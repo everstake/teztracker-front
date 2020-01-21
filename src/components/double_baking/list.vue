@@ -11,7 +11,7 @@
     >
       <template slot="txhash" slot-scope="row">
         <b-link :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }">
-          <span>{{ row.item.operationGroupHash | longhash(35) }}</span>
+          <span>{{ row.item.operationGroupHash | longhash(25) }}</span>
         </b-link>
       </template>
 
@@ -21,23 +21,34 @@
         </b-link>
       </template>
 
-      <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
+      <template slot="age" slot-scope="row">
+        <span>{{ row.item.timestamp | getAge }}</span>
       </template>
-
-      <template slot="from" slot-scope="row">
-        <b-link :to="{ name: 'account', params: { account: row.item.source } }">
-          <span>{{ row.item.source | longhash(20) }}</span>
+      <template slot="baker" slot-scope="row">
+        <router-link
+          class="baker"
+          :to="{ name: 'baker', params: {baker: row.item.doubleBake.evidence_baker}}"
+        >{{row.item.doubleBake.evidence_baker | longhash(20)}}</router-link>
+      </template>
+      <template slot="baker_rewards" slot-scope="row">
+        <span>{{ row.item.doubleBake.baker_reward | tezos }}</span>
+      </template>
+      <template slot="offender" slot-scope="row">
+        <router-link
+          class="baker"
+          :to="{ name: 'baker', params: {baker: row.item.doubleBake.offender}}"
+        >{{row.item.doubleBake.offender | longhash(20)}}</router-link>
+      </template>
+      <template slot="denounced_level" slot-scope="row">
+        <b-link :to="{ name: 'block', params: { level: row.item.doubleBake.denounced_level } }">
+          <span>{{ row.item.doubleBake.denounced_level }}</span>
         </b-link>
       </template>
-
-      <template slot="to" slot-scope="row">
-        <b-link :to="{ name: 'account', params: { account: row.item.delegate } }">
-          <span>{{ row.item.delegate | longhash(20) }}</span>
-        </b-link>
+      <template slot="lost_deposits" slot-scope="row">
+        <span>{{ row.item.doubleBake.lost_deposits | tezos }}</span>
       </template>
-      <template slot="amount" slot-scope="row">
-        <span>{{ row.item.balance | tezos }}</span>
+      <template slot="lost_rewards" slot-scope="row">
+        <span>{{ row.item.doubleBake.lost_rewards | tezos }}</span>
       </template>
     </b-table>
 
@@ -58,22 +69,25 @@ import { mapState } from "vuex";
 import { ACTIONS } from "../../store";
 
 export default {
-  name: "Originations",
+  name: "DoubleBaking",
   props: ["account"],
   data() {
     return {
       perPage: 10,
       currentPage: 1,
       pageOptions: [10, 15, 20, 25, 30],
-      originations: [],
+      double_baking: [],
       count: 0,
       fields: [
         { key: "txhash", label: "Origination Hash" },
         { key: "level", label: "Block ID" },
-        { key: "timestamp", label: "Timestamp" },
-        { key: "to", label: "To" },
-        { key: "from", label: "From" },
-        { key: "amount", label: "Amount" }
+        { key: "age", label: "Age" },
+        { key: "baker", label: "Baker" },
+        { key: "baker_rewards", label: "Baker Rewards" },
+        { key: "offender", label: "Offender" },
+        { key: "denounced_level", label: "Denounced Level" },
+        { key: "lost_deposits", label: "Lost Deposits" },
+        { key: "lost_rewards", label: "Lost Rewards" }
       ]
     };
   },
@@ -82,7 +96,7 @@ export default {
       return this.count;
     },
     items() {
-      return this.originations;
+      return this.double_baking;
     }
   },
   watch: {
@@ -107,10 +121,10 @@ export default {
       if (this.$props.account) {
         props.account_id = this.$props.account;
       }
-      const data = await this.$store.getters.API.getOriginations(props);
-      this.originations = data.data;
+      const data = await this.$store.getters.API.getDoubleBaking(props);
+      this.double_baking = data.data;
       this.count = data.count;
-      this.$store.commit(ACTIONS.SET_ORIGINATIONS_COUNT, this.count);
+      this.$store.commit(ACTIONS.SET_DOUBLEBAKING_COUNT, this.count);
     }
   }
 };

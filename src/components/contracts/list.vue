@@ -9,19 +9,19 @@
       :per-page="0"
       class="transactions-table table table-borderless table-responsive-md"
     >
-      <template slot="baker" slot-scope="row">
-        <b-link :to="{ name: 'baker', params: { baker: row.item.accountId } }">
+      <template slot="contract" slot-scope="row">
+        <b-link :to="{ name: 'account', params: { account: row.item.accountId } }">
           <span>{{ row.item.accountId | longhash(35) }}</span>
         </b-link>
       </template>
-      <template slot="blocks" slot-scope="row">
-        <span>{{ row.item.blocks }}</span>
+      <template slot="manager" slot-scope="row">
+          <span>{{ row.item.manager | longhash(35) }}</span>
       </template>
-      <template slot="assets" slot-scope="row">
-        <span>{{ row.item.stakingBalance | tezos }}</span>
+      <template slot="delegate" slot-scope="row">
+        <span>{{ row.item.delegateValue | longhash(20) }}</span>
       </template>
-      <template slot="endorsement" slot-scope="row">
-        <span>{{ row.item.endorsements }}</span>
+      <template slot="balance" slot-scope="row">
+        <span>{{ row.item.balance | tezos }}</span>
       </template>
     </b-table>
     <b-pagination
@@ -41,7 +41,7 @@ import { mapState } from "vuex";
 import { ACTIONS } from "../../store";
 
 export default {
-  name: "Bakers",
+  name: "Contracts",
   props: {},
   data() {
     return {
@@ -49,29 +49,29 @@ export default {
       currentPage: 1,
       pageOptions: [10, 15, 20, 25, 30],
       fields: [
-        { key: "baker", label: "Baker" },
-        { key: "blocks", label: "Blocks" },
-        { key: "assets", label: "Staked assets" },
-        { key: "endorsement", label: "Endorsement" }
+        { key: "contract", label: "Contract" },
+        { key: "manager", label: "Manager" },
+        { key: "delegate", label: "Delegate" },
+        { key: "balance", label: "Balance" },
       ]
     };
   },
   computed: {
     ...mapState({
-      bakers: state => state.bakers,
+      contracts: state => state.contracts,
       count: state => state.counts
     }),
     rows() {
-      return this.count.bakers;
+      return this.count.contracts;
     },
     items() {
-      return this.bakers;
+      return this.contracts;
     }
   },
   watch: {
     currentPage: {
       async handler(value) {
-        await this.$store.dispatch(ACTIONS.BAKERS_GET, {
+        await this.$store.dispatch(ACTIONS.CONTRACTS_GET, {
           page: value,
           limit: this.perPage
         });
@@ -79,7 +79,7 @@ export default {
     }
   },
   async mounted() {
-    await this.$store.dispatch(ACTIONS.BAKERS_GET);
+    await this.$store.dispatch(ACTIONS.CONTRACTS_GET);
   }
 };
 </script>

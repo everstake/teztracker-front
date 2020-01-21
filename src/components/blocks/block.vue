@@ -27,7 +27,7 @@
               <span class="label">Timestamp</span>
             </div>
             <div class="col-lg-9">
-              <span class="value">{{block.timestamp | timeformat("hh:mm:ss DD.MM.YY")}}</span>
+              <span class="value">{{block.timestamp | timeformat("HH:mm:ss DD.MM.YY")}}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -65,7 +65,7 @@
   </div>
 </template>
 <script>
-import { api } from "../../store";
+import store from "../../store";
 export default {
   name: "Block",
   components: {},
@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     async load(level) {
-      const result = await api.getBlock({ block: level });
+      const result = await this.$store.getters.API.getBlock({ block: level });
       if (result.status !== 200) {
         return this.$router.push({
           name: result.status

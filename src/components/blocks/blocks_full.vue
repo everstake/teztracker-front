@@ -16,7 +16,7 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat("hh:mm:ss DD.MM.YY") }}</span>
+        <span>{{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
       </template>
 
       <template slot="baker" slot-scope="row">

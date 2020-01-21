@@ -106,7 +106,7 @@
 <script>
 import TxInfo from "../transactions/transaction";
 import { mapState } from "vuex";
-import { ACTIONS, api } from "../../store";
+import { ACTIONS } from "../../store";
 
 export default {
   name: "Transaction",
@@ -168,7 +168,7 @@ export default {
         limit: this.perPage,
         operation_id: this.txhash
       };
-      const data = await api.getTransactions(props);
+      const data = await this.$store.getters.API.getTransactions(props);
       if (data.status !== 200) {
         return this.$router.push({
           name: data.status

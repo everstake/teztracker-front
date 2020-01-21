@@ -80,8 +80,6 @@
 import BlockInfo from "../blocks/block";
 import Endorsements from "../endorsements/list";
 import Transactions from "../transactions/transactions";
-import { ACTIONS, api } from "../../store";
-import { mapState } from "vuex";
 
 export default {
   name: "Block",
@@ -101,7 +99,9 @@ export default {
     }
   },
   async created() {
-    const result = await api.getBlock({ block: this.level });
+    const result = await this.$store.getters.API.getBlock({
+      block: this.level
+    });
     this.block = result.data.block || {};
   }
 };

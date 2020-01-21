@@ -17,11 +17,75 @@
             <img src="img/promo-img.svg" height="270px" alt />
           </div>
         </div>
+        <!-- cycle-->
+        <CycleCount />
 
         <div class="promo-tiles row justify-content-md-center">
-          <div class="tile col text-center ml-4 mr-4">
+          <div class="tile col text-center ml-2 mr-4">
             <div class="tile-icon text-center">
-              <font-awesome-icon icon="chart-bar" />
+              <font-awesome-icon :icon="['far', 'lightbulb']" />
+            </div>
+            <span class="counter">{{ stakingRatio }}%</span>
+            <div v-if="info.staking_ratio > 0">
+              <span class="percentage green">
+                <font-awesome-icon icon="caret-up" />
+              </span>
+            </div>
+            <div v-else>
+              <span class="percentage red">
+                <font-awesome-icon icon="caret-down" />
+              </span>
+            </div>
+            <span class="tile-name">Staking ratio</span>
+          </div>
+
+          <div class="tile col text-center mr-4">
+            <div class="tile-icon text-center">
+              <font-awesome-icon :icon="['far', 'star']" />
+            </div>
+            <div class="voting-progress">
+              <b-progress :value="cyclePercent" :max="100" class="mb-2"></b-progress>
+              <div class="progress-labels">
+                <div class="voting-percentage float-left">
+                  <span>{{cyclePercent}}%</span>
+                </div>
+                <div class="timer float-right">
+                  <span>{{timeLeft}}</span> - Until cycle end
+                </div>
+              </div>
+            </div>
+            <span class="tile-name">Voting progress</span>
+          </div>
+
+          <div class="tile col text-center mr-4">
+            <div class="tile-icon text-center">
+              <font-awesome-icon :icon="['far', 'folder']" />
+            </div>
+            <span class="counter">{{ head.level | bignum }}</span>
+            <span class="percentage"></span>
+            <span class="tile-name">Block Height</span>
+          </div>
+
+          <div class="tile col text-center mr-2">
+            <div class="tile-icon text-center">
+              <font-awesome-icon :icon="['far', 'user']" />
+            </div>
+
+            <span class="counter">
+              <router-link
+                class="baker"
+                :to="{ name: 'account', params: { account: head.baker } }"
+              >{{ head.baker | longhash(13) }}</router-link>
+            </span>
+            <span class="percentage"></span>
+            <span class="tile-name">Latest baker</span>
+          </div>
+        </div>
+
+        <div class="promo-tiles row justify-content-md-center">
+          <div class="tile col text-center ml-2 mr-4">
+            <div class="tile-icon text-center">
+              <font-awesome-icon :icon="['far', 'chart-bar']" />
             </div>
             <span class="counter">${{ info.price }}</span>
             <div v-if="info.price_24h_change > 0">
@@ -42,47 +106,31 @@
 
           <div class="tile col text-center mr-4">
             <div class="tile-icon text-center">
-              <font-awesome-icon icon="folder" />
+              <font-awesome-icon :icon="['far', 'bookmark']" />
             </div>
-            <span class="counter">{{ head.level | bignum }}</span>
+            <span class="counter">{{info.volume_24h | bignum(",")}} XTZ</span>
             <span class="percentage"></span>
-            <span class="tile-name">Height</span>
+            <span class="tile-name">Trading Volume</span>
           </div>
 
           <div class="tile col text-center mr-4">
             <div class="tile-icon text-center">
-              <font-awesome-icon icon="hourglass" />
+              <font-awesome-icon :icon="['far', 'gem']" />
             </div>
-            <span class="counter">{{ head.metaCycle }}</span>
+            <span class="counter">${{info.market_cap | bignum(",")}}</span>
             <span class="percentage"></span>
-            <span class="tile-name">Cycle counter</span>
+            <span class="tile-name">Market cap</span>
           </div>
 
-          <div class="tile col text-center mr-4">
+          <div class="tile col text-center mr-2">
             <div class="tile-icon text-center">
-              <font-awesome-icon icon="lightbulb" />
+              <font-awesome-icon :icon="['far', 'hourglass']" />
             </div>
-            <span class="counter">{{ stakingRatio }}%</span>
-            <div v-if="info.staking_ratio > 0">
-              <span class="percentage green">
-                <font-awesome-icon icon="caret-up" />
-              </span>
-            </div>
-            <div v-else>
-              <span class="percentage red">
-                <font-awesome-icon icon="caret-down" />
-              </span>
-            </div>
-            <span class="tile-name">Staking ratio</span>
-          </div>
-
-          <div class="tile col text-center mr-4">
-            <div class="tile-icon text-center">
-              <font-awesome-icon icon="bell" />
-            </div>
-            <span class="counter">{{ info.annual_yield }}%</span>
-            <span class="percentage red"></span>
-            <span class="tile-name">Annual yield</span>
+            <span
+              class="counter"
+            >{{(info.circulating_supply > 0 ? info.circulating_supply.toFixed() : 0) | bignum(",")}}</span>
+            <span class="percentage"></span>
+            <span class="tile-name">Circulating Supply</span>
           </div>
         </div>
       </div>
@@ -153,16 +201,18 @@ import { mapState } from "vuex";
 
 import BlocksCard from "../blocks/blocks_card.vue";
 import TxCard from "../transactions/transactions_card.vue";
+import CycleCount from "../cycle/count.vue";
 import Search from "../search/search";
 import { ACTIONS } from "../../store";
 import { setInterval, clearInterval } from "timers";
-
+import moment from "moment";
 export default {
   name: "index",
   components: {
     BlocksCard,
     TxCard,
-    Search
+    Search,
+    CycleCount
   },
   data() {
     return {
@@ -185,6 +235,14 @@ export default {
         return 0;
       }
       return Math.abs(this.info.staking_ratio.toFixed(2));
+    },
+    cyclePercent() {
+      return parseInt(((this.head.metaCyclePosition / 4096) * 100).toFixed());
+    },
+    timeLeft() {
+      return moment()
+        .add(4096 - this.head.metaCyclePosition, "minutes")
+        .fromNow(true);
     }
   },
   beforeDestroy() {

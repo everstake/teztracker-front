@@ -22,7 +22,7 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat("hh:mm:ss DD.MM.YY") }}</span>
+        <span>{{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
       </template>
 
       <template slot="from" slot-scope="row">
@@ -57,7 +57,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { ACTIONS, api } from "../../store";
+import { ACTIONS } from "../../store";
 
 export default {
   data() {
@@ -98,12 +98,12 @@ export default {
       }
     },
     block: {
-      async handler(value) {
+      async handler() {
         await this.reload();
       }
     },
     account: {
-      async handler(value) {
+      async handler() {
         await this.reload();
       }
     }
@@ -123,7 +123,7 @@ export default {
       if (this.account) {
         props.account_id = this.account;
       }
-      const data = await api.getTransactions(props);
+      const data = await this.$store.getters.API.getTransactions(props);
       if (data.status !== 200) {
         return this.$router.push({
           name: data.status
@@ -136,6 +136,5 @@ export default {
   }
 };
 </script>
-
 
 <style scoped></style>

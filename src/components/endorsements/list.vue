@@ -28,7 +28,7 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat("hh:mm:ss DD.MM.YY") }}</span>
+        <span>{{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
       </template>
     </b-table>
 
@@ -46,7 +46,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { ACTIONS, api } from "../../store";
+import { ACTIONS } from "../../store";
 import _ from "lodash";
 let i = 0;
 export default {
@@ -104,9 +104,9 @@ export default {
         props.block_id = block;
         props.limit = 32;
         this.perPage = 32;
-        result = await api.getBlockEndorsements(props);
+        result = await this.$store.getters.API.getBlockEndorsements(props);
       } else {
-        result = await api.getEndorsements(props);
+        result = await this.$store.getters.API.getEndorsements(props);
       }
       if (result.status !== 200) {
         return this.$router.push({

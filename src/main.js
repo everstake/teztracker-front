@@ -11,20 +11,28 @@ import {
   FontAwesomeLayersText
 } from "@fortawesome/vue-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import { far } from "@fortawesome/free-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { dom } from "@fortawesome/fontawesome-svg-core";
 dom.watch();
 
 library.add(fas);
+library.add(far);
 
 Vue.config.productionTip = false;
 
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 
+
 let router = new VueRouter({
   mode: "history",
   routes
+});
+
+router.beforeEach(async (to, from, next) => {
+  await store.commit('setNetwork', to.params.network)
+  return next()
 });
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

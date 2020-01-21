@@ -27,7 +27,7 @@
               <span class="label">Timestamp</span>
             </div>
             <div class="col-lg-9">
-              <span class="value">{{timestamp | timeformat("hh:mm:ss DD.MM.YY") }}</span>
+              <span class="value">{{timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -63,7 +63,7 @@
   </div>
 </template>
 <script>
-import { api, XTZ, ACTIONS } from "../../store";
+import { XTZ, ACTIONS } from "../../store";
 import { ceil } from "lodash";
 import { mapState } from "vuex";
 

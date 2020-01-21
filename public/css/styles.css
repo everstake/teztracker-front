@@ -39,7 +39,12 @@ body {
 
 .main-header .header-middle .main-nav {
   float: left;
-  margin: 0 62px;
+  margin: 0 48px;
+}
+
+.main-header .header-middle .main-nav.right-block {
+  float: right;
+  margin: 0 24px;
 }
 
 .main-header .header-middle .main-nav ul {
@@ -53,7 +58,7 @@ body {
 .main-header .header-middle .main-nav ul li {
   display: block;
   float: left;
-  padding: 2px 26px;
+  padding: 2px 24px;
 }
 
 .main-header .header-middle .main-nav ul li a {
@@ -203,6 +208,9 @@ span a.baker {
   position: relative;
   width: 100%;
   margin: 0;
+  background-image: url("../img/green-bg.svg");
+  background-position: 0 242px;
+  background-repeat: repeat-x;
 }
 
 .main-content .promo-section .promo-top {
@@ -254,6 +262,13 @@ span a.baker {
 
 .main-content .promo-section .promo-top .promo-image {
   margin: 26px 0;
+}
+
+.main-content .promo-section .promo-tiles {
+  margin: 1.6rem 0;
+}
+.main-content .promo-section .promo-tiles:last-child {
+  margin: 1.6rem 0 0;
 }
 
 .main-content .promo-section .promo-tiles .tile {
@@ -321,6 +336,14 @@ span a.baker {
   text-align: center;
   text-transform: uppercase;
   color: #9EA0A5;
+}
+
+.main-content .promo-section .promo-tiles .voting-progress {
+  display: flex;
+  flex-flow: column nowrap;
+  flex: 1 1;
+  padding-top: 14px;
+  height: 61px;
 }
 
 .main-content .breadcrumbs {
@@ -431,6 +454,32 @@ span a.baker {
 .main-content section .card .card-header .table-filters {
   width: 100%;
   float: left;
+}
+
+.main-content section.cycle-counter .card .card-header .title span {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  text-transform: uppercase;
+  color: #9EA0A5;
+}
+
+.progress {
+  height: 8px;
+  background-color: #F0F0F1;
+}
+.progress .progress-bar {
+  background-color: #309282;
+}
+.progress-labels {
+  margin-bottom: 8px;
+  width: 100%;
+  float: left;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 16px;
+  text-transform: uppercase;
+  color: #9EA0A5;
 }
 
 .main-content section .card .card-header .table-filters .dropdown .btn-secondary {
@@ -687,6 +736,23 @@ span a.baker {
 @media screen and (max-width: 1450px) {
   .card-body .table.transactions-table, .card-body .table.delegations-table {
     table-layout: fixed;
+  }
+}
+@media screen and (max-width: 1360px) {
+  .main-header .header-middle .main-nav {
+    float: left;
+    margin: 0 36px;
+  }
+  
+  .main-header .header-middle .main-nav.right-block {
+    float: right;
+    margin: 0 20px;
+  }
+  
+  .main-header .header-middle .main-nav ul li {
+    display: block;
+    float: left;
+    padding: 2px 20px;
   }
 }
 /*# sourceMappingURL=styles.css.map */
