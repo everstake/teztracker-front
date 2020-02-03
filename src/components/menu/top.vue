@@ -80,6 +80,7 @@
             <div class="dropdown-menu">
               <li class="dropdown-item pointer" @click="useMainNet()">Mainnet</li>
               <li class="dropdown-item pointer" @click="useBabylon()">Babylon net</li>
+              <li class="dropdown-item pointer" @click="useCarthage()">Carthage net</li>
             </div>
           </li>
         </ul>
@@ -104,9 +105,22 @@ export default {
   },
   computed: {
     currentNetwork: function() {
-      return this.$route.params.network === "mainnet"
-        ? "Mainnet"
-        : "Babylonnet";
+      switch (this.$route.params.network) {
+        case 'mainnet':
+          return "Mainnet"
+          break;
+        case  'babylonnet':
+          return 'Babylonnet'
+        break;
+        case 'carthage':
+          return 'Carthage'
+        break
+        default:
+          return "Mainnet"
+      }
+      // return this.$route.params.network === "mainnet"
+      //   ? "Mainnet"
+      //   : "Babylonnet";
     }
   },
   methods: {
@@ -118,13 +132,19 @@ export default {
     },
     useBabylon() {
       window.location = "/babylonnet";
+    },
+    useCarthage() {
+      window.location = "/carthage";
     }
   }
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .pointer {
   cursor: pointer;
+}
+@media screen {
+
 }
 </style>
