@@ -1,5 +1,5 @@
 <template>
-  <div class="card ml-2">
+  <div class="card">
     <div class="card-header">
       <div class="title">
         <h3>

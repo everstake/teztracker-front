@@ -157,7 +157,7 @@
     <section>
       <div class="container-fluid">
         <div class="row">
-          <div class="col-lg-6">
+          <div class="col-lg-6 mb-3">
             <BlocksCard />
           </div>
 
@@ -286,4 +286,16 @@ export default {
   .counter {
     overflow: hidden;
   }
+  @media screen and (max-width: 768px) {
+    .promo-tiles {
+      &.row {
+        flex-direction: column;
+      }
+      .col-sm-12 {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+
 </style>
