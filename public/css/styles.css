@@ -16,6 +16,7 @@ body {
   padding: 0 30px;
   background: #ffffff;
   z-index: 1000;
+  position: fixed;
 }
 
 .main-header .logo {
@@ -164,7 +165,8 @@ span a.baker {
   margin-bottom: 2rem;
   background-image: url("../img/green-bg.svg");
   background-position: 0 0;
-  background-repeat: repeat-x;
+  /*background-repeat: repeat-x;*/
+  padding-top: 80px;
 }
 
 .main-content.error-page {
@@ -743,12 +745,12 @@ span a.baker {
     float: left;
     margin: 0 36px;
   }
-  
+
   .main-header .header-middle .main-nav.right-block {
     float: right;
     margin: 0 20px;
   }
-  
+
   .main-header .header-middle .main-nav ul li {
     display: block;
     float: left;

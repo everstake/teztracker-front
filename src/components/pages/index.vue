@@ -20,117 +20,135 @@
         <!-- cycle-->
         <CycleCount />
 
-        <div class="promo-tiles row justify-content-md-center">
-          <div class="tile col text-center ml-2 mr-4">
-            <div class="tile-icon text-center">
-              <font-awesome-icon :icon="['far', 'lightbulb']" />
-            </div>
-            <span class="counter">{{ stakingRatio }}%</span>
-            <div v-if="info.staking_ratio > 0">
+        <div class="promo-tiles row ">
+          <div class=" col-lg-3 col-md-6 col-sm-12 mb-3 text-center">
+            <div class="tile">
+
+              <div class="tile-icon text-center">
+                <font-awesome-icon :icon="['far', 'lightbulb']" />
+              </div>
+              <span class="counter">{{ stakingRatio }}%</span>
+              <div v-if="info.staking_ratio > 0">
               <span class="percentage green">
                 <font-awesome-icon icon="caret-up" />
               </span>
-            </div>
-            <div v-else>
+              </div>
+              <div v-else>
               <span class="percentage red">
                 <font-awesome-icon icon="caret-down" />
               </span>
+              </div>
+              <span class="tile-name">Staking ratio</span>
+
             </div>
-            <span class="tile-name">Staking ratio</span>
           </div>
 
-          <div class="tile col text-center mr-4">
-            <div class="tile-icon text-center">
-              <font-awesome-icon :icon="['far', 'star']" />
-            </div>
-            <div class="voting-progress">
-              <b-progress :value="cyclePercent" :max="100" class="mb-2"></b-progress>
-              <div class="progress-labels">
-                <div class="voting-percentage float-left">
-                  <span>{{cyclePercent}}%</span>
-                </div>
-                <div class="timer float-right">
-                  <span>{{timeLeft}}</span> - Until cycle end
+          <div class="col-lg-3 col-md-6 col-sm-12 mb-3 text-center">
+            <div class="tile">
+              <div class="tile-icon text-center">
+                <font-awesome-icon :icon="['far', 'star']" />
+              </div>
+              <div class="voting-progress">
+                <b-progress :value="cyclePercent" :max="100" class="mb-2"></b-progress>
+                <div class="progress-labels">
+                  <div class="voting-percentage float-left">
+                    <span>{{cyclePercent}}%</span>
+                  </div>
+                  <div class="timer float-right">
+                    <span>{{timeLeft}}</span> - Until cycle end
+                  </div>
                 </div>
               </div>
+              <span class="tile-name">Voting progress</span>
             </div>
-            <span class="tile-name">Voting progress</span>
           </div>
 
-          <div class="tile col text-center mr-4">
-            <div class="tile-icon text-center">
-              <font-awesome-icon :icon="['far', 'folder']" />
+          <div class=" col-lg-3 col-md-6 col-sm-12 mb-3 text-center ">
+            <div class="tile">
+              <div class="tile-icon text-center">
+                <font-awesome-icon :icon="['far', 'folder']" />
+              </div>
+                <span class="counter">{{ head.level | bignum }}</span>
+                <span class="percentage"></span>
+                <span class="tile-name">Block Height</span>
             </div>
-            <span class="counter">{{ head.level | bignum }}</span>
-            <span class="percentage"></span>
-            <span class="tile-name">Block Height</span>
           </div>
 
-          <div class="tile col text-center mr-2">
-            <div class="tile-icon text-center">
-              <font-awesome-icon :icon="['far', 'user']" />
-            </div>
+          <div class="col-lg-3 col-md-6 col-sm-12 text-center">
+            <div class="tile">
+                <div class="tile-icon text-center">
+                  <font-awesome-icon :icon="['far', 'user']" />
+                </div>
 
-            <span class="counter">
-              <router-link
-                class="baker"
-                :to="{ name: 'account', params: { account: head.baker } }"
-              >{{ head.baker | longhash(13) }}</router-link>
-            </span>
-            <span class="percentage"></span>
-            <span class="tile-name">Latest baker</span>
+                <span class="counter">
+                <router-link
+                        class="baker"
+                        :to="{ name: 'account', params: { account: head.baker } }"
+                >{{ head.baker | longhash(13) }}</router-link>
+              </span>
+                <span class="percentage"></span>
+                <span class="tile-name">Latest baker</span>
+            </div>
           </div>
         </div>
 
-        <div class="promo-tiles row justify-content-md-center">
-          <div class="tile col text-center ml-2 mr-4">
-            <div class="tile-icon text-center">
-              <font-awesome-icon :icon="['far', 'chart-bar']" />
-            </div>
-            <span class="counter">${{ info.price }}</span>
-            <div v-if="info.price_24h_change > 0">
+        <div class="promo-tiles row ">
+          <div class="col col-lg-3 col-md-6 col-sm-12 mb-3 text-center">
+            <div class="tile">
+              <div class="tile-icon text-center">
+                <font-awesome-icon :icon="['far', 'chart-bar']" />
+              </div>
+              <span class="counter">${{ info.price }}</span>
+              <div v-if="info.price_24h_change > 0">
               <span class="percentage green">
                 <font-awesome-icon icon="caret-up" />
                 {{ priceChange }}%
               </span>
-            </div>
-            <div v-else>
+              </div>
+              <div v-else>
               <span class="percentage red">
                 <font-awesome-icon icon="caret-down" />
                 {{ priceChange }}%
               </span>
-            </div>
+              </div>
 
-            <span class="tile-name">Price</span>
+              <span class="tile-name">Price</span>
+            </div>
           </div>
 
-          <div class="tile col text-center mr-4">
-            <div class="tile-icon text-center">
-              <font-awesome-icon :icon="['far', 'bookmark']" />
+          <div class="col col-lg-3 col-md-6 col-sm-12 mb-3 text-center">
+            <div class="tile">
+              <div class="tile-icon text-center">
+                <font-awesome-icon :icon="['far', 'bookmark']" />
+              </div>
+              <span class="counter">{{info.volume_24h | bignum(",")}} XTZ</span>
+              <span class="percentage"></span>
+              <span class="tile-name">Trading Volume</span>
             </div>
-            <span class="counter">{{info.volume_24h | bignum(",")}} XTZ</span>
-            <span class="percentage"></span>
-            <span class="tile-name">Trading Volume</span>
           </div>
 
-          <div class="tile col text-center mr-4">
-            <div class="tile-icon text-center">
-              <font-awesome-icon :icon="['far', 'gem']" />
-            </div>
-            <span class="counter">${{info.market_cap | bignum(",")}}</span>
-            <span class="percentage"></span>
-            <span class="tile-name">Market cap</span>
+          <div class="col col-lg-3 col-md-6 col-sm-12 mb-3 text-center">
+              <div class="tile">
+                <div class="tile-icon text-center">
+                  <font-awesome-icon :icon="['far', 'gem']" />
+                </div>
+                <span class="counter">${{info.market_cap | bignum(",")}}</span>
+                <span class="percentage"></span>
+                <span class="tile-name">Market cap</span>
+              </div>
           </div>
 
-          <div class="tile col text-center mr-2">
-            <div class="tile-icon text-center">
-              <font-awesome-icon :icon="['far', 'hourglass']" />
-            </div>
-            <span
-              class="counter"
-            >{{(info.circulating_supply > 0 ? info.circulating_supply.toFixed() : 0) | bignum(",")}}</span>
-            <span class="percentage"></span>
-            <span class="tile-name">Circulating Supply</span>
+          <div class="col col-lg-3 col-md-6 col-sm-12 mb-3 text-center">
+              <div class="tile">
+                <div class="tile-icon text-center">
+                  <font-awesome-icon :icon="['far', 'hourglass']" />
+                </div>
+                <span
+                        class="counter"
+                >{{(info.circulating_supply > 0 ? info.circulating_supply.toFixed() : 0) | bignum(",")}}</span>
+                <span class="percentage"></span>
+                <span class="tile-name">Circulating Supply</span>
+              </div>
           </div>
         </div>
       </div>
@@ -261,4 +279,11 @@ export default {
 };
 </script>
 
-<style />
+<style  lang="scss">
+  .tile {
+    padding: 0 15px;
+  }
+  .counter {
+    overflow: hidden;
+  }
+</style>

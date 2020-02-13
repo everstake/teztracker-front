@@ -24,6 +24,7 @@
     "register-service-worker": "^1.6.2",
     "sass-loader": "^8.0.2",
     "vue": "^2.6.10",
+    "vue-perfect-scrollbar": "^0.2.1",
     "vue-router": "^3.0.7",
     "vuex": "^3.0.1"
   },

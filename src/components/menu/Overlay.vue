@@ -99,11 +99,6 @@
     }
     }
 
-    h1 {
-        position: relative;
-        text-align: center;
-        font-family: 'Varela Round', serif;
-    }
 
     .button_container {
         position: fixed;

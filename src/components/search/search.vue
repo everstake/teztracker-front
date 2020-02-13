@@ -29,6 +29,8 @@ export default {
   },
   methods: {
     onSubmit: function() {
+      this.$emit('onSubmit', false);
+
       const searchStr = this.$data.searchQuery;
       this.$data.searchQuery = "";
       if (_.isFinite(parseInt(searchStr))) {
@@ -69,6 +71,7 @@ export default {
       return this.$router.push({
         name: "404"
       });
+
     }
   }
 };
