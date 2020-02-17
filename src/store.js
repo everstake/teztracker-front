@@ -71,11 +71,13 @@ export const ACTIONS = {
 
 const API_URL_MAIN = "https://api-teztracker.everstake.one/v2/data/tezos/mainnet/";
 const API_URL_BABYLON = "https://api-teztracker.everstake.one/v2/data/tezos/babylonnet/";
+const API_URL_CARTHAGE = "https://api-teztracker.everstake.one/v2/data/tezos/carthagenet/";
 
 
 const API = {
   mainnet: new TzAPI({ API_URL: API_URL_MAIN }),
-  babylonnet: new TzAPI({ API_URL: API_URL_BABYLON })
+  babylonnet: new TzAPI({ API_URL: API_URL_BABYLON }),
+  carthage: new TzAPI({API_URL:API_URL_CARTHAGE})
 };
 
 
