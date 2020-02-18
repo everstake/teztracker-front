@@ -114,6 +114,63 @@
                 isExpandable: true
                 },
                 {
+                    title: 'Operations',
+                    active: false,
+                    isExpandable: true,
+                    description: [
+                        {
+                            title: 'Transactions',
+                            routeName: 'txs'
+                        },
+                        {
+                            title: 'Endorsements',
+                            routeName: 'endorsements'
+                        },
+                        {
+                            title: 'Delegations',
+                            routeName: 'delegations'
+                        },
+                        {
+                            title: 'Originations',
+                            routeName: 'originations'
+                        },
+                        {
+                            title: 'Activations',
+                            routeName: 'activations'
+                        },
+                        {
+                            title: 'Double-baking',
+                            routeName:'double_baking'
+                        },
+                        {
+                            title: 'Double-endorsement',
+                            routeName:'double_endorsement'
+                        }
+
+                    ],
+                },
+                {
+                    title: 'Bakers',
+                    active: false,
+                    isExpandable: false,
+                    link: 'bakers'
+                },
+                {
+                    title: 'Accounts',
+                    active: false,
+                    isExpandable: true,
+                    description: [
+                        {
+                            title: 'Accounts',
+                            routeName: 'accounts'
+                        },
+                        {
+                            title: 'Contracts',
+                            routeName: 'contracts'
+                        },
+                    ]
+                },
+                {
                     title: 'Current Network',
                     description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
                     active: false,
@@ -133,19 +190,6 @@
                         },
                     ],
                 },
-            //     {
-            //     title: 'Duis aute irure dolor in reprehenderit',
-            //     description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
-            //     active: false,
-            //     isExpandable: true
-            //
-            // }, {
-            //     title: 'Excepteur sint occaecat cupidatat non proident',
-            //     description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-            //     active: false,
-            //     isExpandable: true
-            //
-            // }
             ],
         }
     }

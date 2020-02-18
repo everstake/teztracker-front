@@ -7,7 +7,7 @@
         <div :class="{overlay: true, open: isOpen}" id="overlay">
 
             <div class="overlay_container ">
-                <Accordion />
+                <AccordionMenu />
                 <div class="search search-wrapper-nav">
                     <Search v-on:onSubmit="toggleMenu"/>
                 </div>
@@ -19,12 +19,12 @@
 
 <script>
     import Search from "../search/search";
-    import Accordion  from "./Accordion";
+    import AccordionMenu  from "./AccordionMenu";
     import Footer from "./footer";
 
     export default {
         name: "OverlayMenu",
-        components: { Search, Accordion, Footer },
+        components: { Search, AccordionMenu, Footer },
         data() {
             return {
                 isOpen: false
@@ -161,7 +161,7 @@
         opacity: 1;
         visibility: hidden;
         transition: opacity .35s, visibility .35s, height .35s;
-        overflow: hidden;
+        overflow: auto;
         z-index: 999;
 
     &.open {
