@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 @click="toggleMenu">
-            <font-awesome-icon  v-if="isOpen" class="icon" icon="times-circle" />
+            <font-awesome-icon  v-if="isOpen" class="icon" :icon="['far','times-circle']" />
             <font-awesome-icon   v-else  class="icon" icon="bars" />
         </h3>
         <div :class="{overlay: true, open: isOpen}" id="overlay">
