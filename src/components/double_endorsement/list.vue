@@ -89,11 +89,11 @@ export default {
         page,
         limit: this.perPage
       };
-      if (this.$props.block) {
-        props.block_id = this.$props.block.hash;
+      if (this.block) {
+        props.block_id = this.block.hash;
       }
-      if (this.$props.account) {
-        props.account_id = this.$props.account;
+      if (this.account) {
+        props.account_id = this.account;
       }
       const data = await this.$store.getters.API.getDoubleEndorsement(props);
       this.double_endorsement = data.data;

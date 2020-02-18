@@ -97,7 +97,7 @@ export default {
           name: result.status
         });
       }
-      this.$data.block = result.data.block;
+      this.block = result.data.block;
     }
   }
 };

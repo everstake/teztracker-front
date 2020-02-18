@@ -101,7 +101,7 @@ export default {
       return this.count.future_baking_rights;
     },
     items() {
-      return this.$data.future_baking_rights;
+      return this.future_baking_rights;
     }
   },
   watch: {
@@ -129,7 +129,7 @@ export default {
         }
       }
       const levels = _.uniq(blocks.map(el => el.level)).sort();
-      const rowLength = this.$data.blocks_in_row;
+      const rowLength = this.blocks_in_row;
       const fields = [
         {
           key: "priority",
@@ -165,8 +165,8 @@ export default {
         }
         result.push(row);
       }
-      this.$data.fields = fields;
-      this.$data.future_baking_rights = result;
+      this.fields = fields;
+      this.future_baking_rights = result;
     },
 
     async reload(page = 1) {

@@ -29,8 +29,8 @@ export default {
   },
   methods: {
     onSubmit: function() {
-      const searchStr = this.$data.searchQuery;
-      this.$data.searchQuery = "";
+      const searchStr = this.searchQuery;
+      this.searchQuery = "";
       if (_.isFinite(parseInt(searchStr))) {
         // block id
         return this.$router.push({
