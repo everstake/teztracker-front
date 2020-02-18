@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import TopMenu from "./components/menu/top.vue";
-import Footer from "./components/menu/footer.vue";
+import TopMenu from "./components/menus/TopMenu.vue";
+import Footer from "./components/menus/Footer.vue";
 
 export default {
   name: "app",
