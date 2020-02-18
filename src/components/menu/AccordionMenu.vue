@@ -7,19 +7,21 @@
         >
             <div v-if="!content.link" class="accordion-header">
                 <a href="#" v-on:click="expand($event, i)">
-                    <div v-if="!content.link" class="accordion-header-div">{{ content.title }}</div>
-
-                    <div v-show="content.isExpandable" class="accordion-header-div">
-                        <div class="accordion-caret"></div>
+                    <div v-if="!content.link" class="accordion-header-div">{{ content.title }}
                     </div>
+
+<!--                    <div v-show="content.isExpandable" class="accordion-header-div">-->
+<!--                        <div class="accordion-caret"></div>-->
+<!--                    </div>-->
                 </a>
             </div>
 
             <div  v-if="content.link" class="accordion-header">
                 <a href="#" @click="goToByName(content.link)">
-                    <div v-if="content.link"  class="accordion-header-div">{{ content.title }}</div>
-                    <div v-show="content.isExpandable" class="accordion-header-div">
-                        <div class="accordion-caret"></div>
+                    <div v-if="content.link"  class="accordion-header-div">{{ content.title }}
+                        <div v-show="content.isExpandable" class="accordion-header-div">
+                            <div class="accordion-caret"></div>
+                        </div>
                     </div>
                 </a>
             </div>
@@ -230,7 +232,7 @@
     $accordion-caret-transforming: scale(1.5) rotate(45deg);
     $accordion-caret-active-transform: rotate(135deg);
 
-    $accordion-body-content-padding: 1rem 0rem 1rem 1.4rem;
+    $accordion-body-content-padding: 1rem;
 
 
 
@@ -256,12 +258,16 @@
     .accordion-header {
         color: inherit;
         font-size: $accordion-header-font-size;
-        font-weight: normal;
         position: relative;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+        font-weight: 600;
         a {
             color: inherit;
             text-decoration: none;
-            width: 100%;
+            width: auto;
             height: 100%;
             display: flex;
             justify-content: space-between;
@@ -277,7 +283,7 @@
     .accordion-header-div {
         padding: $accordion-header-padding;
         &:last-child {
-            padding-left: 0;
+            /*padding-left: 0;*/
             display: flex;
             align-items: center;
             justify-content: center;
@@ -299,12 +305,13 @@
 
     .accordion-content {
         padding: $accordion-body-content-padding;
-        margin: 0 0 0 1rem ;
+        /*margin: 0 0 0 1rem ;*/
         justify-content: space-between;
         box-sizing: border-box;
         border-radius: $accordion-header-border-radius;
         transition: $accordion-header-transition;
         cursor: pointer;
+        text-align: center;
         &:not(.accordion-active):hover {
             background-color: $accordion-header-hover-background-color;
         }
