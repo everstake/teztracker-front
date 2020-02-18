@@ -12,7 +12,8 @@
   </form>
 </template>
 <script>
-import _ from "lodash";
+import isFinite from 'lodash/isFinite'
+import startsWith from 'lodash/startsWith'
 
 const prefixes = {
   account: ["tz", "KT"],
@@ -31,7 +32,7 @@ export default {
     onSubmit: function() {
       const searchStr = this.$data.searchQuery;
       this.$data.searchQuery = "";
-      if (_.isFinite(parseInt(searchStr))) {
+      if (isFinite(parseInt(searchStr))) {
         // block id
         return this.$router.push({
           name: "block",
@@ -40,7 +41,7 @@ export default {
       }
       //block hash
       for (const prefix of prefixes.block) {
-        if (_.startsWith(searchStr, prefix)) {
+        if (startsWith(searchStr, prefix)) {
           return this.$router.push({
             name: "block",
             params: { level: searchStr }
@@ -49,7 +50,7 @@ export default {
       }
       //transactions
       for (const prefix of prefixes.operation) {
-        if (_.startsWith(searchStr, prefix)) {
+        if (startsWith(searchStr, prefix)) {
           return this.$router.push({
             name: "tx",
             params: { txhash: searchStr }
@@ -58,7 +59,7 @@ export default {
       }
       //account
       for (const prefix of prefixes.account) {
-        if (_.startsWith(searchStr, prefix)) {
+        if (startsWith(searchStr, prefix)) {
           return this.$router.push({
             name: "account",
             params: { account: searchStr }

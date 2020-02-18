@@ -3,27 +3,29 @@ import VueRouter from "vue-router";
 import App from "./App.vue";
 import store from "./store";
 import routes from "./routes";
-import BootstrapVue from "bootstrap-vue";
 import "./filters";
-import {
-  FontAwesomeIcon,
-  FontAwesomeLayers,
-  FontAwesomeLayersText
-} from "@fortawesome/vue-fontawesome";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-import { far } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from "@fortawesome/vue-fontawesome";
+import { faSearch, faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faLightbulb, faStar, faFolder, faUser, faChartBar, faBookmark, faGem, faHourglass } from "@fortawesome/free-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { dom } from "@fortawesome/fontawesome-svg-core";
-dom.watch();
+import { LinkPlugin } from 'bootstrap-vue';
+import { TablePlugin } from 'bootstrap-vue';
+import { PaginationPlugin } from 'bootstrap-vue';
+import { ProgressPlugin } from 'bootstrap-vue';
 
-library.add(fas);
-library.add(far);
+dom.watch();
+library.add(faSearch, faCaretUp, faCaretDown);
+library.add(faLightbulb, faStar, faFolder, faUser, faChartBar, faBookmark, faGem, faHourglass);
 
 Vue.config.productionTip = false;
 
-Vue.use(VueRouter);
-Vue.use(BootstrapVue);
+Vue.use(LinkPlugin);
+Vue.use(TablePlugin);
+Vue.use(PaginationPlugin);
+Vue.use(ProgressPlugin);
 
+Vue.use(VueRouter);
 
 let router = new VueRouter({
   mode: "history",

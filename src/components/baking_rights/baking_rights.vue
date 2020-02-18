@@ -74,7 +74,7 @@
 <script>
 import { mapState } from "vuex";
 import { ACTIONS } from "../../store";
-import _ from "lodash";
+import uniq from "lodash/uniq";
 export default {
   name: "BakingRights",
   props: [],
@@ -134,7 +134,7 @@ export default {
           });
         }
       }
-      const levels = _.uniq(blocks.map(el => el.level))
+      const levels = uniq(blocks.map(el => el.level))
         .sort()
         .reverse();
       const rowLength = this.$data.blocks_in_row;

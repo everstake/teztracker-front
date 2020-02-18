@@ -64,7 +64,7 @@
 </template>
 <script>
 import { XTZ, ACTIONS } from "../../store";
-import { ceil } from "lodash";
+import ceil from "lodash/ceil";
 import { mapState } from "vuex";
 
 export default {

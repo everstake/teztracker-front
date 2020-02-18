@@ -47,7 +47,6 @@
 <script>
 import { mapState } from "vuex";
 import { ACTIONS } from "../../store";
-import _ from "lodash";
 let i = 0;
 export default {
   name: "Endorsements",

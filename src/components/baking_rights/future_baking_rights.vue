@@ -71,7 +71,7 @@
   </div>
 </template>
 <script>
-import _ from "lodash";
+import uniq from "lodash/uniq";
 import { mapState } from "vuex";
 
 import { ACTIONS } from "../../store";
@@ -128,7 +128,7 @@ export default {
           });
         }
       }
-      const levels = _.uniq(blocks.map(el => el.level)).sort();
+      const levels = uniq(blocks.map(el => el.level)).sort();
       const rowLength = this.$data.blocks_in_row;
       const fields = [
         {

@@ -101,7 +101,7 @@
 <script>
 import { ACTIONS, XTZ } from "../../store";
 import { mapState } from "vuex";
-import { ceil } from "lodash";
+import ceil from "lodash/ceil";
 
 export default {
   name: "Account",

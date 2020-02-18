@@ -1,5 +1,4 @@
 import axios from "axios";
-import _ from "lodash";
 import querystring from "querystring"
 
 const COUNT_HEADER = "x-total-count";
