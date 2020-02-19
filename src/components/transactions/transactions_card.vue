@@ -2,7 +2,9 @@
   <div class="card">
     <div class="card-header">
       <div class="title">
-        <h3><span class="text">Transaction list</span></h3>
+        <h3>
+          <span class="text">Transaction list</span>
+        </h3>
         <div class="counter">
           <!--            <span class="line"></span>-->
           <h3 class="counter-text">{{ count | bignum }}</h3>
@@ -16,20 +18,19 @@
         stacked="md"
         :items="items"
         :fields="fields"
-        :current-page="currentPage"
         :per-page="0"
         class="table table-borderless table-responsive-sm"
       >
         <template slot="timestamp" slot-scope="row">
-          <span>{{
+          <span>
+            {{
             row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY")
-          }}</span>
+            }}
+          </span>
         </template>
 
         <template slot="level" slot-scope="row">
-          <b-link
-            :to="{ name: 'block', params: { level: row.item.blockLevel } }"
-          >
+          <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
             <span>{{ row.item.blockLevel }}</span>
           </b-link>
         </template>
@@ -45,26 +46,22 @@
           </b-link>
         </template>
       </b-table>
-      <div class="pagination-block">
-        <!-- <div class="pagination-block__inner"> -->
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="rows"
-          :per-page="perPage"
-          align="right"
-          first-text
-          prev-text="Prev"
-          next-text="Next"
-          last-text
-        ></b-pagination>
-        <!-- </div> -->
-      </div>
+      <TzPagination
+        :totalRows="rows"
+        :perPage="perPage"
+        align="right"
+        :prevText="'Prev'"
+        :nextText="'Next'"
+        lastText
+        firstText
+        action="TRANSACTIONS_GET"
+      ></TzPagination>
     </div>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import TzPagination from "../common/_tz_pagination";
 
 export default {
   name: "Transactions",
@@ -98,21 +95,8 @@ export default {
       return this.transactions;
     }
   },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.$store.dispatch(ACTIONS.TRANSACTIONS_GET, {
-          page: value,
-          perPage: this.perPage
-        });
-      }
-    }
-  },
-  async created() {
-    await this.$store.dispatch(ACTIONS.TRANSACTIONS_GET, {
-      page: this.currentPage,
-      perPage: this.perPage
-    });
+  components: {
+    TzPagination
   }
 };
 </script>

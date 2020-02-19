@@ -42,8 +42,7 @@
           </b-link>
         </template>
       </b-table>
-      <b-pagination
-        v-model="currentPage"
+      <TzPagination
         :total-rows="rows"
         :per-page="perPage"
         align="right"
@@ -51,13 +50,15 @@
         prev-text="Prev"
         next-text="Next"
         last-text
-      ></b-pagination>
+        action="BLOCKS_GET"
+      ></TzPagination>
     </div>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import TzPagination from "../common/_tz_pagination";
+
 export default {
   data() {
     return {
@@ -89,21 +90,8 @@ export default {
       return this.blocks;
     }
   },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.$store.dispatch(ACTIONS.BLOCKS_GET, {
-          page: value,
-          perPage: this.perPage
-        });
-      }
-    }
-  },
-  async created() {
-    await this.$store.dispatch(ACTIONS.BLOCKS_GET, {
-      page: this.currentPage,
-      perPage: this.perPage
-    });
+  components: {
+    TzPagination
   }
 };
 </script>
