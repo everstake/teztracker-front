@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <TopMenu />
+    <TopMenu v-if="isNetworkInRouteParams" />
     <router-view></router-view>
     <Footer />
   </div>
@@ -15,6 +15,11 @@ export default {
   components: {
     TopMenu,
     Footer
+  },
+  computed: {
+    isNetworkInRouteParams() {
+      return Boolean(this.$route.params.network);
+    }
   }
 };
 </script>

@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row justify-content-lg-center align-items-center">
           <div class="col-lg-3">
-            <img src="img/404.svg" width="100%" alt />
+            <img src="../../assets/img/404.svg" width="100%" alt />
           </div>
         </div>
 

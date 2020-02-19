@@ -59,7 +59,8 @@ export default [
   { path: "/:network/accounts", name: "accounts", component: Accounts },
   { path: "/:network/contracts", name: "contracts", component: Contracts },
   { path: "/:network/account/:account", name: "account", component: Account },
-  { path: "/404", name: "404", component: NotFound },
-  { path: "/500", name: "500", component: ServerError }
-
+  // { path: "/404", name: "404", component: NotFound },
+  // { path: "/500", name: "500", component: ServerError }
+  { path: "/:network/404", name: "404", component: NotFound },
+  { path: "/:network/500", name: "500", component: ServerError }
 ];
