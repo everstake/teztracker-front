@@ -42,13 +42,6 @@ export default {
   align-items: center;
   height: auto;
 
-  @include for-phone-only {
-    padding: $common-padding;
-  }
-  @include for-tablet-landscape-only {
-    padding: $common-padding;
-  }
-
   &__description {
     width: 100%;
     display: flex;
@@ -62,6 +55,9 @@ export default {
     color: #2d2e2c;
     @include for-tablet-portrait-up {
       flex-direction: row;
+    }
+    @include for-phone-only {
+      text-align: center;
     }
   }
 

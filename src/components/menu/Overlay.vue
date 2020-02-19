@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="hamburger-menu">
     <h3 @click="toggleMenu">
       <font-awesome-icon v-if="isOpen" class="icon" :icon="['far', 'times-circle']" />
       <font-awesome-icon v-else class="icon" icon="bars" />
@@ -43,6 +43,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../styles/scss/common";
+
 $color-background: #f5f5f5;
 $color-main: #fff;
 $color-active: #fff;
@@ -239,6 +241,12 @@ $button-width: 35px;
         }
       }
     }
+  }
+}
+
+.hamburger-menu {
+  @include for-regular-desktops-up {
+    display: none;
   }
 }
 @keyframes fadeInRight {

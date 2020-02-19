@@ -19,6 +19,15 @@ import { ACTIONS } from "../../store";
 
 export default {
   name: "Pagination",
+  props: [
+    "totalRows",
+    "align",
+    "firstText",
+    "prevText",
+    "nextText",
+    "lastText",
+    "action"
+  ],
   data() {
     return {
       currentPage: 1,
@@ -40,16 +49,7 @@ export default {
       page: this.currentPage,
       perPage: this.perPage
     });
-  },
-  props: [
-    "totalRows",
-    "align",
-    "firstText",
-    "prevText",
-    "nextText",
-    "lastText",
-    "action"
-  ]
+  }
 };
 </script>
 
