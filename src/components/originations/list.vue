@@ -10,7 +10,9 @@
       class="transactions-table table table-borderless table-responsive-md"
     >
       <template slot="txhash" slot-scope="row">
-        <b-link :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }">
+        <b-link
+          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
+        >
           <span>{{ row.item.operationGroupHash | longhash(35) }}</span>
         </b-link>
       </template>
@@ -22,7 +24,9 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
+        <span>{{
+          row.item.timestamp | timeformat($constants.TIME_FORMAT)
+        }}</span>
       </template>
 
       <template slot="from" slot-scope="row">
@@ -32,7 +36,9 @@
       </template>
 
       <template slot="to" slot-scope="row">
-        <b-link :to="{ name: 'account', params: { account: row.item.delegate } }">
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.delegate } }"
+        >
           <span>{{ row.item.delegate | longhash(20) }}</span>
         </b-link>
       </template>
@@ -54,17 +60,17 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import { mapMutations } from "vuex";
+import { SET_ORIGINATIONS_COUNT } from "@/store/mutations.types";
 
 export default {
   name: "Originations",
   props: ["account"],
   data() {
     return {
-      perPage: 10,
-      currentPage: 1,
-      pageOptions: [10, 15, 20, 25, 30],
+      perPage: this.$constants.PER_PAGE,
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+      pageOptions: this.$constants.PAGE_OPTIONS,
       originations: [],
       count: 0,
       fields: [
@@ -92,10 +98,11 @@ export default {
       }
     }
   },
-  async mounted() {
+  async created() {
     await this.reload();
   },
   methods: {
+    ...mapMutations('operations', [SET_ORIGINATIONS_COUNT]),
     async reload(page = 1) {
       const props = {
         page,
@@ -107,10 +114,10 @@ export default {
       if (this.$props.account) {
         props.account_id = this.$props.account;
       }
-      const data = await this.$store.getters.API.getOriginations(props);
+      const data = await this.$api.getOriginations(props);
       this.originations = data.data;
       this.count = data.count;
-      this.$store.commit(ACTIONS.SET_ORIGINATIONS_COUNT, this.count);
+      this[SET_ORIGINATIONS_COUNT](this.count);
     }
   }
 };

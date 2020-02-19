@@ -58,15 +58,14 @@ export default {
     ICOMetaCount
   },
   computed: {
-    ...mapState({
-      count: state => state.counts,
-      head: state => state.head
+    ...mapState('operations', {
+      count: state => state.counts
     }),
     getPercentage() {
       const num = this.count.activations;
-      const allAddresses = 30317;
-      const result = parseFloat(((num * 100) / allAddresses).toFixed(2));
-      return result;
+      return parseFloat(
+        ((num * 100) / this.$constants.ALL_ICO_ACTIVE_ADDRESSES).toFixed(2)
+      );
     }
   }
 };

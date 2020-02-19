@@ -38,16 +38,16 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import { mapMutations } from "vuex";
+import { SET_SNAPSHOTS_COUNT } from "@/store/mutations.types";
 
 export default {
   name: "Snapshots",
   data() {
     return {
-      perPage: 6,
-      currentPage: 1,
-      pageOptions: [10, 15, 20, 25, 30],
+      perPage: this.$constants.PER_PAGE_SNAPSHOTS,
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+      pageOptions: this.$constants.PAGE_OPTIONS,
       snapshots: [],
       count: 0,
       fields: [
@@ -72,20 +72,22 @@ export default {
       }
     }
   },
-  async mounted() {
+  async created() {
     await this.reload();
   },
   methods: {
+    ...mapMutations('blocks', [SET_SNAPSHOTS_COUNT]),
     async reload(page = 1) {
       const props = {
         page,
         limit: this.perPage
       };
-      const data = await this.$store.getters.API.getSnapshots(props);
-      console.log(data);
+      console.log(this.$api);
+      const data = await this.$api.getSnapshots(props);
+
       this.snapshots = data.data;
       this.count = data.count;
-      this.$store.commit(ACTIONS.SET_SNAPSHOTS_COUNT, this.count);
+      this[SET_SNAPSHOTS_COUNT](this.count);
     }
   }
 };

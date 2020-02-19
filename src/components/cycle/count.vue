@@ -14,16 +14,20 @@
                 <div class="progress-labels">
                   <div class="cycle-label float-left">
                     Cycle -
-                    <span>{{head.metaCycle}}</span>
+                    <span>{{ head.metaCycle }}</span>
                   </div>
-                  <div class="tezos-label float-right">Tezos {{network}}</div>
+                  <div class="tezos-label float-right">Tezos {{ $_network }}</div>
                 </div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-12">
-                <b-progress :value="cyclePercent" :max="100" class="mb-2"></b-progress>
+                <b-progress
+                  :value="cyclePercent"
+                  :max="100"
+                  class="mb-2"
+                ></b-progress>
               </div>
             </div>
 
@@ -31,10 +35,10 @@
               <div class="col-12">
                 <div class="progress-labels">
                   <div class="percentage float-left">
-                    <span>{{cyclePercent}}%</span>
+                    <span>{{ cyclePercent }}%</span>
                   </div>
                   <div class="timer float-right">
-                    <span>{{timeLeft}}</span> - Until cycle end
+                    <span>{{ timeLeft }}</span> - Until cycle end
                   </div>
                 </div>
               </div>
@@ -47,15 +51,20 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import { mapState, mapActions } from "vuex";
+import { GET_BLOCK_HEAD, GET_APP_INFO } from "@/store/actions.types";
 import moment from "moment";
+import network from "../../mixins/network";
+
 export default {
   name: "cycle-counter",
+  mixins: [network],
   computed: {
-    ...mapState({
-      head: state => state.headBlock,
+    ...mapState('app', {
       info: state => state.priceInfo
+    }),
+    ...mapState('blocks', {
+      head: state => state.headBlock
     }),
     cyclePercent() {
       return parseInt(
@@ -66,24 +75,22 @@ export default {
       );
     },
     timeLeft() {
-      const d = moment(this.head.timestamp * 1000).add(
-        this.info.blocks_in_cycle - this.head.metaCyclePosition,
-        "minutes"
-      );
+      const d = moment(
+        this.head.timestamp * this.$constants.THOUSAND_MILLISECONDS
+      ).add(this.info.blocks_in_cycle - this.head.metaCyclePosition, "minutes");
       const duration = moment.duration(d.diff(moment()));
       return `${
         duration.days() > 0 ? duration.days() + "d" : ""
       } ${duration.hours()}h ${duration.minutes()}m`;
-    },
-    network() {
-      return this.$route.params.network === "mainnet"
-        ? "Mainnet"
-        : "Babylonnet";
     }
   },
+  methods: {
+    ...mapActions('app', [GET_APP_INFO]),
+    ...mapActions('blocks', [GET_BLOCK_HEAD])
+  },
   async created() {
-    await this.$store.dispatch(ACTIONS.BLOCK_GET_HEAD);
-    await this.$store.dispatch(ACTIONS.INFO_GET);
+    await this[GET_BLOCK_HEAD]();
+    await this[GET_APP_INFO]();
   }
 };
 </script>

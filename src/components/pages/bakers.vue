@@ -63,7 +63,7 @@ export default {
     BakersList
   },
   computed: {
-    ...mapState({
+    ...mapState('accounts', {
       count: state => state.counts
     })
   }

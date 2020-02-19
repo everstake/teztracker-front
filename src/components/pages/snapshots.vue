@@ -64,7 +64,7 @@ export default {
     SnapshotsList
   },
   computed: {
-    ...mapState({
+    ...mapState('blocks', {
       count: state => state.counts
     })
   }

@@ -11,14 +11,9 @@
     </button>
   </form>
 </template>
+
 <script>
 import _ from "lodash";
-
-const prefixes = {
-  account: ["tz", "KT"],
-  operation: ["o"],
-  block: ["B"]
-};
 
 export default {
   name: "Search",
@@ -29,8 +24,9 @@ export default {
   },
   methods: {
     onSubmit: function() {
-      const searchStr = this.$data.searchQuery;
-      this.$data.searchQuery = "";
+      const searchStr = this.searchQuery;
+      this.searchQuery = "";
+
       if (_.isFinite(parseInt(searchStr))) {
         // block id
         return this.$router.push({
@@ -39,7 +35,7 @@ export default {
         });
       }
       //block hash
-      for (const prefix of prefixes.block) {
+      for (const prefix of this.$constants.SEARCH_PREFIXES.block) {
         if (_.startsWith(searchStr, prefix)) {
           return this.$router.push({
             name: "block",
@@ -48,7 +44,7 @@ export default {
         }
       }
       //transactions
-      for (const prefix of prefixes.operation) {
+      for (const prefix of this.$constants.SEARCH_PREFIXES.operation) {
         if (_.startsWith(searchStr, prefix)) {
           return this.$router.push({
             name: "tx",
@@ -57,7 +53,7 @@ export default {
         }
       }
       //account
-      for (const prefix of prefixes.account) {
+      for (const prefix of this.$constants.SEARCH_PREFIXES.account) {
         if (_.startsWith(searchStr, prefix)) {
           return this.$router.push({
             name: "account",

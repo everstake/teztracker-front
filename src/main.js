@@ -1,7 +1,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import App from "./App.vue";
-import store from "./store";
+// Constants
+import './plugins/constants';
+import './plugins/TezosApi';
+import store from "@/store";
 import routes from "./routes";
 import BootstrapVue from "bootstrap-vue";
 import "./filters";
@@ -14,6 +17,7 @@ import { fas } from "@fortawesome/free-solid-svg-icons";
 import { far } from "@fortawesome/free-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { dom } from "@fortawesome/fontawesome-svg-core";
+
 dom.watch();
 
 library.add(fas);
@@ -30,10 +34,10 @@ let router = new VueRouter({
   routes
 });
 
-router.beforeEach(async (to, from, next) => {
-  await store.commit('setNetwork', to.params.network)
-  return next()
-});
+// router.beforeEach(async (to, from, next) => {
+//   await store.commit("app/setAppNetwork", to.params.network);
+//   return next()
+// });
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("font-awesome-layers", FontAwesomeLayers);

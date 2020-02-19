@@ -63,7 +63,7 @@ export default {
     EndorsementsList
   },
   computed: {
-    ...mapState({
+    ...mapState('blocks', {
       count: state => state.counts
     })
   }

@@ -5,7 +5,7 @@
         <div class="card-header">
           <div class="title">
             <h3>
-              <span class="text">{{hash}}</span>
+              <span class="text">{{ hash }}</span>
             </h3>
             <span class="subtitle">Account Information</span>
           </div>
@@ -19,7 +19,7 @@
               <span class="label">Manager</span>
             </div>
             <div class="col-lg-10">
-              <span class="value">{{account.manager}}</span>
+              <span class="value">{{ account.manager }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -27,7 +27,7 @@
               <span class="label">Delegate</span>
             </div>
             <div class="col-lg-10">
-              <span class="value">{{account.delegateValue}}</span>
+              <span class="value">{{ account.delegateValue }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -36,8 +36,8 @@
             </div>
             <div class="col-lg-10">
               <span class="value">
-                {{account.balance | tezos }}
-                ({{convert(account.balance)}})
+                {{ account.balance | tezos }}
+                ({{ $_convert(account.balance) }})
               </span>
             </div>
           </div>
@@ -56,7 +56,9 @@
                   <span class="label">Baking</span>
                 </div>
                 <div class="col-lg-6">
-                  <span class="value">{{bakerInfo.bakingDeposits | tezos}}</span>
+                  <span class="value">{{
+                    bakerInfo.bakingDeposits | tezos
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -66,7 +68,9 @@
                   <span class="label">Baking</span>
                 </div>
                 <div class="col-lg-9">
-                  <span class="value">{{bakerInfo.bakingRewards | tezos}}</span>
+                  <span class="value">{{
+                    bakerInfo.bakingRewards | tezos
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -78,7 +82,9 @@
                   <span class="label">Endorsement</span>
                 </div>
                 <div class="col-lg-6">
-                  <span class="value">{{bakerInfo.endorsementDeposits | tezos}}</span>
+                  <span class="value">{{
+                    bakerInfo.endorsementDeposits | tezos
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -88,7 +94,9 @@
                   <span class="label">Endorsement</span>
                 </div>
                 <div class="col-lg-9">
-                  <span class="value">{{bakerInfo.endorsementRewards | tezos}}</span>
+                  <span class="value">{{
+                    bakerInfo.endorsementRewards | tezos
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -99,13 +107,14 @@
   </div>
 </template>
 <script>
-import { ACTIONS, XTZ } from "../../store";
-import { mapState } from "vuex";
-import { ceil } from "lodash";
+import convert from "../../mixins/convert";
+import { GET_APP_INFO } from "@/store/actions.types";
+import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Account",
   props: ["hash"],
+  mixins: [convert],
   data() {
     return {
       baker: false,
@@ -114,7 +123,7 @@ export default {
     };
   },
   computed: {
-    ...mapState({
+    ...mapState('app', {
       info: state => state.priceInfo
     })
   },
@@ -125,14 +134,15 @@ export default {
       }
     }
   },
-  async mounted() {
-    await this.$store.dispatch(ACTIONS.INFO_GET);
+  async created() {
+    await this[GET_APP_INFO]();
     await this.reload(this.hash);
   },
   methods: {
+    ...mapActions('app', [GET_APP_INFO]),
     async reload(acc) {
-      const result = await this.$store.getters.API.getAccount({ account: acc });
-      if (result.status !== 200) {
+      const result = await this.$api.getAccount({ account: acc });
+      if (result.status !== this.$constants.STATUS_SUCCESS) {
         return this.$router.push({
           name: result.status
         });
@@ -144,14 +154,6 @@ export default {
       } else {
         this.baker = false;
       }
-    },
-    convert(tzAmount) {
-      let result = 0;
-      if (tzAmount || tzAmount > 0) {
-        const tez = tzAmount / XTZ;
-        result = ceil(tez * this.info.price, 2);
-      }
-      return "$" + result;
     }
   }
 };

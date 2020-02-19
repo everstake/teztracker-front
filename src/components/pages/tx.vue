@@ -106,15 +106,14 @@
 <script>
 import TxInfo from "../transactions/transaction";
 import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
 
 export default {
   name: "Transaction",
   data() {
     return {
-      perPage: 10,
-      currentPage: 1,
-      pageOptions: [10, 15, 20, 25, 30],
+      perPage: this.$constants.PER_PAGE,
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+      pageOptions: this.$constants.PAGE_OPTIONS,
       transactions: [],
       txInfo: {},
       count: 0,
@@ -129,7 +128,7 @@ export default {
     };
   },
   computed: {
-    ...mapState({
+    ...mapState('operations', {
       counts: state => state.counts
     }),
     rows() {
@@ -142,7 +141,7 @@ export default {
       return this.$route.params.txhash;
     }
   },
-  async mounted() {
+  async created() {
     await this.reload();
   },
   components: {
@@ -168,8 +167,8 @@ export default {
         limit: this.perPage,
         operation_id: this.txhash
       };
-      const data = await this.$store.getters.API.getTransactions(props);
-      if (data.status !== 200) {
+      const data = await this.$api.getTransactions(props);
+      if (data.status !== this.$constants.STATUS_SUCCESS) {
         return this.$router.push({
           name: data.status
         });

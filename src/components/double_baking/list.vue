@@ -64,18 +64,19 @@
     ></b-pagination>
   </div>
 </template>
+
 <script>
-import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import { mapMutations } from "vuex";
+import { SET_DOUBLE_BAKING_COUNT } from "@/store/mutations.types";
 
 export default {
   name: "DoubleBaking",
   props: ["account"],
   data() {
     return {
-      perPage: 10,
-      currentPage: 1,
-      pageOptions: [10, 15, 20, 25, 30],
+      perPage: this.$constants.PER_PAGE,
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+      pageOptions: this.$constants.PAGE_OPTIONS,
       double_baking: [],
       count: 0,
       fields: [
@@ -106,10 +107,11 @@ export default {
       }
     }
   },
-  async mounted() {
+  async created() {
     await this.reload();
   },
   methods: {
+    ...mapMutations('operations', [SET_DOUBLE_BAKING_COUNT]),
     async reload(page = 1) {
       const props = {
         page,
@@ -121,10 +123,10 @@ export default {
       if (this.$props.account) {
         props.account_id = this.$props.account;
       }
-      const data = await this.$store.getters.API.getDoubleBaking(props);
+      const data = await this.$api.getDoubleBaking(props);
       this.double_baking = data.data;
       this.count = data.count;
-      this.$store.commit(ACTIONS.SET_DOUBLEBAKING_COUNT, this.count);
+      this[SET_DOUBLE_BAKING_COUNT](this.count);
     }
   }
 };

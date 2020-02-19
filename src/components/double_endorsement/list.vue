@@ -22,7 +22,7 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
+        <span>{{ row.item.timestamp | timeformat($constants.TIME_FORMAT) }}</span>
       </template>
       <template slot="denounced_level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.level } }">
@@ -43,18 +43,19 @@
     ></b-pagination>
   </div>
 </template>
+
 <script>
-import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import { mapMutations } from "vuex";
+import { SET_DOUBLE_ENDORSEMENT_COUNT } from "@/store/mutations.types";
 
 export default {
   name: "DoubleEndorsement",
   props: ["account"],
   data() {
     return {
-      perPage: 10,
-      currentPage: 1,
-      pageOptions: [10, 15, 20, 25, 30],
+      perPage: this.$constants.PER_PAGE,
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+      pageOptions: this.$constants.PAGE_OPTIONS,
       double_endorsement: [],
       count: 0,
       fields: [
@@ -80,10 +81,11 @@ export default {
       }
     }
   },
-  async mounted() {
+  async created() {
     await this.reload();
   },
   methods: {
+    ...mapMutations('operations', [SET_DOUBLE_ENDORSEMENT_COUNT]),
     async reload(page = 1) {
       const props = {
         page,
@@ -95,10 +97,10 @@ export default {
       if (this.$props.account) {
         props.account_id = this.$props.account;
       }
-      const data = await this.$store.getters.API.getDoubleEndorsement(props);
+      const data = await this.$api.getDoubleEndorsement(props);
       this.double_endorsement = data.data;
       this.count = data.count;
-      this.$store.commit(ACTIONS.SET_DOUBLEENDORSEMENT_COUNT, this.count);
+      this[SET_DOUBLE_ENDORSEMENT_COUNT](this.count);
     }
   }
 };
