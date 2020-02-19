@@ -2,7 +2,7 @@
   <div id="app">
     <TopMenu />
     <router-view></router-view>
-    <Footer />
+    <Footer showLogo />
   </div>
 </template>
 

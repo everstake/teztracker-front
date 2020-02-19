@@ -8,8 +8,18 @@
     @content;
   }
 }
+@mixin for-tablet-portrait-only {
+  @media (max-width: 600px) {
+    @content;
+  }
+}
 @mixin for-tablet-landscape-up {
   @media (min-width: 900px) {
+    @content;
+  }
+}
+@mixin for-tablet-landscape-only {
+  @media (max-width: 900px) {
     @content;
   }
 }
@@ -23,3 +33,5 @@
     @content;
   }
 }
+
+$common-padding: 15px;
