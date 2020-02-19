@@ -10,7 +10,9 @@
       class="transactions-table table table-borderless table-responsive-md"
     >
       <template slot="txhash" slot-scope="row">
-        <b-link :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }">
+        <b-link
+          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
+        >
           <span>{{ row.item.operationGroupHash | longhash(35) }}</span>
         </b-link>
       </template>
@@ -32,7 +34,9 @@
       </template>
 
       <template slot="to" slot-scope="row">
-        <b-link :to="{ name: 'account', params: { account: row.item.destination } }">
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.destination } }"
+        >
           <span>{{ row.item.destination | longhash(20) }}</span>
         </b-link>
       </template>

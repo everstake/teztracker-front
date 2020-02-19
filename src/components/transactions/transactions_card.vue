@@ -2,11 +2,11 @@
   <div class="card">
     <div class="card-header">
       <div class="title">
-          <h3><span class="text">Transaction list</span></h3>
-          <div class="counter">
-<!--            <span class="line"></span>-->
-            <h3 class="counter-text">{{ count | bignum }}</h3>
-          </div>
+        <h3><span class="text">Transaction list</span></h3>
+        <div class="counter">
+          <!--            <span class="line"></span>-->
+          <h3 class="counter-text">{{ count | bignum }}</h3>
+        </div>
       </div>
     </div>
 
@@ -21,11 +21,15 @@
         class="table table-borderless table-responsive-sm"
       >
         <template slot="timestamp" slot-scope="row">
-          <span>{{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
+          <span>{{
+            row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY")
+          }}</span>
         </template>
 
         <template slot="level" slot-scope="row">
-          <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
+          <b-link
+            :to="{ name: 'block', params: { level: row.item.blockLevel } }"
+          >
             <span>{{ row.item.blockLevel }}</span>
           </b-link>
         </template>
@@ -41,16 +45,20 @@
           </b-link>
         </template>
       </b-table>
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        align="right"
-        first-text
-        prev-text="Prev"
-        next-text="Next"
-        last-text
-      ></b-pagination>
+      <div class="pagination-block">
+        <!-- <div class="pagination-block__inner"> -->
+        <b-pagination
+          v-model="currentPage"
+          :total-rows="rows"
+          :per-page="perPage"
+          align="right"
+          first-text
+          prev-text="Prev"
+          next-text="Next"
+          last-text
+        ></b-pagination>
+        <!-- </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -61,6 +69,7 @@ import { ACTIONS } from "../../store";
 export default {
   name: "Transactions",
   props: {},
+  mounted() {},
   data() {
     return {
       perPage: 10,
@@ -109,21 +118,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .line {
-    display: block;
-    float: left;
-    width: 30px;
-    height: 16px;
-    margin-right: 0.5rem;
-    border-bottom: 1px solid #9EA0A5;
-    opacity: 0.5;
+// TODO: aliases
+@import "../../styles/scss/common";
+
+.line {
+  display: block;
+  float: left;
+  width: 30px;
+  height: 16px;
+  margin-right: 0.5rem;
+  border-bottom: 1px solid #9ea0a5;
+  opacity: 0.5;
+}
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h3 {
+    line-height: 1;
   }
-  .title {
-    display: flex;
-    justify-content: space-between;
+}
+.pagination-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  @include for-tablet-portrait-up {
+    justify-content: flex-end;
     align-items: center;
-    h3 {
-      line-height: 1;
-    }
+    position: relative;
+    overflow: hidden;
+    width: 100%;
   }
+}
 </style>
