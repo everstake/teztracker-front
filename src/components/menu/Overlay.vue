@@ -1,15 +1,11 @@
 <template>
   <div>
     <h3 @click="toggleMenu">
-      <font-awesome-icon
-        v-if="isOpen"
-        class="icon"
-        :icon="['far', 'times-circle']"
-      />
+      <font-awesome-icon v-if="isOpen" class="icon" :icon="['far', 'times-circle']" />
       <font-awesome-icon v-else class="icon" icon="bars" />
     </h3>
     <div :class="{ overlay: true, open: isOpen }" id="overlay">
-      <div class="overlay_container ">
+      <div class="overlay_container">
         <AccordionMenu />
         <div class="search search-wrapper-nav">
           <Search v-on:onSubmit="toggleMenu" />
@@ -164,6 +160,12 @@ $button-width: 35px;
   transition: opacity 0.35s, visibility 0.35s, height 0.35s;
   overflow: auto;
   z-index: 999;
+
+  &_container {
+    display: flex;
+    height: calc(100%-60px);
+    flex-direction: column;
+  }
 
   &.open {
     top: 60px;

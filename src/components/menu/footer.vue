@@ -5,9 +5,7 @@
         <Logo />
       </div>
       <div class="footer__description">
-        <div class="copyright">
-          © 2019 TZ Tracker. All rights reserved.
-        </div>
+        <div class="copyright">© 2019 TZ Tracker. All rights reserved.</div>
         <div class="contacts">
           <a href="#" class="contacts__item">
             <i class="far fa-envelope"></i> Contact Us

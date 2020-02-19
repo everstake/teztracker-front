@@ -3,17 +3,18 @@
     <div
       class="accordion-item"
       v-for="(content, i) in contents"
-      v-bind:class="{ 'accordion-active': content.active }"
+      :key="i"
+      v-bind:class="{ 'accordion-item--active': content.active }"
     >
       <div v-if="!content.link" class="accordion-header">
         <a href="#" v-on:click="expand($event, i)">
-          <div v-if="!content.link" class="accordion-header-div">
-            {{ content.title }}
-          </div>
+          <div v-if="!content.link" class="accordion-header-div">{{ content.title }}</div>
 
-          <!--                    <div v-show="content.isExpandable" class="accordion-header-div">-->
-          <!--                        <div class="accordion-caret"></div>-->
-          <!--                    </div>-->
+          <div v-show="content.isExpandable" class="accordion-header__icon">
+            <div class="accordion-caret">
+              <font-awesome-icon class="icon" icon="angle-down" />
+            </div>
+          </div>
         </a>
       </div>
 
@@ -23,24 +24,15 @@
             {{ content.title }}
             <div v-show="content.isExpandable" class="accordion-header-div">
               <div class="accordion-caret"></div>
+              <font-awesome-icon class="icon" icon="bars" />
             </div>
           </div>
         </a>
       </div>
 
-      <div
-        v-if="content.isExpandable"
-        class="accordion-body"
-        :ref="'accordion-body-' + i"
-      >
-        <div
-          class="accordion-content"
-          v-for="(link, i) in content.description"
-          :key="i"
-        >
-          <div v-if="!link.customCallback" @click="goToByName(link.routeName)">
-            {{ link.title }}
-          </div>
+      <div v-if="content.isExpandable" class="accordion-body" :ref="'accordion-body-' + i">
+        <div class="accordion-content" v-for="(link, i) in content.description" :key="i">
+          <div v-if="!link.customCallback" @click="goToByName(link.routeName)">{{ link.title }}</div>
           <div v-else @click="link.customCallback()">{{ link.title }}</div>
         </div>
       </div>
@@ -233,9 +225,9 @@ $accordion-caret-background-image: linear-gradient(
 );
 $accordion-caret-width: 0.5rem;
 $accordion-caret-height: 0.5rem;
-$accordion-caret-transform: rotate(-45deg);
-$accordion-caret-transforming: scale(1.5) rotate(45deg);
-$accordion-caret-active-transform: rotate(135deg);
+$accordion-caret-transform: rotate(0deg);
+$accordion-caret-transforming: scale(1.5) rotate(-45deg);
+$accordion-caret-active-transform: rotate(180deg);
 
 $accordion-body-content-padding: 1rem;
 
@@ -251,7 +243,7 @@ $accordion-body-content-padding: 1rem;
   box-shadow: $accordion-box-shadow;
 }
 
-.accordion-item.accordion-active {
+.accordion-item.accordion-item--active {
   .accordion-caret {
     animation: accordion-is-active $base-time linear forwards;
   }
@@ -266,6 +258,10 @@ $accordion-body-content-padding: 1rem;
   text-align: center;
   justify-content: center;
   font-weight: 600;
+  &__icon {
+    padding: 1rem 0;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
@@ -276,8 +272,12 @@ $accordion-body-content-padding: 1rem;
     box-sizing: border-box;
     border-radius: $accordion-header-border-radius;
     transition: $accordion-header-transition;
+    .accordion-active {
+      color: #309282;
+    }
+
     &:not(.accordion-active):hover {
-      background-color: $accordion-header-hover-background-color;
+      color: #309282;
     }
   }
 }
@@ -293,10 +293,10 @@ $accordion-body-content-padding: 1rem;
 }
 
 .accordion-caret {
-  background-image: $accordion-caret-background-image;
-  width: $accordion-caret-width;
-  height: $accordion-caret-height;
-  transform: $accordion-caret-transform;
+  // background-image: $accordion-caret-background-image;
+  // width: $accordion-caret-width;
+  // height: $accordion-caret-height;
+  // transform: $accordion-caret-transform;
   animation: accordion-is-inactive $base-time linear forwards;
 }
 
