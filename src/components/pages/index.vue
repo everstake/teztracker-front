@@ -20,8 +20,8 @@
         <!-- cycle-->
         <CycleCount />
 
-        <div class="promo-tiles row ">
-          <div class=" col-lg-3 col-md-6 col-sm-12 mb-3 text-center">
+        <div class="promo-tiles row">
+          <div class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'lightbulb']" />
@@ -41,17 +41,13 @@
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 col-sm-12 mb-3 text-center">
+          <div class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'star']" />
               </div>
               <div class="voting-progress">
-                <b-progress
-                  :value="cyclePercent"
-                  :max="100"
-                  class="mb-2"
-                ></b-progress>
+                <b-progress :value="cyclePercent" :max="100" class="mb-2"></b-progress>
                 <div class="progress-labels">
                   <div class="voting-percentage float-left">
                     <span>{{ cyclePercent }}%</span>
@@ -65,7 +61,7 @@
             </div>
           </div>
 
-          <div class=" col-lg-3 col-md-6 col-sm-12 mb-3 text-center ">
+          <div class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'folder']" />
@@ -76,7 +72,7 @@
             </div>
           </div>
 
-          <div class="col-lg-3 col-md-6 col-sm-12 text-center">
+          <div class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'user']" />
@@ -86,8 +82,7 @@
                 <router-link
                   class="baker"
                   :to="{ name: 'account', params: { account: head.baker } }"
-                  >{{ head.baker | longhash(13) }}</router-link
-                >
+                >{{ head.baker | longhash(13) }}</router-link>
               </span>
               <span class="percentage"></span>
               <span class="tile-name">Latest baker</span>
@@ -95,8 +90,8 @@
           </div>
         </div>
 
-        <div class="promo-tiles row ">
-          <div class="col col-lg-3 col-md-6 col-sm-12 mb-3 text-center">
+        <div class="promo-tiles row">
+          <div class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'chart-bar']" />
@@ -119,20 +114,18 @@
             </div>
           </div>
 
-          <div class="col col-lg-3 col-md-6 col-sm-12 mb-3 text-center">
+          <div class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'bookmark']" />
               </div>
-              <span class="counter"
-                >{{ info.volume_24h | bignum(",") }} XTZ</span
-              >
+              <span class="counter">{{ info.volume_24h | bignum(",") }} XTZ</span>
               <span class="percentage"></span>
               <span class="tile-name">Trading Volume</span>
             </div>
           </div>
 
-          <div class="col col-lg-3 col-md-6 col-sm-12 mb-3 text-center">
+          <div class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'gem']" />
@@ -143,16 +136,18 @@
             </div>
           </div>
 
-          <div class="col col-lg-3 col-md-6 col-sm-12 mb-3 text-center">
+          <div class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'hourglass']" />
               </div>
-              <span class="counter">{{
+              <span class="counter">
+                {{
                 (info.circulating_supply > 0
-                  ? info.circulating_supply.toFixed()
-                  : 0) | bignum(",")
-              }}</span>
+                ? info.circulating_supply.toFixed()
+                : 0) | bignum(",")
+                }}
+              </span>
               <span class="percentage"></span>
               <span class="tile-name">Circulating Supply</span>
             </div>
@@ -287,6 +282,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../styles/scss/common";
+
 .tile {
   padding: 0 15px;
 }
@@ -296,7 +293,9 @@ export default {
 @media screen and (max-width: 768px) {
   .promo-tiles {
     &.row {
-      flex-direction: column;
+      @include for-smartphones-portrait {
+        flex-direction: column;
+      }
     }
     .col-sm-12 {
       padding-left: 0;
