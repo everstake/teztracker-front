@@ -11,7 +11,7 @@
     >
       <template slot="baker" slot-scope="row">
         <b-link :to="{ name: 'baker', params: { baker: row.item.accountId } }">
-          <span>{{ row.item.accountId | longhash(35) }}</span>
+          <span>{{ row.item.name || row.item.accountId | longhash(35) }}</span>
         </b-link>
       </template>
       <template slot="blocks" slot-scope="row">
