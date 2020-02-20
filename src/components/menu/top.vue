@@ -1,7 +1,9 @@
 <template>
   <header class="main-header">
     <div class="logo">
-      <router-link :to="{ name: 'index' }">TZTracker</router-link>
+      <router-link :to="{ name: 'index' }">
+        <Logo />
+      </router-link>
     </div>
 
     <div class="header-middle">
@@ -98,6 +100,7 @@
 import Search from "../search/search";
 // import { ACTIONS } from "../../store";
 import OverlayHamburgerMenu from "./Overlay";
+import Logo from "../icons/logo";
 
 export default {
   name: "TopMenu",
@@ -109,7 +112,8 @@ export default {
   props: {},
   components: {
     Search,
-    OverlayHamburgerMenu
+    OverlayHamburgerMenu,
+    Logo
   },
   computed: {
     currentNetwork: function() {

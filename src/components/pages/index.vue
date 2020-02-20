@@ -290,17 +290,20 @@ export default {
 .counter {
   overflow: hidden;
 }
-@media screen and (max-width: 768px) {
-  .promo-tiles {
-    &.row {
-      @include for-smartphones-portrait {
-        flex-direction: column;
-      }
+.promo-tiles {
+  &.row {
+    @include for-smartphones-portrait {
+      flex-direction: column;
     }
-    .col-sm-12 {
-      padding-left: 0;
-      padding-right: 0;
-    }
+  }
+  .col-sm-12 {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+.col-xs-12 {
+  @include for-smartphones-portrait {
+    padding: 0;
   }
 }
 </style>
