@@ -15,7 +15,7 @@
         </b-link>
       </template>
       <template slot="manager" slot-scope="row">
-          <span>{{ row.item.manager | longhash(35) }}</span>
+        <span>{{ row.item.manager | longhash(35) }}</span>
       </template>
       <template slot="delegate" slot-scope="row">
         <span>{{ row.item.delegateValue | longhash(20) }}</span>
@@ -24,16 +24,18 @@
         <span>{{ row.item.balance | tezos }}</span>
       </template>
     </b-table>
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      align="right"
-      first-text
-      prev-text="Prev"
-      next-text="Next"
-      last-text
-    ></b-pagination>
+    <div class="pagination-block">
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        align="right"
+        first-text
+        prev-text="Prev"
+        next-text="Next"
+        last-text
+      ></b-pagination>
+    </div>
   </div>
 </template>
 <script>
@@ -52,7 +54,7 @@ export default {
         { key: "contract", label: "Contract" },
         { key: "manager", label: "Manager" },
         { key: "delegate", label: "Delegate" },
-        { key: "balance", label: "Balance" },
+        { key: "balance", label: "Balance" }
       ]
     };
   },
@@ -84,4 +86,23 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang='scss' scoped>
+@import "../../styles/scss/common";
+
+.pagination-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  @include for-tablet-portrait-up {
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+}
+</style>
+
