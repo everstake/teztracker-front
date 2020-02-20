@@ -86,7 +86,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import "../../styles/scss/common";
 
 .pagination-block {

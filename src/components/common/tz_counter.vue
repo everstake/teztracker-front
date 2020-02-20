@@ -2,7 +2,7 @@
   <div class="counter">
     <div v-if="showLine" class="counter__line"></div>
     <div class="counter__text">
-      <h3>{{count | bignum}}</h3>
+      <h3>{{ count | bignum }}</h3>
     </div>
   </div>
 </template>

@@ -5,7 +5,7 @@
         <div class="card-header">
           <div class="title">
             <h3>
-              <span class="text">{{hash}}</span>
+              <span class="text">{{ hash }}</span>
             </h3>
             <span class="subtitle">Account Information</span>
           </div>
@@ -19,7 +19,7 @@
               <span class="label">Manager</span>
             </div>
             <div class="col-lg-10">
-              <span class="value">{{account.manager}}</span>
+              <span class="value">{{ account.manager }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -27,7 +27,7 @@
               <span class="label">Delegate</span>
             </div>
             <div class="col-lg-10">
-              <span class="value">{{account.delegateValue}}</span>
+              <span class="value">{{ account.delegateValue }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -36,8 +36,8 @@
             </div>
             <div class="col-lg-10">
               <span class="value">
-                {{account.balance | tezos }}
-                ({{convert(account.balance)}})
+                {{ account.balance | tezos }}
+                ({{ convert(account.balance) }})
               </span>
             </div>
           </div>
@@ -56,7 +56,9 @@
                   <span class="label">Baking</span>
                 </div>
                 <div class="col-lg-6">
-                  <span class="value">{{bakerInfo.bakingDeposits | tezos}}</span>
+                  <span class="value">{{
+                    bakerInfo.bakingDeposits | tezos
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -66,7 +68,9 @@
                   <span class="label">Baking</span>
                 </div>
                 <div class="col-lg-9">
-                  <span class="value">{{bakerInfo.bakingRewards | tezos}}</span>
+                  <span class="value">{{
+                    bakerInfo.bakingRewards | tezos
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -78,7 +82,9 @@
                   <span class="label">Endorsement</span>
                 </div>
                 <div class="col-lg-6">
-                  <span class="value">{{bakerInfo.endorsementDeposits | tezos}}</span>
+                  <span class="value">{{
+                    bakerInfo.endorsementDeposits | tezos
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -88,7 +94,9 @@
                   <span class="label">Endorsement</span>
                 </div>
                 <div class="col-lg-9">
-                  <span class="value">{{bakerInfo.endorsementRewards | tezos}}</span>
+                  <span class="value">{{
+                    bakerInfo.endorsementRewards | tezos
+                  }}</span>
                 </div>
               </div>
             </div>

@@ -11,14 +11,12 @@
   </div>
 </template>
 
-
 <script>
 export default {
   name: "CardHeader",
   components: {}
 };
 </script>
-
 
 <style lang="scss" scoped>
 @import "../../styles/scss/common";

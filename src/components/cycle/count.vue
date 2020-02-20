@@ -14,16 +14,20 @@
                 <div class="progress-labels">
                   <div class="cycle-label float-left">
                     Cycle -
-                    <span>{{head.metaCycle}}</span>
+                    <span>{{ head.metaCycle }}</span>
                   </div>
-                  <div class="tezos-label float-right">Tezos {{network}}</div>
+                  <div class="tezos-label float-right">Tezos {{ network }}</div>
                 </div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-12">
-                <b-progress :value="cyclePercent" :max="100" class="mb-2"></b-progress>
+                <b-progress
+                  :value="cyclePercent"
+                  :max="100"
+                  class="mb-2"
+                ></b-progress>
               </div>
             </div>
 
@@ -31,10 +35,10 @@
               <div class="col-12">
                 <div class="progress-labels">
                   <div class="percentage float-left">
-                    <span>{{cyclePercent}}%</span>
+                    <span>{{ cyclePercent }}%</span>
                   </div>
                   <div class="timer float-right">
-                    <span>{{timeLeft}}</span> - Until cycle end
+                    <span>{{ timeLeft }}</span> - Until cycle end
                   </div>
                 </div>
               </div>

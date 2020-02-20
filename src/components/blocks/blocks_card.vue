@@ -9,7 +9,9 @@
         <TzCounter :count="count" />
         <div class="counter">
           <div class="tz_link">
-            <router-link class="tz-dropdown-item" :to="{ name: 'blocks' }">View all</router-link>
+            <router-link class="tz-dropdown-item" :to="{ name: 'blocks' }"
+              >View all</router-link
+            >
           </div>
         </div>
       </template>
@@ -27,9 +29,7 @@
       >
         <template slot="timestamp" slot-scope="row">
           <span>
-            {{
-            row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY")
-            }}
+            {{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}
           </span>
         </template>
 

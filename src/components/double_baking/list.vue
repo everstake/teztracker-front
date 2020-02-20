@@ -10,7 +10,9 @@
       class="transactions-table table table-borderless table-responsive-md"
     >
       <template slot="txhash" slot-scope="row">
-        <b-link :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }">
+        <b-link
+          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
+        >
           <span>{{ row.item.operationGroupHash | longhash(25) }}</span>
         </b-link>
       </template>
@@ -27,8 +29,12 @@
       <template slot="baker" slot-scope="row">
         <router-link
           class="baker"
-          :to="{ name: 'baker', params: {baker: row.item.doubleBake.evidence_baker}}"
-        >{{row.item.doubleBake.evidence_baker | longhash(20)}}</router-link>
+          :to="{
+            name: 'baker',
+            params: { baker: row.item.doubleBake.evidence_baker }
+          }"
+          >{{ row.item.doubleBake.evidence_baker | longhash(20) }}</router-link
+        >
       </template>
       <template slot="baker_rewards" slot-scope="row">
         <span>{{ row.item.doubleBake.baker_reward | tezos }}</span>
@@ -36,11 +42,20 @@
       <template slot="offender" slot-scope="row">
         <router-link
           class="baker"
-          :to="{ name: 'baker', params: {baker: row.item.doubleBake.offender}}"
-        >{{row.item.doubleBake.offender | longhash(20)}}</router-link>
+          :to="{
+            name: 'baker',
+            params: { baker: row.item.doubleBake.offender }
+          }"
+          >{{ row.item.doubleBake.offender | longhash(20) }}</router-link
+        >
       </template>
       <template slot="denounced_level" slot-scope="row">
-        <b-link :to="{ name: 'block', params: { level: row.item.doubleBake.denounced_level } }">
+        <b-link
+          :to="{
+            name: 'block',
+            params: { level: row.item.doubleBake.denounced_level }
+          }"
+        >
           <span>{{ row.item.doubleBake.denounced_level }}</span>
         </b-link>
       </template>
@@ -132,7 +147,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import "../../styles/scss/common";
 
 .pagination-block {

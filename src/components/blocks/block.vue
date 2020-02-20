@@ -5,7 +5,7 @@
         <div class="card-header">
           <div class="title">
             <h3>
-              <span class="text">{{level}}</span>
+              <span class="text">{{ level }}</span>
             </h3>
             <span class="subtitle">Block Information</span>
           </div>
@@ -19,7 +19,7 @@
               <span class="label">Hash</span>
             </div>
             <div class="col-lg-9">
-              <span class="value">{{block.hash}}</span>
+              <span class="value">{{ block.hash }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -27,7 +27,9 @@
               <span class="label">Timestamp</span>
             </div>
             <div class="col-lg-9">
-              <span class="value">{{block.timestamp | timeformat("HH:mm:ss DD.MM.YY")}}</span>
+              <span class="value">{{
+                block.timestamp | timeformat("HH:mm:ss DD.MM.YY")
+              }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -35,7 +37,7 @@
               <span class="label">Volume</span>
             </div>
             <div class="col-lg-9">
-              <span class="value">{{block.volume | tezos }}</span>
+              <span class="value">{{ block.volume | tezos }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -43,7 +45,7 @@
               <span class="label">Cycle</span>
             </div>
             <div class="col-lg-9">
-              <span class="value">{{block.metaCycle}}</span>
+              <span class="value">{{ block.metaCycle }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -54,8 +56,9 @@
               <span class="value">
                 <router-link
                   class="baker"
-                  :to="{ name: 'baker', params: {baker: block.baker}}"
-                >{{block.baker}}</router-link>
+                  :to="{ name: 'baker', params: { baker: block.baker } }"
+                  >{{ block.baker }}</router-link
+                >
               </span>
             </div>
           </div>

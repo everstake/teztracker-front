@@ -16,9 +16,11 @@
                 <router-link :to="{ name: 'index' }">Home</router-link>
               </li>
               <li class="breadcrumb-item">
-                <router-link :to="{ name: 'txs' }">Transactions page</router-link>
+                <router-link :to="{ name: 'txs' }"
+                  >Transactions page</router-link
+                >
               </li>
-              <li class="breadcrumb-item active">{{txhash}}</li>
+              <li class="breadcrumb-item active">{{ txhash }}</li>
             </ol>
           </div>
         </div>
@@ -61,13 +63,23 @@
                   class="transactions-table table table-borderless table-responsive-md"
                 >
                   <template slot="from" slot-scope="row">
-                    <b-link :to="{ name: 'account', params: { account: row.item.source } }">
+                    <b-link
+                      :to="{
+                        name: 'account',
+                        params: { account: row.item.source }
+                      }"
+                    >
                       <span>{{ row.item.source | longhash(20) }}</span>
                     </b-link>
                   </template>
 
                   <template slot="to" slot-scope="row">
-                    <b-link :to="{ name: 'account', params: { account: row.item.destination } }">
+                    <b-link
+                      :to="{
+                        name: 'account',
+                        params: { account: row.item.destination }
+                      }"
+                    >
                       <span>{{ row.item.destination | longhash(20) }}</span>
                     </b-link>
                   </template>

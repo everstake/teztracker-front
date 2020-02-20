@@ -24,15 +24,14 @@ Vue.config.productionTip = false;
 Vue.use(VueRouter);
 Vue.use(BootstrapVue);
 
-
 let router = new VueRouter({
   mode: "history",
   routes
 });
 
 router.beforeEach(async (to, from, next) => {
-  await store.commit('setNetwork', to.params.network)
-  return next()
+  await store.commit("setNetwork", to.params.network);
+  return next();
 });
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

@@ -14,7 +14,9 @@
       </template>
 
       <template slot="level" slot-scope="row">
-        <b-link :to="{ name: 'block', params: { level: row.item.snapshot_block } }">
+        <b-link
+          :to="{ name: 'block', params: { level: row.item.snapshot_block } }"
+        >
           <span>{{ row.item.snapshot_block }}</span>
         </b-link>
       </template>
@@ -91,7 +93,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import "../../styles/scss/common";
 
 .pagination-block {

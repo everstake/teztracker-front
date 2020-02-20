@@ -8,7 +8,9 @@
     >
       <div v-if="!content.link" class="accordion-header">
         <a href="#" v-on:click="expand($event, i)">
-          <div v-if="!content.link" class="accordion-header-div">{{ content.title }}</div>
+          <div v-if="!content.link" class="accordion-header-div">
+            {{ content.title }}
+          </div>
 
           <div v-show="content.isExpandable" class="accordion-header__icon">
             <div class="accordion-caret">
@@ -30,9 +32,22 @@
         </a>
       </div>
 
-      <div v-if="content.isExpandable" class="accordion-body" :ref="'accordion-body-' + i">
-        <div class="accordion-content" v-for="(link, i) in content.description" :key="i">
-          <div v-if="!link.customCallback" @click="_handleClick(link.routeName)">{{ link.title }}</div>
+      <div
+        v-if="content.isExpandable"
+        class="accordion-body"
+        :ref="'accordion-body-' + i"
+      >
+        <div
+          class="accordion-content"
+          v-for="(link, i) in content.description"
+          :key="i"
+        >
+          <div
+            v-if="!link.customCallback"
+            @click="_handleClick(link.routeName)"
+          >
+            {{ link.title }}
+          </div>
           <div v-else @click="link.customCallback()">{{ link.title }}</div>
         </div>
       </div>

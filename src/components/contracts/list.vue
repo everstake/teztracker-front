@@ -10,7 +10,9 @@
       class="transactions-table table table-borderless table-responsive-md"
     >
       <template slot="contract" slot-scope="row">
-        <b-link :to="{ name: 'account', params: { account: row.item.accountId } }">
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.accountId } }"
+        >
           <span>{{ row.item.accountId | longhash(35) }}</span>
         </b-link>
       </template>
@@ -86,7 +88,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import "../../styles/scss/common";
 
 .pagination-block {
@@ -105,4 +107,3 @@ export default {
   }
 }
 </style>
-

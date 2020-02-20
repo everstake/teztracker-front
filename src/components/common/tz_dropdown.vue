@@ -7,14 +7,18 @@
       role="button"
       aria-haspopup="true"
       aria-expanded="false"
-    >{{currentVal}}</a>
+      >{{ currentVal }}</a
+    >
     <div class="dropdown-menu">
-      <div class="dropdown-item" @click="selectItem('This Month')">This Month</div>
-      <div class="dropdown-item" @click="selectItem('This Year')">This Year</div>
+      <div class="dropdown-item" @click="selectItem('This Month')">
+        This Month
+      </div>
+      <div class="dropdown-item" @click="selectItem('This Year')">
+        This Year
+      </div>
     </div>
   </div>
 </template>
-
 
 <script>
 export default {
@@ -33,7 +37,7 @@ export default {
 };
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 .dropdown {
   &__title {
     text-decoration: none;

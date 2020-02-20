@@ -19,6 +19,6 @@ export default {
 };
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 @import "/components/common/tz_common_kit_styles";
 </style>

@@ -17,44 +17,51 @@
       <template slot="block_0" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_0.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_0.delegate}}"
-        >{{row.item.block_0.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_0.delegate } }"
+          >{{ row.item.block_0.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_1" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_1.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_1.delegate}}"
-        >{{row.item.block_1.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_1.delegate } }"
+          >{{ row.item.block_1.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_2" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_2.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_2.delegate}}"
-        >{{row.item.block_2.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_2.delegate } }"
+          >{{ row.item.block_2.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_3" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_3.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_3.delegate}}"
-        >{{row.item.block_3.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_3.delegate } }"
+          >{{ row.item.block_3.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_4" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_4.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_4.delegate}}"
-        >{{row.item.block_4.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_4.delegate } }"
+          >{{ row.item.block_4.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_5" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_5.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_5.delegate}}"
-        >{{row.item.block_5.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_5.delegate } }"
+          >{{ row.item.block_5.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_6" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_6.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_6.delegate}}"
-        >{{row.item.block_6.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_6.delegate } }"
+          >{{ row.item.block_6.delegate | longhash(19) }}</router-link
+        >
       </template>
     </b-table>
 
@@ -191,7 +198,7 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
+<style lang="scss" scoped>
 @import "../../styles/scss/common";
 
 .pagination-block {

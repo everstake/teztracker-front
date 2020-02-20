@@ -12,14 +12,18 @@
             <div class="row">
               <div class="col-12">
                 <div class="progress-labels">
-                  <div class="tezos-label float-right">Tezos {{network}}</div>
+                  <div class="tezos-label float-right">Tezos {{ network }}</div>
                 </div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-12">
-                <b-progress :value="percent" :max="100" class="mb-2"></b-progress>
+                <b-progress
+                  :value="percent"
+                  :max="100"
+                  class="mb-2"
+                ></b-progress>
               </div>
             </div>
 
@@ -27,7 +31,7 @@
               <div class="col-12">
                 <div class="progress-labels">
                   <div class="percentage float-left">
-                    <span>{{percent}}%</span>
+                    <span>{{ percent }}%</span>
                   </div>
                 </div>
               </div>

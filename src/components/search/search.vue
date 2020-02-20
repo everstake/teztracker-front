@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     onSubmit: function() {
-      this.$emit('onSubmit', false);
+      this.$emit("onSubmit", false);
 
       const searchStr = this.$data.searchQuery;
       this.$data.searchQuery = "";
@@ -71,7 +71,6 @@ export default {
       return this.$router.push({
         name: "404"
       });
-
     }
   }
 };

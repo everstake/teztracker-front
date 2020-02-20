@@ -69,17 +69,18 @@ export const ACTIONS = {
   INFO_GET: "INFO_GET"
 };
 
-const API_URL_MAIN = "https://api-teztracker.everstake.one/v2/data/tezos/mainnet/";
-const API_URL_BABYLON = "https://api-teztracker.everstake.one/v2/data/tezos/babylonnet/";
-const API_URL_CARTHAGE = "https://api-teztracker.everstake.one/v2/data/tezos/carthagenet/";
-
+const API_URL_MAIN =
+  "https://api-teztracker.everstake.one/v2/data/tezos/mainnet/";
+const API_URL_BABYLON =
+  "https://api-teztracker.everstake.one/v2/data/tezos/babylonnet/";
+const API_URL_CARTHAGE =
+  "https://api-teztracker.everstake.one/v2/data/tezos/carthagenet/";
 
 const API = {
   mainnet: new TzAPI({ API_URL: API_URL_MAIN }),
   babylonnet: new TzAPI({ API_URL: API_URL_BABYLON }),
-  carthage: new TzAPI({API_URL:API_URL_CARTHAGE})
+  carthage: new TzAPI({ API_URL: API_URL_CARTHAGE })
 };
-
 
 export default new Vuex.Store({
   state: {
@@ -126,98 +127,98 @@ export default new Vuex.Store({
     setNetwork(state, network) {
       state.app.network = network;
     },
-    [ACTIONS.SET_TX_COUNT]: function (state, count) {
+    [ACTIONS.SET_TX_COUNT]: function(state, count) {
       state.counts.txs = count;
     },
-    [ACTIONS.SET_ENDORSEMENTS_COUNT]: function (state, count) {
+    [ACTIONS.SET_ENDORSEMENTS_COUNT]: function(state, count) {
       state.counts.endorsements = count;
     },
-    [ACTIONS.SET_DELEGATIONS_COUNT]: function (state, count) {
+    [ACTIONS.SET_DELEGATIONS_COUNT]: function(state, count) {
       state.counts.delegations = count;
     },
-    [ACTIONS.SET_ORIGINATIONS_COUNT]: function (state, count) {
+    [ACTIONS.SET_ORIGINATIONS_COUNT]: function(state, count) {
       state.counts.originations = count;
     },
-    [ACTIONS.SET_ACTIVATIONS_COUNT]: function (state, count) {
+    [ACTIONS.SET_ACTIVATIONS_COUNT]: function(state, count) {
       state.counts.activations = count;
     },
-    [ACTIONS.SET_DOUBLEBAKING_COUNT]: function (state, count) {
+    [ACTIONS.SET_DOUBLEBAKING_COUNT]: function(state, count) {
       state.counts.double_baking = count;
     },
-    [ACTIONS.SET_DOUBLEENDORSEMENT_COUNT]: function (state, count) {
+    [ACTIONS.SET_DOUBLEENDORSEMENT_COUNT]: function(state, count) {
       state.counts.double_endorsement = count;
     },
-    [ACTIONS.SET_SNAPSHOTS_COUNT]: function (state, count) {
+    [ACTIONS.SET_SNAPSHOTS_COUNT]: function(state, count) {
       state.counts.snapshots = count;
     },
-    [ACTIONS.SET_BAKINGRIGHTS_COUNT]: function (state, count) {
+    [ACTIONS.SET_BAKINGRIGHTS_COUNT]: function(state, count) {
       state.counts.baking_rights = count;
     },
-    [ACTIONS.SET_FUTUREBAKINGRIGHTS_COUNT]: function (state, count) {
+    [ACTIONS.SET_FUTUREBAKINGRIGHTS_COUNT]: function(state, count) {
       state.counts.future_baking_rights = count;
     },
-    [ACTIONS.BLOCKS_SET]: function (state, blocks) {
+    [ACTIONS.BLOCKS_SET]: function(state, blocks) {
       state.blocks = blocks.data;
       state.counts.blocks = blocks.count;
     },
-    [ACTIONS.SNAPSHOTS_SET]: function (state, snapshots) {
+    [ACTIONS.SNAPSHOTS_SET]: function(state, snapshots) {
       state.snapshots = snapshots.data;
       state.counts.snapshots = snapshots.count;
     },
-    [ACTIONS.BAKINGRIGHTS_SET]: function (state, baking_rights) {
+    [ACTIONS.BAKINGRIGHTS_SET]: function(state, baking_rights) {
       state.baking_rights = baking_rights.data;
       state.counts.baking_rights = baking_rights.count;
     },
-    [ACTIONS.FUTUREBAKINGRIGHTS_SET]: function (state, future_baking_rights) {
+    [ACTIONS.FUTUREBAKINGRIGHTS_SET]: function(state, future_baking_rights) {
       state.future_baking_rights = future_baking_rights.data;
       state.counts.future_baking_rights = future_baking_rights.count;
     },
-    [ACTIONS.TRANSACTIONS_SET]: function (state, txs) {
+    [ACTIONS.TRANSACTIONS_SET]: function(state, txs) {
       state.txs = txs.data;
       state.counts.txs = txs.count;
     },
-    [ACTIONS.ENDORSEMENTS_SET]: function (state, txs) {
+    [ACTIONS.ENDORSEMENTS_SET]: function(state, txs) {
       state.endorsements = txs.data;
       state.counts.endorsements = txs.count;
     },
-    [ACTIONS.DELEGATIONS_SET]: function (state, txs) {
+    [ACTIONS.DELEGATIONS_SET]: function(state, txs) {
       state.delegations = txs.data;
       state.counts.delegations = txs.count;
     },
-    [ACTIONS.ORIGINATIONS_SET]: function (state, originations) {
+    [ACTIONS.ORIGINATIONS_SET]: function(state, originations) {
       state.originations = originations.data;
       state.counts.originations = originations.count;
     },
-    [ACTIONS.ACTIVATIONS_SET]: function (state, activations) {
+    [ACTIONS.ACTIVATIONS_SET]: function(state, activations) {
       state.activations = activations.data;
       state.counts.activations = activations.count;
     },
-    [ACTIONS.DOUBLEBAKING_SET]: function (state, double_baking) {
+    [ACTIONS.DOUBLEBAKING_SET]: function(state, double_baking) {
       state.double_baking = double_baking.data;
       state.counts.double_baking = double_baking.count;
     },
-    [ACTIONS.DOUBLEENDORSEMENT_SET]: function (state, double_endorsement) {
+    [ACTIONS.DOUBLEENDORSEMENT_SET]: function(state, double_endorsement) {
       state.double_endorsement = double_endorsement.data;
       state.counts.double_endorsement = double_endorsement.count;
     },
-    [ACTIONS.INFO_NEW]: function (state, info) {
+    [ACTIONS.INFO_NEW]: function(state, info) {
       state.priceInfo = info.data;
     },
-    [ACTIONS.BLOCK_SET_HEAD]: function (state, block) {
+    [ACTIONS.BLOCK_SET_HEAD]: function(state, block) {
       state.headBlock = block.data;
     },
-    [ACTIONS.BLOCK_SET_SINGLE]: function (state, block) {
+    [ACTIONS.BLOCK_SET_SINGLE]: function(state, block) {
       state.viewBlock = block.data.block;
     },
-    [ACTIONS.BAKERS_SET]: function (state, data) {
+    [ACTIONS.BAKERS_SET]: function(state, data) {
       state.bakers = data.data;
       state.counts.bakers = data.count;
     },
-    [ACTIONS.ACCOUNTS_SET]: function (state, data) {
+    [ACTIONS.ACCOUNTS_SET]: function(state, data) {
       state.accounts = data.data;
       state.counts.accounts = data.count;
     },
-    [ACTIONS.CONTRACTS_SET]: function (state, data) {
+    [ACTIONS.CONTRACTS_SET]: function(state, data) {
       state.contracts = data.data;
       state.counts.contracts = data.count;
     }
@@ -227,7 +228,10 @@ export default new Vuex.Store({
       commit(ACTIONS.BLOCKS_SET, await getters.API.getBlocks(params));
     },
     async [ACTIONS.BLOCK_GET_BY_LEVEL]({ commit, getters }, params = {}) {
-      commit(ACTIONS.BLOCK_SET_SINGLE, await getters.API.getBlock({ block: params.block }));
+      commit(
+        ACTIONS.BLOCK_SET_SINGLE,
+        await getters.API.getBlock({ block: params.block })
+      );
     },
     async [ACTIONS.SNAPSHOTS_GET]({ commit, getters }, params = {}) {
       commit(ACTIONS.SNAPSHOTS_SET, await getters.API.getSnapshots(params));
@@ -236,7 +240,10 @@ export default new Vuex.Store({
       commit(ACTIONS.BAKINGRIGHTS_SET, await getters.API.baking_rights(params));
     },
     async [ACTIONS.FUTUREBAKINGRIGHTS_GET]({ commit, getters }, params = {}) {
-      commit(ACTIONS.FUTUREBAKINGRIGHT_SET, await getters.API.future_baking_rights(params));
+      commit(
+        ACTIONS.FUTUREBAKINGRIGHT_SET,
+        await getters.API.future_baking_rights(params)
+      );
     },
     async [ACTIONS.INFO_GET]({ commit, getters }) {
       commit(ACTIONS.INFO_NEW, await getters.API.getInfo());
@@ -245,22 +252,34 @@ export default new Vuex.Store({
       commit(ACTIONS.BLOCK_SET_HEAD, await getters.API.getBlockHead());
     },
     async [ACTIONS.TRANSACTIONS_GET]({ commit, getters }, params = {}) {
-      commit(ACTIONS.TRANSACTIONS_SET, await getters.API.getTransactions(params));
+      commit(
+        ACTIONS.TRANSACTIONS_SET,
+        await getters.API.getTransactions(params)
+      );
     },
     async [ACTIONS.DELEGATIONS_GET]({ commit, getters }, params) {
       commit(ACTIONS.DELEGATIONS_SET, await getters.API.getDelegations(params));
     },
     async [ACTIONS.ORIGINATIONS_GET]({ commit, getters }, params) {
-      commit(ACTIONS.ORIGINATIONS_SET, await getters.API.getOriginations(params));
+      commit(
+        ACTIONS.ORIGINATIONS_SET,
+        await getters.API.getOriginations(params)
+      );
     },
     async [ACTIONS.ACTIVATIONS_GET]({ commit, getters }, params) {
       commit(ACTIONS.ACTIVATIONS_SET, await getters.API.getActivations(params));
     },
     async [ACTIONS.DOUBLEBAKING_GET]({ commit, getters }, params) {
-      commit(ACTIONS.DOUBLEBAKING_SET, await getters.API.getDoubleBaking(params));
+      commit(
+        ACTIONS.DOUBLEBAKING_SET,
+        await getters.API.getDoubleBaking(params)
+      );
     },
     async [ACTIONS.DOUBLEENDORSEMENT_GET]({ commit, getters }, params) {
-      commit(ACTIONS.DOUBLEENDORSEMENT_SET, await getters.API.getDoubleEndorsement(params));
+      commit(
+        ACTIONS.DOUBLEENDORSEMENT_SET,
+        await getters.API.getDoubleEndorsement(params)
+      );
     },
     async [ACTIONS.BAKERS_GET]({ commit, getters }, params) {
       commit(ACTIONS.BAKERS_SET, await getters.API.getBakers(params));
@@ -270,7 +289,7 @@ export default new Vuex.Store({
     },
     async [ACTIONS.CONTRACTS_GET]({ commit, getters }, params) {
       commit(ACTIONS.CONTRACTS_SET, await getters.API.getContracts(params));
-    },
+    }
   },
   getters: {
     getBlockById(state) {

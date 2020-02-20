@@ -39,10 +39,17 @@
               <!-- Nav tabs -->
               <ul class="nav nav-tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#transactions">Transactions</a>
+                  <a
+                    class="nav-link active"
+                    data-toggle="tab"
+                    href="#transactions"
+                    >Transactions</a
+                  >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#endorsements">Endorsements</a>
+                  <a class="nav-link" data-toggle="tab" href="#endorsements"
+                    >Endorsements</a
+                  >
                 </li>
               </ul>
 
