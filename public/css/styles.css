@@ -417,7 +417,7 @@ span a.baker {
 
 .main-content section .card .card-header h3 {
   position: relative;
-  height: 32px;
+  /* height: 32px; */
   margin-bottom: 0;
 }
 
@@ -450,7 +450,7 @@ span a.baker {
 .main-content section .card .card-header h3 .counter .counter-text {
   font-size: 26px;
   font-weight: 300;
-  line-height: 32px;
+  /* line-height: 32px; */
 }
 
 .main-content section .card .card-header .subtitle {

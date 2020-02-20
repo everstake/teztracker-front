@@ -27,21 +27,14 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="card ml-2 mr-2">
-              <div class="card-header">
-                <div class="title">
-                  <h3>
-                    <span class="text">Blocks list</span>
-                    <div class="counter">
-                      <span class="line"></span>
-                      <span class="counter-text">
-                        {{
-                        count.blocks | bignum
-                        }}
-                      </span>
-                    </div>
-                  </h3>
-                </div>
-              </div>
+              <TzCardHeader>
+                <template v-slot:left-content class="text">
+                  <h4 class="tz-title--bold">Blocks list</h4>
+                </template>
+                <template v-slot:right-content class="text">
+                  <TzCounter showLine :count="count.blocks" />
+                </template>
+              </TzCardHeader>
 
               <div class="card-body">
                 <Blocks />
@@ -56,13 +49,19 @@
 
 <script>
 import { mapState } from "vuex";
+import TzCardHeader from "../common/tz_card_header";
+import TzDropdown from "../common/tz_dropdown";
+import TzCounter from "../common/tz_counter";
 
 import Blocks from "../blocks/blocks_full.vue";
 
 export default {
   name: "BlocksFull",
   components: {
-    Blocks
+    Blocks,
+    TzCardHeader,
+    TzDropdown,
+    TzCounter
   },
   computed: {
     ...mapState({

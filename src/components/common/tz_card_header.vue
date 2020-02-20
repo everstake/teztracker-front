@@ -21,7 +21,15 @@ export default {
 
 
 <style lang="scss" scoped>
+@import "../../styles/scss/common";
+
 .card-header .card-title {
+  @include for-phone-only {
+    h3,
+    h4 {
+      font-size: 14px;
+    }
+  }
   display: flex;
   justify-content: space-between;
   align-items: baseline;

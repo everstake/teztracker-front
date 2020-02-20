@@ -24,15 +24,25 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../styles/scss/common";
+
 .counter {
+  position: relative;
+  @include for-phone-only {
+    h3 {
+      font-size: 14px;
+    }
+  }
   &__line {
     display: block;
-    float: left;
+    // float: left;
     width: 30px;
     height: 16px;
     margin-right: 0.5rem;
     border-bottom: 1px solid #9ea0a5;
     opacity: 0.5;
+    position: absolute;
+    left: -35px;
   }
 }
 </style>
