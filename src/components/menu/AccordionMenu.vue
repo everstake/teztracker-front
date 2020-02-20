@@ -19,7 +19,7 @@
       </div>
 
       <div v-if="content.link" class="accordion-header">
-        <a href="#" @click="goToByName(content.link)">
+        <a href="#" @click="_handleClick(content.link)">
           <div v-if="content.link" class="accordion-header-div">
             {{ content.title }}
             <div v-show="content.isExpandable" class="accordion-header-div">
@@ -32,7 +32,7 @@
 
       <div v-if="content.isExpandable" class="accordion-body" :ref="'accordion-body-' + i">
         <div class="accordion-content" v-for="(link, i) in content.description" :key="i">
-          <div v-if="!link.customCallback" @click="goToByName(link.routeName)">{{ link.title }}</div>
+          <div v-if="!link.customCallback" @click="_handleClick(link.routeName)">{{ link.title }}</div>
           <div v-else @click="link.customCallback()">{{ link.title }}</div>
         </div>
       </div>
@@ -48,6 +48,15 @@ export default {
       return this.$router.push({
         name: name
       });
+    },
+    _handleClick(goToname) {
+      if (goToname === this.$router.currentRoute.name) {
+        this.$emit("close");
+      } else {
+        return this.$router.push({
+          name: goToname
+        });
+      }
     },
     useMainNet() {
       window.location = "/mainnet";
@@ -89,7 +98,7 @@ export default {
           title: "Dashboard",
           active: false,
           isExpandable: false,
-          link: "index"
+          link: "blocks"
         },
         {
           title: "Blocks",
@@ -168,8 +177,6 @@ export default {
         },
         {
           title: "Current Network",
-          description:
-            "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
           active: false,
           isExpandable: true,
           description: [

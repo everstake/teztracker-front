@@ -6,7 +6,7 @@
     </h3>
     <div :class="{ overlay: true, open: isOpen }" id="overlay">
       <div class="overlay_container">
-        <AccordionMenu />
+        <AccordionMenu @close="closeMenu" />
         <div class="search search-wrapper-nav">
           <Search v-on:onSubmit="toggleMenu" />
         </div>
@@ -32,6 +32,9 @@ export default {
   methods: {
     toggleMenu() {
       this.isOpen = !this.isOpen;
+    },
+    closeMenu() {
+      this.isOpen = false;
     }
   },
   watch: {
