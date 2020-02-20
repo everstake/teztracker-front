@@ -27,16 +27,14 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="card">
-              <div class="card-header">
-                <TzCardHeader>
-                  <template v-slot:left-content class="text">
-                    <h4 class="tz-title--bold">DoubleBaking list</h4>
-                  </template>
-                  <template v-slot:right-content class="text">
-                    <TzCounter showLine :count="count.double_baking" />
-                  </template>
-                </TzCardHeader>
-              </div>
+              <TzCardHeader>
+                <template v-slot:left-content class="text">
+                  <h4 class="tz-title--bold">DoubleBaking list</h4>
+                </template>
+                <template v-slot:right-content class="text">
+                  <TzCounter showLine :count="count.double_baking" />
+                </template>
+              </TzCardHeader>
 
               <div class="card-body">
                 <DoubleBakingList />
