@@ -1,16 +1,19 @@
 <template>
   <div class="card">
-    <div class="card-header">
-      <div class="title">
-        <h3>
-          <span class="text">Blocks list</span>
-          <div class="counter">
-            <span class="line"></span>
-            <span class="counter-text">{{ count | bignum }}</span>
+    <TzCardHeader>
+      <template v-slot:left-content class="text">
+        <h4 class="tz-title--bold">Blocks list</h4>
+        <TzDropdown dropdownTitle="this year" />
+      </template>
+      <template v-slot:right-content class="text">
+        <TzCounter :count="count" />
+        <div class="counter">
+          <div class="tz_link">
+            <router-link class="tz-dropdown-item" :to="{ name: 'blocks' }">View all</router-link>
           </div>
-        </h3>
-      </div>
-    </div>
+        </div>
+      </template>
+    </TzCardHeader>
 
     <div class="card-body">
       <b-table
@@ -58,6 +61,9 @@
 <script>
 import { mapState } from "vuex";
 import TzPagination from "../common/_tz_pagination";
+import TzCardHeader from "../common/tz_card_header";
+import TzDropdown from "../common/tz_dropdown";
+import TzCounter from "../common/counter";
 
 export default {
   data() {
@@ -91,7 +97,10 @@ export default {
     }
   },
   components: {
-    TzPagination
+    TzPagination,
+    TzCardHeader,
+    TzDropdown,
+    TzCounter
   }
 };
 </script>

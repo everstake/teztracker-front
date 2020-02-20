@@ -89,7 +89,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/scss/common";
+
 .cycle-counter {
   padding: 0 15px;
+  @include for-phone-only {
+    padding: 0;
+  }
 }
 </style>
