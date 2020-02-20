@@ -83,7 +83,6 @@ export default {
         limit: this.perPage
       };
       const data = await this.$store.getters.API.getSnapshots(props);
-      console.log(data);
       this.snapshots = data.data;
       this.count = data.count;
       this.$store.commit(ACTIONS.SET_SNAPSHOTS_COUNT, this.count);

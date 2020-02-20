@@ -26,18 +26,15 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
-            <div class="card ml-2 mr-2">
-              <div class="card-header">
-                <div class="title">
-                  <h3>
-                    <span class="text">Originations list</span>
-                    <div class="counter">
-                      <span class="line"></span>
-                      <span class="counter-text">{{ count.originations | bignum }}</span>
-                    </div>
-                  </h3>
-                </div>
-              </div>
+            <div class="card">
+              <TzCardHeader>
+                <template v-slot:left-content class="text">
+                  <h4 class="tz-title--bold">Originations list</h4>
+                </template>
+                <template v-slot:right-content class="text">
+                  <TzCounter showLine :count="count.originations" />
+                </template>
+              </TzCardHeader>
 
               <div class="card-body">
                 <OriginationsList />
@@ -53,10 +50,14 @@
 <script>
 import { mapState } from "vuex";
 import OriginationsList from "../originations/list.vue";
+import TzCardHeader from "../common/tz_card_header";
+import TzCounter from "../common/tz_counter";
 export default {
   name: "Originations",
   components: {
-    OriginationsList
+    OriginationsList,
+    TzCardHeader,
+    TzCounter
   },
   computed: {
     ...mapState({

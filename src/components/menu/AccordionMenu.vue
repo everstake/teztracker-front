@@ -60,8 +60,6 @@ export default {
     },
 
     expand: function(e, i) {
-      console.log("CLICKED", this.$refs, i);
-
       let el = this.$refs["accordion-body-" + i][0];
 
       if (this.contents[i].isExpandable) {

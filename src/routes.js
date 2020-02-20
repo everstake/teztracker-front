@@ -29,14 +29,11 @@ import DoubleEndorsement from "./components/pages/double_endorsement.vue";
 import NotFound from "./components/pages/404.vue";
 import ServerError from "./components/pages/500.vue";
 
-
 // src/middleware/log.js
 export function setNetwork({ next, to }) {
   console.log(to.name);
   return next();
 }
-
-
 
 export default [
   { path: "/", name: "default", component: NetworkRedirect },
@@ -44,16 +41,48 @@ export default [
   { path: "/:network/blocks", name: "blocks", component: Blocks },
   { path: "/:network/block/:level", name: "block", component: Block },
   { path: "/:network/snapshots", name: "snapshots", component: Snapshots },
-  { path: "/:network/baking_rights", name: "baking_rights", component: BakingRights },
+  {
+    path: "/:network/baking_rights",
+    name: "baking_rights",
+    component: BakingRights
+  },
   { path: "/:network/txs", name: "txs", component: Txs },
   { path: "/:network/tx/:txhash", name: "tx", component: Tx },
-  { path: "/:network/endorsements", name: "endorsements", component: Endorsements },
-  { path: "/:network/endorsement/:txID", name: "endorsement", component: Endorsement },
-  { path: "/:network/delegations", name: "delegations", component: Delegations },
-  { path: "/:network/originations", name: "originations", component: Originations },
-  { path: "/:network/activations", name: "activations", component: Activations },
-  { path: "/:network/double_baking", name: "double_baking", component: DoubleBaking },
-  { path: "/:network/double_endorsement", name: "double_endorsement", component: DoubleEndorsement },
+  {
+    path: "/:network/endorsements",
+    name: "endorsements",
+    component: Endorsements
+  },
+  {
+    path: "/:network/endorsement/:txID",
+    name: "endorsement",
+    component: Endorsement
+  },
+  {
+    path: "/:network/delegations",
+    name: "delegations",
+    component: Delegations
+  },
+  {
+    path: "/:network/originations",
+    name: "originations",
+    component: Originations
+  },
+  {
+    path: "/:network/activations",
+    name: "activations",
+    component: Activations
+  },
+  {
+    path: "/:network/double_baking",
+    name: "double_baking",
+    component: DoubleBaking
+  },
+  {
+    path: "/:network/double_endorsement",
+    name: "double_endorsement",
+    component: DoubleEndorsement
+  },
   { path: "/:network/bakers", name: "bakers", component: Bakers },
   { path: "/:network/baker/:baker", name: "baker", component: Baker },
   { path: "/:network/accounts", name: "accounts", component: Accounts },
@@ -61,5 +90,4 @@ export default [
   { path: "/:network/account/:account", name: "account", component: Account },
   { path: "/404", name: "404", component: NotFound },
   { path: "/500", name: "500", component: ServerError }
-
 ];
