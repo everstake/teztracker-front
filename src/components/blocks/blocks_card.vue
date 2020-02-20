@@ -63,7 +63,7 @@ import { mapState } from "vuex";
 import TzPagination from "../common/_tz_pagination";
 import TzCardHeader from "../common/tz_card_header";
 import TzDropdown from "../common/tz_dropdown";
-import TzCounter from "../common/counter";
+import TzCounter from "../common/tz_counter";
 
 export default {
   data() {

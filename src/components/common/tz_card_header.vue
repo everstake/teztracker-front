@@ -23,9 +23,8 @@ export default {
 <style lang="scss" scoped>
 .card-header .card-title {
   display: flex;
-  justify-content: center;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
   flex-direction: row;
 }
 </style>
