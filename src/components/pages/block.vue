@@ -35,7 +35,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
-            <div class="card ml-2 mr-2">
+            <div class="card">
               <!-- Nav tabs -->
               <ul class="nav nav-tabs">
                 <li class="nav-item">
@@ -107,4 +107,22 @@ export default {
 };
 </script>
 
-<style />
+<style lang="scss" scoped>
+@import "../../styles/scss/common";
+.main-content section .card .nav-tabs {
+  @include for-phone-only {
+    margin: 0;
+    padding: 0 15px;
+  }
+  .nav-item {
+    @include for-phone-only {
+      width: 50%;
+    }
+    & .nav-link {
+      @include for-phone-only {
+        padding: 1rem 0rem;
+      }
+    }
+  }
+}
+</style>

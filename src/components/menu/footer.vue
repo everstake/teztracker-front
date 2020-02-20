@@ -81,6 +81,7 @@ export default {
     }
   }
   &__logo {
+    padding: 15px;
     @include for-tablet-portrait-up {
       display: none;
     }

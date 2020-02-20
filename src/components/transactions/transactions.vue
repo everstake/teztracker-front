@@ -10,9 +10,7 @@
       class="transactions-table table table-borderless table-responsive-md"
     >
       <template slot="txhash" slot-scope="row">
-        <b-link
-          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
-        >
+        <b-link :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }">
           <span>{{ row.item.operationGroupHash | longhash(35) }}</span>
         </b-link>
       </template>
@@ -34,9 +32,7 @@
       </template>
 
       <template slot="to" slot-scope="row">
-        <b-link
-          :to="{ name: 'account', params: { account: row.item.destination } }"
-        >
+        <b-link :to="{ name: 'account', params: { account: row.item.destination } }">
           <span>{{ row.item.destination | longhash(20) }}</span>
         </b-link>
       </template>
@@ -47,16 +43,18 @@
         <span>{{ row.item.fee | tezos }}</span>
       </template>
     </b-table>
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      align="right"
-      first-text
-      prev-text="Prev"
-      next-text="Next"
-      last-text
-    ></b-pagination>
+    <div class="pagination-block">
+      <b-pagination
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        align="right"
+        first-text
+        prev-text="Prev"
+        next-text="Next"
+        last-text
+      ></b-pagination>
+    </div>
   </div>
 </template>
 <script>
@@ -141,4 +139,22 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang='scss' scoped>
+@import "../../styles/scss/common";
+
+.pagination-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  @include for-tablet-portrait-up {
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  }
+}
+</style>
