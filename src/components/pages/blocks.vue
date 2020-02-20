@@ -50,7 +50,6 @@
 <script>
 import { mapState } from "vuex";
 import TzCardHeader from "../common/tz_card_header";
-import TzDropdown from "../common/tz_dropdown";
 import TzCounter from "../common/tz_counter";
 
 import Blocks from "../blocks/blocks_full.vue";
@@ -60,7 +59,6 @@ export default {
   components: {
     Blocks,
     TzCardHeader,
-    TzDropdown,
     TzCounter
   },
   computed: {

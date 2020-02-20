@@ -43,6 +43,9 @@ export default {
     opacity: 0.5;
     position: absolute;
     left: -35px;
+    @include for-phone-only {
+      height: 10px;
+    }
   }
 }
 </style>

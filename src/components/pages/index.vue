@@ -288,7 +288,7 @@ export default {
   padding: 0 15px;
 }
 .counter {
-  overflow: hidden;
+  // overflow: hidden;
 }
 .promo-tiles {
   &.row {
