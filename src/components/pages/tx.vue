@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
-            <div class="page-title ml-2">
+            <div class="page-title">
               <h2>
                 Tezos (XTZ) Blockchain Explorer -
                 <span>Transactions page</span>

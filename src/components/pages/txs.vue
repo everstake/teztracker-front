@@ -26,18 +26,15 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
-            <div class="card ml-2 mr-2">
-              <div class="card-header">
-                <div class="title">
-                  <h3>
-                    <span class="text">Transactions list</span>
-                    <div class="counter">
-                      <span class="line"></span>
-                      <span class="counter-text">{{ count.txs | bignum }}</span>
-                    </div>
-                  </h3>
-                </div>
-              </div>
+            <div class="card">
+              <TzCardHeader>
+                <template v-slot:left-content class="text">
+                  <h4 class="tz-title--bold">Transactions list</h4>
+                </template>
+                <template v-slot:right-content class="text">
+                  <TzCounter :count="count.txs" />
+                </template>
+              </TzCardHeader>
 
               <div class="card-body">
                 <TxsList />
@@ -53,10 +50,15 @@
 <script>
 import { mapState } from "vuex";
 import TxsList from "../transactions/transactions.vue";
+import TzCardHeader from "../common/tz_card_header";
+import TzCounter from "../common/tz_counter";
+
 export default {
   name: "Txs",
   components: {
-    TxsList
+    TxsList,
+    TzCardHeader,
+    TzCounter
   },
   computed: {
     ...mapState({
