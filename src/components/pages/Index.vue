@@ -14,7 +14,7 @@
             </p>
           </div>
           <div class="promo-image col-lg-4">
-            <img src="img/promo-img.svg" height="270px" alt />
+            <img src="../../assets/img/promo-img.svg" height="270px" alt />
           </div>
         </div>
         <!-- cycle-->
@@ -77,7 +77,10 @@
             </div>
 
             <span class="counter">
+              <!-- If passed params to a router link are dynamic
+              they must be received before rendering the router link (i.e. v-if="head.baker") -->
               <router-link
+                v-if="head.baker"
                 class="baker"
                 :to="{ name: 'account', params: { account: head.baker } }"
                 >{{ head.baker | longhash(13) }}</router-link
@@ -161,7 +164,7 @@
       <div class="container-fluid">
         <div class="row justify-content-md-center align-items-center">
           <div class="col-lg-4">
-            <img src="img/footer-img.svg" width="85%" alt />
+            <img src="../../assets/img/footer-img.svg" width="85%" alt />
           </div>
           <div class="col-lg-6">
             <div class="row">
