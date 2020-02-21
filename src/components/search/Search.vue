@@ -27,7 +27,10 @@
 </template>
 
 <script>
-import _ from "lodash";
+import { isFinite } from "lodash/isFinite";
+import { startsWith } from "lodash/startsWith";
+import { some } from "lodash/some";
+import { flatten } from "lodash/flatten"
 
 export default {
   name: "Search",
@@ -51,7 +54,7 @@ export default {
       }
 
       // block id
-      if (_.isFinite(parseInt(searchStr))) {
+      if (isFinite(parseInt(searchStr))) {
         setTimeout(() => (this.loading = false), 100);
 
         return this.$router.push({
@@ -61,7 +64,7 @@ export default {
       }
       //block hash
       for (const prefix of this.$constants.SEARCH_PREFIXES.block) {
-        if (_.startsWith(searchStr, prefix)) {
+        if (startsWith(searchStr, prefix)) {
           setTimeout(() => (this.loading = false), 100);
 
           return this.$router.push({
@@ -72,7 +75,7 @@ export default {
       }
       //transactions
       for (const prefix of this.$constants.SEARCH_PREFIXES.operation) {
-        if (_.startsWith(searchStr, prefix)) {
+        if (startsWith(searchStr, prefix)) {
           setTimeout(() => (this.loading = false), 100);
 
           return this.$router.push({
@@ -83,7 +86,7 @@ export default {
       }
       //account
       for (const prefix of this.$constants.SEARCH_PREFIXES.account) {
-        if (_.startsWith(searchStr, prefix)) {
+        if (startsWith(searchStr, prefix)) {
           setTimeout(() => (this.loading = false), 100);
 
           return this.$router.push({
@@ -101,11 +104,11 @@ export default {
       });
     },
     findQueryPrefix(searchQuery) {
-      const prefixesArray = _.flatten(Object.values(this.$constants.SEARCH_PREFIXES));
+      const prefixesArray = flatten(Object.values(this.$constants.SEARCH_PREFIXES));
       let findedPrefix = null;
 
       const findId = () => {
-        if (_.isFinite(parseInt(searchQuery))) {
+        if (isFinite(parseInt(searchQuery))) {
           findedPrefix = parseInt(searchQuery);
           return true;
         }
@@ -114,8 +117,8 @@ export default {
       };
 
       const findPrefix = () => {
-        return _.some(prefixesArray, prefix => {
-          if (_.startsWith(searchQuery, prefix)) {
+        return some(prefixesArray, prefix => {
+          if (startsWith(searchQuery, prefix)) {
             findedPrefix = prefix;
             return true;
           }

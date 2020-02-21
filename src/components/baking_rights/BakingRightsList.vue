@@ -74,7 +74,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import { SET_BAKING_RIGHTS_COUNT } from "@/store/mutations.types";
-import _ from "lodash";
+import uniq from "lodash/uniq";
 export default {
   name: "BakingRightsList",
   props: [],
@@ -135,7 +135,7 @@ export default {
           });
         }
       }
-      const levels = _.uniq(blocks.map(el => el.level))
+      const levels = uniq(blocks.map(el => el.level))
         .sort()
         .reverse();
       const rowLength = this.blocks_in_row;

@@ -71,9 +71,9 @@
   </div>
 </template>
 <script>
-import _ from "lodash";
 import { mapState, mapMutations } from "vuex";
 import { SET_FUTURE_BAKING_RIGHTS_COUNT } from "@/store/mutations.types";
+import uniq from "lodash/uniq";
 
 export default {
   name: "FutureBakingRightsList",
@@ -128,7 +128,7 @@ export default {
           });
         }
       }
-      const levels = _.uniq(blocks.map(el => el.level)).sort();
+      const levels = uniq(blocks.map(el => el.level)).sort();
       const rowLength = this.blocks_in_row;
       const fields = [
         {
