@@ -1,13 +1,27 @@
 <template>
-  <form action id="search-form" v-on:submit.prevent="onSubmit">
+  <form
+    :class="error ? 'search-form--invalid' : ''"
+    action
+    id="search-form"
+    v-on:submit.prevent="onSubmit"
+  >
     <input
       type="text"
       v-model.trim="searchQuery"
-      class="search-query"
       placeholder="Search for block, txn or address"
+      class="search-query"
+      @input="error = ''"
+      :readonly="loading"
     />
-    <button type="submit" class="button-search">
-      <font-awesome-icon class="icon-white" icon="search" />
+
+    <span v-if="error" class="search-form--error">{{ error }}</span>
+
+    <button type="submit" class="button-search" :disabled="loading">
+      <font-awesome-icon
+        class="icon-white"
+        :icon="loading ? 'spinner' : 'search'"
+        :spin="loading"
+      />
     </button>
   </form>
 </template>
@@ -24,15 +38,27 @@ export default {
   name: "Search",
   data() {
     return {
-      searchQuery: ""
+      searchQuery: "",
+      error: "",
+      loading: false
     };
   },
   methods: {
     onSubmit: function() {
+      this.loading = true;
+
       const searchStr = this.$data.searchQuery;
-      this.$data.searchQuery = "";
+      const isFormValid = this.validateForm();
+
+      if (!isFormValid) {
+        this.loading = false;
+        return;
+      }
+
+      // block id
       if (_.isFinite(parseInt(searchStr))) {
-        // block id
+        setTimeout(() => (this.loading = false), 100);
+
         return this.$router.push({
           name: "block",
           params: { level: searchStr }
@@ -41,6 +67,8 @@ export default {
       //block hash
       for (const prefix of prefixes.block) {
         if (_.startsWith(searchStr, prefix)) {
+          setTimeout(() => (this.loading = false), 100);
+
           return this.$router.push({
             name: "block",
             params: { level: searchStr }
@@ -50,6 +78,8 @@ export default {
       //transactions
       for (const prefix of prefixes.operation) {
         if (_.startsWith(searchStr, prefix)) {
+          setTimeout(() => (this.loading = false), 100);
+
           return this.$router.push({
             name: "tx",
             params: { txhash: searchStr }
@@ -59,6 +89,8 @@ export default {
       //account
       for (const prefix of prefixes.account) {
         if (_.startsWith(searchStr, prefix)) {
+          setTimeout(() => (this.loading = false), 100);
+
           return this.$router.push({
             name: "account",
             params: { account: searchStr }
@@ -66,9 +98,55 @@ export default {
         }
       }
 
+      this.loading = false;
+      this.$data.searchQuery = "";
+
       return this.$router.push({
         name: "404"
       });
+    },
+    findQueryPrefix(searchQuery) {
+      const prefixesArray = _.flatten(Object.values(prefixes));
+      let findedPrefix = null;
+
+      const findId = () => {
+        if (_.isFinite(parseInt(searchQuery))) {
+          findedPrefix = parseInt(searchQuery);
+          return true;
+        }
+
+        return false;
+      };
+
+      const findPrefix = () => {
+        return _.some(prefixesArray, prefix => {
+          if (_.startsWith(searchQuery, prefix)) {
+            findedPrefix = prefix;
+            return true;
+          }
+
+          return false;
+        });
+      };
+
+      const queryHasPrefix = findId() || findPrefix();
+      return queryHasPrefix ? findedPrefix : false;
+    },
+    validateForm() {
+      const { searchQuery } = this;
+      const queryIncludesPrefix = this.findQueryPrefix(searchQuery);
+
+      if (searchQuery === "") {
+        this.error = "Search string should not be empty.";
+        return false;
+      }
+
+      if (!queryIncludesPrefix) {
+        this.error = `Search for an ${Object.keys(prefixes).join(" or ")}.`;
+        return false;
+      }
+
+      return true;
     }
   }
 };
