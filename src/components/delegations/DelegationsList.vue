@@ -23,7 +23,7 @@
 
       <template slot="to" slot-scope="row">
         <b-link
-          :to="{ name: 'account', params: { account: row.item.destination } }"
+          :to="{ name: 'account', params: { account: row.item.delegate } }"
           v-if="row.item.delegate"
         >
           <span>{{ row.item.delegate | longhash(20) }}</span>
