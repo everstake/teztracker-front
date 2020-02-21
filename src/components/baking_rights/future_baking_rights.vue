@@ -63,10 +63,10 @@
       :per-page="perPage"
       align="right"
       limit="10"
-      first-text
       prev-text="Prev"
       next-text="Next"
-      last-text
+      first-number
+      last-number
     ></b-pagination>
   </div>
 </template>
