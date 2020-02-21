@@ -27,7 +27,7 @@
               <span class="label">Timestamp</span>
             </div>
             <div class="col-lg-9">
-              <span class="value">{{timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
+              <span class="value">{{timestamp | timeformat($constants.TIME_FORMAT) }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -52,8 +52,8 @@
             </div>
             <div class="col-lg-9">
               <span class="value">
-                {{fee | tezos}}
-                ({{convert(fee)}})
+                {{ fee | tezos }}
+                ({{ $_convert(fee) }})
               </span>
             </div>
           </div>
@@ -62,36 +62,31 @@
     </div>
   </div>
 </template>
+
 <script>
-import { XTZ, ACTIONS } from "../../store";
-import { ceil } from "lodash";
-import { mapState } from "vuex";
+import convert from "../../mixins/convert";
+import { mapState, mapActions } from "vuex";
+import { GET_APP_INFO } from "@/store/actions.types";
 
 export default {
   name: "Transaction",
   props: ["blockHash", "timestamp", "opHash", "level", "fee"],
+  mixins: [convert],
   data() {
     return {
       tx: {}
     };
   },
   computed: {
-    ...mapState({
+    ...mapState('app', {
       info: state => state.priceInfo
     })
   },
   async created() {
-    await this.$store.dispatch(ACTIONS.INFO_GET);
+    await this[GET_APP_INFO]();
   },
   methods: {
-    convert(tzAmount) {
-      let result = 0;
-      if (tzAmount || tzAmount > 0) {
-        const tez = tzAmount / XTZ;
-        result = ceil(tez * this.info.price, 2);
-      }
-      return "$" + result;
-    }
+    ...mapActions('app', [GET_APP_INFO])
   }
 };
 </script>

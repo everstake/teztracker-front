@@ -65,7 +65,7 @@ export default {
     Blocks
   },
   computed: {
-    ...mapState({
+    ...mapState('blocks', {
       count: state => state.counts
     })
   }

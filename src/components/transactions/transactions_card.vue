@@ -23,7 +23,7 @@
         class="table table-borderless table-responsive-sm"
       >
         <template slot="timestamp" slot-scope="row">
-          <span>{{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
+          <span>{{ row.item.timestamp | timeformat($constants.TIME_FORMAT) }}</span>
         </template>
 
         <template slot="level" slot-scope="row">
@@ -57,16 +57,16 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import { mapState, mapActions } from "vuex";
+import { GET_TRANSACTIONS } from "@/store/actions.types";
 
 export default {
   name: "Transactions",
   props: {},
   data() {
     return {
-      perPage: 10,
-      currentPage: 1,
+      perPage: this.$constants.PER_PAGE,
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
         { key: "timestamp", label: "Time", sortable: true },
         {
@@ -80,7 +80,7 @@ export default {
     };
   },
   computed: {
-    ...mapState({
+    ...mapState('operations', {
       transactions: state => state.txs,
       count: state => state.counts.txs
     }),
@@ -94,15 +94,18 @@ export default {
   watch: {
     currentPage: {
       async handler(value) {
-        await this.$store.dispatch(ACTIONS.TRANSACTIONS_GET, {
+        await this[GET_TRANSACTIONS]({
           page: value,
           perPage: this.perPage
         });
       }
     }
   },
+  methods: {
+    ...mapActions('operations', [GET_TRANSACTIONS])
+  },
   async created() {
-    await this.$store.dispatch(ACTIONS.TRANSACTIONS_GET, {
+    await this[GET_TRANSACTIONS]({
       page: this.currentPage,
       perPage: this.perPage
     });

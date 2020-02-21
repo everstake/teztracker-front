@@ -59,7 +59,7 @@ export default {
     DoubleEndorsementList
   },
   computed: {
-    ...mapState({
+    ...mapState('operations', {
       count: state => state.counts
     })
   }

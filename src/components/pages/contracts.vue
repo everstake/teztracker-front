@@ -64,7 +64,7 @@ export default {
     ContractsList
   },
   computed: {
-    ...mapState({
+    ...mapState('accounts', {
       count: state => state.counts
     })
   }

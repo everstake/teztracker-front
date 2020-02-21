@@ -22,7 +22,7 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
+        <span>{{ row.item.timestamp | timeformat($constants.TIME_FORMAT) }}</span>
       </template>
 
       <template slot="from" slot-scope="row">
@@ -56,15 +56,15 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import { mapState, mapMutations } from "vuex";
+import { SET_TX_COUNT } from "@/store/mutations.types";
 
 export default {
   data() {
     return {
-      perPage: 10,
-      currentPage: 1,
-      pageOptions: [10, 15, 20, 25, 30],
+      perPage: this.$constants.PER_PAGE,
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+      pageOptions: this.$constants.PAGE_OPTIONS,
       transactions: [],
       count: 0,
       fields: [
@@ -81,7 +81,7 @@ export default {
   name: "Transactions",
   props: ["block", "account"],
   computed: {
-    ...mapState({
+    ...mapState('operations', {
       counts: state => state.counts
     }),
     rows() {
@@ -108,10 +108,11 @@ export default {
       }
     }
   },
-  async mounted() {
+  async created() {
     await this.reload();
   },
   methods: {
+    ...mapMutations('operations', [SET_TX_COUNT]),
     async reload(page = 1) {
       const props = {
         page,
@@ -123,7 +124,7 @@ export default {
       if (this.account) {
         props.account_id = this.account;
       }
-      const data = await this.$store.getters.API.getTransactions(props);
+      const data = await this.$api.getTransactions(props);
       if (data.status !== 200) {
         return this.$router.push({
           name: data.status
@@ -131,7 +132,7 @@ export default {
       }
       this.transactions = data.data;
       this.count = data.count;
-      this.$store.commit(ACTIONS.SET_TX_COUNT, this.count);
+      this[SET_TX_COUNT](this.count);
     }
   }
 };

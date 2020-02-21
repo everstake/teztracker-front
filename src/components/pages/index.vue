@@ -44,13 +44,18 @@
               <font-awesome-icon :icon="['far', 'star']" />
             </div>
             <div class="voting-progress">
-              <b-progress :value="cyclePercent" :max="100" class="mb-2"></b-progress>
+              <b-progress
+                :value="votingProgressPercent"
+                :max="100"
+                class="mb-2"
+              ></b-progress>
               <div class="progress-labels">
                 <div class="voting-percentage float-left">
-                  <span>{{cyclePercent}}%</span>
+                  <span>{{ votingProgressPercent }}%</span>
                 </div>
                 <div class="timer float-right">
-                  <span>{{timeLeft}}</span> - Until cycle end
+                  <span>{{ timeLeftTillVotingPeriodEnd }}</span> - Until voting
+                  period end
                 </div>
               </div>
             </div>
@@ -75,7 +80,8 @@
               <router-link
                 class="baker"
                 :to="{ name: 'account', params: { account: head.baker } }"
-              >{{ head.baker | longhash(13) }}</router-link>
+                >{{ head.baker | longhash(13) }}</router-link
+              >
             </span>
             <span class="percentage"></span>
             <span class="tile-name">Latest baker</span>
@@ -108,7 +114,7 @@
             <div class="tile-icon text-center">
               <font-awesome-icon :icon="['far', 'bookmark']" />
             </div>
-            <span class="counter">{{info.volume_24h | bignum(",")}} XTZ</span>
+            <span class="counter">{{ info.volume_24h | bignum(",") }} XTZ</span>
             <span class="percentage"></span>
             <span class="tile-name">Trading Volume</span>
           </div>
@@ -117,7 +123,7 @@
             <div class="tile-icon text-center">
               <font-awesome-icon :icon="['far', 'gem']" />
             </div>
-            <span class="counter">${{info.market_cap | bignum(",")}}</span>
+            <span class="counter">${{ info.market_cap | bignum(",") }}</span>
             <span class="percentage"></span>
             <span class="tile-name">Market cap</span>
           </div>
@@ -126,9 +132,11 @@
             <div class="tile-icon text-center">
               <font-awesome-icon :icon="['far', 'hourglass']" />
             </div>
-            <span
-              class="counter"
-            >{{(info.circulating_supply > 0 ? info.circulating_supply.toFixed() : 0) | bignum(",")}}</span>
+            <span class="counter">{{
+              (info.circulating_supply > 0
+                ? info.circulating_supply.toFixed()
+                : 0) | bignum(",")
+            }}</span>
             <span class="percentage"></span>
             <span class="tile-name">Circulating Supply</span>
           </div>
@@ -197,13 +205,13 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+import { GET_APP_INFO, GET_BLOCK_HEAD } from "@/store/actions.types";
 
 import BlocksCard from "../blocks/blocks_card.vue";
 import TxCard from "../transactions/transactions_card.vue";
 import CycleCount from "../cycle/count.vue";
 import Search from "../search/search";
-import { ACTIONS } from "../../store";
 import { setInterval, clearInterval } from "timers";
 import moment from "moment";
 export default {
@@ -220,8 +228,10 @@ export default {
     };
   },
   computed: {
-    ...mapState({
+    ...mapState('app', {
       info: state => state.priceInfo,
+    }),
+    ...mapState('blocks', {
       head: state => state.headBlock
     }),
     priceChange() {
@@ -236,25 +246,40 @@ export default {
       }
       return Math.abs(this.info.staking_ratio.toFixed(2));
     },
-    cyclePercent() {
-      return parseInt(((this.head.metaCyclePosition / 4096) * 100).toFixed());
+    votingProgressPercent() {
+      return parseInt(
+        (
+          (this.head.metaVotingPeriodPosition /
+            (this.info.blocks_in_cycle *
+              this.$constants.CYCLES_IN_VOTING_PERIOD)) *
+          100
+        ).toFixed()
+      );
     },
-    timeLeft() {
+    timeLeftTillVotingPeriodEnd() {
       return moment()
-        .add(4096 - this.head.metaCyclePosition, "minutes")
+        .add(
+          this.info.blocks_in_cycle * this.$constants.CYCLES_IN_VOTING_PERIOD -
+            this.head.metaVotingPeriodPosition,
+          "minutes"
+        )
         .fromNow(true);
     }
   },
   beforeDestroy() {
     clearInterval(this.interval);
   },
+  methods: {
+    ...mapActions('app', [GET_APP_INFO]),
+    ...mapActions('blocks', [GET_BLOCK_HEAD])
+  },
   async created() {
     await Promise.all([
-      await this.$store.dispatch(ACTIONS.INFO_GET),
-      await this.$store.dispatch(ACTIONS.BLOCK_GET_HEAD)
+      await this[GET_APP_INFO](),
+      await this[GET_BLOCK_HEAD]()
     ]);
     this.interval = setInterval(
-      () => this.$store.dispatch(ACTIONS.INFO_GET),
+      () => this[GET_APP_INFO](),
       10000
     );
   }

@@ -59,7 +59,7 @@ export default {
     TxsList
   },
   computed: {
-    ...mapState({
+    ...mapState('operations', {
       count: state => state.counts
     })
   }

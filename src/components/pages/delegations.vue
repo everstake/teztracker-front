@@ -64,7 +64,7 @@ export default {
     DelegationList
   },
   computed: {
-    ...mapState({
+    ...mapState('operations', {
       count: state => state.counts
     })
   }

@@ -79,8 +79,8 @@
             >{{currentNetwork}}</a>
             <div class="dropdown-menu">
               <li class="dropdown-item pointer" @click="useMainNet()">Mainnet</li>
-              <li class="dropdown-item pointer" @click="useBabylon()">Babylon net</li>
-              <li class="dropdown-item pointer" @click="useCarthage()">Carthage net</li>
+              <li class="dropdown-item pointer" @click="useBabylon()">Babylonnet</li>
+              <li class="dropdown-item pointer" @click="useCarthage()">Carthagenet</li>
             </div>
           </li>
         </ul>
@@ -91,50 +91,46 @@
     </div>
   </header>
 </template>
+
 <script>
 import Search from "../search/search";
-import { ACTIONS } from "../../store";
+import { mapMutations, mapState, mapGetters } from 'vuex';
+import { SET_APP_NETWORK } from '@/store/mutations.types.js';
+import network from "../../mixins/network";
+
 export default {
   name: "TopMenu",
-  data() {
-    return {};
-  },
+  mixins: [network],
   props: {},
   components: {
     Search
   },
   computed: {
+    ...mapState('app', {
+      network: state => state.app.network
+    }),
+    ...mapGetters('app', ['getAppNetwork']),
     currentNetwork: function() {
-      switch (this.$route.params.network) {
-        case 'mainnet':
-          return "Mainnet"
-          break;
-        case  'babylonnet':
-          return 'Babylonnet'
-        break;
-        case 'carthage':
-          return 'Carthage'
-        break
-        default:
-          return "Mainnet"
-      }
-      // return this.$route.params.network === "mainnet"
-      //   ? "Mainnet"
-      //   : "Babylonnet";
+      this.changeRouteNetwork(this.getAppNetwork);
+      return this.getAppNetwork;
     }
   },
   methods: {
+    ...mapMutations('app', [SET_APP_NETWORK]),
     isActive(...args) {
       return args.includes(this.$route.name);
     },
+    changeRouteNetwork(network = 'mainnet') {
+      this.$router.push({ name: this.$route.name, params: { network } });
+    },
     useMainNet() {
-      window.location = "/mainnet";
+      this[SET_APP_NETWORK]('mainnet');
     },
     useBabylon() {
-      window.location = "/babylonnet";
+      this[SET_APP_NETWORK]('babylonnet');
     },
     useCarthage() {
-      window.location = "/carthage";
+      this[SET_APP_NETWORK]('carthagenet');
     }
   }
 };
@@ -144,7 +140,9 @@ export default {
 .pointer {
   cursor: pointer;
 }
-@media screen {
 
+.main-nav .dropdown-item,
+.main-nav .dropdown-toggle {
+  text-transform: capitalize;
 }
 </style>

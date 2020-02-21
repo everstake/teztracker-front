@@ -86,7 +86,7 @@ export default {
     FutureBakingRightsList
   },
   computed: {
-    ...mapState({
+    ...mapState('blocks', {
       count: state => state.counts
     })
   }

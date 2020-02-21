@@ -37,17 +37,17 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import { mapState, mapActions } from "vuex";
+import { GET_CONTRACTS } from "@/store/actions.types";
 
 export default {
   name: "Contracts",
   props: {},
   data() {
     return {
-      perPage: 10,
-      currentPage: 1,
-      pageOptions: [10, 15, 20, 25, 30],
+      perPage: this.$constants.PER_PAGE,
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+      pageOptions: this.$constants.PAGE_OPTIONS,
       fields: [
         { key: "contract", label: "Contract" },
         { key: "manager", label: "Manager" },
@@ -57,7 +57,7 @@ export default {
     };
   },
   computed: {
-    ...mapState({
+    ...mapState('accounts', {
       contracts: state => state.contracts,
       count: state => state.counts
     }),
@@ -71,15 +71,18 @@ export default {
   watch: {
     currentPage: {
       async handler(value) {
-        await this.$store.dispatch(ACTIONS.CONTRACTS_GET, {
+        await this[GET_CONTRACTS]({
           page: value,
           limit: this.perPage
         });
       }
     }
   },
-  async mounted() {
-    await this.$store.dispatch(ACTIONS.CONTRACTS_GET);
+  methods: {
+    ...mapActions('accounts', [GET_CONTRACTS])
+  },
+  async created() {
+    await this[GET_CONTRACTS]();
   }
 };
 </script>

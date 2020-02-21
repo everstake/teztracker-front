@@ -12,7 +12,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="progress-labels">
-                  <div class="tezos-label float-right">Tezos {{network}}</div>
+                  <div class="tezos-label float-right">Tezos {{ $_network }}</div>
                 </div>
               </div>
             </div>
@@ -27,7 +27,7 @@
               <div class="col-12">
                 <div class="progress-labels">
                   <div class="percentage float-left">
-                    <span>{{percent}}%</span>
+                    <span>{{ percent }}%</span>
                   </div>
                 </div>
               </div>
@@ -40,23 +40,24 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import { mapState, mapActions } from "vuex";
+import { GET_BLOCK_HEAD } from "@/store/actions.types";
+import network from "../../mixins/network";
+
 export default {
   name: "ico-cycle-counter",
+  mixins: [network],
   props: ["percent"],
   computed: {
-    ...mapState({
+    ...mapState('blocks', {
       head: state => state.headBlock
-    }),
-    network() {
-      return this.$route.params.network === "mainnet"
-        ? "Mainnet"
-        : "Babylonnet";
-    }
+    })
+  },
+  methods: {
+    ...mapActions('blocks', [GET_BLOCK_HEAD])
   },
   async created() {
-    await this.$store.dispatch(ACTIONS.BLOCK_GET_HEAD);
+    await this[GET_BLOCK_HEAD]();
   }
 };
 </script>

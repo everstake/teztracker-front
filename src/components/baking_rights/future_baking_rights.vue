@@ -72,18 +72,17 @@
 </template>
 <script>
 import _ from "lodash";
-import { mapState } from "vuex";
-
-import { ACTIONS } from "../../store";
+import { mapState, mapMutations } from "vuex";
+import { SET_FUTURE_BAKING_RIGHTS_COUNT } from "@/store/mutations.types";
 
 export default {
   name: "FutureBakingRights",
   props: ["block"],
   data() {
     return {
-      perPage: 10,
-      currentPage: 1,
-      blocks_in_row: 6,
+      perPage: this.$constants.PER_PAGE,
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+      blocks_in_row: this.$constants.BLOCKS_IN_ROW,
       future_baking_rights: [],
       fields: [
         {
@@ -94,7 +93,7 @@ export default {
     };
   },
   computed: {
-    ...mapState({
+    ...mapState('blocks', {
       count: state => state.counts
     }),
     rows() {
@@ -111,10 +110,11 @@ export default {
       }
     }
   },
-  async mounted() {
+  async created() {
     await this.reload();
   },
   methods: {
+    ...mapMutations('blocks', [SET_FUTURE_BAKING_RIGHTS_COUNT]),
     parseResponse(data) {
       const blocks = [];
       for (let i = 0; i < data.length; i++) {
@@ -174,11 +174,8 @@ export default {
         page,
         limit: this.blocks_in_row
       };
-      const data = await this.$store.getters.API.getFutureBakingRights(props);
-      await this.$store.commit(
-        ACTIONS.SET_FUTUREBAKINGRIGHTS_COUNT,
-        data.count
-      );
+      const data = await this.$api.getFutureBakingRights(props);
+      await this[SET_FUTURE_BAKING_RIGHTS_COUNT](data.count);
       this.parseResponse(data.data);
     }
   }

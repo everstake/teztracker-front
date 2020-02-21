@@ -16,7 +16,7 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
+        <span>{{ row.item.timestamp | timeformat($constants.TIME_FORMAT) }}</span>
       </template>
 
       <template slot="baker" slot-scope="row">
@@ -47,15 +47,16 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import { mapState, mapActions } from "vuex";
+import { GET_BLOCKS } from "@/store/actions.types";
 
 export default {
+  name: "Blocks_full",
   data() {
     return {
-      perPage: 10,
-      currentPage: 1,
-      pageOptions: [10, 15, 20, 25, 30],
+      perPage: this.$constants.PER_PAGE,
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+      pageOptions: this.$constants.PAGE_OPTIONS,
       fields: [
         {
           key: "level",
@@ -70,9 +71,8 @@ export default {
       ]
     };
   },
-  name: "Blocks_full",
   computed: {
-    ...mapState({
+    ...mapState('blocks', {
       blocks: state => state.blocks,
       count: state => state.counts
     }),
@@ -86,15 +86,18 @@ export default {
   watch: {
     currentPage: {
       async handler(value) {
-        await this.$store.dispatch(ACTIONS.BLOCKS_GET, {
+        await this[GET_BLOCKS]({
           page: value,
           limit: this.perPage
         });
       }
     }
   },
+  methods: {
+    ...mapActions('blocks', [GET_BLOCKS])
+  },
   async created() {
-    await this.$store.dispatch(ACTIONS.BLOCKS_GET, {
+    await this[GET_BLOCKS]({
       page: this.currentPage,
       limit: this.perPage
     });

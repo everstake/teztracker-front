@@ -25,14 +25,9 @@
     </button>
   </form>
 </template>
+
 <script>
 import _ from "lodash";
-
-const prefixes = {
-  account: ["tz", "KT"],
-  operation: ["o"],
-  block: ["B"]
-};
 
 export default {
   name: "Search",
@@ -65,7 +60,7 @@ export default {
         });
       }
       //block hash
-      for (const prefix of prefixes.block) {
+      for (const prefix of this.$constants.SEARCH_PREFIXES.block) {
         if (_.startsWith(searchStr, prefix)) {
           setTimeout(() => (this.loading = false), 100);
 
@@ -76,7 +71,7 @@ export default {
         }
       }
       //transactions
-      for (const prefix of prefixes.operation) {
+      for (const prefix of this.$constants.SEARCH_PREFIXES.operation) {
         if (_.startsWith(searchStr, prefix)) {
           setTimeout(() => (this.loading = false), 100);
 
@@ -87,7 +82,7 @@ export default {
         }
       }
       //account
-      for (const prefix of prefixes.account) {
+      for (const prefix of this.$constants.SEARCH_PREFIXES.account) {
         if (_.startsWith(searchStr, prefix)) {
           setTimeout(() => (this.loading = false), 100);
 
@@ -106,7 +101,7 @@ export default {
       });
     },
     findQueryPrefix(searchQuery) {
-      const prefixesArray = _.flatten(Object.values(prefixes));
+      const prefixesArray = _.flatten(Object.values(this.$constants.SEARCH_PREFIXES));
       let findedPrefix = null;
 
       const findId = () => {
@@ -142,7 +137,7 @@ export default {
       }
 
       if (!queryIncludesPrefix) {
-        this.error = `Search for an ${Object.keys(prefixes).join(" or ")}.`;
+        this.error = `Search for an ${Object.keys(this.$constants.SEARCH_PREFIXES).join(" or ")}.`;
         return false;
       }
 

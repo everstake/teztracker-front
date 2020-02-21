@@ -59,7 +59,7 @@ export default {
     OriginationsList
   },
   computed: {
-    ...mapState({
+    ...mapState('operations', {
       count: state => state.counts
     })
   }

@@ -28,7 +28,7 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}</span>
+        <span>{{ row.item.timestamp | timeformat($constants.TIME_FORMAT) }}</span>
       </template>
     </b-table>
 
@@ -44,19 +44,19 @@
     ></b-pagination>
   </div>
 </template>
+
 <script>
-import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
-import _ from "lodash";
-let i = 0;
+import { mapMutations } from "vuex";
+import { SET_ENDORSEMENTS_COUNT } from "@/store/mutations.types";
+
 export default {
   name: "Endorsements",
   props: ["block"],
   data() {
     return {
-      perPage: 10,
-      currentPage: 1,
-      pageOptions: [10, 15, 20, 25, 30],
+      perPage: this.$constants.PER_PAGE,
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+      pageOptions: this.$constants.PAGE_OPTIONS,
       endorsements: [],
       count: 0,
       fields: [
@@ -94,6 +94,7 @@ export default {
     this.reload({ block: this.level });
   },
   methods: {
+    ...mapMutations('blocks', [SET_ENDORSEMENTS_COUNT]),
     async reload({ page = 1, block = 0 } = {}) {
       const props = {
         page,
@@ -102,22 +103,23 @@ export default {
       let result;
       if (block > 0) {
         props.block_id = block;
-        props.limit = 32;
-        this.perPage = 32;
-        result = await this.$store.getters.API.getBlockEndorsements(props);
+        props.limit = this.$constants.ENDORSEMENTS_LIMIT;
+        this.perPage = this.$constants.ENDORSEMENTS_LIMIT;
+        result = await this.$api.getBlockEndorsements(props);
       } else {
-        result = await this.$store.getters.API.getEndorsements(props);
+        result = await this.$api.getEndorsements(props);
       }
-      if (result.status !== 200) {
+      if (result.status !== this.$constants.STATUS_SUCCESS) {
         return this.$router.push({
           name: result.status
         });
       }
       this.count = result.count;
       this.endorsements = result.data;
-      this.$store.commit(ACTIONS.SET_ENDORSEMENTS_COUNT, this.count);
+      this[SET_ENDORSEMENTS_COUNT](this.count);
     }
   }
 };
 </script>
+
 <style />
