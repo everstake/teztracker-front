@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import { isFinite } from "lodash/isFinite";
-import { startsWith } from "lodash/startsWith";
-import { some } from "lodash/some";
-import { flatten } from "lodash/flatten"
+import isFinite from "lodash/isFinite";
+import startsWith from "lodash/startsWith";
+import some from "lodash/some";
+import flatten from "lodash/flatten";
 
 export default {
   name: "Search",

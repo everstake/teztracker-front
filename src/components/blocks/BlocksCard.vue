@@ -60,7 +60,6 @@ import { mapState, mapActions } from "vuex";
 import { GET_BLOCKS } from "@/store/actions.types";
 export default {
   name: "BlocksCard",
-  props: {},
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
@@ -77,8 +76,6 @@ export default {
       ]
     };
   },
-  name: "Blocks_short",
-  props: {},
   computed: {
     ...mapState('blocks', {
       count: state => state.counts.blocks,

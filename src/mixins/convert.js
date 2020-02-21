@@ -1,5 +1,5 @@
 import { mapState } from "vuex";
-import { ceil } from "lodash/ceil";
+import ceil from "lodash/ceil";
 
 export default {
   computed: {

@@ -8,7 +8,7 @@ import store from "@/store";
 import routes from "./routes";
 import "./filters";
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from "@fortawesome/vue-fontawesome";
-import { faSearch, faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faCaretUp, faCaretDown, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { faLightbulb, faStar, faFolder, faUser, faChartBar, faBookmark, faGem, faHourglass } from "@fortawesome/free-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { dom } from "@fortawesome/fontawesome-svg-core";
@@ -18,7 +18,7 @@ import { PaginationPlugin } from 'bootstrap-vue';
 import { ProgressPlugin } from 'bootstrap-vue';
 
 dom.watch();
-library.add(faSearch, faCaretUp, faCaretDown);
+library.add(faSearch, faSpinner, faCaretUp, faCaretDown);
 library.add(faLightbulb, faStar, faFolder, faUser, faChartBar, faBookmark, faGem, faHourglass);
 
 Vue.config.productionTip = false;
