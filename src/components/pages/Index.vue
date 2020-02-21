@@ -208,9 +208,8 @@
 import { mapState, mapActions } from "vuex";
 import { GET_APP_INFO, GET_BLOCK_HEAD } from "@/store/actions.types";
 
-import BlocksCard from "../blocks/blocks_card.vue";
-import TxCard from "../transactions/transactions_card.vue";
-import Search from "../search/search";
+import BlocksCard from "../blocks/BlocksCard.vue";
+import TxsCard from "../transactions/TxsCard";
 import CycleCounter from "../cycle/CycleCounter";
 import Search from "../search/Search";
 import { setInterval, clearInterval } from "timers";
