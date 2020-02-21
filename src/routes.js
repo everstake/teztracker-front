@@ -1,5 +1,4 @@
-const Index = () => import("./components/pages/Index.vue");
-
+import Index from './components/pages/Index'
 /* Blocks group */
 // Blocks
 const Blocks = () => import("./components/pages/Blocks.vue");
