@@ -165,26 +165,26 @@
               <div class="col-lg-3">
                 <ul>
                   <li>
-                    <a href="#">What is Tezos?</a>
+                    <a href="https://tezos.com">What is Tezos?</a>
                   </li>
                   <li>
-                    <a href="#">White Paper</a>
+                    <a href="https://tezos.com/static/white_paper-2dc8c02267a8fb86bd67a108199441bf.pdf">White Paper</a>
                   </li>
                   <li>
-                    <a href="#">Testnet Faucet</a>
+                    <a href="https://faucet.tzalpha.net/">Testnet Faucet</a>
                   </li>
                 </ul>
               </div>
               <div class="col-lg-3">
                 <ul>
                   <li>
-                    <a href="#">How to Run Tezos?</a>
+                    <a href="https://tezos.gitlab.io/introduction/howtouse.html">How to Run Tezos?</a>
                   </li>
                   <li>
-                    <a href="#">Git repository</a>
+                    <a href="https://gitlab.com/tezos/tezos">Git repository</a>
                   </li>
                   <li>
-                    <a href="#">Docker images</a>
+                    <a href="https://hub.docker.com/r/tezos/tezos">Docker images</a>
                   </li>
                 </ul>
               </div>

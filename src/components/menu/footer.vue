@@ -10,7 +10,7 @@
           </div>
           <div class="col-lg-6 text-right">
             <div class="contacts mr-2">
-              <a href="#" class="contact">
+              <a href="mailto:inbox@everstake.one" class="contact">
                 <i class="far fa-envelope"></i> Contact Us
               </a>
             </div>
