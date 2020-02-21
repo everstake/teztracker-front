@@ -47,7 +47,7 @@ export default {
     onSubmit: function() {
       this.loading = true;
 
-      const searchStr = this.$data.searchQuery;
+      const searchStr = this.searchQuery;
       const isFormValid = this.validateForm();
 
       if (!isFormValid) {
@@ -99,7 +99,7 @@ export default {
       }
 
       this.loading = false;
-      this.$data.searchQuery = "";
+      this.searchQuery = "";
 
       return this.$router.push({
         name: "404"

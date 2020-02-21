@@ -102,7 +102,7 @@ export default {
       return this.count.baking_rights;
     },
     items() {
-      return this.$data.baking_rights;
+      return this.baking_rights;
     }
   },
   watch: {
@@ -137,7 +137,7 @@ export default {
       const levels = _.uniq(blocks.map(el => el.level))
         .sort()
         .reverse();
-      const rowLength = this.$data.blocks_in_row;
+      const rowLength = this.blocks_in_row;
       const fields = [
         {
           key: "priority",
@@ -173,8 +173,8 @@ export default {
         }
         result.push(row);
       }
-      this.$data.fields = fields;
-      this.$data.baking_rights = result;
+      this.fields = fields;
+      this.baking_rights = result;
     },
     async reload(page = 1) {
       const props = {
