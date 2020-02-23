@@ -78,9 +78,11 @@
               aria-expanded="false"
             >{{currentNetwork}}</a>
             <div class="dropdown-menu">
-              <li class="dropdown-item pointer" @click="useMainNet()">Mainnet</li>
-              <li class="dropdown-item pointer" @click="useBabylon()">Babylonnet</li>
-              <li class="dropdown-item pointer" @click="useCarthage()">Carthagenet</li>
+              <li
+                class="dropdown-item pointer"
+                v-for="network in this.getAppNetworkList"
+                @click="changeRouteNetwork(network)"
+              >{{ network }}</li>
             </div>
           </li>
         </ul>
@@ -108,9 +110,8 @@ export default {
     ...mapState('app', {
       network: state => state.app.network
     }),
-    ...mapGetters('app', ['getAppNetwork']),
+    ...mapGetters('app', ['getAppNetwork', 'getAppNetworkList']),
     currentNetwork: function() {
-      this.changeRouteNetwork(this.getAppNetwork);
       return this.getAppNetwork;
     }
   },
@@ -119,17 +120,9 @@ export default {
     isActive(...args) {
       return args.includes(this.$route.name);
     },
-    changeRouteNetwork(network = 'mainnet') {
+    changeRouteNetwork(network) {
+      this[SET_APP_NETWORK](network);
       this.$router.push({ name: this.$route.name, params: { network } });
-    },
-    useMainNet() {
-      this[SET_APP_NETWORK]('mainnet');
-    },
-    useBabylon() {
-      this[SET_APP_NETWORK]('babylonnet');
-    },
-    useCarthage() {
-      this[SET_APP_NETWORK]('carthagenet');
     }
   }
 };

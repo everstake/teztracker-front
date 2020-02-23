@@ -35,10 +35,10 @@ let router = new VueRouter({
   routes
 });
 
-// router.beforeEach(async (to, from, next) => {
-//   await store.commit("app/setAppNetwork", to.params.network);
-//   return next()
-// });
+router.beforeEach(async (to, from, next) => {
+  await store.commit('app/setAppNetwork', to.params.network);
+  return next();
+});
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("font-awesome-layers", FontAwesomeLayers);

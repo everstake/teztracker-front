@@ -4,7 +4,8 @@ import { SET_APP_INFO, SET_APP_NETWORK } from "@/store/mutations.types";
 const initialState = {
   app: {
     platform: "tezos",
-    network: "mainnet"
+    network: "mainnet",
+    networkList: ['mainnet', 'babylonnet', 'carthagenet']
   },
   priceInfo: {}
 };
@@ -27,7 +28,8 @@ export const mutations = {
 };
 
 export const getters = {
-  getAppNetwork: (state) => state.app.network
+  getAppNetwork: (state) => state.app.network,
+  getAppNetworkList: (state) => state.app.networkList
 };
 
 export default {
