@@ -124,6 +124,14 @@ export default {
       this[SET_APP_NETWORK](network);
       this.$router.push({ name: this.$route.name, params: { network } });
     }
+  },
+  beforeRouteUpdate(to, from, next) {
+    next({
+      name: to.name,
+      params: {
+        network: this.currentNetwork()
+      }
+    });
   }
 };
 </script>
