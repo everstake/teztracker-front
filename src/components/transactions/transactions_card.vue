@@ -27,9 +27,9 @@
         class="table table-borderless table-responsive-sm"
       >
         <template slot="timestamp" slot-scope="row">
-          <span>
-            {{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}
-          </span>
+          <span>{{
+            row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY")
+          }}</span>
         </template>
 
         <template slot="level" slot-scope="row">
@@ -51,7 +51,7 @@
           </b-link>
         </template>
       </b-table>
-      <TzPagination
+      <PaginationWithCustomAction
         :totalRows="rows"
         :perPage="perPage"
         align="right"
@@ -59,8 +59,7 @@
         :nextText="'Next'"
         lastText
         firstText
-        action="TRANSACTIONS_GET"
-      ></TzPagination>
+      ></PaginationWithCustomAction>
     </div>
   </div>
 </template>
@@ -70,6 +69,12 @@ import TzPagination from "../common/_tz_pagination";
 import TzCardHeader from "../common/tz_card_header";
 import TzDropdown from "../common/tz_dropdown";
 import TzCounter from "../common/tz_counter";
+
+import withCustomAction from "../common/withCustomAction";
+const PaginationWithCustomAction = withCustomAction(
+  TzPagination,
+  "TRANSACTIONS_GET"
+);
 
 export default {
   name: "Transactions",
@@ -104,10 +109,10 @@ export default {
     }
   },
   components: {
-    TzPagination,
     TzCardHeader,
     TzDropdown,
-    TzCounter
+    TzCounter,
+    PaginationWithCustomAction
   }
 };
 </script>
@@ -131,21 +136,6 @@ export default {
   align-items: center;
   h3 {
     line-height: 1;
-  }
-}
-.pagination-block {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  @include for-tablet-portrait-up {
-    justify-content: flex-end;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
   }
 }
 </style>

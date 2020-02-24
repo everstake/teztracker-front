@@ -28,9 +28,9 @@
         class="table table-borderless table-responsive-sm"
       >
         <template slot="timestamp" slot-scope="row">
-          <span>
-            {{ row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY") }}
-          </span>
+          <span>{{
+            row.item.timestamp | timeformat("HH:mm:ss DD.MM.YY")
+          }}</span>
         </template>
 
         <template slot="level" slot-scope="row">
@@ -45,7 +45,7 @@
           </b-link>
         </template>
       </b-table>
-      <TzPagination
+      <PaginationWithCustomAction
         :total-rows="rows"
         :per-page="perPage"
         align="right"
@@ -54,7 +54,7 @@
         next-text="Next"
         last-text
         action="BLOCKS_GET"
-      ></TzPagination>
+      ></PaginationWithCustomAction>
     </div>
   </div>
 </template>
@@ -64,6 +64,9 @@ import TzPagination from "../common/_tz_pagination";
 import TzCardHeader from "../common/tz_card_header";
 import TzDropdown from "../common/tz_dropdown";
 import TzCounter from "../common/tz_counter";
+
+import withCustomAction from "../common/withCustomAction";
+const PaginationWithCustomAction = withCustomAction(TzPagination, "BLOCKS_GET");
 
 export default {
   data() {
@@ -97,10 +100,10 @@ export default {
     }
   },
   components: {
-    TzPagination,
     TzCardHeader,
     TzDropdown,
-    TzCounter
+    TzCounter,
+    PaginationWithCustomAction
   }
 };
 </script>

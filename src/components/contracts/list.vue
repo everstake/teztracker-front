@@ -26,23 +26,26 @@
         <span>{{ row.item.balance | tezos }}</span>
       </template>
     </b-table>
-    <div class="pagination-block">
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        align="right"
-        first-text
-        prev-text="Prev"
-        next-text="Next"
-        last-text
-      ></b-pagination>
-    </div>
+    <PaginationWithCustomAction
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      align="right"
+      first-text
+      prev-text="Prev"
+      next-text="Next"
+      last-text
+    ></PaginationWithCustomAction>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import TzPagination from "../common/_tz_pagination";
+import withCustomAction from "../common/withCustomAction";
+const PaginationWithCustomAction = withCustomAction(
+  TzPagination,
+  "CONTRACTS_GET"
+);
 
 export default {
   name: "Contracts",
@@ -72,38 +75,8 @@ export default {
       return this.contracts;
     }
   },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.$store.dispatch(ACTIONS.CONTRACTS_GET, {
-          page: value,
-          limit: this.perPage
-        });
-      }
-    }
-  },
-  async mounted() {
-    await this.$store.dispatch(ACTIONS.CONTRACTS_GET);
+  components: {
+    PaginationWithCustomAction
   }
 };
 </script>
-
-<style lang="scss" scoped>
-@import "../../styles/scss/common";
-
-.pagination-block {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  @include for-tablet-portrait-up {
-    justify-content: flex-end;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-  }
-}
-</style>

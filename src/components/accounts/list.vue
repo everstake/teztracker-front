@@ -22,8 +22,7 @@
     </b-table>
 
     <div class="pagination-block">
-      <b-pagination
-        v-model="currentPage"
+      <PaginationWithCustomAction
         :total-rows="rows"
         :per-page="perPage"
         align="right"
@@ -31,13 +30,18 @@
         prev-text="Prev"
         next-text="Next"
         last-text
-      ></b-pagination>
+      ></PaginationWithCustomAction>
     </div>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import { ACTIONS } from "../../store";
+import TzPagination from "../common/_tz_pagination";
+import withCustomAction from "../common/withCustomAction";
+const PaginationWithCustomAction = withCustomAction(
+  TzPagination,
+  "ACCOUNTS_GET"
+);
 
 export default {
   name: "Accounts",
@@ -65,38 +69,8 @@ export default {
       return this.accounts;
     }
   },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.$store.dispatch(ACTIONS.ACCOUNTS_GET, {
-          page: value,
-          limit: this.perPage
-        });
-      }
-    }
-  },
-  async mounted() {
-    await this.$store.dispatch(ACTIONS.ACCOUNTS_GET);
+  components: {
+    PaginationWithCustomAction
   }
 };
 </script>
-
-<style lang="scss" scoped>
-@import "../../styles/scss/common";
-
-.pagination-block {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  @include for-tablet-portrait-up {
-    justify-content: flex-end;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-  }
-}
-</style>

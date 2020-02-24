@@ -34,23 +34,21 @@
       </template>
     </b-table>
 
-    <div class="pagination-block">
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        align="right"
-        first-text
-        prev-text="Prev"
-        next-text="Next"
-        last-text
-      ></b-pagination>
-    </div>
+    <TzPagination
+      @change="_handleChange"
+      :totalRows="rows"
+      :perPage="perPage"
+      align="right"
+      firstText
+      prevText="Prev"
+      nextText="Next"
+      lastText
+    ></TzPagination>
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
 import { ACTIONS } from "../../store";
+import TzPagination from "../common/_tz_pagination";
 
 export default {
   name: "Activations",
@@ -78,6 +76,9 @@ export default {
       return this.activations;
     }
   },
+  components: {
+    TzPagination
+  },
   watch: {
     currentPage: {
       async handler(value) {
@@ -88,7 +89,11 @@ export default {
   async mounted() {
     await this.reload();
   },
+
   methods: {
+    _handleChange(page) {
+      this.currentPage = page;
+    },
     async reload(page = 1) {
       const props = {
         page,
@@ -100,6 +105,7 @@ export default {
       if (this.$props.account) {
         props.account_id = this.$props.account;
       }
+      // :C Move to actions, make HOC for pagination item. withAction(b-pagination);
       const data = await this.$store.getters.API.getActivations(props);
       this.activations = data.data;
       this.count = data.count;
@@ -108,23 +114,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-@import "../../styles/scss/common";
-
-.pagination-block {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  @include for-tablet-portrait-up {
-    justify-content: flex-end;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-  }
-}
-</style>

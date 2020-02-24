@@ -1,6 +1,7 @@
 <template>
   <div class="pagination-block">
     <b-pagination
+      @change="_handleChange"
       v-model="currentPage"
       :total-rows="totalRows"
       :per-page="perPage"
@@ -14,40 +15,45 @@
 </template>
 
 <script>
-import { ACTIONS } from "../../store";
-
 export default {
-  name: "Pagination",
-  props: [
-    "totalRows",
-    "align",
-    "firstText",
-    "prevText",
-    "nextText",
-    "lastText",
-    "action"
-  ],
+  name: "TzPagination",
+
+  props: {
+    totalRows: {
+      type: Number,
+      default: 0
+    },
+    align: {
+      type: String,
+      default: "right"
+    },
+    firstText: {
+      type: String,
+      default: "right"
+    },
+    prevText: {
+      type: String,
+      default: "right"
+    },
+    nextText: {
+      type: String,
+      default: "right"
+    },
+    lastText: {
+      type: String,
+      default: "right"
+    }
+  },
   data() {
     return {
       currentPage: 1,
       perPage: 10
     };
   },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.$store.dispatch(ACTIONS[this.action], {
-          page: value,
-          perPage: this.perPage
-        });
-      }
+  methods: {
+    _handleChange(page) {
+      this.$emit("change", page);
     }
-  },
-  async created() {
-    await this.$store.dispatch(ACTIONS[this.action], {
-      page: this.currentPage,
-      perPage: this.perPage
-    });
   }
 };
 </script>

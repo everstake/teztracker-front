@@ -34,7 +34,7 @@
       </template>
     </b-table>
 
-    <TzPagination
+    <PaginationWithCustomAction
       :total-rows="rows"
       :per-page="perPage"
       align="right"
@@ -42,14 +42,16 @@
       prev-text="Prev"
       next-text="Next"
       last-text
-      action="BLOCKS_GET"
-    ></TzPagination>
+    ></PaginationWithCustomAction>
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
 import { ACTIONS } from "../../store";
 import TzPagination from "../common/_tz_pagination";
+
+import withCustomAction from "../common/withCustomAction";
+const PaginationWithCustomAction = withCustomAction(TzPagination, "BLOCKS_GET");
 
 export default {
   data() {
@@ -100,7 +102,8 @@ export default {
     });
   },
   components: {
-    TzPagination
+    TzPagination,
+    PaginationWithCustomAction
   }
 };
 </script>

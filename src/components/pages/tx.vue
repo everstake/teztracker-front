@@ -96,8 +96,8 @@
                     <span>{{ row.item.storageLimit }}</span>
                   </template>
                 </b-table>
-                <b-pagination
-                  v-model="currentPage"
+                <TzPagination
+                  @change="_handleChange"
                   :total-rows="rows"
                   :per-page="perPage"
                   align="right"
@@ -105,7 +105,7 @@
                   prev-text="Prev"
                   next-text="Next"
                   last-text
-                ></b-pagination>
+                ></TzPagination>
               </div>
             </div>
           </div>
@@ -119,6 +119,7 @@
 import TxInfo from "../transactions/transaction";
 import { mapState } from "vuex";
 import { ACTIONS } from "../../store";
+import TzPagination from "../common/_tz_pagination";
 
 export default {
   name: "Transaction",
@@ -158,7 +159,8 @@ export default {
     await this.reload();
   },
   components: {
-    TxInfo
+    TxInfo,
+    TzPagination
   },
   watch: {
     currentPage: {
@@ -174,6 +176,9 @@ export default {
     }
   },
   methods: {
+    _handleChange(page) {
+      this.currentPage = page;
+    },
     async reload(page = 1) {
       const props = {
         page,

@@ -66,8 +66,8 @@
     </b-table>
 
     <div class="pagination-block">
-      <b-pagination
-        v-model="currentPage"
+      <TzPagination
+        @change="_handleChange"
         :total-rows="rows"
         :per-page="perPage"
         align="right"
@@ -76,7 +76,7 @@
         prev-text="Prev"
         next-text="Next"
         last-text
-      ></b-pagination>
+      ></TzPagination>
     </div>
   </div>
 </template>
@@ -84,6 +84,8 @@
 import { mapState } from "vuex";
 import { ACTIONS } from "../../store";
 import _ from "lodash";
+import TzPagination from "../common/_tz_pagination";
+
 export default {
   name: "BakingRights",
   props: [],
@@ -193,30 +195,13 @@ export default {
       const data = await this.$store.getters.API.getBakingRights(props);
       await this.$store.commit(ACTIONS.SET_BAKINGRIGHTS_COUNT, data.count);
       this.parseResponse(data.data);
+    },
+    _handleChange(page) {
+      this.currentPage = page;
     }
+  },
+  components: {
+    TzPagination
   }
 };
 </script>
-
-<style lang="scss" scoped>
-@import "../../styles/scss/common";
-
-.pagination-block {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  @include for-tablet-portrait-up {
-    justify-content: flex-end;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-  }
-}
-.winner {
-  background-color: aquamarine;
-}
-</style>

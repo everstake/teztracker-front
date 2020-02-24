@@ -64,19 +64,18 @@
       </template>
     </b-table>
 
-    <div class="pagination-block">
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        align="right"
-        limit="10"
-        first-text
-        prev-text="Prev"
-        next-text="Next"
-        last-text
-      ></b-pagination>
-    </div>
+    <TzPagination
+      @change="_handleChange"
+      v-model="currentPage"
+      :total-rows="rows"
+      :per-page="perPage"
+      align="right"
+      limit="10"
+      first-text
+      prev-text="Prev"
+      next-text="Next"
+      last-text
+    ></TzPagination>
   </div>
 </template>
 <script>
@@ -84,6 +83,7 @@ import _ from "lodash";
 import { mapState } from "vuex";
 
 import { ACTIONS } from "../../store";
+import TzPagination from "../common/_tz_pagination";
 
 export default {
   name: "FutureBakingRights",
@@ -124,6 +124,9 @@ export default {
     await this.reload();
   },
   methods: {
+    _handleChange(page) {
+      this.currentPage = page;
+    },
     parseResponse(data) {
       const blocks = [];
       for (let i = 0; i < data.length; i++) {
@@ -190,26 +193,9 @@ export default {
       );
       this.parseResponse(data.data);
     }
+  },
+  components: {
+    TzPagination
   }
 };
 </script>
-
-<style lang="scss">
-@import "../../styles/scss/common";
-
-.pagination-block {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  @include for-tablet-portrait-up {
-    justify-content: flex-end;
-    align-items: center;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-  }
-}
-</style>

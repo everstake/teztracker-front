@@ -33,8 +33,8 @@
       </template>
     </b-table>
 
-    <b-pagination
-      v-model="currentPage"
+    <TzPagination
+      @change="_handleChange"
       :total-rows="rows"
       :per-page="perPage"
       align="right"
@@ -42,12 +42,12 @@
       prev-text="Prev"
       next-text="Next"
       last-text
-    ></b-pagination>
+    ></TzPagination>
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
 import { ACTIONS } from "../../store";
+import TzPagination from "../common/_tz_pagination";
 
 export default {
   name: "DoubleEndorsement",
@@ -86,6 +86,9 @@ export default {
     await this.reload();
   },
   methods: {
+    _handleChange(page) {
+      this.currentPage = page;
+    },
     async reload(page = 1) {
       const props = {
         page,
@@ -102,6 +105,9 @@ export default {
       this.count = data.count;
       this.$store.commit(ACTIONS.SET_DOUBLEENDORSEMENT_COUNT, this.count);
     }
+  },
+  components: {
+    TzPagination
   }
 };
 </script>
