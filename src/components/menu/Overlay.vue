@@ -1,13 +1,13 @@
 <template>
   <div class="hamburger-menu">
-    <h3 @click="toggleMenu">
+    <div  class="hamburger-menu__icon" @click="toggleMenu">
       <font-awesome-icon
         v-if="isOpen"
         class="icon"
         :icon="['far', 'times-circle']"
       />
       <font-awesome-icon v-else class="icon" icon="bars" />
-    </h3>
+    </div>
     <div :class="{ overlay: true, open: isOpen }" id="overlay">
       <div class="overlay_container">
         <div class="mobile-nav">
@@ -257,6 +257,10 @@ $button-width: 35px;
 }
 
 .hamburger-menu {
+  &__icon {
+    font-size: 24px;
+    /*color: */
+  }
   @include for-regular-desktops-up {
     display: none;
   }
