@@ -1,8 +1,8 @@
 <template>
-  <section class="cycle-counter">
+  <section class="cycle-counter container">
     <div class="row">
       <div class="col-12">
-        <div class="card ml-2 mr-2">
+        <div class="card ">
           <div class="card-header">
             <div class="title text-center">
               <span>Percentage of ICO addresses activated</span>
@@ -64,3 +64,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  .container {
+    position: relative;
+  }
+</style>

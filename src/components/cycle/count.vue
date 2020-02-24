@@ -96,7 +96,7 @@ export default {
 @import "../../styles/scss/common";
 
 .cycle-counter {
-  padding: 0 15px;
+  padding: 0 5px;
   @include for-phone-only {
     padding: 0;
   }
