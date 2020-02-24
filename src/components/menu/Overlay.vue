@@ -10,9 +10,11 @@
     </h3>
     <div :class="{ overlay: true, open: isOpen }" id="overlay">
       <div class="overlay_container">
-        <AccordionMenu @close="closeMenu" />
-        <div class="search search-wrapper-nav">
-          <Search v-on:onSubmit="toggleMenu" />
+        <div class="mobile-nav">
+          <AccordionMenu @close="closeMenu" />
+          <div class="search search-wrapper-nav">
+            <Search v-on:onSubmit="toggleMenu" />
+          </div>
         </div>
         <Footer class="footer--fixed" />
       </div>
@@ -174,6 +176,9 @@ $button-width: 35px;
     display: flex;
     height: calc(100%-60px);
     flex-direction: column;
+    .mobile-nav {
+      flex: 1;
+    }
   }
 
   &.open {
@@ -268,7 +273,7 @@ $button-width: 35px;
 }
 
 .footer--fixed {
-  position: fixed;
+  /*position: fixed;*/
   bottom: 0;
   width: 100%;
 }
