@@ -174,7 +174,7 @@ $button-width: 35px;
 
   &_container {
     display: flex;
-    height: calc(100%-60px);
+    height: calc(100% - 60px);
     flex-direction: column;
     .mobile-nav {
       flex: 1;
