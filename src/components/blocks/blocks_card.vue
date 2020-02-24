@@ -3,7 +3,7 @@
     <TzCardHeader>
       <template v-slot:left-content class="text">
         <h4 class="tz-title--bold">Blocks list</h4>
-        <TzDropdown dropdownTitle="this year" />
+        <TzDropdown dropdownTitle="This year" />
       </template>
       <template v-slot:right-content class="text">
         <TzCounter :count="count" />

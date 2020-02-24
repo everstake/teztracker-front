@@ -42,6 +42,7 @@ export default {
   &__title {
     text-decoration: none;
     color: #9ea0a5;
+    font-weight: bold;
     &:hover {
       text-decoration: none;
       color: #309282;

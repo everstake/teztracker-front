@@ -86,22 +86,6 @@ export default {
       return this.blocks;
     }
   },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.$store.dispatch(ACTIONS.BLOCKS_GET, {
-          page: value,
-          limit: this.perPage
-        });
-      }
-    }
-  },
-  async created() {
-    await this.$store.dispatch(ACTIONS.BLOCKS_GET, {
-      page: this.currentPage,
-      limit: this.perPage
-    });
-  },
   components: {
     TzPagination,
     PaginationWithCustomAction
