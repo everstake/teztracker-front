@@ -58,6 +58,7 @@ export default {
     return {
       perPage: 10,
       pageOptions: [10, 15, 20, 25, 30],
+      currentPage: 1,
       fields: [
         {
           key: "level",
