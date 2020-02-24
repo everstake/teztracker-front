@@ -175,6 +175,8 @@ span a.baker {
   background-position: 0 0;
   /*background-repeat: repeat-x;*/
   padding-top: 80px;
+  flex: 1;
+  min-height:calc(100vh - 60px);
 }
 
 .main-content.error-page {
