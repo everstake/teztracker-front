@@ -348,13 +348,13 @@ export default {
   }
 }
 div.main-content .promo-section .promo-top .promo-search {
-    .search {
-      @include for-smartphones-portrait-up {
-        width: 100%;
-      }
-      @include for-regular-desktops-up {
-        width: 85%;
-      }
+  .search {
+    @include for-smartphones-portrait-up {
+      width: 100%;
+    }
+    @include for-regular-desktops-up {
+      width: 85%;
     }
   }
+}
 </style>

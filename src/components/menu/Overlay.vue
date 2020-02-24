@@ -1,6 +1,6 @@
 <template>
   <div class="hamburger-menu">
-    <div  class="hamburger-menu__icon" @click="toggleMenu">
+    <div class="hamburger-menu__icon" @click="toggleMenu">
       <font-awesome-icon
         v-if="isOpen"
         class="icon"
