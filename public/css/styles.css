@@ -787,7 +787,7 @@ span a.baker {
 @media screen and (max-width: 1360px) {
   .main-header .header-middle .main-nav {
     float: left;
-    margin: 0 36px;
+    margin: 0 15px;
   }
 
   .main-header .header-middle .main-nav.right-block {
