@@ -47,23 +47,36 @@ const NotFound = () => import("./components/pages/errors/NotFound.vue");
 const ServerError = () => import("./components/pages/errors/ServerError.vue");
 
 export default [
-  { path: "/", name: "default", redirect: "/mainnet" },
-  { path: "/:network/", name: "index", component: Index },
-
-  /* Blocks group */
-  // Blocks
-  { path: "/:network/blocks", name: "blocks", component: Blocks },
-  { path: "/:network/block/:level", name: "block", component: Block },
-  // Snapshots
-  { path: "/:network/snapshots", name: "snapshots", component: Snapshots },
-  // Baking rights
   {
-    path: "/:network/baking_rights",
+    path: '/',
+    name: 'index',
+    redirect: { name: 'network', params: { network: 'mainnet' } }
+  },
+  {
+    name: 'network',
+    path: '/:network',
+    component: Index
+  },
+  {
+    name: 'blocks',
+    path: '/:network/blocks',
+    component: Blocks
+  },
+  {
+    name: 'block',
+    path: '/:network/block/:level',
+    component: Block
+  },
+  {
+    name: "snapshots",
+    path: "/:network/snapshots",
+    component: Snapshots
+  },
+  {
     name: "baking_rights",
+    path: "/:network/baking_rights",
     component: BakingRights
   },
-  /* Blocks group end */
-
   /* Operations group */
   // Txs
   { path: "/:network/txs", name: "txs", component: Txs },
@@ -122,9 +135,15 @@ export default [
   // Contracts
   { path: "/:network/contracts", name: "contracts", component: Contracts },
   /* Accounts group end */
-
+  {
+    name: '404',
+    path: '/:network/*',
+    component: NotFound
+  },
   // Errors
-  { path: "/404", name: "404", component: NotFound },
-  { path: "/500", name: "500", component: ServerError },
-  { path: "*", redirect: "/404" }
+  {
+    path: "/500",
+    name: "500",
+    component: ServerError
+  }
 ];

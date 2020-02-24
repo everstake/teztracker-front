@@ -5,6 +5,7 @@ import App from "./App.vue";
 import './plugins/constants';
 import './plugins/TezosApi';
 import store from "@/store";
+import { state as appState } from '@/store/modules/app.module';
 import routes from "./routes";
 import "./filters";
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from "@fortawesome/vue-fontawesome";
@@ -35,9 +36,20 @@ let router = new VueRouter({
   routes
 });
 
-router.beforeEach(async (to, from, next) => {
-  await store.commit('app/setAppNetwork', to.params.network);
-  return next();
+router.beforeEach( (to, from, next) => {
+  const isRouteNetworkValid = appState.app.networkList.some(network => network === to.params.network);
+
+  if (isRouteNetworkValid) {
+    store.commit('app/setAppNetwork', to.params.network);
+    return next();
+  } else {
+    next({
+      name: to.name,
+      params: {
+        network: appState.app.network
+      }
+    });
+  }
 });
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

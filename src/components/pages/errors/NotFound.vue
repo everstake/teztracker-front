@@ -28,10 +28,11 @@ export default {
   name: "NotFound",
   methods: {
     back() {
-      if (window.history.length <= 2) {
-        return this.$router.push({ name: "index" });
+      if (window.history.length > 2) {
+        this.$router.go(-1);
+      } else {
+        return this.$router.push({ name: "network" });
       }
-      this.$router.go(-2);
     }
   }
 };

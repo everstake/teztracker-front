@@ -1,19 +1,19 @@
 <template>
   <header class="main-header">
     <div class="logo">
-      <router-link :to="{ name: 'index' }">TZTracker</router-link>
+      <router-link :to="{ name: 'network' }">TZTracker</router-link>
     </div>
     <div class="header-middle">
       <nav class="main-nav">
         <ul>
           <li v-bind:class="{ active: isActive('index') }">
-            <router-link :to="{ name: 'index' }">Dashboard</router-link>
+            <router-link :to="{ name: 'network' }">Dashboard</router-link>
           </li>
           <li>
             <a
               class="dropdown-toggle"
               data-toggle="dropdown"
-              href="#"
+              href="/"
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
@@ -28,7 +28,7 @@
             <a
               class="dropdown-toggle"
               data-toggle="dropdown"
-              href="#"
+              href="/"
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
@@ -53,7 +53,7 @@
             <a
               class="dropdown-toggle"
               data-toggle="dropdown"
-              href="#"
+              href="/"
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
@@ -72,7 +72,7 @@
             <a
               class="dropdown-toggle"
               data-toggle="dropdown"
-              href="#"
+              href="/"
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
