@@ -20,10 +20,8 @@
         <!-- cycle-->
         <CycleCount />
 
-        <div class="promo-tiles row">
-          <div
-            class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center"
-          >
+        <div class="tz-row promo-tiles">
+          <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'lightbulb']" />
@@ -43,9 +41,7 @@
             </div>
           </div>
 
-          <div
-            class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center"
-          >
+          <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'star']" />
@@ -69,9 +65,7 @@
             </div>
           </div>
 
-          <div
-            class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center"
-          >
+          <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'folder']" />
@@ -82,7 +76,7 @@
             </div>
           </div>
 
-          <div class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 text-center">
+          <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'user']" />
@@ -101,10 +95,8 @@
           </div>
         </div>
 
-        <div class="promo-tiles row">
-          <div
-            class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center"
-          >
+        <div class="promo-tiles tz-row">
+          <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'chart-bar']" />
@@ -127,9 +119,7 @@
             </div>
           </div>
 
-          <div
-            class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center"
-          >
+          <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'bookmark']" />
@@ -142,9 +132,7 @@
             </div>
           </div>
 
-          <div
-            class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center"
-          >
+          <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'gem']" />
@@ -155,9 +143,7 @@
             </div>
           </div>
 
-          <div
-            class="col col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-3 text-center"
-          >
+          <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'hourglass']" />
@@ -325,6 +311,40 @@ export default {
 .col-xs-12 {
   @include for-smartphones-portrait {
     padding: 0;
+  }
+}
+
+.tz-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  @include for-smartphones-portrait-up {
+    flex-direction: column;
+  }
+  @include for-tablet-portrait-up {
+    flex-direction: row;
+  }
+
+  &__item {
+    flex: 1 0 20%;
+    padding: 5px;
+
+    @include for-smartphones-portrait-up {
+      flex: 1 0 50%;
+    }
+    @include for-low-resolution-tablets-mobiles-landscape {
+      flex: 1 0 50%;
+    }
+    @include for-tablet-ipad-landscape {
+      flex: 1 0 50%;
+    }
+    @include for-tablet-ipad-portrait {
+      flex: 1 0 50%;
+    }
+
+    @include for-regular-desktops-up {
+      flex: 1 0 20%;
+    }
   }
 }
 </style>

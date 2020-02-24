@@ -1,5 +1,5 @@
-/* 
-  ##Device = Most of the mobiles 
+/*
+  ##Device = Most of the mobiles
   ##Screen = B/w 320px to 479px
 */
 @mixin for-smartphones-portrait {
@@ -7,8 +7,15 @@
     @content;
   }
 }
+
+@mixin for-smartphones-portrait-up {
+  @media (min-width: 320px) {
+    @content;
+  }
+}
+
 /**
-  ## Device = Most of the mobiles 
+  ## Device = Most of the mobiles
   ##Screen = B/w 320px to 479px
 */
 @mixin for-phone-only {
@@ -16,7 +23,7 @@
     @content;
   }
 }
-/* 
+/*
   ##Device = Low Resolution Tablets, Mobiles (Landscape)
   ##Screen = B/w 481px to 767px
 */
@@ -26,7 +33,7 @@
   }
 }
 
-/* 
+/*
   ##Device = Tablets, Ipads (portrait)
   ##Screen = B/w 768px to 1024px
 */
@@ -37,7 +44,7 @@
   }
 }
 
-/* 
+/*
   ##Device = Tablets, Ipads (landscape)
   ##Screen = B/w 768px to 1024px
 */
@@ -71,7 +78,7 @@
   }
 }
 
-/* 
+/*
   ##Device = Laptops, Desktops
   ##Screen = B/w 1025px to 1280px
 */
@@ -81,7 +88,7 @@
   }
 }
 
-/* 
+/*
   ##Device = Desktops
   ##Screen = 1281px to higher resolution desktops
 */
