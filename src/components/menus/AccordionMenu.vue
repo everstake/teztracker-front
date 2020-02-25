@@ -80,7 +80,7 @@ export default {
       window.location = "/babylonnet";
     },
     useCarthage() {
-      window.location = "/carthage";
+      window.location = "/carthagenet";
     },
 
     expand: function(e, i) {

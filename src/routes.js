@@ -136,14 +136,7 @@ export default [
   { path: "/:network/contracts", name: "contracts", component: Contracts },
   /* Accounts group end */
   // Errors
-  {
-    name: '404',
-    path: '/:network/*',
-    component: NotFound
-  },
-  {
-    path: "/500",
-    name: "500",
-    component: ServerError
-  }
+  {path: '/:network/404', name: '404', component: NotFound},
+  {path: '/:network/*', redirect: { name: '404' }},
+  {path: '/:network/500', name: '500', component: ServerError},
 ];
