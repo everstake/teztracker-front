@@ -82,7 +82,6 @@ export default {
         page,
         limit: this.perPage
       };
-      console.log(this.$api);
       const data = await this.$api.getSnapshots(props);
 
       this.snapshots = data.data;

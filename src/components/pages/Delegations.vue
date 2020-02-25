@@ -13,7 +13,7 @@
 
             <ol class="breadcrumb ml-2">
               <li class="breadcrumb-item">
-                <router-link :to="{ name: 'index' }">Home</router-link>
+                <router-link :to="{ name: 'network' }">Home</router-link>
               </li>
               <li class="breadcrumb-item active">Delegations page</li>
             </ol>

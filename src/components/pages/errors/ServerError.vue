@@ -15,7 +15,7 @@
               <span class="error-number">500</span>
             </h1>
             <h2 class="error-subtitle">Something`s wrong</h2>
-            <router-link class="go-home" :to="{ name: 'index' }"
+            <router-link class="go-home" :to="{ name: 'network' }"
               >Go to homepage</router-link
             >
           </div>

@@ -15,7 +15,7 @@
               <span class="error-number">404</span>
             </h1>
             <h2 class="error-subtitle">Something`s missing</h2>
-            <a class="go-home" v-on:click="back()">Go back</a>
+            <router-link :to="{ name: 'network' }" class="go-home">Home</router-link>
           </div>
         </div>
       </div>
@@ -25,14 +25,6 @@
 
 <script>
 export default {
-  name: "NotFound",
-  methods: {
-    back() {
-      if (window.history.length <= 2) {
-        return this.$router.push({ name: "index" });
-      }
-      this.$router.go(-2);
-    }
-  }
+  name: "NotFound"
 };
 </script>
