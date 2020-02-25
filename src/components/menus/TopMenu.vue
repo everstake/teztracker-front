@@ -78,11 +78,9 @@
               aria-expanded="false"
             >{{currentNetwork}}</a>
             <div class="dropdown-menu">
-              <li
-                class="dropdown-item pointer"
-                v-for="network in networkList"
-                @click="changeRouteNetwork(network)"
-              >{{ network }}</li>
+              <div v-for="network in networkList" @click="changeRouteNetwork(network)" class="dropdown-item pointer">
+                {{ network }}
+              </div>
             </div>
           </li>
         </ul>
@@ -122,7 +120,12 @@ export default {
     },
     changeRouteNetwork(network) {
       this[SET_APP_NETWORK](network);
-      this.$router.push({ name: this.$route.name, params: { network } });
+
+      if (this.$route.name === '404') {
+        this.$router.push({ name: 'network', params: { network } });
+      } else {
+        this.$router.push({ name: this.$route.name, params: { network } });
+      }
     }
   }
 };

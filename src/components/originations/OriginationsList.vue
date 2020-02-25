@@ -35,7 +35,7 @@
         </b-link>
       </template>
 
-      <template slot="to" slot-scope="row">
+      <template slot="to" slot-scope="row" v-if="row.item.delegate">
         <b-link
           :to="{ name: 'account', params: { account: row.item.delegate } }"
         >
