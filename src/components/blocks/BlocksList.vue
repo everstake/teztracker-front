@@ -16,7 +16,9 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat($constants.TIME_FORMAT) }}</span>
+        <span>{{
+          row.item.timestamp | timeformat($constants.TIME_FORMAT)
+        }}</span>
       </template>
 
       <template slot="baker" slot-scope="row">
@@ -34,23 +36,33 @@
       </template>
     </b-table>
 
-    <b-pagination
-      v-model="currentPage"
+    <PaginationWithCustomAction
       :total-rows="rows"
       :per-page="perPage"
       align="right"
+      first-text
       prev-text="Prev"
       next-text="Next"
-      first-number
-      last-number
-    ></b-pagination>
+      last-text
+    />
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
-import { GET_BLOCKS } from "@/store/actions.types";
+import { mapState } from "vuex";
+import TzPagination from "../common/_tz_pagination";
+
+import withCustomAction from "../common/withCustomAction";
+const PaginationWithCustomAction = withCustomAction(
+  TzPagination,
+  "blocks",
+  "GET_BLOCKS"
+);
 
 export default {
+  name: "BlocksList",
+  components: {
+    PaginationWithCustomAction
+  },
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
@@ -70,9 +82,8 @@ export default {
       ]
     };
   },
-  name: "BlocksList",
   computed: {
-    ...mapState('blocks', {
+    ...mapState("blocks", {
       blocks: state => state.blocks,
       count: state => state.counts
     }),
@@ -82,25 +93,6 @@ export default {
     items() {
       return this.blocks;
     }
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this[GET_BLOCKS]({
-          page: value,
-          limit: this.perPage
-        });
-      }
-    }
-  },
-  methods: {
-    ...mapActions('blocks', [GET_BLOCKS])
-  },
-  async created() {
-    await this[GET_BLOCKS]({
-      page: this.currentPage,
-      limit: this.perPage
-    });
   }
 };
 </script>

@@ -1,8 +1,11 @@
 <template>
   <header class="main-header">
     <div class="logo">
-      <router-link :to="{ name: 'index' }">TZTracker</router-link>
+      <router-link :to="{ name: 'index' }">
+        <Logo />
+      </router-link>
     </div>
+
     <div class="header-middle">
       <nav class="main-nav">
         <ul>
@@ -17,11 +20,18 @@
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
-            >Blocks</a>
+              >Blocks</a
+            >
             <div class="dropdown-menu">
-              <router-link class="dropdown-item" :to="{ name: 'blocks' }">Blocks</router-link>
-              <router-link class="dropdown-item" :to="{ name: 'snapshots' }">Snapshots</router-link>
-              <router-link class="dropdown-item" :to="{ name: 'baking_rights' }">Baking Rights</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'blocks' }"
+                >Blocks</router-link
+              >
+              <router-link class="dropdown-item" :to="{ name: 'snapshots' }"
+                >Snapshots</router-link
+              >
+              <router-link class="dropdown-item" :to="{ name: 'baking_rights' }"
+                >Baking Rights</router-link
+              >
             </div>
           </li>
           <li>
@@ -32,18 +42,32 @@
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
-            >Operations</a>
+              >Operations</a
+            >
             <div class="dropdown-menu">
-              <router-link class="dropdown-item" :to="{ name: 'txs' }">Transactions</router-link>
-              <router-link class="dropdown-item" :to="{ name: 'endorsements' }">Endorsements</router-link>
-              <router-link class="dropdown-item" :to="{ name: 'delegations' }">Delegations</router-link>
-              <router-link class="dropdown-item" :to="{ name: 'originations' }">Originations</router-link>
-              <router-link class="dropdown-item" :to="{ name: 'activations' }">Activations</router-link>
-              <router-link class="dropdown-item" :to="{ name: 'double_baking' }">Double-baking</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'txs' }"
+                >Transactions</router-link
+              >
+              <router-link class="dropdown-item" :to="{ name: 'endorsements' }"
+                >Endorsements</router-link
+              >
+              <router-link class="dropdown-item" :to="{ name: 'delegations' }"
+                >Delegations</router-link
+              >
+              <router-link class="dropdown-item" :to="{ name: 'originations' }"
+                >Originations</router-link
+              >
+              <router-link class="dropdown-item" :to="{ name: 'activations' }"
+                >Activations</router-link
+              >
+              <router-link class="dropdown-item" :to="{ name: 'double_baking' }"
+                >Double-baking</router-link
+              >
               <router-link
                 class="dropdown-item"
                 :to="{ name: 'double_endorsement' }"
-              >Double-endorsement</router-link>
+                >Double-endorsement</router-link
+              >
             </div>
           </li>
           <li v-bind:class="{ active: isActive('bakers') }">
@@ -57,10 +81,15 @@
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
-            >Accounts</a>
+              >Accounts</a
+            >
             <div class="dropdown-menu">
-              <router-link class="dropdown-item" :to="{ name: 'accounts' }">Accounts</router-link>
-              <router-link class="dropdown-item" :to="{ name: 'contracts' }">Contracts</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'accounts' }"
+                >Accounts</router-link
+              >
+              <router-link class="dropdown-item" :to="{ name: 'contracts' }"
+                >Contracts</router-link
+              >
             </div>
           </li>
         </ul>
@@ -76,7 +105,8 @@
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
-            >{{currentNetwork}}</a>
+              >{{ currentNetwork }}</a
+            >
             <div class="dropdown-menu">
               <li
                 class="dropdown-item pointer"
@@ -91,6 +121,8 @@
     <div class="search">
       <Search />
     </div>
+
+    <OverlayHamburgerMenu />
   </header>
 </template>
 
@@ -99,13 +131,17 @@ import { mapMutations, mapState, mapGetters } from 'vuex';
 import { SET_APP_NETWORK } from '@/store/mutations.types.js';
 import network from "../../mixins/network";
 import Search from "../search/Search";
+import OverlayHamburgerMenu from "./Overlay";
+import Logo from "../icons/logo";
+
 export default {
   name: "TopMenu",
-  mixins: [network],
-  props: {},
   components: {
-    Search
+    Search,
+    OverlayHamburgerMenu,
+    Logo
   },
+  mixins: [network],
   computed: {
     ...mapState('app', {
       network: state => state.app.network
@@ -129,6 +165,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "../../styles/scss/common";
+
+.header-middle,
+.search {
+  display: none;
+  @include for-regular-desktops-up {
+    display: block;
+  }
+}
 .pointer {
   cursor: pointer;
 }
@@ -136,5 +181,10 @@ export default {
 .main-nav .dropdown-item,
 .main-nav .dropdown-toggle {
   text-transform: capitalize;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

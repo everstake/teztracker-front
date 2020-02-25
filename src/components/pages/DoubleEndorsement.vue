@@ -26,18 +26,15 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
-            <div class="card ml-2 mr-2">
-              <div class="card-header">
-                <div class="title">
-                  <h3>
-                    <span class="text">Double Endorsement list</span>
-                    <div class="counter">
-                      <span class="line"></span>
-                      <span class="counter-text">{{ count.double_endorsement | bignum }}</span>
-                    </div>
-                  </h3>
-                </div>
-              </div>
+            <div class="card">
+              <TzCardHeader>
+                <template v-slot:left-content class="text">
+                  <h4 class="tz-title--bold">Double Endorsement list</h4>
+                </template>
+                <template v-slot:right-content class="text">
+                  <TzCounter :count="count.double_endorsement" />
+                </template>
+              </TzCardHeader>
 
               <div class="card-body">
                 <DoubleEndorsementList />
@@ -53,10 +50,15 @@
 <script>
 import { mapState } from "vuex";
 import DoubleEndorsementList from "../double_endorsement/DoubleEndorsementList";
+import TzCardHeader from "../common/tz_card_header";
+import TzCounter from "../common/tz_counter";
+
 export default {
   name: "DoubleEndorsement",
   components: {
-    DoubleEndorsementList
+    DoubleEndorsementList,
+    TzCardHeader,
+    TzCounter
   },
   computed: {
     ...mapState('operations', {

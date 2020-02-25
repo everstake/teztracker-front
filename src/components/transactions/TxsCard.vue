@@ -1,16 +1,21 @@
 <template>
-  <div class="card mr-2">
-    <div class="card-header">
-      <div class="title">
-        <h3>
-          <span class="text">Transaction list</span>
-          <div class="counter">
-            <span class="line"></span>
-            <span class="counter-text">{{ count | bignum }}</span>
+  <div class="card">
+    <TzCardHeader>
+      <template v-slot:left-content class="text">
+        <h4 class="tz-title--bold">Transaction list</h4>
+<!--        <TzDropdown dropdownTitle="This year" />-->
+      </template>
+      <template v-slot:right-content class="text">
+        <TzCounter :count="count" />
+        <div class="counter">
+          <div class="tz_link">
+            <router-link class="tz-dropdown-item" :to="{ name: 'txs' }"
+              >View all</router-link
+            >
           </div>
-        </h3>
-      </div>
-    </div>
+        </div>
+      </template>
+    </TzCardHeader>
 
     <div class="card-body">
       <b-table
@@ -18,7 +23,6 @@
         stacked="md"
         :items="items"
         :fields="fields"
-        :current-page="currentPage"
         :per-page="0"
         class="table table-borderless table-responsive-sm"
       >
@@ -27,7 +31,9 @@
         </template>
 
         <template slot="level" slot-scope="row">
-          <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
+          <b-link
+            :to="{ name: 'block', params: { level: row.item.blockLevel } }"
+          >
             <span>{{ row.item.blockLevel }}</span>
           </b-link>
         </template>
@@ -43,26 +49,41 @@
           </b-link>
         </template>
       </b-table>
-      <b-pagination
-        v-model="currentPage"
+
+      <PaginationWithCustomAction
         :total-rows="rows"
         :per-page="perPage"
         align="right"
-        prev-text="Prev"
-        next-text="Next"
-        first-number
-        last-number
-      ></b-pagination>
+        first-text
+        :prev-text="'Prev'"
+        :next-text="'Next'"
+        last-text
+      />
     </div>
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
-import { GET_TRANSACTIONS } from "@/store/actions.types";
+import { mapState } from "vuex";
+import TzPagination from "../common/_tz_pagination";
+import TzCardHeader from "../common/tz_card_header";
+// import TzDropdown from "../common/tz_dropdown";
+import TzCounter from "../common/tz_counter";
+
+import withCustomAction from "../common/withCustomAction";
+const PaginationWithCustomAction = withCustomAction(
+  TzPagination,
+  "operations",
+  "GET_TRANSACTIONS"
+);
 
 export default {
   name: "TxsCard",
-  props: {},
+  components: {
+    TzCardHeader,
+    // TzDropdown,
+    TzCounter,
+    PaginationWithCustomAction
+  },
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
@@ -90,27 +111,29 @@ export default {
     items() {
       return this.transactions;
     }
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this[GET_TRANSACTIONS]({
-          page: value,
-          perPage: this.perPage
-        });
-      }
-    }
-  },
-  methods: {
-    ...mapActions('operations', [GET_TRANSACTIONS])
-  },
-  async created() {
-    await this[GET_TRANSACTIONS]({
-      page: this.currentPage,
-      perPage: this.perPage
-    });
   }
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+// TODO: aliases
+@import "../../styles/scss/common";
+
+.line {
+  display: block;
+  float: left;
+  width: 30px;
+  height: 16px;
+  margin-right: 0.5rem;
+  border-bottom: 1px solid #9ea0a5;
+  opacity: 0.5;
+}
+.title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  h3 {
+    line-height: 1;
+  }
+}
+</style>

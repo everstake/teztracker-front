@@ -20,25 +20,36 @@
         <span>{{ row.item.balance | tezos }}</span>
       </template>
     </b-table>
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      align="right"
-      prev-text="Prev"
-      next-text="Next"
-      first-number
-      last-number
-    ></b-pagination>
+
+    <div class="pagination-block">
+      <PaginationWithCustomAction
+        :total-rows="rows"
+        :per-page="perPage"
+        align="right"
+        first-text
+        prev-text="Prev"
+        next-text="Next"
+        last-text
+      />
+    </div>
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
-import { GET_ACCOUNTS } from "@/store/actions.types";
+import { mapState } from "vuex";
+import TzPagination from "../common/_tz_pagination";
+
+import withCustomAction from "../common/withCustomAction";
+const PaginationWithCustomAction = withCustomAction(
+  TzPagination,
+  "accounts",
+  "GET_ACCOUNTS"
+);
 
 export default {
   name: "AccountsList",
-  props: {},
+  components: {
+    PaginationWithCustomAction
+  },
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
@@ -61,24 +72,6 @@ export default {
     items() {
       return this.accounts;
     }
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this[GET_ACCOUNTS]({
-          page: value,
-          limit: this.perPage
-        });
-      }
-    }
-  },
-  methods: {
-    ...mapActions('accounts', [GET_ACCOUNTS])
-  },
-  async created() {
-    await this[GET_ACCOUNTS]();
   }
 };
 </script>
-
-<style scoped></style>

@@ -8,7 +8,7 @@
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
-      class="table table-borderless"
+      class="transactions-table table table-borderless table-responsive-md"
     >
       <template slot="priority" slot-scope="row">
         <span>{{ row.item.priority }}</span>
@@ -17,67 +17,80 @@
       <template slot="block_0" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_0.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_0.delegate}}"
-        >{{row.item.block_0.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_0.delegate } }"
+          >{{ row.item.block_0.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_1" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_1.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_1.delegate}}"
-        >{{row.item.block_1.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_1.delegate } }"
+          >{{ row.item.block_1.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_2" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_2.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_2.delegate}}"
-        >{{row.item.block_2.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_2.delegate } }"
+          >{{ row.item.block_2.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_3" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_3.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_3.delegate}}"
-        >{{row.item.block_3.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_3.delegate } }"
+          >{{ row.item.block_3.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_4" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_4.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_4.delegate}}"
-        >{{row.item.block_4.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_4.delegate } }"
+          >{{ row.item.block_4.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_5" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_5.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_5.delegate}}"
-        >{{row.item.block_5.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_5.delegate } }"
+          >{{ row.item.block_5.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_6" slot-scope="row">
         <router-link
           :class="{ winner: row.item.block_6.winner }"
-          :to="{ name: 'baker', params: {baker: row.item.block_6.delegate}}"
-        >{{row.item.block_6.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_6.delegate } }"
+          >{{ row.item.block_6.delegate | longhash(19) }}</router-link
+        >
       </template>
     </b-table>
 
-    <b-pagination
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      align="right"
-      limit="10"
-      prev-text="Prev"
-      next-text="Next"
-      first-number
-      last-number
-    ></b-pagination>
+    <div class="pagination-block">
+      <TzPagination
+        @change="_handleChange"
+        :total-rows="rows"
+        :per-page="perPage"
+        align="right"
+        limit="10"
+        first-text
+        prev-text="Prev"
+        next-text="Next"
+        last-text
+      />
+    </div>
   </div>
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
 import { SET_BAKING_RIGHTS_COUNT } from "@/store/mutations.types";
 import uniq from "lodash/uniq";
+import TzPagination from "../common/_tz_pagination";
+
 export default {
   name: "BakingRightsList",
-  props: [],
+  components: {
+    TzPagination
+  },
   data() {
     return {
       baking_rights: [],
@@ -185,13 +198,10 @@ export default {
       const data = await this.$api.getBakingRights(props);
       await this[SET_BAKING_RIGHTS_COUNT](data.count);
       this.parseResponse(data.data);
+    },
+    _handleChange(page) {
+      this.currentPage = page;
     }
   }
 };
 </script>
-
-<style scoped>
-.winner {
-  background-color: aquamarine;
-}
-</style>

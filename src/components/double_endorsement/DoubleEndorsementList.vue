@@ -10,7 +10,9 @@
       class="transactions-table table table-borderless table-responsive-md"
     >
       <template slot="txhash" slot-scope="row">
-        <b-link :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }">
+        <b-link
+          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
+        >
           <span>{{ row.item.operationGroupHash | longhash(35) }}</span>
         </b-link>
       </template>
@@ -31,25 +33,29 @@
       </template>
     </b-table>
 
-    <b-pagination
-      v-model="currentPage"
+    <TzPagination
+      @change="_handleChange"
       :total-rows="rows"
       :per-page="perPage"
       align="right"
+      first-text
       prev-text="Prev"
       next-text="Next"
-      first-number
-      last-number
-    ></b-pagination>
+      last-text
+    />
   </div>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
 import { SET_DOUBLE_ENDORSEMENT_COUNT } from "@/store/mutations.types";
+import TzPagination from "../common/_tz_pagination";
 
 export default {
   name: "DoubleEndorsementList",
+  components: {
+    TzPagination
+  },
   props: ["account"],
   data() {
     return {
@@ -86,6 +92,9 @@ export default {
   },
   methods: {
     ...mapMutations('operations', [SET_DOUBLE_ENDORSEMENT_COUNT]),
+    _handleChange(page) {
+      this.currentPage = page;
+    },
     async reload(page = 1) {
       const props = {
         page,

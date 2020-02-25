@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
-            <div class="page-title ml-2">
+            <div class="page-title">
               <h2>
                 Tezos (XTZ) Blockchain Explorer -
                 <span>Transactions page</span>
@@ -16,9 +16,11 @@
                 <router-link :to="{ name: 'index' }">Home</router-link>
               </li>
               <li class="breadcrumb-item">
-                <router-link :to="{ name: 'txs' }">Transactions page</router-link>
+                <router-link :to="{ name: 'txs' }"
+                  >Transactions page</router-link
+                >
               </li>
-              <li class="breadcrumb-item active">{{txhash}}</li>
+              <li class="breadcrumb-item active">{{ txhash }}</li>
             </ol>
           </div>
         </div>
@@ -28,9 +30,9 @@
     <section>
       <div class="container-fluid">
         <TxSingle
-          :blockHash="txInfo.blockHash"
+          :block-hash="txInfo.blockHash"
           :timestamp="txInfo.timestamp"
-          :opHash="txInfo.operationGroupHash"
+          :op-hash="txInfo.operationGroupHash"
           :level="txInfo.blockLevel"
           :fee="txInfo.fee"
         />
@@ -61,13 +63,23 @@
                   class="transactions-table table table-borderless table-responsive-md"
                 >
                   <template slot="from" slot-scope="row">
-                    <b-link :to="{ name: 'account', params: { account: row.item.source } }">
+                    <b-link
+                      :to="{
+                        name: 'account',
+                        params: { account: row.item.source }
+                      }"
+                    >
                       <span>{{ row.item.source | longhash(20) }}</span>
                     </b-link>
                   </template>
 
                   <template slot="to" slot-scope="row">
-                    <b-link :to="{ name: 'account', params: { account: row.item.destination } }">
+                    <b-link
+                      :to="{
+                        name: 'account',
+                        params: { account: row.item.destination }
+                      }"
+                    >
                       <span>{{ row.item.destination | longhash(20) }}</span>
                     </b-link>
                   </template>
@@ -84,16 +96,17 @@
                     <span>{{ row.item.storageLimit }}</span>
                   </template>
                 </b-table>
-                <b-pagination
-                  v-model="currentPage"
+
+                <TzPagination
+                  @change="_handleChange"
                   :total-rows="rows"
                   :per-page="perPage"
                   align="right"
+                  first-text
                   prev-text="Prev"
                   next-text="Next"
-                  first-number
-                  last-number
-                ></b-pagination>
+                  last-text
+                />
               </div>
             </div>
           </div>
@@ -106,11 +119,13 @@
 <script>
 import TxSingle from "../transactions/TxSingle";
 import { mapState } from "vuex";
+import TzPagination from "../common/_tz_pagination";
 
 export default {
   name: "Tx",
   components: {
-    TxSingle
+    TxSingle,
+    TzPagination
   },
   data() {
     return {
@@ -161,6 +176,9 @@ export default {
     }
   },
   methods: {
+    _handleChange(page) {
+      this.currentPage = page;
+    },
     async reload(page = 1) {
       const props = {
         page,

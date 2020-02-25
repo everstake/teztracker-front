@@ -1,8 +1,8 @@
 <template>
-  <section class="cycle-counter">
+  <section class="cycle-counter container-fluid">
     <div class="row">
       <div class="col-12">
-        <div class="card ml-2 mr-2">
+        <div class="card ">
           <div class="card-header">
             <div class="title text-center">
               <span>Percentage of ICO addresses activated</span>
@@ -19,7 +19,11 @@
 
             <div class="row">
               <div class="col-12">
-                <b-progress :value="percent" :max="100" class="mb-2"></b-progress>
+                <b-progress
+                  :value="percent"
+                  :max="100"
+                  class="mb-2"
+                />
               </div>
             </div>
 
@@ -61,3 +65,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.container {
+  position: relative;
+}
+</style>

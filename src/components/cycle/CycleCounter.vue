@@ -2,7 +2,7 @@
   <section class="cycle-counter">
     <div class="row">
       <div class="col-12">
-        <div class="card ml-2 mr-2">
+        <div class="card">
           <div class="card-header">
             <div class="title text-center">
               <span>Cycle counter</span>
@@ -94,3 +94,14 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../../styles/scss/common";
+
+.cycle-counter {
+  padding: 0 5px;
+  @include for-phone-only {
+    padding: 0;
+  }
+}
+</style>

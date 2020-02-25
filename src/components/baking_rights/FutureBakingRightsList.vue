@@ -7,7 +7,7 @@
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
-      class="table table-borderless table-responsive-md"
+      class="transactions-table table table-borderless table-responsive-md"
     >
       <template slot="priority" slot-scope="row">
         <span>{{ row.item.priority }}</span>
@@ -16,67 +16,79 @@
       <template slot="block_0" slot-scope="row">
         <router-link
           class="baker"
-          :to="{ name: 'baker', params: {baker: row.item.block_0.delegate}}"
-        >{{row.item.block_0.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_0.delegate } }"
+          >{{ row.item.block_0.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_1" slot-scope="row">
         <router-link
           class="baker"
-          :to="{ name: 'baker', params: {baker: row.item.block_1.delegate}}"
-        >{{row.item.block_1.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_1.delegate } }"
+          >{{ row.item.block_1.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_2" slot-scope="row">
         <router-link
           class="baker"
-          :to="{ name: 'baker', params: {baker: row.item.block_2.delegate}}"
-        >{{row.item.block_2.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_2.delegate } }"
+          >{{ row.item.block_2.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_3" slot-scope="row">
         <router-link
           class="baker"
-          :to="{ name: 'baker', params: {baker: row.item.block_3.delegate}}"
-        >{{row.item.block_3.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_3.delegate } }"
+          >{{ row.item.block_3.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_4" slot-scope="row">
         <router-link
           class="baker"
-          :to="{ name: 'baker', params: {baker: row.item.block_4.delegate}}"
-        >{{row.item.block_4.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_4.delegate } }"
+          >{{ row.item.block_4.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_5" slot-scope="row">
         <router-link
           class="baker"
-          :to="{ name: 'baker', params: {baker: row.item.block_5.delegate}}"
-        >{{row.item.block_5.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_5.delegate } }"
+          >{{ row.item.block_5.delegate | longhash(19) }}</router-link
+        >
       </template>
       <template slot="block_6" slot-scope="row">
         <router-link
           class="baker"
-          :to="{ name: 'baker', params: {baker: row.item.block_6.delegate}}"
-        >{{row.item.block_6.delegate | longhash(19)}}</router-link>
+          :to="{ name: 'baker', params: { baker: row.item.block_6.delegate } }"
+          >{{ row.item.block_6.delegate | longhash(19) }}</router-link
+        >
       </template>
     </b-table>
 
-    <b-pagination
+    <TzPagination
+      @change="_handleChange"
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
       align="right"
       limit="10"
+      first-text
       prev-text="Prev"
       next-text="Next"
-      first-number
-      last-number
-    ></b-pagination>
+      last-text
+    />
   </div>
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
 import { SET_FUTURE_BAKING_RIGHTS_COUNT } from "@/store/mutations.types";
 import uniq from "lodash/uniq";
+import TzPagination from "../common/_tz_pagination";
 
 export default {
   name: "FutureBakingRightsList",
+  components: {
+    TzPagination
+  },
   props: ["block"],
   data() {
     return {
@@ -115,6 +127,9 @@ export default {
   },
   methods: {
     ...mapMutations('blocks', [SET_FUTURE_BAKING_RIGHTS_COUNT]),
+    _handleChange(page) {
+      this.currentPage = page;
+    },
     parseResponse(data) {
       const blocks = [];
       for (let i = 0; i < data.length; i++) {

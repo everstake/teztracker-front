@@ -35,14 +35,21 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col-lg-12">
-            <div class="card ml-2 mr-2">
+            <div class="card">
               <!-- Nav tabs -->
               <ul class="nav nav-tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#transactions">Transactions</a>
+                  <a
+                    class="nav-link active"
+                    data-toggle="tab"
+                    href="#transactions"
+                    >Transactions</a
+                  >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#endorsements">Endorsements</a>
+                  <a class="nav-link" data-toggle="tab" href="#endorsements"
+                    >Endorsements</a
+                  >
                 </li>
               </ul>
 
@@ -102,12 +109,27 @@ export default {
     const result = await this.$api.getBlock({
       block: this.level
     });
-    // const result = await this.$api.getBlock({
-    //   block: this.level
-    // });
     this.block = result.data.block || {};
   }
 };
 </script>
 
-<style />
+<style lang="scss" scoped>
+@import "../../styles/scss/common";
+.main-content section .card .nav-tabs {
+  @include for-phone-only {
+    margin: 0;
+    padding: 0 15px;
+  }
+  .nav-item {
+    @include for-phone-only {
+      width: 50%;
+    }
+    & .nav-link {
+      @include for-phone-only {
+        padding: 1rem 0rem;
+      }
+    }
+  }
+}
+</style>

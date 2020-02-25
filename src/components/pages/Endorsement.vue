@@ -9,13 +9,13 @@ import EndorsementSingle from "../endorsements/EndorsementSingle";
 
 export default {
   name: "Endorsement",
+  components: {
+    EndorsementSingle
+  },
   computed: {
     hash() {
       return this.$route.params.txID;
     }
-  },
-  components: {
-    EndorsementSingle
   }
 };
 </script>

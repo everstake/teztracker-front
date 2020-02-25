@@ -5,7 +5,7 @@
         <div class="card-header">
           <div class="title">
             <h3>
-              <span class="text">{{opHash}}</span>
+              <span class="text">{{ opHash }}</span>
             </h3>
             <span class="subtitle">Transaction Information</span>
           </div>
@@ -19,7 +19,7 @@
               <span class="label">Included in Block</span>
             </div>
             <div class="col-lg-9">
-              <span class="value">{{blockHash}}</span>
+              <span class="value">{{ blockHash }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -35,7 +35,7 @@
               <span class="label">Operation Hash</span>
             </div>
             <div class="col-lg-9">
-              <span class="value">{{opHash}}</span>
+              <span class="value">{{ opHash }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -43,7 +43,7 @@
               <span class="label">Block id</span>
             </div>
             <div class="col-lg-9">
-              <span class="value">{{level}}</span>
+              <span class="value">{{ level }}</span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">

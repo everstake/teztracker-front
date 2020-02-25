@@ -18,7 +18,7 @@
               <li class="breadcrumb-item">
                 <router-link :to="{ name: 'accounts' }">Accounts</router-link>
               </li>
-              <li class="breadcrumb-item active">{{hash}}</li>
+              <li class="breadcrumb-item active">{{ hash }}</li>
             </ol>
           </div>
         </div>
@@ -39,13 +39,22 @@
               <!-- Nav tabs -->
               <ul class="nav nav-tabs">
                 <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#transactions">Transactions</a>
+                  <a
+                    class="nav-link active"
+                    data-toggle="tab"
+                    href="#transactions"
+                    >Transactions</a
+                  >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#delegations">Delegations</a>
+                  <a class="nav-link" data-toggle="tab" href="#delegations"
+                    >Delegations</a
+                  >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#originations">Originations</a>
+                  <a class="nav-link" data-toggle="tab" href="#originations"
+                    >Originations</a
+                  >
                 </li>
               </ul>
 
@@ -107,16 +116,16 @@ import DelegationsList from "../delegations/DelegationsList";
 import OriginationsList from "../originations/OriginationsList";
 export default {
   name: "Account",
-  computed: {
-    hash() {
-      return this.$route.params.account;
-    }
-  },
   components: {
     AccountSingle,
     TxsList,
     DelegationsList,
     OriginationsList
+  },
+  computed: {
+    hash() {
+      return this.$route.params.account;
+    }
   }
 };
 </script>

@@ -15,7 +15,7 @@
               <span class="error-number">404</span>
             </h1>
             <h2 class="error-subtitle">Something`s missing</h2>
-            <a class="go-home" v-on:click="back()">Go back</a>
+            <a class="go-home" @click="back()">Go back</a>
           </div>
         </div>
       </div>

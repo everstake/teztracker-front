@@ -2,8 +2,7 @@
   <form
     :class="error ? 'search-form--invalid' : ''"
     action
-    id="search-form"
-    v-on:submit.prevent="onSubmit"
+    @submit.prevent="onSubmit"
   >
     <input
       type="text"
@@ -104,7 +103,9 @@ export default {
       });
     },
     findQueryPrefix(searchQuery) {
-      const prefixesArray = flatten(Object.values(this.$constants.SEARCH_PREFIXES));
+      const prefixesArray = flatten(
+        Object.values(this.$constants.SEARCH_PREFIXES)
+      );
       let findedPrefix = null;
 
       const findId = () => {
@@ -140,7 +141,9 @@ export default {
       }
 
       if (!queryIncludesPrefix) {
-        this.error = `Search for an ${Object.keys(this.$constants.SEARCH_PREFIXES).join(" or ")}.`;
+        this.error = `Search for an ${Object.keys(
+          this.$constants.SEARCH_PREFIXES
+        ).join(" or ")}.`;
         return false;
       }
 

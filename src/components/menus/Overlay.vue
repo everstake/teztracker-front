@@ -1,0 +1,295 @@
+<template>
+  <div class="hamburger-menu">
+    <div class="hamburger-menu__icon" @click="toggleMenu">
+      <font-awesome-icon
+        v-if="isOpen"
+        class="icon"
+        :icon="['far', 'times-circle']"
+      />
+      <font-awesome-icon v-else class="icon" icon="bars" />
+    </div>
+    <div :class="{ overlay: true, open: isOpen }" id="overlay">
+      <div class="overlay_container">
+        <div class="mobile-nav">
+          <AccordionMenu @close="closeMenu" />
+          <div class="search search-wrapper-nav">
+            <Search @onSubmit="toggleMenu" />
+          </div>
+        </div>
+        <Footer class="footer--fixed" />
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import Search from "../search/Search";
+import AccordionMenu from "./AccordionMenu";
+import Footer from "./Footer";
+
+export default {
+  name: "OverlayMenu",
+  components: { Search, AccordionMenu, Footer },
+  data() {
+    return {
+      isOpen: false
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.isOpen = !this.isOpen;
+    },
+    closeMenu() {
+      this.isOpen = false;
+    }
+  },
+  watch: {
+    $route() {
+      this.isOpen = false;
+    }
+  }
+};
+</script>
+
+<style lang="scss">
+@import "../../styles/scss/common";
+
+$color-background: #f5f5f5;
+$color-main: #fff;
+$color-active: #fff;
+$color-link: #fff;
+
+$button-height: 27px;
+$button-width: 35px;
+
+.icon {
+  cursor: pointer;
+}
+.container {
+  position: absolute;
+  width: 100%;
+  heigh: 100%;
+  text-align: center;
+  top: 40%;
+  left: 0;
+  margin: 0 auto;
+  font-family: "Varela Round", sans-serif;
+
+  p {
+    font-size: 20px;
+  }
+
+  a {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    color: $color-main;
+    text-decoration: none;
+    font-size: 20px;
+    overflow: hidden;
+    top: 5px;
+
+    &:after {
+      content: "";
+      position: absolute;
+      background: $color-main;
+      height: 2px;
+      width: 0%;
+      transform: translateX(-50%);
+      left: 50%;
+      bottom: 0;
+      transition: 0.35s ease;
+    }
+    &:hover:after,
+    &:focus:after,
+    &:active:after {
+      width: 100%;
+    }
+  }
+}
+
+.button_container {
+  position: fixed;
+  top: 5%;
+  right: 2%;
+  height: $button-height;
+  width: $button-width;
+  cursor: pointer;
+  z-index: 100;
+  transition: opacity 0.25s ease;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &.active {
+    .top {
+      transform: translateY(11px) translateX(0) rotate(45deg);
+      background: $color-active;
+    }
+    .middle {
+      opacity: 0;
+      background: $color-active;
+    }
+
+    .bottom {
+      transform: translateY(-11px) translateX(0) rotate(-45deg);
+      background: $color-active;
+    }
+  }
+
+  span {
+    background: $color-main;
+    border: none;
+    height: 5px;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: all 0.35s ease;
+    cursor: pointer;
+
+    &:nth-of-type(2) {
+      top: 11px;
+    }
+
+    &:nth-of-type(3) {
+      top: 22px;
+    }
+  }
+}
+
+.overlay {
+  top: 60px; // Header height
+  position: fixed;
+  background: $color-main;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  opacity: 1;
+  visibility: hidden;
+  transition: opacity 0.35s, visibility 0.35s, height 0.35s;
+  overflow: auto;
+  z-index: 999;
+
+  &_container {
+    display: flex;
+    height: calc(100% - 60px);
+    flex-direction: column;
+    .mobile-nav {
+      flex: 1;
+    }
+  }
+
+  &.open {
+    top: 60px;
+    opacity: 1;
+    visibility: visible;
+    height: 100%;
+
+    li {
+      animation: fadeInRight 0.5s ease forwards;
+      animation-delay: 0.35s;
+
+      &:nth-of-type(2) {
+        animation-delay: 0.4s;
+      }
+      &:nth-of-type(3) {
+        animation-delay: 0.45s;
+      }
+      &:nth-of-type(4) {
+        animation-delay: 0.5s;
+      }
+    }
+  }
+  nav {
+    position: relative;
+    height: 70%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    font-weight: 400;
+    text-align: center;
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    display: inline-block;
+    position: relative;
+    height: 100%;
+
+    li {
+      display: block;
+      height: 25%;
+      height: calc(100% / 4);
+      min-height: 50px;
+      position: relative;
+      opacity: 0;
+
+      a {
+        display: block;
+        position: relative;
+        color: $color-link;
+        text-decoration: none;
+        overflow: hidden;
+
+        &:hover:after,
+        &:focus:after,
+        &:active:after {
+          width: 100%;
+        }
+
+        &:after {
+          content: "";
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: 0%;
+          transform: translateX(-50%);
+          height: 3px;
+          background: $color-link;
+          transition: 0.35s;
+        }
+      }
+    }
+  }
+}
+
+.hamburger-menu {
+  &__icon {
+    font-size: 24px;
+    /*color: */
+  }
+  @include for-regular-desktops-up {
+    display: none;
+  }
+}
+@keyframes fadeInRight {
+  0% {
+    opacity: 0;
+    left: 20%;
+  }
+  100% {
+    opacity: 1;
+    left: 0;
+  }
+}
+
+.footer--fixed {
+  /*position: fixed;*/
+  bottom: 0;
+  width: 100%;
+}
+
+.search-wrapper-nav {
+  width: 80%;
+  margin: auto;
+  input {
+    height: 60px !important;
+  }
+  button {
+    height: 60px !important;
+  }
+}
+</style>

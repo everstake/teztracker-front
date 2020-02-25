@@ -1,16 +1,21 @@
 <template>
-  <div class="card ml-2">
-    <div class="card-header">
-      <div class="title">
-        <h3>
-          <span class="text">Blocks list</span>
-          <div class="counter">
-            <span class="line"></span>
-            <span class="counter-text">{{ count | bignum }}</span>
+  <div class="card">
+    <TzCardHeader>
+      <template v-slot:left-content class="text">
+        <h4 class="tz-title--bold">Blocks list</h4>
+<!--        <TzDropdown dropdownTitle="This year" />-->
+      </template>
+      <template v-slot:right-content class="text">
+        <TzCounter :count="count" />
+        <div class="counter">
+          <div class="tz_link">
+            <router-link class="tz-dropdown-item" :to="{ name: 'blocks' }"
+              >View all</router-link
+            >
           </div>
-        </h3>
-      </div>
-    </div>
+        </div>
+      </template>
+    </TzCardHeader>
 
     <div class="card-body">
       <b-table
@@ -24,9 +29,7 @@
       >
         <template slot="timestamp" slot-scope="row">
           <span>
-            {{
-            row.item.timestamp | timeformat($constants.TIME_FORMAT)
-            }}
+            {{ row.item.timestamp | timeformat($constants.TIME_FORMAT) }}
           </span>
         </template>
 
@@ -42,24 +45,42 @@
           </b-link>
         </template>
       </b-table>
-      <b-pagination
-        v-model="currentPage"
+
+      <PaginationWithCustomAction
         :total-rows="rows"
         :per-page="perPage"
         align="right"
+        first-text
         prev-text="Prev"
         next-text="Next"
-        first-number
-        last-number
-      ></b-pagination>
+        last-text
+        action="BLOCKS_GET"
+      />
     </div>
   </div>
 </template>
 <script>
-import { mapState, mapActions } from "vuex";
-import { GET_BLOCKS } from "@/store/actions.types";
+import { mapState } from "vuex";
+import TzPagination from "../common/_tz_pagination";
+import TzCardHeader from "../common/tz_card_header";
+// import TzDropdown from "../common/tz_dropdown";
+import TzCounter from "../common/tz_counter";
+
+import withCustomAction from "../common/withCustomAction";
+const PaginationWithCustomAction = withCustomAction(
+  TzPagination,
+  "blocks",
+  "GET_BLOCKS"
+);
+
 export default {
   name: "BlocksCard",
+  components: {
+    TzCardHeader,
+    // TzDropdown,
+    TzCounter,
+    PaginationWithCustomAction
+  },
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
@@ -77,7 +98,7 @@ export default {
     };
   },
   computed: {
-    ...mapState('blocks', {
+    ...mapState("blocks", {
       count: state => state.counts.blocks,
       blocks: state => state.blocks
     }),
@@ -87,25 +108,6 @@ export default {
     items() {
       return this.blocks;
     }
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this[GET_BLOCKS]({
-          page: value,
-          perPage: this.perPage
-        });
-      }
-    }
-  },
-  methods: {
-    ...mapActions('blocks', [GET_BLOCKS])
-  },
-  async created() {
-    await this[GET_BLOCKS]({
-      page: this.currentPage,
-      perPage: this.perPage
-    });
   }
 };
 </script>

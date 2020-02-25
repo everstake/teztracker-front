@@ -4,7 +4,6 @@ import http from "./services/http-service";
 
 const COUNT_HEADER = "x-total-count";
 
-
 function formatURL(api, path, query) {
   return `${api}${path}?${querystring.stringify(query)}`;
 }

@@ -2,13 +2,13 @@
   <div id="app" :key="getAppNetwork">
     <TopMenu />
     <router-view></router-view>
-    <Footer />
+    <Footer showLogo />
   </div>
 </template>
 
 <script>
-import TopMenu from "./components/menus/TopMenu.vue";
-import Footer from "./components/menus/Footer.vue";
+import TopMenu from "./components/menus/TopMenu";
+import Footer from "./components/menus/Footer";
 import { mapGetters } from 'vuex';
 
 export default {
@@ -23,4 +23,6 @@ export default {
 };
 </script>
 
-<style></style>
+<style lang="scss">
+@import "/components/common/tz_common_kit_styles";
+</style>

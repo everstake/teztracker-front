@@ -10,7 +10,9 @@
       class="transactions-table table table-borderless table-responsive-md"
     >
       <template slot="txhash" slot-scope="row">
-        <b-link :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }">
+        <b-link
+          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
+        >
           <span>{{ row.item.operationGroupHash | longhash(35) }}</span>
         </b-link>
       </template>
@@ -32,7 +34,9 @@
       </template>
 
       <template slot="to" slot-scope="row">
-        <b-link :to="{ name: 'account', params: { account: row.item.destination } }">
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.destination } }"
+        >
           <span>{{ row.item.destination | longhash(20) }}</span>
         </b-link>
       </template>
@@ -43,23 +47,30 @@
         <span>{{ row.item.fee | tezos }}</span>
       </template>
     </b-table>
-    <b-pagination
-      v-model="currentPage"
+
+    <TzPagination
+      @change="_handleChange"
       :total-rows="rows"
       :per-page="perPage"
       align="right"
+      first-text
       prev-text="Prev"
       next-text="Next"
-      first-number
-      last-number
-    ></b-pagination>
+      last-text
+    />
   </div>
 </template>
 <script>
 import { mapState, mapMutations } from "vuex";
 import { SET_TX_COUNT } from "@/store/mutations.types";
+import TzPagination from "../common/_tz_pagination";
 
 export default {
+  name: "TxsList",
+  components: {
+    TzPagination
+  },
+  props: ["block", "account"],
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
@@ -78,8 +89,6 @@ export default {
       ]
     };
   },
-  name: "TxsList",
-  props: ["block", "account"],
   computed: {
     ...mapState('operations', {
       counts: state => state.counts
@@ -113,6 +122,9 @@ export default {
   },
   methods: {
     ...mapMutations('operations', [SET_TX_COUNT]),
+    _handleChange(page) {
+      this.currentPage = page;
+    },
     async reload(page = 1) {
       const props = {
         page,
@@ -137,5 +149,3 @@ export default {
   }
 };
 </script>
-
-<style scoped></style>
