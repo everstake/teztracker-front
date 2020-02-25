@@ -14,7 +14,7 @@
               Page
               <span class="error-number">404</span>
             </h1>
-            <h2 class="error-subtitle">Something`s missing</h2>
+            <h2 class="error-subtitle">Page not found</h2>
             <router-link :to="{ name: 'network' }" class="go-home">Home</router-link>
           </div>
         </div>
