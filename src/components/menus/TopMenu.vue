@@ -121,7 +121,7 @@ export default {
     changeRouteNetwork(network) {
       this[SET_APP_NETWORK](network);
 
-      if (this.$route.name === '404') {
+      if (this.$route.name === '404' || this.$route.name === '500') {
         this.$router.push({ name: 'network', params: { network } });
       } else {
         this.$router.push({ name: this.$route.name, params: { network } });
