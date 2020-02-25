@@ -175,6 +175,12 @@ export default {
 </script>
 
 <style>
+  .tooltip .tooltip-inner {
+    font-size: 13px;
+  }
+</style>
+
+<style scoped>
   .card-header .title {
     word-break: break-word;
   }
@@ -188,10 +194,6 @@ export default {
 
   .icon-primary {
     color: #309282;
-  }
-
-  .tooltip .tooltip-inner {
-    font-size: 13px;
   }
 
   .icon {
