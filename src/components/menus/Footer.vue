@@ -7,7 +7,7 @@
       <div class="footer__description">
         <div class="copyright">© {{ currentYear }} TZ Tracker. All rights reserved.</div>
         <div class="contacts">
-          <a href="#" class="contacts__item">
+          <a href="mailto:inbox@everstake.one" class="contacts__item">
             <i class="far fa-envelope"></i> Contact Us
           </a>
         </div>
@@ -15,6 +15,7 @@
     </footer>
   </div>
 </template>
+
 <script>
 import Logo from "../icons/logo";
 

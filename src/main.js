@@ -5,20 +5,18 @@ import App from "./App.vue";
 import './plugins/constants';
 import './plugins/TezosApi';
 import store from "@/store";
+import { state as appState } from '@/store/modules/app.module';
 import routes from "./routes";
 import "./filters";
 import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from "@fortawesome/vue-fontawesome";
-import { faSearch, faCaretUp, faCaretDown, faSpinner, faBars, faAngleDown } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faCaretUp, faCaretDown, faSpinner, faBars, faAngleDown, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { faLightbulb, faStar, faFolder, faUser, faChartBar, faBookmark, faGem, faHourglass, faTimesCircle } from "@fortawesome/free-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { dom } from "@fortawesome/fontawesome-svg-core";
-import { LinkPlugin } from 'bootstrap-vue';
-import { TablePlugin } from 'bootstrap-vue';
-import { PaginationPlugin } from 'bootstrap-vue';
-import { ProgressPlugin } from 'bootstrap-vue';
+import { LinkPlugin, TablePlugin, PaginationPlugin, ProgressPlugin, TooltipPlugin } from 'bootstrap-vue';
 
 dom.watch();
-library.add(faSearch, faSpinner, faCaretUp, faCaretDown, faBars, faAngleDown);
+library.add(faSearch, faSpinner, faCaretUp, faCaretDown, faBars, faAngleDown, faCopy);
 library.add(faLightbulb, faStar, faFolder, faUser, faChartBar, faBookmark, faGem, faHourglass, faTimesCircle);
 
 Vue.config.productionTip = false;
@@ -27,6 +25,7 @@ Vue.use(LinkPlugin);
 Vue.use(TablePlugin);
 Vue.use(PaginationPlugin);
 Vue.use(ProgressPlugin);
+Vue.use(TooltipPlugin);
 
 Vue.use(VueRouter);
 
@@ -35,9 +34,20 @@ let router = new VueRouter({
   routes
 });
 
-router.beforeEach(async (to, from, next) => {
-  await store.commit('app/setAppNetwork', to.params.network);
-  return next();
+router.beforeEach( (to, from, next) => {
+  const isRouteNetworkValid = appState.app.networkList.some(network => network === to.params.network);
+
+  if (isRouteNetworkValid) {
+    store.commit('app/setAppNetwork', to.params.network);
+    return next();
+  } else {
+    next({
+      name: to.name,
+      params: {
+        network: appState.app.network
+      }
+    });
+  }
 });
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);

@@ -1,7 +1,7 @@
 <template>
   <header class="main-header">
     <div class="logo">
-      <router-link :to="{ name: 'index' }">
+      <router-link :to="{ name: 'network', params: { network: currentNetwork } }">
         <Logo />
       </router-link>
     </div>
@@ -10,86 +10,61 @@
       <nav class="main-nav">
         <ul>
           <li v-bind:class="{ active: isActive('index') }">
-            <router-link :to="{ name: 'index' }">Dashboard</router-link>
+            <router-link :to="{ name: 'network', params: { network: currentNetwork } }">Dashboard</router-link>
           </li>
           <li>
             <a
               class="dropdown-toggle"
               data-toggle="dropdown"
-              href="#"
+              href="/"
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
               >Blocks</a
             >
             <div class="dropdown-menu">
-              <router-link class="dropdown-item" :to="{ name: 'blocks' }"
-                >Blocks</router-link
-              >
-              <router-link class="dropdown-item" :to="{ name: 'snapshots' }"
-                >Snapshots</router-link
-              >
-              <router-link class="dropdown-item" :to="{ name: 'baking_rights' }"
-                >Baking Rights</router-link
-              >
+              <router-link class="dropdown-item" :to="{ name: 'blocks', params: { network: currentNetwork } }">Blocks</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'snapshots', params: { network: currentNetwork } }">Snapshots</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'baking_rights', params: { network: currentNetwork } }">Baking Rights</router-link>
             </div>
           </li>
           <li>
             <a
               class="dropdown-toggle"
               data-toggle="dropdown"
-              href="#"
+              href="/"
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
-              >Operations</a
-            >
+            >Operations</a>
             <div class="dropdown-menu">
-              <router-link class="dropdown-item" :to="{ name: 'txs' }"
-                >Transactions</router-link
-              >
-              <router-link class="dropdown-item" :to="{ name: 'endorsements' }"
-                >Endorsements</router-link
-              >
-              <router-link class="dropdown-item" :to="{ name: 'delegations' }"
-                >Delegations</router-link
-              >
-              <router-link class="dropdown-item" :to="{ name: 'originations' }"
-                >Originations</router-link
-              >
-              <router-link class="dropdown-item" :to="{ name: 'activations' }"
-                >Activations</router-link
-              >
-              <router-link class="dropdown-item" :to="{ name: 'double_baking' }"
-                >Double-baking</router-link
-              >
+              <router-link class="dropdown-item" :to="{ name: 'txs', params: { network: currentNetwork } }">Transactions</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'endorsements', params: { network: currentNetwork } }">Endorsements</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'delegations', params: { network: currentNetwork } }">Delegations</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'originations', params: { network: currentNetwork } }">Originations</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'activations', params: { network: currentNetwork } }">Activations</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'double_baking', params: { network: currentNetwork } }">Double-baking</router-link>
               <router-link
                 class="dropdown-item"
-                :to="{ name: 'double_endorsement' }"
-                >Double-endorsement</router-link
-              >
+                :to="{ name: 'double_endorsement', params: { network: currentNetwork } }"
+              >Double-endorsement</router-link>
             </div>
           </li>
           <li v-bind:class="{ active: isActive('bakers') }">
-            <router-link :to="{ name: 'bakers' }">Bakers</router-link>
+            <router-link :to="{ name: 'bakers', params: { network: currentNetwork } }">Bakers</router-link>
           </li>
           <li>
             <a
               class="dropdown-toggle"
               data-toggle="dropdown"
-              href="#"
+              href="/"
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
-              >Accounts</a
-            >
+            >Accounts</a>
             <div class="dropdown-menu">
-              <router-link class="dropdown-item" :to="{ name: 'accounts' }"
-                >Accounts</router-link
-              >
-              <router-link class="dropdown-item" :to="{ name: 'contracts' }"
-                >Contracts</router-link
-              >
+              <router-link class="dropdown-item" :to="{ name: 'accounts', params: { network: currentNetwork } }">Accounts</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'contracts', params: { network: currentNetwork } }">Contracts</router-link>
             </div>
           </li>
         </ul>
@@ -101,18 +76,15 @@
             <a
               class="dropdown-toggle"
               data-toggle="dropdown"
-              href="#"
+              href="/"
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
-              >{{ currentNetwork }}</a
-            >
+              >{{ currentNetwork }}</a>
             <div class="dropdown-menu">
-              <li
-                class="dropdown-item pointer"
-                v-for="network in this.getAppNetworkList"
-                @click="changeRouteNetwork(network)"
-              >{{ network }}</li>
+              <div v-for="network in networkList" @click="changeRouteNetwork(network)" class="dropdown-item pointer">
+                {{ network }}
+              </div>
             </div>
           </li>
         </ul>
@@ -146,10 +118,10 @@ export default {
     ...mapState('app', {
       network: state => state.app.network
     }),
-    ...mapGetters('app', ['getAppNetwork', 'getAppNetworkList']),
-    currentNetwork: function() {
-      return this.getAppNetwork;
-    }
+    ...mapGetters('app', {
+      currentNetwork: 'getAppNetwork',
+      networkList: 'getAppNetworkList'
+    })
   },
   methods: {
     ...mapMutations('app', [SET_APP_NETWORK]),
@@ -158,7 +130,12 @@ export default {
     },
     changeRouteNetwork(network) {
       this[SET_APP_NETWORK](network);
-      this.$router.push({ name: this.$route.name, params: { network } });
+
+      if (this.$route.name === '404' || this.$route.name === '500') {
+        this.$router.push({ name: 'network', params: { network } });
+      } else {
+        this.$router.push({ name: this.$route.name, params: { network } });
+      }
     }
   }
 };
