@@ -175,6 +175,10 @@ export default {
 </script>
 
 <style>
+  .card-header .title {
+    word-break: break-word;
+  }
+
   .card__title {
     display: inline-flex;
     align-items: center;
