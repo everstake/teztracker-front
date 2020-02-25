@@ -438,7 +438,7 @@ span a.baker {
 }
 
 .main-content section .card .card-header h3 .text {
-  display: block;
+  display: inline-block;
   font-size: 16px;
   font-weight: 700;
   line-height: 20px;

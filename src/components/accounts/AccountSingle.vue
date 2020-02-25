@@ -4,10 +4,12 @@
       <div class="card ml-2 mr-2">
         <div class="card-header">
           <div class="title">
-            <h3>
-              <span class="text">{{ hash }}</span>
+            <h3 id="card-title" class="card__title" @click="copyToClipboard()">
+              <span ref="textToCopy" class="text">{{ hash }}</span>
+              <span class="icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span>
             </h3>
-            <span class="subtitle">Account Information</span>
+            <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
+            <div class="subtitle">Account Information</div>
           </div>
         </div>
 
@@ -154,7 +156,43 @@ export default {
       } else {
         this.baker = false;
       }
+    },
+    copyToClipboard() {
+      const selection = window.getSelection();
+      const range = window.document.createRange();
+      selection.removeAllRanges();
+      range.selectNode(this.$refs.textToCopy);
+      selection.addRange(range);
+
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        selection.removeAllRanges();
+      }
     }
   }
 };
 </script>
+
+<style>
+  .card__title {
+    display: inline-flex;
+    align-items: center;
+    padding-right: 0 !important; /* outweigh selector cascade from public styles */
+    cursor: pointer;
+  }
+
+  .icon-primary {
+    color: #309282;
+  }
+
+  .tooltip .tooltip-inner {
+    font-size: 13px;
+  }
+
+  .icon {
+    display: inline-block;
+    padding-left: .5rem;
+    font-size: 16px;
+  }
+</style>
