@@ -121,7 +121,7 @@ export default {
           title: "Dashboard",
           active: false,
           isExpandable: false,
-          link: "blocks"
+          link: "network"
         },
         {
           title: "Blocks",
@@ -214,7 +214,7 @@ export default {
               network: 'babylonnet'
             },
             {
-              title: "Carthage",
+              title: "Carthagenet",
               customCallback: true,
               network: 'carthagenet'
             }
