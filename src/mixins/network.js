@@ -6,8 +6,8 @@ export default {
           return "Mainnet";
         case "babylonnet":
           return "Babylonnet";
-        case "carthage":
-          return "Carthage";
+        case "carthagenet":
+          return "Carthagenet";
         default:
           return "Mainnet";
       }
