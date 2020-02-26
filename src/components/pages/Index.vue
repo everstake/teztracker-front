@@ -340,6 +340,9 @@ export default {
   @include for-smartphones-portrait-up {
     flex-direction: column;
   }
+  @include for-phone-only {
+    flex-direction: column;
+  }
   @include for-tablet-portrait-up {
     flex-direction: row;
   }
@@ -347,6 +350,7 @@ export default {
   &__item {
     flex: 1 0 20%;
     padding: 5px;
+    width: 100%;
 
     @include for-smartphones-portrait-up {
       flex: 1 0 50%;

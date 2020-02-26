@@ -12,7 +12,7 @@ body {
   -ms-flex-align: center;
   align-items: center;
   width: 100%;
-  height: 100px;
+  height: 90px;
   padding: 0 30px;
   background: #ffffff;
   z-index: 1000;
@@ -40,7 +40,7 @@ body {
 
 .main-header .header-middle .main-nav {
   float: left;
-  margin: 0 48px;
+  margin: 0 40px;
 }
 
 .main-header .header-middle .main-nav.right-block {
@@ -86,6 +86,7 @@ body {
 
 span a.baker {
   color: #309282;
+  word-break: break-all;
 }
 .main-header .header-middle .main-nav ul li a:hover {
   color: #309282;
@@ -174,7 +175,7 @@ span a.baker {
   background-image: url('../img/green-bg.svg');
   background-position: 0 0;
   /*background-repeat: repeat-x;*/
-  padding-top: 80px;
+  padding-top: 90px;
   flex: 1;
   min-height:calc(100vh - 60px);
 }
@@ -227,6 +228,10 @@ span a.baker {
 
 .main-content .promo-section .promo-top {
   overflow: hidden;
+}
+
+.main-content .promo-section .promo-top .promo-search {
+  margin: 26px 0;
 }
 
 .main-content .promo-section .promo-top .promo-search h1 {
@@ -377,9 +382,6 @@ span a.baker {
 }
 
 .main-content .promo-section .promo-tiles .voting-progress {
-  display: flex;
-  flex-flow: column nowrap;
-  flex: 1 1;
   padding-top: 14px;
   height: 61px;
 }
