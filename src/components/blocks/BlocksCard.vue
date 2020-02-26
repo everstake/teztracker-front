@@ -49,11 +49,6 @@
       <PaginationWithCustomAction
         :total-rows="rows"
         :per-page="perPage"
-        align="right"
-        first-text
-        prev-text="Prev"
-        next-text="Next"
-        last-text
         action="BLOCKS_GET"
       />
     </div>

@@ -69,12 +69,7 @@
       v-model="currentPage"
       :total-rows="rows"
       :per-page="perPage"
-      align="right"
       limit="10"
-      first-text
-      prev-text="Prev"
-      next-text="Next"
-      last-text
     />
   </div>
 </template>

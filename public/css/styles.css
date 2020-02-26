@@ -717,6 +717,15 @@ span a.baker {
   color: #309282;
 }
 
+.main-content section .card .card-body .pagination .page-item.disabled:hover .page-link {
+  background-color: transparent;
+  color: #309282;
+}
+
+.main-content section .card .card-body .pagination .page-item .page-link:focus {
+  box-shadow: 0 0 0 0.2rem rgba(48, 146, 130, 0.2);
+}
+
 .main-content section .card .card-body .item-info {
   padding: 12px 0;
 }
