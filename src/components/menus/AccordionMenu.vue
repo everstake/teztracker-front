@@ -48,7 +48,7 @@
           >
             {{ link.title }}
           </div>
-          <div v-else @click="link.customCallback()">{{ link.title }}</div>
+          <div v-else @click="changeRouteNetwork(link.network)">{{ link.title }}</div>
         </div>
       </div>
     </div>
@@ -56,9 +56,12 @@
 </template>
 <script>
 import { TweenLite, Power2 } from "gsap";
+import { mapMutations, mapGetters } from 'vuex';
+import { SET_APP_NETWORK } from '@/store/mutations.types.js';
 
 export default {
   methods: {
+    ...mapMutations('app', [SET_APP_NETWORK]),
     goToByName(name) {
       return this.$router.push({
         name: name
@@ -69,18 +72,19 @@ export default {
         this.$emit("close");
       } else {
         return this.$router.push({
-          name: goToname
+          name: goToname,
+          network: this.getAppNetwork
         });
       }
     },
-    useMainNet() {
-      window.location = "/mainnet";
-    },
-    useBabylon() {
-      window.location = "/babylonnet";
-    },
-    useCarthage() {
-      window.location = "/carthagenet";
+    changeRouteNetwork(network) {
+      this[SET_APP_NETWORK](network);
+
+      if (this.$route.name === '404' || this.$route.name === '500') {
+        this.$router.push({ name: 'network', params: { network } });
+      } else {
+        this.$router.push({ name: this.$route.name, params: { network } });
+      }
     },
 
     expand: function(e, i) {
@@ -104,6 +108,10 @@ export default {
         }
       }
     }
+  },
+
+  computed: {
+    ...mapGetters('app', ['getAppNetwork', 'getAppNetworkList'])
   },
 
   data() {
@@ -197,15 +205,18 @@ export default {
           description: [
             {
               title: "Mainnet",
-              customCallback: this.useMainNet
+              customCallback: true,
+              network: 'mainnet'
             },
             {
               title: "Babylon",
-              customCallback: this.useBabylon
+              customCallback: true,
+              network: 'babylonnet'
             },
             {
               title: "Carthage",
-              customCallback: this.useCarthage
+              customCallback: true,
+              network: 'carthagenet'
             }
           ]
         }
