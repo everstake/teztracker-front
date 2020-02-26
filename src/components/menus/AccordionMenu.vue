@@ -56,6 +56,8 @@
 </template>
 <script>
 import { TweenLite, Power2 } from "gsap";
+import { gsap, CSSPlugin } from "gsap/all";
+gsap.registerPlugin(CSSPlugin);
 import { mapMutations, mapGetters } from 'vuex';
 import { SET_APP_NETWORK } from '@/store/mutations.types.js';
 
