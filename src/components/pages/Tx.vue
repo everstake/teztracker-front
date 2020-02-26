@@ -187,12 +187,12 @@ export default {
       };
       const data = await this.$api.getTransactions(props);
       if (data.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.push({
+        return this.$router.replace({
           name: data.status
         });
       }
       if (data.data.length === 0) {
-        return this.$router.push({
+        return this.$router.replace({
           name: "404"
         });
       }

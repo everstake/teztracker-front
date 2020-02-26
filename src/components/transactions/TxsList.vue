@@ -138,7 +138,7 @@ export default {
       }
       const data = await this.$api.getTransactions(props);
       if (data.status !== 200) {
-        return this.$router.push({
+        return this.$router.replace({
           name: data.status
         });
       }

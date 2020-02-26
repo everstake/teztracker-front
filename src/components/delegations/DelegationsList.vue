@@ -126,7 +126,7 @@ export default {
       }
       const data = await this.$api.getDelegations(props);
       if (data.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.push({
+        return this.$router.replace({
           name: data.status
         });
       }
