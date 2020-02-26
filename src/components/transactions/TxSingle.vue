@@ -19,7 +19,13 @@
               <span class="label">Included in Block</span>
             </div>
             <div class="col-lg-9">
-              <span class="value">{{ blockHash }}</span>
+              <span class="value">
+                <router-link
+                  class="link"
+                  :to="{ name: 'block', params: { level } }"
+                  >{{ level }}</router-link
+                >
+              </span>
             </div>
           </div>
           <div class="item-info row ml-1 mr-1">
@@ -38,14 +44,14 @@
               <span class="value">{{ opHash }}</span>
             </div>
           </div>
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
-              <span class="label">Block id</span>
-            </div>
-            <div class="col-lg-9">
-              <span class="value">{{ level }}</span>
-            </div>
-          </div>
+<!--          <div class="item-info row ml-1 mr-1">-->
+<!--            <div class="col-lg-3">-->
+<!--              <span class="label">Block id</span>-->
+<!--            </div>-->
+<!--            <div class="col-lg-9">-->
+<!--              <span class="value">{{ level }}</span>-->
+<!--            </div>-->
+<!--          </div>-->
           <div class="item-info row ml-1 mr-1">
             <div class="col-lg-3">
               <span class="label">Fee</span>
