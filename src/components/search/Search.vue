@@ -41,11 +41,20 @@ export default {
     };
   },
   methods: {
-    onSubmit: function() {
+    resolveSearch(props, status) {
+      if (status !== this.$constants.STATUS_SUCCESS) {
+        return this.$router.replace({ name: status });
+      }
+
+      this.$router.push({ ...props });
+    },
+    async onSubmit() {
       this.loading = true;
 
       const searchStr = this.searchQuery;
       const isFormValid = this.validateForm();
+      let routerSettings;
+      let requestStatus;
 
       if (!isFormValid) {
         this.loading = false;
@@ -54,53 +63,40 @@ export default {
 
       // block id
       if (isFinite(parseInt(searchStr))) {
-        setTimeout(() => (this.loading = false), 100);
-
-        return this.$router.push({
-          name: "block",
-          params: { level: searchStr }
-        });
+        const { status } = await this.$api.getBlock({ block: searchStr });
+        routerSettings = { name: "block", params: { level: searchStr } };
+        requestStatus = status;
       }
+
       //block hash
       for (const prefix of this.$constants.SEARCH_PREFIXES.block) {
         if (startsWith(searchStr, prefix)) {
-          setTimeout(() => (this.loading = false), 100);
-
-          return this.$router.push({
-            name: "block",
-            params: { level: searchStr }
-          });
+          const { status } = await this.$api.getBlock({ block: searchStr });
+          routerSettings = { name: "block", params: { level: searchStr } };
+          requestStatus = status;
         }
       }
       //transactions
       for (const prefix of this.$constants.SEARCH_PREFIXES.operation) {
         if (startsWith(searchStr, prefix)) {
-          setTimeout(() => (this.loading = false), 100);
-
-          return this.$router.push({
-            name: "tx",
-            params: { txhash: searchStr }
-          });
+          const { status } = await this.$api.getTransactions({ txhash: searchStr });
+          routerSettings = { name: "tx", params: { txhash: searchStr } };
+          requestStatus = status;
         }
       }
       //account
       for (const prefix of this.$constants.SEARCH_PREFIXES.account) {
         if (startsWith(searchStr, prefix)) {
-          setTimeout(() => (this.loading = false), 100);
-
-          return this.$router.push({
-            name: "account",
-            params: { account: searchStr }
-          });
+          const { status } = await this.$api.getAccount({ account: searchStr });
+          routerSettings = { name: "account", params: { account: searchStr } };
+          requestStatus = status;
         }
       }
 
-      this.loading = false;
       this.searchQuery = "";
+      this.loading = false;
 
-      return this.$router.push({
-        name: "404"
-      });
+      this.resolveSearch(routerSettings, requestStatus);
     },
     findQueryPrefix(searchQuery) {
       const prefixesArray = flatten(
