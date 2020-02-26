@@ -84,11 +84,11 @@ body {
   margin-left: 4px;
 }
 
-span a.baker {
+span a.baker, .link {
   color: #309282;
   word-break: break-all;
 }
-.main-header .header-middle .main-nav ul li a:hover {
+.main-header .header-middle .main-nav ul li a:hover, .link:hover {
   color: #309282;
 }
 
