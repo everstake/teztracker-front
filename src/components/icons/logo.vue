@@ -52,7 +52,6 @@ export default {
 
 <style lang="scss" scoped>
 .svg-logo {
-  padding: 10px;
   text-align: center;
 }
 </style>
