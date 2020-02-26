@@ -116,7 +116,7 @@ export default {
         result = await this.$api.getEndorsements(props);
       }
       if (result.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.push({
+        return this.$router.replace({
           name: result.status
         });
       }
