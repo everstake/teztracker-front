@@ -93,7 +93,7 @@ export default {
     async load(level) {
       const result = await this.$api.getBlock({ block: level });
       if (result.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.push({
+        return this.$router.replace({
           name: result.status
         });
       }

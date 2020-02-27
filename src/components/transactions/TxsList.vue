@@ -52,11 +52,6 @@
       @change="_handleChange"
       :total-rows="rows"
       :per-page="perPage"
-      align="right"
-      first-text
-      prev-text="Prev"
-      next-text="Next"
-      last-text
     />
   </div>
 </template>
@@ -138,7 +133,7 @@ export default {
       }
       const data = await this.$api.getTransactions(props);
       if (data.status !== 200) {
-        return this.$router.push({
+        return this.$router.replace({
           name: data.status
         });
       }

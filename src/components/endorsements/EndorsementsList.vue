@@ -19,7 +19,7 @@
 
       <template slot="block" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.level } }">
-          <span>{{ row.item.blockHash | longhash(25) }}</span>
+          <span>{{ row.item.level }}</span>
         </b-link>
       </template>
 
@@ -40,11 +40,6 @@
       @change="_handleChange"
       :total-rows="rows"
       :per-page="perPage"
-      align="right"
-      first-text
-      prev-text="Prev"
-      next-text="Next"
-      last-text
     />
   </div>
 </template>
@@ -121,7 +116,7 @@ export default {
         result = await this.$api.getEndorsements(props);
       }
       if (result.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.push({
+        return this.$router.replace({
           name: result.status
         });
       }

@@ -51,8 +51,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import { GET_BLOCK_HEAD, GET_APP_INFO } from "@/store/actions.types";
+import { mapState } from "vuex";
 import moment from "moment";
 import network from "../../mixins/network";
 
@@ -83,14 +82,6 @@ export default {
         duration.days() > 0 ? duration.days() + "d" : ""
       } ${duration.hours()}h ${duration.minutes()}m`;
     }
-  },
-  methods: {
-    ...mapActions('app', [GET_APP_INFO]),
-    ...mapActions('blocks', [GET_BLOCK_HEAD])
-  },
-  async created() {
-    await this[GET_BLOCK_HEAD]();
-    await this[GET_APP_INFO]();
   }
 };
 </script>

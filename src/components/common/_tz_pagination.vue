@@ -6,10 +6,7 @@
       :total-rows="totalRows"
       :per-page="perPage"
       :align="align"
-      :first-text="firstText"
-      :prev-text="prevText"
-      :next-text="nextText"
-      :last-text="lastText"
+      :limit="4"
     />
   </div>
 </template>
@@ -28,19 +25,19 @@ export default {
     },
     firstText: {
       type: String,
-      default: "right"
+      default: "Start"
     },
     prevText: {
       type: String,
-      default: "right"
+      default: "Prev"
     },
     nextText: {
       type: String,
-      default: "right"
+      default: "Next"
     },
     lastText: {
       type: String,
-      default: "right"
+      default: "End"
     }
   },
   data() {
@@ -65,7 +62,7 @@ export default {
   justify-content: center;
   align-items: center;
   position: relative;
-  overflow: hidden;
+  overflow: auto;
   width: 100%;
   @include for-tablet-portrait-up {
     justify-content: flex-end;

@@ -2,22 +2,76 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import App from "./App.vue";
 // Constants
-import './plugins/constants';
-import './plugins/TezosApi';
+import "./plugins/constants";
+import "./plugins/TezosApi";
 import store from "@/store";
-import { state as appState } from '@/store/modules/app.module';
+import { state as appState } from "@/store/modules/app.module";
 import routes from "./routes";
 import "./filters";
-import { FontAwesomeIcon, FontAwesomeLayers, FontAwesomeLayersText } from "@fortawesome/vue-fontawesome";
-import { faSearch, faCaretUp, faCaretDown, faSpinner, faBars, faAngleDown, faCopy } from "@fortawesome/free-solid-svg-icons";
-import { faLightbulb, faStar, faFolder, faUser, faChartBar, faBookmark, faGem, faHourglass, faTimesCircle } from "@fortawesome/free-regular-svg-icons";
+import {
+  FontAwesomeIcon,
+  FontAwesomeLayers,
+  FontAwesomeLayersText
+} from "@fortawesome/vue-fontawesome";
+import {
+  faSearch,
+  faCaretUp,
+  faCaretDown,
+  faSpinner,
+  faBars,
+  faAngleDown,
+  faCopy,
+  faAngleLeft,
+  faAngleRight,
+  faAngleDoubleLeft,
+  faAngleDoubleRight
+} from "@fortawesome/free-solid-svg-icons";
+import {
+  faLightbulb,
+  faStar,
+  faFolder,
+  faUser,
+  faChartBar,
+  faBookmark,
+  faGem,
+  faHourglass,
+  faTimesCircle
+} from "@fortawesome/free-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { dom } from "@fortawesome/fontawesome-svg-core";
-import { LinkPlugin, TablePlugin, PaginationPlugin, ProgressPlugin, TooltipPlugin } from 'bootstrap-vue';
+import {
+  LinkPlugin,
+  TablePlugin,
+  PaginationPlugin,
+  ProgressPlugin,
+  TooltipPlugin
+} from "bootstrap-vue";
 
 dom.watch();
-library.add(faSearch, faSpinner, faCaretUp, faCaretDown, faBars, faAngleDown, faCopy);
-library.add(faLightbulb, faStar, faFolder, faUser, faChartBar, faBookmark, faGem, faHourglass, faTimesCircle);
+library.add(
+  faSearch,
+  faSpinner,
+  faCaretUp,
+  faCaretDown,
+  faBars,
+  faAngleDown,
+  faCopy,
+  faAngleLeft,
+  faAngleRight,
+  faAngleDoubleLeft,
+  faAngleDoubleRight
+);
+library.add(
+  faLightbulb,
+  faStar,
+  faFolder,
+  faUser,
+  faChartBar,
+  faBookmark,
+  faGem,
+  faHourglass,
+  faTimesCircle
+);
 
 Vue.config.productionTip = false;
 
@@ -34,11 +88,13 @@ let router = new VueRouter({
   routes
 });
 
-router.beforeEach( (to, from, next) => {
-  const isRouteNetworkValid = appState.app.networkList.some(network => network === to.params.network);
+router.beforeEach((to, from, next) => {
+  const isRouteNetworkValid = appState.app.networkList.some(
+    network => network === to.params.network
+  );
 
   if (isRouteNetworkValid) {
-    store.commit('app/setAppNetwork', to.params.network);
+    store.commit("app/setAppNetwork", to.params.network);
     return next();
   } else {
     next({

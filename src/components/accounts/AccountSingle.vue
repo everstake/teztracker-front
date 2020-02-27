@@ -145,7 +145,7 @@ export default {
     async reload(acc) {
       const result = await this.$api.getAccount({ account: acc });
       if (result.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.push({
+        return this.$router.replace({
           name: result.status
         });
       }

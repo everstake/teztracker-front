@@ -84,11 +84,11 @@ body {
   margin-left: 4px;
 }
 
-span a.baker {
+span a.baker, .link {
   color: #309282;
   word-break: break-all;
 }
-.main-header .header-middle .main-nav ul li a:hover {
+.main-header .header-middle .main-nav ul li a:hover, .link:hover {
   color: #309282;
 }
 
@@ -715,6 +715,15 @@ span a.baker {
 .main-content section .card .card-body .pagination .page-item:hover .page-link {
   background-color: #e0efec;
   color: #309282;
+}
+
+.main-content section .card .card-body .pagination .page-item.disabled:hover .page-link {
+  background-color: transparent;
+  color: #309282;
+}
+
+.main-content section .card .card-body .pagination .page-item .page-link:focus {
+  box-shadow: 0 0 0 0.2rem rgba(48, 146, 130, 0.2);
 }
 
 .main-content section .card .card-body .item-info {
