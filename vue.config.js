@@ -8,5 +8,12 @@ module.exports = {
           /en|ru|cn/
       )
     ]
+  },
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `@import "~@/styles/scss/index";`
+      }
+    }
   }
 };
