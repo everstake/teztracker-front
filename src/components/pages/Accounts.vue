@@ -1,0 +1,71 @@
+<template>
+  <div class="main-content">
+    <section class="breadcrumbs">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="page-title ml-2">
+              <h2>
+                Tezos (XTZ) Blockchain Explorer -
+                <span>Accounts page</span>
+              </h2>
+            </div>
+
+            <ol class="breadcrumb ml-2">
+              <li class="breadcrumb-item">
+                <router-link :to="{ name: 'network' }">Home</router-link>
+              </li>
+              <li class="breadcrumb-item active">Accounts page</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card ml-2 mr-2">
+              <TzCardHeader>
+                <template v-slot:left-content class="text">
+                  <h4 class="tz-title--bold">Accounts list</h4>
+                </template>
+                <template v-slot:right-content class="text">
+                  <TzCounter showLine :count="count.accounts" />
+                </template>
+              </TzCardHeader>
+
+              <div class="card-body">
+                <AccountsList />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</template>
+
+<script>
+import { mapState } from "vuex";
+import AccountsList from "../accounts/AccountsList";
+import TzCardHeader from "../common/tz_card_header";
+import TzCounter from "../common/tz_counter";
+
+export default {
+  name: "Accounts",
+  components: {
+    AccountsList,
+    TzCounter,
+    TzCardHeader
+  },
+  computed: {
+    ...mapState('accounts', {
+      count: state => state.counts
+    })
+  }
+};
+</script>
+
+<style />

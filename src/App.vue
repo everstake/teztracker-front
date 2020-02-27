@@ -1,22 +1,28 @@
 <template>
-  <div id="app">
+  <div id="app" :key="getAppNetwork">
     <TopMenu />
     <router-view></router-view>
-    <Footer />
+    <Footer showLogo />
   </div>
 </template>
 
 <script>
-import TopMenu from "./components/menu/top.vue";
-import Footer from "./components/menu/footer.vue";
+import TopMenu from "./components/menus/TopMenu";
+import Footer from "./components/menus/Footer";
+import { mapGetters } from 'vuex';
 
 export default {
   name: "app",
   components: {
     TopMenu,
     Footer
+  },
+  computed: {
+    ...mapGetters('app', ['getAppNetwork'])
   }
 };
 </script>
 
-<style></style>
+<style lang="scss">
+@import "/components/common/tz_common_kit_styles";
+</style>

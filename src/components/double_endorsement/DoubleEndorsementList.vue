@@ -1,0 +1,111 @@
+<template>
+  <div>
+    <b-table
+      show-empty
+      stacked="md"
+      :items="items"
+      :fields="fields"
+      :current-page="currentPage"
+      :per-page="0"
+      class="transactions-table table table-borderless table-responsive-md"
+    >
+      <template slot="txhash" slot-scope="row">
+        <b-link
+          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
+        >
+          <span>{{ row.item.operationGroupHash | longhash(35) }}</span>
+        </b-link>
+      </template>
+
+      <template slot="level" slot-scope="row">
+        <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
+          <span>{{ row.item.blockLevel }}</span>
+        </b-link>
+      </template>
+
+      <template slot="timestamp" slot-scope="row">
+        <span>{{ row.item.timestamp | timeformat($constants.TIME_FORMAT) }}</span>
+      </template>
+      <template slot="denounced_level" slot-scope="row">
+        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
+          <span>{{ row.item.level }}</span>
+        </b-link>
+      </template>
+    </b-table>
+
+    <TzPagination
+      @change="_handleChange"
+      :total-rows="rows"
+      :per-page="perPage"
+    />
+  </div>
+</template>
+
+<script>
+import { mapMutations } from "vuex";
+import { SET_DOUBLE_ENDORSEMENT_COUNT } from "@/store/mutations.types";
+import TzPagination from "../common/_tz_pagination";
+
+export default {
+  name: "DoubleEndorsementList",
+  components: {
+    TzPagination
+  },
+  props: ["account"],
+  data() {
+    return {
+      perPage: this.$constants.PER_PAGE,
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+      pageOptions: this.$constants.PAGE_OPTIONS,
+      double_endorsement: [],
+      count: 0,
+      fields: [
+        { key: "txhash", label: "Origination Hash" },
+        { key: "level", label: "Block ID" },
+        { key: "timestamp", label: "Timestamp" },
+        { key: "denounced_level", label: "Denounced Level" }
+      ]
+    };
+  },
+  computed: {
+    rows() {
+      return this.count;
+    },
+    items() {
+      return this.double_endorsement;
+    }
+  },
+  watch: {
+    currentPage: {
+      async handler(value) {
+        await this.reload(value);
+      }
+    }
+  },
+  async created() {
+    await this.reload();
+  },
+  methods: {
+    ...mapMutations('operations', [SET_DOUBLE_ENDORSEMENT_COUNT]),
+    _handleChange(page) {
+      this.currentPage = page;
+    },
+    async reload(page = 1) {
+      const props = {
+        page,
+        limit: this.perPage
+      };
+      if (this.block) {
+        props.block_id = this.block.hash;
+      }
+      if (this.account) {
+        props.account_id = this.account;
+      }
+      const data = await this.$api.getDoubleEndorsement(props);
+      this.double_endorsement = data.data;
+      this.count = data.count;
+      this[SET_DOUBLE_ENDORSEMENT_COUNT](this.count);
+    }
+  }
+};
+</script>
