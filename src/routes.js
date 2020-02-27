@@ -43,6 +43,7 @@ const Contracts = () => import("./components/pages/Contracts.vue");
 
 // Protocol amendment
 const ProtocolAmendment = () => import("@/components/pages/ProtocolAmendment.vue");
+const ProposalPeriod = () => import("@/components/pages/ProposalPeriod.vue");
 
 // Errors
 const NotFound = () => import("./components/pages/errors/NotFound.vue");
@@ -139,6 +140,8 @@ export default [
   /* Accounts group end */
   { path: "/:network/protocol_amendment", redirect: { name: 'protocol_amendment' }},
   { path: "/mainnet/protocol_amendment", name: 'protocol_amendment', component: ProtocolAmendment },
+  { path: "/:network/period/:id", redirect: { name: "proposal_period" }},
+  { path: '/mainnet/period/:id', name: 'proposal_period', component: ProposalPeriod },
   // Errors
   { path: "/:network/404", name: "404", component: NotFound },
   { path: "/:network/*", redirect: { name: "404" } },

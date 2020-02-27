@@ -14,3 +14,4 @@ export const GET_ORIGINATIONS = "getOriginations";
 export const GET_ACTIVATIONS = "getActivations";
 export const GET_ACCOUNTS = "getAccounts";
 export const GET_CONTRACTS = "getContracts";
+export const GET_PROPOSAL_PERIOD = "getProposalPeriod";

@@ -1,10 +1,16 @@
 <template>
-  <div class="protocol-amendment__card">
+  <div
+    class="protocol-amendment__card"
+    @click="onPeriodClick(id)"
+  >
     <div class="protocol-amendment__period">
-      <div>{{ period }}</div>
+      {{ period }}
     </div>
-    <div class="protocol-amendment__name">
-      <div>{{ name }}</div>
+    <div
+      class="protocol-amendment__name"
+      :class="period === 'current' ? 'protocol-amendment__name--active' : ''"
+    >
+      {{ name }}
     </div>
   </div>
 </template>
@@ -12,7 +18,12 @@
 <script>
 export default {
   name: "ProtocolAmendmentCard",
-  props: ['name', 'period']
+  props: ['name', 'period', 'id'],
+  methods: {
+    onPeriodClick(id) {
+      this.$emit('handleClick', id)
+    }
+  }
 };
 </script>
 
@@ -44,7 +55,11 @@ export default {
   &__name {
     margin: auto;
     font-size: 72px;
-    color: #2d2e2c;
+    color: #9ea0a5;
+
+    &--active {
+      color: #2d2e2c;
+    }
 
     @include for-tablet-ipad-landscape {
       font-size: 55px;

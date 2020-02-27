@@ -5,6 +5,7 @@ import app from "./modules/app.module";
 import blocks from "./modules/blocks.module";
 import operations from "./modules/operations.module";
 import accounts from "./modules/accounts.module";
+import proposal from "./modules/proposal.module";
 
 Vue.use(Vuex);
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     app,
     blocks,
     accounts,
-    operations
+    operations,
+    proposal
   }
 });

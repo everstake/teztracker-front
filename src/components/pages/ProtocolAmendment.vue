@@ -34,6 +34,8 @@
             <ProtocolAmendmentCard
               :name="amendment.name"
               :period="amendment.period"
+              :id="amendment.id"
+              @handleClick="handleProtocolClick($event)"
             />
           </b-col>
         </b-row>
@@ -44,7 +46,7 @@
 
 <script>
 import ProtocolAmendmentCard from "@/components/protocol_amendment/ProtocolAmendmentCard";
-import uuid from '@/mixins/uuid'
+import uuid from '@/mixins/uuid';
 
 export default {
   name: "Bakers",
@@ -54,13 +56,25 @@ export default {
   mixins: [uuid],
   data: () => ({
     amendmentList: new Set([
-      { name: "carthage 2.0", period: "current" },
-      { name: "carthage 1.0", period: "past" },
-      { name: "babylon 2.0", period: "past" },
-      { name: "brest A", period: "past" },
-      { name: "athens A", period: "past" }
+      { name: "carthage 2.0", period: "current", id: 25 },
+      { name: "carthage 1.0", period: "past", id: 21 },
+      { name: "babylon 2.0", period: "past", id: 16 },
+      { name: "brest A", period: "past", id: 14 },
+      { name: "athens A", period: "past", id: 10 }
     ])
   }),
+  methods: {
+    async handleProtocolClick(id) {
+      const data = await this.$api.getProposalPeriod({ id });
+      const { status } = data;
+
+      if (status !== this.$constants.STATUS_SUCCESS) {
+        return this.$router.replace({ name: status });
+      }
+
+      this.$router.push({ name: 'proposal_period', params: { id } })
+    }
+  }
 };
 </script>
 

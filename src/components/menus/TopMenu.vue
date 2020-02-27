@@ -77,7 +77,7 @@
               aria-expanded="false"
             >Protocol Amendments</a>
             <div class="dropdown-menu">
-              <router-link class="dropdown-item" :to="{ name: 'protocol_amendment' }">Amendments list</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'protocol_amendment' }">All amendments</router-link>
             </div>
           </li>
         </ul>
@@ -132,13 +132,14 @@ export default {
     networkChangable: true
   }),
   watch: {
+    //TODO: directly to page
     $route(to, from) {
-      if (to.name === 'protocol_amendment') {
-        this.networkChangable = false;
-      }
-
       if (from.name === 'protocol_amendment') {
         this.networkChangable = true;
+      }
+
+      if (to.name === 'protocol_amendment' || to.name.includes('period')) {
+        this.networkChangable = false;
       }
     }
   },

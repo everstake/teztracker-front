@@ -1,6 +1,6 @@
 import http from "./http.service";
 import querystring from "querystring";
-import { state } from '@/store/modules/app.module'
+import { state } from '@/store/modules/app.module';
 
 const COUNT_HEADER = "x-total-count";
 
@@ -32,9 +32,14 @@ const endpoint = {
   carthagenet: "https://api-teztracker.everstake.one/v2/data/tezos/carthagenet/"
 };
 
+const votingEndpoint = "https://api-teztracker.everstake.one/v2/data/mainnet/";
+
 const TzAPI = {
   API_URL() {
     return endpoint[state.app.network];
+  },
+  getVotingUrl() {
+    return votingEndpoint;
   },
   getAccounts(opts = {}) {
     return get(this.API_URL(), "accounts", opts);
@@ -116,6 +121,9 @@ const TzAPI = {
   },
   getFutureBakingRights(opts = {}) {
     return get(this.API_URL(), "future_baking_rights", opts);
+  },
+  getProposalPeriod(opts = {}) {
+    return get(this.getVotingUrl(), 'period', opts);
   }
 };
 
