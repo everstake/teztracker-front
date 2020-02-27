@@ -43,7 +43,7 @@ export default {
   methods: {
     resolveSearch(props, status) {
       if (status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.replace({ name: status });
+        return this.$router.push({ name: status });
       }
 
       this.$router.push({ ...props });
