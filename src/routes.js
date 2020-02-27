@@ -1,4 +1,4 @@
-import Index from './components/pages/Index'
+import Index from "./components/pages/Index";
 /* Blocks group */
 // Blocks
 const Blocks = () => import("./components/pages/Blocks.vue");
@@ -25,8 +25,7 @@ const Activations = () => import("./components/pages/Activations.vue");
 // Double baking
 const DoubleBaking = () => import("./components/pages/DoubleBaking.vue");
 // Double endorsement
-const DoubleEndorsement = () =>
-  import("./components/pages/DoubleEndorsement.vue");
+const DoubleEndorsement = () => import("./components/pages/DoubleEndorsement.vue");
 /* Operations group end */
 
 // Bakers
@@ -42,29 +41,32 @@ const Account = () => import("./components/pages/Account.vue");
 const Contracts = () => import("./components/pages/Contracts.vue");
 /* Accounts group end */
 
+// Protocol amendment
+const ProtocolAmendment = () => import("@/components/pages/ProtocolAmendment.vue");
+
 // Errors
 const NotFound = () => import("./components/pages/errors/NotFound.vue");
 const ServerError = () => import("./components/pages/errors/ServerError.vue");
 
 export default [
   {
-    path: '/',
-    name: 'index',
-    redirect: { name: 'network', params: { network: 'mainnet' } }
+    path: "/",
+    name: "index",
+    redirect: { name: "network", params: { network: "mainnet" } }
   },
   {
-    name: 'network',
-    path: '/:network',
+    name: "network",
+    path: "/:network",
     component: Index
   },
   {
-    name: 'blocks',
-    path: '/:network/blocks',
+    name: "blocks",
+    path: "/:network/blocks",
     component: Blocks
   },
   {
-    name: 'block',
-    path: '/:network/block/:level',
+    name: "block",
+    path: "/:network/block/:level",
     component: Block
   },
   {
@@ -135,8 +137,10 @@ export default [
   // Contracts
   { path: "/:network/contracts", name: "contracts", component: Contracts },
   /* Accounts group end */
+  { path: "/:network/protocol_amendment", redirect: { name: 'protocol_amendment' }},
+  { path: "/mainnet/protocol_amendment", name: 'protocol_amendment', component: ProtocolAmendment },
   // Errors
-  {path: '/:network/404', name: '404', component: NotFound},
-  {path: '/:network/*', redirect: { name: '404' }},
-  {path: '/:network/500', name: '500', component: ServerError},
+  { path: "/:network/404", name: "404", component: NotFound },
+  { path: "/:network/*", redirect: { name: "404" } },
+  { path: "/:network/500", name: "500", component: ServerError }
 ];

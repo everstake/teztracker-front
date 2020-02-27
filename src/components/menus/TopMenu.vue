@@ -67,10 +67,23 @@
               <router-link class="dropdown-item" :to="{ name: 'contracts', params: { network: currentNetwork } }">Contracts</router-link>
             </div>
           </li>
+          <li v-if="currentNetwork === 'mainnet'">
+            <a
+              class="dropdown-toggle"
+              data-toggle="dropdown"
+              href="/"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >Protocol Amendments</a>
+            <div class="dropdown-menu">
+              <router-link class="dropdown-item" :to="{ name: 'protocol_amendment' }">Amendments list</router-link>
+            </div>
+          </li>
         </ul>
       </nav>
 
-      <nav class="main-nav right-block">
+      <nav class="main-nav right-block" v-if="networkChangable">
         <ul>
           <li>
             <a
@@ -82,7 +95,7 @@
               aria-expanded="false"
               >{{ currentNetwork }}</a>
             <div class="dropdown-menu">
-              <div v-for="network in networkList" @click="changeRouteNetwork(network)" class="dropdown-item pointer">
+              <div v-for="network in networkList" :key="generateKey()" @click="changeRouteNetwork(network)" class="dropdown-item pointer">
                 {{ network }}
               </div>
             </div>
@@ -105,6 +118,7 @@ import network from "../../mixins/network";
 import Search from "../search/Search";
 import OverlayHamburgerMenu from "./Overlay";
 import Logo from "../icons/logo";
+import uuid from '@/mixins/uuid'
 
 export default {
   name: "TopMenu",
@@ -113,7 +127,21 @@ export default {
     OverlayHamburgerMenu,
     Logo
   },
-  mixins: [network],
+  mixins: [network, uuid],
+  data: () => ({
+    networkChangable: true
+  }),
+  watch: {
+    $route(to, from) {
+      if (to.name === 'protocol_amendment') {
+        this.networkChangable = false;
+      }
+
+      if (from.name === 'protocol_amendment') {
+        this.networkChangable = true;
+      }
+    }
+  },
   computed: {
     ...mapState('app', {
       network: state => state.app.network
