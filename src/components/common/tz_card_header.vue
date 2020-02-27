@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/scss/common";
+
 
 .card-header .card-title {
   @include for-phone-only {

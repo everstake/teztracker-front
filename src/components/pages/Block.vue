@@ -115,7 +115,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/scss/common";
+
 .main-content section .card .nav-tabs {
   @include for-phone-only {
     margin: 0;

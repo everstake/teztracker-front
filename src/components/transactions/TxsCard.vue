@@ -112,7 +112,7 @@ export default {
 
 <style lang="scss" scoped>
 // TODO: aliases
-@import "../../styles/scss/common";
+
 
 .line {
   display: block;

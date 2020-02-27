@@ -87,7 +87,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/scss/common";
+
 
 .cycle-counter {
   padding: 0 5px;
