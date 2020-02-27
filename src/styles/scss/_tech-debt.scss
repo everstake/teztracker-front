@@ -100,7 +100,7 @@ span a.baker, .link {
   position: relative;
   top: -2px;
   border: none;
-  content: url(../img/angle-down.svg);
+  content: url(~@/assets/img/angle-down.svg);
   vertical-align: baseline;
 }
 
@@ -121,12 +121,12 @@ span a.baker, .link {
 .main-header .header-middle .main-nav ul li .dropdown-menu .dropdown-item:hover,
 .main-header .header-middle .main-nav ul li .dropdown-menu .dropdown-item:focus,
 .main-header
-  .header-middle
-  .main-nav
-  ul
-  li
-  .dropdown-menu
-  .dropdown-item:active {
+.header-middle
+.main-nav
+ul
+li
+.dropdown-menu
+.dropdown-item:active {
   background: transparent;
   color: #309282;
 }
@@ -172,7 +172,7 @@ span a.baker, .link {
   -ms-flex-direction: column;
   flex-direction: column;
   /* margin-bottom: 2rem; */
-  background-image: url('../img/green-bg.svg');
+  background-image: url('~@/assets/img/green-bg.svg');
   background-position: 0 0;
   /*background-repeat: repeat-x;*/
   padding-top: 90px;
@@ -221,7 +221,7 @@ span a.baker, .link {
   position: relative;
   width: 100%;
   margin: 0;
-  background-image: url('../img/green-bg.svg');
+  background-image: url('~@/assets/img/green-bg.svg');
   background-position: 0 242px;
   background-repeat: repeat-x;
 }
@@ -524,12 +524,12 @@ span a.baker, .link {
 }
 
 .main-content
-  section
-  .card
-  .card-header
-  .table-filters
-  .dropdown
-  .btn-secondary {
+section
+.card
+.card-header
+.table-filters
+.dropdown
+.btn-secondary {
   padding: 0;
   border: none;
   font-size: 13px;
@@ -540,48 +540,48 @@ span a.baker, .link {
 }
 
 .main-content
-  section
-  .card
-  .card-header
-  .table-filters
-  .dropdown
-  .btn-secondary:focus {
+section
+.card
+.card-header
+.table-filters
+.dropdown
+.btn-secondary:focus {
   outline: none;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
 
 .main-content
-  section
-  .card
-  .card-header
-  .table-filters
-  .dropdown
-  .btn-secondary.dropdown-toggle:after {
+section
+.card
+.card-header
+.table-filters
+.dropdown
+.btn-secondary.dropdown-toggle:after {
   border: none;
-  content: url(../img/arrow-down.svg);
+  content: url(~@/assets/img/arrow-down.svg);
   vertical-align: baseline;
 }
 
 .main-content
-  section
-  .card
-  .card-header
-  .table-filters
-  .dropdown
-  .dropdown-item {
+section
+.card
+.card-header
+.table-filters
+.dropdown
+.dropdown-item {
   font-size: 13px;
   font-weight: 600;
   color: #9ea0a5;
 }
 
 .main-content
-  section
-  .card
-  .card-header
-  .table-filters
-  .dropdown
-  .dropdown-item:hover {
+section
+.card
+.card-header
+.table-filters
+.dropdown
+.dropdown-item:hover {
   background-color: #e0efec;
   color: #309282;
 }
@@ -602,16 +602,16 @@ span a.baker, .link {
   height: 1px;
   margin: 12px auto 0;
   background-image: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(6%, #4a4a4a),
-    color-stop(2%, rgba(255, 255, 255, 0))
+                  linear,
+                  left top,
+                  right top,
+                  color-stop(6%, #4a4a4a),
+                  color-stop(2%, rgba(255, 255, 255, 0))
   );
   background-image: linear-gradient(
-    to right,
-    #4a4a4a 6%,
-    rgba(255, 255, 255, 0) 2%
+                  to right,
+                  #4a4a4a 6%,
+                  rgba(255, 255, 255, 0) 2%
   );
   background-position: top;
   background-size: 10px 1px;
@@ -632,16 +632,16 @@ span a.baker, .link {
 
 .main-content section .card .card-body .table tbody {
   background-image: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(6%, #4a4a4a),
-    color-stop(2%, rgba(255, 255, 255, 0))
+                  linear,
+                  left top,
+                  right top,
+                  color-stop(6%, #4a4a4a),
+                  color-stop(2%, rgba(255, 255, 255, 0))
   );
   background-image: linear-gradient(
-    to right,
-    #4a4a4a 6%,
-    rgba(255, 255, 255, 0) 2%
+                  to right,
+                  #4a4a4a 6%,
+                  rgba(255, 255, 255, 0) 2%
   );
   background-position: top;
   background-size: 10px 1px;
@@ -650,16 +650,16 @@ span a.baker, .link {
 
 .main-content section .card .card-body .table tbody tr:last-child {
   background-image: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    color-stop(6%, #4a4a4a),
-    color-stop(2%, rgba(255, 255, 255, 0))
+                  linear,
+                  left top,
+                  right top,
+                  color-stop(6%, #4a4a4a),
+                  color-stop(2%, rgba(255, 255, 255, 0))
   );
   background-image: linear-gradient(
-    to right,
-    #4a4a4a 6%,
-    rgba(255, 255, 255, 0) 2%
+                  to right,
+                  #4a4a4a 6%,
+                  rgba(255, 255, 255, 0) 2%
   );
   background-position: bottom;
   background-size: 10px 1px;
@@ -702,12 +702,12 @@ span a.baker, .link {
 }
 
 .main-content
-  section
-  .card
-  .card-body
-  .pagination
-  .page-item.active
-  .page-link {
+section
+.card
+.card-body
+.pagination
+.page-item.active
+.page-link {
   background-color: transparent;
   color: #309282;
 }

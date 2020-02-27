@@ -40,7 +40,7 @@ export default {
 
 
 .footer {
-  padding: $common-padding;
+  padding: 15px;
 
   display: flex;
   flex-direction: column;
