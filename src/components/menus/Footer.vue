@@ -37,10 +37,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/scss/common";
+
 
 .footer {
-  padding: $common-padding;
+  padding: 15px;
 
   display: flex;
   flex-direction: column;

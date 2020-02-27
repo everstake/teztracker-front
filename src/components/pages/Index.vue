@@ -308,7 +308,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../styles/scss/common";
+
 
 .tile {
   padding: 0 15px;

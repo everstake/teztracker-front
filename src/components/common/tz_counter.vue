@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../styles/scss/common";
+
 
 .counter {
   position: relative;

@@ -52,7 +52,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../styles/scss/common";
+
 
 $color-background: #f5f5f5;
 $color-main: #fff;
