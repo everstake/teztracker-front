@@ -3,7 +3,7 @@
     <b-table
       show-empty
       stacked="md"
-      :items="items"
+      :items="snapshots"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
@@ -26,28 +26,30 @@
       </template>
     </b-table>
 
-    <TzPagination
-      @change="_handleChange"
+    <Pagination
+      @change="$_handleCurrentPageChange"
       v-model="currentPage"
-      :total-rows="rows"
+      :total-rows="count"
       :per-page="perPage"
     />
   </div>
 </template>
+
 <script>
 import { mapMutations } from "vuex";
 import { SET_SNAPSHOTS_COUNT } from "@/store/mutations.types";
-import TzPagination from "../common/_tz_pagination";
+import Pagination from "../partials/Pagination";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 
 export default {
   name: "SnapshotsList",
   components: {
-    TzPagination
+    Pagination
   },
+  mixins: [handleCurrentPageChange],
   data() {
     return {
       perPage: this.$constants.PER_PAGE_SNAPSHOTS,
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       pageOptions: this.$constants.PAGE_OPTIONS,
       snapshots: [],
       count: 0,
@@ -57,14 +59,6 @@ export default {
         { key: "rolls", label: "Amount of rolls" }
       ]
     };
-  },
-  computed: {
-    rows() {
-      return this.count;
-    },
-    items() {
-      return this.snapshots;
-    }
   },
   watch: {
     currentPage: {
@@ -78,9 +72,6 @@ export default {
   },
   methods: {
     ...mapMutations('blocks', [SET_SNAPSHOTS_COUNT]),
-    _handleChange(page) {
-      this.currentPage = page;
-    },
     async reload(page = 1) {
       const props = {
         page,

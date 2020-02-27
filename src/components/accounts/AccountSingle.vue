@@ -180,7 +180,7 @@ export default {
   }
 </style>
 
-<style scoped>
+<style lang="scss" scoped>
   .card-header .title {
     word-break: break-word;
   }
@@ -193,7 +193,7 @@ export default {
   }
 
   .icon-primary {
-    color: #309282;
+    color: $color-brand;
   }
 
   .icon {

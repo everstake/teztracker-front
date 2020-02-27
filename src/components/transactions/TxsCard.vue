@@ -1,12 +1,12 @@
 <template>
   <div class="card">
-    <TzCardHeader>
+    <CardHeader>
       <template v-slot:left-content class="text">
         <h4 class="tz-title--bold">Transaction list</h4>
-<!--        <TzDropdown dropdownTitle="This year" />-->
+<!--        <Dropdown dropdownTitle="This year" />-->
       </template>
       <template v-slot:right-content class="text">
-        <TzCounter :count="count" />
+        <Counter :count="count" />
         <div class="counter">
           <div class="tz_link">
             <router-link class="tz-dropdown-item" :to="{ name: 'txs' }"
@@ -15,13 +15,13 @@
           </div>
         </div>
       </template>
-    </TzCardHeader>
+    </CardHeader>
 
     <div class="card-body">
       <b-table
         show-empty
         stacked="md"
-        :items="items"
+        :items="transactions"
         :fields="fields"
         :per-page="0"
         class="table table-borderless table-responsive-sm"
@@ -51,7 +51,7 @@
       </b-table>
 
       <PaginationWithCustomAction
-        :total-rows="rows"
+        :total-rows="count"
         :per-page="perPage"
       />
     </div>
@@ -59,14 +59,14 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import TzPagination from "../common/_tz_pagination";
-import TzCardHeader from "../common/tz_card_header";
-// import TzDropdown from "../common/tz_dropdown";
-import TzCounter from "../common/tz_counter";
+import Pagination from "../partials/Pagination";
+import CardHeader from "../partials/CardHeader";
+// import Dropdown from "../common/Dropdown";
+import Counter from "../partials/Counter";
 
-import withCustomAction from "../common/withCustomAction";
+import withCustomAction from "../partials/withCustomAction";
 const PaginationWithCustomAction = withCustomAction(
-  TzPagination,
+  Pagination,
   "operations",
   "GET_TRANSACTIONS"
 );
@@ -74,9 +74,9 @@ const PaginationWithCustomAction = withCustomAction(
 export default {
   name: "TxsCard",
   components: {
-    TzCardHeader,
-    // TzDropdown,
-    TzCounter,
+    CardHeader,
+    // Dropdown,
+    Counter,
     PaginationWithCustomAction
   },
   data() {
@@ -100,12 +100,6 @@ export default {
       transactions: state => state.txs,
       count: state => state.counts.txs
     }),
-    rows() {
-      return this.count;
-    },
-    items() {
-      return this.transactions;
-    }
   }
 };
 </script>
@@ -120,7 +114,7 @@ export default {
   width: 30px;
   height: 16px;
   margin-right: 0.5rem;
-  border-bottom: 1px solid #9ea0a5;
+  border-bottom: 1px solid $color-grey;
   opacity: 0.5;
 }
 .title {

@@ -3,7 +3,7 @@
     <b-table
       show-empty
       stacked="md"
-      :items="items"
+      :items="endorsements"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
@@ -36,9 +36,9 @@
       </template>
     </b-table>
 
-    <TzPagination
-      @change="_handleChange"
-      :total-rows="rows"
+    <Pagination
+      @change="$_handleCurrentPageChange"
+      :total-rows="count"
       :per-page="perPage"
     />
   </div>
@@ -47,18 +47,19 @@
 <script>
 import { mapMutations } from "vuex";
 import { SET_ENDORSEMENTS_COUNT } from "@/store/mutations.types";
-import TzPagination from "../common/_tz_pagination";
+import Pagination from "../partials/Pagination";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 
 export default {
   name: "EndorsementsList",
   components: {
-    TzPagination
+    Pagination
   },
+  mixins: [handleCurrentPageChange],
   props: ["block"],
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       pageOptions: this.$constants.PAGE_OPTIONS,
       endorsements: [],
       count: 0,
@@ -71,12 +72,6 @@ export default {
     };
   },
   computed: {
-    rows() {
-      return this.count;
-    },
-    items() {
-      return this.endorsements;
-    },
     level() {
       return this.$route.params.level;
     }
@@ -98,9 +93,6 @@ export default {
   },
   methods: {
     ...mapMutations('blocks', [SET_ENDORSEMENTS_COUNT]),
-    _handleChange(page) {
-      this.currentPage = page;
-    },
     async reload({ page = 1, block = 0 } = {}) {
       const props = {
         page,

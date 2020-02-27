@@ -9,6 +9,9 @@ import accounts from "./modules/accounts.module";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+  state: {
+    s: Vue.prototype.$constants.STATUS_SUCCESS
+  },
   getters: {
     API() {
       return TzAPI;

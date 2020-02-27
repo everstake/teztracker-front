@@ -3,7 +3,7 @@
     <b-table
       show-empty
       stacked="md"
-      :items="items"
+      :items="delegations"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
@@ -48,10 +48,10 @@
       </template>
     </b-table>
 
-    <TzPagination
-      @change="_handleChange"
+    <Pagination
+      @change="$_handleCurrentPageChange"
       v-model="currentPage"
-      :total-rows="rows"
+      :total-rows="count"
       :per-page="perPage"
     />
   </div>
@@ -60,18 +60,19 @@
 <script>
 import { mapMutations } from "vuex";
 import { SET_DELEGATIONS_COUNT } from "@/store/mutations.types";
-import TzPagination from "../common/_tz_pagination";
+import Pagination from "../partials/Pagination";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 
 export default {
   name: "DelegationsList",
   components: {
-    TzPagination
+    Pagination
   },
   props: ["account"],
+  mixins: [handleCurrentPageChange],
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       pageOptions: this.$constants.PAGE_OPTIONS,
       delegations: [],
       count: 0,
@@ -85,14 +86,6 @@ export default {
       ]
     };
   },
-  computed: {
-    rows() {
-      return this.count;
-    },
-    items() {
-      return this.delegations;
-    }
-  },
   watch: {
     currentPage: {
       async handler(value) {
@@ -105,9 +98,6 @@ export default {
   },
   methods: {
     ...mapMutations('operations', [SET_DELEGATIONS_COUNT]),
-    _handleChange(page) {
-      this.currentPage = page;
-    },
     async reload(page = 1) {
       const props = {
         page,

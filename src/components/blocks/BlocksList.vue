@@ -3,7 +3,7 @@
     <b-table
       show-empty
       stacked="md"
-      :items="items"
+      :items="blocks"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
@@ -37,18 +37,18 @@
     </b-table>
 
     <PaginationWithCustomAction
-      :total-rows="rows"
+      :total-rows="Number(this.count.blocks)"
       :per-page="perPage"
     />
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import TzPagination from "../common/_tz_pagination";
+import Pagination from "../partials/Pagination";
 
-import withCustomAction from "../common/withCustomAction";
+import withCustomAction from "../partials/withCustomAction";
 const PaginationWithCustomAction = withCustomAction(
-  TzPagination,
+  Pagination,
   "blocks",
   "GET_BLOCKS"
 );
@@ -81,13 +81,7 @@ export default {
     ...mapState("blocks", {
       blocks: state => state.blocks,
       count: state => state.counts
-    }),
-    rows() {
-      return Number(this.count.blocks);
-    },
-    items() {
-      return this.blocks;
-    }
+    })
   }
 };
 </script>

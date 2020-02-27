@@ -1,8 +1,7 @@
+import Vue from "vue";
 import http from "./http.service";
 import querystring from "querystring";
 import { state } from '@/store/modules/app.module'
-
-const COUNT_HEADER = "x-total-count";
 
 function formatURL(api, path, query) {
   return `${api}${path}?${querystring.stringify(query)}`;
@@ -20,21 +19,15 @@ async function get(api, path, query) {
     data = e.response;
   }
   const result = { data: data.data, status: data.status };
-  if (data.headers[COUNT_HEADER]) {
-    result.count = parseInt(data.headers[COUNT_HEADER]);
+  if (data.headers[Vue.prototype.$constants.COUNT_HEADER]) {
+    result.count = parseInt(data.headers[Vue.prototype.$constants.COUNT_HEADER]);
   }
   return result;
 }
 
-const endpoint = {
-  mainnet: "https://api-teztracker.everstake.one/v2/data/tezos/mainnet/",
-  babylonnet: "https://api-teztracker.everstake.one/v2/data/tezos/babylonnet/",
-  carthagenet: "https://api-teztracker.everstake.one/v2/data/tezos/carthagenet/"
-};
-
 const TzAPI = {
   API_URL() {
-    return endpoint[state.app.network];
+    return Vue.prototype.$constants.API_BASE_URLS[state.app.network];
   },
   getAccounts(opts = {}) {
     return get(this.API_URL(), "accounts", opts);

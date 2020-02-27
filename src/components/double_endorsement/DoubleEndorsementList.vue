@@ -3,7 +3,7 @@
     <b-table
       show-empty
       stacked="md"
-      :items="items"
+      :items="double_endorsement"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
@@ -33,9 +33,9 @@
       </template>
     </b-table>
 
-    <TzPagination
-      @change="_handleChange"
-      :total-rows="rows"
+    <Pagination
+      @change="$_handleCurrentPageChange"
+      :total-rows="count"
       :per-page="perPage"
     />
   </div>
@@ -44,18 +44,19 @@
 <script>
 import { mapMutations } from "vuex";
 import { SET_DOUBLE_ENDORSEMENT_COUNT } from "@/store/mutations.types";
-import TzPagination from "../common/_tz_pagination";
+import Pagination from "../partials/Pagination";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 
 export default {
   name: "DoubleEndorsementList",
   components: {
-    TzPagination
+    Pagination
   },
+  mixins: [handleCurrentPageChange],
   props: ["account"],
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       pageOptions: this.$constants.PAGE_OPTIONS,
       double_endorsement: [],
       count: 0,
@@ -66,14 +67,6 @@ export default {
         { key: "denounced_level", label: "Denounced Level" }
       ]
     };
-  },
-  computed: {
-    rows() {
-      return this.count;
-    },
-    items() {
-      return this.double_endorsement;
-    }
   },
   watch: {
     currentPage: {
@@ -87,9 +80,6 @@ export default {
   },
   methods: {
     ...mapMutations('operations', [SET_DOUBLE_ENDORSEMENT_COUNT]),
-    _handleChange(page) {
-      this.currentPage = page;
-    },
     async reload(page = 1) {
       const props = {
         page,
