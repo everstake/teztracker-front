@@ -2,12 +2,12 @@
   <div>
     <b-table
       show-empty
-      stacked="md"
       :items="transactions"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
-      class="transactions-table table table-borderless table-responsive-md"
+      borderless
+      class="transactions-table table-responsive-md"
     >
       <template slot="txhash" slot-scope="row">
         <b-link
@@ -71,7 +71,6 @@ export default {
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
-      pageOptions: this.$constants.PAGE_OPTIONS,
       transactions: [],
       count: 0,
       fields: [
@@ -108,7 +107,10 @@ export default {
     }
   },
   async created() {
-    await this.reload();
+    // TODO: refactor API
+    if (!this.block) {
+      await this.reload();
+    }
   },
   methods: {
     ...mapMutations('operations', [SET_TX_COUNT]),

@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 
 module.exports = {
+  productionSourceMap: false,
   configureWebpack: {
     plugins: [
       new webpack.ContextReplacementPlugin(
@@ -10,6 +11,7 @@ module.exports = {
     ]
   },
   css: {
+    sourceMap: true,
     loaderOptions: {
       sass: {
         prependData: `@import "@/assets/scss/_variables";

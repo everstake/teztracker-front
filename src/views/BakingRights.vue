@@ -1,68 +1,55 @@
 <template>
-  <div class="main-content">
-    <section class="breadcrumbs">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="page-title ml-2">
-              <h2>
-                Tezos (XTZ) Blockchain Explorer -
-                <span>Baking Rights</span>
-              </h2>
-            </div>
+  <PageContentContainer page-name="Baking Rights">
+    <template #breadcrumbs>
+      <Breadcrumbs :crumbs="crumbs" />
+    </template>
 
-            <ol class="breadcrumb ml-2">
-              <li class="breadcrumb-item">
-                <router-link :to="{ name: 'network' }">Home</router-link>
-              </li>
-              <li class="breadcrumb-item active">Baking Rights</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </section>
+    <template #content>
+      <section>
+        <b-container fluid>
+          <b-row>
+            <b-col lg="12">
+              <b-card class="mb-3" no-body>
+                <CardHeader>
+                  <template #left-content class="text">
+                    <h4 class="tz-title--bold">Future Baking Rights</h4>
+                  </template>
+                  <template #right-content class="text">
+                    <Counter show-line :count="count.future_baking_rights" />
+                  </template>
+                </CardHeader>
 
-    <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card mb-3">
-              <CardHeader>
-                <template v-slot:left-content class="text">
-                  <h4 class="tz-title--bold">Future Baking Rights</h4>
-                </template>
-                <template v-slot:right-content class="text">
-                  <Counter :count="count.future_baking_rights" />
-                </template>
-              </CardHeader>
+                <b-card-body>
+                  <FutureBakingRightsList />
+                </b-card-body>
+              </b-card>
 
-              <div class="card-body">
-                <FutureBakingRightsList />
-              </div>
-            </div>
-            <div class="card mb-3">
-              <CardHeader>
-                <template v-slot:left-content class="text">
-                  <h4 class="tz-title--bold">Past Baking Rights</h4>
-                </template>
-                <template v-slot:right-content class="text">
-                  <Counter :count="count.baking_rights" />
-                </template>
-              </CardHeader>
+              <b-card no-body>
+                <CardHeader>
+                  <template #left-content class="text">
+                    <h4 class="tz-title--bold">Past Baking Rights</h4>
+                  </template>
+                  <template #right-content class="text">
+                    <Counter show-line :count="count.baking_rights" />
+                  </template>
+                </CardHeader>
 
-              <div class="card-body">
-                <BakingRightsList />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+                <b-card-body>
+                  <BakingRightsList />
+                </b-card-body>
+              </b-card>
+            </b-col>
+          </b-row>
+        </b-container>
+      </section>
+    </template>
+  </PageContentContainer>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import PageContentContainer from "../layouts/PageContentContainer";
+import Breadcrumbs from "../components/partials/Breadcrumbs";
 import BakingRightsList from "../components/baking_rights/BakingRightsList";
 import FutureBakingRightsList from "../components/baking_rights/FutureBakingRightsList";
 import CardHeader from "../components/partials/CardHeader";
@@ -71,10 +58,20 @@ import Counter from "../components/partials/Counter";
 export default {
   name: "BakingRights",
   components: {
+    PageContentContainer,
+    Breadcrumbs,
     BakingRightsList,
     FutureBakingRightsList,
     CardHeader,
     Counter
+  },
+  data() {
+    return {
+      crumbs: [
+        { toRouteName: "network", text: "Home" },
+        { toRouteName: "baking_rights", text: "Baking Rights" }
+      ]
+    };
   },
   computed: {
     ...mapState('blocks', {

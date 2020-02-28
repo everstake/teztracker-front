@@ -41,16 +41,21 @@ body {
 
 .main-header .header-middle .main-nav {
   float: left;
-  margin: 0 28px;
+  margin: 0 18px;
 }
 
 .main-header .header-middle .main-nav.right-block {
   float: right;
   margin: 0 15px;
+  ul {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
-.main-header .header-middle .main-nav ul {
-  display: block;
+.main-nav__list{
+  display: flex;
+  align-items: center;
   float: left;
   list-style: none;
   margin: 0;
@@ -113,6 +118,7 @@ span a.baker, .link {
   padding: 0.8rem 1rem;
   font-size: 14px;
   color: $color-black;
+  transition: color 0.2s;
 }
 
 .main-header .header-middle .main-nav ul li .dropdown-menu .dropdown-item:hover,
@@ -722,7 +728,7 @@ section
 }
 
 .main-content section .card .nav-tabs {
-  margin: 30px 30px 0;
+  margin: 30px 0 0;
   border-color: $color-white--grey;
 }
 
@@ -803,12 +809,12 @@ section
 @media screen and (max-width: 1360px) {
   .main-header .header-middle .main-nav {
     float: left;
-    margin: 0 15px;
+    margin: 0;
   }
 
   .main-header .header-middle .main-nav.right-block {
     float: right;
-    margin: 0 20px;
+    margin: 0;
   }
 
   .main-header .header-middle .main-nav ul li {

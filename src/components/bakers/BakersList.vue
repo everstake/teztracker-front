@@ -2,12 +2,12 @@
   <div>
     <b-table
       show-empty
-      stacked="md"
       :items="bakers"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
-      class="transactions-table table table-borderless table-responsive-md"
+      borderless
+      class="transactions-table table-responsive-md"
     >
       <template slot="baker" slot-scope="row">
         <b-link :to="{ name: 'baker', params: { baker: row.item.accountId } }">
@@ -52,7 +52,6 @@ export default {
     return {
       perPage: this.$constants.PER_PAGE,
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      pageOptions: this.$constants.PAGE_OPTIONS,
       fields: [
         { key: "baker", label: "Baker" },
         { key: "blocks", label: "Blocks" },

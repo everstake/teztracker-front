@@ -38,12 +38,17 @@ export default {
     lastText: {
       type: String,
       default: "End"
+    },
+    perPage: {
+      type: Number,
+      default() {
+        return this.$constants.PER_PAGE;
+      }
     }
   },
   data() {
     return {
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      perPage: this.$constants.PER_PAGE
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE
     };
   },
   methods: {

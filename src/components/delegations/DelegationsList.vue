@@ -2,12 +2,12 @@
   <div>
     <b-table
       show-empty
-      stacked="md"
       :items="delegations"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
-      class="transactions-table table table-borderless table-responsive-md"
+      borderless
+      class="transactions-table table-responsive-md"
     >
       <template slot="txhash" slot-scope="row">
         <b-link
@@ -73,7 +73,6 @@ export default {
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
-      pageOptions: this.$constants.PAGE_OPTIONS,
       delegations: [],
       count: 0,
       fields: [

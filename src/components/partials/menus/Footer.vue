@@ -1,19 +1,17 @@
 <template>
-  <div>
-    <footer class="footer">
-      <div v-if="showLogo" class="footer__logo">
-        <Logo />
+  <footer class="footer">
+    <div v-if="showLogo" class="footer__logo">
+      <Logo/>
+    </div>
+    <div class="footer__description">
+      <div class="copyright">© {{ currentYear }} TZ Tracker. All rights reserved.</div>
+      <div class="contacts">
+        <a href="mailto:inbox@everstake.one" class="contacts__item">
+          <i class="far fa-envelope"></i> Contact Us
+        </a>
       </div>
-      <div class="footer__description">
-        <div class="copyright">© {{ currentYear }} TZ Tracker. All rights reserved.</div>
-        <div class="contacts">
-          <a href="mailto:inbox@everstake.one" class="contacts__item">
-            <i class="far fa-envelope"></i> Contact Us
-          </a>
-        </div>
-      </div>
-    </footer>
-  </div>
+    </div>
+  </footer>
 </template>
 
 <script>

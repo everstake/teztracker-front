@@ -1,89 +1,61 @@
 <template>
-  <div class="main-content">
-    <section class="breadcrumbs">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="page-title ml-2">
-              <h2>
-                Tezos (XTZ) Blockchain Explorer -
-                <span>Blocks page</span>
-              </h2>
-            </div>
+  <PageContentContainer page-name="Block page">
+    <template #breadcrumbs>
+      <Breadcrumbs :crumbs="crumbs"/>
+    </template>
 
-            <ol class="breadcrumb ml-2">
-              <li class="breadcrumb-item">
-                <router-link :to="{ name: 'network' }">Home</router-link>
-              </li>
-              <li class="breadcrumb-item">
-                <router-link :to="{ name: 'blocks' }">Block page</router-link>
-              </li>
-              <li class="breadcrumb-item active">{{ level }}</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </section>
+    <template #content>
+      <section>
+        <b-container fluid>
+          <BlockSingle :block="block" />
+        </b-container>
+      </section>
 
-    <section>
-      <div class="container-fluid">
-        <BlockSingle :level="level" />
-      </div>
-    </section>
+      <section>
+        <b-container fluid>
+          <b-row>
+            <b-col lg="12">
+              <b-card no-body>
+                <b-tabs>
+                  <b-tab title="Transactions" active>
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">Transactions list</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
 
-    <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card">
-              <!-- Nav tabs -->
-              <ul class="nav nav-tabs">
-                <li class="nav-item">
-                  <a
-                    class="nav-link active"
-                    data-toggle="tab"
-                    href="#transactions"
-                    >Transactions</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#endorsements"
-                    >Endorsements</a
-                  >
-                </li>
-              </ul>
+                    <b-card-body>
+                      <TxsList :block="block"/>
+                    </b-card-body>
+                  </b-tab>
+                  <b-tab title="Endorsements">
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">Endorsements list</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
 
-              <!-- Tab panes -->
-              <div class="tab-content">
-                <div class="tab-pane active" id="transactions">
-                  <div class="card-header">
-                    <div class="title">
-                      <h3>
-                        <span class="text">Transactions list</span>
-                      </h3>
-                    </div>
-                  </div>
-
-                  <div class="card-body">
-                    <TxsList :block="block" />
-                  </div>
-                </div>
-
-                <div class="tab-pane" id="endorsements">
-                  <div class="card-body">
-                    <EndorsementsList :block="block.level" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+                    <b-card-body>
+                      <EndorsementsList :block="block.level"/>
+                    </b-card-body>
+                  </b-tab>
+                </b-tabs>
+              </b-card>
+            </b-col>
+          </b-row>
+        </b-container>
+      </section>
+    </template>
+  </PageContentContainer>
 </template>
 
 <script>
+import PageContentContainer from "../layouts/PageContentContainer";
+import Breadcrumbs from "../components/partials/Breadcrumbs";
 import BlockSingle from "../components/blocks/BlockSingle";
 import EndorsementsList from "../components/endorsements/EndorsementsList";
 import TxsList from "../components/transactions/TxsList";
@@ -91,6 +63,8 @@ import TxsList from "../components/transactions/TxsList";
 export default {
   name: "Block",
   components: {
+    PageContentContainer,
+    Breadcrumbs,
     BlockSingle,
     EndorsementsList,
     TxsList
@@ -103,14 +77,34 @@ export default {
   computed: {
     level() {
       return this.$route.params.level;
+    },
+    crumbs() {
+      return [
+        {toRouteName: "network", text: "Home"},
+        {toRouteName: "blocks", text: "Blocks page"},
+        {toRouteName: "block", text: this.level}
+      ];
     }
   },
-  async created() {
-    const result = await this.$api.getBlock({
-      block: this.level
-    });
-    this.block = result.data.block || {};
-  }
+  watch: {
+    level: {
+      immediate: true,
+      async handler(value) {
+        await this.load(value);
+      }
+    }
+  },
+  methods: {
+    async load(level) {
+      const result = await this.$api.getBlock({ block: level });
+      if (result.status !== this.$constants.STATUS_SUCCESS) {
+        return this.$router.replace({
+          name: result.status
+        });
+      }
+      this.block = result.data.block;
+    }
+  },
 };
 </script>
 

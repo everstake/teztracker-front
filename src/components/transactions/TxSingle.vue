@@ -1,24 +1,24 @@
 <template>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card ml-2 mr-2">
-        <div class="card-header">
-          <div class="title">
+  <b-row>
+    <b-col lg="12">
+      <b-card no-body>
+        <b-card-header>
+          <div class="break-word">
             <h3>
               <span class="text">{{ opHash }}</span>
             </h3>
             <span class="subtitle">Transaction Information</span>
           </div>
-        </div>
+        </b-card-header>
 
         <div class="card-divider"></div>
 
-        <div class="card-body">
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
+        <b-card-body>
+          <b-row class="item-info ml-1 mr-1">
+            <b-col lg="3">
               <span class="label">Included in Block</span>
-            </div>
-            <div class="col-lg-9">
+            </b-col>
+            <b-col lg="9">
               <span class="value">
                 <router-link
                   class="link"
@@ -26,47 +26,47 @@
                   >{{ level }}</router-link
                 >
               </span>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
+            </b-col>
+          </b-row>
+          <b-row class="item-info ml-1 mr-1">
+            <b-col lg="3">
               <span class="label">Timestamp</span>
-            </div>
-            <div class="col-lg-9">
+            </b-col>
+            <b-col lg="9">
               <span class="value">{{timestamp | timeformat($constants.TIME_FORMAT) }}</span>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
+            </b-col>
+          </b-row>
+          <b-row class="item-info ml-1 mr-1">
+            <b-col lg="3">
               <span class="label">Operation Hash</span>
-            </div>
-            <div class="col-lg-9">
+            </b-col>
+            <b-col lg="9">
               <span class="value">{{ opHash }}</span>
-            </div>
-          </div>
-<!--          <div class="item-info row ml-1 mr-1">-->
-<!--            <div class="col-lg-3">-->
+            </b-col>
+          </b-row>
+<!--          <b-row class="item-info ml-1 mr-1">-->
+<!--            <b-col lg="3">-->
 <!--              <span class="label">Block id</span>-->
-<!--            </div>-->
-<!--            <div class="col-lg-9">-->
+<!--            </b-col>-->
+<!--            <b-col lg="9">-->
 <!--              <span class="value">{{ level }}</span>-->
-<!--            </div>-->
-<!--          </div>-->
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
+<!--            </b-col>-->
+<!--          </b-row>-->
+          <b-row class="item-info ml-1 mr-1">
+            <b-col lg="3">
               <span class="label">Fee</span>
-            </div>
-            <div class="col-lg-9">
+            </b-col>
+            <b-col lg="9">
               <span class="value">
                 {{ fee | tezos }}
                 ({{ $_convert(fee) }})
               </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+            </b-col>
+          </b-row>
+        </b-card-body>
+      </b-card>
+    </b-col>
+  </b-row>
 </template>
 
 <script>

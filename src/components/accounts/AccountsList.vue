@@ -2,12 +2,12 @@
   <div>
     <b-table
       show-empty
-      stacked="md"
       :items="accounts"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
-      class="transactions-table table table-borderless table-responsive-md"
+      borderless
+      class="transactions-table table-responsive-md"
     >
       <template slot="account" slot-scope="row">
         <b-link
@@ -49,7 +49,6 @@ export default {
     return {
       perPage: this.$constants.PER_PAGE,
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      pageOptions: this.$constants.PAGE_OPTIONS,
       fields: [
         { key: "account", label: "Account" },
         { key: "amount", label: "Amount" }

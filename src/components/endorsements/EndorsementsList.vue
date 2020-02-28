@@ -2,12 +2,12 @@
   <div>
     <b-table
       show-empty
-      stacked="md"
       :items="endorsements"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
-      class="table table-borderless table-responsive-md"
+      borderless
+      class="transactions-table table-responsive-md"
     >
       <template slot="txhash" slot-scope="row">
         <b-link
@@ -60,7 +60,6 @@ export default {
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
-      pageOptions: this.$constants.PAGE_OPTIONS,
       endorsements: [],
       count: 0,
       fields: [
@@ -101,10 +100,13 @@ export default {
       let result;
       if (block > 0) {
         props.block_id = block;
-        props.limit = this.$constants.ENDORSEMENTS_LIMIT;
+        // TODO: Refactor API service
+        delete props.limit;
+        delete props.page;
         this.perPage = this.$constants.ENDORSEMENTS_LIMIT;
         result = await this.$api.getBlockEndorsements(props);
       } else {
+        this.perPage = this.$constants.PER_PAGE;
         result = await this.$api.getEndorsements(props);
       }
       if (result.status !== this.$constants.STATUS_SUCCESS) {
