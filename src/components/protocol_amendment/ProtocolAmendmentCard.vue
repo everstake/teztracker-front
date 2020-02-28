@@ -28,8 +28,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/scss/common";
-
 .protocol-amendment {
   &__card {
     display: flex;

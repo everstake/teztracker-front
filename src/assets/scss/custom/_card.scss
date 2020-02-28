@@ -1,0 +1,129 @@
+.vote-card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid #f0f0f1;
+  border-radius: 4px;
+  box-shadow: 0 0 15px 7px rgba(0,0,0,0.02);
+
+  &__header {
+    padding: 18px 28px 9px;
+  }
+
+  &__body {
+    padding: 1.25rem 0;
+  }
+
+  &__container-space-between {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__table {
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+
+    // moidify table pagination
+    & .page-link {
+      border: none;
+      color: #9ea0a5;
+    }
+  }
+
+  &__th {
+    font-size: 14px;
+    font-weight: 700;
+    color: #2d2e2c;
+  }
+
+  &__tbody {
+    background-image: linear-gradient(to right, #4a4a4a 6%, rgba(255,255,255,0) 2%);
+    background-position: top;
+    background-size: 10px 1px;
+    background-repeat: repeat-x;
+  }
+
+  &__td {
+    padding: 1rem 0.75rem;
+    font-size: 14px;
+  }
+
+  &__link {
+    color: #309282;
+  }
+
+  &__divider {
+    display: block;
+    height: 1px;
+    margin: 30px 0;
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(6%, #4a4a4a), color-stop(2%, rgba(255,255,255,0)));
+    background-image: linear-gradient(to right, #4a4a4a 6%, rgba(255,255,255,0) 2%);
+    background-position: top;
+    background-size: 10px 1px;
+    background-repeat: repeat-x;
+  }
+
+  &__title-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    aling-items: center;
+    margin: 30px 0;
+  }
+
+  &__link {
+    color: inherit;
+    border-bottom: 1px solid #2d2e2c;
+
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration: none;
+      border-color: #309282;
+      color: #309282;
+    }
+  }
+
+  &__font-size {
+    &--14 {
+      font-size: 14px;
+    }
+
+    &--16 {
+      font-size: 16px;
+    }
+
+    &--18 {
+      font-size: 18px;
+    }
+
+    &--20 {
+      font-size: 20px;
+    }
+
+    &--36 {
+      font-size: 36px;
+    }
+  }
+
+  &__weight {
+    &--bold {
+      font-weight: bold;
+    }
+
+    &--lighter {
+      color: #9ea0a5;
+    }
+  }
+
+  &__percentage {
+    font-size: 14px;
+    font-weight: 600;
+    color: #9ea0a5;
+    text-transform: uppercase;
+  }
+}
+
+// 30px title vertical margin
+// 14px, 16px, 20px, 36px title size

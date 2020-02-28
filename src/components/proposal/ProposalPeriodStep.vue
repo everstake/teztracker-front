@@ -4,7 +4,7 @@
       <li
         v-for="period of periodsTypes"
         class="proposal-step__item"
-        :class="period === type ? 'proposal-step__item--active' : ''"
+        :class="{ 'proposal-step__item--active': period === type }"
       >
         {{ period }}
       </li>
@@ -61,19 +61,19 @@ export default {
     cursor: pointer;
 
     &:nth-child(1):before {
-      content: '1'
+      content: '1';
     }
 
     &:nth-child(2):before {
-      content: '2'
+      content: '2';
     }
 
     &:nth-child(3):before {
-      content: '3'
+      content: '3';
     }
 
     &:nth-child(4):before {
-      content: '4'
+      content: '4';
     }
 
     &:before {
@@ -94,7 +94,7 @@ export default {
       color: #309282;
 
       &:before {
-        content: '\2713' !important;
+        content: url('~@/assets/icons/done.svg') !important;
         border-color: #309282;
       }
     }

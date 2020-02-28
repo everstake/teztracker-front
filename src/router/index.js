@@ -24,6 +24,7 @@ router.beforeEach((to, from, next) => {
     next({
       name: to.name,
       params: {
+        ...to.params,
         network: appState.app.network
       }
     });

@@ -4,7 +4,8 @@ import {
   TablePlugin,
   PaginationPlugin,
   ProgressPlugin,
-  TooltipPlugin
+  TooltipPlugin,
+  LayoutPlugin
 } from "bootstrap-vue";
 import {
   FontAwesomeIcon,
@@ -43,6 +44,7 @@ Vue.use(TablePlugin);
 Vue.use(PaginationPlugin);
 Vue.use(ProgressPlugin);
 Vue.use(TooltipPlugin);
+Vue.use(LayoutPlugin);
 
 dom.watch();
 library.add(

@@ -41,8 +41,8 @@ const Contracts = () => import("../views/Contracts.vue");
 /* Accounts group end */
 
 // Protocol amendment
-const ProtocolAmendment = () => import("@/components/pages/ProtocolAmendment.vue");
-const ProposalPeriod = () => import("@/components/pages/ProposalPeriod.vue");
+const ProtocolAmendment = () => import("@/views/ProtocolAmendment.vue");
+const ProposalPeriod = () => import("@/views/ProposalPeriod.vue");
 
 // Errors
 const NotFound = () => import("../views/errors/NotFound.vue");
