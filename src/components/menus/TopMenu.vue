@@ -128,21 +128,6 @@ export default {
     Logo
   },
   mixins: [network, uuid],
-  data: () => ({
-    networkChangable: true
-  }),
-  watch: {
-    //TODO: directly to page
-    $route(to, from) {
-      if (from.name === 'protocol_amendment') {
-        this.networkChangable = true;
-      }
-
-      if (to.name === 'protocol_amendment' || to.name.includes('period')) {
-        this.networkChangable = false;
-      }
-    }
-  },
   computed: {
     ...mapState('app', {
       network: state => state.app.network
@@ -151,6 +136,19 @@ export default {
       currentNetwork: 'getAppNetwork',
       networkList: 'getAppNetworkList'
     })
+  },
+  data: () => ({
+    networkChangable: true
+  }),
+  watch: {
+    $route(to) {
+      // TODO: directly to page
+      if (to.name.includes('protocol') || to.name.includes('proposal')) {
+        this.networkChangable = false;
+      } else {
+        this.networkChangable = true;
+      }
+    }
   },
   methods: {
     ...mapMutations('app', [SET_APP_NETWORK]),

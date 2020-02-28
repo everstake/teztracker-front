@@ -94,6 +94,7 @@ export default {
       color: #309282;
 
       &:before {
+        content: '\2713' !important;
         border-color: #309282;
       }
     }
