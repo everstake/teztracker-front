@@ -4,7 +4,7 @@
       show-empty
       fixed
       stacked="md"
-      :items="items"
+      :items="baking_rights"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
@@ -66,9 +66,9 @@
     </b-table>
 
     <div class="pagination-block">
-      <TzPagination
-        @change="_handleChange"
-        :total-rows="rows"
+      <Pagination
+        @change="$_handleCurrentPageChange"
+        :total-rows="count.baking_rights"
         :per-page="perPage"
         limit="10"
       />
@@ -79,13 +79,15 @@
 import { mapState, mapMutations } from "vuex";
 import { SET_BAKING_RIGHTS_COUNT } from "@/store/mutations.types";
 import uniq from "lodash/uniq";
-import TzPagination from "../common/_tz_pagination";
+import Pagination from "../partials/Pagination";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 
 export default {
   name: "BakingRightsList",
   components: {
-    TzPagination
+    Pagination
   },
+  mixins: [handleCurrentPageChange],
   data() {
     return {
       baking_rights: [],
@@ -93,7 +95,6 @@ export default {
       block_levels: [],
       blocks: [],
       perPage: this.$constants.PER_PAGE,
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
         {
           key: "priority",
@@ -105,13 +106,7 @@ export default {
   computed: {
     ...mapState('blocks', {
       count: state => state.counts
-    }),
-    rows() {
-      return this.count.baking_rights;
-    },
-    items() {
-      return this.baking_rights;
-    }
+    })
   },
   watch: {
     currentPage: {
@@ -193,9 +188,6 @@ export default {
       const data = await this.$api.getBakingRights(props);
       await this[SET_BAKING_RIGHTS_COUNT](data.count);
       this.parseResponse(data.data);
-    },
-    _handleChange(page) {
-      this.currentPage = page;
     }
   }
 };

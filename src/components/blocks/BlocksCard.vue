@@ -1,12 +1,12 @@
 <template>
   <div class="card">
-    <TzCardHeader>
+    <CardHeader>
       <template v-slot:left-content class="text">
         <h4 class="tz-title--bold">Blocks list</h4>
-<!--        <TzDropdown dropdownTitle="This year" />-->
+<!--        <Dropdown dropdownTitle="This year" />-->
       </template>
       <template v-slot:right-content class="text">
-        <TzCounter :count="count" />
+        <Counter :count="count" />
         <div class="counter">
           <div class="tz_link">
             <router-link class="tz-dropdown-item" :to="{ name: 'blocks' }"
@@ -15,13 +15,13 @@
           </div>
         </div>
       </template>
-    </TzCardHeader>
+    </CardHeader>
 
     <div class="card-body">
       <b-table
         show-empty
         stacked="md"
-        :items="items"
+        :items="blocks"
         :fields="fields"
         :current-page="currentPage"
         :per-page="0"
@@ -47,7 +47,7 @@
       </b-table>
 
       <PaginationWithCustomAction
-        :total-rows="rows"
+        :total-rows="Number(this.count)"
         :per-page="perPage"
         action="BLOCKS_GET"
       />
@@ -56,14 +56,14 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import TzPagination from "../common/_tz_pagination";
-import TzCardHeader from "../common/tz_card_header";
-// import TzDropdown from "../common/tz_dropdown";
-import TzCounter from "../common/tz_counter";
+import Pagination from "../partials/Pagination";
+import CardHeader from "../partials/CardHeader";
+// import Dropdown from "../common/Dropdown";
+import Counter from "../partials/Counter";
 
-import withCustomAction from "../common/withCustomAction";
+import withCustomAction from "../partials/withCustomAction";
 const PaginationWithCustomAction = withCustomAction(
-  TzPagination,
+  Pagination,
   "blocks",
   "GET_BLOCKS"
 );
@@ -71,9 +71,9 @@ const PaginationWithCustomAction = withCustomAction(
 export default {
   name: "BlocksCard",
   components: {
-    TzCardHeader,
-    // TzDropdown,
-    TzCounter,
+    CardHeader,
+    // Dropdown,
+    Counter,
     PaginationWithCustomAction
   },
   data() {
@@ -96,14 +96,7 @@ export default {
     ...mapState("blocks", {
       count: state => state.counts.blocks,
       blocks: state => state.blocks
-    }),
-    rows() {
-      return Number(this.count);
-    },
-    items() {
-      return this.blocks;
-    }
+    })
   }
 };
 </script>
-<style />

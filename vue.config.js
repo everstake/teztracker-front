@@ -8,5 +8,13 @@ module.exports = {
           /en|ru|cn/
       )
     ]
+  },
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: `@import "@/assets/scss/_variables";
+                      @import "@/assets/scss/_mixins";`
+      }
+    }
   }
 };
