@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import TopMenu from "./components/menus/TopMenu";
-import Footer from "./components/menus/Footer";
+import TopMenu from "./components/partials/menus/TopMenu";
+import Footer from "./components/partials/menus/Footer";
 import { mapGetters } from 'vuex';
 
 export default {
@@ -24,5 +24,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "/components/common/tz_common_kit_styles";
+@import "assets/scss/index";
 </style>

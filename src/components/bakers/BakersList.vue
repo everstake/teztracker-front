@@ -3,7 +3,7 @@
     <b-table
       show-empty
       stacked="md"
-      :items="items"
+      :items="bakers"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
@@ -27,18 +27,18 @@
 
     <PaginationWithCustomAction
       v-model="currentPage"
-      :total-rows="rows"
+      :total-rows="count.bakers"
       :per-page="perPage"
     />
   </div>
 </template>
 <script>
 import { mapState } from "vuex";
-import TzPagination from "../common/_tz_pagination";
+import Pagination from "../partials/Pagination";
 
-import withCustomAction from "../common/withCustomAction";
+import withCustomAction from "../partials/withCustomAction";
 const PaginationWithCustomAction = withCustomAction(
-  TzPagination,
+  Pagination,
   "accounts",
   "GET_BAKERS"
 );
@@ -66,12 +66,6 @@ export default {
       bakers: state => state.bakers,
       count: state => state.counts
     }),
-    rows() {
-      return this.count.bakers;
-    },
-    items() {
-      return this.bakers;
-    }
   },
 };
 </script>

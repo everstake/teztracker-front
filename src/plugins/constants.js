@@ -23,7 +23,7 @@ const constants = {
   BLOCKS_IN_CYCLE_MAINNET: 4096,
   BLOCKS_IN_CYCLE_TESTNET: 2048, // twice lesser than in mainnet
   CYCLES_IN_VOTING_PERIOD: 8,
-  APIS: {
+  API_BASE_URLS: {
     mainnet: "https://api-teztracker.everstake.one/v2/data/tezos/mainnet/",
     babylonnet: "https://api-teztracker.everstake.one/v2/data/tezos/babylonnet/",
     carthagenet: "https://api-teztracker.everstake.one/v2/data/tezos/carthagenet/"
