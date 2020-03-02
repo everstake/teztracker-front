@@ -115,9 +115,28 @@ const TzAPI = {
   getFutureBakingRights(opts = {}) {
     return get(this.API_URL(), "future_baking_rights", opts);
   },
-  getProposalPeriod(opts = {}) {
+  getPeriod(opts = {}) {
     return get(this.getVotingUrl(), 'period', opts);
-  }
+  },
+  getPeriods(opts = {}) {
+    return get(this.getVotingUrl(), 'periods', opts);
+  },
+  getProposals(opts = {}) {
+    const { id } = opts;
+    return get(this.getVotingUrl(), `proposals/${id}`, opts);
+  },
+  getBallots(opts = {}) {
+    const { id } = opts;
+    return get(this.getVotingUrl(), `ballots/${id}`, opts);
+  },
+  getVoters(opts = {}) {
+    const { id } = opts;
+    return get(this.getVotingUrl(), `proposal_votes/${id}`, opts);
+  },
+  getNonVoters(opts = {}) {
+    const { id } = opts;
+    return get(this.getVotingUrl(), `non_voters/${id}`, opts);
+  },
 };
 
 export default TzAPI;

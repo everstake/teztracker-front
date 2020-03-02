@@ -65,7 +65,7 @@ export default {
   }),
   methods: {
     async handleProtocolClick(id) {
-      const data = await this.$api.getProposalPeriod({ id });
+      const data = await this.$api.getPeriod({ id });
       const { status } = data;
 
       if (status !== this.$constants.STATUS_SUCCESS) {
