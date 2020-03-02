@@ -60,7 +60,10 @@
                     Recent Votes
                   </p>
                   <div class="vote-card__recent" v-for="voter in voters.slice(0,3)" :key="generateKey()">
-                    <div class="vote-card__recent-name">{{ voter.name || voter.pkh }}</div>
+                    <div>
+                      <div class="vote-card__recent-name">{{ voter.name || voter.pkh }}</div>
+                      <div class="vote-card__recent-proposal"><span>Proposal:</span> {{ voter.proposal | longhash(15) }}</div>
+                    </div>
                     <div class="vote-card__recent-rolls">{{ voter.rolls }}</div>
                   </div>
                   <div class="vote-card__divider"></div>
@@ -135,49 +138,20 @@
     <!-- Proposals end -->
 
     <!-- Changelog start -->
-    <CardSection :fluid="true">
+    <CardSection :fluid="true" v-for="proposalItem in proposalsList">
       <template #body>
         <div class="vote-card">
           <div class="vote-card__header">
             <div class="vote-card__container-space-between">
               <p class="vote-card__font-size--36 vote-card__weight--bold">
-                Carthage (PtCarthav)
+                {{ proposalItem.name || proposalItem.hash | longhash(35) }}
               </p>
               <p class="vote-card__font-size--36">
-                <span class="vote-card__weight--lighter">Upvotes:</span> 3.50%
+                <span class="vote-card__weight--lighter">Upvotes:</span> {{getPercentage(proposal.voteStats.votesAvailable, proposal.voteStats.votesCast).toFixed(2)}}%
               </p>
             </div>
             <div class="vote-card__title vote-card__font-size--18">
-              <span class="vote-card__weight--lighter">ID:</span> 25
-            </div>
-            <div class="vote-card__divider"></div>
-            <p class="vote-card__font-size--18">
-              Increase the gas limit per block and per operation by 30%, improve
-              the accuracy of the formula used for calculating baking and
-              endorsing rewards and fix various small issues (see
-              <a class="vote-card__link" href="#">changelog</a>)
-            </p>
-          </div>
-        </div>
-      </template>
-    </CardSection>
-    <!-- Changelog end -->
-
-    <!-- Changelog start -->
-    <CardSection :fluid="true">
-      <template #body>
-        <div class="vote-card">
-          <div class="vote-card__header">
-            <div class="vote-card__container-space-between">
-              <p class="vote-card__font-size--36 vote-card__weight--bold">
-                Carthage 2.0
-              </p>
-              <p class="vote-card__font-size--36">
-                <span class="vote-card__weight--lighter">Upvotes:</span> 3.50%
-              </p>
-            </div>
-            <div class="vote-card__title vote-card__font-size--18">
-              <span class="vote-card__weight--lighter">ID:</span> 26
+              <span class="vote-card__weight--lighter">ID:</span> {{ proposalItem.period }}
             </div>
             <div class="vote-card__divider"></div>
             <p class="vote-card__font-size--18">
@@ -374,12 +348,12 @@ export default {
     },
     async fetchVoters(id) {
       const data = await this.$api.getVoters({ id });
-      this.voters = data.data.map(voter => ({ ...voter, id: `id_${id}` }));
+      this.voters = data.data.map(voter => ({ ...voter, id }));
       console.log("voters", this.voters);
     },
     async fetchNonVoters(id) {
       const data = await this.$api.getNonVoters({ id });
-      this.nonVoters = data.data.map(voter => ({ ...voter, id: `id_${id}` }));
+      this.nonVoters = data.data.map(voter => ({ ...voter, id }));
       console.log("nonVoters", this.nonVoters);
     },
     getPercentage(a, b) {

@@ -133,19 +133,29 @@
     &:last-child {
       margin-bottom: 0;
     }
+
+    &-name {
+      font-size: 18px;
+      color: #2d2e2c;
+      letter-spacing: 0.39px;
+    }
+
+    &-proposal {
+      font-size: 18px;
+
+      & span {
+        color: #9ea0a5;
+      }
+    }
+
+    &-rolls {
+      font-size: 18px;
+      color: #2d2e2c;
+      letter-spacing: 0.39px;
+    }
   }
 
-  &__name {
-    font-size: 18px;
-    color: #2d2e2c;
-    letter-spacing: 0.39px;
-  }
 
-  &__rolls {
-    font-size: 18px;
-    color: #2d2e2c;
-    letter-spacing: 0.39px;
-  }
 }
 
 // 30px title vertical margin
