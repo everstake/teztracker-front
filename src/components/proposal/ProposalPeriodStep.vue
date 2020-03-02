@@ -48,17 +48,30 @@ export default {
     margin-bottom: 0;
     padding-left: 0;
     list-style: none;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 30px;
+      right: 30px;
+      height: 1px;
+      background-color: #9ea0a5;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 
   &__item {
     position: relative;
     display: flex;
     align-items: center;
+    padding: 0 25px;
     font-size: 20px;
     font-weight: 600;
     color: #9ea0a5;
     text-transform: uppercase;
     cursor: pointer;
+    background-color: white;
 
     &:nth-child(1):before {
       content: '1';

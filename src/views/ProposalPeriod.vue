@@ -138,7 +138,7 @@
     <!-- Proposals end -->
 
     <!-- Changelog start -->
-    <CardSection :fluid="true" v-for="proposalItem in proposalsList">
+    <CardSection :fluid="true" v-for="proposalItem in proposalsList" :key="generateKey()">
       <template #body>
         <div class="vote-card">
           <div class="vote-card__header">
