@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :key="getAppNetwork">
+  <div id="app" :key="$route.path || getAppNetwork">
     <TopMenu />
     <router-view></router-view>
     <Footer showLogo />
