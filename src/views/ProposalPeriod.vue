@@ -23,7 +23,7 @@
     <!-- Proposal Steps start -->
     <CardSection :fluid="true">
       <template #body>
-        <ProposalPeriodStep :type="proposal.periodType" />
+        <ProposalPeriodStep :type="proposal.period.periodType" />
       </template>
     </CardSection>
     <!-- Proposal Steps end -->
@@ -92,6 +92,9 @@
                         <span class="vote-card__percentage">Participation</span>
                         <span class="vote-card__percentage">Votes Cast</span>
                       </div>
+                      <div class="vote-card__p">
+                        Bakers {{ proposal.voteStats.numVoters }} / {{ proposal.voteStats.numVotersTotal }}
+                      </div>
                     </b-col>
                     <b-col cols="6">
                       <div class="vote-card__container-space-between">
@@ -126,6 +129,9 @@
                           >Votes Availaible</span
                         >
                       </div>
+                      <div class="vote-card__p">
+                        Non-voters {{ proposal.voteStats.numVotersTotal - proposal.voteStats.numVoters }} / {{ proposal.voteStats.numVotersTotal }}
+                      </div>
                     </b-col>
                   </b-row>
                 </div>
@@ -144,7 +150,7 @@
           <div class="vote-card__header">
             <div class="vote-card__container-space-between">
               <p class="vote-card__font-size--36 vote-card__weight--bold">
-                {{ proposalItem.name || proposalItem.hash | longhash(35) }}
+                {{ proposalItem.name || proposalItem.hash }}
               </p>
               <p class="vote-card__font-size--36">
                 <span class="vote-card__weight--lighter">Upvotes:</span> {{getPercentage(proposal.voteStats.votesAvailable, proposal.voteStats.votesCast).toFixed(2)}}%
@@ -293,6 +299,7 @@ export default {
     return {
       proposal: {
         period: {
+          periodType: "",
           endLevel: 0,
           endTime: "",
           id: 0,
@@ -305,7 +312,6 @@ export default {
           votesAvailable: 0,
           votesCast: 0
         },
-        periodType: ""
       },
       proposalsList: {},
       periods: {},
@@ -330,7 +336,7 @@ export default {
   },
   mixins: [uuid],
   methods: {
-    async fetchProposal(id) {
+    async fetchPeriod(id) {
       const data = await this.$api.getPeriod({ id });
       const { status } = data;
 
@@ -339,35 +345,34 @@ export default {
       }
 
       this.proposal = data.data;
-      console.log("proposal", this.proposal);
+    },
+    async fetchPeriods(id) {
+      const data = await this.$api.getPeriods({ id });
+      this.periods = data.data;
+      console.log('periods', this.periods);
     },
     async fetchProposals(id) {
       const data = await this.$api.getProposals({ id });
       this.proposalsList = data.data;
-      console.log("proposalsList", this.proposalsList);
     },
     async fetchVoters(id) {
       const data = await this.$api.getVoters({ id });
       this.voters = data.data.map(voter => ({ ...voter, id }));
-      console.log("voters", this.voters);
     },
     async fetchNonVoters(id) {
       const data = await this.$api.getNonVoters({ id });
       this.nonVoters = data.data.map(voter => ({ ...voter, id }));
-      console.log("nonVoters", this.nonVoters);
     },
     getPercentage(a, b) {
       return (b * 100) / a;
     }
   },
   created() {
-    this.fetchProposal(this.$route.params.id);
+    this.fetchPeriod(this.$route.params.id);
+    this.fetchPeriods(this.$route.params.id);
     this.fetchProposals(this.$route.params.id);
     this.fetchVoters(this.$route.params.id);
     this.fetchNonVoters(this.$route.params.id);
-  },
-  mounted() {
-    console.log(this.$constants);
   }
 };
 </script>

@@ -56,7 +56,7 @@
   &__divider {
     display: block;
     height: 1px;
-    margin: 30px 0;
+    margin: 15px 0;
     background-image: -webkit-gradient(linear, left top, right top, color-stop(6%, #4a4a4a), color-stop(2%, rgba(255,255,255,0)));
     background-image: linear-gradient(to right, #4a4a4a 6%, rgba(255,255,255,0) 2%);
     background-position: top;
@@ -155,7 +155,13 @@
     }
   }
 
-
+  &__p {
+    margin-top: 15px;
+    color: #2d2e2c;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
 }
 
 // 30px title vertical margin
