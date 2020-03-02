@@ -59,6 +59,10 @@
                   <p class="vote-card__font-size--14 vote-card__weight--bold">
                     Recent Votes
                   </p>
+                  <div class="vote-card__recent" v-for="voter in voters.slice(0,3)" :key="generateKey()">
+                    <div class="vote-card__recent-name">{{ voter.name || voter.pkh }}</div>
+                    <div class="vote-card__recent-rolls">{{ voter.rolls }}</div>
+                  </div>
                   <div class="vote-card__divider"></div>
                   <b-row>
                     <b-col cols="6">
@@ -305,6 +309,7 @@ import CardHeader from "@/components/partials/CardHeader";
 import CardSection from "@/components/partials/CardSection";
 import DoughnutChart from "@/components/partials/DoughnutChart";
 import Pagination from '@/components/partials/Pagination';
+import uuid from '@/mixins/uuid';
 
 export default {
   name: "ProposalPeriod",
@@ -349,6 +354,7 @@ export default {
       ]
     };
   },
+  mixins: [uuid],
   methods: {
     async fetchProposal(id) {
       const data = await this.$api.getPeriod({ id });
