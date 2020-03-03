@@ -2,12 +2,12 @@
   <div>
     <b-table
       show-empty
-      stacked="md"
       :items="contracts"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
-      class="transactions-table table table-borderless table-responsive-md"
+      borderless
+      class="transactions-table table-responsive-md"
     >
       <template slot="contract" slot-scope="row">
         <b-link
@@ -34,6 +34,7 @@
     />
   </div>
 </template>
+
 <script>
 import { mapState } from "vuex";
 import Pagination from "../partials/Pagination";
@@ -54,7 +55,6 @@ export default {
     return {
       perPage: this.$constants.PER_PAGE,
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      pageOptions: this.$constants.PAGE_OPTIONS,
       fields: [
         { key: "contract", label: "Contract" },
         { key: "manager", label: "Manager" },

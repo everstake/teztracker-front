@@ -1,24 +1,24 @@
 <template>
   <div class="main-content error-page">
     <section class="error-section">
-      <div class="container-fluid">
-        <div class="row justify-content-lg-center align-items-center">
-          <div class="col-lg-3">
+      <b-container>
+        <b-row class="justify-content-lg-center align-items-center">
+          <b-col lg="3">
             <img src="../../assets/img/404.svg" width="100%" alt />
-          </div>
-        </div>
+          </b-col>
+        </b-row>
 
-        <div class="row justify-content-lg-center align-items-center">
-          <div class="col-lg-8 text-center">
+        <b-row class="justify-content-lg-center align-items-center">
+          <b-col lg="8" class="text-center">
             <h1 class="error-text text-center">
               Page
               <span class="error-number">500</span>
             </h1>
             <h2 class="error-subtitle">Something`s wrong</h2>
             <router-link :to="{ name: 'network' }" class="go-home">Home</router-link>
-          </div>
-        </div>
-      </div>
+          </b-col>
+        </b-row>
+      </b-container>
     </section>
   </div>
 </template>

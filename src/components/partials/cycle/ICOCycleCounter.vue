@@ -1,45 +1,46 @@
 <template>
   <section class="cycle-counter container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <div class="card ">
-          <div class="card-header">
+    <b-row>
+      <b-col>
+        <b-card no-body>
+          <b-card-header>
             <div class="title text-center">
               <span>Percentage of ICO addresses activated</span>
             </div>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-12">
+          </b-card-header>
+
+          <b-card-body>
+            <b-row>
+              <b-col>
                 <div class="progress-labels">
                   <div class="tezos-label float-right">Tezos {{ $_network }}</div>
                 </div>
-              </div>
-            </div>
+              </b-col>
+            </b-row>
 
-            <div class="row">
-              <div class="col-12">
+            <b-row>
+              <b-col>
                 <b-progress
                   :value="percent"
                   :max="100"
                   class="mb-2"
                 />
-              </div>
-            </div>
+              </b-col>
+            </b-row>
 
-            <div class="row">
-              <div class="col-12">
+            <b-row>
+              <b-col>
                 <div class="progress-labels">
                   <div class="percentage float-left">
                     <span>{{ percent }}%</span>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              </b-col>
+            </b-row>
+          </b-card-body>
+        </b-card>
+      </b-col>
+    </b-row>
   </section>
 </template>
 

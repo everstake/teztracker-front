@@ -1,40 +1,40 @@
 <template>
   <div class="main-content">
-    <section class="promo-section">
-      <div class="container-fluid">
-        <div class="promo-top row justify-content-md-center align-items-center">
-          <div class="promo-search col-lg-6">
+    <b-container fluid>
+      <section class="promo-section">
+        <b-row class="promo-top justify-content-md-center align-items-center">
+          <b-col lg="6" class="promo-search">
             <h1>Tezos (XTZ) Blockchain Explorer</h1>
             <div class="search">
-              <Search />
+              <Search/>
             </div>
             <p>
               Tezos blockchain - Version
               <span>1.01.00</span>
             </p>
-          </div>
-          <div class="promo-image col-lg-4">
-            <img src="../assets/img/promo-img.svg" height="270px" alt />
-          </div>
-        </div>
-        <!-- cycle-->
-        <CycleCounter />
+          </b-col>
+          <b-col lg="4" class="promo-image">
+            <img src="../assets/img/promo-img.svg" height="270px" alt/>
+          </b-col>
+        </b-row>
+
+        <CycleCounter/>
 
         <div class="tz-row promo-tiles">
           <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'lightbulb']" />
+                <font-awesome-icon :icon="['far', 'lightbulb']"/>
               </div>
               <span class="counter">{{ stakingRatio }}%</span>
               <div v-if="info.staking_ratio > 0">
                 <span class="percentage green">
-                  <font-awesome-icon icon="caret-up" />
+                  <font-awesome-icon icon="caret-up"/>
                 </span>
               </div>
               <div v-else>
                 <span class="percentage red">
-                  <font-awesome-icon icon="caret-down" />
+                  <font-awesome-icon icon="caret-down"/>
                 </span>
               </div>
               <span class="tile-name">Staking ratio</span>
@@ -44,7 +44,7 @@
           <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'star']" />
+                <font-awesome-icon :icon="['far', 'star']"/>
               </div>
               <div class="voting-progress">
                 <b-progress
@@ -58,7 +58,7 @@
                   </div>
                   <div class="timer float-right">
                     <span>{{ timeLeftTillVotingPeriodEnd }}</span> - Until
-                    voting period end
+                                                                   voting period end
                   </div>
                 </div>
               </div>
@@ -69,7 +69,7 @@
           <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'folder']" />
+                <font-awesome-icon :icon="['far', 'folder']"/>
               </div>
               <span class="counter">{{ head.level | bignum }}</span>
               <span class="percentage"></span>
@@ -80,17 +80,15 @@
           <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'user']" />
+                <font-awesome-icon :icon="['far', 'user']"/>
               </div>
 
               <span class="counter">
-                <!-- If passed params to a router link are dynamic
-              they must be received before rendering the router link (i.e. v-if="head.baker") -->
                 <router-link
                   v-if="head.baker"
                   class="baker"
                   :to="{ name: 'account', params: { account: head.baker } }"
-                  >{{ head.baker | longhash(13) }}</router-link
+                >{{ head.baker | longhash(13) }}</router-link
                 >
               </span>
               <span class="percentage"></span>
@@ -103,18 +101,18 @@
           <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'chart-bar']" />
+                <font-awesome-icon :icon="['far', 'chart-bar']"/>
               </div>
               <span class="counter">${{ info.price }}</span>
               <div v-if="info.price_24h_change > 0">
                 <span class="percentage green">
-                  <font-awesome-icon icon="caret-up" />
+                  <font-awesome-icon icon="caret-up"/>
                   {{ priceChange }}%
                 </span>
               </div>
               <div v-else>
                 <span class="percentage red">
-                  <font-awesome-icon icon="caret-down" />
+                  <font-awesome-icon icon="caret-down"/>
                   {{ priceChange }}%
                 </span>
               </div>
@@ -126,10 +124,10 @@
           <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'bookmark']" />
+                <font-awesome-icon :icon="['far', 'bookmark']"/>
               </div>
               <span class="counter"
-                >{{ info.volume_24h | bignum(",") }} XTZ</span
+              >{{ info.volume_24h | bignum(",") }} XTZ</span
               >
               <span class="percentage"></span>
               <span class="tile-name">Trading Volume</span>
@@ -139,7 +137,7 @@
           <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'gem']" />
+                <font-awesome-icon :icon="['far', 'gem']"/>
               </div>
               <span class="counter">${{ info.market_cap | bignum(",") }}</span>
               <span class="percentage"></span>
@@ -150,7 +148,7 @@
           <div class="tz-row__item mb-3 text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'hourglass']" />
+                <font-awesome-icon :icon="['far', 'hourglass']"/>
               </div>
               <span class="counter">
                 {{
@@ -164,36 +162,37 @@
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </b-container>
 
     <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12 col-xl-6 mb-3">
+      <b-container fluid>
+        <b-row>
+          <b-col lg="12" xl="6" class="mb-3">
             <BlocksCard />
-          </div>
+          </b-col>
 
-          <div class="col-lg-12 col-xl-6">
+          <b-col lg="12" xl="6">
             <TxsCard />
-          </div>
-        </div>
-      </div>
+          </b-col>
+        </b-row>
+      </b-container>
     </section>
+
     <div class="promo-footer">
-      <div class="container-fluid">
-        <div class="row justify-content-md-center align-items-center">
-          <div class="col-lg-4">
+      <b-container fluid>
+        <b-row class="justify-content-md-center align-items-center">
+          <b-col lg="4">
             <img src="../assets/img/footer-img.svg" width="85%" alt />
-          </div>
-          <div class="col-lg-6">
-            <div class="row">
-              <div class="col-lg-12">
+          </b-col>
+          <b-col lg="6">
+            <b-row>
+              <b-col lg="12">
                 <h2>More about Tezos</h2>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-3">
+              </b-col>
+            </b-row>
+            <b-row>
+              <b-col lg="3">
                 <ul>
                   <li>
                     <a href="https://tezos.com" target=”_blank”>What is Tezos?</a>
@@ -205,8 +204,8 @@
                     <a href="https://faucet.tzalpha.net/" target=”_blank”>Testnet Faucet</a>
                   </li>
                 </ul>
-              </div>
-              <div class="col-lg-3">
+              </b-col>
+              <b-col lg="3">
                 <ul>
                   <li>
                     <a href="https://tezos.gitlab.io/introduction/howtouse.html" target=”_blank”>How to Run Tezos?</a>
@@ -218,11 +217,11 @@
                     <a href="https://hub.docker.com/r/tezos/tezos" target=”_blank”>Docker images</a>
                   </li>
                 </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+              </b-col>
+            </b-row>
+          </b-col>
+        </b-row>
+      </b-container>
     </div>
   </div>
 </template>

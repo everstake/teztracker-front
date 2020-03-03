@@ -4,7 +4,13 @@ import {
   TablePlugin,
   PaginationPlugin,
   ProgressPlugin,
-  TooltipPlugin
+  TooltipPlugin,
+  DropdownPlugin,
+  ButtonPlugin,
+  LayoutPlugin,
+  CardPlugin,
+  TabsPlugin,
+  BreadcrumbPlugin
 } from "bootstrap-vue";
 import {
   FontAwesomeIcon,
@@ -43,6 +49,12 @@ Vue.use(TablePlugin);
 Vue.use(PaginationPlugin);
 Vue.use(ProgressPlugin);
 Vue.use(TooltipPlugin);
+Vue.use(DropdownPlugin);
+Vue.use(ButtonPlugin);
+Vue.use(LayoutPlugin);
+Vue.use(CardPlugin);
+Vue.use(TabsPlugin);
+Vue.use(BreadcrumbPlugin);
 
 dom.watch();
 library.add(

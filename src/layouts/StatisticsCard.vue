@@ -3,7 +3,7 @@
     <b-col cols="12">
       <b-card no-body>
         <template #header>
-          <div class="title">
+          <div class="break-word">
             <h3>
               <span class="text">{{ title }}</span>
             </h3>

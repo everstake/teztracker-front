@@ -1,21 +1,15 @@
 <template>
-  <ol class="breadcrumb ml-2">
-    <li
+  <b-breadcrumb class="ml-2">
+    <b-breadcrumb-item
       v-for="(crumb, index) in crumbs"
       :key="index"
-      :class="{
-        'breadcrumb-item': true,
-        active: index === crumbs.length - 1
-      }"
+      :to="{ name: crumb.toRouteName }"
+      :tag="index === crumbs.length - 1 ? 'span' : 'a'"
+      :active="index === crumbs.length - 1"
     >
-      <router-link
-        :to="{ name: crumb.toRouteName }"
-        :tag="index === crumbs.length - 1 ? 'span' : 'a'"
-      >
-        {{ crumb.text }}
-      </router-link>
-    </li>
-  </ol>
+      {{ crumb.text }}
+    </b-breadcrumb-item>
+  </b-breadcrumb>
 </template>
 
 <script>

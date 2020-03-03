@@ -1,117 +1,98 @@
 <template>
-  <div class="main-content">
-    <section class="breadcrumbs">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="page-title">
-              <h2>
-                Tezos (XTZ) Blockchain Explorer -
-                <span>Transactions page</span>
-              </h2>
-            </div>
+  <PageContentContainer page-name="Transaction page">
+    <template #breadcrumbs>
+      <Breadcrumbs :crumbs="crumbs"/>
+    </template>
 
-            <ol class="breadcrumb ml-2">
-              <li class="breadcrumb-item">
-                <router-link :to="{ name: 'network' }">Home</router-link>
-              </li>
-              <li class="breadcrumb-item">
-                <router-link :to="{ name: 'txs' }"
-                  >Transactions page</router-link
-                >
-              </li>
-              <li class="breadcrumb-item active">{{ txhash }}</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </section>
+    <template #content>
+      <section>
+        <b-container fluid>
+          <TxSingle
+            :block-hash="txInfo.blockHash"
+            :timestamp="txInfo.timestamp"
+            :op-hash="txInfo.operationGroupHash"
+            :level="txInfo.blockLevel"
+            :fee="txInfo.fee"
+          />
+        </b-container>
+      </section>
 
-    <section>
-      <div class="container-fluid">
-        <TxSingle
-          :block-hash="txInfo.blockHash"
-          :timestamp="txInfo.timestamp"
-          :op-hash="txInfo.operationGroupHash"
-          :level="txInfo.blockLevel"
-          :fee="txInfo.fee"
-        />
-      </div>
-    </section>
+      <section>
+        <b-container fluid>
+          <b-row>
+            <b-col lg="12">
+              <b-card no-body>
+                <b-card-header>
+                  <div class="break-word">
+                    <h3>
+                      <span class="text">Transactions list</span>
+                    </h3>
+                  </div>
+                </b-card-header>
 
-    <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card ml-2 mr-2">
-              <div class="card-header">
-                <div class="title">
-                  <h3>
-                    <span class="text">Transactions list</span>
-                  </h3>
-                </div>
-              </div>
-
-              <div class="card-body">
-                <b-table
-                  show-empty
-                  stacked="md"
-                  :items="transactions"
-                  :fields="fields"
-                  :current-page="currentPage"
-                  :per-page="0"
-                  class="transactions-table table table-borderless table-responsive-md"
-                >
-                  <template slot="from" slot-scope="row">
-                    <b-link
-                      :to="{
+                <b-card-body>
+                  <b-table
+                    show-empty
+                    :items="transactions"
+                    :fields="fields"
+                    :current-page="currentPage"
+                    :per-page="0"
+                    borderless
+                    class="transactions-table table-responsive-md"
+                  >
+                    <template slot="from" slot-scope="row">
+                      <b-link
+                        :to="{
                         name: 'account',
                         params: { account: row.item.source }
                       }"
-                    >
-                      <span>{{ row.item.source | longhash(20) }}</span>
-                    </b-link>
-                  </template>
+                      >
+                        <span>{{ row.item.source | longhash(20) }}</span>
+                      </b-link>
+                    </template>
 
-                  <template slot="to" slot-scope="row">
-                    <b-link
-                      :to="{
+                    <template slot="to" slot-scope="row">
+                      <b-link
+                        :to="{
                         name: 'account',
                         params: { account: row.item.destination }
                       }"
-                    >
-                      <span>{{ row.item.destination | longhash(20) }}</span>
-                    </b-link>
-                  </template>
-                  <template slot="amount" slot-scope="row">
-                    <span>{{ row.item.amount | tezos }}</span>
-                  </template>
-                  <template slot="fee" slot-scope="row">
-                    <span>{{ row.item.fee | tezos }}</span>
-                  </template>
-                  <template slot="gas" slot-scope="row">
-                    <span>{{ row.item.gasLimit }}</span>
-                  </template>
-                  <template slot="storage" slot-scope="row">
-                    <span>{{ row.item.storageLimit }}</span>
-                  </template>
-                </b-table>
+                      >
+                        <span>{{ row.item.destination | longhash(20) }}</span>
+                      </b-link>
+                    </template>
+                    <template slot="amount" slot-scope="row">
+                      <span>{{ row.item.amount | tezos }}</span>
+                    </template>
+                    <template slot="fee" slot-scope="row">
+                      <span>{{ row.item.fee | tezos }}</span>
+                    </template>
+                    <template slot="gas" slot-scope="row">
+                      <span>{{ row.item.gasLimit }}</span>
+                    </template>
+                    <template slot="storage" slot-scope="row">
+                      <span>{{ row.item.storageLimit }}</span>
+                    </template>
+                  </b-table>
 
-                <Pagination
-                  @change="$_handleCurrentPageChange"
-                  :total-rows="count"
-                  :per-page="perPage"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+                  <Pagination
+                    @change="$_handleCurrentPageChange"
+                    :total-rows="count"
+                    :per-page="perPage"
+                  />
+                </b-card-body>
+              </b-card>
+            </b-col>
+          </b-row>
+        </b-container>
+      </section>
+    </template>
+  </PageContentContainer>
 </template>
 
 <script>
+import PageContentContainer from "../layouts/PageContentContainer";
+import Breadcrumbs from "../components/partials/Breadcrumbs";
 import TxSingle from "../components/transactions/TxSingle";
 import { mapState } from "vuex";
 import Pagination from "../components/partials/Pagination";
@@ -120,6 +101,8 @@ import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 export default {
   name: "Tx",
   components: {
+    PageContentContainer,
+    Breadcrumbs,
     TxSingle,
     Pagination
   },
@@ -127,7 +110,6 @@ export default {
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
-      pageOptions: this.$constants.PAGE_OPTIONS,
       transactions: [],
       txInfo: {},
       count: 0,
@@ -147,6 +129,13 @@ export default {
     }),
     txhash() {
       return this.$route.params.txhash;
+    },
+    crumbs() {
+      return [
+        {toRouteName: "network", text: "Home"},
+        {toRouteName: "txs", text: "Transactions page"},
+        {toRouteName: "tx", text: this.txhash}
+      ];
     }
   },
   async created() {

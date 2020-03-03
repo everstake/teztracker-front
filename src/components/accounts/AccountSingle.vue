@@ -1,9 +1,9 @@
 <template>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card ml-2 mr-2">
-        <div class="card-header">
-          <div class="title">
+  <b-row>
+    <b-col lg="12">
+      <b-card no-body>
+        <b-card-header>
+          <div class="break-word">
             <h3 id="card-title" class="card__title" @click="copyToClipboard()">
               <span ref="textToCopy" class="text">{{ hash }}</span>
               <span class="icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span>
@@ -11,103 +11,104 @@
             <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
             <div class="subtitle">Account Information</div>
           </div>
-        </div>
+        </b-card-header>
 
         <div class="card-divider"></div>
 
-        <div class="card-body">
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-2">
+        <b-card-body>
+          <b-row class="item-info ml-1 mr-1">
+            <b-col lg="2">
               <span class="label">Manager</span>
-            </div>
-            <div class="col-lg-10">
+            </b-col>
+            <b-col lg="10">
               <span class="value">{{ account.manager }}</span>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-2">
+            </b-col>
+          </b-row>
+          <b-row class="item-info ml-1 mr-1">
+            <b-col lg="2">
               <span class="label">Delegate</span>
-            </div>
-            <div class="col-lg-10">
+            </b-col>
+            <b-col lg="10">
               <span class="value">{{ account.delegateValue }}</span>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-2">
+            </b-col>
+          </b-row>
+          <b-row class="item-info ml-1 mr-1">
+            <b-col lg="2">
               <span class="label">Balance</span>
-            </div>
-            <div class="col-lg-10">
+            </b-col>
+            <b-col lg="10">
               <span class="value">
                 {{ account.balance | tezos }}
                 ({{ $_convert(account.balance) }})
               </span>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1" v-if="baker">
-            <div class="col-lg-4">
+            </b-col>
+          </b-row>
+          <b-row class="item-info ml-1 mr-1" v-if="baker">
+            <b-col lg="4">
               <span class="value">Current Deposits</span>
-            </div>
-            <div class="col-lg-8">
+            </b-col>
+            <b-col lg="8">
               <span class="value">Pending Rewards</span>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1" v-if="baker">
-            <div class="col-lg-4">
-              <div class="row">
-                <div class="col-lg-6">
+            </b-col>
+          </b-row>
+          <b-row class="item-info ml-1 mr-1" v-if="baker">
+            <b-col lg="4">
+              <b-row>
+                <b-col lg="6">
                   <span class="label">Baking</span>
-                </div>
-                <div class="col-lg-6">
+                </b-col>
+                <b-col lg="6">
                   <span class="value">{{
                     bakerInfo.bakingDeposits | tezos
                   }}</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-8">
-              <div class="row">
-                <div class="col-lg-3">
+                </b-col>
+              </b-row>
+            </b-col>
+            <b-col lg="8">
+              <b-row>
+                <b-col lg="3">
                   <span class="label">Baking</span>
-                </div>
-                <div class="col-lg-9">
+                </b-col>
+                <b-col lg="9">
                   <span class="value">{{
                     bakerInfo.bakingRewards | tezos
                   }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1" v-if="baker">
-            <div class="col-lg-4">
-              <div class="row">
-                <div class="col-lg-6">
+                </b-col>
+              </b-row>
+            </b-col>
+          </b-row>
+          <b-row class="item-info ml-1 mr-1" v-if="baker">
+            <b-col lg="4">
+              <b-row>
+                <b-col lg="6">
                   <span class="label">Endorsement</span>
-                </div>
-                <div class="col-lg-6">
+                </b-col>
+                <b-col lg="6">
                   <span class="value">{{
                     bakerInfo.endorsementDeposits | tezos
                   }}</span>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-8">
-              <div class="row">
-                <div class="col-lg-3">
+                </b-col>
+              </b-row>
+            </b-col>
+            <b-col lg="8">
+              <b-row>
+                <b-col lg="3">
                   <span class="label">Endorsement</span>
-                </div>
-                <div class="col-lg-9">
+                </b-col>
+                <b-col lg="9">
                   <span class="value">{{
                     bakerInfo.endorsementRewards | tezos
                   }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+                </b-col>
+              </b-row>
+            </b-col>
+          </b-row>
+        </b-card-body>
+      </b-card>
+    </b-col>
+  </b-row>
 </template>
+
 <script>
 import convert from "../../mixins/convert";
 import { GET_APP_INFO } from "@/store/actions.types";

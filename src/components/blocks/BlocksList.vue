@@ -2,12 +2,12 @@
   <div>
     <b-table
       show-empty
-      stacked="md"
       :items="blocks"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
-      class="table table-borderless table-responsive-sm"
+      borderless
+      class="transactions-table table-responsive-md"
     >
       <template slot="level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.level } }">
@@ -42,6 +42,7 @@
     />
   </div>
 </template>
+
 <script>
 import { mapState } from "vuex";
 import Pagination from "../partials/Pagination";
@@ -62,14 +63,8 @@ export default {
     return {
       perPage: this.$constants.PER_PAGE,
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      pageOptions: this.$constants.PAGE_OPTIONS,
       fields: [
-        {
-          key: "level",
-          label: "Block ID",
-          sortable: true,
-          sortDirection: "desc"
-        },
+        { key: "level", label: "Block ID" },
         { key: "timestamp", label: "Timestamp" },
         { key: "baker", label: "Baker" },
         { key: "volume", label: "Volume" },

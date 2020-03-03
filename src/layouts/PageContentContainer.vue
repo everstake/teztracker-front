@@ -1,9 +1,9 @@
 <template>
   <div class="main-content">
     <section class="breadcrumbs">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
+      <b-container fluid>
+        <b-row>
+          <b-col lg="12">
             <div class="page-title ml-2">
               <h2>
                 Tezos (XTZ) Blockchain Explorer -
@@ -12,9 +12,9 @@
             </div>
 
             <slot name="breadcrumbs" />
-          </div>
-        </div>
-      </div>
+          </b-col>
+        </b-row>
+      </b-container>
     </section>
 
     <slot name="content" />

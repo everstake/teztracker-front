@@ -1,38 +1,35 @@
 <template>
   <section class="cycle-counter">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
+    <b-row>
+      <b-col>
+        <b-card no-body>
+          <b-card-header>
             <div class="title text-center">
-              <span>Cycle counter</span>
+              Cycle counter
             </div>
-          </div>
-          <div class="card-body">
-            <div class="row">
-              <div class="col-12">
-                <div class="progress-labels">
-                  <div class="cycle-label float-left">
-                    Cycle -
-                    <span>{{ head.metaCycle }}</span>
-                  </div>
-                  <div class="tezos-label float-right">Tezos {{ $_network }}</div>
-                </div>
+          </b-card-header>
+
+          <b-card-body>
+            <div class="progress-labels">
+              <div class="cycle-label float-left">
+                Cycle -
+                <span>{{ head.metaCycle }}</span>
               </div>
+              <div class="tezos-label float-right">Tezos {{ $_network }}</div>
             </div>
 
-            <div class="row">
-              <div class="col-12">
+            <b-row>
+              <b-col>
                 <b-progress
                   :value="cyclePercent"
                   :max="100"
                   class="mb-2"
-                ></b-progress>
-              </div>
-            </div>
+                />
+              </b-col>
+            </b-row>
 
-            <div class="row">
-              <div class="col-12">
+            <b-row>
+              <b-col>
                 <div class="progress-labels">
                   <div class="percentage float-left">
                     <span>{{ cyclePercent }}%</span>
@@ -41,12 +38,12 @@
                     <span>{{ timeLeft }}</span> - Until cycle end
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              </b-col>
+            </b-row>
+          </b-card-body>
+        </b-card>
+      </b-col>
+    </b-row>
   </section>
 </template>
 
@@ -59,10 +56,10 @@ export default {
   name: "CycleCounter",
   mixins: [network],
   computed: {
-    ...mapState('app', {
+    ...mapState("app", {
       info: state => state.priceInfo
     }),
-    ...mapState('blocks', {
+    ...mapState("blocks", {
       head: state => state.headBlock
     }),
     cyclePercent() {
@@ -87,7 +84,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 
 .cycle-counter {
   padding: 0 5px;

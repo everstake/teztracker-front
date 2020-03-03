@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <b-card no-body>
     <CardHeader>
       <template v-slot:left-content class="text">
         <h4 class="tz-title--bold">Blocks list</h4>
@@ -17,15 +17,15 @@
       </template>
     </CardHeader>
 
-    <div class="card-body">
+    <b-card-body>
       <b-table
         show-empty
-        stacked="md"
         :items="blocks"
         :fields="fields"
         :current-page="currentPage"
         :per-page="0"
-        class="table table-borderless table-responsive-sm"
+        borderless
+        class="table-responsive-sm"
       >
         <template slot="timestamp" slot-scope="row">
           <span>
@@ -51,14 +51,15 @@
         :per-page="perPage"
         action="BLOCKS_GET"
       />
-    </div>
-  </div>
+    </b-card-body>
+  </b-card>
 </template>
+
 <script>
 import { mapState } from "vuex";
 import Pagination from "../partials/Pagination";
 import CardHeader from "../partials/CardHeader";
-// import Dropdown from "../common/Dropdown";
+// import Dropdown from "../partials/Dropdown";
 import Counter from "../partials/Counter";
 
 import withCustomAction from "../partials/withCustomAction";
@@ -81,13 +82,8 @@ export default {
       perPage: this.$constants.PER_PAGE,
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
-        { key: "timestamp", label: "Time", sortable: true },
-        {
-          key: "level",
-          label: "Block ID",
-          sortable: true,
-          sortDirection: "desc"
-        },
+        { key: "timestamp", label: "Time" },
+        { key: "level", label: "Block ID" },
         { key: "baker", label: "Baker" }
       ]
     };

@@ -53,7 +53,6 @@ export default {
 
 <style lang="scss">
 
-
 $color-background: #f5f5f5;
 $color-main: #fff;
 $color-active: #fff;
