@@ -1,8 +1,4 @@
 <script>
-// import VueCharts from 'vue-chartjs'
-// import { Doughnut } from 'vue-chartjs';
-import VueCharts from "vue-chartjs";
-
 import { Doughnut } from "vue-chartjs";
 
 export default {
@@ -15,9 +11,9 @@ export default {
         {
           data: [75, 25],
           backgroundColor: ["#309282", "#9ea0a5"],
-          borderWidth: 0,
+          borderWidth: 10,
           cutoutPercentage: 70,
-          responsive: false,
+          responsive: false
         }
       ],
       labels: ["Carthage (PtCarthav)", "Carthage 1.0"]

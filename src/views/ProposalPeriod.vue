@@ -23,13 +23,13 @@
     <!-- Proposal Steps start -->
     <CardSection :fluid="true">
       <template #body>
-        <ProposalPeriodStep :type="proposal.period.periodType" />
+        <ProposalPeriodStep :periodTypes="periodTypes" :currentPeriodType="proposal.period.periodType" :periodStepUrls="getPeriodStepsLinks" />
       </template>
     </CardSection>
     <!-- Proposal Steps end -->
 
     <!-- Proposals start -->
-    <CardSection :fluid="true">
+    <CardSection v-if="this.proposal.period.periodType === 'proposal'" :fluid="true">
       <template #body>
         <b-row>
           <b-col cols="4">
@@ -143,15 +143,76 @@
     </CardSection>
     <!-- Proposals end -->
 
+    <!-- Proposals start -->
+    <CardSection v-if="this.proposal.period.periodType === 'testing'" :fluid="true">
+      <template #body>
+        <b-row>
+          <b-col cols="12">
+            <div class="vote-card">
+              <div class="vote-card__header">
+                <div class="vote-card__container-space-between">
+                  <p class="vote-card__font-size--16 vote-card__weight--bold">
+                    Babylon 2.0 (PsBabyM)
+                  </p>
+                </div>
+                <div class="vote-card__divider"></div>
+                <div class="vote-card__body">
+                  <p class="vote-card__font-size--14 vote-card__weight--bold">
+                    Recent Votes
+                  </p>
+                  <div class="vote-card__recent" v-for="voter in voters.slice(0,3)" :key="generateKey()">
+                    <div>
+                      <div class="vote-card__recent-name">{{ voter.name || voter.pkh }}</div>
+                      <div class="vote-card__recent-proposal"><span>Proposal:</span> {{ voter.proposal | longhash(15) }}</div>
+                    </div>
+                    <div class="vote-card__recent-rolls">{{ voter.rolls }}</div>
+                  </div>
+                  <div class="vote-card__divider"></div>
+                </div>
+              </div>
+            </div>
+          </b-col>
+        </b-row>
+      </template>
+    </CardSection>
+    <!-- Proposals end -->
+  
+    <!-- Proposals start -->
+    <CardSection v-if="this.proposal.period.periodType === 'exploration'" :fluid="true">
+      <template #body>
+        <b-row>
+          <b-col cols="4">
+            <div class="exploration-vote"></div>
+          {{ proposal.ballots.yay }}
+          </b-col>
+        
+          <b-col cols="4">
+            {{ proposal.ballots.nay || 0 }}
+          </b-col>
+
+          <b-col cols="4">
+            {{ proposal.ballots.pass }}
+          </b-col>
+        </b-row>
+      </template>
+    </CardSection>
+    <!-- Proposals end -->
+
     <!-- Changelog start -->
     <CardSection :fluid="true" v-for="proposalItem in proposalsList" :key="generateKey()">
       <template #body>
         <div class="vote-card">
           <div class="vote-card__header">
             <div class="vote-card__container-space-between">
-              <p class="vote-card__font-size--36 vote-card__weight--bold">
-                {{ proposalItem.name || proposalItem.hash }}
-              </p>
+              <div
+                @click="copyToClipboard()"
+                id="card-title"
+                class="vote-card__title-wrapper vote-card--pointer"
+              >
+                <p class="vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold" ref="textToCopy">{{ proposalItem.name || proposalItem.hash }}</p>
+                <span class="icon vote-card__icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span>
+                <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
+              </div>
               <p class="vote-card__font-size--36">
                 <span class="vote-card__weight--lighter">Upvotes:</span> {{getPercentage(proposal.voteStats.votesAvailable, proposal.voteStats.votesCast).toFixed(2)}}%
               </p>
@@ -285,7 +346,6 @@
 
 <script>
 import ProposalPeriodStep from "@/components/proposal/ProposalPeriodStep";
-import CardHeader from "@/components/partials/CardHeader";
 import CardSection from "@/components/partials/CardSection";
 import DoughnutChart from "@/components/partials/DoughnutChart";
 import Pagination from '@/components/partials/Pagination';
@@ -293,8 +353,47 @@ import uuid from '@/mixins/uuid';
 
 export default {
   name: "ProposalPeriod",
-  components: { ProposalPeriodStep, CardHeader, CardSection, DoughnutChart, Pagination },
-  computed: {},
+  components: { ProposalPeriodStep, CardSection, DoughnutChart, Pagination },
+  computed: {
+    getPeriodStepsLinks() {
+      const currentPeriodId = this.proposal.period.id;
+      const currentPeriodType = this.proposal.period.periodType;
+      const currentPeriodIndex = this.periods.findIndex(period => period.id === currentPeriodId);
+      const currentPeriodTypeIndex = this.periodTypes.findIndex(period => period === currentPeriodType);
+      let tempResult = [];
+      const result = [];
+
+      switch (currentPeriodTypeIndex) {
+        case 0:
+          tempResult = this.periods.slice(currentPeriodIndex, currentPeriodIndex + 4);
+          break;
+        case 1:
+          tempResult = this.periods.slice(currentPeriodIndex - 1, currentPeriodIndex + 3);
+          break;
+        case 2:
+          tempResult = this.periods.slice(currentPeriodIndex - 2, currentPeriodIndex + 2);
+          break;
+        case 3:
+          tempResult = this.periods.slice(currentPeriodIndex - 3, currentPeriodIndex + 1);
+          break;
+        case 4:
+          tempResult = this.periods.slice(currentPeriodIndex - 4, currentPeriodIndex);
+          break;
+        default:
+          [null, null, null, null];
+      }
+
+      tempResult.map((item, index) => {
+        if (item.periodType === this.periodTypes[index]) {
+          result.push(item.id);
+        } else {
+          result.push(null);
+        }
+      });
+
+      return result;
+    }
+  },
   data() {
     return {
       proposal: {
@@ -312,9 +411,15 @@ export default {
           votesAvailable: 0,
           votesCast: 0
         },
+        ballots: {
+          yay: 0,
+          pass: 0,
+          nay: 0
+        }
       },
       proposalsList: {},
-      periods: {},
+      periodTypes: ['proposal', 'exploration', 'testing', 'promotion'],
+      periods: [],
       perPage: 20,
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       pageOptions: this.$constants.PAGE_OPTIONS,
@@ -331,11 +436,27 @@ export default {
       nonVotersFields: [
         { key: "pkh", label: "Baker" },
         { key: "rolls", label: "Number of voters" }
-      ]
+      ],
     };
   },
   mixins: [uuid],
   methods: {
+    getPercentage(a, b) {
+      return (b * 100) / a;
+    },
+    copyToClipboard() {
+      const selection = window.getSelection();
+      const range = window.document.createRange();
+      selection.removeAllRanges();
+      range.selectNode(this.$refs.textToCopy[0]);
+      selection.addRange(range);
+
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        selection.removeAllRanges();
+      }
+    },
     async fetchPeriod(id) {
       const data = await this.$api.getPeriod({ id });
       const { status } = data;
@@ -349,7 +470,6 @@ export default {
     async fetchPeriods(id) {
       const data = await this.$api.getPeriods({ id });
       this.periods = data.data;
-      console.log('periods', this.periods);
     },
     async fetchProposals(id) {
       const data = await this.$api.getProposals({ id });
@@ -363,16 +483,26 @@ export default {
       const data = await this.$api.getNonVoters({ id });
       this.nonVoters = data.data.map(voter => ({ ...voter, id }));
     },
-    getPercentage(a, b) {
-      return (b * 100) / a;
+    async fetchBallots(id) {
+      const data = await this.$api.getBallots({ id });
+      this.ballots = data.data;
     }
   },
-  created() {
-    this.fetchPeriod(this.$route.params.id);
-    this.fetchPeriods(this.$route.params.id);
-    this.fetchProposals(this.$route.params.id);
-    this.fetchVoters(this.$route.params.id);
-    this.fetchNonVoters(this.$route.params.id);
+  async created() {
+    await this.fetchPeriod(this.$route.params.id);
+    await this.fetchPeriods(this.$route.params.id);
+
+    switch (this.proposal.period.periodType) {
+      case 'proposal':
+        await this.fetchProposals(this.$route.params.id);
+        await this.fetchVoters(this.$route.params.id);
+        await this.fetchNonVoters(this.$route.params.id);
+        break;
+      case 'exploration':
+      case 'promotion':
+        await this.fetchBallots(this.$route.params.id);
+        break;
+    }
   }
 };
 </script>

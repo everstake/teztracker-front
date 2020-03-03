@@ -64,14 +64,6 @@
     background-repeat: repeat-x;
   }
 
-  &__title-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    aling-items: center;
-    margin: 30px 0;
-  }
-
   &__link {
     color: inherit;
     border-bottom: 1px solid #2d2e2c;
@@ -163,8 +155,31 @@
     text-transform: uppercase;
   }
 
+  &__title-wrapper {
+    position: relative;
+    max-width: 70%;
+  }
+
   &__para {
+    display: inline-block;
     max-width: 60%;
+  }
+
+  &__icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-left: 10px;
+    font-size: 16px;
+    color: #309282;
+  }
+
+  &--pointer {
+    cursor: pointer;
+  }
+
+  &__word-wrap {
+    word-wrap: break-word;
   }
 }
 

@@ -1,12 +1,23 @@
 <template>
   <div class="proposal-step">
     <ul class="proposal-step__list">
-      <li
-        v-for="period of periodsTypes"
-        class="proposal-step__item"
-        :class="{ 'proposal-step__item--active': period === type }"
-      >
-        {{ period }}
+      <li v-for="(period, index) of periodTypes" class="proposal-step__item">
+        <p v-if="periodStepUrls[index] === null" class="proposal-step__para">
+          {{ period }}
+        </p>
+        <router-link
+          v-else
+          :to="{
+            name: 'proposal_period',
+            params: { id: periodStepUrls[index] }
+          }"
+          :class="{
+            'proposal-step__link--active': period === currentPeriodType
+          }"
+          class="proposal-step__link"
+        >
+          {{ period }}
+        </router-link>
       </li>
     </ul>
   </div>
@@ -14,11 +25,13 @@
 
 <script>
 export default {
-  name: 'ProposalPeriodStep',
-  props: ['type'],
-  data: () => ({
-    periodsTypes: ['proposal', 'exploration', 'testing', 'promotion']
-  })
+  name: "ProposalPeriodStep",
+  props: ["periodTypes", "currentPeriodType", "periodStepUrls"],
+  methods: {
+    getLink(index) {
+      return this.periodStepUrls[index];
+    }
+  }
 };
 </script>
 
@@ -30,7 +43,7 @@ export default {
 
   &:after {
     z-index: 5;
-    content: '';
+    content: "";
     display: inline-block;
     position: absolute;
     left: 0;
@@ -50,7 +63,7 @@ export default {
     list-style: none;
 
     &:before {
-      content: '';
+      content: "";
       position: absolute;
       left: 30px;
       right: 30px;
@@ -70,23 +83,30 @@ export default {
     font-weight: 600;
     color: #9ea0a5;
     text-transform: uppercase;
-    cursor: pointer;
     background-color: white;
 
-    &:nth-child(1):before {
-      content: '1';
+    &:nth-child(1) .proposal-step__link:before {
+      content: "1";
     }
 
-    &:nth-child(2):before {
-      content: '2';
+    &:nth-child(2) .proposal-step__link:before {
+      content: "2";
     }
 
-    &:nth-child(3):before {
-      content: '3';
+    &:nth-child(3) .proposal-step__link:before {
+      content: "3";
     }
 
-    &:nth-child(4):before {
-      content: '4';
+    &:nth-child(4) .proposal-step__link:before {
+      content: "4";
+    }
+  }
+
+  &__link {
+    color: #309282;
+
+    &:hover {
+      text-decoration: none;
     }
 
     &:before {
@@ -100,17 +120,19 @@ export default {
       width: 70px;
       height: 70px;
       border: 1px solid #9ea0a5;
+      color: #9ea0a5;
       border-radius: 50%;
     }
 
-    &--active {
-      color: #309282;
-
-      &:before {
-        content: url('~@/assets/icons/done.svg') !important;
-        border-color: #309282;
-      }
+    &--active:before {
+      content: url("~@/assets/icons/done.svg") !important;
+      border-color: #309282;
     }
+  }
+
+  &__para {
+    margin-bottom: 0;
+    color: #9ea0a5;
   }
 }
 </style>
