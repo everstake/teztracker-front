@@ -205,11 +205,11 @@
           <div class="vote-card__header">
             <div class="vote-card__container-space-between">
               <div
-                @click="copyToClipboard()"
+                @click="copyToClipboard(proposalItem.hash)"
                 id="card-title"
                 class="vote-card__title-wrapper vote-card--pointer"
               >
-                <p class="vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold" ref="textToCopy">{{ proposalItem.name || proposalItem.hash }}</p>
+                <p :ref='proposalItem.hash' class="vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold">{{ proposalItem.name || proposalItem.hash }}</p>
                 <span class="icon vote-card__icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span>
                 <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
               </div>
@@ -444,11 +444,11 @@ export default {
     getPercentage(a, b) {
       return (b * 100) / a;
     },
-    copyToClipboard() {
+    copyToClipboard(hash) {
       const selection = window.getSelection();
       const range = window.document.createRange();
       selection.removeAllRanges();
-      range.selectNode(this.$refs.textToCopy[0]);
+      range.selectNode(this.$refs[hash][0]);
       selection.addRange(range);
 
       try {
