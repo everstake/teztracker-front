@@ -40,8 +40,10 @@
     <!-- Testing period end -->
 
     <!-- Testing period start -->
-    <PeriodPromotion
+    <PeriodExploration
       v-if="currentPeriodType === 'promotion'"
+      :proposal="proposal"
+      :voters="voters"
       class="vote__promotion"
     />
     <!-- Testing period end -->
@@ -72,7 +74,6 @@ import uuid from '@/mixins/uuid';
 import PeriodProposal from '@/components/proposal/PeriodProposal';
 import PeriodExploration from '@/components/proposal/PeriodExploration';
 import PeriodTesting from '@/components/proposal/PeriodTesting';
-import PeriodPromotion from '@/components/proposal/PeriodPromotion';
 import PeriodBreadcrumbs from '@/components/proposal/PeriodBreadcrumbs';
 import PeriodTable from "@/components/proposal/PeriodTable";
 
@@ -83,7 +84,6 @@ export default {
     PeriodProposal,
     PeriodExploration,
     PeriodTesting,
-    PeriodPromotion,
     PeriodBreadcrumbs,
     PeriodTable
   },
