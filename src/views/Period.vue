@@ -20,131 +20,134 @@
     </CardSection>
     <!-- Breadcrumbs end -->
 
-    <!-- Proposal Steps start -->
+    <!-- Period Steps start -->
     <CardSection :fluid="true">
       <template #body>
         <PeriodStep :periodTypes="periodTypes" :currentPeriodType="proposal.period.periodType" :periodStepUrls="getPeriodStepsLinks" />
       </template>
     </CardSection>
-    <!-- Proposal Steps end -->
+    <!-- Period Steps end -->
 
-    <!-- Proposals start -->
-    <CardSection v-if="this.proposal.period.periodType === 'proposal'" :fluid="true">
+    <!-- Proposal period star -->
+    <CardSection :fluid="true" v-if="currentPeriodType === 'proposal'">
       <template #body>
-        <b-row>
-          <b-col cols="4">
-            <div class="vote-card">
-              <div class="vote-card__header">
-                <div class="vote-card__container-space-between">
-                  <p class="vote-card__font-size--16 vote-card__weight--bold">
-                    Proposals
-                  </p>
-                </div>
-                <div class="vote-card__divider"></div>
-                <DoughnutChart />
-              </div>
-            </div>
-          </b-col>
-
-          <b-col cols="8">
-            <div class="vote-card">
-              <div class="vote-card__header">
-                <div class="vote-card__container-space-between">
-                  <p class="vote-card__font-size--16 vote-card__weight--bold">
-                    General voting stats
-                  </p>
-                </div>
-                <div class="vote-card__divider"></div>
-                <div class="vote-card__body">
-                  <p class="vote-card__font-size--14 vote-card__weight--bold">
-                    Recent Votes
-                  </p>
-                  <div class="vote-card__recent" v-for="voter in voters.slice(0,3)" :key="generateKey()">
-                    <div>
-                      <div class="vote-card__recent-name">{{ voter.name || voter.pkh }}</div>
-                      <div class="vote-card__recent-proposal"><span>Proposal:</span> {{ voter.proposal | longhash(15) }}</div>
-                    </div>
-                    <div class="vote-card__recent-rolls">{{ voter.rolls }}</div>
-                  </div>
-                  <div class="vote-card__divider"></div>
-                  <b-row>
-                    <b-col cols="6">
-                      <div class="vote-card__container-space-between">
-                        <span class="vote-card__percentage"
-                          >{{
-                            getPercentage(
-                              proposal.voteStats.votesAvailable,
-                              proposal.voteStats.votesCast
-                            ).toFixed(2)
-                          }}%</span
-                        >
-                        <span class="vote-card__percentage"
-                          >{{ proposal.voteStats.votesCast }} /
-                          {{ proposal.voteStats.votesAvailable }}</span
-                        >
-                      </div>
-                      <b-progress
-                        :value="proposal.voteStats.votesCast"
-                        :max="proposal.voteStats.votesAvailable"
-                        class="mb-2"
-                      ></b-progress>
-                      <div class="vote-card__container-space-between">
-                        <span class="vote-card__percentage">Participation</span>
-                        <span class="vote-card__percentage">Votes Cast</span>
-                      </div>
-                      <div class="vote-card__p">
-                        Bakers {{ proposal.voteStats.numVoters }} / {{ proposal.voteStats.numVotersTotal }}
-                      </div>
-                    </b-col>
-                    <b-col cols="6">
-                      <div class="vote-card__container-space-between">
-                        <span class="vote-card__percentage"
-                          >{{
-                            getPercentage(
-                              proposal.voteStats.votesAvailable,
-                              proposal.voteStats.votesAvailable -
-                                proposal.voteStats.votesCast
-                            ).toFixed(2)
-                          }}%</span
-                        >
-                        <span class="vote-card__percentage"
-                          >{{
-                            proposal.voteStats.votesAvailable -
-                              proposal.voteStats.votesCast
-                          }}
-                          / {{ proposal.voteStats.votesAvailable }}</span
-                        >
-                      </div>
-                      <b-progress
-                        :value="
-                          proposal.voteStats.votesAvailable -
-                            proposal.voteStats.votesCast
-                        "
-                        :max="proposal.voteStats.votesAvailable"
-                        class="mb-2"
-                      ></b-progress>
-                      <div class="vote-card__container-space-between">
-                        <span class="vote-card__percentage">Undecided</span>
-                        <span class="vote-card__percentage"
-                          >Votes Availaible</span
-                        >
-                      </div>
-                      <div class="vote-card__p">
-                        Non-voters {{ proposal.voteStats.numVotersTotal - proposal.voteStats.numVoters }} / {{ proposal.voteStats.numVotersTotal }}
-                      </div>
-                    </b-col>
-                  </b-row>
-                </div>
-              </div>
-            </div>
-          </b-col>
-        </b-row>
+        <PeriodProposal
+          :proposal="proposal"
+          :voters="voters"
+          class="vote__proposal"
+        />
       </template>
     </CardSection>
-    <!-- Proposals end -->
+    <!-- Proposal period end -->
 
-    <!-- Proposals start -->
-    <CardSection v-if="this.proposal.period.periodType === 'testing'" :fluid="true">
+    <!-- Proposal period start -->
+<!--    <CardSection v-if="currentPeriodType === 'proposal'" :fluid="true">-->
+<!--      <template #body>-->
+<!--        <b-row>-->
+<!--          <b-col cols="4">-->
+<!--            <div class="vote-card">-->
+<!--              <div class="vote-card__header">-->
+<!--                <div class="vote-card__container-space-between">-->
+<!--                  <p class="vote-card__font-size&#45;&#45;16 vote-card__weight&#45;&#45;bold">-->
+<!--                    Proposals-->
+<!--                  </p>-->
+<!--                </div>-->
+<!--                <div class="vote-card__divider"></div>-->
+<!--                <DoughnutChart />-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </b-col>-->
+
+<!--          <b-col cols="8">-->
+<!--            <div class="vote-card">-->
+<!--              <div class="vote-card__header">-->
+<!--                <div class="vote-card__container-space-between">-->
+<!--                  <p class="vote-card__font-size&#45;&#45;16 vote-card__weight&#45;&#45;bold">-->
+<!--                    General voting stats-->
+<!--                  </p>-->
+<!--                </div>-->
+<!--                <div class="vote-card__divider"></div>-->
+<!--                <div class="vote-card__body">-->
+<!--                  <p class="vote-card__font-size&#45;&#45;14 vote-card__weight&#45;&#45;bold">-->
+<!--                    Recent Votes-->
+<!--                  </p>-->
+<!--                  <div class="vote-card__recent" v-for="voter in voters.slice(0,3)" :key="generateKey()">-->
+<!--                    <div>-->
+<!--                      <div class="vote-card__recent-name">{{ voter.name || voter.pkh }}</div>-->
+<!--                      <div class="vote-card__recent-proposal"><span>Proposal:</span> {{ voter.proposal | longhash(15) }}</div>-->
+<!--                    </div>-->
+<!--                    <div class="vote-card__recent-rolls">{{ voter.rolls }}</div>-->
+<!--                  </div>-->
+<!--                  <div class="vote-card__divider"></div>-->
+<!--                  <b-row>-->
+<!--                    <b-col cols="6">-->
+<!--                      <div class="vote-card__container-space-between">-->
+<!--                        <span class="vote-card__percentage"-->
+<!--                          >{{getPercentage([proposal.voteStats.votesAvailable, proposal.voteStats.votesCast]).toFixed(2)}}%</span-->
+<!--                        >-->
+<!--                        <span class="vote-card__percentage"-->
+<!--                          >{{ proposal.voteStats.votesCast }} /-->
+<!--                          {{ proposal.voteStats.votesAvailable }}</span-->
+<!--                        >-->
+<!--                      </div>-->
+<!--                      <b-progress-->
+<!--                        :value="proposal.voteStats.votesCast"-->
+<!--                        :max="proposal.voteStats.votesAvailable"-->
+<!--                        class="mb-2"-->
+<!--                      ></b-progress>-->
+<!--                      <div class="vote-card__container-space-between">-->
+<!--                        <span class="vote-card__percentage">Participation</span>-->
+<!--                        <span class="vote-card__percentage">Votes Cast</span>-->
+<!--                      </div>-->
+<!--                      <div class="vote-card__p">-->
+<!--                        Bakers {{ proposal.voteStats.numVoters }} / {{ proposal.voteStats.numVotersTotal }}-->
+<!--                      </div>-->
+<!--                    </b-col>-->
+<!--                    <b-col cols="6">-->
+<!--                      <div class="vote-card__container-space-between">-->
+<!--                        <span class="vote-card__percentage"-->
+<!--                          >{{-->
+<!--                            getPercentage([proposal.voteStats.votesAvailable, proposal.voteStats.votesAvailable - proposal.voteStats.votesCast]).toFixed(2)-->
+<!--                          }}%</span-->
+<!--                        >-->
+<!--                        <span class="vote-card__percentage"-->
+<!--                          >{{-->
+<!--                            proposal.voteStats.votesAvailable - -->
+<!--                              proposal.voteStats.votesCast-->
+<!--                          }}-->
+<!--                          / {{ proposal.voteStats.votesAvailable }}</span-->
+<!--                        >-->
+<!--                      </div>-->
+<!--                      <b-progress-->
+<!--                        :value="-->
+<!--                          proposal.voteStats.votesAvailable - -->
+<!--                            proposal.voteStats.votesCast-->
+<!--                        "-->
+<!--                        :max="proposal.voteStats.votesAvailable"-->
+<!--                        class="mb-2"-->
+<!--                      ></b-progress>-->
+<!--                      <div class="vote-card__container-space-between">-->
+<!--                        <span class="vote-card__percentage">Undecided</span>-->
+<!--                        <span class="vote-card__percentage"-->
+<!--                          >Votes Availaible</span-->
+<!--                        >-->
+<!--                      </div>-->
+<!--                      <div class="vote-card__p">-->
+<!--                        Non-voters {{ proposal.voteStats.numVotersTotal - proposal.voteStats.numVoters }} / {{ proposal.voteStats.numVotersTotal }}-->
+<!--                      </div>-->
+<!--                    </b-col>-->
+<!--                  </b-row>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </b-col>-->
+<!--        </b-row>-->
+<!--      </template>-->
+<!--    </CardSection>-->
+    <!-- Proposal period end -->
+
+    <!-- Testing Period start -->
+    <CardSection v-if="currentPeriodType === 'testing'" :fluid="true">
       <template #body>
         <b-row>
           <b-col cols="12">
@@ -175,10 +178,10 @@
         </b-row>
       </template>
     </CardSection>
-    <!-- Proposals end -->
-  
-    <!-- Proposals start -->
-    <CardSection v-if="this.proposal.period.periodType === 'exploration'" :fluid="true">
+    <!-- Testing Proposals end -->
+
+    <!-- Exploration period start -->
+    <CardSection v-if="currentPeriodType === 'exploration'" :fluid="true">
       <template #body>
         <b-row>
           <b-col cols="4">
@@ -196,9 +199,9 @@
         </b-row>
       </template>
     </CardSection>
-    <!-- Proposals end -->
+    <!-- Exploration period end -->
 
-    <!-- Changelog start -->
+    <!-- Period's proposals start -->
     <CardSection :fluid="true" v-for="proposalItem in proposalsList" :key="generateKey()">
       <template #body>
         <div class="vote-card">
@@ -214,7 +217,7 @@
                 <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
               </div>
               <p class="vote-card__font-size--36">
-                <span class="vote-card__weight--lighter">Upvotes:</span> {{getPercentage(proposal.voteStats.votesAvailable, proposal.voteStats.votesCast).toFixed(2)}}%
+                <span class="vote-card__weight--lighter">Upvotes:</span> {{getPercentage([proposal.voteStats.votesAvailable, proposal.voteStats.votesCast]).toFixed(2)}}%
               </p>
             </div>
             <div class="vote-card__title vote-card__font-size--18">
@@ -231,9 +234,9 @@
         </div>
       </template>
     </CardSection>
-    <!-- Changelog end -->
+    <!-- Period's proposals end -->
 
-    <!-- Voters start -->
+    <!-- Vote tables start -->
     <CardSection :fluid="true">
       <template #body>
         <div class="card ml-2 mr-2">
@@ -340,21 +343,24 @@
         </div>
       </template>
     </CardSection>
-    <!-- Voters end -->
+    <!-- Vote tables end -->
   </div>
 </template>
 
 <script>
 import PeriodStep from "@/components/proposal/PeriodStep";
 import CardSection from "@/components/partials/CardSection";
-import DoughnutChart from "@/components/partials/DoughnutChart";
 import Pagination from '@/components/partials/Pagination';
 import uuid from '@/mixins/uuid';
+import PeriodProposal from '@/components/proposal/PeriodProposal'
 
 export default {
   name: "Period",
-  components: { PeriodStep, CardSection, DoughnutChart, Pagination },
+  components: { PeriodStep, CardSection, Pagination, PeriodProposal },
   computed: {
+    currentPeriodType() {
+      return this.proposal.period.periodType;
+    },
     getPeriodStepsLinks() {
       const currentPeriodId = this.proposal.period.id;
       const currentPeriodType = this.proposal.period.periodType;
@@ -439,9 +445,13 @@ export default {
       ],
     };
   },
+  updated() {
+    console.log(this.currentPeriodType)
+  },
   mixins: [uuid],
   methods: {
-    getPercentage(a, b) {
+    getPercentage(arr) {
+      const [a, b] = arr;
       return (b * 100) / a;
     },
     copyToClipboard(hash) {
@@ -492,7 +502,7 @@ export default {
     await this.fetchPeriod(this.$route.params.id);
     await this.fetchPeriods(this.$route.params.id);
 
-    switch (this.proposal.period.periodType) {
+    switch (this.currentPeriodType) {
       case 'proposal':
         await this.fetchProposals(this.$route.params.id);
         await this.fetchVoters(this.$route.params.id);
