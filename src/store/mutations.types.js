@@ -1,5 +1,6 @@
 export const SET_APP_INFO = "setAppInfo";
 export const SET_APP_NETWORK = "setAppNetwork";
+export const SET_APP_NETWORK_CHANGABLE = "setAppNetworkChangable";
 export const SET_BLOCK = "setBlock";
 export const SET_BLOCK_HEAD = "setBlockHead";
 export const SET_BLOCK_SINGLE = "setBlockSingle";

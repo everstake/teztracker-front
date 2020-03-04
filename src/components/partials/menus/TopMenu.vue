@@ -165,21 +165,9 @@ export default {
     }),
     ...mapGetters('app', {
       currentNetwork: 'getAppNetwork',
-      networkList: 'getAppNetworkList'
+      networkList: 'getAppNetworkList',
+      networkChangable: 'getAppNetworkChangable'
     })
-  },
-  data: () => ({
-    networkChangable: true
-  }),
-  watch: {
-    $route(to) {
-      // TODO: directly to page
-      if (to.name.includes('protocol') || to.name.includes('proposal')) {
-        this.networkChangable = false;
-      } else {
-        this.networkChangable = true;
-      }
-    }
   },
   methods: {
     ...mapMutations('app', [SET_APP_NETWORK]),
