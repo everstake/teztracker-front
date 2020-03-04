@@ -168,7 +168,7 @@
   &__icon {
     position: absolute;
     top: 0;
-    right: 0;
+    right: -5px;
     margin-left: 10px;
     font-size: 16px;
     color: #309282;
@@ -252,7 +252,7 @@
     &--icon {
       position: absolute;
       top: 0;
-      right: 0;
+      right: -5px;
       margin-left: 10px;
       font-size: 16px;
       color: #309282;
@@ -292,45 +292,51 @@
   }
 
   // card
-  &-card {
-    display: flex;
-    flex-direction: column;
-    background-color: #fff;
-    border: 1px solid #f0f0f1;
-    border-radius: 4px;
-    box-shadow: 0 0 15px 7px rgba(0,0,0,0.02);
+  //&-card {
+  //  display: flex;
+  //  flex-direction: column;
+  //  background-color: #fff;
+  //  border: 1px solid #f0f0f1;
+  //  border-radius: 4px;
+  //  box-shadow: 0 0 15px 7px rgba(0,0,0,0.02);
+  //
+  //  &__container {
+  //    margin: 1.6rem 0;
+  //
+  //    &--space-between {
+  //      display: flex;
+  //      justify-content: space-between;
+  //    }
+  //
+  //    &--col-8 {
+  //      display: inline-block;
+  //      max-width: 60%;
+  //    }
+  //  }
+  //
+  //  &__body {
+  //    padding: 18px 28px 9px;
+  //  }
+  //
+  //  &__paragraph {
+  //    margin-top: 15px;
+  //    font-size: 14px;
+  //    font-weight: 600;
+  //    color: #2d2e2c;
+  //    text-transform: uppercase;
+  //  }
+  //
+  //  &--cursor-pointer {
+  //    cursor: pointer;
+  //  }
+  //
+  //  &--break-word {
+  //    word-wrap: break-word;
+  //  }
+  //}
 
-    &__container {
-      &--space-between {
-        display: flex;
-        justify-content: space-between;
-      }
+  &-breadcrumbs {
 
-      &--col-8 {
-        display: inline-block;
-        max-width: 60%;
-      }
-    }
-
-    &__body {
-      padding: 18px 28px 9px;
-    }
-
-    &__paragraph {
-      margin-top: 15px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #2d2e2c;
-      text-transform: uppercase;
-    }
-
-    &--cursor-pointer {
-      cursor: pointer;
-    }
-
-    &--break-word {
-      word-wrap: break-word;
-    }
   }
 
   // proposal page
@@ -361,3 +367,56 @@
 
 // 30px title vertical margin
 // 14px, 16px, 20px, 36px title size
+
+.vote-card {
+  margin: 1.6rem 0;
+
+  &.vote-breadcrumbs {
+    padding: 2rem 0 1rem;
+    background-color: #e0efec;
+    border-color: #e0efec;
+    box-shadow: none;
+  }
+}
+
+.vote-breadcrumbs {
+  &__title {
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 37px;
+    letter-spacing: 0.4285713px;
+    color: #309282;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__item {
+    font-size: 18px;
+    line-height: 22px;
+    letter-spacing: 0.3px;
+    color: #6c757d;
+    word-break: break-all;
+
+    &+.breadcrumbs__item:before {
+      display: inline-block;
+      padding-right: .5rem;
+    }
+
+    &:before {
+      content: ' - ';
+      color: #2d2e2c;
+    }
+
+    &--active {
+      color: #309282;
+    }
+  }
+
+  &__link {
+    color: #2d2e2c;
+  }
+}

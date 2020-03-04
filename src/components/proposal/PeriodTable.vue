@@ -1,6 +1,6 @@
 <template>
 	<CardSection :fluid="true">
-		<template #body>
+		<template>
 			<div class="card ml-2 mr-2">
 				<!-- Nav tabs -->
 				<ul class="nav nav-tabs">

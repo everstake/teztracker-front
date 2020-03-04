@@ -1,6 +1,6 @@
 <template>
   <CardSection :fluid="true">
-    <template #body>
+    <template>
       <b-row>
         <b-col cols="4">
           <div class="exploration-vote"></div>

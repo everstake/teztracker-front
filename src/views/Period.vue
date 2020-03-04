@@ -168,19 +168,6 @@ export default {
       const [a, b] = arr;
       return (b * 100) / a;
     },
-    copyToClipboard(hash) {
-      const selection = window.getSelection();
-      const range = window.document.createRange();
-      selection.removeAllRanges();
-      range.selectNode(this.$refs[hash][0]);
-      selection.addRange(range);
-
-      try {
-        document.execCommand('copy');
-      } catch (err) {
-        selection.removeAllRanges();
-      }
-    },
     async fetchPeriod(id) {
       const data = await this.$api.getPeriod({ id });
       const { status } = data;

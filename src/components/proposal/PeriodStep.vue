@@ -1,6 +1,6 @@
 <template>
   <CardSection :fluid="true">
-    <template #body>
+    <template>
       <div class="proposal-step">
         <ul class="proposal-step__list">
           <li v-for="(period, index) of periodTypes" class="proposal-step__item">

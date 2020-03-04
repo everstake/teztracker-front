@@ -1,7 +1,7 @@
 <template>
   <div>
     <CardSection :fluid="true">
-      <template #body>
+      <template>
         <b-row>
           <b-col cols="4">
             <div class="vote-card">
@@ -119,7 +119,7 @@
     </CardSection>
 
     <CardSection :fluid="true" v-for="proposalItem in proposalsList" :key="generateKey()">
-    <template #body>
+    <template>
       <div class="vote-card">
         <div class="vote-card__header">
           <div class="vote-card__container-space-between">
@@ -170,6 +170,19 @@ export default {
     getPercentage(arr) {
       const [a, b] = arr;
       return (b * 100) / a;
+    },
+    copyToClipboard(hash) {
+      const selection = window.getSelection();
+      const range = window.document.createRange();
+      selection.removeAllRanges();
+      range.selectNode(this.$refs[hash][0]);
+      selection.addRange(range);
+
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        selection.removeAllRanges();
+      }
     }
 	}
 };

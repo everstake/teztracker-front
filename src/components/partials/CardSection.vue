@@ -1,19 +1,10 @@
 <template>
-  <section class="card-section">
+  <section class="card-section vote-card">
     <b-container :fluid="fluid">
       <b-row>
         <b-col :cols="cols" :sm="sm" :md="md" :lg="lg" :xl="xl">
-          <div class="card-section__breadcrumbs">
-            <slot name="breadcrumbs"></slot>
-          </div>
-          <div class="card-section__header">
-            <slot name="header"></slot>
-          </div>
           <div class="card-section__body">
-            <slot name="body"></slot>
-          </div>
-          <div class="card-section__footer">
-            <slot name="footer"></slot>
+            <slot></slot>
           </div>
         </b-col>
       </b-row>
@@ -23,7 +14,7 @@
 
 <script>
 export default {
-  name: "cardSection",
+  name: "CardSection",
   props: {
     fluid: {
       type: Boolean,
