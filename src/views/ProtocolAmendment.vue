@@ -72,7 +72,7 @@ export default {
         return this.$router.replace({ name: status });
       }
 
-      this.$router.push({ name: 'proposal_period', params: { id } })
+      this.$router.push({ name: 'period', params: { id } })
     }
   }
 };

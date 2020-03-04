@@ -183,5 +183,99 @@
   }
 }
 
+
+.vote {
+  // table
+  &-table {
+    &__tbody {}
+
+    &__th {}
+
+    &__td {}
+  }
+
+  // divider
+  &__divider {}
+
+  // link
+  &__link {}
+
+  &__title {
+    &--container {}
+
+    &--icon {}
+
+    // 14px
+    &--small {}
+
+    // 16px
+    &--regular {}
+
+    // 20px
+    &--medium {}
+
+    // 36px
+    &--large {}
+
+    &--bold {}
+
+    &--color-inactive {}
+
+    &--text-uppercase {}
+  }
+
+  // card
+  &-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #f0f0f1;
+    border-radius: 4px;
+    box-shadow: 0 0 15px 7px rgba(0,0,0,0.02);
+
+    &__container {
+      &--space-between {}
+      &--col-8 {}
+    }
+
+    &__header {}
+
+    &__body {
+      padding: 18px 28px 9px;
+    }
+
+    &__paragraph {}
+
+    &__cursor-pointer {}
+
+    &__word-wrap {}
+  }
+
+  // proposal page
+  &-proposal {
+    &__chart {}
+    &__info {}
+  }
+
+  // exploration page
+  &-exploration {
+    &__chart {}
+    &__info {}
+    &__vote-stats {}
+  }
+
+  // testing page
+  &-testing {
+    &__info {}
+    &__description {}
+  }
+
+  // promotion page
+  &-promotion {
+    &__chart {}
+    &__info {}
+  }
+}
+
 // 30px title vertical margin
 // 14px, 16px, 20px, 36px title size

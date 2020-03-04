@@ -23,7 +23,7 @@
     <!-- Proposal Steps start -->
     <CardSection :fluid="true">
       <template #body>
-        <ProposalPeriodStep :periodTypes="periodTypes" :currentPeriodType="proposal.period.periodType" :periodStepUrls="getPeriodStepsLinks" />
+        <PeriodStep :periodTypes="periodTypes" :currentPeriodType="proposal.period.periodType" :periodStepUrls="getPeriodStepsLinks" />
       </template>
     </CardSection>
     <!-- Proposal Steps end -->
@@ -345,15 +345,15 @@
 </template>
 
 <script>
-import ProposalPeriodStep from "@/components/proposal/ProposalPeriodStep";
+import PeriodStep from "@/components/proposal/PeriodStep";
 import CardSection from "@/components/partials/CardSection";
 import DoughnutChart from "@/components/partials/DoughnutChart";
 import Pagination from '@/components/partials/Pagination';
 import uuid from '@/mixins/uuid';
 
 export default {
-  name: "ProposalPeriod",
-  components: { ProposalPeriodStep, CardSection, DoughnutChart, Pagination },
+  name: "Period",
+  components: { PeriodStep, CardSection, DoughnutChart, Pagination },
   computed: {
     getPeriodStepsLinks() {
       const currentPeriodId = this.proposal.period.id;

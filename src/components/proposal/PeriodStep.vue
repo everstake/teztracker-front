@@ -8,7 +8,7 @@
         <router-link
           v-else
           :to="{
-            name: 'proposal_period',
+            name: 'period',
             params: { id: periodStepUrls[index] }
           }"
           :class="{
@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: "ProposalPeriodStep",
+  name: "PeriodStep",
   props: ["periodTypes", "currentPeriodType", "periodStepUrls"],
   methods: {
     getLink(index) {
