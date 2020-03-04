@@ -10,13 +10,8 @@
               </p>
               <router-link
                 v-else
-                :to="{
-              name: 'period',
-              params: { id: periodStepUrls[index] }
-            }"
-                :class="{
-              'proposal-step__link--active': period === currentPeriodType
-            }"
+                :to="{name: 'period',params: { id: periodStepUrls[index] }}"
+                :class="{'proposal-step__link--active': period === currentPeriodType}"
                 class="proposal-step__link"
               >
                 {{ period }}
@@ -84,6 +79,7 @@ export default {
   }
 
   &__item {
+    min-height: 70px;
     position: relative;
     display: flex;
     align-items: center;
@@ -94,19 +90,23 @@ export default {
     text-transform: uppercase;
     background-color: white;
 
-    &:nth-child(1) .proposal-step__link:before {
+    &:nth-child(1) .proposal-step__link:before,
+    &:nth-child(1) .proposal-step__para:before {
       content: "1";
     }
 
-    &:nth-child(2) .proposal-step__link:before {
+    &:nth-child(2) .proposal-step__link:before,
+    &:nth-child(2) .proposal-step__para:before {
       content: "2";
     }
-
-    &:nth-child(3) .proposal-step__link:before {
+  
+    &:nth-child(3) .proposal-step__link:before,
+    &:nth-child(3) .proposal-step__para:before {
       content: "3";
     }
-
-    &:nth-child(4) .proposal-step__link:before {
+  
+    &:nth-child(4) .proposal-step__link:before,
+    &:nth-child(4) .proposal-step__para:before {
       content: "4";
     }
   }
@@ -142,6 +142,21 @@ export default {
   &__para {
     margin-bottom: 0;
     color: #9ea0a5;
+
+    &:before {
+      position: relative;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 30px;
+      font-weight: lighter;
+      font-size: 28px;
+      width: 70px;
+      height: 70px;
+      border: 1px solid #9ea0a5;
+      color: #9ea0a5;
+      border-radius: 50%;
+    }
   }
 }
 </style>
