@@ -187,41 +187,108 @@
 .vote {
   // table
   &-table {
-    &__tbody {}
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
 
-    &__th {}
+    &__tbody {
+      background-image: linear-gradient(to right, #4a4a4a 6%, rgba(255,255,255,0) 2%);
+      background-position: top;
+      background-size: 10px 1px;
+      background-repeat: repeat-x;
+    }
 
-    &__td {}
+    &__th {
+      font-size: 14px;
+      font-weight: 700;
+      color: #2d2e2c;
+    }
+
+    &__td {
+      padding: 1rem 0.75rem;
+      font-size: 14px;
+    }
+
+    // moidify table pagination
+    & .page-link {
+      color: #9ea0a5;
+      border: none;
+    }
   }
 
   // divider
-  &__divider {}
+  &__divider {
+    display: block;
+    height: 1px;
+    margin: 15px 0;
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(6%, #4a4a4a), color-stop(2%, rgba(255,255,255,0)));
+    background-image: linear-gradient(to right, #4a4a4a 6%, rgba(255,255,255,0) 2%);
+    background-position: top;
+    background-size: 10px 1px;
+    background-repeat: repeat-x;
+  }
 
   // link
-  &__link {}
+  &__link {
+    //color: #309282;
+    color: inherit;
+    border-bottom: 1px solid #2d2e2c;
+
+    &:hover,
+    &:active,
+    &:focus {
+      color: #309282;
+      border-color: #309282;
+      text-decoration: none;
+    }
+  }
 
   &__title {
-    &--container {}
+    &--container {
+      position: relative;
+      max-width: 70%;
+    }
 
-    &--icon {}
+    &--icon {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin-left: 10px;
+      font-size: 16px;
+      color: #309282;
+    }
 
     // 14px
-    &--small {}
+    &--small {
+      font-size: 14px;
+    }
 
     // 16px
-    &--regular {}
+    &--regular {
+      font-size: 16px;
+    }
 
     // 20px
-    &--medium {}
+    &--medium {
+      font-size: 20px;
+    }
 
     // 36px
-    &--large {}
+    &--large {
+      font-size: 36px;
+    }
 
-    &--bold {}
+    &--bold {
+      font-weight: bold;
+    }
 
-    &--color-inactive {}
+    &--color-inactive {
+      color: #9ea0a5;
+    }
 
-    &--text-uppercase {}
+    &--text-uppercase {
+      text-transform: uppercase;
+    }
   }
 
   // card
@@ -234,21 +301,36 @@
     box-shadow: 0 0 15px 7px rgba(0,0,0,0.02);
 
     &__container {
-      &--space-between {}
-      &--col-8 {}
-    }
+      &--space-between {
+        display: flex;
+        justify-content: space-between;
+      }
 
-    &__header {}
+      &--col-8 {
+        display: inline-block;
+        max-width: 60%;
+      }
+    }
 
     &__body {
       padding: 18px 28px 9px;
     }
 
-    &__paragraph {}
+    &__paragraph {
+      margin-top: 15px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2d2e2c;
+      text-transform: uppercase;
+    }
 
-    &__cursor-pointer {}
+    &--cursor-pointer {
+      cursor: pointer;
+    }
 
-    &__word-wrap {}
+    &--break-word {
+      word-wrap: break-word;
+    }
   }
 
   // proposal page
