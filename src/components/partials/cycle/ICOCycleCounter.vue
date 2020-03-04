@@ -5,7 +5,7 @@
         <b-card no-body>
           <b-card-header>
             <div class="title text-center">
-              <span>Percentage of ICO addresses activated</span>
+              Percentage of ICO addresses activated
             </div>
           </b-card-header>
 
@@ -13,7 +13,7 @@
             <b-row>
               <b-col>
                 <div class="progress-labels">
-                  <div class="tezos-label float-right">Tezos {{ $_network }}</div>
+                  <div class="tezos-label">Tezos {{ $_network }}</div>
                 </div>
               </b-col>
             </b-row>
@@ -31,8 +31,8 @@
             <b-row>
               <b-col>
                 <div class="progress-labels">
-                  <div class="percentage float-left">
-                    <span>{{ percent }}%</span>
+                  <div class="percentage">
+                    {{ percent }}%
                   </div>
                 </div>
               </b-col>

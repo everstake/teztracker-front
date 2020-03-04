@@ -53,12 +53,11 @@
                   class="mb-2"
                 ></b-progress>
                 <div class="progress-labels">
-                  <div class="voting-percentage float-left">
-                    <span>{{ votingProgressPercent }}%</span>
+                  <div class="voting-percentage">
+                    {{ votingProgressPercent }}%
                   </div>
-                  <div class="timer float-right">
-                    <span>{{ timeLeftTillVotingPeriodEnd }}</span> - Until
-                                                                   voting period end
+                  <div class="timer">
+                    {{ timeLeftTillVotingPeriodEnd }} - Until voting period end
                   </div>
                 </div>
               </div>

@@ -40,6 +40,11 @@ const Account = () => import("../views/Account.vue");
 const Contracts = () => import("../views/Contracts.vue");
 /* Accounts group end */
 
+/* Votes group */
+//Votes
+const Vote = () => import("../views/Vote.vue");
+/* Votes group end */
+
 // Errors
 const NotFound = () => import("../views/errors/NotFound.vue");
 const ServerError = () => import("../views/errors/ServerError.vue");
@@ -128,6 +133,12 @@ export default [
   // Contracts
   { path: "/:network/contracts", name: "contracts", component: Contracts },
   /* Accounts group end */
+
+  /* Governance group */
+  // Votes
+  { path: "/:network/vote/:voteHash", name: "vote", component: Vote },
+  /* Governance group end */
+
   // Errors
   { path: "/:network/404", name: "404", component: NotFound },
   { path: "/:network/*", redirect: { name: "404" } },

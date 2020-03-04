@@ -1,74 +1,35 @@
 <template>
-  <b-row>
-    <b-col lg="12">
-      <b-card no-body>
-        <b-card-header>
-          <div class="break-word">
-            <h3>
-              <span class="text">{{ level }}</span>
-            </h3>
-            <span class="subtitle">Block Information</span>
-          </div>
-        </b-card-header>
-
-        <div class="card-divider"></div>
-
-        <b-card-body>
-          <b-row class="item-info ml-1 mr-1">
-            <b-col lg="3">
-              <span class="label">Hash</span>
-            </b-col>
-            <b-col lg="9">
-              <span class="value">{{ block.hash }}</span>
-            </b-col>
-          </b-row>
-          <b-row class="item-info ml-1 mr-1">
-            <b-col lg="3">
-              <span class="label">Timestamp</span>
-            </b-col>
-            <b-col lg="9">
-              <span class="value">{{block.timestamp | timeformat($constants.TIME_FORMAT)}}</span>
-            </b-col>
-          </b-row>
-          <b-row class="item-info ml-1 mr-1">
-            <b-col lg="3">
-              <span class="label">Volume</span>
-            </b-col>
-            <b-col lg="9">
-              <span class="value">{{ block.volume | tezos }}</span>
-            </b-col>
-          </b-row>
-          <b-row class="item-info ml-1 mr-1">
-            <b-col lg="3">
-              <span class="label">Cycle</span>
-            </b-col>
-            <b-col lg="9">
-              <span class="value">{{ block.metaCycle }}</span>
-            </b-col>
-          </b-row>
-          <b-row class="item-info ml-1 mr-1">
-            <b-col lg="3">
-              <span class="label">Baker</span>
-            </b-col>
-            <b-col lg="9">
-              <span class="value">
-                <router-link
-                  class="baker"
-                  :to="{ name: 'baker', params: { baker: block.baker } }"
-                  >{{ block.baker }}</router-link
-                >
-              </span>
-            </b-col>
-          </b-row>
-        </b-card-body>
-      </b-card>
-    </b-col>
-  </b-row>
+  <StatisticsCard
+    :title="level"
+    subtitle="Block information"
+    :fields="blockRestructured"
+  >
+    <template #value="slotProps">
+      <template v-if="slotProps.field.key === 'Timestamp'">
+        {{ slotProps.field.value | timeformat($constants.TIME_FORMAT) }}
+      </template>
+      <template v-else-if="slotProps.field.key === 'Volume'">
+        {{ slotProps.field.value | tezos }}
+      </template>
+      <router-link
+        v-else-if="slotProps.field.key === 'Baker'"
+        class="baker"
+        :to="{ name: 'baker', params: { baker: slotProps.field.value } }"
+      >
+        {{ slotProps.field.value }}
+      </router-link>
+    </template>
+  </StatisticsCard>
 </template>
 
 <script>
+import StatisticsCard from "@/layouts/StatisticsCard";
+
 export default {
   name: "BlockSingle",
+  components: {
+    StatisticsCard
+  },
   props: {
     block: {
       type: Object,
@@ -78,6 +39,15 @@ export default {
   computed: {
     level() {
       return this.$route.params.level;
+    },
+    blockRestructured() {
+      return [
+        { key: "Hash", value: this.block.hash },
+        { key: "Timestamp", value: this.block.timestamp },
+        { key: "Volume", value: this.block.volume },
+        { key: "Cycle", value: this.block.metaCycle },
+        { key: "Baker", value: this.block.baker },
+      ]
     }
   }
 };
