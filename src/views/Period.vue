@@ -1,7 +1,7 @@
 <template>
   <div class="main-content">
     <!-- Breadcrumbs start -->
-    <PeriodBreadcrumbs :currentPeriodType="currentPeriodType"></PeriodBreadcrumbs>
+    <PeriodBreadcrumbs :currentPeriodType="currentPeriodType" />
     <!-- Breadcrumbs end -->
 
     <!-- Period Steps start -->
@@ -26,6 +26,7 @@
     <PeriodExploration
       v-if="currentPeriodType === 'exploration'"
       :proposal="proposal"
+      :voters="voters"
       class="vote__exploration"
     />
     <!-- Exploration period end -->
@@ -47,10 +48,19 @@
 
     <!-- Vote tables start -->
     <PeriodTable
-    :voters="voters"
-    :nonVoters='nonVoters'
-    :votersFields='votersFields'
-    :nonVotersFields="nonVotersFields"
+      v-if="currentPeriodType === 'proposal'"
+      :voters="voters"
+      :nonVoters='nonVoters'
+      :votersFields='votersFields'
+      :nonVotersFields="nonVotersFields"
+    />
+
+    <PeriodTable
+      v-if="currentPeriodType === 'exploration' || currentPeriodType === 'promotion'"
+      :voters="voters"
+      :nonVoters='nonVoters'
+      :votersFields='ballotFields'
+      :nonVotersFields="nonVotersFields"
     />
     <!-- Vote tables end -->
   </div>
@@ -143,7 +153,7 @@ export default {
           nay: 0
         }
       },
-      proposalsList: {},
+      proposalsList: [],
       periodTypes: ['proposal', 'exploration', 'testing', 'promotion'],
       periods: [],
       voters: [],
@@ -160,6 +170,15 @@ export default {
         { key: "pkh", label: "Baker" },
         { key: "rolls", label: "Number of voters" }
       ],
+      ballotFields: [
+  
+        { key: "pkh", label: "Baker" },
+        { key: "rolls", label: "Number of voters" },
+        { key: "decision", label: "Vote" },
+        { key: "blockLevel", label: "Block" },
+        { key: "timestamp", label: "Timestamp" },
+        { key: "operation", label: "Vote hash" }
+      ]
     };
   },
   mixins: [uuid],
@@ -196,7 +215,7 @@ export default {
     },
     async fetchBallots(id) {
       const data = await this.$api.getBallots({ id });
-      this.ballots = data.data;
+      this.voters = data.data;
     }
   },
   async created() {
@@ -211,6 +230,7 @@ export default {
         break;
       case 'exploration':
       case 'promotion':
+        await this.fetchNonVoters(this.$route.params.id);
         await this.fetchBallots(this.$route.params.id);
         break;
     }

@@ -292,48 +292,63 @@
   }
 
   // card
-  //&-card {
-  //  display: flex;
-  //  flex-direction: column;
-  //  background-color: #fff;
-  //  border: 1px solid #f0f0f1;
-  //  border-radius: 4px;
-  //  box-shadow: 0 0 15px 7px rgba(0,0,0,0.02);
-  //
-  //  &__container {
-  //    margin: 1.6rem 0;
-  //
-  //    &--space-between {
-  //      display: flex;
-  //      justify-content: space-between;
-  //    }
-  //
-  //    &--col-8 {
-  //      display: inline-block;
-  //      max-width: 60%;
-  //    }
-  //  }
-  //
-  //  &__body {
-  //    padding: 18px 28px 9px;
-  //  }
-  //
-  //  &__paragraph {
-  //    margin-top: 15px;
-  //    font-size: 14px;
-  //    font-weight: 600;
-  //    color: #2d2e2c;
-  //    text-transform: uppercase;
-  //  }
-  //
-  //  &--cursor-pointer {
-  //    cursor: pointer;
-  //  }
-  //
-  //  &--break-word {
-  //    word-wrap: break-word;
-  //  }
-  //}
+  &-card {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #f0f0f1;
+    border-radius: 4px;
+    box-shadow: 0 0 15px 7px rgba(0,0,0,0.02);
+
+    &__container {
+      margin: 1.6rem 0;
+
+      &--space-between {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &--col-8 {
+        display: inline-block;
+        max-width: 60%;
+      }
+    }
+
+    &__body {
+      padding: 18px 28px 9px;
+    }
+
+    &__paragraph {
+      margin-top: 15px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #2d2e2c;
+      text-transform: uppercase;
+    }
+
+    &--cursor-pointer {
+      cursor: pointer;
+    }
+
+    &--break-word {
+      word-wrap: break-word;
+    }
+
+    &-supermajority,
+    &-quorum {
+      position: relative;
+      transform: translateX(-100%);
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: -25px;
+        width: 1px;
+        background-color: #a9abb0;
+      }
+    }
+  }
 
   &-breadcrumbs {
 
@@ -362,6 +377,34 @@
   &-promotion {
     &__chart {}
     &__info {}
+  }
+
+  &__ballot {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    font-size: 32px;
+    font-weight: 300;
+    color: #9ea0a5;
+
+    .ballot {
+      &__container {
+        padding-top: 50px;
+        padding-bottom: 50px;
+      }
+    }
+
+    &--yay {
+      color: #309282;
+    }
+
+    &--nay {
+      color: #e56968;
+    }
+
+    &--pass {
+      color: #1815b5;
+    }
   }
 }
 

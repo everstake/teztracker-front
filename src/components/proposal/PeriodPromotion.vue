@@ -1,11 +1,13 @@
 <template>
-	<CardSection>
-		<template>
-			<b-row>
-				<b-col cols="12"></b-col>
-			</b-row>
-		</template>
-	</CardSection>
+	<div class="vote__promotion">
+		<CardSection>
+			<template>
+				<b-row>
+					<b-col cols="12"></b-col>
+				</b-row>
+			</template>
+		</CardSection>
+	</div>
 </template>
 
 <script>

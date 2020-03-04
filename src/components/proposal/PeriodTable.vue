@@ -1,5 +1,6 @@
 <template>
-	<CardSection :fluid="true">
+	<div class="vote__table">
+		<CardSection :fluid="true">
 		<template>
 			<div class="card ml-2 mr-2">
 				<!-- Nav tabs -->
@@ -105,6 +106,7 @@
 			</div>
 		</template>
 	</CardSection>
+	</div>
 </template>
 
 <script>
@@ -117,7 +119,12 @@ export default {
     CardSection,
     Pagination
 	},
-	props: ['voters', 'nonVoters', 'votersFields', 'nonVotersFields'],
+	props: [
+	  'voters',
+		'nonVoters',
+		'votersFields',
+		'nonVotersFields'
+	],
 	data() {
     return {
       perPage: 20,

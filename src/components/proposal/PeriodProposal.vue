@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="vote__proposal">
     <CardSection :fluid="true">
       <template>
         <b-row>
@@ -12,7 +12,9 @@
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
-                <DoughnutChart />
+                <DoughnutChart
+                  :data="[proposal.voteStats.votesAvailable, ...proposalsList.filter(item => item.votesCasted)]"
+                />
               </div>
             </div>
           </b-col>
@@ -49,14 +51,9 @@
                   <b-row>
                     <b-col cols="6">
                       <div class="vote-card__container-space-between">
-                    <span class="vote-card__percentage"
-                    >{{
-                        getPercentage([
-                          proposal.voteStats.votesAvailable,
-                          proposal.voteStats.votesCast
-                        ]).toFixed(2)
-                      }}%</span
-                    >
+                    <span class="vote-card__percentage">
+                      {{getPercentage([proposal.voteStats.votesAvailable, proposal.voteStats.votesCast]).toFixed(2)}}%
+                    </span>
                         <span class="vote-card__percentage"
                         >{{ proposal.voteStats.votesCast }} /
                       {{ proposal.voteStats.votesAvailable }}</span
@@ -133,7 +130,7 @@
               <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
             </div>
             <p class="vote-card__font-size--36">
-              <span class="vote-card__weight--lighter">Upvotes:</span> {{getPercentage([proposal.voteStats.votesAvailable, proposal.voteStats.votesCast]).toFixed(2)}}%
+              <span class="vote-card__weight--lighter">Upvotes:</span> {{getPercentage([proposal.voteStats.votesAvailable, proposalItem.votesCasted]).toFixed(2)}}%
             </p>
           </div>
           <div class="vote-card__title vote-card__font-size--18">
