@@ -1,7 +1,18 @@
-<template></template>
+<template>
+	<CardSection>
+		<template #body>
+			<b-row>
+				<b-col cols="12"></b-col>
+			</b-row>
+		</template>
+	</CardSection>
+</template>
 
 <script>
+import CardSection from "@/components/partials/CardSection";
+
 export default {
-  name: 'PeriodPromotion'
+  name: 'PeriodPromotion',
+  components: {CardSection}
 }
 </script>

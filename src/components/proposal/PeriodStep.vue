@@ -1,31 +1,38 @@
 <template>
-  <div class="proposal-step">
-    <ul class="proposal-step__list">
-      <li v-for="(period, index) of periodTypes" class="proposal-step__item">
-        <p v-if="periodStepUrls[index] === null" class="proposal-step__para">
-          {{ period }}
-        </p>
-        <router-link
-          v-else
-          :to="{
+  <CardSection :fluid="true">
+    <template #body>
+      <div class="proposal-step">
+        <ul class="proposal-step__list">
+          <li v-for="(period, index) of periodTypes" class="proposal-step__item">
+            <p v-if="periodStepUrls[index] === null" class="proposal-step__para">
+              {{ period }}
+            </p>
+            <router-link
+              v-else
+              :to="{
             name: 'period',
             params: { id: periodStepUrls[index] }
           }"
-          :class="{
+              :class="{
             'proposal-step__link--active': period === currentPeriodType
           }"
-          class="proposal-step__link"
-        >
-          {{ period }}
-        </router-link>
-      </li>
-    </ul>
-  </div>
+              class="proposal-step__link"
+            >
+              {{ period }}
+            </router-link>
+          </li>
+        </ul>
+      </div>
+    </template>
+  </CardSection>
 </template>
 
 <script>
+import CardSection from "@/components/partials/CardSection";
+
 export default {
   name: "PeriodStep",
+  components: {CardSection},
   props: ["periodTypes", "currentPeriodType", "periodStepUrls"],
   methods: {
     getLink(index) {
