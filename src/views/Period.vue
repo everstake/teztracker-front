@@ -29,6 +29,7 @@
       :proposal="proposal"
       :voters="voters"
       :backgroundColors="backgroundColors"
+      @sortTableBy="enableTableSort"
       class="vote__exploration"
     />
     <!-- Exploration period end -->
@@ -47,6 +48,7 @@
       :proposal="proposal"
       :voters="voters"
       :backgroundColors="backgroundColors"
+      @sortTableBy="enableTableSort"
       class="vote__promotion"
     />
     <!-- Testing period end -->
@@ -63,7 +65,7 @@
 
     <PeriodTable
       v-if="currentPeriodType === 'exploration' || currentPeriodType === 'promotion'"
-      :voters="voters"
+      :voters="filteredVoters"
       :nonVoters='nonVoters'
       :votersFields='ballotFields'
       :nonVotersFields="nonVotersFields"
@@ -98,6 +100,21 @@ export default {
     ...mapState('proposal', {
       votersCount: state => state.counts.voters
     }),
+    filteredVoters() {
+      if (this.filterTable === 'yay') {
+        return this.voters.filter(voter => voter.decision === 'yay');
+      }
+
+      if (this.filterTable === 'nay') {
+        return this.voters.filter(voter => voter.decision === 'nay');
+      }
+
+      if (this.filterTable === 'pass') {
+        return this.voters.filter(voter => voter.decision === 'pass');
+      }
+
+      return this.voters;
+    },
     currentPeriodType() {
       return this.proposal.period.periodType;
     },
@@ -188,13 +205,19 @@ export default {
         { key: "timestamp", label: "Timestamp" },
         { key: "operation", label: "Vote hash" }
       ],
-      backgroundColors: ["#309282", "#9ea0a5", "#e56968"]
+      backgroundColors: ["#309282", "#9ea0a5", "#e56968"],
+      filterTable: false
     };
   },
   mixins: [uuid],
   methods: {
     ...mapMutations('proposal', [SET_VOTERS_COUNT, SET_NON_VOTERS_COUNT]),
+    async enableTableSort(arg) {
+      await this.fetchBallots(this.proposal.period.id, this.votersCount);
+      this.filterTable = arg;
+    },
     handleShowClick({ type, limit }) {
+      this.filterTable = false;
       if (type === 'voters') {
         switch (this.currentPeriodType) {
           case 'proposal':

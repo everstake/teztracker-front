@@ -139,7 +139,7 @@
         <b-row>
           <b-col cols="4">
             <div class="vote-card">
-              <div class="vote__ballot ballot">
+              <div @click="enableSorting('yay')" class="vote__ballot ballot">
                 <img class="ballot__icon" src="../../assets/icons/yay.svg" alt="In favor">
                 <div class="ballot__container">
                   <span class="vote__ballot--yay">
@@ -154,7 +154,7 @@
 
           <b-col cols="4">
             <div class="vote-card">
-              <div class="vote__ballot ballot">
+              <div @click="enableSorting('nay')" class="vote__ballot ballot">
                 <img class="ballot__icon" src="../../assets/icons/nay.svg" alt="Against">
                 <div class="ballot__container">
                   <span class="vote__ballot--nay">
@@ -169,7 +169,7 @@
 
           <b-col cols="4">
             <div class="vote-card">
-              <div class="vote__ballot ballot">
+              <div @click="enableSorting('pass')" class="vote__ballot ballot">
                 <img class="ballot__icon" src="../../assets/icons/pass.svg" alt="Pass">
                 <div class="ballot__container">
                   <span class="vote__ballot--pass">
@@ -206,6 +206,9 @@ export default {
   ],
   mixins: [uuid],
   methods: {
+    enableSorting(arg) {
+      this.$emit('sortTableBy', arg)
+    },
     formatToCalendarDate(date, format) {
       return moment(date).format(format);
     },
