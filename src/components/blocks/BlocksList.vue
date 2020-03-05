@@ -1,11 +1,15 @@
 <template>
   <div>
+    <div class="d-flex justify-content-between mb-4">
+      <PerPageSelect @per-page="$_setPerPage" />
+    </div>
+
     <b-table
       show-empty
       :items="blocks"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="0"
+      :per-page="perPage"
       borderless
       class="transactions-table table-responsive-md"
     >
@@ -45,7 +49,9 @@
 
 <script>
 import { mapState } from "vuex";
+import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
+import setPerPage from "@/mixins/setPerPage";
 
 import withCustomAction from "../partials/withCustomAction";
 const PaginationWithCustomAction = withCustomAction(
@@ -57,18 +63,25 @@ const PaginationWithCustomAction = withCustomAction(
 export default {
   name: "BlocksList",
   components: {
+    PerPageSelect,
     PaginationWithCustomAction
+  },
+  mixins: [setPerPage],
+  props: {
+    isTableComplete: {
+      type: Boolean,
+      default: true
+    }
   },
   data() {
     return {
-      perPage: this.$constants.PER_PAGE,
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
         { key: "level", label: "Block ID" },
         { key: "timestamp", label: "Timestamp" },
         { key: "baker", label: "Baker" },
-        { key: "volume", label: "Volume" },
-        { key: "fees", label: "Fees" }
+        { key: "volume", label: "Volume", class: !this.isTableComplete ? 'd-none': '' },
+        { key: "fees", label: "Fees", class: !this.isTableComplete ? 'd-none': '' }
       ]
     };
   },

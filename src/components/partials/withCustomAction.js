@@ -12,7 +12,13 @@ const withCustomAction = (pagination, storeModuleNamespace, customAction) => {
       });
     },
     props: { ...originalProps },
-
+    watch: {
+      // Passed through props.
+      // Needed to repeat request if the number of per page items changes.
+      perPage() {
+        this.fireAction();
+      }
+    },
     methods: {
       async fireAction(page = 1) {
         await this.$store.dispatch(

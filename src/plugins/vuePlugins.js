@@ -10,7 +10,8 @@ import {
   LayoutPlugin,
   CardPlugin,
   TabsPlugin,
-  BreadcrumbPlugin
+  BreadcrumbPlugin,
+  FormSelectPlugin
 } from "bootstrap-vue";
 import {
   FontAwesomeIcon,
@@ -57,6 +58,7 @@ Vue.use(LayoutPlugin);
 Vue.use(CardPlugin);
 Vue.use(TabsPlugin);
 Vue.use(BreadcrumbPlugin);
+Vue.use(FormSelectPlugin);
 
 dom.watch();
 library.add(

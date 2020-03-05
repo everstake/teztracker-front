@@ -1,15 +1,19 @@
 <template>
   <div>
+    <div class="d-flex justify-content-between mb-4">
+      <PerPageSelect @per-page="$_setPerPage" />
+    </div>
+
     <b-table
       show-empty
       :items="contracts"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="0"
+      :per-page="perPage"
       borderless
       class="transactions-table table-responsive-md"
     >
-      <template slot="contract" slot-scope="row">
+      <template slot="accountId" slot-scope="row">
         <b-link
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
@@ -19,7 +23,7 @@
       <template slot="manager" slot-scope="row">
         <span>{{ row.item.manager | longhash(35) }}</span>
       </template>
-      <template slot="delegate" slot-scope="row">
+      <template slot="delegateValue" slot-scope="row">
         <span>{{ row.item.delegateValue | longhash(20) }}</span>
       </template>
       <template slot="balance" slot-scope="row">
@@ -37,7 +41,9 @@
 
 <script>
 import { mapState } from "vuex";
+import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
+import setPerPage from "@/mixins/setPerPage";
 
 import withCustomAction from "../partials/withCustomAction";
 const PaginationWithCustomAction = withCustomAction(
@@ -49,22 +55,28 @@ const PaginationWithCustomAction = withCustomAction(
 export default {
   name: "ContractsList",
   components: {
+    PerPageSelect,
     PaginationWithCustomAction
   },
+  mixins: [setPerPage],
   data() {
     return {
-      perPage: this.$constants.PER_PAGE,
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
-        { key: "contract", label: "Contract" },
+        { key: "accountId", label: "Contract" },
         { key: "manager", label: "Manager" },
-        { key: "delegate", label: "Delegate" },
-        { key: "balance", label: "Balance" }
+        { key: "delegateValue", label: "Delegate" },
+        {
+          key: "balance",
+          label: "Balance",
+          sortable: true,
+          sortDirection: "desc"
+        }
       ]
     };
   },
   computed: {
-    ...mapState('accounts', {
+    ...mapState("accounts", {
       contracts: state => state.contracts,
       count: state => state.counts
     })

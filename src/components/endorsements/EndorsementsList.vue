@@ -1,5 +1,12 @@
 <template>
   <div>
+    <div
+      class="d-flex justify-content-between mb-4"
+      v-if="!isBlockEndorsements"
+    >
+      <PerPageSelect @per-page="$_setPerPage" />
+    </div>
+
     <b-table
       show-empty
       :items="endorsements"
@@ -47,19 +54,20 @@
 <script>
 import { mapMutations } from "vuex";
 import { SET_ENDORSEMENTS_COUNT } from "@/store/mutations.types";
+import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
+import setPerPage from "@/mixins/setPerPage";
 
 export default {
   name: "EndorsementsList",
   components: {
+    PerPageSelect,
     Pagination
   },
-  mixins: [handleCurrentPageChange],
-  props: ["block"],
+  mixins: [handleCurrentPageChange, setPerPage],
   data() {
     return {
-      perPage: this.$constants.PER_PAGE,
       endorsements: [],
       count: 0,
       fields: [
@@ -73,6 +81,9 @@ export default {
   computed: {
     level() {
       return this.$route.params.level;
+    },
+    isBlockEndorsements() {
+      return this.level > 0;
     }
   },
   watch: {
@@ -82,13 +93,28 @@ export default {
       }
     },
     level: {
+      immediate: true,
       async handler(value) {
-        await this.reload({ block: value });
+        if (this.isBlockEndorsements) {
+          await this.reload({ block: value });
+        }
+      }
+    },
+    perPage: {
+      async handler() {
+        if (!this.isBlockEndorsements) {
+          await this.reload({ block: this.level });
+        }
       }
     }
   },
   async created() {
-    this.reload({ block: this.level });
+    if (this.isBlockEndorsements) {
+      this.perPage = this.$constants.ENDORSEMENTS_LIMIT;
+    } else {
+      this.perPage = this.$constants.PER_PAGE;
+      await this.reload({ block: this.level });
+    }
   },
   methods: {
     ...mapMutations('blocks', [SET_ENDORSEMENTS_COUNT]),
@@ -103,10 +129,8 @@ export default {
         // TODO: Refactor API service
         delete props.limit;
         delete props.page;
-        this.perPage = this.$constants.ENDORSEMENTS_LIMIT;
         result = await this.$api.getBlockEndorsements(props);
       } else {
-        this.perPage = this.$constants.PER_PAGE;
         result = await this.$api.getEndorsements(props);
       }
       if (result.status !== this.$constants.STATUS_SUCCESS) {

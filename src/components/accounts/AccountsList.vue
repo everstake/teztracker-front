@@ -1,22 +1,26 @@
 <template>
   <div>
+    <div class="d-flex justify-content-between mb-4">
+      <PerPageSelect @per-page="$_setPerPage" />
+    </div>
+
     <b-table
       show-empty
       :items="accounts"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="0"
+      :per-page="perPage"
       borderless
       class="transactions-table table-responsive-md"
     >
-      <template slot="account" slot-scope="row">
+      <template slot="accountId" slot-scope="row">
         <b-link
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
           <span>{{ row.item.accountId | longhash(35) }}</span>
         </b-link>
       </template>
-      <template slot="amount" slot-scope="row">
+      <template slot="balance" slot-scope="row">
         <span>{{ row.item.balance | tezos }}</span>
       </template>
     </b-table>
@@ -31,7 +35,9 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
+import setPerPage from "@/mixins/setPerPage";
 
 import withCustomAction from "../partials/withCustomAction";
 const PaginationWithCustomAction = withCustomAction(
@@ -43,20 +49,26 @@ const PaginationWithCustomAction = withCustomAction(
 export default {
   name: "AccountsList",
   components: {
+    PerPageSelect,
     PaginationWithCustomAction
   },
+  mixins: [setPerPage],
   data() {
     return {
-      perPage: this.$constants.PER_PAGE,
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
-        { key: "account", label: "Account" },
-        { key: "amount", label: "Amount" }
+        { key: "accountId", label: "Account" },
+        {
+          key: "balance",
+          label: "Amount",
+          sortable: true,
+          sortDirection: "desc"
+        }
       ]
     };
   },
   computed: {
-    ...mapState('accounts', {
+    ...mapState("accounts", {
       accounts: state => state.accounts,
       count: state => state.counts
     })
