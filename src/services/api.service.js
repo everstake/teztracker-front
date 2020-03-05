@@ -118,6 +118,12 @@ const TzAPI = {
   getFutureBakingRights(opts = {}) {
     return get(this.API_URL(), "future_baking_rights", opts);
   }
+  // getBallot(opts = {}) {
+  //   return get(this.API_URL(), "operations", {
+  //     operation_kind: "ballot",
+  //     ...opts
+  //   });
+  // },
 };
 
 export default TzAPI;

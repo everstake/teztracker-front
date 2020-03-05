@@ -6,7 +6,7 @@
 <!--        <Dropdown dropdownTitle="This year" />-->
       </template>
       <template v-slot:right-content class="text">
-        <Counter :count="count" />
+        <Counter show-line :count="count" />
         <div class="counter">
           <div class="tz_link">
             <router-link class="tz-dropdown-item" :to="{ name: 'txs' }"

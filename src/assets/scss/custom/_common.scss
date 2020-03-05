@@ -381,7 +381,6 @@ li
 
 .main-content .promo-section .promo-tiles .voting-progress {
   padding-top: 14px;
-  height: 61px;
 }
 
 .main-content .breadcrumbs {
@@ -510,12 +509,14 @@ li
 .progress-labels {
   margin-bottom: 8px;
   width: 100%;
-  float: left;
   font-size: 14px;
   font-weight: 600;
   line-height: 16px;
   text-transform: uppercase;
   color: $color-grey;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .main-content

@@ -11,11 +11,12 @@
 
           <b-card-body>
             <div class="progress-labels">
-              <div class="cycle-label float-left">
-                Cycle -
-                <span>{{ head.metaCycle }}</span>
+              <div class="cycle-label mr-2">
+                Cycle - {{ head.metaCycle }}
               </div>
-              <div class="tezos-label float-right">Tezos {{ $_network }}</div>
+              <div class="tezos-label">
+                Tezos {{ $_network }}
+              </div>
             </div>
 
             <b-row>
@@ -31,11 +32,11 @@
             <b-row>
               <b-col>
                 <div class="progress-labels">
-                  <div class="percentage float-left">
-                    <span>{{ cyclePercent }}%</span>
+                  <div class="percentage mr-2">
+                    {{ cyclePercent }}%
                   </div>
-                  <div class="timer float-right">
-                    <span>{{ timeLeft }}</span> - Until cycle end
+                  <div class="timer">
+                    {{ timeLeft }} - Until cycle end
                   </div>
                 </div>
               </b-col>

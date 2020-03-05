@@ -2,7 +2,7 @@
   <div>
     <b-table
       show-empty
-      :items="transactions"
+      :items="votes"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
@@ -24,7 +24,9 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat($constants.TIME_FORMAT) }}</span>
+        <span>{{
+          row.item.timestamp | timeformat($constants.TIME_FORMAT)
+        }}</span>
       </template>
 
       <template slot="from" slot-scope="row">
@@ -57,85 +59,27 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-import { SET_TX_COUNT } from "@/store/mutations.types";
 import Pagination from "../partials/Pagination";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 
 export default {
-  name: "TxsList",
+  name: "VotesList",
   components: {
     Pagination
   },
-  mixins: [handleCurrentPageChange],
-  props: ["block", "account"],
   data() {
     return {
-      perPage: this.$constants.PER_PAGE,
-      transactions: [],
+      votes: [],
       count: 0,
       fields: [
-        { key: "txhash", label: "Transactions Hash" },
-        { key: "level", label: "Block ID" },
+        { key: "period", label: "Period" },
+        { key: "baker", label: "Baker" },
+        { key: "vote", label: "Vote" },
+        { key: "votingPeriod", label: "Voting period" },
         { key: "timestamp", label: "Timestamp" },
-        { key: "from", label: "From" },
-        { key: "to", label: "To" },
-        { key: "amount", label: "Amount" },
-        { key: "fee", label: "Fees" }
+        { key: "blockLevel", label: "Block level" },
+        { key: "hash", label: "Hash" }
       ]
     };
-  },
-  computed: {
-    ...mapState('operations', {
-      counts: state => state.counts
-    }),
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.reload(value);
-      }
-    },
-    block: {
-      async handler() {
-        await this.reload();
-      }
-    },
-    account: {
-      async handler() {
-        await this.reload();
-      }
-    }
-  },
-  async created() {
-    // TODO: refactor API
-    if (!this.block) {
-      await this.reload();
-    }
-  },
-  methods: {
-    ...mapMutations('operations', [SET_TX_COUNT]),
-    async reload(page = 1) {
-      const props = {
-        page,
-        limit: this.perPage
-      };
-      if (this.block) {
-        props.block_id = this.block.hash;
-      }
-      if (this.account) {
-        props.account_id = this.account;
-      }
-      const data = await this.$api.getTransactions(props);
-      if (data.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.replace({
-          name: data.status
-        });
-      }
-      this.transactions = data.data;
-      this.count = data.count;
-      this[SET_TX_COUNT](this.count);
-    }
   }
 };
 </script>
