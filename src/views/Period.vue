@@ -46,6 +46,7 @@
       v-if="currentPeriodType === 'promotion'"
       :proposal="proposal"
       :voters="voters"
+      :backgroundColors="backgroundColors"
       class="vote__promotion"
     />
     <!-- Testing period end -->
