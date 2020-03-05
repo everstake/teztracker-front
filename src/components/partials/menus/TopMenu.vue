@@ -98,7 +98,13 @@
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
-            >Protocol Amendments</a>
+            >
+              Protocol Amendments
+              <font-awesome-icon
+                icon="angle-down"
+                class="ml-1"
+              />
+            </a>
             <div class="dropdown-menu">
               <router-link class="dropdown-item" :to="{ name: 'protocol_amendment' }">All amendments</router-link>
             </div>

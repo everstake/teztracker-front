@@ -134,8 +134,8 @@
                   </div>
                 </div>
                 <div class="vote-card__container-space-between">
-                 <span class="vote-card__percentage">Period start: {{ formatToCalendarDate(proposal.period.startTime, 'DD.MM.YY') }}</span>
-                 <span class="vote-card__percentage">Period end: {{ formatToCalendarDate(proposal.period.endTime, 'DD.MM.YY') }}</span>
+                 <span class="vote-card__percentage">Period starts: {{ formatToCalendarDate(proposal.period.startTime, 'DD.MM.YY') }}</span>
+                 <span class="vote-card__percentage">Period ends: {{ formatToCalendarDate(proposal.period.endTime, 'DD.MM.YY') }}</span>
                 </div>
                 <b-progress
                   :value="formatToUnixTime(proposal.period.startTime)"

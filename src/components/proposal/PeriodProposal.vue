@@ -49,7 +49,7 @@
                   >
                     <div>
                       <div class="vote-card__recent-name">
-                        {{ voter.name || voter.pkh }}
+                        {{ voter.title || voter.pkh }}
                       </div>
                       <div class="vote-card__recent-proposal">
                         <span>Proposal:</span> {{ voter.proposal | longhash(15) }}
@@ -201,14 +201,14 @@ export default {
         ];
 
         options.labels = [
-          ...this.proposals.map(proposal => proposal.name || this.$options.filters.longhash(proposal.hash)),
+          ...this.proposals.map(proposal => proposal.title || this.$options.filters.longhash(proposal.hash)),
           'Undecided'
         ];
       }
 
       if (proposalsCount > 1) {
         options.data = this.proposals.map(({ upvote }) => upvote);
-        options.labels = this.proposals.map(proposal => proposal.name || this.$options.filters.longhash(proposal.hash))
+        options.labels = this.proposals.map(proposal => proposal.title || this.$options.filters.longhash(proposal.hash))
       }
 
       return options;

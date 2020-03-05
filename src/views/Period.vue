@@ -206,7 +206,7 @@ export default {
         { key: "timestamp", label: "Timestamp" },
         { key: "operation", label: "Vote hash" }
       ],
-      backgroundColors: ["#309282", "#9ea0a5", "#e56968"],
+      backgroundColors: ["#309282", "#e56968", "#9ea0a5"],
       filterTable: false
     };
   },
