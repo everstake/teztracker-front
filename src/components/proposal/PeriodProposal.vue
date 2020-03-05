@@ -3,7 +3,7 @@
     <CardSection :fluid="true" class="mb-5">
       <template>
         <b-row>
-          <b-col cols="4" xl="8" lg="4" md="12" sm="12">
+          <b-col cols="4" xl="4" lg="4" md="12" sm="12">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
