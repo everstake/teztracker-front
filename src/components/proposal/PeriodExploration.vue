@@ -117,6 +117,15 @@
                     {{ proposal.voteStats.votesCast }}
                   </div>
                 </div>
+                <div class="vote-card__container-space-between">
+                 <span class="vote-card__percentage">Period start: {{ formatToCalendarDate(proposal.period.startTime, 'DD.MM.YY') }}</span>
+                 <span class="vote-card__percentage">Period end: {{ formatToCalendarDate(proposal.period.endTime, 'DD.MM.YY') }}</span>
+                </div>
+                <b-progress
+                  :value="formatToUnixTime(proposal.period.startTime)"
+                  :max="formatToUnixTime(proposal.period.endTime)"
+                  class="mb-2"
+                />
                 <div class="vote-card__divider"></div>
               </div>
             </div>
@@ -182,6 +191,7 @@
 import CardSection from '@/components/partials/CardSection';
 import uuid from '@/mixins/uuid';
 import DoughnutChart from "@/components/partials/DoughnutChart";
+import moment from 'moment';
 
 export default {
   name: "PeriodExploration",
@@ -196,6 +206,12 @@ export default {
   ],
   mixins: [uuid],
   methods: {
+    formatToCalendarDate(date, format) {
+      return moment(date).format(format);
+    },
+    formatToUnixTime(date) {
+      return moment(date).unix();
+    },
     getPercentage(arr) {
       const [a, b] = arr;
       return (b * 100) / a;
