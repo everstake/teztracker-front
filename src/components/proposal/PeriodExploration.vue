@@ -34,13 +34,13 @@
               </div>
             </div>
           </b-col>
-
+          <!--separate-->
           <b-col cols="8">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
                   <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold">
-                    {{ proposal.proposal.name || proposal.proposal.hash }}
+                    {{ proposal.proposal.title || proposal.proposal.hash }}
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
@@ -51,6 +51,22 @@
                     </div>
                   </div>
                   <div class="vote-card__recent-rolls">{{ proposal.proposal.hash }}</div>
+                </div>
+                <div class="vote-card__recent">
+                  <div>
+                    <div class="vote-card__recent-name">
+                      Proposer
+                    </div>
+                  </div>
+                  <div class="vote-card__recent-rolls">{{ proposal.proposal.proposer.name }}</div>
+                </div>
+                <div class="vote-card__recent">
+                  <div>
+                    <div class="vote-card__recent-name">
+                      Proposer file
+                    </div>
+                  </div>
+                  <div class="vote-card__recent-rolls">{{ proposal.proposal.proposalFile }}</div>
                 </div>
                 <b-row class="mb-3 mt-3">
                   <b-col class="mt-3 mb-3" cols="12">

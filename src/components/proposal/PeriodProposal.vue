@@ -44,7 +44,7 @@
                   </p>
                   <div
                     class="vote-card__recent"
-                    v-for="voter in voters.slice(0, 3)"
+                    v-for="voter in voters.slice(0, 4)"
                     :key="generateKey()"
                   >
                     <div>
@@ -135,7 +135,7 @@
               id="card-title"
               class="vote-card__title-wrapper vote-card--pointer"
             >
-              <p :ref='proposal.hash' class="vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold">{{ proposal.name || proposal.hash }}</p>
+              <p :ref='proposal.hash' class="vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold">{{ proposal.title || proposal.hash }}</p>
               <span class="icon vote-card__icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span>
               <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
             </div>
@@ -148,10 +148,7 @@
           </div>
           <div class="vote-card__divider"></div>
           <p class="vote-card__font-size--18">
-            Increase the gas limit per block and per operation by 30%, improve
-            the accuracy of the formula used for calculating baking and
-            endorsing rewards and fix various small issues (see
-            <a class="vote-card__link" href="#">changelog</a>)
+            {{proposal.shortDescription}}
           </p>
         </div>
       </div>

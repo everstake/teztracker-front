@@ -38,6 +38,7 @@
     <PeriodTesting
       v-if="currentPeriodType === 'testing'"
       :voters="voters"
+      :proposal="proposal"
       class="vote__testing"
     />
     <!-- Testing period end -->

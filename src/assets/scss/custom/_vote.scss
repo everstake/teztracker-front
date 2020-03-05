@@ -7,10 +7,17 @@
   box-shadow: 0 0 15px 7px rgba(0,0,0,0.02);
 
   &__header {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     padding: 18px 28px 9px;
   }
 
   &__body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
     padding: 1.25rem 0;
   }
 
@@ -168,7 +175,7 @@
   &__icon {
     position: absolute;
     top: 0;
-    right: -5px;
+    right: -25px;
     margin-left: 10px;
     font-size: 16px;
     color: #309282;

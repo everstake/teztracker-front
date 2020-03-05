@@ -7,14 +7,17 @@
 						<div class="vote-card">
 							<div class="vote-card__header">
 								<div class="vote-card__container-space-between">
-									<p class="vote-card__font-size--16 vote-card__weight--bold">
-										No data
+									<p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold">
+										Proposal Description
 									</p>
 								</div>
 								<div class="vote-card__divider"></div>
 								<div class="vote-card__body">
-									<p class="vote-card__font-size--14 vote-card__weight--bold">
-										No data
+									<p class="vote-card--margin-none vote-card__font-size--18 vote-card__weight--bold">
+										{{ this.proposal.proposal.title }}
+									</p>
+									<p class="vote-card__recent-name">
+										{{ this.proposal.proposal.shortDescription }}
 									</p>
 									<div class="vote-card__divider"></div>
 								</div>
@@ -34,7 +37,7 @@ import CardSection from "@/components/partials/CardSection";
 export default {
   name: 'PeriodTesting',
 	components: {CardSection},
-	props: ['voters'],
+	props: ['voters', 'proposal'],
 	mixins: [uuid]
 }
 </script>
