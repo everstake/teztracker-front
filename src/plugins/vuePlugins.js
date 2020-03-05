@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from "vue";
 import {
   LinkPlugin,
   TablePlugin,
@@ -43,6 +43,8 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { dom } from "@fortawesome/fontawesome-svg-core";
+import router from "../router";
+import VueGtag from "vue-gtag";
 
 Vue.use(LinkPlugin);
 Vue.use(TablePlugin);
@@ -85,3 +87,5 @@ library.add(
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("font-awesome-layers", FontAwesomeLayers);
 Vue.component("font-awesome-layers-text", FontAwesomeLayersText);
+
+Vue.use(VueGtag, { config: { id: "UA-159555120-1" } }, router);

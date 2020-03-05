@@ -42,7 +42,7 @@ const Contracts = () => import("../views/Contracts.vue");
 
 /* Votes group */
 //Votes
-const Vote = () => import("../views/Vote.vue");
+// const Vote = () => import("../views/Vote.vue");
 /* Votes group end */
 
 // Errors
@@ -136,7 +136,7 @@ export default [
 
   /* Governance group */
   // Votes
-  { path: "/:network/vote/:voteHash", name: "vote", component: Vote },
+  // { path: "/:network/vote/:voteHash", name: "vote", component: Vote },
   /* Governance group end */
 
   // Errors

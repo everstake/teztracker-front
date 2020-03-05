@@ -92,11 +92,4 @@ export default {
     padding: 0;
   }
 }
-
-.progress-labels {
-  float: none;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
 </style>
