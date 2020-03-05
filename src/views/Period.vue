@@ -18,6 +18,7 @@
       :proposal="proposal"
       :voters="voters"
       :proposals="proposals"
+      :backgroundColors="backgroundColors"
       class="vote__proposal"
     />
     <!-- Proposal period end -->
@@ -27,6 +28,7 @@
       v-if="currentPeriodType === 'exploration'"
       :proposal="proposal"
       :voters="voters"
+      :backgroundColors="backgroundColors"
       class="vote__exploration"
     />
     <!-- Exploration period end -->
@@ -178,7 +180,8 @@ export default {
         { key: "blockLevel", label: "Block" },
         { key: "timestamp", label: "Timestamp" },
         { key: "operation", label: "Vote hash" }
-      ]
+      ],
+      backgroundColors: ["#309282", "#9ea0a5", "#e56968"]
     };
   },
   mixins: [uuid],

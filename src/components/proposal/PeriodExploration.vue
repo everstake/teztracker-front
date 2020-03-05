@@ -13,8 +13,24 @@
                 </div>
                 <div class="vote-card__divider"></div>
                 <DoughnutChart
-                  :data="[proposal.ballots.yay, proposal.ballots.nay, proposal.ballots.pass]"
+                  :options="{
+                    data: [proposal.ballots.yay, proposal.ballots.nay, proposal.ballots.pass],
+                    labels: ['Yay', 'Nay', 'Pass']
+                }"
+                  :backgroundColors="backgroundColors"
                 />
+                <div class="vote-card__container--space-between vote-card__container--wrap">
+                  <div
+                    v-for="(percentage, index) in getDoughnutOptions.percentage"
+                    :key="generateKey()"
+                    class="vote-chart__label"
+                    :style="{
+                    color: backgroundColors[index]
+                  }"
+                  >
+                    {{ percentage }}%
+                  </div>
+                </div>
               </div>
             </div>
           </b-col>
@@ -179,13 +195,39 @@ export default {
   },
   props: [
     "proposal",
-    'voters'
+    'voters',
+    'backgroundColors'
   ],
   mixins: [uuid],
   methods: {
     getPercentage(arr) {
       const [a, b] = arr;
       return (b * 100) / a;
+    }
+  },
+  computed: {
+    getDoughnutOptions() {
+      const { yay, nay, pass } = this.proposal.ballots;
+      const votes = [yay, nay, pass];
+      const { votesAvailable } = this.proposal.voteStats;
+
+      const votePercentage = votes.map(vote => {
+        const percentage = this.getPercentage([votesAvailable, vote]);
+
+        if (percentage < 1) {
+          return percentage.toFixed(2);
+        }
+
+        return percentage.toFixed();
+      });
+
+      const options = {
+        data: [yay, nay, pass],
+        labels: ['Yay', 'Nay', 'Pass'],
+        percentage: [...votePercentage]
+      };
+
+      return options;
     }
   }
 };

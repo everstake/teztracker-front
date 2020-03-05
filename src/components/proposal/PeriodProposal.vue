@@ -12,7 +12,19 @@
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
-                <DoughnutChart :options="getDoughnutOptions"/>
+                <DoughnutChart :options="getDoughnutOptions" :backgroundColors="backgroundColors"/>
+                <div class="vote-card__container--space-between vote-card__container--wrap">
+                  <div
+                    v-for="(upvote, index) in getDoughnutOptions.data"
+                    :key="generateKey()"
+                    class="vote-chart__label"
+                    :style="{
+                      color: backgroundColors[index]
+                    }"
+                  >
+                    {{ upvote }}%
+                  </div>
+                </div>
               </div>
             </div>
           </b-col>
@@ -159,7 +171,7 @@ export default {
     DoughnutChart,
     CardSection
   },
-  props: ['proposal', 'voters', 'proposals'],
+  props: ['proposal', 'voters', 'proposals', 'backgroundColors'],
 	mixins: [uuid],
 	methods: {
     getPercentage(arr) {

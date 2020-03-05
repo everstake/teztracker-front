@@ -58,11 +58,11 @@
 								</template>
 							</b-table>
 							
-							<Pagination
-								v-model="currentPage"
-								:total-rows="voters.length"
-								:per-page="perPage"
-							/>
+<!--							<Pagination-->
+<!--								v-model="currentPage"-->
+<!--								:total-rows="voters.length"-->
+<!--								:per-page="perPage"-->
+<!--							/>-->
 							<!-- voters table end -->
 						</div>
 					</div>

@@ -308,6 +308,10 @@
         justify-content: space-between;
       }
 
+      &--wrap {
+        flex-wrap: wrap;
+      }
+
       &--col-8 {
         display: inline-block;
         max-width: 60%;
@@ -461,5 +465,16 @@
 
   &__link {
     color: #2d2e2c;
+  }
+}
+
+
+.vote {
+  &-chart {
+    &__label {
+      font-size: 48px;
+      font-weight: 200;
+      color: #414141
+    }
   }
 }
