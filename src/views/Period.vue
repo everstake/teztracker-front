@@ -17,7 +17,7 @@
       v-if="currentPeriodType === 'proposal'"
       :proposal="proposal"
       :voters="voters"
-      :proposalsList="proposalsList"
+      :proposals="proposals"
       class="vote__proposal"
     />
     <!-- Proposal period end -->
@@ -153,7 +153,7 @@ export default {
           nay: 0
         }
       },
-      proposalsList: [],
+      proposals: [],
       periodTypes: ['proposal', 'exploration', 'testing', 'promotion'],
       periods: [],
       voters: [],
@@ -202,8 +202,12 @@ export default {
       this.periods = data.data;
     },
     async fetchProposals(id) {
-      const data = await this.$api.getProposals({ id });
-      this.proposalsList = data.data;
+      const { data } = await this.$api.getProposals({ id });
+      data.map(proposal => {
+        proposal.upvote = this.getPercentage([this.proposal.voteStats.votesAvailable, proposal.votesCasted]).toFixed(2);
+      })
+
+      this.proposals = data;
     },
     async fetchVoters(id) {
       const data = await this.$api.getVoters({ id });

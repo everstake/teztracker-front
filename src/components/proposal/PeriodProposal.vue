@@ -12,9 +12,7 @@
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
-                <DoughnutChart
-                  :data="[proposal.voteStats.votesAvailable, ...proposalsList.filter(item => item.votesCasted)]"
-                />
+                <DoughnutChart :options="getDoughnutOptions"/>
               </div>
             </div>
           </b-col>
@@ -93,7 +91,7 @@
                         >
                       </div>
                       <b-progress
-                        :value="proposal.voteStats.votesAvailable -proposal.voteStats.votesCast"
+                        :value="proposal.voteStats.votesAvailable - proposal.voteStats.votesCast"
                         :max="proposal.voteStats.votesAvailable"
                         class="mb-2"
                       />
@@ -115,26 +113,26 @@
       </template>
     </CardSection>
 
-    <CardSection :fluid="true" v-for="proposalItem in proposalsList" :key="generateKey()">
+    <CardSection :fluid="true" v-for="proposal in proposals" :key="generateKey()">
     <template>
       <div class="vote-card">
         <div class="vote-card__header">
           <div class="vote-card__container-space-between">
             <div
-              @click="copyToClipboard(proposalItem.hash)"
+              @click="copyToClipboard(proposal.hash)"
               id="card-title"
               class="vote-card__title-wrapper vote-card--pointer"
             >
-              <p :ref='proposalItem.hash' class="vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold">{{ proposalItem.name || proposalItem.hash }}</p>
+              <p :ref='proposal.hash' class="vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold">{{ proposal.name || proposal.hash }}</p>
               <span class="icon vote-card__icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span>
               <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
             </div>
             <p class="vote-card__font-size--36">
-              <span class="vote-card__weight--lighter">Upvotes:</span> {{getPercentage([proposal.voteStats.votesAvailable, proposalItem.votesCasted]).toFixed(2)}}%
+              <span class="vote-card__weight--lighter">Upvotes:</span> {{proposal.upvote}}%
             </p>
           </div>
           <div class="vote-card__title vote-card__font-size--18">
-            <span class="vote-card__weight--lighter">ID:</span> {{ proposalItem.period }}
+            <span class="vote-card__weight--lighter">ID:</span> {{ proposal.period }}
           </div>
           <div class="vote-card__divider"></div>
           <p class="vote-card__font-size--18">
@@ -161,7 +159,7 @@ export default {
     DoughnutChart,
     CardSection
   },
-  props: ['proposal', 'voters', 'proposalsList'],
+  props: ['proposal', 'voters', 'proposals'],
 	mixins: [uuid],
 	methods: {
     getPercentage(arr) {
@@ -181,6 +179,21 @@ export default {
         selection.removeAllRanges();
       }
     }
-	}
+	},
+  computed: {
+    getDoughnutOptions() {
+      const proposalsCount = this.proposals.length;
+      const options = {};
+
+      if (proposalsCount > 1) {
+        options.data = this.proposals.map(proposal => proposal.upvote);
+      }
+
+      options.data = this.proposals.map(proposal => proposal.upvote > 1 ? proposal.upvote : proposal.upvote * 100);
+      options.labels = this.proposals.map(proposal => proposal.name || this.$options.filters.longhash(proposal.hash))
+
+      return options;
+    }
+  }
 };
 </script>
