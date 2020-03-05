@@ -379,6 +379,12 @@
     &--margin-none {
       margin: 0;
     }
+
+    &__chart {
+      @include max-width-regular-laptop {
+
+      }
+    }
   }
 
   &-breadcrumbs {

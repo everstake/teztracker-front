@@ -3,7 +3,7 @@
     <CardSection :fluid="true" class="mb-5">
       <template>
         <b-row>
-          <b-col cols="4">
+          <b-col cols="4" xl="8" lg="4" md="12" sm="12">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
@@ -12,7 +12,9 @@
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
-                <DoughnutChart :options="getDoughnutOptions" :backgroundColors="backgroundColors"/>
+                <div class="vote-card__chart">
+                  <DoughnutChart :options="getDoughnutOptions" :backgroundColors="backgroundColors"/>
+                </div>
                 <div class="vote-card__container--space-between vote-card__container--wrap mt-5">
                   <div
                     v-for="(upvote, index) in getDoughnutOptions.data"
@@ -29,7 +31,7 @@
             </div>
           </b-col>
 
-          <b-col cols="8">
+          <b-col cols="8" xl="8" lg="8" md="12" sm="12">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">

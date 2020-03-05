@@ -66,6 +66,10 @@ export default {
     padding-left: 0;
     list-style: none;
 
+    @include max-width-tablet {
+      flex-direction: column;
+    }
+
     &:before {
       content: "";
       position: absolute;
@@ -75,6 +79,10 @@ export default {
       background-color: #9ea0a5;
       top: 50%;
       transform: translateY(-50%);
+  
+      @include max-width-tablet {
+      
+      }
     }
   }
 
@@ -89,6 +97,14 @@ export default {
     color: #9ea0a5;
     text-transform: uppercase;
     background-color: white;
+
+    @include max-width-regular-laptop {
+      padding: 0 10px;
+    }
+
+    @include max-width-tablet {
+      padding: 25px 0;
+    }
 
     &:nth-child(1) .proposal-step__link:before,
     &:nth-child(1) .proposal-step__para:before {
@@ -113,6 +129,12 @@ export default {
 
   &__link {
     color: #309282;
+    
+    @include max-width-tablet {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
     &:hover {
       text-decoration: none;
@@ -131,6 +153,15 @@ export default {
       border: 1px solid #309282;
       color: #309282;
       border-radius: 50%;
+      
+      @include max-width-regular-laptop {
+        display: none;
+      }
+      
+      @include max-width-tablet {
+        display: inline-flex;
+        margin-right: 0;
+      }
     }
 
     &--active:before {
