@@ -197,12 +197,22 @@ export default {
       const proposalsCount = this.proposals.length;
       const options = {};
 
-      if (proposalsCount > 1) {
-        options.data = this.proposals.map(proposal => proposal.upvote);
+      if (proposalsCount === 1) {
+        options.data = [
+          ...this.proposals.map(({ upvote }) => upvote > 1 ? upvote : upvote * 100),
+          ...this.proposals.map(({ upvote }) => upvote > 1 ? 100 - upvote : 1 - upvote * 100)
+        ];
+
+        options.labels = [
+          ...this.proposals.map(proposal => proposal.name || this.$options.filters.longhash(proposal.hash)),
+          'Undecided'
+        ];
       }
 
-      options.data = this.proposals.map(proposal => proposal.upvote > 1 ? proposal.upvote : proposal.upvote * 100);
-      options.labels = this.proposals.map(proposal => proposal.name || this.$options.filters.longhash(proposal.hash))
+      if (proposalsCount > 1) {
+        options.data = this.proposals.map(({ upvote }) => upvote);
+        options.labels = this.proposals.map(proposal => proposal.name || this.$options.filters.longhash(proposal.hash))
+      }
 
       return options;
     }

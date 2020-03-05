@@ -21,7 +21,7 @@
                 />
                 <div class="vote-card__container--space-between vote-card__container--wrap">
                   <div
-                    v-for="(percentage, index) in getDoughnutOptions.percentage"
+                    v-for="(percentage, index) in getVotesPercentage"
                     :key="generateKey()"
                     class="vote-chart__label"
                     :style="{
@@ -134,8 +134,8 @@
                 <img class="ballot__icon" src="../../assets/icons/yay.svg" alt="In favor">
                 <div class="ballot__container">
                   <span class="vote__ballot--yay">
-                    {{getPercentage([proposal.voteStats.votesAvailable, proposal.ballots.yay]).toFixed()}}%
-                    ({{ proposal.ballots.yay }})
+                    {{getVotesPercentage[0]}}%
+                    ({{ getVotes.yay }})
                   </span>
                   In favor
                 </div>
@@ -149,12 +149,8 @@
                 <img class="ballot__icon" src="../../assets/icons/nay.svg" alt="Against">
                 <div class="ballot__container">
                   <span class="vote__ballot--nay">
-                    {{
-                      getPercentage([proposal.voteStats.votesAvailable, proposal.ballots.nay]).toFixed() > 1 ?
-                      getPercentage([proposal.voteStats.votesAvailable, proposal.ballots.nay]).toFixed() :
-                      getPercentage([proposal.voteStats.votesAvailable, proposal.ballots.nay]).toFixed(2)
-                    }}%
-                    ({{ proposal.ballots.nay }})
+                    {{getVotesPercentage[1]}}%
+                    ({{ getVotes.nay }})
                   </span>
                   Against
                 </div>
@@ -168,8 +164,8 @@
                 <img class="ballot__icon" src="../../assets/icons/pass.svg" alt="Pass">
                 <div class="ballot__container">
                   <span class="vote__ballot--pass">
-                    {{getPercentage([proposal.voteStats.votesAvailable, proposal.ballots.pass]).toFixed()}}%
-                    ({{ proposal.ballots.pass }})
+                    {{getVotesPercentage[2]}}%
+                    ({{ getVotes.pass }})
                   </span>
                   Pass
                 </div>
@@ -206,13 +202,19 @@ export default {
     }
   },
   computed: {
-    getDoughnutOptions() {
-      const { yay, nay, pass } = this.proposal.ballots;
-      const votes = [yay, nay, pass];
+    getVotes() {
+      const { yay = 0, nay = 0, pass = 0 } = this.proposal.ballots;
+      return {yay, nay, pass}
+    },
+    getVotesPercentage() {
       const { votesAvailable } = this.proposal.voteStats;
+      const { yay = 0, nay = 0, pass = 0 } = this.proposal.ballots;
+      const votes = [yay, nay, pass];
 
       const votePercentage = votes.map(vote => {
         const percentage = this.getPercentage([votesAvailable, vote]);
+
+        if (percentage === 0) return percentage.toFixed();
 
         if (percentage < 1) {
           return percentage.toFixed(2);
@@ -221,10 +223,15 @@ export default {
         return percentage.toFixed();
       });
 
+      return votePercentage;
+    },
+    getDoughnutOptions() {
+      const { yay = 0, nay = 0, pass = 0 } = this.proposal.ballots;
+
       const options = {
         data: [yay, nay, pass],
         labels: ['Yay', 'Nay', 'Pass'],
-        percentage: [...votePercentage]
+        percentage: [...this.getVotesPercentage]
       };
 
       return options;
