@@ -1,13 +1,13 @@
 <template>
   <div class="vote__proposal">
-    <CardSection :fluid="true">
+    <CardSection :fluid="true" class="mb-5">
       <template>
         <b-row>
           <b-col cols="4">
-            <div class="vote-card">
+            <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
-                  <p class="vote-card__font-size--16 vote-card__weight--bold">
+                  <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold">
                     Proposals
                   </p>
                 </div>
@@ -30,10 +30,10 @@
           </b-col>
 
           <b-col cols="8">
-            <div class="vote-card">
+            <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
-                  <p class="vote-card__font-size--16 vote-card__weight--bold">
+                  <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold">
                     General voting stats
                   </p>
                 </div>

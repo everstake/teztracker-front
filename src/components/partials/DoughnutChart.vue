@@ -15,12 +15,18 @@ export default {
 	},
 	methods: {
     initChart() {
+      let { data = [], backgroundColors = [] } = this.options;
+
+      if (this.options.data !== undefined) {
+        backgroundColors = this.backgroundColors.slice(0, this.options.data.length);
+      }
+
       return this.renderChart(
         {
           datasets: [
             {
-              data: this.options.data,
-              backgroundColor: this.backgroundColors.slice(0, this.options.data.length)
+              data: data,
+              backgroundColor: backgroundColors
             }
           ],
           labels: this.options.labels

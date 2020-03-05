@@ -316,6 +316,10 @@
         display: inline-block;
         max-width: 60%;
       }
+
+      &--height-equal {
+        min-height: 100%;
+      }
     }
 
     &__body {
@@ -351,6 +355,10 @@
         width: 1px;
         background-color: #a9abb0;
       }
+    }
+
+    &--margin-none {
+      margin: 0;
     }
   }
 
