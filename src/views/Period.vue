@@ -58,6 +58,7 @@
       :nonVoters='nonVoters'
       :votersFields='votersFields'
       :nonVotersFields="nonVotersFields"
+      @onShowClick="handleShowClick"
     />
 
     <PeriodTable
@@ -66,6 +67,7 @@
       :nonVoters='nonVoters'
       :votersFields='ballotFields'
       :nonVotersFields="nonVotersFields"
+      @onShowClick="handleShowClick"
     />
     <!-- Vote tables end -->
   </div>
@@ -79,6 +81,8 @@ import PeriodExploration from '@/components/proposal/PeriodExploration';
 import PeriodTesting from '@/components/proposal/PeriodTesting';
 import PeriodBreadcrumbs from '@/components/proposal/PeriodBreadcrumbs';
 import PeriodTable from "@/components/proposal/PeriodTable";
+import { SET_VOTERS_COUNT, SET_NON_VOTERS_COUNT } from "@/store/mutations.types";
+import { mapMutations, mapState } from 'vuex';
 
 export default {
   name: "Period",
@@ -91,6 +95,9 @@ export default {
     PeriodTable
   },
   computed: {
+    ...mapState('proposal', {
+      votersCount: state => state.counts.voters
+    }),
     currentPeriodType() {
       return this.proposal.period.periodType;
     },
@@ -174,7 +181,6 @@ export default {
         { key: "rolls", label: "Number of voters" }
       ],
       ballotFields: [
-  
         { key: "pkh", label: "Baker" },
         { key: "rolls", label: "Number of voters" },
         { key: "decision", label: "Vote" },
@@ -187,6 +193,24 @@ export default {
   },
   mixins: [uuid],
   methods: {
+    ...mapMutations('proposal', [SET_VOTERS_COUNT, SET_NON_VOTERS_COUNT]),
+    handleShowClick({ type, limit }) {
+      if (type === 'voters') {
+        switch (this.currentPeriodType) {
+          case 'proposal':
+            this.fetchVoters(this.proposal.period.id, limit);
+            break;
+          case 'exploration':
+          case 'promotion':
+            this.fetchBallots(this.proposal.period.id, limit);
+        }
+      }
+
+      if (type === 'nonVoters') {
+        let nonVotersLimit = limit >= 300 ? 300 : limit;
+        this.fetchNonVoters(this.proposal.period.id, nonVotersLimit);
+      }
+    },
     getPercentage(arr) {
       const [a, b] = arr;
       return (b * 100) / a;
@@ -213,16 +237,19 @@ export default {
 
       this.proposals = data;
     },
-    async fetchVoters(id) {
-      const data = await this.$api.getVoters({ id });
+    async fetchVoters(id, limit = 20) {
+      const data = await this.$api.getVoters({ id, limit });
+      this[SET_VOTERS_COUNT](data.count);
       this.voters = data.data.map(voter => ({ ...voter, id }));
     },
-    async fetchNonVoters(id) {
-      const data = await this.$api.getNonVoters({ id });
+    async fetchNonVoters(id, limit = 20) {
+      const data = await this.$api.getNonVoters({ id, limit });
+      this[SET_NON_VOTERS_COUNT](data.count);
       this.nonVoters = data.data.map(voter => ({ ...voter, id }));
     },
-    async fetchBallots(id) {
-      const data = await this.$api.getBallots({ id });
+    async fetchBallots(id, limit = 20) {
+      const data = await this.$api.getBallots({ id, limit });
+      this[SET_VOTERS_COUNT](data.count);
       this.voters = data.data;
     }
   },

@@ -214,6 +214,17 @@
       color: #9ea0a5;
       border: none;
     }
+
+    &__button-wrapper {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    &__button {
+      border: none;
+      outline: none;
+      background-color: transparent;
+    }
   }
 
   // divider

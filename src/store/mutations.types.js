@@ -29,3 +29,5 @@ export const SET_ACCOUNTS = "setAccounts";
 export const SET_CONTRACTS = "setContracts";
 export const SET_PROPOSAL_PERIOD = "setProposalPeriod";
 export const SET_PERIODS = "setPeriods";
+export const SET_VOTERS_COUNT = "setVotersCount";
+export const SET_NON_VOTERS_COUNT = "setNonVotersCount";

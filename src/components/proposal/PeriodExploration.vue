@@ -1,13 +1,13 @@
 <template>
   <div class="vote__exploration">
-    <CardSection :fluid="true">
+    <CardSection :fluid="true" class="mb-5">
       <template>
         <b-row>
           <b-col cols="4">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
-                  <p class="vote-card__font-size--16 vote-card__weight--bold">
+                  <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold">
                     Proposals
                   </p>
                 </div>
@@ -19,7 +19,7 @@
                 }"
                   :backgroundColors="backgroundColors"
                 />
-                <div class="vote-card__container--space-between vote-card__container--wrap">
+                <div class="vote-card__container--space-between vote-card__container--wrap mt-5">
                   <div
                     v-for="(percentage, index) in getVotesPercentage"
                     :key="generateKey()"
@@ -39,7 +39,7 @@
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
-                  <p class="vote-card__font-size--16 vote-card__weight--bold">
+                  <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold">
                     {{ proposal.proposal.name || proposal.proposal.hash }}
                   </p>
                 </div>

@@ -13,7 +13,7 @@
                 </div>
                 <div class="vote-card__divider"></div>
                 <DoughnutChart :options="getDoughnutOptions" :backgroundColors="backgroundColors"/>
-                <div class="vote-card__container--space-between vote-card__container--wrap">
+                <div class="vote-card__container--space-between vote-card__container--wrap mt-5">
                   <div
                     v-for="(upvote, index) in getDoughnutOptions.data"
                     :key="generateKey()"

@@ -1,5 +1,5 @@
 import { GET_PROPOSAL_PERIOD, GET_PERIODS } from "@/store/actions.types";
-import { SET_PROPOSAL_PERIOD, SET_PERIODS } from "@/store/mutations.types";
+import { SET_PROPOSAL_PERIOD, SET_PERIODS, SET_VOTERS_COUNT, SET_NON_VOTERS_COUNT } from "@/store/mutations.types";
 
 const initialState = {
   proposal: {
@@ -7,7 +7,11 @@ const initialState = {
       periodType: ''
     }
   },
-  periods: []
+  periods: [],
+  counts: {
+    voters: 0,
+    nonVoters: 0
+  }
 };
 
 export const state = { ...initialState };
@@ -27,6 +31,12 @@ export const mutations = {
   },
   [SET_PERIODS](state, payload) {
     state.periods = payload.data;
+  },
+  [SET_VOTERS_COUNT](state, payload) {
+    state.counts.voters = payload;
+  },
+  [SET_NON_VOTERS_COUNT](state, payload) {
+    state.counts.nonVoters = payload;
   }
 };
 
