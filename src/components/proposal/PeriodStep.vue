@@ -200,7 +200,7 @@ export default {
       @include max-width-regular-laptop {
         display: none;
       }
-      
+
       @include max-width-tablet {
         position: absolute;
         top: 0;
@@ -242,6 +242,14 @@ export default {
     margin-bottom: 0;
     color: #9ea0a5;
 
+    @include max-width-tablet {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 18px;
+    }
+
     &:before {
       position: relative;
       display: inline-flex;
@@ -255,6 +263,43 @@ export default {
       border: 1px solid #9ea0a5;
       color: #9ea0a5;
       border-radius: 50%;
+
+      @include max-width-regular-laptop {
+        display: none;
+      }
+
+      @include max-width-tablet {
+        position: absolute;
+        top: 0;
+        left: -5px;
+        transform: translateX(-100%);
+        display: inline-block;
+        font-size: 18px;
+        width: auto;
+        height: auto;
+        border: none;
+        font-weight: 600;
+      }
+
+      @include for-smartphones-portrait {
+        display: none;
+      }
+    }
+
+    @include for-smartphones-portrait {
+      font-size: 16px;
+    }
+
+    @include for-tablet-ipad-portrait {
+      font-weight: 400;
+    }
+
+    @include max-width-regular-laptop {
+      font-weight: 400;
+    }
+
+    @include max-width-tablet {
+      font-weight: 600;
     }
   }
 }

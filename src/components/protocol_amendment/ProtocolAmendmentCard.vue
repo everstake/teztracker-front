@@ -42,6 +42,10 @@ export default {
     box-shadow: 0 0 15px 7px rgba(0, 0, 0, 0.02);
     cursor: pointer;
     user-select: none;
+
+    @include max-width-tablet-portrait {
+      padding: 25px;
+    }
   }
 
   &__period {
@@ -54,13 +58,18 @@ export default {
     margin: auto;
     font-size: 72px;
     color: #9ea0a5;
+    word-break: break-word;
+
+    @include max-width-regular-laptop {
+      font-size: 55px;
+    }
+
+    @include max-width-tablet-portrait {
+      font-size: 40px;
+    }
 
     &--active {
       color: #2d2e2c;
-    }
-
-    @include for-tablet-ipad-landscape {
-      font-size: 55px;
     }
 
     @include for-low-resolution-tablets-mobiles-landscape {
@@ -68,11 +77,11 @@ export default {
     }
 
     @include for-smartphones-portrait {
-      font-size: 35px;
+      font-size: 34px;
     }
 
     @media (max-width: 320px) {
-      font-size: 35px;
+      font-size: 34px;
     }
   }
 

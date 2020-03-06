@@ -28,14 +28,14 @@
           <b-col
             sm="12"
             md="6"
-            v-for="amendment in amendmentList"
+            v-for="(protocol, index) in protocols"
             :key="generateKey()"
           >
             <ProtocolAmendmentCard
-              :name="amendment.name"
-              :period="amendment.period"
-              :id="amendment.id"
-              @handleClick="handleProtocolClick($event)"
+              :name="protocol.title"
+              :period="index === 0 ? 'current' : 'past'"
+              :id="protocol.period"
+              @handleClick="handleProtocolClick(protocol.period)"
             />
           </b-col>
         </b-row>
@@ -54,15 +54,11 @@ export default {
     ProtocolAmendmentCard
   },
   mixins: [uuid],
-  data: () => ({
-    amendmentList: new Set([
-      { name: "carthage 2.0", period: "current", id: 25 },
-      { name: "carthage 1.0", period: "past", id: 21 },
-      { name: "babylon 2.0", period: "past", id: 16 },
-      { name: "brest A", period: "past", id: 14 },
-      { name: "athens A", period: "past", id: 10 }
-    ])
-  }),
+  data() {
+    return {
+      protocols: []
+    };
+  },
   methods: {
     async handleProtocolClick(id) {
       const data = await this.$api.getPeriod({ id });
@@ -74,6 +70,10 @@ export default {
 
       this.$router.push({ name: 'period', params: { id } })
     }
+  },
+  async created() {
+    const data = await this.$api.getProposals({});
+    this.protocols = data.data;
   }
 };
 </script>

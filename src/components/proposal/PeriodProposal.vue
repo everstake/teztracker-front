@@ -150,9 +150,7 @@
                   <span class="vote-card__weight--lighter">ID:</span> {{ proposal.period }}
                 </div>
                 <div class="vote-card__divider"></div>
-                <p class="vote-card__font-size--18">
-                  {{proposal.shortDescription}}
-                </p>
+                <p class="vote-card__font-size--18 vote-card__proposal-description" v-html="proposal.shortDescription"></p>
               </div>
             </div>
           </b-col>

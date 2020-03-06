@@ -471,6 +471,19 @@
       position: relative;
       display: inline-block;
     }
+
+    &__proposal-description {
+      & a {
+        color: #2d2e2c;
+        border-bottom: 1px solid #2d2e2c;
+
+        &:hover {
+          color: #309282;
+          border-color: #309282;
+          text-decoration: none;
+        }
+      }
+    }
   }
 
   &-breadcrumbs {
@@ -510,6 +523,7 @@
     font-weight: 300;
     color: #9ea0a5;
     cursor: pointer;
+
 
     @include max-width-desktop {
       font-size: 24px;

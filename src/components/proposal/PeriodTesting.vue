@@ -14,11 +14,9 @@
 								<div class="vote-card__divider"></div>
 								<div class="vote-card__body">
 									<p class="vote-card--margin-none vote-card__font-size--18 vote-card__weight--bold">
-										{{ this.proposal.proposal.title }}
+										{{ proposal.proposal.title }}
 									</p>
-									<p class="vote-card__recent-name">
-										{{ this.proposal.proposal.shortDescription }}
-									</p>
+									<p class="vote-card__recent-name vote-card__proposal-description" v-html="proposal.proposal.shortDescription"></p>
 									<div class="vote-card__divider"></div>
 								</div>
 							</div>
