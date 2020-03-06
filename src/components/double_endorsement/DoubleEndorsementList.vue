@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="d-flex justify-content-between mb-4">
+      <PerPageSelect @per-page="$_setPerPage" />
+    </div>
+
     <b-table
       show-empty
       :items="double_endorsement"
@@ -44,19 +48,21 @@
 <script>
 import { mapMutations } from "vuex";
 import { SET_DOUBLE_ENDORSEMENT_COUNT } from "@/store/mutations.types";
+import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
+import setPerPage from "@/mixins/setPerPage";
 
 export default {
   name: "DoubleEndorsementList",
   components: {
+    PerPageSelect,
     Pagination
   },
-  mixins: [handleCurrentPageChange],
+  mixins: [handleCurrentPageChange, setPerPage],
   props: ["account"],
   data() {
     return {
-      perPage: this.$constants.PER_PAGE,
       double_endorsement: [],
       count: 0,
       fields: [
@@ -72,6 +78,9 @@ export default {
       async handler(value) {
         await this.reload(value);
       }
+    },
+    async perPage() {
+      await this.reload();
     }
   },
   async created() {

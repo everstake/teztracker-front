@@ -1,6 +1,6 @@
 <template>
   <StatisticsCard
-    :title="level"
+    :title="String(level)"
     subtitle="Block information"
     :fields="blockRestructured"
   >
