@@ -6,21 +6,48 @@
 
     <!-- Period Steps start -->
     <PeriodStep
+      v-if="this.proposals.length === 0"
+      :periodTypes="periodTypes"
+      :currentPeriodType="proposal.period.periodType"
+      :periodStepUrls="[proposal.period.id, null, null, null]"
+    />
+    <PeriodStep
+      v-else
       :periodTypes="periodTypes"
       :currentPeriodType="proposal.period.periodType"
       :periodStepUrls="getPeriodStepsLinks"
     />
+
     <!-- Period Steps end -->
 
     <!-- Proposal period start -->
     <PeriodProposal
-      v-if="currentPeriodType === 'proposal'"
+      v-if="currentPeriodType === 'proposal' && proposals.length > 0"
       :proposal="proposal"
       :voters="voters"
       :proposals="proposals"
       :backgroundColors="backgroundColors"
       class="vote__proposal"
     />
+    <CardSection
+      v-else-if="currentPeriodType === 'proposal' && proposals.length === 0"
+      :fluid="true"
+    >
+      <template>
+        <b-row>
+          <b-col cols="12">
+            <div class="vote-card vote-card__empty">
+              <div class="vote-card__header">
+                <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered">
+                  There is no proposals on this period.
+                </p>
+              </div>
+            </div>
+          </b-col>
+        </b-row>
+      </template>
+    </CardSection>
+
     <!-- Proposal period end -->
 
     <!-- Exploration period start -->
@@ -56,7 +83,7 @@
 
     <!-- Vote tables start -->
     <PeriodTable
-      v-if="currentPeriodType === 'proposal'"
+      v-if="currentPeriodType === 'proposal' && proposals.length > 0"
       :voters="voters"
       :nonVoters='nonVoters'
       :votersFields='votersFields'
@@ -86,6 +113,7 @@ import PeriodBreadcrumbs from '@/components/proposal/PeriodBreadcrumbs';
 import PeriodTable from "@/components/proposal/PeriodTable";
 import { SET_VOTERS_COUNT, SET_NON_VOTERS_COUNT } from "@/store/mutations.types";
 import { mapMutations, mapState } from 'vuex';
+import CardSection from '@/components/partials/CardSection';
 
 export default {
   name: "Period",
@@ -95,7 +123,8 @@ export default {
     PeriodExploration,
     PeriodTesting,
     PeriodBreadcrumbs,
-    PeriodTable
+    PeriodTable,
+    CardSection
   },
   computed: {
     ...mapState('proposal', {

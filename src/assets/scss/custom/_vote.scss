@@ -72,6 +72,10 @@
     background-repeat: repeat-x;
   }
 
+  &__empty {
+    padding: 40px 0;
+  }
+
   &__link {
     color: inherit;
     border-bottom: 1px solid #2d2e2c;
@@ -104,6 +108,10 @@
 
     &--36 {
       font-size: 36px;
+    }
+
+    &--centered {
+      text-align: center;
     }
   }
 
