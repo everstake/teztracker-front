@@ -76,6 +76,12 @@ export default {
   },
   mixins: [handleCurrentPageChange, setPerPage],
   props: {
+    block: {
+      type: Object
+    },
+    account: {
+      type: String
+    },
     isTableComplete: {
       type: Boolean,
       default: true
