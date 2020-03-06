@@ -6,7 +6,7 @@
 
     <!-- Period Steps start -->
     <PeriodStep
-      v-if="this.proposals.length === 0"
+      v-if="currentPeriodType === 'proposal' && proposals.length === 0"
       :periodTypes="periodTypes"
       :currentPeriodType="proposal.period.periodType"
       :periodStepUrls="[proposal.period.id, null, null, null]"
@@ -17,7 +17,6 @@
       :currentPeriodType="proposal.period.periodType"
       :periodStepUrls="getPeriodStepsLinks"
     />
-
     <!-- Period Steps end -->
 
     <!-- Proposal period start -->
@@ -26,7 +25,7 @@
       :proposal="proposal"
       :voters="voters"
       :proposals="proposals"
-      :backgroundColors="backgroundColors"
+      :backgroundColors="backgroundColors.proposal"
       class="vote__proposal"
     />
     <CardSection
@@ -55,9 +54,10 @@
       v-if="currentPeriodType === 'exploration'"
       :proposal="proposal"
       :voters="voters"
-      :backgroundColors="backgroundColors"
+      :backgroundColors="backgroundColors.exploration"
       @sortTableBy="enableTableSort"
       class="vote__exploration"
+      :sortBy="filterTable"
     />
     <!-- Exploration period end -->
 
@@ -75,9 +75,10 @@
       v-if="currentPeriodType === 'promotion'"
       :proposal="proposal"
       :voters="voters"
-      :backgroundColors="backgroundColors"
+      :backgroundColors="backgroundColors.exploration"
       @sortTableBy="enableTableSort"
       class="vote__promotion"
+      :sortBy="filterTable"
     />
     <!-- Testing period end -->
 
@@ -235,7 +236,10 @@ export default {
         { key: "timestamp", label: "Timestamp" },
         { key: "operation", label: "Vote hash" }
       ],
-      backgroundColors: ["#309282", "#e56968", "#9ea0a5"],
+      backgroundColors: {
+        proposal: ["#309282", "#9ea0a5"],
+        exploration: ["#309282", "#e56968", "#9ea0a5"]
+      },
       filterTable: false
     };
   },
@@ -243,7 +247,11 @@ export default {
   methods: {
     ...mapMutations('proposal', [SET_VOTERS_COUNT, SET_NON_VOTERS_COUNT]),
     async enableTableSort(arg) {
-      await this.fetchBallots(this.proposal.period.id, this.votersCount);
+      if (arg === this.filterTable) {
+        this.filterTable = false;
+        return;
+      }
+
       this.filterTable = arg;
     },
     handleShowClick({ type, limit }) {
@@ -283,7 +291,7 @@ export default {
       this.periods = data.data;
     },
     async fetchProposals(id) {
-      const { data } = await this.$api.getProposals({ id });
+      const { data } = await this.$api.getProposals({ period_id: id });
       data.map(proposal => {
         proposal.upvote = this.getPercentage([this.proposal.voteStats.votesAvailable, proposal.votesCasted]).toFixed(2);
       })

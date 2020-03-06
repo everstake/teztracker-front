@@ -1,5 +1,5 @@
 <template>
-  <section class="card-section">
+  <section class="">
     <b-container :fluid="fluid">
       <b-row>
         <b-col :cols="cols" :sm="sm" :md="md" :lg="lg" :xl="xl">

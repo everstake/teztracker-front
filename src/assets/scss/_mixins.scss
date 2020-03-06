@@ -33,10 +33,22 @@
   }
 }
 
+@mixin max-width-mobiles-landscape {
+  @media (max-width: 767px) {
+    @content;
+  }
+}
+
 /*
   ##Device = Tablets, Ipads (portrait)
   ##Screen = B/w 768px to 1024px
 */
+
+@mixin max-width-tablet-portrait {
+  @media (max-width: 1024px) {
+    @content;
+  }
+}
 
 @mixin for-tablet-ipad-portrait {
   @media (min-width: 768px) and (max-width: 1024px) {
@@ -78,6 +90,12 @@
   }
 }
 
+@mixin max-width-desktop {
+  @media (max-width: 1280px) {
+    @content;
+  }
+}
+
 @mixin for-desktop-up {
   @media (min-width: 1200px) {
     @content;
@@ -106,6 +124,12 @@
 */
 @mixin for-regular-desktops-up {
   @media (min-width: 1281px) {
+    @content;
+  }
+}
+
+@mixin max-width-big-desktop {
+  @media (max-width: 1400px) {
     @content;
   }
 }

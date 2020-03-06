@@ -3,7 +3,7 @@
     <CardSection :fluid="true" class="mb-5">
       <template>
         <b-row>
-          <b-col cols="4">
+          <b-col cols="12" sm="10" md="5" lg="4" xl="4" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
@@ -12,13 +12,16 @@
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
-                <DoughnutChart
-                  :options="{
-                    data: [proposal.ballots.yay, proposal.ballots.nay, proposal.ballots.pass],
-                    labels: ['Yay', 'Nay', 'Pass']
-                }"
-                  :backgroundColors="backgroundColors"
-                />
+                <div class="vote__chart">
+                  <DoughnutChart
+                    :options="{
+                      data: [proposal.ballots.yay, proposal.ballots.nay, proposal.ballots.pass],
+                      labels: ['Yay', 'Nay', 'Pass'],
+                      percents: false
+                  }"
+                    :backgroundColors="backgroundColors"
+                  />
+                </div>
                 <div class="vote-card__container--space-between vote-card__container--wrap mt-5">
                   <div
                     v-for="(percentage, index) in getVotesPercentage"
@@ -35,7 +38,7 @@
             </div>
           </b-col>
           <!--separate-->
-          <b-col cols="8">
+          <b-col cols="12" sm="10" md="7" lg="8" xl="8" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
@@ -66,7 +69,9 @@
                       Proposer file
                     </div>
                   </div>
-                  <div class="vote-card__recent-rolls">{{ proposal.proposal.proposalFile }}</div>
+                  <div class="vote-card__recent-rolls">
+                    <a :href="proposal.proposal.proposalFile" class="vote-card__link vote-card__link--active" target="_blank">{{ proposal.proposal.proposalFile }}</a>
+                  </div>
                 </div>
                 <b-row class="mb-3 mt-3">
                   <b-col class="mt-3 mb-3" cols="12">
@@ -85,7 +90,7 @@
                       class="mb-2"
                     />
                   </b-col>
-    
+
                   <b-col cols="12">
                     <div class="vote-card__container-space-between">
                       <span class="vote-card__percentage vote-card-quorum"
@@ -134,8 +139,8 @@
                   </div>
                 </div>
                 <div class="vote-card__container-space-between">
-                 <span class="vote-card__percentage">Period starts: {{ formatToCalendarDate(proposal.period.startTime, 'DD.MM.YY') }}</span>
-                 <span class="vote-card__percentage">Period ends: {{ formatToCalendarDate(proposal.period.endTime, 'DD.MM.YY') }}</span>
+                 <span class="vote-card__percentage"><span class="vote-card__percentage-label">Period starts:</span> {{ formatToCalendarDate(proposal.period.startTime, 'DD.MM.YY') }}</span>
+                 <span class="vote-card__percentage"><span class="vote-card__percentage-label">Period ends:</span> {{ formatToCalendarDate(proposal.period.endTime, 'DD.MM.YY') }}</span>
                 </div>
                 <b-progress
                   :value="formatToUnixTime(proposal.period.startTime)"
@@ -153,9 +158,13 @@
     <CardSection :fluid="true">
       <template>
         <b-row>
-          <b-col cols="4">
+          <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0">
             <div class="vote-card">
-              <div @click="enableSorting('yay')" class="vote__ballot ballot">
+              <div
+                @click="enableSorting('yay')"
+                :class="{'vote__ballot--active': sortBy === 'yay'}"
+                class="vote__ballot ballot"
+              >
                 <img class="ballot__icon" src="../../assets/icons/yay.svg" alt="In favor">
                 <div class="ballot__container">
                   <span class="vote__ballot--yay">
@@ -168,9 +177,13 @@
             </div>
           </b-col>
 
-          <b-col cols="4">
+          <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0">
             <div class="vote-card">
-              <div @click="enableSorting('nay')" class="vote__ballot ballot">
+              <div
+                @click="enableSorting('nay')"
+                :class="{'vote__ballot--active': sortBy === 'nay'}"
+                class="vote__ballot ballot"
+              >
                 <img class="ballot__icon" src="../../assets/icons/nay.svg" alt="Against">
                 <div class="ballot__container">
                   <span class="vote__ballot--nay">
@@ -183,9 +196,13 @@
             </div>
           </b-col>
 
-          <b-col cols="4">
+          <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0">
             <div class="vote-card">
-              <div @click="enableSorting('pass')" class="vote__ballot ballot">
+              <div
+                @click="enableSorting('pass')"
+                :class="{'vote__ballot--active': sortBy === 'pass'}"
+                class="vote__ballot ballot"
+              >
                 <img class="ballot__icon" src="../../assets/icons/pass.svg" alt="Pass">
                 <div class="ballot__container">
                   <span class="vote__ballot--pass">
@@ -218,7 +235,8 @@ export default {
   props: [
     "proposal",
     'voters',
-    'backgroundColors'
+    'backgroundColors',
+    'sortBy'
   ],
   mixins: [uuid],
   methods: {

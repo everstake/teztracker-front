@@ -13,11 +13,12 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const toRouteName = String(to.name);
   const isRouteNetworkValid = appState.app.networkList.some(
     network => network === to.params.network
   );
 
-  if (to.name.includes('protocol') || to.name.includes('period')) {
+  if (toRouteName.includes('protocol') || toRouteName.includes('period')) {
     if (appState.app.networkChangable) store.commit("app/setAppNetworkChangable", false);
   } else {
     if (!appState.app.networkChangable) store.commit("app/setAppNetworkChangable", true);

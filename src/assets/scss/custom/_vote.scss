@@ -12,6 +12,10 @@
     flex: 1;
     justify-content: space-between;
     padding: 18px 28px 9px;
+
+    @include max-width-desktop {
+      padding: 15px;
+    }
   }
 
   &__body {
@@ -80,6 +84,11 @@
     color: inherit;
     border-bottom: 1px solid #2d2e2c;
 
+    &--active {
+      color: #309282;
+      border: none;
+    }
+
     &:hover,
     &:active,
     &:focus {
@@ -130,13 +139,26 @@
     font-weight: 600;
     color: #9ea0a5;
     text-transform: uppercase;
+
+    &-label {
+      @include for-tablet-portrait-only {
+        display: none;
+      }
+    }
   }
 
   &__recent {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 22px;
+    word-break: break-word;
+
+    @include max-width-tablet-portrait {
+      flex-direction: column;
+      align-items: flex-start;
+    }
 
     &:last-child {
       margin-bottom: 0;
@@ -146,6 +168,10 @@
       font-size: 18px;
       color: #2d2e2c;
       letter-spacing: 0.39px;
+
+      @include for-smartphones-portrait {
+        font-size: 16px;
+      }
     }
 
     &-proposal {
@@ -154,12 +180,25 @@
       & span {
         color: #9ea0a5;
       }
+
+      @include for-smartphones-portrait {
+        font-size: 16px;
+      }
     }
 
     &-rolls {
       font-size: 18px;
       color: #2d2e2c;
       letter-spacing: 0.39px;
+      word-break: break-word;
+
+      @include max-width-tablet-portrait {
+        font-weight: 600;
+      }
+
+      @include for-smartphones-portrait {
+        font-size: 16px;
+      }
     }
   }
 
@@ -174,6 +213,10 @@
   &__title-wrapper {
     position: relative;
     max-width: 70%;
+
+    @include max-width-tablet-portrait {
+      max-width: none;
+    }
   }
 
   &__para {
@@ -188,6 +231,15 @@
     margin-left: 10px;
     font-size: 16px;
     color: #309282;
+
+    @include max-width-tablet-portrait {
+      right: -15px;
+      margin-left: 0;
+    }
+
+    @include max-width-tablet {
+      right: -12px;
+    }
   }
 
   &--pointer {
@@ -195,7 +247,7 @@
   }
 
   &__word-wrap {
-    word-wrap: break-word;
+    word-break: break-all;
   }
 }
 
@@ -237,6 +289,9 @@
     }
 
     &__button {
+      font-size: 18px;
+      font-weight: bold;
+      color: #309282;
       border: none;
       outline: none;
       background-color: transparent;
@@ -346,6 +401,10 @@
 
       &--height-equal {
         min-height: 100%;
+
+        @include max-width-tablet {
+          margin-bottom: 30px;
+        }
       }
     }
 
@@ -393,6 +452,25 @@
 
       }
     }
+
+    &__upvote {
+      @include max-width-tablet-portrait {
+        flex-direction: column;
+      }
+    }
+
+    &__progress {
+      @include max-width-tablet-portrait {
+        &:first-child {
+          margin-bottom: 25px;
+        }
+      }
+    }
+
+    &__upvote-title {
+      position: relative;
+      display: inline-block;
+    }
   }
 
   &-breadcrumbs {
@@ -433,10 +511,20 @@
     color: #9ea0a5;
     cursor: pointer;
 
+    @include max-width-desktop {
+      font-size: 24px;
+    }
+
     .ballot {
       &__container {
         padding-top: 50px;
         padding-bottom: 50px;
+      }
+
+      @include max-width-big-desktop {
+        &__icon {
+          display: none;
+        }
       }
     }
 
@@ -450,6 +538,21 @@
 
     &--pass {
       color: #1815b5;
+    }
+
+    &--active {
+      font-weight: 400;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+  }
+
+  &__info {
+    @include max-width-tablet {
+      margin-bottom: 50px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
   }
 }
@@ -516,7 +619,23 @@
     &__label {
       font-size: 48px;
       font-weight: 200;
-      color: #414141
+      color: #414141;
+
+      @include for-smartphones-portrait {
+        font-size: 26px;
+      }
+    }
+  }
+
+  &__chart {
+    @include max-width-mobiles-landscape {
+      padding-left: 50px;
+      padding-right: 50px;
+    }
+
+    @include for-tablet-portrait-only {
+      padding-left: 0;
+      padding-right: 0;
     }
   }
 }

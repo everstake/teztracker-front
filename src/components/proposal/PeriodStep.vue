@@ -2,23 +2,27 @@
   <div class="vote__steps">
     <CardSection :fluid="true">
       <template>
-        <div class="proposal-step">
-          <ul class="proposal-step__list">
-            <li v-for="(period, index) of periodTypes" class="proposal-step__item">
-              <p v-if="periodStepUrls[index] === null" class="proposal-step__para">
-                {{ period }}
-              </p>
-              <router-link
-                v-else
-                :to="{name: 'period',params: { id: periodStepUrls[index] }}"
-                :class="{'proposal-step__link--active': period === currentPeriodType}"
-                class="proposal-step__link"
-              >
-                {{ period }}
-              </router-link>
-            </li>
-          </ul>
-        </div>
+        <b-row>
+          <b-col cols="12" sm="10" md="12" lg="12" xl="12" offset-cols="0" offset-sm="1" offset-md="0">
+            <div class="proposal-step">
+              <ul class="proposal-step__list">
+                <li v-for="(period, index) of periodTypes" class="proposal-step__item">
+                  <p v-if="periodStepUrls[index] === null" class="proposal-step__para">
+                    {{ period }}
+                  </p>
+                  <router-link
+                    v-else
+                    :to="{name: 'period',params: { id: periodStepUrls[index] }}"
+                    :class="{'proposal-step__link--active': period === currentPeriodType}"
+                    class="proposal-step__link"
+                  >
+                    {{ period }}
+                  </router-link>
+                </li>
+              </ul>
+            </div>
+          </b-col>
+        </b-row>
       </template>
     </CardSection>
   </div>
@@ -45,6 +49,10 @@ export default {
   padding: 40px 30px;
   background-color: #fff;
 
+  @include max-width-tablet {
+    padding: 20px 30px;
+  }
+
   &:after {
     z-index: 5;
     content: "";
@@ -67,7 +75,7 @@ export default {
     list-style: none;
 
     @include max-width-tablet {
-      flex-direction: column;
+      flex-wrap: wrap;
     }
 
     &:before {
@@ -79,9 +87,9 @@ export default {
       background-color: #9ea0a5;
       top: 50%;
       transform: translateY(-50%);
-  
+
       @include max-width-tablet {
-      
+        display: none;
       }
     }
   }
@@ -103,37 +111,72 @@ export default {
     }
 
     @include max-width-tablet {
-      padding: 25px 0;
+      padding: 25px;
     }
 
     &:nth-child(1) .proposal-step__link:before,
     &:nth-child(1) .proposal-step__para:before {
       content: "1";
+
+      @include max-width-tablet {
+        content: "1.";
+      }
     }
 
     &:nth-child(2) .proposal-step__link:before,
     &:nth-child(2) .proposal-step__para:before {
       content: "2";
+
+      @include max-width-tablet {
+        content: "2.";
+      }
+
     }
   
     &:nth-child(3) .proposal-step__link:before,
     &:nth-child(3) .proposal-step__para:before {
       content: "3";
+
+      @include max-width-tablet {
+        content: "3.";
+      }
     }
   
     &:nth-child(4) .proposal-step__link:before,
     &:nth-child(4) .proposal-step__para:before {
       content: "4";
+
+      @include max-width-tablet {
+        content: "4.";
+      }
     }
   }
 
   &__link {
     color: #309282;
-    
+
     @include max-width-tablet {
+      position: relative;
       display: flex;
       flex-direction: column;
       align-items: center;
+      font-size: 18px;
+    }
+
+    @include for-smartphones-portrait {
+      font-size: 16px;
+    }
+
+    @include for-tablet-ipad-portrait {
+      font-weight: 400;
+    }
+
+    @include max-width-regular-laptop {
+      font-weight: 400;
+    }
+
+    @include max-width-tablet {
+      font-weight: 600;
     }
 
     &:hover {
@@ -153,20 +196,45 @@ export default {
       border: 1px solid #309282;
       color: #309282;
       border-radius: 50%;
-      
+
       @include max-width-regular-laptop {
         display: none;
       }
       
       @include max-width-tablet {
-        display: inline-flex;
-        margin-right: 0;
+        position: absolute;
+        top: 0;
+        left: -5px;
+        transform: translateX(-100%);
+        display: inline-block;
+        font-size: 18px;
+        width: auto;
+        height: auto;
+        border: none;
+        font-weight: 600;
+      }
+
+      @include for-smartphones-portrait {
+        display: none;
+      }
+    }
+
+    &--active {
+      @include max-width-regular-laptop {
+        font-weight: 600;
+      }
+
+      @include for-tablet-ipad-portrait {
+        font-weight: 600;
       }
     }
 
     &--active:before {
       content: url("~@/assets/icons/done.svg") !important;
       border-color: #309282;
+
+      @include max-width-tablet {
+      }
     }
   }
 

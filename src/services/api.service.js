@@ -122,8 +122,7 @@ const TzAPI = {
     return get(this.getVotingUrl(), 'periods', opts);
   },
   getProposals(opts = {}) {
-    const { id } = opts;
-    return get(this.getVotingUrl(), `proposals/${id}`, opts);
+    return get(this.getVotingUrl(), `proposals`, opts);
   },
   getBallots(opts = {}) {
     const { id } = opts;
