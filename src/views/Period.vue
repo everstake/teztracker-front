@@ -18,89 +18,111 @@
       :periodStepUrls="getPeriodStepsLinks"
     />
     <!-- Period Steps end -->
-
-    <!-- Proposal period start -->
-    <PeriodProposal
-      v-if="currentPeriodType === 'proposal' && proposals.length > 0"
-      :proposal="proposal"
-      :voters="voters"
-      :proposals="proposals"
-      :backgroundColors="backgroundColors.proposal"
-      class="vote__proposal"
-    />
-    <CardSection
-      v-else-if="currentPeriodType === 'proposal' && proposals.length === 0"
-      :fluid="true"
-    >
-      <template>
-        <b-row>
-          <b-col cols="12">
-            <div class="vote-card vote-card__empty">
-              <div class="vote-card__header">
-                <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered">
-                  There is no proposals on this period.
-                </p>
+    
+    <div>
+      <CardSection
+        v-if="loading"
+        :fluid="true"
+      >
+        <template>
+          <b-row>
+            <b-col cols="12">
+              <div class="vote-card vote-card__empty">
+                <div class="vote-card__header">
+                  <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered">
+                    Loading...
+                  </p>
+                </div>
               </div>
-            </div>
-          </b-col>
-        </b-row>
-      </template>
-    </CardSection>
-
-    <!-- Proposal period end -->
-
-    <!-- Exploration period start -->
-    <PeriodExploration
-      v-if="currentPeriodType === 'exploration'"
-      :proposal="proposal"
-      :voters="voters"
-      :backgroundColors="backgroundColors.exploration"
-      @sortTableBy="enableTableSort"
-      class="vote__exploration"
-      :sortBy="filterTable"
-    />
-    <!-- Exploration period end -->
-
-    <!-- Testing period start -->
-    <PeriodTesting
-      v-if="currentPeriodType === 'testing'"
-      :voters="voters"
-      :proposal="proposal"
-      class="vote__testing"
-    />
-    <!-- Testing period end -->
-
-    <!-- Testing period start -->
-    <PeriodExploration
-      v-if="currentPeriodType === 'promotion'"
-      :proposal="proposal"
-      :voters="voters"
-      :backgroundColors="backgroundColors.exploration"
-      @sortTableBy="enableTableSort"
-      class="vote__promotion"
-      :sortBy="filterTable"
-    />
-    <!-- Testing period end -->
-
-    <!-- Vote tables start -->
-    <PeriodTable
-      v-if="currentPeriodType === 'proposal' && proposals.length > 0"
-      :voters="voters"
-      :nonVoters='nonVoters'
-      :votersFields='votersFields'
-      :nonVotersFields="nonVotersFields"
-      @onShowClick="handleShowClick"
-    />
-
-    <PeriodTable
-      v-if="currentPeriodType === 'exploration' || currentPeriodType === 'promotion'"
-      :voters="filteredVoters"
-      :nonVoters='nonVoters'
-      :votersFields='ballotFields'
-      :nonVotersFields="nonVotersFields"
-      @onShowClick="handleShowClick"
-    />
-    <!-- Vote tables end -->
+            </b-col>
+          </b-row>
+        </template>
+      </CardSection>
+      <div v-else>
+        <!-- Proposal period start -->
+        <PeriodProposal
+          v-if="currentPeriodType === 'proposal' && proposals.length > 0"
+          :proposal="proposal"
+          :voters="voters"
+          :proposals="proposals"
+          :backgroundColors="backgroundColors.proposal"
+          class="vote__proposal"
+        />
+        <CardSection
+          v-else-if="currentPeriodType === 'proposal' && proposals.length === 0"
+          :fluid="true"
+        >
+          <template>
+            <b-row>
+              <b-col cols="12">
+                <div class="vote-card vote-card__empty">
+                  <div class="vote-card__header">
+                    <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered">
+                      There is no proposals on this period.
+                    </p>
+                  </div>
+                </div>
+              </b-col>
+            </b-row>
+          </template>
+        </CardSection>
+  
+        <!-- Proposal period end -->
+  
+        <!-- Exploration period start -->
+        <PeriodExploration
+          v-if="currentPeriodType === 'exploration'"
+          :proposal="proposal"
+          :voters="voters"
+          :backgroundColors="backgroundColors.exploration"
+          @sortTableBy="enableTableSort"
+          class="vote__exploration"
+          :sortBy="filterTable"
+        />
+        <!-- Exploration period end -->
+  
+        <!-- Testing period start -->
+        <PeriodTesting
+          v-if="currentPeriodType === 'testing'"
+          :voters="voters"
+          :proposal="proposal"
+          class="vote__testing"
+        />
+        <!-- Testing period end -->
+  
+        <!-- Testing period start -->
+        <PeriodExploration
+          v-if="currentPeriodType === 'promotion'"
+          :proposal="proposal"
+          :voters="voters"
+          :backgroundColors="backgroundColors.exploration"
+          @sortTableBy="enableTableSort"
+          class="vote__promotion"
+          :sortBy="filterTable"
+        />
+        <!-- Testing period end -->
+  
+        <!-- Vote tables start -->
+        <PeriodTable
+          v-if="currentPeriodType === 'proposal' && proposals.length > 0"
+          :voters="voters"
+          :nonVoters='nonVoters'
+          :votersFields='votersFields'
+          :nonVotersFields="nonVotersFields"
+          @onShowClick="handleShowClick"
+        />
+  
+        <PeriodTable
+          v-if="currentPeriodType === 'exploration' || currentPeriodType === 'promotion'"
+          :voters="filteredVoters"
+          :nonVoters='nonVoters'
+          :votersFields='ballotFields'
+          :nonVotersFields="nonVotersFields"
+          @onShowClick="handleShowClick"
+        />
+        <!-- Vote tables end -->
+      </div>
+    </div>
   </div>
 </template>
 
@@ -240,7 +262,8 @@ export default {
         proposal: ["#309282", "#9ea0a5"],
         exploration: ["#309282", "#e56968", "#9ea0a5"]
       },
-      filterTable: false
+      filterTable: false,
+      loading: true
     };
   },
   mixins: [uuid],
@@ -330,6 +353,8 @@ export default {
         await this.fetchBallots(this.$route.params.id);
         break;
     }
+  
+    this.loading = false;
   }
 };
 </script>

@@ -526,7 +526,7 @@
 
 
     @include max-width-desktop {
-      font-size: 24px;
+      font-size: 21px;
     }
 
     .ballot {
@@ -561,7 +561,7 @@
   }
 
   &__info {
-    @include max-width-tablet {
+    @include max-width-mobiles-landscape {
       margin-bottom: 50px;
 
       &:last-child {

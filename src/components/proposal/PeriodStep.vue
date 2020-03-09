@@ -50,7 +50,7 @@ export default {
   background-color: #fff;
 
   @include max-width-tablet {
-    padding: 20px 30px;
+    /*padding: 20px 30px;*/
   }
 
   &:after {
@@ -63,6 +63,26 @@ export default {
     height: 1px;
     color: #9ea0a5;
     text-transform: capitalize;
+
+    @include max-width-tablet {
+      top: 90px;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: auto;
+      background-color: #9ea0a5;
+    }
+
+    @include for-smartphones-portrait {
+      top: 90px;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1px;
+      height: auto;
+      background-color: #9ea0a5;
+    }
   }
 
   &__list {
@@ -76,6 +96,14 @@ export default {
 
     @include max-width-tablet {
       flex-wrap: wrap;
+      flex-direction: column;
+      position: relative;
+      z-index: 6;
+    }
+
+    @include for-smartphones-portrait {
+      position: relative;
+      z-index: 6;
     }
 
     &:before {
@@ -111,44 +139,37 @@ export default {
     }
 
     @include max-width-tablet {
-      padding: 25px;
+      min-height: auto;
+      margin: 25px;
+      padding-top: 25px;
+      padding-bottom: 25px;
+    }
+
+    @include for-smartphones-portrait {
+      min-height: auto;
+      margin: 25px;
+      padding-top: 25px;
+      padding-bottom: 25px;
     }
 
     &:nth-child(1) .proposal-step__link:before,
     &:nth-child(1) .proposal-step__para:before {
       content: "1";
-
-      @include max-width-tablet {
-        content: "1.";
-      }
     }
 
     &:nth-child(2) .proposal-step__link:before,
     &:nth-child(2) .proposal-step__para:before {
       content: "2";
-
-      @include max-width-tablet {
-        content: "2.";
-      }
-
     }
   
     &:nth-child(3) .proposal-step__link:before,
     &:nth-child(3) .proposal-step__para:before {
       content: "3";
-
-      @include max-width-tablet {
-        content: "3.";
-      }
     }
   
     &:nth-child(4) .proposal-step__link:before,
     &:nth-child(4) .proposal-step__para:before {
       content: "4";
-
-      @include max-width-tablet {
-        content: "4.";
-      }
     }
   }
 
@@ -161,9 +182,14 @@ export default {
       flex-direction: column;
       align-items: center;
       font-size: 18px;
+      padding-top: 60px;
+      padding-bottom: 0;
+      font-size: 18px;
     }
 
     @include for-smartphones-portrait {
+      padding-top: 60px;
+      padding-bottom: 0;
       font-size: 16px;
     }
 
@@ -203,19 +229,32 @@ export default {
 
       @include max-width-tablet {
         position: absolute;
+        margin: 0;
         top: 0;
-        left: -5px;
-        transform: translateX(-100%);
-        display: inline-block;
+        left: 50%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        transform: translateX(-50%);
         font-size: 18px;
-        width: auto;
-        height: auto;
-        border: none;
-        font-weight: 600;
+        font-weight: lighter;
+        border: 1px solid #309282;
       }
 
       @include for-smartphones-portrait {
-        display: none;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        transform: translateX(-50%);
+        font-weight: lighter;
+        border: 1px solid #309282;
       }
     }
 
@@ -232,9 +271,6 @@ export default {
     &--active:before {
       content: url("~@/assets/icons/done.svg") !important;
       border-color: #309282;
-
-      @include max-width-tablet {
-      }
     }
   }
 
@@ -249,6 +285,7 @@ export default {
       align-items: center;
       font-size: 18px;
     }
+    
 
     &:before {
       position: relative;
@@ -269,16 +306,7 @@ export default {
       }
 
       @include max-width-tablet {
-        position: absolute;
-        top: 0;
-        left: -5px;
-        transform: translateX(-100%);
-        display: inline-block;
-        font-size: 18px;
-        width: auto;
-        height: auto;
-        border: none;
-        font-weight: 600;
+        display: none;
       }
 
       @include for-smartphones-portrait {
