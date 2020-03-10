@@ -199,8 +199,8 @@ export default {
 
       if (proposalsCount === 1) {
         options.data = [
-          ...this.proposals.map(({ upvote }) => upvote > 1 ? upvote : upvote * 100),
-          ...this.proposals.map(({ upvote }) => upvote > 1 ? 100 - upvote : 1 - upvote * 100)
+          ...this.proposals.map(({ upvote }) => upvote < 1 ? upvote : upvote * 100),
+          ...this.proposals.map(({ upvote }) => upvote < 1 ? 100 - upvote : 1 - upvote * 100)
         ];
 
         options.labels = [
