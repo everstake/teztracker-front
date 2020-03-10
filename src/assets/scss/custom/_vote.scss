@@ -240,6 +240,10 @@
     @include max-width-tablet {
       right: -12px;
     }
+
+    @include for-smartphones-portrait {
+      right: -14px;
+    }
   }
 
   &--pointer {
