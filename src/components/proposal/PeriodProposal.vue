@@ -140,7 +140,7 @@
                     class="vote-card__title-wrapper vote-card--pointer"
                   >
                     <p :ref='proposal.hash' class="vote-card__upvote-title vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold">{{ proposal.title || proposal.hash }}<span class="icon vote-card__icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span></p>
-                    <b-tooltip ref="tooltip" triggers="hover" :target="proposal.hash">Copied to clipboard</b-tooltip>
+                    <b-tooltip ref="tooltip" triggers="hover" :target="proposal.hash">Copy to clipboard</b-tooltip>
                   </div>
                   <p class="vote-card__font-size--36 vote-card__upvote-item">
                     <span class="vote-card__weight--lighter">Upvotes:</span> {{proposal.upvote}}%

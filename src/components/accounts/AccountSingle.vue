@@ -8,7 +8,7 @@
               <span ref="textToCopy" class="text">{{ hash }}</span>
               <span class="icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span>
             </h3>
-            <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copied to clipboard</b-tooltip>
+            <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
             <div class="subtitle">Account Information</div>
           </div>
         </div>
