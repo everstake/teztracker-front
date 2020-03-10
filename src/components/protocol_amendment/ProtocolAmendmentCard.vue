@@ -2,13 +2,13 @@
   <div
     class="protocol-amendment__card"
     @click="onPeriodClick(id)"
+    :class="period === 'current' ? 'protocol-amendment__card--active' : ''"
   >
     <div class="protocol-amendment__period font font--regular">
       {{ period }}
     </div>
     <div
       class="protocol-amendment__name font font--regular"
-      :class="period === 'current' ? 'protocol-amendment__name--active' : ''"
     >
       {{ name }}
     </div>
@@ -46,6 +46,13 @@ export default {
     @include max-width-tablet-portrait {
       padding: 25px;
     }
+
+    &--active {
+      .protocol-amendment__name,
+      .protocol-amendment__period {
+        color: #2d2e2c;
+      }
+    }
   }
 
   &__period {
@@ -58,10 +65,6 @@ export default {
     margin: auto;
     color: #9ea0a5;
     word-break: break-word;
-
-    &--active {
-      color: #2d2e2c;
-    }
   }
 
   &__period,

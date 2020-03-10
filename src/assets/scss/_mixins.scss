@@ -1,5 +1,5 @@
 @mixin from-large-desktop {
-  @media (min-width: 1800px) {
+  @media (min-width: 1401px) {
     @content;
   }
 }
