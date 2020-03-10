@@ -1,3 +1,45 @@
+@mixin from-large-desktop {
+  @media (min-width: 1800px) {
+    @content;
+  }
+}
+
+@mixin from-big-desktop {
+  @media (max-width: 1400px) {
+    @content;
+  }
+}
+
+@mixin from-laptop-to-desktop {
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    @content;
+  }
+}
+
+@mixin from-tablet-to-laptop {
+  @media (min-width: 768px) and (max-width: 1024px) {
+    @content;
+  }
+}
+
+@mixin from-smartphone-portrait-to-tablet {
+  @media (min-width: 481px) and (max-width: 767px) {
+    @content;
+  }
+}
+
+@mixin from-smartphone-to-portrait {
+  @media (min-width: 320px) and (max-width: 480px) {
+    @content;
+  }
+}
+
+@mixin from-smartphone {
+  @media (max-width: 319px) {
+    @content;
+  }
+}
+
 /*
   ##Device = Most of the mobiles
   ##Screen = B/w 320px to 479px

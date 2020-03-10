@@ -3,11 +3,11 @@
     class="protocol-amendment__card"
     @click="onPeriodClick(id)"
   >
-    <div class="protocol-amendment__period">
+    <div class="protocol-amendment__period font font--regular">
       {{ period }}
     </div>
     <div
-      class="protocol-amendment__name"
+      class="protocol-amendment__name font font--regular"
       :class="period === 'current' ? 'protocol-amendment__name--active' : ''"
     >
       {{ name }}
@@ -32,9 +32,9 @@ export default {
   &__card {
     display: flex;
     flex-direction: column;
-    margin-bottom: 30px;
+    height: 100%;
+    margin-bottom: 0px;
     padding: 40px;
-    height: 450px;
     text-align: center;
     background-color: #fff;
     border: 1px solid #f0f0f1;
@@ -49,39 +49,18 @@ export default {
   }
 
   &__period {
-    font-size: 36px;
+    margin-bottom: 15px;
     letter-spacing: 0.77px;
     color: #f0f0f1;
   }
 
   &__name {
     margin: auto;
-    font-size: 72px;
     color: #9ea0a5;
     word-break: break-word;
 
-    @include max-width-regular-laptop {
-      font-size: 55px;
-    }
-
-    @include max-width-tablet-portrait {
-      font-size: 40px;
-    }
-
     &--active {
       color: #2d2e2c;
-    }
-
-    @include for-low-resolution-tablets-mobiles-landscape {
-      font-size: 50px;
-    }
-
-    @include for-smartphones-portrait {
-      font-size: 34px;
-    }
-
-    @media (max-width: 320px) {
-      font-size: 34px;
     }
   }
 

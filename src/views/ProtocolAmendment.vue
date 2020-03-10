@@ -1,33 +1,34 @@
 <template>
   <div class="main-content protocol-amendment">
-    <section class="breadcrumbs">
+    <div class="tz-breadcrumbs mt-4 mb-4">
       <b-container fluid>
         <b-row>
           <b-col lg="12">
             <div class="page-title ml-2">
-              <h2 class="breadcrumbs__title">
-                Tezos (XTZ) Blockchain Explorer -
-                <span>Protocol amendment</span>
+              <h2 class="font font--regular tz-breadcrumbs__title">
+                Tezos (XTZ) Blockchain Explorer
               </h2>
             </div>
 
-            <ol class="breadcrumb ml-2">
-              <li class="breadcrumb-item">
-                <router-link :to="{ name: 'network' }">Home</router-link>
+            <ol class="ml-2 tz-breadcrumbs__list">
+              <li class="font font--regular tz-breadcrumbs__item">
+                <router-link :to="{ name: 'network' }" class="tz-breadcrumbs__link">Home</router-link>
               </li>
-              <li class="breadcrumb-item active">Protocol amendment</li>
+              <li class="active font font--regular tz-breadcrumbs__item">Protocol amendment</li>
             </ol>
           </b-col>
         </b-row>
       </b-container>
-    </section>
+    </div>
 
-    <section>
+    <div>
       <b-container fluid>
         <b-row>
           <b-col
             sm="12"
             md="6"
+            lg="4"
+            class="mb-4"
             v-for="(protocol, index) in protocols"
             :key="generateKey()"
           >
@@ -40,7 +41,7 @@
           </b-col>
         </b-row>
       </b-container>
-    </section>
+    </div>
   </div>
 </template>
 

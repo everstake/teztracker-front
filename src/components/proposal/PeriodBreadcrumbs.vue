@@ -3,7 +3,7 @@
 		<CardSection class="breadcrumbs vote-breadcrumbs" :fluid="true">
 			<template>
 				<div class="page-title ml-2">
-					<h2 class="breadcrumbs__title">
+					<h2 class="breadcrumbs__title font font--regular">
 						Tezos (XTZ) Blockchain Explorer -
 						<span>Proposal period</span>
 					</h2>
