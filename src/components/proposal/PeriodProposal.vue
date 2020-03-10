@@ -142,7 +142,7 @@
                     <p :ref='proposal.hash' class="vote-card__upvote-title vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold">{{ proposal.title || proposal.hash }}<span class="icon vote-card__icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span></p>
                     <b-tooltip ref="tooltip" triggers="hover" :target="proposal.hash">Copied to clipboard</b-tooltip>
                   </div>
-                  <p class="vote-card__font-size--36">
+                  <p class="vote-card__font-size--36 vote-card__upvote-item">
                     <span class="vote-card__weight--lighter">Upvotes:</span> {{proposal.upvote}}%
                   </p>
                 </div>
@@ -195,12 +195,15 @@ export default {
   computed: {
     getDoughnutOptions() {
       const proposalsCount = this.proposals.length;
+      const { votesAvailable } = this.proposal.voteStats;
       const options = {};
 
       if (proposalsCount === 1) {
         options.data = [
-          ...this.proposals.map(({ upvote }) => upvote < 1 ? upvote : upvote * 100),
-          ...this.proposals.map(({ upvote }) => upvote < 1 ? 100 - upvote : 1 - upvote * 100)
+          ...this.proposals.map(({ upvote }) => upvote),
+          ...this.proposals.map(proposal => {
+            return this.getPercentage([votesAvailable, votesAvailable - proposal.votesCasted]).toFixed(2);
+          })
         ];
 
         options.labels = [

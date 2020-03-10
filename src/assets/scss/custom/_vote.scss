@@ -457,6 +457,12 @@
       @include max-width-tablet-portrait {
         flex-direction: column;
       }
+
+      &-item {
+        @include for-smartphones-portrait {
+          font-size: 23px;
+        }
+      }
     }
 
     &__progress {
@@ -470,6 +476,10 @@
     &__upvote-title {
       position: relative;
       display: inline-block;
+
+      @include for-smartphones-portrait {
+        font-size: 25px;
+      }
     }
 
     &__proposal-description {
