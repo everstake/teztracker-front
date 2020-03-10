@@ -656,14 +656,14 @@
   }
 
   &__chart {
-    @include max-width-mobiles-landscape {
-      padding-left: 50px;
-      padding-right: 50px;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
 
-    @include for-tablet-portrait-only {
-      padding-left: 0;
-      padding-right: 0;
+    & canvas {
+      width: 100% !important;
+      height: auto !important;
     }
   }
 }

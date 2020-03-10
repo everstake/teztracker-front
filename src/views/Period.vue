@@ -18,7 +18,7 @@
       :periodStepUrls="getPeriodStepsLinks"
     />
     <!-- Period Steps end -->
-    
+
     <div>
       <CardSection
         v-if="loading"

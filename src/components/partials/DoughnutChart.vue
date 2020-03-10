@@ -23,7 +23,7 @@ export default {
       }
 
       const options = {
-        cutoutPercentage: 80,
+        cutoutPercentage: 85,
         legend: {
           position: 'bottom',
           align: 'start',

@@ -3,7 +3,7 @@
     <CardSection :fluid="true" class="mb-5">
       <template>
         <b-row>
-          <b-col cols="12" sm="10" md="5" lg="5" xl="5" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
+          <b-col cols="12" sm="10" md="5" lg="4" xl="4" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
@@ -31,7 +31,7 @@
             </div>
           </b-col>
 
-          <b-col cols="12" sm="10" md="7" lg="7" xl="7" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
+          <b-col cols="12" sm="10" md="7" lg="8" xl="8" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">

@@ -6,15 +6,15 @@
           <b-col cols="12" sm="10" md="12" lg="12" xl="12" offset-cols="0" offset-sm="1" offset-md="0">
             <div class="proposal-step">
               <ul class="proposal-step__list">
-                <li v-for="(period, index) of periodTypes" class="proposal-step__item">
-                  <p v-if="periodStepUrls[index] === null" class="proposal-step__para">
+                <li v-for="(period, index) of periodTypes" class="proposal-step__item font font--mini">
+                  <p v-if="periodStepUrls[index] === null" class="proposal-step__para font font--mini">
                     {{ period }}
                   </p>
                   <router-link
                     v-else
                     :to="{name: 'period',params: { id: periodStepUrls[index] }}"
                     :class="{'proposal-step__link--active': period === currentPeriodType}"
-                    class="proposal-step__link"
+                    class="proposal-step__link font font--mini"
                   >
                     {{ period }}
                   </router-link>
@@ -46,11 +46,27 @@ export default {
 <style lang="scss" scoped>
 .proposal-step {
   position: relative;
-  padding: 40px 30px;
+  padding: 25px 0;
   background-color: #fff;
 
-  @include max-width-tablet {
-    /*padding: 20px 30px;*/
+  @include from-laptop-to-desktop {
+    padding: 10px;
+  }
+
+  @include from-tablet-to-laptop {
+    padding: 10px;
+  }
+
+  @include from-smartphone-portrait-to-tablet {
+    padding: 10px;
+  }
+
+  @include from-smartphone-to-portrait {
+    padding: 10px;
+  }
+
+  @include from-smartphone {
+    padding: 10px;
   }
 
   &:after {
@@ -65,13 +81,7 @@ export default {
     text-transform: capitalize;
 
     @include max-width-tablet {
-      top: 90px;
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 1px;
-      height: auto;
-      background-color: #9ea0a5;
+      display: none;
     }
 
     @include for-smartphones-portrait {
@@ -140,16 +150,23 @@ export default {
 
     @include max-width-tablet {
       min-height: auto;
-      margin: 25px;
-      padding-top: 25px;
-      padding-bottom: 25px;
+      margin-bottom: 15px;
+      padding: 0;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
 
-    @include for-smartphones-portrait {
+    @include from-smartphone-to-portrait {
       min-height: auto;
-      margin: 25px;
-      padding-top: 25px;
-      padding-bottom: 25px;
+      margin: 0;
+      padding: 10px;
+    }
+
+    @include from-smartphone {
+      margin: 0;
+      padding: 10px;
     }
 
     &:nth-child(1) .proposal-step__link:before,
@@ -161,12 +178,12 @@ export default {
     &:nth-child(2) .proposal-step__para:before {
       content: "2";
     }
-  
+
     &:nth-child(3) .proposal-step__link:before,
     &:nth-child(3) .proposal-step__para:before {
       content: "3";
     }
-  
+
     &:nth-child(4) .proposal-step__link:before,
     &:nth-child(4) .proposal-step__para:before {
       content: "4";
@@ -202,6 +219,7 @@ export default {
     }
 
     @include max-width-tablet {
+      padding-top: 0;
       font-weight: 600;
     }
 
@@ -228,33 +246,7 @@ export default {
       }
 
       @include max-width-tablet {
-        position: absolute;
-        margin: 0;
-        top: 0;
-        left: 50%;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        transform: translateX(-50%);
-        font-size: 18px;
-        font-weight: lighter;
-        border: 1px solid #309282;
-      }
-
-      @include for-smartphones-portrait {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        transform: translateX(-50%);
-        font-weight: lighter;
-        border: 1px solid #309282;
+        display: none;
       }
     }
 
