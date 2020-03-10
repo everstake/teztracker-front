@@ -10,12 +10,14 @@
       :periodTypes="periodTypes"
       :currentPeriodType="proposal.period.periodType"
       :periodStepUrls="[proposal.period.id, null, null, null]"
+      :loading="loading"
     />
     <PeriodStep
       v-else
       :periodTypes="periodTypes"
       :currentPeriodType="proposal.period.periodType"
       :periodStepUrls="getPeriodStepsLinks"
+      :loading="loading"
     />
     <!-- Period Steps end -->
 
@@ -29,8 +31,8 @@
             <b-col cols="12">
               <div class="vote-card vote-card__empty">
                 <div class="vote-card__header">
-                  <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered">
-                    Loading...
+                  <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered font font--regular vote__loading">
+                    Loading
                   </p>
                 </div>
               </div>

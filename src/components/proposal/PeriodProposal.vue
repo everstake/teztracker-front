@@ -3,19 +3,20 @@
     <CardSection :fluid="true" class="mb-5">
       <template>
         <b-row>
-          <b-col cols="12" sm="10" md="5" lg="4" xl="4" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
-            <div class="vote-card vote-card__container--height-equal">
+          <b-col cols="12" sm="10" md="12" lg="12" xl="4" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
+            <div class="vote-card vote-card__container--height-equal vote-card-chart">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
-                  <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold">
+                  <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold font font-mini">
                     Proposals
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
-                <div class="vote-card__chart vote__chart">
-                  <DoughnutChart :options="getDoughnutOptions" :backgroundColors="backgroundColors"/>
-                </div>
-                <div class="vote-card__container--space-between vote-card__container--wrap mt-5">
+                <div class="vote__chart-container">
+                  <div class="vote-card__chart vote__chart">
+                    <DoughnutChart :options="getDoughnutOptions" :backgroundColors="backgroundColors"/>
+                  </div>
+                  <div class="vote-card__container--space-between vote-card__container--wrap mt-5">
                   <div
                     v-for="(upvote, index) in getDoughnutOptions.data"
                     :key="generateKey()"
@@ -27,21 +28,22 @@
                     {{ upvote }}%
                   </div>
                 </div>
+                </div>
               </div>
             </div>
           </b-col>
 
-          <b-col cols="12" sm="10" md="7" lg="8" xl="8" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
+          <b-col cols="12" sm="10" md="12" lg="12" xl="8" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
-                  <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold">
+                  <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold font font-mini">
                     General voting stats
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
                 <div class="vote-card__body">
-                  <p class="vote-card__font-size--14 vote-card__weight--bold">
+                  <p class="vote-card__font-size--14 vote-card__weight--bold font font--mini">
                     Recent Votes
                   </p>
                   <div
@@ -50,14 +52,14 @@
                     :key="generateKey()"
                   >
                     <div>
-                      <div class="vote-card__recent-name">
+                      <div class="vote-card__recent-name font font--mini">
                         {{ voter.title || voter.pkh }}
                       </div>
-                      <div class="vote-card__recent-proposal">
+                      <div class="vote-card__recent-proposal font font--mini">
                         <span>Proposal:</span> {{ voter.proposal | longhash(15) }}
                       </div>
                     </div>
-                    <div class="vote-card__recent-rolls">{{ voter.rolls }}</div>
+                    <div class="vote-card__recent-rolls font font--mini">{{ voter.rolls }}</div>
                   </div>
                   <div class="vote-card__divider"></div>
                   <b-row>
@@ -139,18 +141,18 @@
                     :id="proposal.hash"
                     class="vote-card__title-wrapper vote-card--pointer"
                   >
-                    <p :ref='proposal.hash' class="vote-card__upvote-title vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold">{{ proposal.title || proposal.hash }}<span class="icon vote-card__icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span></p>
+                    <p :ref='proposal.hash' class="vote-card__upvote-title vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold font font--mini">{{ proposal.title || proposal.hash }}<span class="icon vote-card__icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span></p>
                     <b-tooltip ref="tooltip" triggers="hover" :target="proposal.hash">Copy to clipboard</b-tooltip>
                   </div>
-                  <p class="vote-card__font-size--36 vote-card__upvote-item">
+                  <p class="vote-card__font-size--36 vote-card__upvote-item font font--mini">
                     <span class="vote-card__weight--lighter">Upvotes:</span> {{proposal.upvote}}%
                   </p>
                 </div>
-                <div class="vote-card__title vote-card__font-size--18">
+                <div class="vote-card__title vote-card__font-size--18 font font--mini">
                   <span class="vote-card__weight--lighter">ID:</span> {{ proposal.period }}
                 </div>
                 <div class="vote-card__divider"></div>
-                <p class="vote-card__font-size--18 vote-card__proposal-description" v-html="proposal.shortDescription"></p>
+                <p class="vote-card__font-size--18 vote-card__proposal-description font font--mini" v-html="proposal.shortDescription"></p>
               </div>
             </div>
           </b-col>

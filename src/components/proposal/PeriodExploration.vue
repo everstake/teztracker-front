@@ -3,26 +3,27 @@
     <CardSection :fluid="true" class="mb-5">
       <template>
         <b-row>
-          <b-col cols="12" sm="10" md="5" lg="5" xl="5" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
-            <div class="vote-card vote-card__container--height-equal">
+          <b-col cols="12" sm="10" md="12" lg="12" xl="4" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
+            <div class="vote-card vote-card__container--height-equal vote-card-chart">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
-                  <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold">
+                  <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold font font-mini">
                     Proposals
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
-                <div class="vote__chart">
-                  <DoughnutChart
-                    :options="{
-                      data: [proposal.ballots.yay, proposal.ballots.nay, proposal.ballots.pass],
-                      labels: ['Yay', 'Nay', 'Pass'],
-                      percents: false
-                  }"
-                    :backgroundColors="backgroundColors"
-                  />
-                </div>
-                <div class="vote-card__container--space-between vote-card__container--wrap mt-5">
+                <div class="vote__chart-container">
+                  <div class="vote-card__chart vote__chart">
+                    <DoughnutChart
+                      :options="{
+                        data: [proposal.ballots.yay, proposal.ballots.nay, proposal.ballots.pass],
+                        labels: ['Yay', 'Nay', 'Pass'],
+                        percents: false
+                    }"
+                      :backgroundColors="backgroundColors"
+                    />
+                  </div>
+                  <div class="vote-card__container--space-between vote-card__container--wrap mt-5">
                   <div
                     v-for="(percentage, index) in getVotesPercentage"
                     :key="generateKey()"
@@ -34,11 +35,12 @@
                     {{ percentage }}%
                   </div>
                 </div>
+                </div>
               </div>
             </div>
           </b-col>
           <!--separate-->
-          <b-col cols="12" sm="10" md="7" lg="7" xl="7" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
+          <b-col cols="12" sm="10" md="12" lg="12" xl="8" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
@@ -49,27 +51,27 @@
                 <div class="vote-card__divider"></div>
                 <div class="vote-card__recent">
                   <div>
-                    <div class="vote-card__recent-name">
+                    <div class="vote-card__recent-name font font--mini">
                       Hash
                     </div>
                   </div>
-                  <div class="vote-card__recent-rolls">{{ proposal.proposal.hash }}</div>
+                  <div class="vote-card__recent-rolls font font--mini">{{ proposal.proposal.hash }}</div>
                 </div>
-                <div class="vote-card__recent">
+                <div class="vote-card__recent font font--mini">
                   <div>
-                    <div class="vote-card__recent-name">
+                    <div class="vote-card__recent-name font font--mini">
                       Proposer
                     </div>
                   </div>
-                  <div class="vote-card__recent-rolls">{{ proposal.proposal.proposer.name }}</div>
+                  <div class="vote-card__recent-rolls font font--mini">{{ proposal.proposal.proposer.name }}</div>
                 </div>
                 <div class="vote-card__recent">
                   <div>
-                    <div class="vote-card__recent-name">
+                    <div class="vote-card__recent-name font font--mini">
                       Proposer file
                     </div>
                   </div>
-                  <div class="vote-card__recent-rolls">
+                  <div class="vote-card__recent-rolls font font--mini">
                     <a :href="proposal.proposal.proposalFile" class="vote-card__link vote-card__link--active" target="_blank">{{ proposal.proposal.proposalFile }}</a>
                   </div>
                 </div>
@@ -109,32 +111,32 @@
                 </b-row>
                 <div class="vote-card__recent">
                   <div>
-                    <div class="vote-card__recent-name">
+                    <div class="vote-card__recent-name font font--mini">
                       Percen of votes
                     </div>
                   </div>
-                  <div class="vote-card__recent-rolls">
+                  <div class="vote-card__recent-rolls font font--mini">
                     {{getPercentage([proposal.voteStats.votesAvailable, proposal.voteStats.votesCast]).toFixed(2)}}%
                   </div>
                 </div>
                 <div class="vote-card__recent">
                   <div>
-                    <div class="vote-card__recent-name">
+                    <div class="vote-card__recent-name font font--mini">
                       Bakers vote
                     </div>
                   </div>
-                  <div class="vote-card__recent-rolls">
+                  <div class="vote-card__recent-rolls font font--mini">
                     {{ proposal.voteStats.numVoters }} /
                     {{ proposal.voteStats.numVotersTotal }}
                   </div>
                 </div>
-                <div class="vote-card__recent">
+                <div class="vote-card__recent font font--mini">
                   <div>
-                    <div class="vote-card__recent-name">
+                    <div class="vote-card__recent-name font font--mini">
                       Votes cast
                     </div>
                   </div>
-                  <div class="vote-card__recent-rolls">
+                  <div class="vote-card__recent-rolls font font--mini">
                     {{ proposal.voteStats.votesCast }}
                   </div>
                 </div>
@@ -166,8 +168,8 @@
                 class="vote__ballot ballot"
               >
                 <img class="ballot__icon" src="../../assets/icons/yay.svg" alt="In favor">
-                <div class="ballot__container">
-                  <span class="vote__ballot--yay">
+                <div class="ballot__container font font--mini">
+                  <span class="vote__ballot--yay font font--mini">
                     {{getVotesPercentage[0]}}%
                     ({{ getVotes.yay }})
                   </span>
@@ -185,8 +187,8 @@
                 class="vote__ballot ballot"
               >
                 <img class="ballot__icon" src="../../assets/icons/nay.svg" alt="Against">
-                <div class="ballot__container">
-                  <span class="vote__ballot--nay">
+                <div class="ballot__container font font--mini">
+                  <span class="vote__ballot--nay font font--mini">
                     {{getVotesPercentage[1]}}%
                     ({{ getVotes.nay }})
                   </span>
@@ -204,8 +206,8 @@
                 class="vote__ballot ballot"
               >
                 <img class="ballot__icon" src="../../assets/icons/pass.svg" alt="Pass">
-                <div class="ballot__container">
-                  <span class="vote__ballot--pass">
+                <div class="ballot__container font font--mini">
+                  <span class="vote__ballot--pass font font--mini">
                     {{getVotesPercentage[2]}}%
                     ({{ getVotes.pass }})
                   </span>

@@ -155,7 +155,7 @@
     margin-bottom: 22px;
     word-break: break-word;
 
-    @include max-width-tablet-portrait {
+    @include from-smartphone-portrait-to-tablet {
       flex-direction: column;
       align-items: flex-start;
     }
@@ -229,7 +229,7 @@
     top: 0;
     right: -25px;
     margin-left: 10px;
-    font-size: 16px;
+    font-size: 14px;
     color: #309282;
 
     @include max-width-tablet-portrait {
@@ -243,6 +243,11 @@
 
     @include for-smartphones-portrait {
       right: -14px;
+      font-size: 10px;
+    }
+
+    @include from-smartphone {
+      font-size: 10px;
     }
   }
 
@@ -583,6 +588,32 @@
       }
     }
   }
+
+  &__loading {
+    position: relative;
+
+    &:after {
+      position: absolute;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: bottom;
+      animation: ellipsis steps(4,end) 900ms infinite;
+      content: "\2026";
+      width: 0;
+    }
+  }
+}
+
+@keyframes ellipsis {
+  to {
+    width: 20px;
+  }
+}
+
+@-webkit-keyframes ellipsis {
+  to {
+    width: 20px;
+  }
 }
 
 // 30px title vertical margin
@@ -641,15 +672,55 @@
   }
 }
 
+.vote-card-chart {
+
+}
 
 .vote {
+  &-card-chart {
+    @include from-laptop-to-desktop {
+      min-height: auto !important;
+    }
+    @include from-tablet-to-laptop {
+      min-height: auto !important;
+    }
+
+    @include from-smartphone-portrait-to-tablet {
+      min-height: auto !important;;
+    }
+  }
+
   &-chart {
     &__label {
-      font-size: 48px;
       font-weight: 200;
       color: #414141;
+      padding: 0 10px;
 
-      @include for-smartphones-portrait {
+      @include from-large-desktop {
+        font-size: 38px;
+      }
+
+      @include from-big-desktop {
+        font-size: 26px;
+      }
+
+      @include from-laptop-to-desktop {
+        font-size: 26px;
+      }
+
+      @include from-tablet-to-laptop {
+        font-size: 26px;
+      }
+
+      @include from-smartphone-portrait-to-tablet {
+        font-size: 26px;
+      }
+
+      @include from-smartphone-to-portrait {
+        font-size: 26px;
+      }
+
+      @include from-smartphone {
         font-size: 26px;
       }
     }
@@ -664,6 +735,69 @@
     & canvas {
       width: 100% !important;
       height: auto !important;
+    }
+
+    @include from-laptop-to-desktop {
+      width: 30%;
+    }
+
+    @include for-desktop-up {
+      width: 100%;
+    }
+
+    @include from-tablet-to-laptop {
+      width: 30%;
+    }
+
+    @include from-smartphone-portrait-to-tablet {
+      width: 50%;
+    }
+
+    &-container {
+      @include from-laptop-to-desktop {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+
+      @include from-tablet-to-laptop {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+
+      @include from-smartphone-portrait-to-tablet {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+      }
+    }
+  }
+
+  &-card__container--wrap {
+    @include from-laptop-to-desktop {
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-around;
+      margin-top: 0 !important;
+    }
+
+    @include from-tablet-to-laptop {
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-evenly;
+      margin-top: 0 !important;
+    }
+
+    @include from-smartphone-portrait-to-tablet {
+      flex-direction: column;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-evenly;
+      margin-top: 0 !important;
     }
   }
 }

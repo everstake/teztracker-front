@@ -7,13 +7,22 @@
             <div class="proposal-step">
               <ul class="proposal-step__list">
                 <li v-for="(period, index) of periodTypes" class="proposal-step__item font font--mini">
-                  <p v-if="periodStepUrls[index] === null" class="proposal-step__para font font--mini">
+                  <p
+                    v-if="periodStepUrls[index] === null && !loading"
+                    class="proposal-step__para font font--mini"
+                    :class="{
+                      'proposal-step__para--disabled': loading
+                    }"
+                  >
                     {{ period }}
                   </p>
                   <router-link
                     v-else
                     :to="{name: 'period',params: { id: periodStepUrls[index] }}"
-                    :class="{'proposal-step__link--active': period === currentPeriodType}"
+                    :class="{
+                      'proposal-step__link--active': period === currentPeriodType && !loading,
+                      'proposal-step__link--disabled': loading
+                    }"
                     class="proposal-step__link font font--mini"
                   >
                     {{ period }}
@@ -34,7 +43,12 @@ import CardSection from "@/components/partials/CardSection";
 export default {
   name: "PeriodStep",
   components: {CardSection},
-  props: ["periodTypes", "currentPeriodType", "periodStepUrls"],
+  props: [
+    "periodTypes",
+    "currentPeriodType",
+    "periodStepUrls",
+    "loading"
+  ],
   methods: {
     getLink(index) {
       return this.periodStepUrls[index];
@@ -150,12 +164,9 @@ export default {
 
     @include max-width-tablet {
       min-height: auto;
-      margin-bottom: 15px;
-      padding: 0;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
+      margin: 0;
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
 
     @include from-smartphone-to-portrait {
@@ -201,7 +212,6 @@ export default {
       font-size: 18px;
       padding-top: 60px;
       padding-bottom: 0;
-      font-size: 18px;
     }
 
     @include for-smartphones-portrait {
@@ -220,7 +230,7 @@ export default {
 
     @include max-width-tablet {
       padding-top: 0;
-      font-weight: 600;
+      font-weight: 400;
     }
 
     &:hover {
@@ -258,11 +268,27 @@ export default {
       @include for-tablet-ipad-portrait {
         font-weight: 600;
       }
+
+      @include from-smartphone-portrait-to-tablet {
+        font-weight: 600;
+      }
     }
 
     &--active:before {
       content: url("~@/assets/icons/done.svg") !important;
       border-color: #309282;
+    }
+
+    &--disabled {
+      color: #9ea0a5;
+      user-select: none;
+      cursor: text;
+      pointer-events: none;
+
+      &:before {
+        color: #9ea0a5;
+        border-color: #9ea0a5;
+      }
     }
   }
 
@@ -277,7 +303,6 @@ export default {
       align-items: center;
       font-size: 18px;
     }
-    
 
     &:before {
       position: relative;
@@ -320,6 +345,17 @@ export default {
 
     @include max-width-tablet {
       font-weight: 600;
+    }
+
+    &--disabled {
+      color: #9ea0a5;
+      user-select: none;
+      cursor: text;
+      pointer-events: none;
+
+      &:before {
+        border-color: #9ea0a5;
+      }
     }
   }
 }

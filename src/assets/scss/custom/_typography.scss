@@ -14,22 +14,22 @@
   &--mini {
     // max-width 1800
     @include from-large-desktop {
-      font-size: 21px !important;
+      font-size: 18px !important;
     }
 
     // max-width 1400
     @include from-big-desktop {
-      font-size: 21px !important;
+      font-size: 16px !important;
     }
 
     // 1025-1280
     @include from-laptop-to-desktop {
-      font-size: 21px !important;
+      font-size: 16px !important;
     }
 
     // 768-1024
     @include from-tablet-to-laptop {
-      font-size: 18px !important;
+      font-size: 16px !important;
     }
 
     // 481-767
