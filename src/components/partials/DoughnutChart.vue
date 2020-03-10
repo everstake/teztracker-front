@@ -30,7 +30,7 @@ export default {
           labels: {
             padding: 30,
             usePointStyle: true,
-            fontSize: 20,
+            fontSize: 16,
             fontFamily: 'Montserrat Alternates'
           }
         },
