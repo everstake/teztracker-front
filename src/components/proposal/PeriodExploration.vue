@@ -160,7 +160,7 @@
     <CardSection :fluid="true" class="ballots">
       <template>
         <b-row>
-          <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0">
+          <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0" class="ballot__col">
             <div class="vote-card">
               <div
                 @click="enableSorting('yay')"
@@ -178,9 +178,7 @@
               </div>
             </div>
           </b-col>
-        </b-row>
-        <b-row>
-          <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0">
+          <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0" class="ballot__col">
             <div class="vote-card">
               <div
                 @click="enableSorting('nay')"
@@ -198,9 +196,7 @@
               </div>
             </div>
           </b-col>
-        </b-row>
-        <b-row>
-          <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0">
+          <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0" class="ballot__col">
             <div class="vote-card">
               <div
                 @click="enableSorting('pass')"
@@ -218,7 +214,6 @@
               </div>
             </div>
           </b-col>
-
         </b-row>
       </template>
     </CardSection>
