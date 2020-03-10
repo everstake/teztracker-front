@@ -20,9 +20,7 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{
-          row.item.timestamp | timeformat($constants.TIME_FORMAT)
-        }}</span>
+        <span>{{ row.item.timestamp | timeformat(dateFormat) }}</span>
       </template>
 
       <template slot="baker" slot-scope="row">
@@ -80,15 +78,24 @@ export default {
         { key: "level", label: "Block ID" },
         { key: "timestamp", label: "Timestamp" },
         { key: "baker", label: "Baker" },
-        { key: "volume", label: "Volume", class: !this.isTableComplete ? 'd-none': '' },
-        { key: "fees", label: "Fees", class: !this.isTableComplete ? 'd-none': '' }
+        {
+          key: "volume",
+          label: "Volume",
+          class: !this.isTableComplete ? "d-none" : ""
+        },
+        {
+          key: "fees",
+          label: "Fees",
+          class: !this.isTableComplete ? "d-none" : ""
+        }
       ]
     };
   },
   computed: {
-    ...mapState("blocks", {
-      blocks: state => state.blocks,
-      count: state => state.counts
+    ...mapState({
+      blocks: state => state.blocks.blocks,
+      count: state => state.blocks.counts,
+      dateFormat: state => state.app.dateFormat
     })
   }
 };

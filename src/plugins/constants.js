@@ -9,7 +9,8 @@ const constants = {
   PER_PAGE_SNAPSHOTS: 6,
   STATUS_SUCCESS: 200,
   USD_PRECISION: 2,
-  TIME_FORMAT: "HH:mm:ss DD.MM.YY",
+  DATE_FORMAT: "DD.MM.YY HH:mm:ss",
+  DATE_FORMAT_US: "MM.DD.YY HH:mm:ss",
   ENDORSEMENTS_LIMIT: 32, // Max number of endorsements for a block
   MAX_HASH_LENGTH: 20,
   ALL_ICO_ACTIVE_ADDRESSES: 30317,

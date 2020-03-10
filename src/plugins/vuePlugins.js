@@ -11,7 +11,9 @@ import {
   CardPlugin,
   TabsPlugin,
   BreadcrumbPlugin,
-  FormSelectPlugin
+  FormSelectPlugin,
+  FormGroupPlugin,
+  FormCheckboxPlugin
 } from "bootstrap-vue";
 import {
   FontAwesomeIcon,
@@ -29,7 +31,8 @@ import {
   faAngleLeft,
   faAngleRight,
   faAngleDoubleLeft,
-  faAngleDoubleRight
+  faAngleDoubleRight,
+  faCog
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faLightbulb,
@@ -59,6 +62,8 @@ Vue.use(CardPlugin);
 Vue.use(TabsPlugin);
 Vue.use(BreadcrumbPlugin);
 Vue.use(FormSelectPlugin);
+Vue.use(FormGroupPlugin);
+Vue.use(FormCheckboxPlugin);
 
 dom.watch();
 library.add(
@@ -72,7 +77,8 @@ library.add(
   faAngleLeft,
   faAngleRight,
   faAngleDoubleLeft,
-  faAngleDoubleRight
+  faAngleDoubleRight,
+  faCog
 );
 library.add(
   faLightbulb,

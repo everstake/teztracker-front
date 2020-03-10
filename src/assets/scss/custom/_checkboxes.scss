@@ -1,0 +1,19 @@
+.custom-control-input {
+  &:checked ~ .custom-control-label::before {
+    border-color: $color-brand;
+    background-color: $color-brand;
+  }
+
+  &:focus:not(:checked) ~ .custom-control-label::before {
+    border-color: $color-brand;
+  }
+
+  &:focus ~ .custom-control-label::before {
+    box-shadow: 0 0 0 0.2rem $color-brand--opacity-2;
+  }
+
+  &:not(:disabled):active ~ .custom-control-label::before {
+    background-color: $color-brand--opacity-2;
+    border-color: $color-brand--opacity-2;
+  }
+}

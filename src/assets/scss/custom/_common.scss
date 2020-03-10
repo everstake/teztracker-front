@@ -41,12 +41,12 @@ body {
 
 .main-header .header-middle .main-nav {
   float: left;
-  margin: 0 18px;
+  margin: 0 30px;
 }
 
 .main-header .header-middle .main-nav.right-block {
   float: right;
-  margin: 0 15px;
+  margin: 0 30px 0 0;
   ul {
     padding-left: 0;
     padding-right: 0;
@@ -65,7 +65,11 @@ body {
 .main-header .header-middle .main-nav ul li {
   display: block;
   float: left;
-  padding: 2px 24px;
+  padding: 0 24px 0 0;
+
+  &:last-child {
+    padding-right: 0;
+  }
 }
 
 .main-header .header-middle .main-nav ul li a {
@@ -112,6 +116,11 @@ span a.baker, .link {
   border-radius: 4px;
   -webkit-box-shadow: 0px 0px 15px 7px $color-black--opacity-02;
   box-shadow: 0px 0px 15px 7px $color-black--opacity-02;
+}
+
+.main-header .header-middle .main-nav ul li .dropdown-menu .b-dropdown-text {
+  padding: 0.8rem 1rem;
+  font-size: 14px;
 }
 
 .main-header .header-middle .main-nav ul li .dropdown-menu .dropdown-item {
@@ -810,18 +819,15 @@ section
 @media screen and (max-width: 1360px) {
   .main-header .header-middle .main-nav {
     float: left;
-    margin: 0;
   }
 
   .main-header .header-middle .main-nav.right-block {
     float: right;
-    margin: 0;
   }
 
   .main-header .header-middle .main-nav ul li {
     display: block;
     float: left;
-    padding: 2px 20px;
   }
 }
 /*# sourceMappingURL=styles.css.map */
