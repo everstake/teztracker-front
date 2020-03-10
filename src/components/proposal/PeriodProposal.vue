@@ -1,6 +1,6 @@
 <template>
   <div class="vote__proposal">
-    <CardSection :fluid="true" class="mb-5">
+    <CardSection :fluid="true">
       <template>
         <b-row>
           <b-col cols="12" sm="10" md="12" lg="12" xl="4" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">

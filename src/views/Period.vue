@@ -1,5 +1,5 @@
 <template>
-  <div class="main-content">
+  <div class="main-content vote-content">
     <!-- Breadcrumbs start -->
     <PeriodBreadcrumbs :currentPeriodType="currentPeriodType" />
     <!-- Breadcrumbs end -->

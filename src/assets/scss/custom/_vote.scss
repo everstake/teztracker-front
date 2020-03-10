@@ -262,6 +262,13 @@
 
 
 .vote {
+  &-content {
+    & section {
+      margin: 0;
+      padding: 1.6rem 0;
+    }
+  }
+
   // table
   &-table {
     width: 100%;
@@ -410,10 +417,6 @@
 
       &--height-equal {
         min-height: 100%;
-
-        @include max-width-tablet {
-          margin-bottom: 30px;
-        }
       }
     }
 
@@ -581,7 +584,7 @@
 
   &__info {
     @include max-width-mobiles-landscape {
-      margin-bottom: 50px;
+      //margin-bottom: 50px;
 
       &:last-child {
         margin-bottom: 0;
@@ -620,8 +623,6 @@
 // 14px, 16px, 20px, 36px title size
 
 .vote-card {
-  margin: 1.6rem 0;
-
   &.vote-breadcrumbs {
     padding: 2rem 0 1rem;
     background-color: #e0efec;
@@ -812,6 +813,40 @@
       align-items: center;
       justify-content: space-evenly;
       margin-top: 0 !important;
+    }
+  }
+}
+
+.vote-proposal__info,
+.vote-exploration__info{
+  margin: 1.6rem 0;
+}
+
+.ballots .row{
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+  }
+}
+
+
+.vote__info{
+  @include for-desktop-down {
+    margin-top: 1.6rem;
+    margin-bottom: 1.6rem;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
     }
   }
 }
