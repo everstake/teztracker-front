@@ -58,7 +58,7 @@ export default {
 <style lang="scss" scoped>
 .proposal-step {
   position: relative;
-  padding: 25px 0;
+  padding: 10px 0;
   background-color: #fff;
 
   @include from-laptop-to-desktop {
@@ -149,7 +149,7 @@ export default {
     position: relative;
     display: flex;
     align-items: center;
-    padding: 0 25px;
+    padding: 0 50px;
     font-size: 20px;
     font-weight: 600;
     color: #9ea0a5;
@@ -157,7 +157,7 @@ export default {
     background-color: white;
 
     @include max-width-regular-laptop {
-      padding: 0 10px;
+      padding: 0 30px;
     }
 
     @include max-width-tablet {
@@ -240,13 +240,13 @@ export default {
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      margin-right: 30px;
-      font-weight: lighter;
-      font-size: 28px;
-      width: 70px;
-      height: 70px;
-      border: 1px solid #309282;
+      width: 45px;
+      height: 45px;
+      margin-right: 10px;
+      font-size: 16px;
+      font-weight: 400;
       color: #309282;
+      border: 1px solid #309282;
       border-radius: 50%;
 
       @include max-width-regular-laptop {

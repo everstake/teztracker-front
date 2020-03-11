@@ -150,7 +150,6 @@
                   :max="formatToUnixTime(proposal.period.endTime)"
                   class="mb-2"
                 />
-                <div class="vote-card__divider"></div>
               </div>
             </div>
           </b-col>

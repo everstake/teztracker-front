@@ -61,7 +61,6 @@
                     </div>
                     <div class="vote-card__recent-rolls font font--mini">{{ voter.rolls }}</div>
                   </div>
-                  <div class="vote-card__divider"></div>
                   <b-row>
                     <b-col class="vote-card__progress" cols="12" sm="12" md="12" lg="6" xl="6">
                       <div class="vote-card__container-space-between">

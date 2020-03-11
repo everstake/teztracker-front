@@ -152,10 +152,20 @@
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 22px;
+    margin-bottom: 0;
     word-break: break-word;
 
     @include from-smartphone-portrait-to-tablet {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    @include from-smartphone-to-portrait {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    @include from-smartphone {
       flex-direction: column;
       align-items: flex-start;
     }
