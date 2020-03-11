@@ -549,7 +549,7 @@
 
   &__ballot {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     font-size: 32px;
     font-weight: 300;
@@ -563,13 +563,17 @@
 
     .ballot {
       &__container {
-        padding-top: 50px;
-        padding-bottom: 50px;
+        padding-top: 30px;
+        padding-bottom: 30px;
       }
 
-      @include max-width-big-desktop {
-        &__icon {
-          display: none;
+      &__icon {
+        width: auto;
+        height: 40px;
+        margin-right: 15px;
+
+        @include max-width-mobiles-landscape {
+          display: inline-block;
         }
       }
     }
@@ -881,38 +885,10 @@
   }
 }
 
-//.vote-proposal__info,
-//.vote-exploration__info{
-//  margin: 1.6rem 0;
-//}
-
-//.ballots .ballot__col{
-//  @include for-desktop-down {
-//    padding-top: 1.6rem;
-//    padding-bottom: 1.6rem;
-//
-//    &:first-child {
-//      padding-top: 0;
-//    }
-//
-//    &:last-child {
-//      padding-bottom: 0;
-//    }
-//  }
-//}
-
-
-//.vote__info{
-//  @include for-desktop-down {
-//    margin-top: 1.6rem;
-//    margin-bottom: 1.6rem;
-//
-//    &:first-child {
-//      margin-top: 0;
-//    }
-//
-//    &:last-child {
-//      margin-bottom: 0;
-//    }
-//  }
-//}
+.ballot__col {
+  @include max-width-mobiles-landscape {
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+  }
+}

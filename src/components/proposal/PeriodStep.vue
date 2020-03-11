@@ -66,7 +66,7 @@ export default {
   }
 
   @include from-tablet-to-laptop {
-    padding: 10px;
+    padding: 15px;
   }
 
   @include from-smartphone-portrait-to-tablet {

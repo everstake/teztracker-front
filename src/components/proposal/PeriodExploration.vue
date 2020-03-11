@@ -161,7 +161,7 @@
       <template>
         <b-row>
           <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0" class="ballot__col">
-            <div class="vote-card margin-bottom">
+            <div class="vote-card">
               <div
                 @click="enableSorting('yay')"
                 :class="{'vote__ballot--active': sortBy === 'yay'}"
@@ -179,7 +179,7 @@
             </div>
           </b-col>
           <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0" class="ballot__col">
-            <div class="vote-card margin-bottom">
+            <div class="vote-card">
               <div
                 @click="enableSorting('nay')"
                 :class="{'vote__ballot--active': sortBy === 'nay'}"
