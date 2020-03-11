@@ -1,7 +1,7 @@
 <template>
   <div class="main-content vote-content">
     <!-- Breadcrumbs start -->
-    <PeriodBreadcrumbs :currentPeriodType="currentPeriodType" />
+    <PeriodBreadcrumbs :currentPeriodType="currentPeriodType" :loading="loading" />
     <!-- Breadcrumbs end -->
 
     <!-- Period Steps start -->
@@ -355,7 +355,7 @@ export default {
         await this.fetchBallots(this.$route.params.id);
         break;
     }
-  
+
     this.loading = false;
   }
 };

@@ -12,7 +12,7 @@
 				<li class="font font--mini tz-breadcrumbs__item">
 					<router-link :to="{ name: 'network' }" class="tz-breadcrumbs__link">Home</router-link>
 				</li>
-				<li class="active font font--mini tz-breadcrumbs__item">Proposal period</li>
+				<li v-if="!loading" class="active font font--mini tz-breadcrumbs__item"><span class="tz-breadcrumbs__label">{{ currentPeriodType }}</span> period</li>
 			</ol>
 		</template>
 	</CardSection>
@@ -24,6 +24,9 @@ import CardSection from "@/components/partials/CardSection";
 export default {
   name: 'PeriodBreadcrumbs',
 	components: {CardSection},
-	props: ['currentPeriodType']
+	props: [
+	  'currentPeriodType',
+    'loading'
+  ]
 }
 </script>
