@@ -47,6 +47,8 @@
         :voters="voters"
         :proposals="proposals"
         :backgroundColors="backgroundColors.proposal"
+        @setDoughnutLegendPosition="setPeriodWidth"
+        :getDoughnutLegendPosition="getDoughnutLegendPosition"
         class="vote__proposal"
       />
       <CardSection
@@ -76,9 +78,11 @@
         :proposal="proposal"
         :voters="voters"
         :backgroundColors="backgroundColors.exploration"
-        @sortTableBy="enableTableSort"
-        class="vote__exploration"
         :sortBy="filterTable"
+        @sortTableBy="enableTableSort"
+        @setDoughnutLegendPosition="setPeriodWidth"
+        :getDoughnutLegendPosition="getDoughnutLegendPosition"
+        class="vote__exploration"
       />
       <!-- Exploration period end -->
 
@@ -97,9 +101,11 @@
         :proposal="proposal"
         :voters="voters"
         :backgroundColors="backgroundColors.exploration"
-        @sortTableBy="enableTableSort"
         class="vote__promotion"
         :sortBy="filterTable"
+        @sortTableBy="enableTableSort"
+        @setDoughnutLegendPosition="setPeriodWidth"
+        :getDoughnutLegendPosition="getDoughnutLegendPosition"
       />
       <!-- Testing period end -->
 
@@ -148,67 +154,6 @@ export default {
     PeriodBreadcrumbs,
     PeriodTable,
     CardSection
-  },
-  computed: {
-    ...mapState('proposal', {
-      votersCount: state => state.counts.voters
-    }),
-    filteredVoters() {
-      if (this.filterTable === 'yay') {
-        return this.voters.filter(voter => voter.decision === 'yay');
-      }
-
-      if (this.filterTable === 'nay') {
-        return this.voters.filter(voter => voter.decision === 'nay');
-      }
-
-      if (this.filterTable === 'pass') {
-        return this.voters.filter(voter => voter.decision === 'pass');
-      }
-
-      return this.voters;
-    },
-    currentPeriodType() {
-      return this.proposal.period.periodType;
-    },
-    getPeriodStepsLinks() {
-      const currentPeriodId = this.proposal.period.id;
-      const currentPeriodType = this.proposal.period.periodType;
-      const currentPeriodIndex = this.periods.findIndex(period => period.id === currentPeriodId);
-      const currentPeriodTypeIndex = this.periodTypes.findIndex(period => period === currentPeriodType);
-      let tempResult = [];
-      const result = [];
-
-      switch (currentPeriodTypeIndex) {
-        case 0:
-          tempResult = this.periods.slice(currentPeriodIndex, currentPeriodIndex + 4);
-          break;
-        case 1:
-          tempResult = this.periods.slice(currentPeriodIndex - 1, currentPeriodIndex + 3);
-          break;
-        case 2:
-          tempResult = this.periods.slice(currentPeriodIndex - 2, currentPeriodIndex + 2);
-          break;
-        case 3:
-          tempResult = this.periods.slice(currentPeriodIndex - 3, currentPeriodIndex + 1);
-          break;
-        case 4:
-          tempResult = this.periods.slice(currentPeriodIndex - 4, currentPeriodIndex);
-          break;
-        default:
-          [null, null, null, null];
-      }
-
-      tempResult.map((item, index) => {
-        if (item.periodType === this.periodTypes[index]) {
-          result.push(item.id);
-        } else {
-          result.push(null);
-        }
-      });
-
-      return result;
-    }
   },
   data() {
     return {
@@ -263,7 +208,10 @@ export default {
         exploration: ["#309282", "#e56968", "#9ea0a5"]
       },
       filterTable: false,
-      loading: true
+      loading: true,
+      window: {
+        width: 0
+      }
     };
   },
   mixins: [uuid],
@@ -335,6 +283,89 @@ export default {
       const data = await this.$api.getBallots({ id, limit });
       this[SET_VOTERS_COUNT](data.count);
       this.voters = data.data;
+    },
+    setPeriodWidth(width) {
+      this.window.width = width;
+    }
+  },
+  computed: {
+    ...mapState('proposal', {
+      votersCount: state => state.counts.voters
+    }),
+    filteredVoters() {
+      if (this.filterTable === 'yay') {
+        return this.voters.filter(voter => voter.decision === 'yay');
+      }
+
+      if (this.filterTable === 'nay') {
+        return this.voters.filter(voter => voter.decision === 'nay');
+      }
+
+      if (this.filterTable === 'pass') {
+        return this.voters.filter(voter => voter.decision === 'pass');
+      }
+
+      return this.voters;
+    },
+    currentPeriodType() {
+      return this.proposal.period.periodType;
+    },
+    getPeriodStepsLinks() {
+      const currentPeriodId = this.proposal.period.id;
+      const currentPeriodType = this.proposal.period.periodType;
+      const currentPeriodIndex = this.periods.findIndex(period => period.id === currentPeriodId);
+      const currentPeriodTypeIndex = this.periodTypes.findIndex(period => period === currentPeriodType);
+      let tempResult = [];
+      const result = [];
+
+      switch (currentPeriodTypeIndex) {
+        case 0:
+          tempResult = this.periods.slice(currentPeriodIndex, currentPeriodIndex + 4);
+          break;
+        case 1:
+          tempResult = this.periods.slice(currentPeriodIndex - 1, currentPeriodIndex + 3);
+          break;
+        case 2:
+          tempResult = this.periods.slice(currentPeriodIndex - 2, currentPeriodIndex + 2);
+          break;
+        case 3:
+          tempResult = this.periods.slice(currentPeriodIndex - 3, currentPeriodIndex + 1);
+          break;
+        case 4:
+          tempResult = this.periods.slice(currentPeriodIndex - 4, currentPeriodIndex);
+          break;
+        default:
+          [null, null, null, null];
+      }
+
+      tempResult.map((item, index) => {
+        if (item.periodType === this.periodTypes[index]) {
+          result.push(item.id);
+        } else {
+          result.push(null);
+        }
+      });
+
+      return result;
+    },
+    getDoughnutLegendPosition() {
+      if (this.window.width <= 480) {
+        return { position: 'bottom', align: 'center' };
+      }
+
+      if (this.window.width >= 481 && this.window.width <= 767) {
+        return { position: 'bottom', align: 'center' };
+      }
+
+      if (this.window.width >= 768 && this.window.width <= 1024) {
+        return { position: 'bottom', align: 'center' };
+      }
+
+      if (this.window.width >= 1025 && this.window.width <= 1199) {
+        return { position: 'bottom', align: 'center' }
+      }
+
+      return { position: 'bottom', align: 'center' };
     }
   },
   async created() {

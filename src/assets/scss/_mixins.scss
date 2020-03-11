@@ -10,6 +10,12 @@
   }
 }
 
+@mixin for-desktop-down {
+  @media (max-width: 1199px) {
+    @content;
+  }
+}
+
 @mixin from-laptop-to-desktop {
   @media (min-width: 1025px) and (max-width: 1280px) {
     @content;
@@ -138,11 +144,7 @@
   }
 }
 
-@mixin for-desktop-down {
-  @media (max-width: 1199px) {
-    @content;
-  }
-}
+
 
 @mixin for-desktop-up {
   @media (min-width: 1200px) {

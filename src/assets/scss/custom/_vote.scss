@@ -694,7 +694,7 @@
     &__label {
       font-weight: 200;
       color: #414141;
-      padding: 0 10px;
+      padding: 0 20px;
 
       @include from-large-desktop {
         font-size: 38px;
@@ -717,40 +717,57 @@
       }
 
       @include from-smartphone-to-portrait {
+        padding: 0 10px;
         font-size: 30px;
       }
 
       @include from-smartphone {
+        padding: 0 10px;
         font-size: 30px;
       }
     }
   }
 
   &__chart {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: auto;
 
-    & canvas {
-      width: 100% !important;
-      height: auto !important;
+
+    & > div {
+      position: relative;
+      width: 100%;
+      height: 100%;
+
+      @include for-desktop-down {
+        max-height: 250px;
+      }
+      //position: relative;
+      //width: 80%;
+      //height: 400px;
     }
 
     @include from-laptop-to-desktop {
-      width: 30%;
+      //max-height: 200px;
     }
 
     @include for-desktop-up {
-      width: 90%;
+      //max-height: none;
+      //width: 100%;
     }
 
     @include from-tablet-to-laptop {
-      width: 40%;
+      //width: 100%;
+      //max-height: 200px;
     }
 
     @include from-smartphone-portrait-to-tablet {
-      width: 70%;
+      //width: 100%;
+      //max-height: 200px;
+    }
+
+    @include from-smartphone {
     }
 
     &-container {
@@ -764,19 +781,30 @@
       @include from-laptop-to-desktop {
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
+        justify-content: space-around;
       }
 
       @include from-tablet-to-laptop {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-around;
       }
 
       @include from-smartphone-portrait-to-tablet {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      @include from-smartphone-to-portrait {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+      }
+
+      @include from-smartphone {
+        display: flex;
+        flex-direction: column;
         justify-content: space-around;
       }
     }
@@ -787,7 +815,7 @@
       flex-direction: row;
       flex-wrap: wrap;
       align-items: center;
-      justify-content: space-evenly;
+      justify-content: center;
       margin-top: 0 !important;
     }
 
@@ -803,12 +831,28 @@
       flex-direction: row;
       flex-wrap: wrap;
       align-items: center;
-      justify-content: space-evenly;
+      justify-content: center;
       margin-top: 0 !important;
     }
 
     @include from-smartphone-portrait-to-tablet {
-      flex-direction: column;
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-evenly;
+      margin-top: 0 !important;
+    }
+
+    @include from-smartphone-to-portrait {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-evenly;
+      margin-top: 0 !important;
+    }
+
+    @include from-smartphone {
+      flex-direction: row;
       flex-wrap: wrap;
       align-items: center;
       justify-content: space-evenly;

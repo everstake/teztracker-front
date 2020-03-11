@@ -18,7 +18,8 @@
                       :options="{
                         data: [proposal.ballots.yay, proposal.ballots.nay, proposal.ballots.pass],
                         labels: ['Yay', 'Nay', 'Pass'],
-                        percents: false
+                        percents: false,
+                        legend: getDoughnutLegendPosition
                     }"
                       :backgroundColors="backgroundColors"
                     />
@@ -236,7 +237,8 @@ export default {
     "proposal",
     'voters',
     'backgroundColors',
-    'sortBy'
+    'sortBy',
+    'getDoughnutLegendPosition'
   ],
   mixins: [uuid],
   methods: {
@@ -252,6 +254,9 @@ export default {
     getPercentage(arr) {
       const [a, b] = arr;
       return (b * 100) / a;
+    },
+    handleResize() {
+      this.$emit('setDoughnutLegendPosition', window.innerWidth);
     }
   },
   computed: {
@@ -281,14 +286,25 @@ export default {
     getDoughnutOptions() {
       const { yay = 0, nay = 0, pass = 0 } = this.proposal.ballots;
 
+      console.log(this.getDoughnutLegendPosition);
+
       const options = {
         data: [yay, nay, pass],
         labels: ['Yay', 'Nay', 'Pass'],
-        percentage: [...this.getVotesPercentage]
+        percentage: [...this.getVotesPercentage],
+        legend: this.getDoughnutLegendPosition
       };
+
 
       return options;
     }
+  },
+  created() {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize);
   }
 };
 </script>

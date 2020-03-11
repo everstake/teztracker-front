@@ -173,7 +173,7 @@ export default {
     DoughnutChart,
     CardSection
   },
-  props: ['proposal', 'voters', 'proposals', 'backgroundColors'],
+  props: ['proposal', 'voters', 'proposals', 'backgroundColors', 'getDoughnutLegendPosition'],
 	mixins: [uuid],
 	methods: {
     getPercentage(arr) {
@@ -192,6 +192,9 @@ export default {
       } catch (err) {
         selection.removeAllRanges();
       }
+    },
+    handleResize() {
+      this.$emit('setDoughnutLegendPosition', window.innerWidth);
     }
 	},
   computed: {
@@ -220,9 +223,17 @@ export default {
       }
 
       options.percents = true;
+      options.legend = this.getDoughnutLegendPosition;
 
       return options;
     }
+  },
+  created() {
+    window.addEventListener('resize', this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.handleResize);
   }
 };
 </script>

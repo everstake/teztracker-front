@@ -15,7 +15,7 @@ export default {
 	},
 	methods: {
     initChart() {
-      let { data = [], backgroundColors = [] } = this.options;
+      let { data = [], backgroundColors = [], legend = {} } = this.options;
       const vm = this;
 
       if (this.options.data !== undefined) {
@@ -24,9 +24,11 @@ export default {
 
       const options = {
         cutoutPercentage: 85,
+        responsive: true,
+        maintainAspectRatio: false,
+        aspectRatio: 1,
         legend: {
-          position: 'bottom',
-          align: 'start',
+          ...legend,
           labels: {
             padding: 30,
             usePointStyle: true,
