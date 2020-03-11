@@ -265,7 +265,7 @@
   &-content {
     & section {
       margin: 0;
-      padding: 1.6rem 0;
+      padding: 0;
     }
   }
 
@@ -817,38 +817,48 @@
   }
 }
 
-.vote-proposal__info,
-.vote-exploration__info{
-  margin: 1.6rem 0;
-}
+.vote-content {
+  & .margin-top {
+    margin-top: 30px;
+  }
 
-.ballots .ballot__col{
-  @include for-desktop-down {
-    padding-top: 1.6rem;
-    padding-bottom: 1.6rem;
-
-    &:first-child {
-      padding-top: 0;
-    }
-
-    &:last-child {
-      padding-bottom: 0;
-    }
+  & .margin-bottom {
+    margin-bottom: 30px;
   }
 }
 
+//.vote-proposal__info,
+//.vote-exploration__info{
+//  margin: 1.6rem 0;
+//}
 
-.vote__info{
-  @include for-desktop-down {
-    margin-top: 1.6rem;
-    margin-bottom: 1.6rem;
+//.ballots .ballot__col{
+//  @include for-desktop-down {
+//    padding-top: 1.6rem;
+//    padding-bottom: 1.6rem;
+//
+//    &:first-child {
+//      padding-top: 0;
+//    }
+//
+//    &:last-child {
+//      padding-bottom: 0;
+//    }
+//  }
+//}
 
-    &:first-child {
-      margin-top: 0;
-    }
 
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
+//.vote__info{
+//  @include for-desktop-down {
+//    margin-top: 1.6rem;
+//    margin-bottom: 1.6rem;
+//
+//    &:first-child {
+//      margin-top: 0;
+//    }
+//
+//    &:last-child {
+//      margin-bottom: 0;
+//    }
+//  }
+//}

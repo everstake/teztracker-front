@@ -1,9 +1,9 @@
 <template>
-  <div class="vote__proposal">
+  <div class="vote__proposal margin-bottom">
     <CardSection :fluid="true">
       <template>
         <b-row>
-          <b-col cols="12" sm="10" md="12" lg="12" xl="4" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
+          <b-col cols="12" sm="10" md="12" lg="12" xl="4" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info margin-bottom">
             <div class="vote-card vote-card__container--height-equal vote-card-chart">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
@@ -33,7 +33,7 @@
             </div>
           </b-col>
 
-          <b-col cols="12" sm="10" md="12" lg="12" xl="8" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
+          <b-col cols="12" sm="10" md="12" lg="12" xl="8" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info margin-bottom">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">

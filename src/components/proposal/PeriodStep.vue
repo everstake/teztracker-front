@@ -1,5 +1,5 @@
 <template>
-  <CardSection :fluid="true">
+  <CardSection :fluid="true" class="margin-bottom">
       <template>
         <b-row>
           <b-col cols="12" sm="10" md="12" lg="12" xl="12" offset-cols="0" offset-sm="1" offset-md="0">

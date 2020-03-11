@@ -3,7 +3,7 @@
     <CardSection :fluid="true">
       <template>
         <b-row>
-          <b-col cols="12" sm="10" md="12" lg="12" xl="4" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
+          <b-col cols="12" sm="10" md="12" lg="12" xl="4" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info margin-bottom">
             <div class="vote-card vote-card__container--height-equal vote-card-chart">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
@@ -40,7 +40,7 @@
             </div>
           </b-col>
           <!--separate-->
-          <b-col cols="12" sm="10" md="12" lg="12" xl="8" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info">
+          <b-col cols="12" sm="10" md="12" lg="12" xl="8" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info margin-bottom">
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
@@ -157,11 +157,11 @@
       </template>
     </CardSection>
 
-    <CardSection :fluid="true" class="ballots">
+    <CardSection :fluid="true" class="ballots margin-bottom">
       <template>
         <b-row>
           <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0" class="ballot__col">
-            <div class="vote-card">
+            <div class="vote-card margin-bottom">
               <div
                 @click="enableSorting('yay')"
                 :class="{'vote__ballot--active': sortBy === 'yay'}"
@@ -179,7 +179,7 @@
             </div>
           </b-col>
           <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0" class="ballot__col">
-            <div class="vote-card">
+            <div class="vote-card margin-bottom">
               <div
                 @click="enableSorting('nay')"
                 :class="{'vote__ballot--active': sortBy === 'nay'}"

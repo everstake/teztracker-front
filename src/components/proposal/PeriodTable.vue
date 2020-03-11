@@ -1,5 +1,5 @@
 <template>
-  <div class="vote__table">
+  <div class="vote__table margin-bottom">
     <CardSection :fluid="true">
       <template>
         <b-row>

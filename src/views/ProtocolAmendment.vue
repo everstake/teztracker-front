@@ -40,7 +40,7 @@
             sm="12"
             md="6"
             lg="4"
-            class="mb-4"
+            class="protocol-amendment__col"
             v-for="(protocol, index) in protocols"
             :key="generateKey()"
           >
@@ -96,6 +96,10 @@ export default {
 <style lang="scss" scoped>
 .protocol-amendment {
   padding-top: 90px;
+
+  &__col {
+    margin-bottom: 30px;
+  }
 }
 
 .breadcrumbs {

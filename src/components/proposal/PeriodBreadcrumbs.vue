@@ -1,5 +1,5 @@
 <template>
-	<CardSection class="tz-breadcrumbs" :fluid="true">
+	<CardSection class="tz-breadcrumbs margin-top margin-bottom" :fluid="true">
 		<template>
 			<ol class="ml-2 tz-breadcrumbs__list">
 				<li class="font font--mini tz-breadcrumbs__item">
