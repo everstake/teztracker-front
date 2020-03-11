@@ -4,34 +4,18 @@
       <template>
         <b-row>
           <b-col cols="12" sm="10" md="12" lg="12" xl="12" offset-cols="0" offset-sm="1" offset-md="0">
-            <div class="card">
-              <!-- Nav tabs -->
-              <ul class="nav nav-tabs">
-                <li class="nav-item">
-                  <a class="nav-link active" data-toggle="tab" href="#voters"
-                  >Voters</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" data-toggle="tab" href="#non-voters"
-                  >Non-voters</a
-                  >
-                </li>
-              </ul>
-
-              <!-- Tab panes -->
-              <div class="tab-content">
-                <div class="tab-pane active" id="voters">
-                  <div class="card-header">
-                    <div class="title">
+            <b-card no-body>
+              <b-tabs>
+                <b-tab title="Voters" active>
+                  <b-card-header>
+                    <div class="break-word">
                       <h3>
                         <span class="text">Voters list</span>
                       </h3>
                     </div>
-                  </div>
+                  </b-card-header>
 
-                  <div class="card-body">
-                    <!-- voters table start -->
+                  <b-card-body>
                     <b-table
                       show-empty
                       :items="voters"
@@ -76,33 +60,20 @@
                         <span>{{ formatDate(row.item.timestamp) }}</span>
                       </template>
                     </b-table>
-
-                    <div class="vote-table__button-wrapper">
-                      <button
-                        @click.prevent="handleShowClick('voters')"
-                        class="vote-table__button"
-                      >
-                        {{ showMoreVoters ? "Show less" : "Show all" }}
-                      </button>
-                    </div>
-                    <!-- voters table end -->
-                  </div>
-                </div>
-
-                <div class="tab-pane" id="non-voters">
-                  <div class="card-header">
-                    <div class="title">
+                  </b-card-body>
+                </b-tab>
+                <b-tab title="Non-voters">
+                  <b-card-header>
+                    <div class="break-word">
                       <h3>
-                        <span class="text">Non-voters list</span>
+                        <span class="text">Non-voters</span>
                       </h3>
                     </div>
-                  </div>
+                  </b-card-header>
 
-                  <div class="card-body">
-                    <!-- non-voters table start -->
+                  <b-card-body>
                     <b-table
                       show-empty
-                      stacked="md"
                       :items="nonVoters"
                       :fields="nonVotersFields"
                       :current-page="currentPage"
@@ -119,26 +90,10 @@
                         </b-link>
                       </template>
                     </b-table>
-
-                    <div class="vote-table__button-wrapper">
-                      <button
-                        @click.prevent="handleShowClick('nonVoters')"
-                        class="vote-table__button"
-                      >
-                        {{ showMoreNonVoters ? "Show less" : "Show all" }}
-                      </button>
-                    </div>
-
-                    <!--                <Pagination-->
-                    <!--                  v-model="currentPage"-->
-                    <!--                  :total-rows="voters.length"-->
-                    <!--                  :per-page="perPage"-->
-                    <!--                />-->
-                    <!-- non-voters table end -->
-                  </div>
-                </div>
-              </div>
-            </div>
+                  </b-card-body>
+                </b-tab>
+              </b-tabs>
+            </b-card>
           </b-col>
         </b-row>
       </template>
