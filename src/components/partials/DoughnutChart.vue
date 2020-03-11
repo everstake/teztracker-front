@@ -23,7 +23,7 @@ export default {
       }
 
       const options = {
-        cutoutPercentage: 85,
+        cutoutPercentage: 90,
         responsive: true,
         maintainAspectRatio: false,
         aspectRatio: 1,

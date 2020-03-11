@@ -34,7 +34,6 @@
                     <!-- voters table start -->
                     <b-table
                       show-empty
-                      stacked="md"
                       :items="voters"
                       :fields="votersFields"
                       :current-page="currentPage"

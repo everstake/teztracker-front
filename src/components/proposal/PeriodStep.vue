@@ -145,7 +145,6 @@ export default {
   }
 
   &__item {
-    min-height: 70px;
     position: relative;
     display: flex;
     align-items: center;
@@ -240,8 +239,8 @@ export default {
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      width: 45px;
-      height: 45px;
+      width: 35px;
+      height: 35px;
       margin-right: 10px;
       font-size: 16px;
       font-weight: 400;
@@ -307,11 +306,11 @@ export default {
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      margin-right: 30px;
+      margin-right: 10px;
       font-weight: lighter;
-      font-size: 28px;
-      width: 70px;
-      height: 70px;
+      font-size: 16px;
+      width: 35px;
+      height: 35px;
       border: 1px solid #9ea0a5;
       color: #9ea0a5;
       border-radius: 50%;
