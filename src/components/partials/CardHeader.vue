@@ -1,14 +1,14 @@
 <template>
-  <div class="card-header">
-    <div class="card-title">
+  <b-card-header>
+    <b-card-title>
       <div class="card-title_left">
         <slot name="left-content"></slot>
       </div>
       <div class="card-title_right">
         <slot name="right-content"></slot>
       </div>
-    </div>
-  </div>
+    </b-card-title>
+  </b-card-header>
 </template>
 
 <script>

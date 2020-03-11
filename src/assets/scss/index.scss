@@ -1,4 +1,9 @@
+@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap-vue/src/index';
 @import 'custom/typography';
 @import 'custom/common';
+@import 'custom/dropdowns';
+@import 'custom/btns';
+@import 'custom/tables';
 @import 'custom/vote';
 @import 'custom/breadcrumbs';

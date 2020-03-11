@@ -1,10 +1,16 @@
-import Vue from 'vue';
+import Vue from "vue";
 import {
   LinkPlugin,
   TablePlugin,
   PaginationPlugin,
   ProgressPlugin,
   TooltipPlugin,
+  DropdownPlugin,
+  ButtonPlugin,
+  CardPlugin,
+  TabsPlugin,
+  BreadcrumbPlugin,
+  FormSelectPlugin
   LayoutPlugin
 } from "bootstrap-vue";
 import {
@@ -38,13 +44,21 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { dom } from "@fortawesome/fontawesome-svg-core";
+import router from "../router";
+import VueGtag from "vue-gtag";
 
 Vue.use(LinkPlugin);
 Vue.use(TablePlugin);
 Vue.use(PaginationPlugin);
 Vue.use(ProgressPlugin);
 Vue.use(TooltipPlugin);
+Vue.use(DropdownPlugin);
+Vue.use(ButtonPlugin);
 Vue.use(LayoutPlugin);
+Vue.use(CardPlugin);
+Vue.use(TabsPlugin);
+Vue.use(BreadcrumbPlugin);
+Vue.use(FormSelectPlugin);
 
 dom.watch();
 library.add(
@@ -75,3 +89,5 @@ library.add(
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.component("font-awesome-layers", FontAwesomeLayers);
 Vue.component("font-awesome-layers-text", FontAwesomeLayersText);
+
+Vue.use(VueGtag, { config: { id: "UA-159555120-1" } }, router);

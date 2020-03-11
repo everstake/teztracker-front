@@ -3,10 +3,19 @@
 .tz_link a {
   color: $color-brand;
   text-transform: capitalize;
+  font-size: 14px;
 }
 .tz-title--bold {
   font-weight: bold;
   margin-bottom: 0;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  text-transform: uppercase;
+  color: $color-grey;
 }
 
 

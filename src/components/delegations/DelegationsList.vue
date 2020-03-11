@@ -1,13 +1,17 @@
 <template>
   <div>
+    <div class="d-flex justify-content-between mb-4">
+      <PerPageSelect @per-page="$_setPerPage" />
+    </div>
+
     <b-table
       show-empty
-      stacked="md"
       :items="delegations"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
-      class="transactions-table table table-borderless table-responsive-md"
+      borderless
+      class="transactions-table table-responsive-md"
     >
       <template slot="txhash" slot-scope="row">
         <b-link
@@ -60,20 +64,21 @@
 <script>
 import { mapMutations } from "vuex";
 import { SET_DELEGATIONS_COUNT } from "@/store/mutations.types";
+import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
+import setPerPage from "@/mixins/setPerPage";
 
 export default {
   name: "DelegationsList",
   components: {
+    PerPageSelect,
     Pagination
   },
   props: ["account"],
-  mixins: [handleCurrentPageChange],
+  mixins: [handleCurrentPageChange, setPerPage],
   data() {
     return {
-      perPage: this.$constants.PER_PAGE,
-      pageOptions: this.$constants.PAGE_OPTIONS,
       delegations: [],
       count: 0,
       fields: [
@@ -91,6 +96,9 @@ export default {
       async handler(value) {
         await this.reload(value);
       }
+    },
+    async perPage() {
+      await this.reload();
     }
   },
   async created() {

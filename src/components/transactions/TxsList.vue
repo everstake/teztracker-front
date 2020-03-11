@@ -1,13 +1,17 @@
 <template>
   <div>
+    <div class="d-flex justify-content-between mb-4">
+      <PerPageSelect @per-page="$_setPerPage" />
+    </div>
+
     <b-table
       show-empty
-      stacked="md"
       :items="transactions"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
-      class="transactions-table table table-borderless table-responsive-md"
+      borderless
+      class="transactions-table table-responsive-md"
     >
       <template slot="txhash" slot-scope="row">
         <b-link
@@ -55,40 +59,53 @@
     />
   </div>
 </template>
+
 <script>
 import { mapState, mapMutations } from "vuex";
 import { SET_TX_COUNT } from "@/store/mutations.types";
+import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
+import setPerPage from "@/mixins/setPerPage";
 
 export default {
   name: "TxsList",
   components: {
+    PerPageSelect,
     Pagination
   },
-  mixins: [handleCurrentPageChange],
-  props: ["block", "account"],
+  mixins: [handleCurrentPageChange, setPerPage],
+  props: {
+    block: {
+      type: Object
+    },
+    account: {
+      type: String
+    },
+    isTableComplete: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
-      perPage: this.$constants.PER_PAGE,
-      pageOptions: this.$constants.PAGE_OPTIONS,
       transactions: [],
       count: 0,
       fields: [
-        { key: "txhash", label: "Transactions Hash" },
         { key: "level", label: "Block ID" },
         { key: "timestamp", label: "Timestamp" },
-        { key: "from", label: "From" },
-        { key: "to", label: "To" },
-        { key: "amount", label: "Amount" },
-        { key: "fee", label: "Fees" }
+        { key: "txhash", label: "Transactions Hash" },
+        { key: "from", label: "From", class: !this.isTableComplete ? 'd-none' : '' },
+        { key: "to", label: "To", class: !this.isTableComplete ? 'd-none' : '' },
+        { key: "amount", label: "Amount", class: !this.isTableComplete ? 'd-none' : '' },
+        { key: "fee", label: "Fees", class: !this.isTableComplete ? 'd-none' : '' }
       ]
     };
   },
   computed: {
     ...mapState('operations', {
       counts: state => state.counts
-    }),
+    })
   },
   watch: {
     currentPage: {
@@ -105,10 +122,16 @@ export default {
       async handler() {
         await this.reload();
       }
+    },
+    async perPage() {
+      await this.reload();
     }
   },
   async created() {
-    await this.reload();
+    // TODO: refactor API
+    if (!this.block) {
+      await this.reload();
+    }
   },
   methods: {
     ...mapMutations('operations', [SET_TX_COUNT]),

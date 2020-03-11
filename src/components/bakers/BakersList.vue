@@ -1,15 +1,19 @@
 <template>
   <div>
+    <div class="d-flex justify-content-between mb-4">
+      <PerPageSelect @per-page="$_setPerPage" />
+    </div>
+
     <b-table
       show-empty
-      stacked="md"
       :items="bakers"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="0"
-      class="transactions-table table table-borderless table-responsive-md"
+      :per-page="perPage"
+      borderless
+      class="transactions-table table-responsive-md"
     >
-      <template slot="baker" slot-scope="row">
+      <template slot="accountId" slot-scope="row">
         <b-link :to="{ name: 'baker', params: { baker: row.item.accountId } }">
           <span>{{ row.item.name || row.item.accountId | longhash(35) }}</span>
         </b-link>
@@ -17,10 +21,10 @@
       <template slot="blocks" slot-scope="row">
         <span>{{ row.item.blocks }}</span>
       </template>
-      <template slot="assets" slot-scope="row">
+      <template slot="stakingBalance" slot-scope="row">
         <span>{{ row.item.stakingBalance | tezos }}</span>
       </template>
-      <template slot="endorsement" slot-scope="row">
+      <template slot="endorsements" slot-scope="row">
         <span>{{ row.item.endorsements }}</span>
       </template>
     </b-table>
@@ -32,9 +36,12 @@
     />
   </div>
 </template>
+
 <script>
 import { mapState } from "vuex";
+import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
+import setPerPage from "@/mixins/setPerPage";
 
 import withCustomAction from "../partials/withCustomAction";
 const PaginationWithCustomAction = withCustomAction(
@@ -46,18 +53,29 @@ const PaginationWithCustomAction = withCustomAction(
 export default {
   name: "BakersList",
   components: {
+    PerPageSelect,
     PaginationWithCustomAction
   },
+  mixins: [setPerPage],
   data() {
     return {
-      perPage: this.$constants.PER_PAGE,
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      pageOptions: this.$constants.PAGE_OPTIONS,
+      // The key property must coincide with the corresponding keys in the data items
       fields: [
-        { key: "baker", label: "Baker" },
-        { key: "blocks", label: "Blocks" },
-        { key: "assets", label: "Staked assets" },
-        { key: "endorsement", label: "Endorsement" }
+        { key: "accountId", label: "Baker" },
+        {
+          key: "blocks",
+          label: "Blocks",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        { key: "stakingBalance", label: "Staked assets" },
+        {
+          key: "endorsements",
+          label: "Endorsement",
+          sortable: true,
+          sortDirection: "desc"
+        }
       ]
     };
   },
@@ -65,7 +83,7 @@ export default {
     ...mapState("accounts", {
       bakers: state => state.bakers,
       count: state => state.counts
-    }),
-  },
+    })
+  }
 };
 </script>

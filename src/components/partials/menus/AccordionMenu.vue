@@ -312,6 +312,7 @@ $accordion-body-content-padding: 1rem;
 
     &:not(.accordion-active):hover {
       color: $color-brand;
+      text-decoration: none;
     }
   }
 }

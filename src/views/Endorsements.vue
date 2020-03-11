@@ -1,54 +1,40 @@
 <template>
-  <div class="main-content">
-    <section class="breadcrumbs">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="page-title ml-2">
-              <h2>
-                Tezos (XTZ) Blockchain Explorer -
-                <span>Endorsements page</span>
-              </h2>
-            </div>
+  <PageContentContainer page-name="Endorsements page">
+    <template #breadcrumbs>
+      <Breadcrumbs :crumbs="crumbs" />
+    </template>
 
-            <ol class="breadcrumb ml-2">
-              <li class="breadcrumb-item">
-                <router-link :to="{ name: 'network' }">Home</router-link>
-              </li>
-              <li class="breadcrumb-item active">Endorsements page</li>
-            </ol>
-          </div>
-        </div>
-      </div>
-    </section>
+    <template #content>
+      <section>
+        <b-container fluid>
+          <b-row>
+            <b-col lg="12">
+              <b-card no-body>
+                <CardHeader>
+                  <template #left-content class="text">
+                    <h4 class="tz-title--bold">Endorsements list</h4>
+                  </template>
+                  <template #right-content class="text">
+                    <Counter show-line :count="count.endorsements"/>
+                  </template>
+                </CardHeader>
 
-    <section>
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card">
-              <CardHeader>
-                <template v-slot:left-content class="text">
-                  <h4 class="tz-title--bold">Endorsements list</h4>
-                </template>
-                <template v-slot:right-content class="text">
-                  <Counter show-line :count="count.endorsements" />
-                </template>
-              </CardHeader>
-
-              <div class="card-body">
-                <EndorsementsList />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </div>
+                <b-card-body>
+                  <EndorsementsList />
+                </b-card-body>
+              </b-card>
+            </b-col>
+          </b-row>
+        </b-container>
+      </section>
+    </template>
+  </PageContentContainer>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import PageContentContainer from "../layouts/PageContentContainer";
+import Breadcrumbs from "../components/partials/Breadcrumbs";
 import EndorsementsList from "../components/endorsements/EndorsementsList";
 import CardHeader from "../components/partials/CardHeader";
 import Counter from "../components/partials/Counter";
@@ -56,9 +42,19 @@ import Counter from "../components/partials/Counter";
 export default {
   name: "Endorsements",
   components: {
+    PageContentContainer,
+    Breadcrumbs,
     EndorsementsList,
     CardHeader,
     Counter
+  },
+  data() {
+    return {
+      crumbs: [
+        { toRouteName: "network", text: "Home" },
+        { toRouteName: "endorsements", text: "Endorsements page" }
+      ]
+    };
   },
   computed: {
     ...mapState('blocks', {

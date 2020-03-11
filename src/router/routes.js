@@ -44,6 +44,11 @@ const Contracts = () => import("../views/Contracts.vue");
 const ProtocolAmendment = () => import("@/views/ProtocolAmendment.vue");
 const Period = () => import("@/views/Period.vue");
 
+/* Votes group */
+//Votes
+// const Vote = () => import("../views/Vote.vue");
+/* Votes group end */
+
 // Errors
 const NotFound = () => import("../views/errors/NotFound.vue");
 const ServerError = () => import("../views/errors/ServerError.vue");
@@ -132,6 +137,12 @@ export default [
   // Contracts
   { path: "/:network/contracts", name: "contracts", component: Contracts },
   /* Accounts group end */
+
+  /* Governance group */
+  // Votes
+  // { path: "/:network/vote/:voteHash", name: "vote", component: Vote },
+  /* Governance group end */
+
   { path: "/:network/protocol_amendment", redirect: { name: 'protocol_amendment' }},
   { path: "/mainnet/protocol_amendment", name: 'protocol_amendment', component: ProtocolAmendment },
   { path: "/:network/period/:id", redirect: { name: "period" }},

@@ -1,103 +1,53 @@
 <template>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card">
-        <div class="card-header">
-          <div class="title">
-            <h3>
-              <span class="text">{{ level }}</span>
-            </h3>
-            <span class="subtitle">Block Information</span>
-          </div>
-        </div>
-
-        <div class="card-divider"></div>
-
-        <div class="card-body">
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
-              <span class="label">Hash</span>
-            </div>
-            <div class="col-lg-9">
-              <span class="value">{{ block.hash }}</span>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
-              <span class="label">Timestamp</span>
-            </div>
-            <div class="col-lg-9">
-              <span class="value">{{block.timestamp | timeformat($constants.TIME_FORMAT)}}</span>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
-              <span class="label">Volume</span>
-            </div>
-            <div class="col-lg-9">
-              <span class="value">{{ block.volume | tezos }}</span>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
-              <span class="label">Cycle</span>
-            </div>
-            <div class="col-lg-9">
-              <span class="value">{{ block.metaCycle }}</span>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
-              <span class="label">Baker</span>
-            </div>
-            <div class="col-lg-9">
-              <span class="value">
-                <router-link
-                  class="baker"
-                  :to="{ name: 'baker', params: { baker: block.baker } }"
-                  >{{ block.baker }}</router-link
-                >
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <StatisticsCard
+    :title="String(level)"
+    subtitle="Block information"
+    :fields="blockRestructured"
+  >
+    <template #value="slotProps">
+      <template v-if="slotProps.field.key === 'Timestamp'">
+        {{ slotProps.field.value | timeformat($constants.TIME_FORMAT) }}
+      </template>
+      <template v-else-if="slotProps.field.key === 'Volume'">
+        {{ slotProps.field.value | tezos }}
+      </template>
+      <router-link
+        v-else-if="slotProps.field.key === 'Baker'"
+        class="baker"
+        :to="{ name: 'baker', params: { baker: slotProps.field.value } }"
+      >
+        {{ slotProps.field.value }}
+      </router-link>
+    </template>
+  </StatisticsCard>
 </template>
+
 <script>
+import StatisticsCard from "@/layouts/StatisticsCard";
 
 export default {
   name: "BlockSingle",
-  data() {
-    return {
-      block: {}
-    };
+  components: {
+    StatisticsCard
+  },
+  props: {
+    block: {
+      type: Object,
+      required: true
+    }
   },
   computed: {
     level() {
       return this.$route.params.level;
-    }
-  },
-  watch: {
-    level: {
-      async handler(value) {
-        await this.load(value);
-      }
-    }
-  },
-  async created() {
-    await this.load(this.level);
-  },
-  methods: {
-    async load(level) {
-      const result = await this.$api.getBlock({ block: level });
-      if (result.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.replace({
-          name: result.status
-        });
-      }
-      this.block = result.data.block;
+    },
+    blockRestructured() {
+      return [
+        { key: "Hash", value: this.block.hash },
+        { key: "Timestamp", value: this.block.timestamp },
+        { key: "Volume", value: this.block.volume },
+        { key: "Cycle", value: this.block.metaCycle },
+        { key: "Baker", value: this.block.baker },
+      ]
     }
   }
 };

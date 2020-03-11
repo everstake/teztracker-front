@@ -1,23 +1,17 @@
 <template>
-  <div class="dropdown">
-    <a
-      class="dropdown-toggle dropdown__title"
-      data-toggle="dropdown"
-      href="#"
-      role="button"
-      aria-haspopup="true"
-      aria-expanded="false"
-      >{{ currentVal }}</a
-    >
-    <div class="dropdown-menu">
-      <div class="dropdown-item" @click="selectItem('This Month')">
-        This Month
-      </div>
-      <div class="dropdown-item" @click="selectItem('This Year')">
-        This Year
-      </div>
-    </div>
-  </div>
+  <b-dropdown variant="link" no-caret class="custom-dropdown">
+    <template #button-content>
+      {{ currentVal }}
+      <font-awesome-icon icon="angle-down" class="ml-1"/>
+    </template>
+
+    <b-dropdown-item-button @click="selectItem('This month')">
+      This month
+    </b-dropdown-item-button>
+    <b-dropdown-item-button @click="selectItem('This year')">
+      This year
+    </b-dropdown-item-button>
+  </b-dropdown>
 </template>
 
 <script>

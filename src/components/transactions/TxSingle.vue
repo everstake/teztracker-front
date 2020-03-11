@@ -1,92 +1,53 @@
 <template>
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card ml-2 mr-2">
-        <div class="card-header">
-          <div class="title">
-            <h3>
-              <span class="text">{{ opHash }}</span>
-            </h3>
-            <span class="subtitle">Transaction Information</span>
-          </div>
-        </div>
-
-        <div class="card-divider"></div>
-
-        <div class="card-body">
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
-              <span class="label">Included in Block</span>
-            </div>
-            <div class="col-lg-9">
-              <span class="value">
-                <router-link
-                  class="link"
-                  :to="{ name: 'block', params: { level } }"
-                  >{{ level }}</router-link
-                >
-              </span>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
-              <span class="label">Timestamp</span>
-            </div>
-            <div class="col-lg-9">
-              <span class="value">{{timestamp | timeformat($constants.TIME_FORMAT) }}</span>
-            </div>
-          </div>
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
-              <span class="label">Operation Hash</span>
-            </div>
-            <div class="col-lg-9">
-              <span class="value">{{ opHash }}</span>
-            </div>
-          </div>
-<!--          <div class="item-info row ml-1 mr-1">-->
-<!--            <div class="col-lg-3">-->
-<!--              <span class="label">Block id</span>-->
-<!--            </div>-->
-<!--            <div class="col-lg-9">-->
-<!--              <span class="value">{{ level }}</span>-->
-<!--            </div>-->
-<!--          </div>-->
-          <div class="item-info row ml-1 mr-1">
-            <div class="col-lg-3">
-              <span class="label">Fee</span>
-            </div>
-            <div class="col-lg-9">
-              <span class="value">
-                {{ fee | tezos }}
-                ({{ $_convert(fee) }})
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  <StatisticsCard
+    :title="opHash"
+    subtitle="Transaction information"
+    :fields="txInfoRestructured"
+  >
+    <template #value="slotProps">
+      <router-link
+        v-if="slotProps.field.key === 'Included in Block'"
+        class="link"
+        :to="{ name: 'block', params: { level } }"
+      >
+        {{ slotProps.field.value }}
+      </router-link>
+      <template v-else-if="slotProps.field.key === 'Timestamp'">
+        {{ slotProps.field.value | timeformat($constants.TIME_FORMAT) }}
+      </template>
+      <template v-else-if="slotProps.field.key === 'Fee'">
+        {{ slotProps.field.value | tezos }}
+        ({{ $_convert(slotProps.field.value) }})
+      </template>
+    </template>
+  </StatisticsCard>
 </template>
 
 <script>
-import convert from "../../mixins/convert";
 import { mapState, mapActions } from "vuex";
 import { GET_APP_INFO } from "@/store/actions.types";
+import StatisticsCard from "@/layouts/StatisticsCard";
+import convert from "../../mixins/convert";
 
 export default {
   name: "TxSingle",
-  props: ["blockHash", "timestamp", "opHash", "level", "fee"],
+  props: ["timestamp", "opHash", "level", "fee"],
   mixins: [convert],
-  data() {
-    return {
-      tx: {}
-    };
+  components: {
+    StatisticsCard
   },
   computed: {
     ...mapState('app', {
       info: state => state.priceInfo
-    })
+    }),
+    txInfoRestructured() {
+      return [
+        { key: "Included in Block", value: this.level },
+        { key: "Timestamp", value: this.timestamp },
+        { key: "Operation hash", value: this.opHash },
+        { key: "Fee", value: this.fee }
+      ];
+    }
   },
   async created() {
     await this[GET_APP_INFO]();

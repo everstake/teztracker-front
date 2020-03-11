@@ -1,26 +1,30 @@
 import Vue from "vue";
 import http from "./http.service";
 import querystring from "querystring";
-import { state } from '@/store/modules/app.module';
+import { state } from "@/store/modules/app.module";
 
 function formatURL(api, path, query) {
   return `${api}${path}?${querystring.stringify(query)}`;
 }
 
-async function get(api, path, query) {
+async function get(api, path, query, isStandard = true) {
   const { page = 1, limit = 10 } = query;
   const offset = limit * (page - 1);
   let data;
   try {
     data = await http.get(
-      formatURL(api, path, Object.assign({}, query, { limit, offset }))
+      isStandard
+        ? formatURL(api, path, Object.assign({}, query, { limit, offset }))
+        : formatURL(api, path, Object.assign({}, query))
     );
   } catch (e) {
     data = e.response;
   }
   const result = { data: data.data, status: data.status };
   if (data.headers[Vue.prototype.$constants.COUNT_HEADER]) {
-    result.count = parseInt(data.headers[Vue.prototype.$constants.COUNT_HEADER]);
+    result.count = parseInt(
+      data.headers[Vue.prototype.$constants.COUNT_HEADER]
+    );
   }
   return result;
 }
@@ -97,11 +101,15 @@ const TzAPI = {
   },
   getBlock(opts = {}) {
     const { block = "head" } = opts;
-    return get(this.API_URL(), `blocks/${block}`, opts);
+    // TODO: Refactor API service
+    delete opts.block;
+    return get(this.API_URL(), `blocks/${block}`, opts, false);
   },
   getBlockEndorsements(opts = {}) {
     const { block_id } = opts;
-    return get(this.API_URL(), `blocks/${block_id}/endorsements`, opts);
+    // TODO: Refactor API service
+    delete opts.block_id;
+    return get(this.API_URL(), `blocks/${block_id}/endorsements`, opts, false);
   },
   getBlocks(opts = {}) {
     return get(this.API_URL(), "blocks", opts);

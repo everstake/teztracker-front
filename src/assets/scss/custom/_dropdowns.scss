@@ -1,0 +1,35 @@
+.custom-dropdown {
+  .btn-link {
+    color: $color-black;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    border-width: 0;
+    transition: color 0.2s;
+    line-height: 17px;
+
+    &:hover {
+      color: $color-brand;
+      text-decoration: none;
+    }
+    &:focus {
+      text-decoration: none;
+    }
+  }
+
+  &.show {
+    .btn-link {
+      color: $color-brand;
+    }
+  }
+
+  .dropdown-item:focus {
+    outline: none;
+  }
+}
+
+.main-header .header-middle .main-nav ul.dropdown-menu li {
+  display: block;
+  float: initial;
+  padding: 0;
+}
