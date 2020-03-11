@@ -132,23 +132,18 @@
             </b-dropdown>
           </li>
           <li v-if="currentNetwork === 'mainnet'">
-            <a
-              class="dropdown-toggle"
-              data-toggle="dropdown"
-              href="/"
-              role="button"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Governance
-              <font-awesome-icon
-                icon="angle-down"
-                class="ml-1"
-              />
-            </a>
-            <div class="dropdown-menu">
-              <router-link class="dropdown-item" :to="{ name: 'protocol_amendment' }">Protocol Amendments</router-link>
-            </div>
+            <b-dropdown id="governance" variant="link" class="custom-dropdown">
+              <template #button-content>
+                Governance
+                <font-awesome-icon icon="angle-down" class="ml-1" />
+              </template>
+
+              <b-dropdown-item
+                :to="{ name: 'protocol_amendment' }"
+              >
+                Protocol Amendments
+              </b-dropdown-item>
+            </b-dropdown>
           </li>
         </ul>
       </nav>

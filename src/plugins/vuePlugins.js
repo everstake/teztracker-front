@@ -10,7 +10,7 @@ import {
   CardPlugin,
   TabsPlugin,
   BreadcrumbPlugin,
-  FormSelectPlugin
+  FormSelectPlugin,
   LayoutPlugin
 } from "bootstrap-vue";
 import {
