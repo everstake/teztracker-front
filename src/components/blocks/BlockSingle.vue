@@ -6,7 +6,7 @@
   >
     <template #value="slotProps">
       <template v-if="slotProps.field.key === 'Timestamp'">
-        {{ slotProps.field.value | timeformat($constants.TIME_FORMAT) }}
+        {{ slotProps.field.value | timeformat(dateFormat) }}
       </template>
       <template v-else-if="slotProps.field.key === 'Volume'">
         {{ slotProps.field.value | tezos }}
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import StatisticsCard from "@/layouts/StatisticsCard";
 
 export default {
@@ -37,6 +38,9 @@ export default {
     }
   },
   computed: {
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
+    }),
     level() {
       return this.$route.params.level;
     },

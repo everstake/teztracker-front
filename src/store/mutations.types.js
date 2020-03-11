@@ -26,3 +26,4 @@ export const SET_TRANSACTIONS = "setTransactions";
 export const SET_BAKERS = "setBakers";
 export const SET_ACCOUNTS = "setAccounts";
 export const SET_CONTRACTS = "setContracts";
+export const SET_DATE_FORMAT = "setDateFormat";
