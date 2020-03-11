@@ -31,7 +31,8 @@ async function get(api, path, query, isStandard = true) {
 
 const TzAPI = {
   API_URL() {
-    return Vue.prototype.$constants.API_BASE_URLS[state.app.network];
+    // return Vue.prototype.$constants.API_BASE_URLS[state.app.network];
+    return Vue.prototype.$constants.DEV_API_BASE_URLS[state.app.network];
   },
   getAccounts(opts = {}) {
     return get(this.API_URL(), "accounts", opts);
