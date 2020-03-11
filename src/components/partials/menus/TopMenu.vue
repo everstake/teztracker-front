@@ -99,14 +99,14 @@
               aria-haspopup="true"
               aria-expanded="false"
             >
-              Protocol Amendments
+              Governance
               <font-awesome-icon
                 icon="angle-down"
                 class="ml-1"
               />
             </a>
             <div class="dropdown-menu">
-              <router-link class="dropdown-item" :to="{ name: 'protocol_amendment' }">All amendments</router-link>
+              <router-link class="dropdown-item" :to="{ name: 'protocol_amendment' }">Protocol Amendments</router-link>
             </div>
           </li>
         </ul>
