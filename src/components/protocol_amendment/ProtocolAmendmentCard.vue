@@ -27,7 +27,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .protocol-amendment {
   &__card {
     display: flex;
@@ -72,5 +72,21 @@ export default {
     font-weight: 700;
     text-transform: capitalize;
   }
+
+  &__loading {
+    position: relative;
+
+    &:after {
+      position: absolute;
+      overflow: hidden;
+      display: inline-block;
+      vertical-align: bottom;
+      animation: ellipsis steps(4,end) 900ms infinite;
+      content: "\2026";
+      width: 0;
+    }
+  }
+
+
 }
 </style>

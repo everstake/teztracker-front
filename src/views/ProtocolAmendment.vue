@@ -15,7 +15,25 @@
       </b-container>
     </div>
 
-    <div>
+    <div v-if="loading">
+      <b-container fluid>
+        <b-row>
+          <b-col
+            sm="12"
+            md="6"
+            lg="4"
+            class="mb-4"
+          >
+            <div class="protocol-amendment__card">
+              <div class="protocol-amendment__loading font font--regular">
+                Loading
+              </div>
+            </div>
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
+    <div v-else>
       <b-container fluid>
         <b-row>
           <b-col
@@ -51,7 +69,8 @@ export default {
   mixins: [uuid],
   data() {
     return {
-      protocols: []
+      protocols: [],
+      loading: true
     };
   },
   methods: {
@@ -69,6 +88,7 @@ export default {
   async created() {
     const data = await this.$api.getProposals({});
     this.protocols = data.data;
+    this.loading = false;
   }
 };
 </script>
