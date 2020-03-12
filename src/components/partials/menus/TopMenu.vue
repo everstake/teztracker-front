@@ -143,6 +143,12 @@
               >
                 Protocol Amendments
               </b-dropdown-item>
+
+              <b-dropdown-item
+                :to="{ name: 'protocols' }"
+              >
+                Protocols list
+              </b-dropdown-item>
             </b-dropdown>
           </li>
         </ul>

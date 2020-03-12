@@ -126,7 +126,7 @@ export default {
       votersFields: [
         { key: "pkh", label: "Baker" },
         { key: "rolls", label: "Number of voters" },
-        { key: "id", label: "Vote" },
+        { key: "proposal", label: "Vote" },
         { key: "blockLevel", label: "Block" },
         { key: "timestamp", label: "Timestamp" },
         { key: "operation", label: "Vote hash" }

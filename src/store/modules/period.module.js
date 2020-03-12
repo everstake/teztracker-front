@@ -1,5 +1,5 @@
 import { GET_PROPOSAL_PERIOD, GET_PERIODS, GET_PROPOSALS, GET_VOTERS, GET_NON_VOTERS, GET_BALLOTS } from "@/store/actions.types";
-import { SET_PROPOSAL_PERIOD, SET_PERIODS, SET_VOTERS_COUNT, SET_NON_VOTERS_COUNT, SET_PROPOSALS, SET_VOTERS, SET_NON_VOTERS, SET_BALLOTS } from "@/store/mutations.types";
+import { SET_PROPOSAL_PERIOD, SET_PERIODS, SET_VOTERS_COUNT, SET_NON_VOTERS_COUNT, SET_PROPOSALS, SET_VOTERS, SET_NON_VOTERS, SET_BALLOTS, SET_PROTOCOLS_COUNT } from "@/store/mutations.types";
 import getPercentage from "@/utils/getPercentage";
 
 const initialState = {
@@ -14,7 +14,8 @@ const initialState = {
   nonVoters: [],
   counts: {
     voters: 0,
-    nonVoters: 0
+    nonVoters: 0,
+    protocols: 0
   }
 };
 
@@ -74,6 +75,9 @@ export const mutations = {
   [SET_BALLOTS](state, payload) {
     state.counts.voters = payload.count;
     state.voters = payload.data;
+  },
+  [SET_PROTOCOLS_COUNT](state, payload) {
+    state.counts.protocols = payload;
   }
 };
 

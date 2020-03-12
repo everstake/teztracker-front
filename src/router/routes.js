@@ -43,6 +43,7 @@ const Contracts = () => import("../views/Contracts.vue");
 // Protocol amendment
 const ProtocolAmendment = () => import("@/views/ProtocolAmendment.vue");
 const Period = () => import("@/views/Period.vue");
+const Protocols = () => import("@/views/Protocols.vue");
 
 /* Votes group */
 //Votes
@@ -145,6 +146,8 @@ export default [
 
   { path: "/:network/protocol_amendment", redirect: { name: 'protocol_amendment' }},
   { path: "/mainnet/protocol_amendment", name: 'protocol_amendment', component: ProtocolAmendment },
+  { path: "/:network/protocols", redirect: { name: 'protocols' } },
+  { path: '/mainnet/protocols', name: 'protocols', component: Protocols },
   { path: "/:network/period/:id", redirect: { name: "period" }},
   { path: '/mainnet/period/:id', name: 'period', component: Period },
   // Errors

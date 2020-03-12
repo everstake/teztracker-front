@@ -35,3 +35,4 @@ export const SET_PROPOSALS = "setProposals"
 export const SET_VOTERS = "setVoters";
 export const SET_NON_VOTERS = "setNonVoters";
 export const SET_BALLOTS = "setBallots";
+export const SET_PROTOCOLS_COUNT = "setProtocolsCount";

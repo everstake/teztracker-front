@@ -28,29 +28,32 @@
                         <b-link
                           :to="{ name: 'baker', params: { baker: row.item.pkh } }"
                         >
-                      <span>{{
-                        row.item.name || row.item.pkh | longhash(35)
-                      }}</span>
+                      <span>{{row.item.name || row.item.pkh | longhash(35)}}</span>
                         </b-link>
                       </template>
 
                       <template slot="blockLevel" slot-scope="row">
                         <b-link
                           :to="{
-                        name: 'block',
-                        params: { level: row.item.blockLevel }
-                      }"
+                            name: 'block',
+                            params: { level: row.item.blockLevel }
+                          }"
                         >
                           <span>{{ row.item.blockLevel }}</span>
                         </b-link>
                       </template>
 
+                      <template slot="proposal" slot-scope="row">
+                        <span>{{ row.item.proposal | longhash(9) }}</span>
+                      </template>
+
+
                       <template slot="operation" slot-scope="row">
                         <b-link
                           :to="{
-                        name: 'tx',
-                        params: { txhash: row.item.operation }
-                      }"
+                            name: 'tx',
+                            params: { txhash: row.item.operation }
+                          }"
                         >
                           <span>{{ row.item.operation | longhash(35) }}</span>
                         </b-link>

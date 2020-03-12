@@ -144,6 +144,9 @@ const TzAPI = {
     const { id } = opts;
     return get(this.getVotingUrl(), `non_voters/${id}`, opts);
   },
+  getProtocols(opts = {}) {
+    return get(this.getVotingUrl(), `protocols`, opts);
+  }
 };
 
 export default TzAPI;
