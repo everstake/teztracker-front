@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import ProtocolAmendmentCard from "@/components/protocol_amendment/ProtocolAmendmentCard";
+import ProtocolAmendmentCard from "@/components/protocol/ProtocolAmendmentCard";
 import uuid from '@/mixins/uuid';
 
 export default {

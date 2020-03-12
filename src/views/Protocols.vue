@@ -37,7 +37,7 @@ import PageContentContainer from "../layouts/PageContentContainer";
 import Breadcrumbs from "../components/partials/Breadcrumbs";
 import CardHeader from "../components/partials/CardHeader";
 import Counter from "../components/partials/Counter";
-import ProtocolsList from "@/components/protocol_amendment/ProtocolsList";
+import ProtocolsList from "@/components/protocol/ProtocolsList";
 
 export default {
   name: "Protocols",

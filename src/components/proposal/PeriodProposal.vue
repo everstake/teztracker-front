@@ -54,7 +54,7 @@
                         {{ voter.title || voter.pkh }}
                       </div>
                       <div class="vote-card__recent-proposal font font--mini">
-                        <span>Proposal:</span> {{ voter.proposal | longhash(15) }}
+                        <span>Proposal:</span> {{ voter.proposal | longhash(9) }}
                       </div>
                     </div>
                     <div class="vote-card__recent-rolls font font--mini">{{ voter.rolls }}</div>
