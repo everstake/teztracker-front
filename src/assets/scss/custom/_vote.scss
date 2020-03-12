@@ -873,6 +873,12 @@
       margin-top: 0 !important;
     }
   }
+
+  &__proposal {
+    &  section:not(:last-child):not(:first-child) {
+      margin-bottom: 30px;
+    }
+  }
 }
 
 .vote-content {
