@@ -279,21 +279,6 @@ export default {
       });
 
       return votePercentage;
-    },
-    getDoughnutOptions() {
-      const { yay = 0, nay = 0, pass = 0 } = this.proposal.ballots;
-
-      console.log(this.getDoughnutLegendPosition);
-
-      const options = {
-        data: [yay, nay, pass],
-        labels: ['Yay', 'Nay', 'Pass'],
-        percentage: [...this.getVotesPercentage],
-        legend: this.getDoughnutLegendPosition
-      };
-
-
-      return options;
     }
   },
   created() {

@@ -13,10 +13,10 @@
 								</div>
 								<div class="vote-card__divider"></div>
 								<div class="vote-card__body">
-									<p class="vote-card--margin-none vote-card__font-size--18 vote-card__weight--bold font font--mini">
+									<p class="vote-card__font-size--18 vote-card__weight--bold font font--mini">
 										{{ proposal.proposal.title }}
 									</p>
-									<p class="vote-card__recent-name vote-card__proposal-description font font--mini" v-html="proposal.proposal.shortDescription"></p>
+									<p class="vote-card--margin-none vote-card__recent-name vote-card__proposal-description font font--mini" v-html="proposal.proposal.shortDescription"></p>
 									<div class="vote-card__divider"></div>
 								</div>
 							</div>
