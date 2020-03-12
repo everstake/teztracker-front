@@ -12,6 +12,9 @@
       <div class="overlay_container">
         <div class="mobile-nav">
           <AccordionMenu @close="closeMenu" />
+          <div class="d-flex justify-content-center pb-5 text-center date-switcher-wrap">
+            <DateFormatSwitcher :is-switch-only="true" />
+          </div>
           <div class="search search-wrapper-nav">
             <Search @onSubmit="toggleMenu" />
           </div>
@@ -25,11 +28,12 @@
 <script>
 import Search from "../Search";
 import AccordionMenu from "./AccordionMenu";
+import DateFormatSwitcher from "@/components/partials/DateFormatSwitcher";
 import Footer from "./Footer";
 
 export default {
   name: "OverlayMenu",
-  components: { Search, AccordionMenu, Footer },
+  components: { Search, AccordionMenu, Footer, DateFormatSwitcher },
   data() {
     return {
       isOpen: false
@@ -276,7 +280,6 @@ $button-width: 35px;
 }
 
 .footer--fixed {
-  /*position: fixed;*/
   bottom: 0;
   width: 100%;
 }
@@ -290,5 +293,9 @@ $button-width: 35px;
   button {
     height: 60px !important;
   }
+}
+
+.date-switcher-wrap {
+  margin-top: -16px;
 }
 </style>

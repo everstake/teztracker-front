@@ -28,7 +28,7 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat($constants.TIME_FORMAT) }}</span>
+        <span>{{ row.item.timestamp | timeformat(dateFormat) }}</span>
       </template>
 
       <template slot="to" slot-scope="row">
@@ -46,7 +46,7 @@
   </div>
 </template>
 <script>
-import { mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import { SET_ACTIVATIONS_COUNT } from "@/store/mutations.types";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
@@ -72,6 +72,11 @@ export default {
         { key: "to", label: "To" }
       ]
     };
+  },
+  computed: {
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
+    })
   },
   watch: {
     currentPage: {

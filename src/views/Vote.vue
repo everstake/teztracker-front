@@ -14,7 +14,7 @@
           >
             <template #value="slotProps">
               <template v-if="slotProps.field.key === 'Timestamp'">
-                {{ slotProps.field.value | timeformat($constants.TIME_FORMAT) }}
+                {{ slotProps.field.value | timeformat(dateFormat) }}
               </template>
             </template>
           </StatisticsCard>
@@ -28,6 +28,7 @@
 import PageContentContainer from "../layouts/PageContentContainer";
 import Breadcrumbs from "../components/partials/Breadcrumbs";
 import StatisticsCard from "../layouts/StatisticsCard";
+import { mapState } from "vuex";
 
 export default {
   name: "Vote",
@@ -50,6 +51,9 @@ export default {
     };
   },
   computed: {
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
+    }),
     voteHash() {
       return this.$route.params.voteHash;
     },

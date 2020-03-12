@@ -1,0 +1,68 @@
+<template>
+  <b-form-group v-if="isSwitchOnly"
+                label="Date format:"
+                class="mb-0"
+                label-class="font-weight-semi-bold"
+  >
+    <b-form-checkbox v-model="isUSDateFormat" name="date-format" switch>
+      {{ isUSDateFormat ? "US date format" : "Standard date format" }}
+    </b-form-checkbox>
+  </b-form-group>
+
+  <b-dropdown v-else id="blocks" variant="link" class="custom-dropdown">
+    <template #button-content>
+      <font-awesome-icon icon="cog" />
+      <font-awesome-icon icon="angle-down" class="ml-1" />
+    </template>
+
+    <b-dropdown-text>
+      <b-form-group label="Date format:" class="mb-0">
+        <b-form-checkbox v-model="isUSDateFormat" name="date-format" switch>
+          {{ isUSDateFormat ? "US date format" : "Standard date format" }}
+        </b-form-checkbox>
+      </b-form-group>
+    </b-dropdown-text>
+  </b-dropdown>
+</template>
+
+<script>
+import { mapState, mapMutations } from "vuex";
+import { SET_DATE_FORMAT } from "@/store/mutations.types";
+
+export default {
+  name: "DateFormatSwitcher",
+  props: {
+    isSwitchOnly: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      isUSDateFormat: this.$helpers.isLocalStorageAvailable()
+        ? localStorage.getItem("defaultDateFormat") ===
+          this.$constants.DATE_FORMAT_US
+        : false
+    };
+  },
+  computed: {
+    ...mapState("app", {
+      dateFormat: state => state.app.dateFormat
+    })
+  },
+  watch: {
+    isUSDateFormat: {
+      immediate: true,
+      handler(value) {
+        const userDefaultDateFormat = value
+          ? this.$constants.DATE_FORMAT_US
+          : this.$constants.DATE_FORMAT;
+        this[SET_DATE_FORMAT](userDefaultDateFormat);
+      }
+    }
+  },
+  methods: {
+    ...mapMutations("app", [SET_DATE_FORMAT])
+  }
+};
+</script>
