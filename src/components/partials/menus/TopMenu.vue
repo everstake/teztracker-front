@@ -112,6 +112,12 @@
               >Bakers</router-link
             >
           </li>
+          <li v-bind:class="{ active: isActive('public_bakers') }">
+            <router-link
+              :to="{ name: 'public_bakers', params: { network: currentNetwork } }"
+            >Public bakers</router-link
+            >
+          </li>
           <li>
             <b-dropdown id="accounts" variant="link" class="custom-dropdown">
               <template #button-content>

@@ -29,6 +29,7 @@ const DoubleEndorsement = () => import("../views/DoubleEndorsement.vue");
 
 // Bakers
 const Bakers = () => import("../views/Bakers.vue");
+const BakersPublic = () => import("../views/BakersPublic.vue");
 const Baker = () => import("../views/Baker.vue");
 
 /* Accounts group */
@@ -124,6 +125,7 @@ export default [
 
   // Bakers
   { path: "/:network/bakers", name: "bakers", component: Bakers },
+  { path: "/:network/public_bakers", name: "public_bakers", component: BakersPublic },
   { path: "/:network/baker/:baker", name: "baker", component: Baker },
 
   /* Accounts group */

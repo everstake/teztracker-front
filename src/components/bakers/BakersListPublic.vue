@@ -18,6 +18,9 @@
           {{ row.item.name || row.item.accountId | longhash(35) }}
         </b-link>
       </template>
+      <template slot="fee" slot-scope="row">
+        {{ row.item.fee }} %
+      </template>
       <template slot="stakingBalance" slot-scope="row">
         {{ row.item.stakingBalance | tezos }}
       </template>
@@ -28,7 +31,7 @@
 
     <PaginationWithCustomAction
       v-model="currentPage"
-      :total-rows="count.bakers"
+      :total-rows="count.publicBakers"
       :per-page="perPage"
     />
   </div>
@@ -41,14 +44,15 @@ import Pagination from "../partials/Pagination";
 import setPerPage from "@/mixins/setPerPage";
 
 import withCustomAction from "../partials/withCustomAction";
+
 const PaginationWithCustomAction = withCustomAction(
   Pagination,
   "accounts",
-  "GET_BAKERS"
+  "GET_PUBLIC_BAKERS"
 );
 
 export default {
-  name: "BakersList",
+  name: "BakersListPublic",
   components: {
     PerPageSelect,
     PaginationWithCustomAction
@@ -57,9 +61,12 @@ export default {
   data() {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      // The key property must coincide with the corresponding keys in the data items
       fields: [
         { key: "accountId", label: "Baker" },
+        { key: "capacity", label: "Capacity" },
+        { key: "fee", label: "Fee" },
+        { key: "stakingBalance", label: "Total balance" },
+        { key: "rolls", label: "Rolls" },
         {
           key: "blocks",
           label: "Blocks",
@@ -72,8 +79,7 @@ export default {
           sortable: true,
           sortDirection: "desc"
         },
-        { key: "stakingBalance", label: "Total balance" },
-        { key: "rolls", label: "Rolls" },
+        { key: "activeDelegators", label: "# of delegators" },
         { key: "bakingSince", label: "Baking since" }
       ]
     };
