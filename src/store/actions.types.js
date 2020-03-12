@@ -16,3 +16,7 @@ export const GET_ACCOUNTS = "getAccounts";
 export const GET_CONTRACTS = "getContracts";
 export const GET_PROPOSAL_PERIOD = "getProposalPeriod";
 export const GET_PERIODS = "getPeriods";
+export const GET_PROPOSALS = "getProposals";
+export const GET_VOTERS = "getVoters";
+export const GET_NON_VOTERS = "getNonVoters";
+export const GET_BALLOTS = "getBallots";

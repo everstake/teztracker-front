@@ -57,10 +57,10 @@
       >
         <template>
           <b-row>
-            <b-col cols="12">
+            <b-col cols="12" sm="10" md="12" lg="12" xl="12" offset-cols="0" offset-sm="1" offset-md="0">
               <div class="vote-card vote-card__empty">
                 <div class="vote-card__header">
-                  <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered">
+                  <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered font font--mini">
                     There is no proposals on this period.
                   </p>
                 </div>
@@ -140,9 +140,16 @@ import PeriodExploration from '@/components/proposal/PeriodExploration';
 import PeriodTesting from '@/components/proposal/PeriodTesting';
 import PeriodBreadcrumbs from '@/components/proposal/PeriodBreadcrumbs';
 import PeriodTable from "@/components/proposal/PeriodTable";
-import { SET_VOTERS_COUNT, SET_NON_VOTERS_COUNT } from "@/store/mutations.types";
-import { mapMutations, mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 import CardSection from '@/components/partials/CardSection';
+import {
+  GET_PERIODS,
+  GET_PROPOSAL_PERIOD,
+  GET_PROPOSALS,
+  GET_VOTERS,
+  GET_NON_VOTERS,
+  GET_BALLOTS
+} from "@/store/actions.types";
 
 export default {
   name: "Period",
@@ -157,7 +164,7 @@ export default {
   },
   data() {
     return {
-      proposal: {
+      proposall: {
         period: {
           periodType: "",
           endLevel: 0,
@@ -178,10 +185,10 @@ export default {
           nay: 0
         }
       },
-      proposals: [],
+      proposalss: [],
       periodTypes: ['proposal', 'exploration', 'testing', 'promotion'],
-      periods: [],
-      voters: [],
+      periodss: [],
+      voterss: [],
       votersFields: [
         { key: "pkh", label: "Baker" },
         { key: "rolls", label: "Number of voters" },
@@ -190,7 +197,7 @@ export default {
         { key: "timestamp", label: "Timestamp" },
         { key: "operation", label: "Vote hash" }
       ],
-      nonVoters: [],
+      nonVoterss: [],
       nonVotersFields: [
         { key: "pkh", label: "Baker" },
         { key: "rolls", label: "Number of voters" }
@@ -216,7 +223,7 @@ export default {
   },
   mixins: [uuid],
   methods: {
-    ...mapMutations('proposal', [SET_VOTERS_COUNT, SET_NON_VOTERS_COUNT]),
+    ...mapActions('period', [GET_PROPOSAL_PERIOD, GET_PERIODS, GET_PROPOSALS, GET_VOTERS, GET_NON_VOTERS, GET_BALLOTS]),
     async enableTableSort(arg) {
       if (arg === this.filterTable) {
         this.filterTable = false;
@@ -248,49 +255,35 @@ export default {
       return (b * 100) / a;
     },
     async fetchPeriod(id) {
-      const data = await this.$api.getPeriod({ id });
-      const { status } = data;
-
-      if (status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.replace({ name: status });
-      }
-
-      this.proposal = data.data;
+      await this[GET_PROPOSAL_PERIOD]({ id });
     },
     async fetchPeriods(id) {
-      const data = await this.$api.getPeriods({ id });
-      this.periods = data.data;
+      await this[GET_PERIODS]({ id });
     },
     async fetchProposals(id) {
-      const { data } = await this.$api.getProposals({ period_id: id });
-      data.map(proposal => {
-        proposal.upvote = this.getPercentage([this.proposal.voteStats.votesAvailable, proposal.votesCasted]).toFixed(2);
-      })
-
-      this.proposals = data;
+      await this[GET_PROPOSALS]({ period_id: id });
     },
     async fetchVoters(id, limit = 20) {
-      const data = await this.$api.getVoters({ id, limit });
-      this[SET_VOTERS_COUNT](data.count);
-      this.voters = data.data.map(voter => ({ ...voter, id }));
+      await this[GET_VOTERS]({ id, limit });
     },
     async fetchNonVoters(id, limit = 20) {
-      const data = await this.$api.getNonVoters({ id, limit });
-      this[SET_NON_VOTERS_COUNT](data.count);
-      this.nonVoters = data.data.map(voter => ({ ...voter, id }));
+      await this[GET_NON_VOTERS]({ id, limit });
     },
     async fetchBallots(id, limit = 20) {
-      const data = await this.$api.getBallots({ id, limit });
-      this[SET_VOTERS_COUNT](data.count);
-      this.voters = data.data;
+      this[GET_BALLOTS]({ id, limit });
     },
     setPeriodWidth(width) {
       this.window.width = width;
     }
   },
   computed: {
-    ...mapState('proposal', {
-      votersCount: state => state.counts.voters
+    ...mapState('period', {
+      votersCount: state => state.counts.voters,
+      proposal: state => state.period,
+      periods: state => state.periods,
+      proposals: state => state.proposals,
+      voters: state => state.voters,
+      nonVoters: state => state.nonVoters
     }),
     filteredVoters() {
       if (this.filterTable === 'yay') {
@@ -369,19 +362,21 @@ export default {
     }
   },
   async created() {
-    await this.fetchPeriod(this.$route.params.id);
-    await this.fetchPeriods(this.$route.params.id);
+    const { id } = this.$route.params;
+
+    await this.fetchPeriod(id);
+    await this.fetchPeriods(id);
 
     switch (this.currentPeriodType) {
       case 'proposal':
-        await this.fetchProposals(this.$route.params.id);
-        await this.fetchVoters(this.$route.params.id);
-        await this.fetchNonVoters(this.$route.params.id);
+        await this.fetchProposals(id);
+        await this.fetchVoters(id);
+        await this.fetchNonVoters(id);
         break;
       case 'exploration':
       case 'promotion':
-        await this.fetchNonVoters(this.$route.params.id);
-        await this.fetchBallots(this.$route.params.id);
+        await this.fetchNonVoters(id);
+        await this.fetchBallots(id);
         break;
     }
 

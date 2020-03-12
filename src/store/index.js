@@ -5,7 +5,7 @@ import app from "./modules/app.module";
 import blocks from "./modules/blocks.module";
 import operations from "./modules/operations.module";
 import accounts from "./modules/accounts.module";
-import proposal from "./modules/proposal.module";
+import period from "./modules/period.module";
 
 Vue.use(Vuex);
 
@@ -20,6 +20,6 @@ export default new Vuex.Store({
     blocks,
     accounts,
     operations,
-    proposal
+    period
   }
 });

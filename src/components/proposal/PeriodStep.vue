@@ -17,7 +17,7 @@
                   </p>
                   <router-link
                     v-else
-                    :to="{ name: 'period',params: { id: periodStepUrls[index] || true }}"
+                    :to="{ name: 'period',params: { id: periodStepUrls[index] || 1 }}"
                     :class="{
                       'proposal-step__link--active': period === currentPeriodType && !loading,
                       'proposal-step__link--disabled': loading

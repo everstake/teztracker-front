@@ -31,3 +31,7 @@ export const SET_PROPOSAL_PERIOD = "setProposalPeriod";
 export const SET_PERIODS = "setPeriods";
 export const SET_VOTERS_COUNT = "setVotersCount";
 export const SET_NON_VOTERS_COUNT = "setNonVotersCount";
+export const SET_PROPOSALS = "setProposals"
+export const SET_VOTERS = "setVoters";
+export const SET_NON_VOTERS = "setNonVoters";
+export const SET_BALLOTS = "setBallots";
