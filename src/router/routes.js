@@ -47,7 +47,7 @@ const Protocols = () => import("@/views/Protocols.vue");
 
 /* Votes group */
 //Votes
-// const Vote = () => import("../views/Vote.vue");
+const Vote = () => import("../views/Vote.vue");
 /* Votes group end */
 
 // Errors
@@ -141,15 +141,15 @@ export default [
 
   /* Governance group */
   // Votes
-  // { path: "/:network/vote/:voteHash", name: "vote", component: Vote },
-  /* Governance group end */
-
   { path: "/:network/protocol_amendment", redirect: { name: 'protocol_amendment' }},
   { path: "/mainnet/protocol_amendment", name: 'protocol_amendment', component: ProtocolAmendment },
   { path: "/:network/protocols", redirect: { name: 'protocols' } },
   { path: '/mainnet/protocols', name: 'protocols', component: Protocols },
   { path: "/:network/period/:id", redirect: { name: "period" }},
   { path: '/mainnet/period/:id', name: 'period', component: Period },
+  { path: "/:network/vote/:voteHash", name: "vote", component: Vote },
+  /* Governance group end */
+
   // Errors
   { path: "/:network/404", name: "404", component: NotFound },
   { path: "/:network/*", redirect: { name: "404" } },

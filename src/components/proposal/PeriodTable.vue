@@ -51,8 +51,8 @@
                       <template slot="operation" slot-scope="row">
                         <b-link
                           :to="{
-                            name: 'tx',
-                            params: { txhash: row.item.operation }
+                            name: 'vote',
+                            params: { voteHash: row.item.operation }
                           }"
                         >
                           <span>{{ row.item.operation | longhash(35) }}</span>

@@ -41,9 +41,12 @@ export default {
       voteInfo: {},
       // Map voteInfo keys with formatted ones
       voteInfoKeysMap: {
+        blockHash: "Hash",
+        ballot: "Vote",
         blockLevel: "Included in block",
         kind: "Kind",
         operationGroupHash: "Operation hash",
+        proposal: "Proposal",
         source: "Source",
         timestamp: "Timestamp"
       }
