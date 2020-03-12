@@ -21,9 +21,7 @@
                     v-for="(upvote, index) in getDoughnutOptions.data"
                     :key="generateKey()"
                     class="vote-chart__label"
-                    :style="{
-                      color: backgroundColors[index]
-                    }"
+                    :style="{ color: backgroundColors[index] }"
                   >
                     {{ upvote }}%
                   </div>
@@ -65,12 +63,11 @@
                     <b-col class="vote-card__progress" cols="12" sm="12" md="12" lg="6" xl="6">
                       <div class="vote-card__container-space-between">
                     <span class="vote-card__percentage">
-                      {{getPercentage([proposal.voteStats.votesAvailable, proposal.voteStats.votesCast]).toFixed(2)}}%
+                      {{ getParticipationPercent }}%
                     </span>
-                        <span class="vote-card__percentage"
-                        >{{ proposal.voteStats.votesCast }} /
-                      {{ proposal.voteStats.votesAvailable }}</span
-                        >
+                        <span class="vote-card__percentage">
+                          {{ getParticipationCount }}
+                        </span>
                       </div>
                       <b-progress
                         :value="proposal.voteStats.votesCast"
@@ -82,28 +79,17 @@
                         <span class="vote-card__percentage">Votes Cast</span>
                       </div>
                       <div class="vote-card__p">
-                        Bakers {{ proposal.voteStats.numVoters }} /
-                        {{ proposal.voteStats.numVotersTotal }}
+                        Bakers {{ getBakersParticipationCount }}
                       </div>
                     </b-col>
                     <b-col class="vote-card__progress" cols="12" sm="12" md="12" lg="6" xl="6">
                       <div class="vote-card__container-space-between">
-                    <span class="vote-card__percentage"
-                    >{{
-                        getPercentage([
-                          proposal.voteStats.votesAvailable,
-                          proposal.voteStats.votesAvailable -
-                            proposal.voteStats.votesCast
-                        ]).toFixed(2)
-                      }}%</span
-                    >
-                        <span class="vote-card__percentage"
-                        >{{
-                        proposal.voteStats.votesAvailable -
-                          proposal.voteStats.votesCast
-                      }}
-                      / {{ proposal.voteStats.votesAvailable }}</span
-                        >
+                    <span class="vote-card__percentage">
+                      {{ getUndecidedPercent }}%
+                    </span>
+                        <span class="vote-card__percentage">
+                          {{ getUndecidedCount }}
+                        </span>
                       </div>
                       <b-progress
                         :value="proposal.voteStats.votesAvailable - proposal.voteStats.votesCast"
@@ -116,7 +102,7 @@
                       </div>
                       <div class="vote-card__p">
                         Non-voters
-                        {{ proposal.voteStats.numVotersTotal - proposal.voteStats.numVoters }} / {{ proposal.voteStats.numVotersTotal }}
+                        {{ getNonVotersCount }}
                       </div>
                     </b-col>
                   </b-row>
@@ -165,6 +151,7 @@
 import CardSection from '@/components/partials/CardSection';
 import DoughnutChart from "@/components/partials/DoughnutChart";
 import uuid from '@/mixins/uuid'
+import getPercentage from "@/utils/getPercentage";
 
 export default {
   name: "PeriodProposal",
@@ -175,10 +162,7 @@ export default {
   props: ['proposal', 'voters', 'proposals', 'backgroundColors', 'getDoughnutLegendPosition'],
 	mixins: [uuid],
 	methods: {
-    getPercentage(arr) {
-      const [a, b] = arr;
-      return (b * 100) / a;
-    },
+    getPercentage: (...args) => getPercentage(...args),
     copyToClipboard(hash) {
       const selection = window.getSelection();
       const range = window.document.createRange();
@@ -206,7 +190,7 @@ export default {
         options.data = [
           ...this.proposals.map(({ upvote }) => upvote),
           ...this.proposals.map(proposal => {
-            return this.getPercentage([votesAvailable, votesAvailable - proposal.votesCasted]).toFixed(2);
+            return this.getPercentage(votesAvailable, votesAvailable - proposal.votesCasted).toFixed(2);
           })
         ];
 
@@ -225,6 +209,30 @@ export default {
       options.legend = this.getDoughnutLegendPosition;
 
       return options;
+    },
+    getParticipationPercent() {
+      const { votesAvailable, votesCast } = this.proposal.voteStats;
+      return this.getPercentage(votesAvailable, votesCast).toFixed(2);
+    },
+    getParticipationCount() {
+      const { votesAvailable, votesCast } = this.proposal.voteStats;
+      return `${votesCast} / ${votesAvailable}`;
+    },
+    getBakersParticipationCount() {
+      const { numVoters, numVotersTotal } = this.proposal.voteStats;
+      return `${numVoters} / ${numVotersTotal}`;
+    },
+    getUndecidedPercent() {
+      const { votesAvailable, votesCast } = this.proposal.voteStats;
+      return this.getPercentage(votesAvailable, votesAvailable - votesCast).toFixed(2)
+    },
+    getUndecidedCount() {
+      const { votesAvailable, votesCast } = this.proposal.voteStats;
+      return `${votesAvailable - votesCast} / ${votesAvailable}`;
+    },
+    getNonVotersCount() {
+      const { numVotersTotal, numVoters } = this.proposal.voteStats;
+      return `${numVotersTotal - numVoters} / ${numVotersTotal}`;
     }
   },
   created() {

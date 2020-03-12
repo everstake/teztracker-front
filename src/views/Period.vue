@@ -250,10 +250,6 @@ export default {
         this.fetchNonVoters(this.proposal.period.id, nonVotersLimit);
       }
     },
-    getPercentage(arr) {
-      const [a, b] = arr;
-      return (b * 100) / a;
-    },
     async fetchPeriod(id) {
       await this[GET_PROPOSAL_PERIOD]({ id });
     },

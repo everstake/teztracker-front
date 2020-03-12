@@ -117,7 +117,7 @@
                     </div>
                   </div>
                   <div class="vote-card__recent-rolls font font--mini">
-                    {{getPercentage([proposal.voteStats.votesAvailable, proposal.voteStats.votesCast]).toFixed(2)}}%
+                    {{getPercentage(proposal.voteStats.votesAvailable, proposal.voteStats.votesCast).toFixed(2)}}%
                   </div>
                 </div>
                 <div class="vote-card__recent">
@@ -225,6 +225,7 @@ import CardSection from '@/components/partials/CardSection';
 import uuid from '@/mixins/uuid';
 import DoughnutChart from "@/components/partials/DoughnutChart";
 import moment from 'moment';
+import getPercentage from "@/utils/getPercentage";
 
 export default {
   name: "PeriodExploration",
@@ -241,6 +242,7 @@ export default {
   ],
   mixins: [uuid],
   methods: {
+    getPercentage: (...args) => getPercentage(...args),
     enableSorting(arg) {
       this.$emit('sortTableBy', arg)
     },
@@ -249,10 +251,6 @@ export default {
     },
     formatToUnixTime(date) {
       return moment(date).unix();
-    },
-    getPercentage(arr) {
-      const [a, b] = arr;
-      return (b * 100) / a;
     },
     handleResize() {
       this.$emit('setDoughnutLegendPosition', window.innerWidth);
@@ -269,7 +267,7 @@ export default {
       const votes = [yay, nay, pass];
 
       const votePercentage = votes.map(vote => {
-        const percentage = this.getPercentage([votesAvailable, vote]);
+        const percentage = this.getPercentage(votesAvailable, vote);
 
         if (percentage === 0) return percentage.toFixed();
 
