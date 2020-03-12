@@ -60,6 +60,14 @@
                         <span>{{ formatDate(row.item.timestamp) }}</span>
                       </template>
                     </b-table>
+                    <div class="vote-table__button-wrapper">
+                      <button
+                        @click.prevent="handleShowClick('voters')"
+                        class="vote-table__button"
+                      >
+                        {{ showMoreVoters ? "Show less" : "Show all" }}
+                      </button>
+                    </div>
                   </b-card-body>
                 </b-tab>
                 <b-tab title="Non-voters">
@@ -90,6 +98,14 @@
                         </b-link>
                       </template>
                     </b-table>
+                    <div class="vote-table__button-wrapper">
+                      <button
+                        @click.prevent="handleShowClick('nonVoters')"
+                        class="vote-table__button"
+                      >
+                        {{ showMoreNonVoters ? "Show less" : "Show all" }}
+                      </button>
+                    </div>
                   </b-card-body>
                 </b-tab>
               </b-tabs>
@@ -103,16 +119,12 @@
 
 <script>
 import CardSection from "@/components/partials/CardSection";
-import Pagination from "@/components/partials/Pagination";
 import moment from "moment";
 import { mapState } from "vuex";
 
 export default {
   name: "PeriodTable",
-  components: {
-    CardSection,
-    Pagination
-  },
+  components: { CardSection },
   props: ["voters", "nonVoters", "votersFields", "nonVotersFields"],
   data() {
     return {
@@ -124,7 +136,7 @@ export default {
     };
   },
   computed: {
-    ...mapState("proposal", {
+    ...mapState("period", {
       votersCount: state => state.counts.voters,
       nonVotersCount: state => state.counts.nonVoters
     })
