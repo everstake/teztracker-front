@@ -1,37 +1,37 @@
 <template>
   <CardSection :fluid="true" class="margin-bottom">
-      <template>
-        <b-row>
-          <b-col cols="12" sm="10" md="12" lg="12" xl="12" offset-cols="0" offset-sm="1" offset-md="0">
-            <div class="proposal-step">
-              <ul class="proposal-step__list">
-                <li v-for="(period, index) of periodTypes" class="proposal-step__item font font--mini">
-                  <p
-                    v-if="periodStepUrls[index] === null && !loading"
-                    class="proposal-step__para font font--mini"
-                    :class="{
-                      'proposal-step__para--disabled': loading
-                    }"
-                  >
-                    {{ period }}
-                  </p>
-                  <router-link
-                    v-else
-                    :to="{ name: 'period',params: { id: periodStepUrls[index] || 1 }}"
-                    :class="{
-                      'proposal-step__link--active': period === currentPeriodType && !loading,
-                      'proposal-step__link--disabled': loading
-                    }"
-                    class="proposal-step__link font font--mini"
-                  >
-                    {{ period }}
-                  </router-link>
-                </li>
-              </ul>
-            </div>
-          </b-col>
-        </b-row>
-      </template>
+    <template>
+      <b-row>
+        <b-col cols="12" sm="10" md="12" lg="12" xl="12" offset-cols="0" offset-sm="1" offset-md="0">
+          <div class="proposal-step">
+            <ul class="proposal-step__list">
+              <li v-for="(period, index) of periodTypes" class="proposal-step__item font font--mini">
+                <p
+                  v-if="getLinks[index] === null && !loading"
+                  class="proposal-step__para font font--mini"
+                  :class="{
+                    'proposal-step__para--disabled': loading
+                  }"
+                >
+                  {{ period }}
+                </p>
+                <router-link
+                  v-else
+                  :to="{ name: 'period', params: { id: getLinks[index] } }"
+                  :class="{
+                    'proposal-step__link--active': period === currentPeriodType && !loading,
+                    'proposal-step__link--disabled': loading
+                  }"
+                  class="proposal-step__link font font--mini"
+                >
+                  {{ period }}
+                </router-link>
+              </li>
+            </ul>
+          </div>
+        </b-col>
+      </b-row>
+    </template>
     </CardSection>
 </template>
 
@@ -40,16 +40,24 @@ import CardSection from "@/components/partials/CardSection";
 
 export default {
   name: "PeriodStep",
-  components: {CardSection},
+  components: {
+    CardSection
+  },
   props: [
     "periodTypes",
     "currentPeriodType",
     "periodStepUrls",
-    "loading"
+    "loading",
+    "shownCondition",
+    "currentPeriodId"
   ],
-  methods: {
-    getLink(index) {
-      return this.periodStepUrls[index];
+  computed: {
+    getLinks() {
+      if (this.shownCondition) {
+        return [this.currentPeriodId, null, null, null];
+      }
+
+      return this.periodStepUrls;
     }
   }
 };

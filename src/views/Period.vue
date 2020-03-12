@@ -6,42 +6,21 @@
 
     <!-- Period Steps start -->
     <PeriodStep
-      v-if="currentPeriodType === 'proposal' && proposals.length === 0"
+      :shownCondition="currentPeriodType === 'proposal' && proposals.length === 0"
       :periodTypes="periodTypes"
       :currentPeriodType="proposal.period.periodType"
-      :periodStepUrls="[proposal.period.id, null, null, null]"
-      :loading="loading"
-    />
-    <PeriodStep
-      v-else
-      :periodTypes="periodTypes"
-      :currentPeriodType="proposal.period.periodType"
+      :currentPeriodId="proposal.period.id"
       :periodStepUrls="getPeriodStepsLinks"
       :loading="loading"
     />
     <!-- Period Steps end -->
 
-    <CardSection
-      v-if="loading"
-      :fluid="true"
-    >
-      <template>
-        <b-row>
-          <b-col cols="12" sm="10" md="12" lg="12" xl="12" offset-cols="0" offset-sm="1" offset-md="0">
-            <div class="vote-card vote-card__empty">
-              <div class="vote-card__header">
-                <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered font font--regular vote__loading">
-                  Loading
-                </p>
-              </div>
-            </div>
-          </b-col>
-        </b-row>
-      </template>
-    </CardSection>
-    <div v-else>
+    <PeriodLoading v-if="loading" />
+    <EmptyProposal v-if="!loading && currentPeriodType === 'proposal' && proposals.length === 0" />
+    <div v-if="!loading">
       <!-- Proposal period start -->
       <PeriodProposal
+        :condition="currentPeriodType === 'proposal' && proposals.length > 0"
         v-if="currentPeriodType === 'proposal' && proposals.length > 0"
         :proposal="proposal"
         :voters="voters"
@@ -51,24 +30,6 @@
         :getDoughnutLegendPosition="getDoughnutLegendPosition"
         class="vote__proposal"
       />
-      <CardSection
-        v-else-if="currentPeriodType === 'proposal' && proposals.length === 0"
-        :fluid="true"
-      >
-        <template>
-          <b-row>
-            <b-col cols="12" sm="10" md="12" lg="12" xl="12" offset-cols="0" offset-sm="1" offset-md="0">
-              <div class="vote-card vote-card__empty">
-                <div class="vote-card__header">
-                  <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered font font--mini">
-                    There is no proposals on this period.
-                  </p>
-                </div>
-              </div>
-            </b-col>
-          </b-row>
-        </template>
-      </CardSection>
 
       <!-- Proposal period end -->
 
@@ -140,15 +101,11 @@ import PeriodExploration from '@/components/proposal/PeriodExploration';
 import PeriodTesting from '@/components/proposal/PeriodTesting';
 import PeriodBreadcrumbs from '@/components/proposal/PeriodBreadcrumbs';
 import PeriodTable from "@/components/proposal/PeriodTable";
+import PeriodLoading from "@/components/proposal/PeriodLoading";
+import EmptyProposal from "@/components/proposal/EmptyProposal";
 import { mapState, mapActions } from 'vuex';
-import CardSection from '@/components/partials/CardSection';
 import {
-  GET_PERIODS,
-  GET_PROPOSAL_PERIOD,
-  GET_PROPOSALS,
-  GET_VOTERS,
-  GET_NON_VOTERS,
-  GET_BALLOTS
+  GET_PERIODS, GET_PROPOSAL_PERIOD, GET_PROPOSALS, GET_VOTERS, GET_NON_VOTERS, GET_BALLOTS
 } from "@/store/actions.types";
 
 export default {
@@ -160,35 +117,12 @@ export default {
     PeriodTesting,
     PeriodBreadcrumbs,
     PeriodTable,
-    CardSection
+    PeriodLoading,
+    EmptyProposal
   },
   data() {
     return {
-      proposall: {
-        period: {
-          periodType: "",
-          endLevel: 0,
-          endTime: "",
-          id: 0,
-          startLevel: 0,
-          startTime: ""
-        },
-        voteStats: {
-          numVoters: 0,
-          numVotersTotal: 0,
-          votesAvailable: 0,
-          votesCast: 0
-        },
-        ballots: {
-          yay: 0,
-          pass: 0,
-          nay: 0
-        }
-      },
-      proposalss: [],
       periodTypes: ['proposal', 'exploration', 'testing', 'promotion'],
-      periodss: [],
-      voterss: [],
       votersFields: [
         { key: "pkh", label: "Baker" },
         { key: "rolls", label: "Number of voters" },
@@ -197,7 +131,6 @@ export default {
         { key: "timestamp", label: "Timestamp" },
         { key: "operation", label: "Vote hash" }
       ],
-      nonVoterss: [],
       nonVotersFields: [
         { key: "pkh", label: "Baker" },
         { key: "rolls", label: "Number of voters" }
