@@ -68,6 +68,7 @@ export default {
   position: relative;
   padding: 10px 0;
   background-color: #fff;
+  border-radius: 4px;
 
   @include from-laptop-to-desktop {
     padding: 10px;
