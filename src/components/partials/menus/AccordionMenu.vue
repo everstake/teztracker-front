@@ -209,6 +209,10 @@ export default {
             {
               title: "Protocol Amendments",
               routeName: "protocol_amendment"
+            },
+            {
+              title: "Protocols list",
+              routeName: "protocols"
             }
           ]
         },
