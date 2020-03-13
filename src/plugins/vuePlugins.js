@@ -7,11 +7,11 @@ import {
   TooltipPlugin,
   DropdownPlugin,
   ButtonPlugin,
-  LayoutPlugin,
   CardPlugin,
   TabsPlugin,
   BreadcrumbPlugin,
   FormSelectPlugin,
+  LayoutPlugin,
   FormGroupPlugin,
   FormCheckboxPlugin
 } from "bootstrap-vue";

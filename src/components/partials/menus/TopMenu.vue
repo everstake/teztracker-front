@@ -131,10 +131,30 @@
               </b-dropdown-item>
             </b-dropdown>
           </li>
+          <li v-if="currentNetwork === 'mainnet'">
+            <b-dropdown id="governance" variant="link" class="custom-dropdown">
+              <template #button-content>
+                Governance
+                <font-awesome-icon icon="angle-down" class="ml-1" />
+              </template>
+
+              <b-dropdown-item
+                :to="{ name: 'protocol_amendment' }"
+              >
+                Protocol Amendments
+              </b-dropdown-item>
+
+              <b-dropdown-item
+                :to="{ name: 'protocols' }"
+              >
+                Protocols list
+              </b-dropdown-item>
+            </b-dropdown>
+          </li>
         </ul>
       </nav>
 
-      <nav class="main-nav right-block">
+      <nav class="main-nav right-block" v-if="networkChangable">
         <ul>
           <li>
             <b-dropdown id="blocks" variant="link" class="custom-dropdown">
@@ -146,9 +166,10 @@
               </template>
 
               <b-dropdown-item-button
-                v-for="(network, index) in networkList"
-                :key="index"
+                v-for="network in networkList"
                 @click="changeRouteNetwork(network)"
+                class="dropdown-item pointer"
+                :key="generateKey()"
               >
                 <span class="text-capitalize">
                   {{ network }}
@@ -171,11 +192,12 @@
 </template>
 
 <script>
-import { mapMutations, mapState, mapGetters } from "vuex";
-import { SET_APP_NETWORK } from "@/store/mutations.types.js";
+import { mapMutations, mapState, mapGetters } from 'vuex';
+import { SET_APP_NETWORK } from '@/store/mutations.types.js';
 import network from "../../../mixins/network";
 import Search from "../Search";
 import OverlayHamburgerMenu from "./Overlay";
+import uuid from '@/mixins/uuid'
 import DateFormatSwitcher from "@/components/partials/DateFormatSwitcher";
 import Logo from "../icons/Logo";
 
@@ -187,26 +209,27 @@ export default {
     DateFormatSwitcher,
     Logo
   },
-  mixins: [network],
+  mixins: [network, uuid],
   computed: {
     ...mapState("app", {
       network: state => state.app.network
     }),
-    ...mapGetters("app", {
-      currentNetwork: "getAppNetwork",
-      networkList: "getAppNetworkList"
+    ...mapGetters('app', {
+      currentNetwork: 'getAppNetwork',
+      networkList: 'getAppNetworkList',
+      networkChangable: 'getAppNetworkChangable'
     })
   },
   methods: {
-    ...mapMutations("app", [SET_APP_NETWORK]),
+    ...mapMutations('app', [SET_APP_NETWORK]),
     isActive(...args) {
       return args.includes(this.$route.name);
     },
     changeRouteNetwork(network) {
       this[SET_APP_NETWORK](network);
 
-      if (this.$route.name === "404" || this.$route.name === "500") {
-        this.$router.push({ name: "network", params: { network } });
+      if (this.$route.name === '404' || this.$route.name === '500') {
+        this.$router.push({ name: 'network', params: { network } });
       } else {
         this.$router.push({ name: this.$route.name, params: { network } });
       }

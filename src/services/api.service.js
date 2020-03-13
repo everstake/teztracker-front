@@ -29,9 +29,14 @@ async function get(api, path, query, isStandard = true) {
   return result;
 }
 
+const votingEndpoint = "https://api-teztracker.everstake.one/v2/data/mainnet/";
+
 const TzAPI = {
   API_URL() {
     return Vue.prototype.$constants.API_BASE_URLS[state.app.network];
+  },
+  getVotingUrl() {
+    return votingEndpoint;
   },
   getAccounts(opts = {}) {
     return get(this.API_URL(), "accounts", opts);
@@ -117,13 +122,36 @@ const TzAPI = {
   },
   getFutureBakingRights(opts = {}) {
     return get(this.API_URL(), "future_baking_rights", opts);
+  },
+  getPeriod(opts = {}) {
+    return get(this.getVotingUrl(), 'period', opts);
+  },
+  getPeriods(opts = {}) {
+    return get(this.getVotingUrl(), 'periods', opts);
+  },
+  getProposals(opts = {}) {
+    return get(this.getVotingUrl(), `proposals`, opts);
+  },
+  getBallots(opts = {}) {
+    const { id } = opts;
+    return get(this.getVotingUrl(), `ballots/${id}`, opts);
+  },
+  getBallot(opts = {}) {
+    return get(this.API_URL(), "operations", {
+      ...opts
+    });
+  },
+  getVoters(opts = {}) {
+    const { id } = opts;
+    return get(this.getVotingUrl(), `proposal_votes/${id}`, opts);
+  },
+  getNonVoters(opts = {}) {
+    const { id } = opts;
+    return get(this.getVotingUrl(), `non_voters/${id}`, opts);
+  },
+  getProtocols(opts = {}) {
+    return get(this.getVotingUrl(), `protocols`, opts);
   }
-  // getBallot(opts = {}) {
-  //   return get(this.API_URL(), "operations", {
-  //     operation_kind: "ballot",
-  //     ...opts
-  //   });
-  // },
 };
 
 export default TzAPI;
