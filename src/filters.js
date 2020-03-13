@@ -46,6 +46,13 @@ Vue.filter("tezosCapacity", function(amount) {
   return "0 XTZ";
 });
 
+Vue.filter("addPercent", function(amount) {
+  if (amount > 0) {
+    return `${amount} %`;
+  }
+  return "0 %";
+});
+
 Vue.filter("getAge", function(timestamp) {
   var date = new Date();
   var value = Math.ceil(

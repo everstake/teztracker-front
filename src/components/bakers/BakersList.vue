@@ -9,7 +9,7 @@
       :items="bakersFormatted"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="0"
+      :per-page="perPage"
       borderless
       class="transactions-table table-responsive-md"
     >
@@ -26,34 +26,39 @@
       </template>
     </b-table>
 
-    <Pagination
+    <PaginationWithCustomAction
+      v-model="currentPage"
       :total-rows="count.bakers"
       :per-page="perPage"
-      @change="$_handleCurrentPageChange"
     />
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import { GET_BAKERS } from "@/store/actions.types";
+import { mapState } from "vuex";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 import setPerPage from "@/mixins/setPerPage";
+
+import withCustomAction from "../partials/withCustomAction";
+const PaginationWithCustomAction = withCustomAction(
+  Pagination,
+  "accounts",
+  "GET_BAKERS"
+);
 
 export default {
   name: "BakersList",
   components: {
     PerPageSelect,
-    Pagination
+    PaginationWithCustomAction
   },
-  mixins: [handleCurrentPageChange, setPerPage],
+  mixins: [setPerPage],
   data() {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+      // The key property must coincide with the corresponding keys in the data items
       fields: [
-        { key: "position", label: "#" },
         { key: "accountId", label: "Baker" },
         {
           key: "blocks",
@@ -79,41 +84,12 @@ export default {
       count: state => state.accounts.counts,
       dateFormat: state => state.app.dateFormat
     }),
-    offset() {
-      if (!this.perPage) return 0;
-
-      return this.currentPage * this.perPage - this.perPage;
-    },
     bakersFormatted() {
       if (!this.bakers || this.bakers.length === 0) return [];
 
-      return this.bakers.map((bakerObj, index) => {
-        return {
-          position: index + 1 + this.offset,
-          accountId: bakerObj.accountId,
-          ...bakerObj.bakerInfo
-        };
+      return this.bakers.map(bakerObj => {
+        return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
       });
-    }
-  },
-  watch: {
-    currentPage: {
-      immediate: true,
-      handler(value) {
-        this.load(value, this.perPage);
-      }
-    },
-    perPage: {
-      handler(value) {
-        this.currentPage = 1;
-        this.load(1, value);
-      }
-    }
-  },
-  methods: {
-    ...mapActions("accounts", [GET_BAKERS]),
-    async load(page = 1, limit = 10) {
-      await this[GET_BAKERS]({ page, limit });
     }
   }
 };
