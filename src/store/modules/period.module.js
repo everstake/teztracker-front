@@ -44,7 +44,9 @@ export const actions = {
 
 export const mutations = {
   [SET_PROPOSAL_PERIOD](state, payload) {
-    state.period = payload.data;
+    if (payload.status === 200) {
+      state.period = payload.data;
+    }
   },
   [SET_PERIODS](state, payload) {
     state.periods = payload.data;

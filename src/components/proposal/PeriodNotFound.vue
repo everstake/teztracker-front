@@ -8,7 +8,7 @@
           <div class="vote-card vote-card__empty">
             <div class="vote-card__header">
               <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered font font--regular">
-                There is no proposals on this period.
+                Period {{ $route.params.id }} was not found.
               </p>
             </div>
           </div>
@@ -19,12 +19,12 @@
 </template>
 
 <script>
-import CardSection from '@/components/partials/CardSection'
+  import CardSection from "@/components/partials/CardSection";
 
-export default {
-  name: 'EmptyProposal',
-  components: {
-    CardSection
+  export default {
+    name: 'PeriodLoading',
+    components: {
+      CardSection
+    }
   }
-}
 </script>

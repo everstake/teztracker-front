@@ -17,6 +17,7 @@
 
     <PeriodLoading v-if="loading" />
     <EmptyProposal v-if="!loading && currentPeriodType === 'proposal' && proposals.length === 0" />
+    <PeriodNotFound v-if="!loading && !proposal.period.periodType" />
     <div v-if="!loading">
       <!-- Proposal period start -->
       <PeriodProposal
@@ -103,6 +104,7 @@ import PeriodBreadcrumbs from '@/components/proposal/PeriodBreadcrumbs';
 import PeriodTable from "@/components/proposal/PeriodTable";
 import PeriodLoading from "@/components/proposal/PeriodLoading";
 import EmptyProposal from "@/components/proposal/EmptyProposal";
+import PeriodNotFound from "@/components/proposal/PeriodNotFound";
 import { mapState, mapActions } from 'vuex';
 import {
   GET_PERIODS, GET_PROPOSAL_PERIOD, GET_PROPOSALS, GET_VOTERS, GET_NON_VOTERS, GET_BALLOTS
@@ -118,7 +120,8 @@ export default {
     PeriodBreadcrumbs,
     PeriodTable,
     PeriodLoading,
-    EmptyProposal
+    EmptyProposal,
+    PeriodNotFound
   },
   data() {
     return {
