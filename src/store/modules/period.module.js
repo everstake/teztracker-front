@@ -4,7 +4,9 @@ import getPercentage from "@/utils/getPercentage";
 
 const initialState = {
   period: {
-    period: {},
+    period: {
+      periodType: ''
+    },
     voteStats: {},
     ballots: {}
   },
@@ -44,9 +46,10 @@ export const actions = {
 
 export const mutations = {
   [SET_PROPOSAL_PERIOD](state, payload) {
-    if (payload.status === 200) {
-      state.period = payload.data;
-    }
+    state.period = {
+      ...state.period,
+      ...payload.data
+    };
   },
   [SET_PERIODS](state, payload) {
     state.periods = payload.data;

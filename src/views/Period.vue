@@ -16,9 +16,9 @@
     <!-- Period Steps end -->
 
     <PeriodLoading v-if="loading" />
-    <EmptyProposal v-if="!loading && currentPeriodType === 'proposal' && proposals.length === 0" />
-    <PeriodNotFound v-if="!loading && !proposal.period.periodType" />
-    <div v-if="!loading">
+    <EmptyProposal v-else-if="!loading && currentPeriodType === 'proposal' && proposals.length === 0" />
+    <PeriodNotFound v-else-if="!loading && (proposal.period.periodType === '' || isNaN(Number($route.params.id)) || typeof(Number($route.params.id)) !== 'number')" />
+    <div v-else>
       <!-- Proposal period start -->
       <PeriodProposal
         :condition="currentPeriodType === 'proposal' && proposals.length > 0"
