@@ -39,6 +39,13 @@ Vue.filter("tezos", function(amount) {
   //return amount + "ꜩ";
 });
 
+Vue.filter("tezosCapacity", function(amount) {
+  if (amount > 0) {
+    return `${amount} XTZ`;
+  }
+  return "0 XTZ";
+});
+
 Vue.filter("getAge", function(timestamp) {
   var date = new Date();
   var value = Math.ceil(

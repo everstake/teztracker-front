@@ -26,6 +26,14 @@
   .dropdown-item:focus {
     outline: none;
   }
+
+  .dropdown-menu {
+    color: $color-black;
+  }
+
+  .b-dropdown-text {
+    font-weight: 400;
+  }
 }
 
 .main-header .header-middle .main-nav ul.dropdown-menu li {

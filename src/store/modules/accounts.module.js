@@ -1,5 +1,5 @@
-import { GET_ACCOUNTS, GET_BAKERS, GET_CONTRACTS, GET_PUBLIC_BAKERS } from "@/store/actions.types";
-import { SET_ACCOUNTS, SET_BAKERS, SET_CONTRACTS, SET_PUBLIC_BAKERS } from "@/store/mutations.types";
+import { GET_ACCOUNTS, GET_BAKERS, GET_PUBLIC_BAKERS, GET_CONTRACTS } from "@/store/actions.types";
+import { SET_ACCOUNTS, SET_BAKERS, SET_PUBLIC_BAKERS, SET_CONTRACTS } from "@/store/mutations.types";
 
 const initialState = {
   accounts: [],
@@ -37,7 +37,7 @@ export const mutations = {
     state.counts.bakers = data.count;
   },
   [SET_PUBLIC_BAKERS](state, data) {
-    state.bakers = data.data;
+    state.publicBakers = data.data;
     state.counts.publicBakers = data.count;
   },
   [SET_ACCOUNTS](state, data) {

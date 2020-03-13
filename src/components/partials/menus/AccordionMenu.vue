@@ -183,8 +183,17 @@ export default {
         {
           title: "Bakers",
           active: false,
-          isExpandable: false,
-          link: "bakers"
+          isExpandable:true,
+          description: [
+            {
+              title: "All bakers",
+              routeName: "bakers"
+            },
+            {
+              title: "Public bakers",
+              routeName: "public_bakers"
+            }
+          ]
         },
         {
           title: "Accounts",

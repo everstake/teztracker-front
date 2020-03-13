@@ -9,7 +9,7 @@
       :items="bakersFormatted"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="perPage"
+      :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
     >
@@ -18,9 +18,10 @@
           {{ row.item.name || row.item.accountId | longhash(35) }}
         </b-link>
       </template>
-      <template slot="fee" slot-scope="row">
-        {{ row.item.fee }} %
+      <template slot="stakingCapacity" slot-scope="row">
+        {{ row.item.stakingCapacity | tezosCapacity }}
       </template>
+      <template slot="fee" slot-scope="row"> {{ row.item.fee }} % </template>
       <template slot="stakingBalance" slot-scope="row">
         {{ row.item.stakingBalance | tezos }}
       </template>
@@ -29,41 +30,36 @@
       </template>
     </b-table>
 
-    <PaginationWithCustomAction
-      v-model="currentPage"
+    <Pagination
       :total-rows="count.publicBakers"
       :per-page="perPage"
+      @change="$_handleCurrentPageChange"
     />
   </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+import { GET_PUBLIC_BAKERS } from "@/store/actions.types";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 import setPerPage from "@/mixins/setPerPage";
-
-import withCustomAction from "../partials/withCustomAction";
-
-const PaginationWithCustomAction = withCustomAction(
-  Pagination,
-  "accounts",
-  "GET_PUBLIC_BAKERS"
-);
 
 export default {
   name: "BakersListPublic",
   components: {
     PerPageSelect,
-    PaginationWithCustomAction
+    Pagination
   },
-  mixins: [setPerPage],
+  mixins: [handleCurrentPageChange, setPerPage],
   data() {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
+        { key: "position", label: "#" },
         { key: "accountId", label: "Baker" },
-        { key: "capacity", label: "Capacity" },
+        { key: "stakingCapacity", label: "Capacity" },
         { key: "fee", label: "Fee" },
         { key: "stakingBalance", label: "Total balance" },
         { key: "rolls", label: "Rolls" },
@@ -86,16 +82,45 @@ export default {
   },
   computed: {
     ...mapState({
-      bakers: state => state.accounts.bakers,
+      publicBakers: state => state.accounts.publicBakers,
       count: state => state.accounts.counts,
       dateFormat: state => state.app.dateFormat
     }),
-    bakersFormatted() {
-      if (!this.bakers || this.bakers.length === 0) return [];
+    offset() {
+      if (!this.perPage) return 0;
 
-      return this.bakers.map(bakerObj => {
-        return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
+      return this.currentPage * this.perPage - this.perPage;
+    },
+    bakersFormatted() {
+      if (!this.publicBakers || this.publicBakers.length === 0) return [];
+
+      return this.publicBakers.map((bakerObj, index) => {
+        return {
+          position: index + 1 + this.offset,
+          accountId: bakerObj.accountId,
+          ...bakerObj.bakerInfo
+        };
       });
+    }
+  },
+  watch: {
+    currentPage: {
+      immediate: true,
+      handler(value) {
+        this.load(value, this.perPage);
+      }
+    },
+    perPage: {
+      handler(value) {
+        this.currentPage = 1;
+        this.load(1, value);
+      }
+    }
+  },
+  methods: {
+    ...mapActions("accounts", [GET_PUBLIC_BAKERS]),
+    async load(page = 1, limit = 10) {
+      await this[GET_PUBLIC_BAKERS]({ page, limit });
     }
   }
 };

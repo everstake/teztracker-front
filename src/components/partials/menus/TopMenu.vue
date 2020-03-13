@@ -106,17 +106,24 @@
               </b-dropdown-item>
             </b-dropdown>
           </li>
-          <li v-bind:class="{ active: isActive('bakers') }">
-            <router-link
-              :to="{ name: 'bakers', params: { network: currentNetwork } }"
-              >Bakers</router-link
-            >
-          </li>
-          <li v-bind:class="{ active: isActive('public_bakers') }">
-            <router-link
-              :to="{ name: 'public_bakers', params: { network: currentNetwork } }"
-            >Public bakers</router-link
-            >
+          <li>
+            <b-dropdown id="bakers" variant="link" class="custom-dropdown">
+              <template #button-content>
+                Bakers
+                <font-awesome-icon icon="angle-down" class="ml-1" />
+              </template>
+
+              <b-dropdown-item
+                :to="{ name: 'bakers', params: { network: currentNetwork } }"
+              >
+                All bakers
+              </b-dropdown-item>
+              <b-dropdown-item
+                :to="{ name: 'public_bakers', params: { network: currentNetwork } }"
+              >
+                Public bakers
+              </b-dropdown-item>
+            </b-dropdown>
           </li>
           <li>
             <b-dropdown id="accounts" variant="link" class="custom-dropdown">
