@@ -57,7 +57,11 @@ export default {
         return [this.currentPeriodId, null, null, null];
       }
 
-      return this.periodStepUrls;
+      if (this.periodStepUrls.length > 0) {
+        return this.periodStepUrls;
+      } else {
+        return [null, null, null, null];
+      }
     }
   }
 };
