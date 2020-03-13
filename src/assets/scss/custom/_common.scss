@@ -393,7 +393,8 @@ li
 }
 
 .main-content .breadcrumbs {
-  padding: 2rem 0 1rem;
+  padding: 0;
+  margin-bottom: 0;
 }
 
 .main-content .breadcrumbs h2 {
@@ -411,7 +412,8 @@ li
 }
 
 .main-content .breadcrumbs .breadcrumb .breadcrumb-item {
-  font-size: 18px;
+  padding-left: 0;
+  font-size: 16px;
   font-weight: 400;
   line-height: 22px;
   letter-spacing: 0.3857144px;
@@ -424,6 +426,8 @@ li
 }
 
 .main-content .breadcrumbs .breadcrumb .breadcrumb-item:before {
+  padding-left: .6rem;
+  padding-right: .2rem;
   content: ' - ';
   color: $color-black;
 }
