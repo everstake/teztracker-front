@@ -17,7 +17,6 @@
 										{{ proposal.proposal.title }}
 									</p>
 									<p class="vote-card--margin-none vote-card__recent-name vote-card__proposal-description font font--mini" v-html="proposal.proposal.shortDescription"></p>
-									<div class="vote-card__divider"></div>
 								</div>
 							</div>
 						</div>
