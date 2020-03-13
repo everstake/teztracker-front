@@ -60,6 +60,7 @@
 <script>
 import ProtocolAmendmentCard from "@/components/protocol/ProtocolAmendmentCard";
 import uuid from '@/mixins/uuid';
+import uniqBy from "lodash/uniqBy";
 
 export default {
   name: "Bakers",
@@ -89,8 +90,27 @@ export default {
   async created() {
     const protocols = await this.$api.getProposals({});
     const periods = await this.$api.getPeriods({});
+    const sortedProtocols = protocols.data.sort((a, b) => a.period < b.period ? 1 : -1);
+    const uniqProtocols = uniqBy(sortedProtocols, 'period');
+
+    const mappedProtocols = uniqProtocols.map(protocol => {
+      if (protocol.title.includes(protocol.hash.slice(0, 8))) {
+        protocol.title = protocol.title.split(' ')[0];
+
+        if (protocol.period === 21) {
+          protocol.title = `${protocol.title} 1.0`;
+        }
+
+        if (protocol.period === 22) {
+          protocol.title = `${protocol.title} 2.0`;
+        }
+      }
+      return protocol;
+    });
+
     this.currentPeriodId = Math.max(...periods.data.map(period => period.id));
-    this.protocols = protocols.data.sort((a, b) => a.period < b.period ? 1 : -1);
+    this.protocols = mappedProtocols;
+
     this.loading = false;
   }
 };
