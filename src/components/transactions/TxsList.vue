@@ -28,7 +28,7 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat($constants.TIME_FORMAT) }}</span>
+        <span>{{ row.item.timestamp | timeformat(dateFormat) }}</span>
       </template>
 
       <template slot="from" slot-scope="row">
@@ -103,8 +103,8 @@ export default {
     };
   },
   computed: {
-    ...mapState('operations', {
-      counts: state => state.counts
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
     })
   },
   watch: {

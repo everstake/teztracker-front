@@ -39,7 +39,7 @@
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat($constants.TIME_FORMAT) }}</span>
+        <span>{{ row.item.timestamp | timeformat(dateFormat) }}</span>
       </template>
     </b-table>
 
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import { SET_ENDORSEMENTS_COUNT } from "@/store/mutations.types";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
@@ -79,6 +79,9 @@ export default {
     };
   },
   computed: {
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
+    }),
     level() {
       return this.$route.params.level;
     },

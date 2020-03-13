@@ -1,5 +1,6 @@
+import Vue from "vue";
 import { GET_APP_INFO } from "@/store/actions.types";
-import { SET_APP_INFO, SET_APP_NETWORK, SET_APP_NETWORK_CHANGABLE } from "@/store/mutations.types";
+import { SET_APP_INFO, SET_APP_NETWORK, SET_APP_NETWORK_CHANGABLE, SET_DATE_FORMAT } from "@/store/mutations.types";
 
 const initialState = {
   app: {
@@ -8,7 +9,8 @@ const initialState = {
     networkList: ['mainnet', 'babylonnet', 'carthagenet'],
     networkChangable: true
   },
-  priceInfo: {}
+  priceInfo: {},
+  dateFormat: Vue.prototype.$constants.DATE_FORMAT
 };
 
 export const state = { ...initialState };
@@ -28,6 +30,12 @@ export const mutations = {
   },
   [SET_APP_INFO](state, info) {
     state.priceInfo = info.data;
+  },
+  [SET_DATE_FORMAT](state, info) {
+    if (Vue.prototype.$helpers.isLocalStorageAvailable()) {
+      localStorage.setItem("defaultDateFormat", info);
+    }
+    state.dateFormat = info;
   }
 };
 

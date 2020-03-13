@@ -6,6 +6,8 @@ import "./plugins/constants";
 import "./plugins/tezosApi";
 // Vue plugins
 import "./plugins/vuePlugins";
+// Helper functions
+import "./plugins/helpers";
 // Filters
 import "./filters";
 import router from "./router";

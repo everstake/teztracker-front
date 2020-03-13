@@ -13,7 +13,7 @@
         {{ slotProps.field.value }}
       </router-link>
       <template v-else-if="slotProps.field.key === 'Timestamp'">
-        {{ slotProps.field.value | timeformat($constants.TIME_FORMAT) }}
+        {{ slotProps.field.value | timeformat(dateFormat) }}
       </template>
       <template v-else-if="slotProps.field.key === 'Fee'">
         {{ slotProps.field.value | tezos }}
@@ -37,8 +37,9 @@ export default {
     StatisticsCard
   },
   computed: {
-    ...mapState('app', {
-      info: state => state.priceInfo
+    ...mapState("app", {
+      info: state => state.priceInfo,
+      dateFormat: state => state.dateFormat
     }),
     txInfoRestructured() {
       return [

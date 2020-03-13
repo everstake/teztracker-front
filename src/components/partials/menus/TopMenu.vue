@@ -1,6 +1,6 @@
 <template>
   <header class="main-header">
-    <div class="logo">
+    <div class="logo mb-1">
       <router-link
         :to="{ name: 'network', params: { network: currentNetwork } }"
       >
@@ -177,6 +177,9 @@
               </b-dropdown-item-button>
             </b-dropdown>
           </li>
+          <li>
+            <DateFormatSwitcher />
+          </li>
         </ul>
       </nav>
     </div>
@@ -195,6 +198,7 @@ import network from "../../../mixins/network";
 import Search from "../Search";
 import OverlayHamburgerMenu from "./Overlay";
 import uuid from '@/mixins/uuid'
+import DateFormatSwitcher from "@/components/partials/DateFormatSwitcher";
 import Logo from "../icons/Logo";
 
 export default {
@@ -202,6 +206,7 @@ export default {
   components: {
     Search,
     OverlayHamburgerMenu,
+    DateFormatSwitcher,
     Logo
   },
   mixins: [network, uuid],

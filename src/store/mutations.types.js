@@ -36,3 +36,4 @@ export const SET_VOTERS = "setVoters";
 export const SET_NON_VOTERS = "setNonVoters";
 export const SET_BALLOTS = "setBallots";
 export const SET_PROTOCOLS_COUNT = "setProtocolsCount";
+export const SET_DATE_FORMAT = "setDateFormat";
