@@ -16,6 +16,22 @@
               <template v-if="slotProps.field.key === 'Timestamp'">
                 {{ slotProps.field.value | timeformat(dateFormat) }}
               </template>
+              <template v-else-if="slotProps.field.key === 'Source'">
+                <router-link
+                  :to="{ name: 'account', params: { account: slotProps.field.value } }"
+                  class="baker"
+                >
+                  {{ slotProps.field.value }}
+                </router-link>
+              </template>
+              <template v-else-if="slotProps.field.key === 'Included in block'">
+                <router-link
+                  :to="{ name: 'block', params: { level: slotProps.field.value } }"
+                  class="baker"
+                >
+                  {{ slotProps.field.value }}
+                </router-link>
+              </template>
             </template>
           </StatisticsCard>
         </b-container>
