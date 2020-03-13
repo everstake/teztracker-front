@@ -88,7 +88,7 @@ export default {
       };
 
       const data = await this.$api.getProtocols(props);
-      const result = data.data.map((protocol, index) => ({ ...protocol, id: index }));
+      const result = data.data.map((protocol, index) => ({ ...protocol, id: index })).reverse();
       this[SET_PROTOCOLS_COUNT](data.data.length);
       this.protocols = result;
     }

@@ -88,8 +88,8 @@
                       </span>
                     </div>
                     <b-progress
-                      :value="proposal.ballots.supermajority"
-                      :max="100"
+                      :value="Number(getVotes.yay + getVotes.pass)"
+                      :max="Number(getVotes.yay + getVotes.nay + getVotes.pass)"
                       class="mb-2"
                     />
                   </b-col>
@@ -104,8 +104,8 @@
                       </span>
                     </div>
                     <b-progress
-                      :value="proposal.ballots.quorum"
-                      :max="1"
+                      :value="Number(getPercentage(proposal.voteStats.votesAvailable, proposal.voteStats.votesCast).toFixed(2))"
+                      :max="100"
                       class="mb-2"
                     />
                   </b-col>
@@ -113,7 +113,7 @@
                 <div class="vote-card__recent">
                   <div>
                     <div class="vote-card__recent-name font font--mini">
-                      Percen of votes
+                      Percent of votes
                     </div>
                   </div>
                   <div class="vote-card__recent-rolls font font--mini">
@@ -167,13 +167,13 @@
                 :class="{'vote__ballot--active': sortBy === 'yay'}"
                 class="vote__ballot ballot"
               >
-                <img class="ballot__icon" src="../../assets/icons/yay.svg" alt="In favor">
+                <img class="ballot__icon" src="../../assets/icons/yay.svg" alt="Yay">
                 <div class="ballot__container font font--mini">
                   <span class="vote__ballot--yay font font--mini">
                     {{getVotesPercentage[0]}}%
                     ({{ getVotes.yay }})
                   </span>
-                  In favor
+                  Yay
                 </div>
               </div>
             </div>
@@ -185,13 +185,13 @@
                 :class="{'vote__ballot--active': sortBy === 'nay'}"
                 class="vote__ballot ballot"
               >
-                <img class="ballot__icon" src="../../assets/icons/nay.svg" alt="Against">
+                <img class="ballot__icon" src="../../assets/icons/nay.svg" alt="Nay">
                 <div class="ballot__container font font--mini">
                   <span class="vote__ballot--nay font font--mini">
                     {{getVotesPercentage[1]}}%
                     ({{ getVotes.nay }})
                   </span>
-                  Against
+                  Nay
                 </div>
               </div>
             </div>

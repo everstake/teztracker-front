@@ -50,7 +50,8 @@ export default {
         proposal: "Proposal",
         source: "Source",
         timestamp: "Timestamp"
-      }
+      },
+      crumbs: []
     };
   },
   computed: {
@@ -59,12 +60,6 @@ export default {
     }),
     voteHash() {
       return this.$route.params.voteHash;
-    },
-    crumbs() {
-      return [
-        { toRouteName: "network", text: "Home" },
-        { toRouteName: "vote", text: this.voteHash }
-      ];
     },
     voteInfoRestructured() {
       if (!this.voteInfo || Object.keys(this.voteInfo).length === 0) return [];
@@ -106,6 +101,22 @@ export default {
 
       this.voteInfo = result.data[0];
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (from.params.id) {
+        vm.crumbs = [
+          { toRouteName: "network", text: "Home" },
+          { toRouteName: from.name, text: from.name, params: { id: from.params.id } },
+          { toRouteName: "vote", text: vm.voteHash }
+        ];
+      } else {
+        vm.crumbs = [
+          { toRouteName: "network", text: "Home" },
+          { toRouteName: "vote", text: vm.voteHash }
+        ];
+      }
+    });
   }
 };
 </script>
