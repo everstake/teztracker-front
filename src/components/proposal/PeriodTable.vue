@@ -133,7 +133,7 @@ export default {
     return {
       perPage: 20,
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      pageOptions: this.$constants.PAGE_OPTIONS,
+      pageOptions: this.$constants.PER_PAGE,
       showMoreVoters: false,
       showMoreNonVoters: false
     };
@@ -142,11 +142,14 @@ export default {
     ...mapState("period", {
       votersCount: state => state.counts.voters,
       nonVotersCount: state => state.counts.nonVoters
+    }),
+    ...mapState('app', {
+      dateFormat: state => state.dateFormat
     })
   },
   methods: {
     formatDate(date) {
-      return moment(date).format(this.$constants.TIME_FORMAT);
+      return moment(date).format(this.dateFormat);
     },
     handleShowClick(type) {
       if (type === 'voters') {

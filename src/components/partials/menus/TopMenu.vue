@@ -154,10 +154,10 @@
         </ul>
       </nav>
 
-      <nav class="main-nav right-block" v-if="networkChangable">
+      <nav class="main-nav right-block">
         <ul>
           <li>
-            <b-dropdown id="blocks" variant="link" class="custom-dropdown">
+            <b-dropdown id="blocks" variant="link" class="custom-dropdown"  v-if="networkChangable">
               <template #button-content>
                 <span class="text-capitalize">
                   {{ currentNetwork }}
