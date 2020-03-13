@@ -16,6 +16,22 @@
               <template v-if="slotProps.field.key === 'Timestamp'">
                 {{ slotProps.field.value | timeformat(dateFormat) }}
               </template>
+              <template v-else-if="slotProps.field.key === 'Source'">
+                <router-link
+                  :to="{ name: 'account', params: { account: slotProps.field.value } }"
+                  class="baker"
+                >
+                  {{ slotProps.field.value }}
+                </router-link>
+              </template>
+              <template v-else-if="slotProps.field.key === 'Included in block'">
+                <router-link
+                  :to="{ name: 'block', params: { level: slotProps.field.value } }"
+                  class="baker"
+                >
+                  {{ slotProps.field.value }}
+                </router-link>
+              </template>
             </template>
           </StatisticsCard>
         </b-container>
@@ -50,7 +66,8 @@ export default {
         proposal: "Proposal",
         source: "Source",
         timestamp: "Timestamp"
-      }
+      },
+      crumbs: []
     };
   },
   computed: {
@@ -59,12 +76,6 @@ export default {
     }),
     voteHash() {
       return this.$route.params.voteHash;
-    },
-    crumbs() {
-      return [
-        { toRouteName: "network", text: "Home" },
-        { toRouteName: "vote", text: this.voteHash }
-      ];
     },
     voteInfoRestructured() {
       if (!this.voteInfo || Object.keys(this.voteInfo).length === 0) return [];
@@ -106,6 +117,22 @@ export default {
 
       this.voteInfo = result.data[0];
     }
+  },
+  beforeRouteEnter(to, from, next) {
+    next(vm => {
+      if (from.params.id) {
+        vm.crumbs = [
+          { toRouteName: "network", text: "Home" },
+          { toRouteName: from.name, text: from.name, params: { id: from.params.id } },
+          { toRouteName: "vote", text: vm.voteHash }
+        ];
+      } else {
+        vm.crumbs = [
+          { toRouteName: "network", text: "Home" },
+          { toRouteName: "vote", text: vm.voteHash }
+        ];
+      }
+    });
   }
 };
 </script>

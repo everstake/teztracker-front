@@ -41,12 +41,12 @@
             md="6"
             lg="4"
             class="protocol-amendment__col"
-            v-for="(protocol, index) in protocols"
+            v-for="protocol in protocols"
             :key="generateKey()"
           >
             <ProtocolAmendmentCard
               :name="protocol.title"
-              :period="index === 0 ? 'current' : 'past'"
+              :period="protocol.period === currentPeriodId ? 'current' : 'past'"
               :id="protocol.period"
               @handleClick="handleProtocolClick(protocol.period)"
             />
@@ -70,6 +70,7 @@ export default {
   data() {
     return {
       protocols: [],
+      currentPeriodId: null,
       loading: true
     };
   },
@@ -86,8 +87,10 @@ export default {
     }
   },
   async created() {
-    const data = await this.$api.getProposals({});
-    this.protocols = data.data;
+    const protocols = await this.$api.getProposals({});
+    const periods = await this.$api.getPeriods({});
+    this.currentPeriodId = Math.max(...periods.data.map(period => period.id));
+    this.protocols = protocols.data.sort((a, b) => a.period < b.period ? 1 : -1);
     this.loading = false;
   }
 };
