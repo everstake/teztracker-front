@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="16px" viewBox="0 0 24 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="14px" height="9px" viewBox="0 0 14 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
-    <title>Fill 6974</title>
+    <title>Artboard</title>
     <desc>Created with Sketch.</desc>
     <defs>
         <filter x="0.0%" y="0.0%" width="100.0%" height="100.0%" filterUnits="objectBoundingBox" id="filter-1">
             <feGaussianBlur stdDeviation="0" in="SourceGraphic"></feGaussianBlur>
         </filter>
     </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Proposal_promotion_1_0_0" transform="translate(-1646.000000, -290.000000)" fill="#309282">
-            <g id="timeline" transform="translate(30.000000, 221.000000)">
-                <g id="Added-to-favorites-2" transform="translate(31.000000, 40.000000)">
-                    <path d="M1593.50025,45.00025 C1593.37225,45.00025 1593.24425,44.95125 1593.14625,44.85425 L1585.14625,36.85425 C1584.95125,36.65825 1584.95125,36.34225 1585.14625,36.14625 C1585.34225,35.95125 1585.65825,35.95125 1585.85425,36.14625 L1593.50025,43.79325 L1608.14625,29.14625 C1608.34225,28.95125 1608.65825,28.95125 1608.85425,29.14625 C1609.04925,29.34225 1609.04925,29.65825 1608.85425,29.85425 L1593.85425,44.85425 C1593.75625,44.95125 1593.62825,45.00025 1593.50025,45.00025" id="Fill-6974" filter="url(#filter-1)"></path>
-                </g>
-            </g>
-        </g>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M4.95837587,9 C4.88371076,9 4.80904564,8.97243793 4.75188017,8.91787628 L0.0853107227,4.41794659 C-0.0284369076,4.30769832 -0.0284369076,4.12995109 0.0853107227,4.01970282 C0.199641674,3.91001703 0.383971167,3.91001703 0.498302119,4.01970282 L4.95837587,8.32107311 L13.5016979,0.0822643396 C13.6160288,-0.0274214465 13.8003583,-0.0274214465 13.9146893,0.0822643396 C14.0284369,0.192512617 14.0284369,0.37025984 13.9146893,0.480508117 L5.16487157,8.91787628 C5.10770609,8.97243793 5.03304098,9 4.95837587,9" id="Fill-6974" fill="#309282" filter="url(#filter-1)"></path>
     </g>
 </svg>
