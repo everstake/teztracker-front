@@ -4,13 +4,6 @@
       <b-container fluid>
         <b-row>
           <b-col lg="12">
-            <div class="page-title ml-2">
-              <h2>
-                Tezos (XTZ) Blockchain Explorer -
-                <span>{{ pageName }}</span>
-              </h2>
-            </div>
-
             <slot name="breadcrumbs" />
           </b-col>
         </b-row>
