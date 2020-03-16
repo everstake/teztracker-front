@@ -121,12 +121,6 @@ export default {
     return {
       contents: [
         {
-          title: "Dashboard",
-          active: false,
-          isExpandable: false,
-          link: "network"
-        },
-        {
           title: "Blocks",
           description: [
             {
@@ -183,8 +177,17 @@ export default {
         {
           title: "Bakers",
           active: false,
-          isExpandable: false,
-          link: "bakers"
+          isExpandable:true,
+          description: [
+            {
+              title: "All bakers",
+              routeName: "bakers"
+            },
+            {
+              title: "Public bakers",
+              routeName: "public_bakers"
+            }
+          ]
         },
         {
           title: "Accounts",
@@ -207,7 +210,7 @@ export default {
           isExpandable: true,
           description: [
             {
-              title: "Protocol Amendments",
+              title: "Protocol amendments",
               routeName: "protocol_amendment"
             },
             {

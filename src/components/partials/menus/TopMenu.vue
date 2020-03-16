@@ -11,12 +11,6 @@
     <div class="header-middle">
       <nav class="main-nav">
         <ul class="main-nav__list">
-          <li v-bind:class="{ active: isActive('index') }">
-            <router-link
-              :to="{ name: 'network', params: { network: currentNetwork } }"
-              >Dashboard</router-link
-            >
-          </li>
           <li>
             <b-dropdown id="blocks" variant="link" class="custom-dropdown">
               <template #button-content>
@@ -106,11 +100,24 @@
               </b-dropdown-item>
             </b-dropdown>
           </li>
-          <li v-bind:class="{ active: isActive('bakers') }">
-            <router-link
-              :to="{ name: 'bakers', params: { network: currentNetwork } }"
-              >Bakers</router-link
-            >
+          <li>
+            <b-dropdown id="bakers" variant="link" class="custom-dropdown">
+              <template #button-content>
+                Bakers
+                <font-awesome-icon icon="angle-down" class="ml-1" />
+              </template>
+
+              <b-dropdown-item
+                :to="{ name: 'bakers', params: { network: currentNetwork } }"
+              >
+                All bakers
+              </b-dropdown-item>
+              <b-dropdown-item
+                :to="{ name: 'public_bakers', params: { network: currentNetwork } }"
+              >
+                Public bakers
+              </b-dropdown-item>
+            </b-dropdown>
           </li>
           <li>
             <b-dropdown id="accounts" variant="link" class="custom-dropdown">
@@ -141,7 +148,7 @@
               <b-dropdown-item
                 :to="{ name: 'protocol_amendment' }"
               >
-                Protocol Amendments
+                Protocol amendments
               </b-dropdown-item>
 
               <b-dropdown-item

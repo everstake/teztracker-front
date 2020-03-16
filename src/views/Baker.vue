@@ -1,13 +1,13 @@
 <template>
   <PageContentContainer page-name="Baker page">
     <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs"/>
+      <Breadcrumbs :crumbs="crumbs" />
     </template>
 
     <template #content>
       <section>
         <b-container fluid>
-          <AccountSingle :hash="hash"/>
+          <BakerSingle :hash="hash" />
         </b-container>
       </section>
 
@@ -27,7 +27,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <TxsList :account="hash"/>
+                      <TxsList :account="hash" />
                     </b-card-body>
                   </b-tab>
                   <b-tab title="Delegations">
@@ -40,7 +40,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <DelegationsList :account="hash"/>
+                      <DelegationsList :account="hash" />
                     </b-card-body>
                   </b-tab>
                   <b-tab title="Originations">
@@ -53,7 +53,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <OriginationsList :account="hash"/>
+                      <OriginationsList :account="hash" />
                     </b-card-body>
                   </b-tab>
                 </b-tabs>
@@ -69,7 +69,7 @@
 <script>
 import PageContentContainer from "../layouts/PageContentContainer";
 import Breadcrumbs from "../components/partials/Breadcrumbs";
-import AccountSingle from "../components/accounts/AccountSingle";
+import BakerSingle from "../components/bakers/BakerSingle";
 import TxsList from "../components/transactions/TxsList";
 import DelegationsList from "../components/delegations/DelegationsList";
 import OriginationsList from "../components/originations/OriginationsList";
@@ -79,7 +79,7 @@ export default {
   components: {
     PageContentContainer,
     Breadcrumbs,
-    AccountSingle,
+    BakerSingle,
     TxsList,
     DelegationsList,
     OriginationsList
@@ -90,9 +90,9 @@ export default {
     },
     crumbs() {
       return [
-        {toRouteName: "network", text: "Home"},
-        {toRouteName: "bakers", text: "Bakers page"},
-        {toRouteName: "baker", text: this.hash}
+        { toRouteName: "network", text: "Home" },
+        { toRouteName: "bakers", text: "Bakers page" },
+        { toRouteName: "baker", text: this.hash }
       ];
     }
   }

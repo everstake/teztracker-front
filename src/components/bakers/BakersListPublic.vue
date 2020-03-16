@@ -18,6 +18,12 @@
           {{ row.item.name || row.item.accountId | longhash(35) }}
         </b-link>
       </template>
+      <template slot="stakingCapacity" slot-scope="row">
+        {{ row.item.stakingCapacity | tezosCapacity }}
+      </template>
+      <template slot="fee" slot-scope="row">
+        {{ row.item.fee }} %
+      </template>
       <template slot="stakingBalance" slot-scope="row">
         {{ row.item.stakingBalance | tezos }}
       </template>
@@ -28,7 +34,7 @@
 
     <PaginationWithCustomAction
       v-model="currentPage"
-      :total-rows="count.bakers"
+      :total-rows="count.publicBakers"
       :per-page="perPage"
     />
   </div>
@@ -44,11 +50,11 @@ import withCustomAction from "../partials/withCustomAction";
 const PaginationWithCustomAction = withCustomAction(
   Pagination,
   "accounts",
-  "GET_BAKERS"
+  "GET_PUBLIC_BAKERS"
 );
 
 export default {
-  name: "BakersList",
+  name: "BakersListPublic",
   components: {
     PerPageSelect,
     PaginationWithCustomAction
@@ -57,9 +63,12 @@ export default {
   data() {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      // The key property must coincide with the corresponding keys in the data items
       fields: [
         { key: "accountId", label: "Baker" },
+        { key: "stakingCapacity", label: "Capacity" },
+        { key: "fee", label: "Fee" },
+        { key: "stakingBalance", label: "Total balance" },
+        { key: "rolls", label: "Rolls" },
         {
           key: "blocks",
           label: "Blocks",
@@ -72,22 +81,21 @@ export default {
           sortable: true,
           sortDirection: "desc"
         },
-        { key: "stakingBalance", label: "Total balance" },
-        { key: "rolls", label: "Rolls" },
+        { key: "activeDelegators", label: "# of delegators" },
         { key: "bakingSince", label: "Baking since" }
       ]
     };
   },
   computed: {
     ...mapState({
-      bakers: state => state.accounts.bakers,
+      publicBakers: state => state.accounts.publicBakers,
       count: state => state.accounts.counts,
       dateFormat: state => state.app.dateFormat
     }),
     bakersFormatted() {
-      if (!this.bakers || this.bakers.length === 0) return [];
+      if (!this.publicBakers || this.publicBakers.length === 0) return [];
 
-      return this.bakers.map(bakerObj => {
+      return this.publicBakers.map(bakerObj => {
         return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
       });
     }

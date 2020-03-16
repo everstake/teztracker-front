@@ -97,3 +97,18 @@
 .font-weight-semi-bold {
   font-weight: 600;
 }
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 16px;
+  color: $color-grey;
+}
+
+.fs-16 {
+  font-size: 16px;
+}
+
+.text-accent {
+  @extend .fs-16, .font-weight-bold;
+}

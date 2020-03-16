@@ -51,6 +51,9 @@ const TzAPI = {
   getBakers(opts = {}) {
     return get(this.API_URL(), "bakers", opts);
   },
+  getPublicBakers(opts = {}) {
+    return get(this.API_URL(), "public_bakers", opts);
+  },
   getTransactions(opts = {}) {
     const options = { ...opts };
     if (!options.operation_id) {

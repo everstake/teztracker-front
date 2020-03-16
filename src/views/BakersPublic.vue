@@ -1,5 +1,5 @@
 <template>
-  <PageContentContainer page-name="Bakers page">
+  <PageContentContainer page-name="Public bakers page">
     <template #breadcrumbs>
       <Breadcrumbs :crumbs="crumbs" />
     </template>
@@ -12,15 +12,15 @@
               <b-card no-body>
                 <CardHeader>
                   <template #left-content class="text">
-                    <h4 class="tz-title--bold">Bakers list</h4>
+                    <h4 class="tz-title--bold">Public bakers list</h4>
                   </template>
                   <template #right-content class="text">
-                    <Counter show-line :count="count.bakers" />
+                    <Counter show-line :count="count.publicBakers" />
                   </template>
                 </CardHeader>
 
                 <b-card-body>
-                  <BakersList />
+                  <BakersListPublic />
                 </b-card-body>
               </b-card>
             </b-col>
@@ -35,16 +35,16 @@
 import { mapState } from "vuex";
 import PageContentContainer from "../layouts/PageContentContainer";
 import Breadcrumbs from "../components/partials/Breadcrumbs";
-import BakersList from "../components/bakers/BakersList";
+import BakersListPublic from "../components/bakers/BakersListPublic";
 import CardHeader from "../components/partials/CardHeader";
 import Counter from "../components/partials/Counter";
 
 export default {
-  name: "Bakers",
+  name: "BakersPublic",
   components: {
     PageContentContainer,
     Breadcrumbs,
-    BakersList,
+    BakersListPublic,
     Counter,
     CardHeader
   },
@@ -52,7 +52,7 @@ export default {
     return {
       crumbs: [
         { toRouteName: "network", text: "Home" },
-        { toRouteName: "bakers", text: "All bakers page" }
+        { toRouteName: "public_bakers", text: "Public bakers page" }
       ]
     };
   },
