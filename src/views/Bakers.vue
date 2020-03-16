@@ -52,7 +52,7 @@ export default {
     return {
       crumbs: [
         { toRouteName: "network", text: "Home" },
-        { toRouteName: "bakers", text: "Bakers page" }
+        { toRouteName: "bakers", text: "All bakers page" }
       ]
     };
   },

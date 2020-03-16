@@ -11,12 +11,6 @@
     <div class="header-middle">
       <nav class="main-nav">
         <ul class="main-nav__list">
-          <li v-bind:class="{ active: isActive('index') }">
-            <router-link
-              :to="{ name: 'network', params: { network: currentNetwork } }"
-              >Dashboard</router-link
-            >
-          </li>
           <li>
             <b-dropdown id="blocks" variant="link" class="custom-dropdown">
               <template #button-content>
@@ -154,7 +148,7 @@
               <b-dropdown-item
                 :to="{ name: 'protocol_amendment' }"
               >
-                Protocol Amendments
+                Protocol amendments
               </b-dropdown-item>
 
               <b-dropdown-item
