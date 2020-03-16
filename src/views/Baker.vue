@@ -7,7 +7,6 @@
     <template #content>
       <section>
         <b-container fluid>
-<!--          <AccountSingle :hash="hash" />-->
           <BakerSingle :hash="hash" />
         </b-container>
       </section>
@@ -70,7 +69,6 @@
 <script>
 import PageContentContainer from "../layouts/PageContentContainer";
 import Breadcrumbs from "../components/partials/Breadcrumbs";
-// import AccountSingle from "../components/accounts/AccountSingle";
 import BakerSingle from "../components/bakers/BakerSingle";
 import TxsList from "../components/transactions/TxsList";
 import DelegationsList from "../components/delegations/DelegationsList";
@@ -81,7 +79,6 @@ export default {
   components: {
     PageContentContainer,
     Breadcrumbs,
-    // AccountSingle,
     BakerSingle,
     TxsList,
     DelegationsList,

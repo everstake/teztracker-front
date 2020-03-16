@@ -7,9 +7,8 @@
             v-if="Object.keys(bakerInfo).length !== 0"
             id="card-title"
             class="card__title"
-            @click="copyToClipboard()"
           >
-            <span ref="textToCopy" class="text">
+            <span class="text">
               <template v-if="bakerInfo.name">
                 {{ bakerInfo.name }}
               </template>
@@ -17,13 +16,7 @@
                 {{ hash }}
               </template>
             </span>
-            <span class="icon"
-              ><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"
-            /></span>
           </h3>
-          <b-tooltip ref="tooltip" triggers="hover" target="card-title"
-            >Copy to clipboard</b-tooltip
-          >
           <div class="subtitle">Baker information</div>
         </b-card-header>
 
@@ -38,7 +31,21 @@
                 <b-row class="item-info">
                   <b-col lg="4" class="label">Address</b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ hash }}
+                    <span id="hash">
+                      <span ref="textToCopy">
+                        {{ hash }}
+                      </span>
+                      <b-tooltip ref="tooltip" triggers="hover" target="hash">
+                        Copy to clipboard
+                      </b-tooltip>
+                      <span class="icon">
+                        <font-awesome-icon
+                          @click="copyToClipboard()"
+                          class="icon-primary"
+                          :icon="['fas', 'copy']"
+                        />
+                      </span>
+                    </span>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -85,38 +92,49 @@
                   <b-col lg="4" class="label">Total balance</b-col>
                   <b-col lg="6" class="text-accent">
                     {{ bakerInfo.evaluatedBalance | tezos }}
-                    ({{ $_convert(bakerInfo.evaluatedBalance) }})
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">Liquid balance</b-col>
-                  <b-col lg="8" class="text-accent">{{ account.balance | tezos }}</b-col>
+                  <b-col lg="8" class="text-accent">{{
+                    account.balance | tezos
+                  }}</b-col>
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">Staking balance</b-col>
-                  <b-col lg="8" class="text-accent">{{ bakerInfo.stakingBalance | tezos }}</b-col>
+                  <b-col lg="8" class="text-accent">{{
+                    bakerInfo.stakingBalance | tezos
+                  }}</b-col>
                 </b-row>
 
                 <span class="text-accent">Current Deposits</span>
 
                 <b-row class="item-info">
                   <b-col lg="4" class="label">Baking</b-col>
-                  <b-col lg="8" class="text-accent">{{ bakerInfo.bakingDeposits | tezos }}</b-col>
+                  <b-col lg="8" class="text-accent">{{
+                    bakerInfo.bakingDeposits | tezos
+                  }}</b-col>
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">Endorsement</b-col>
-                  <b-col lg="8" class="text-accent">{{ bakerInfo.endorsementDeposits | tezos }}</b-col>
+                  <b-col lg="8" class="text-accent">{{
+                    bakerInfo.endorsementDeposits | tezos
+                  }}</b-col>
                 </b-row>
 
                 <span class="text-accent">Pending Rewards</span>
 
                 <b-row class="item-info">
                   <b-col lg="4" class="label">Baking</b-col>
-                  <b-col lg="8" class="text-accent">{{ bakerInfo.bakingRewards | tezos }}</b-col>
+                  <b-col lg="8" class="text-accent">{{
+                    bakerInfo.bakingRewards | tezos
+                  }}</b-col>
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">Endorsement</b-col>
-                  <b-col lg="8" class="text-accent">{{ bakerInfo.endorsementRewards | tezos }}</b-col>
+                  <b-col lg="8" class="text-accent">{{
+                    bakerInfo.endorsementRewards | tezos
+                  }}</b-col>
                 </b-row>
               </b-col>
             </b-row>
