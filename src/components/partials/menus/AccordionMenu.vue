@@ -211,6 +211,21 @@ export default {
           ]
         },
         {
+          title: "Governance",
+          active: false,
+          isExpandable: true,
+          description: [
+            {
+              title: "Protocol Amendments",
+              routeName: "protocol_amendment"
+            },
+            {
+              title: "Protocols list",
+              routeName: "protocols"
+            }
+          ]
+        },
+        {
           title: "Current Network",
           active: false,
           isExpandable: true,

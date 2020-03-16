@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="9px" viewBox="0 0 14 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>Artboard</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="0.0%" y="0.0%" width="100.0%" height="100.0%" filterUnits="objectBoundingBox" id="filter-1">
+            <feGaussianBlur stdDeviation="0" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M4.95837587,9 C4.88371076,9 4.80904564,8.97243793 4.75188017,8.91787628 L0.0853107227,4.41794659 C-0.0284369076,4.30769832 -0.0284369076,4.12995109 0.0853107227,4.01970282 C0.199641674,3.91001703 0.383971167,3.91001703 0.498302119,4.01970282 L4.95837587,8.32107311 L13.5016979,0.0822643396 C13.6160288,-0.0274214465 13.8003583,-0.0274214465 13.9146893,0.0822643396 C14.0284369,0.192512617 14.0284369,0.37025984 13.9146893,0.480508117 L5.16487157,8.91787628 C5.10770609,8.97243793 5.03304098,9 4.95837587,9" id="Fill-6974" fill="#309282" filter="url(#filter-1)"></path>
+    </g>
+</svg>
