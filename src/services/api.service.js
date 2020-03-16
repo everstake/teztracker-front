@@ -33,8 +33,7 @@ const votingEndpoint = "https://api-teztracker.everstake.one/v2/data/mainnet/";
 
 const TzAPI = {
   API_URL() {
-    // return Vue.prototype.$constants.API_BASE_URLS[state.app.network];
-    return Vue.prototype.$constants.DEV_API_BASE_URLS[state.app.network];
+    return Vue.prototype.$constants.API_BASE_URLS[state.app.network];
   },
   getVotingUrl() {
     return votingEndpoint;

@@ -29,11 +29,6 @@ const constants = {
     babylonnet: "https://api-teztracker.everstake.one/v2/data/tezos/babylonnet/",
     carthagenet: "https://api-teztracker.everstake.one/v2/data/tezos/carthagenet/"
   },
-  DEV_API_BASE_URLS: {
-    mainnet: "http://144.76.66.20:8085/v2/data/tezos/mainnet/",
-    babylonnet: "http://144.76.66.20:8085/v2/data/tezos/babylonnet/",
-    carthagenet: "http://144.76.66.20:8085/v2/data/tezos/carthagenet/"
-  },
   SEARCH_PREFIXES: {
     account: ["tz", "KT"],
     operation: ["o"],
