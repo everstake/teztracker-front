@@ -21,7 +21,7 @@
         <CycleCounter/>
 
         <div class="tz-row promo-tiles">
-          <div class="tz-row__item mb-3 text-center">
+          <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'lightbulb']"/>
@@ -41,7 +41,7 @@
             </div>
           </div>
 
-          <div class="tz-row__item mb-3 text-center">
+          <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'star']"/>
@@ -64,7 +64,7 @@
             </div>
           </div>
 
-          <div class="tz-row__item mb-3 text-center">
+          <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'folder']"/>
@@ -75,7 +75,7 @@
             </div>
           </div>
 
-          <div class="tz-row__item mb-3 text-center">
+          <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'user']"/>
@@ -96,7 +96,7 @@
         </div>
 
         <div class="promo-tiles tz-row">
-          <div class="tz-row__item mb-3 text-center">
+          <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'chart-bar']"/>
@@ -119,7 +119,7 @@
             </div>
           </div>
 
-          <div class="tz-row__item mb-3 text-center">
+          <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'bookmark']"/>
@@ -132,7 +132,7 @@
             </div>
           </div>
 
-          <div class="tz-row__item mb-3 text-center">
+          <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'gem']"/>
@@ -143,7 +143,7 @@
             </div>
           </div>
 
-          <div class="tz-row__item mb-3 text-center">
+          <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'hourglass']"/>

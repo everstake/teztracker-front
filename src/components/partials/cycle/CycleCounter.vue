@@ -87,6 +87,7 @@ export default {
 <style lang="scss" scoped>
 
 .cycle-counter {
+  margin-top: 0;
   padding: 0 5px;
   @include for-phone-only {
     padding: 0;
