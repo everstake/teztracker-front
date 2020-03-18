@@ -326,7 +326,7 @@ li
   background: $color-white;
   -webkit-box-shadow: 0px 0px 15px 7px $color-black--opacity-02;
   box-shadow: 0px 0px 15px 7px $color-black--opacity-02;
-  padding: 15px;
+  padding: 5px 15px;
 }
 
 .main-content .promo-section .promo-tiles .tile .tile-icon {
@@ -349,8 +349,7 @@ li
   display: block;
   text-align: center;
   font-weight: 300;
-  font-size: 32px;
-  line-height: 39px;
+  font-size: 20px;
   color: $color-black;
 }
 
@@ -381,7 +380,6 @@ li
   margin-top: 10px;
   font-size: 14px;
   font-weight: 600;
-  line-height: 17px;
   text-align: center;
   text-transform: uppercase;
   color: $color-grey;
@@ -452,7 +450,7 @@ li
   float: left;
   background: $color-white;
   border: none;
-  padding: 18px 28px 9px;
+  padding: 5px 15px 5px;
 }
 
 .main-content section .card .card-header h3 {
@@ -511,6 +509,11 @@ li
   color: $color-grey;
 }
 
+.main-content section.cycle-counter .card-body > .progress-labels {
+  margin-bottom: 3px;
+}
+
+
 .progress {
   height: 8px;
   background-color: $color-white--grey;
@@ -519,16 +522,18 @@ li
   background-color: $color-brand;
 }
 .progress-labels {
-  margin-bottom: 8px;
   width: 100%;
   font-size: 14px;
   font-weight: 600;
-  line-height: 16px;
   text-transform: uppercase;
   color: $color-grey;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.voting-progress .progress-labels {
+  flex-direction: column;
 }
 
 .main-content
@@ -617,7 +622,8 @@ section
 .main-content section .card .card-body {
   width: 100%;
   float: left;
-  /* padding: 9px 28px 18px; */
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .main-content section .card .card-body .table thead tr th {
@@ -767,7 +773,6 @@ section
 }
 
 .promo-footer {
-  /* padding: 2rem 0; */
   padding: 15px;
   background-color: $color-teal--light;
 }

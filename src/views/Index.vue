@@ -53,15 +53,14 @@
                   class="mb-2"
                 ></b-progress>
                 <div class="progress-labels">
-                  <div class="voting-percentage">
+                  <div class="voting-percentage percentage green">
                     {{ votingProgressPercent }}%
                   </div>
-                  <div class="timer">
+                  <div class="tile-name">
                     {{ timeLeftTillVotingPeriodEnd }} - Until voting period end
                   </div>
                 </div>
               </div>
-              <span class="tile-name">Voting progress</span>
             </div>
           </div>
 

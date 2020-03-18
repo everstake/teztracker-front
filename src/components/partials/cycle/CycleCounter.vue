@@ -4,7 +4,7 @@
       <b-col>
         <b-card no-body>
           <b-card-header>
-            <div class="title text-center">
+            <div class="cycle-counter__title title text-center">
               Cycle counter
             </div>
           </b-card-header>
@@ -90,6 +90,10 @@ export default {
   padding: 0 5px;
   @include for-phone-only {
     padding: 0;
+  }
+  
+  &__title {
+    font-size: 15px;
   }
 }
 </style>
