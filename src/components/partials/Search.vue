@@ -1,10 +1,9 @@
 <template>
-  <form
+  <div
     :class="error ? 'search-form--invalid' : ''"
-    action
-    @submit.prevent="onSubmit"
+    class="search__form"
   >
-    <input
+    <b-form-input
       type="text"
       v-model.trim="searchQuery"
       placeholder="Search for block, txn or address"
@@ -15,14 +14,15 @@
 
     <span v-if="error" class="search-form--error">{{ error }}</span>
 
-    <button type="submit" class="button-search" :disabled="loading">
+    <b-button type="submit" class="button-search" :disabled="loading">
       <font-awesome-icon
         class="icon-white"
         :icon="loading ? 'spinner' : 'search'"
         :spin="loading"
+        @click="onSubmit"
       />
-    </button>
-  </form>
+    </b-button>
+  </div>
 </template>
 
 <script>
@@ -152,5 +152,9 @@ export default {
 <style scoped>
 .icon-white {
   color: white;
+}
+
+.search__form {
+  display: block;
 }
 </style>
