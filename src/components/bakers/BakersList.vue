@@ -72,8 +72,18 @@ export default {
           sortable: true,
           sortDirection: "desc"
         },
-        { key: "stakingBalance", label: "Total balance" },
-        { key: "rolls", label: "Rolls" },
+        {
+          key: "stakingBalance",
+          label: "Total balance",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "rolls",
+          label: "Rolls",
+          sortable: true,
+          sortDirection: "desc"
+        },
         { key: "bakingSince", label: "Baking since" }
       ]
     };

@@ -65,10 +65,30 @@ export default {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
         { key: "accountId", label: "Baker" },
-        { key: "stakingCapacity", label: "Capacity" },
-        { key: "fee", label: "Fee" },
-        { key: "stakingBalance", label: "Total balance" },
-        { key: "rolls", label: "Rolls" },
+        {
+          key: "stakingCapacity",
+          label: "Capacity",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "fee",
+          label: "Fee",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "stakingBalance",
+          label: "Total balance",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "rolls",
+          label: "Rolls",
+          sortable: true,
+          sortDirection: "desc"
+        },
         {
           key: "blocks",
           label: "Blocks",
