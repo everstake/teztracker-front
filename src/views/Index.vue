@@ -1,5 +1,5 @@
 <template>
-  <div class="main-content">
+  <div class="main-content dashboard">
     <b-container fluid>
       <section class="promo-section">
         <b-row class="promo-top justify-content-md-center align-items-center">
@@ -94,7 +94,7 @@
           </div>
         </div>
 
-        <div class="promo-tiles tz-row">
+        <div class="tz-row promo-tiles">
           <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
@@ -162,14 +162,14 @@
       </section>
     </b-container>
 
-    <section>
+    <section class="dashboard__cards">
       <b-container fluid>
         <b-row>
-          <b-col lg="12" xl="6" class="mb-3">
+          <b-col lg="12" xl="6" class="mb-3 dashboard__card">
             <BlocksCard />
           </b-col>
 
-          <b-col lg="12" xl="6">
+          <b-col lg="12" xl="6 dashboard__card">
             <TxsCard />
           </b-col>
         </b-row>
@@ -341,8 +341,35 @@ export default {
 
   &__item {
     flex: 1 0 20%;
-    padding: 5px;
+    padding: 0;
+    margin: 0;
     width: 100%;
+    padding-bottom: 1.6rem;
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+    
+    &:first-child {
+      padding-left: 0;
+    }
+    
+    &:last-child {
+      padding-right: 0;
+    }
+  
+    @media (max-width: 1280px) {
+      &:nth-child(odd) {
+        padding-left: 0;
+      }
+    
+      &:nth-child(even) {
+        padding-right: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      padding-left: 0;
+      padding-right: 0;
+    }
 
     @include for-smartphones-portrait-up {
       flex: 1 0 50%;
@@ -371,5 +398,21 @@ div.main-content .promo-section .promo-top .promo-search {
       width: 85%;
     }
   }
+}
+
+.dashboard {
+  &__card {
+    &:first-child {
+      padding-right: 0.8rem;
+    }
+
+    &:last-child {
+      padding-left: 0.8rem;
+    }
+  }
+}
+
+.main-content .dashboard__cards {
+  margin-top: 0;
 }
 </style>

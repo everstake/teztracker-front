@@ -88,7 +88,8 @@ export default {
 
 .cycle-counter {
   margin-top: 0;
-  padding: 0 5px;
+  padding: 0;
+  
   @include for-phone-only {
     padding: 0;
   }

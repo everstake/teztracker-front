@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="d-flex justify-content-between mb-4"
+      class="d-flex justify-content-between mb-2"
       v-if="!isBlockEndorsements"
     >
       <PerPageSelect @per-page="$_setPerPage" />
