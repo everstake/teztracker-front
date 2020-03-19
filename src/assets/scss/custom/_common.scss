@@ -330,14 +330,23 @@ li
 }
 
 .main-content .promo-section .promo-tiles .tile .tile-icon {
-  width: 40px;
-  height: 40px;
+  position: relative;
+  width: 30px;
+  height: 30px;
   border: 1px solid $color-white--grey;
   border-radius: 4px;
-  margin: 30px auto 14px;
+  margin: 10px auto 10px;
   padding: 5px 0 0;
   font-size: 20px;
   color: $color-white--grey;
+}
+
+.main-content .promo-section .promo-tiles .tile .tile-icon > svg {
+  width: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .main-content .promo-section .promo-tiles .tile .tile-icon i {
@@ -357,7 +366,7 @@ li
   display: block;
   height: 22px;
   text-align: center;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 600;
   line-height: 22px;
 }
@@ -377,7 +386,6 @@ li
 .main-content .promo-section .promo-tiles .tile .tile-name {
   display: block;
   text-align: center;
-  margin-top: 10px;
   font-size: 14px;
   font-weight: 600;
   text-align: center;
@@ -515,7 +523,7 @@ li
 
 
 .progress {
-  height: 8px;
+  height: 6px;
   background-color: $color-white--grey;
 }
 .progress .progress-bar {

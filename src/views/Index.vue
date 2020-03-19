@@ -50,7 +50,6 @@
                 <b-progress
                   :value="votingProgressPercent"
                   :max="100"
-                  class="mb-2"
                 ></b-progress>
                 <div class="progress-labels">
                   <div class="voting-percentage percentage green">
