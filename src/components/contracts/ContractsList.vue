@@ -29,6 +29,9 @@
       <template slot="balance" slot-scope="row">
         <span>{{ row.item.balance | tezos }}</span>
       </template>
+      <template slot="createdAt" slot-scope="row">
+        <span>{{ row.item.createdAt | timeformat(dateFormat) }}</span>
+      </template>
     </b-table>
 
     <PaginationWithCustomAction
@@ -71,7 +74,8 @@ export default {
           label: "Balance",
           sortable: true,
           sortDirection: "desc"
-        }
+        },
+        { key: "createdAt", label: "Created" }
       ]
     };
   },
@@ -79,6 +83,9 @@ export default {
     ...mapState("accounts", {
       contracts: state => state.contracts,
       count: state => state.counts
+    }),
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
     })
   }
 };
