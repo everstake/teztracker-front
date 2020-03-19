@@ -129,11 +129,11 @@
       
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown>
-            <b-nav-text>
-              <DateFormatSwitcher class="pointer" :isSwitchOnly="false" />
-            </b-nav-text>
-          </b-nav-item-dropdown>
+<!--          <b-nav-item-dropdown>-->
+<!--            <b-nav-text>-->
+<!--              <DateFormatSwitcher class="pointer" :isSwitchOnly="false" />-->
+<!--            </b-nav-text>-->
+<!--          </b-nav-item-dropdown>-->
           <b-nav-item-dropdown class="text-capitalize" :text="currentNetwork" right :disabled="!networkChangable">
             <b-dropdown-item
               v-for="network in networkList"
@@ -145,7 +145,7 @@
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-form class="search">
-            <Search />
+            <Search :placeholder="'Block, txn or address'" />
           </b-nav-form>
         </b-navbar-nav>
       </b-collapse>
@@ -158,7 +158,6 @@ import { mapMutations, mapState, mapGetters } from 'vuex';
 import { SET_APP_NETWORK } from '@/store/mutations.types.js';
 import network from "../../../mixins/network";
 import Search from "../Search";
-import OverlayHamburgerMenu from "./Overlay";
 import uuid from '@/mixins/uuid'
 import DateFormatSwitcher from "@/components/partials/DateFormatSwitcher";
 import Logo from "../icons/Logo";
@@ -167,7 +166,6 @@ export default {
   name: "TopMenu",
   components: {
     Search,
-    OverlayHamburgerMenu,
     DateFormatSwitcher,
     Logo
   },
@@ -204,20 +202,8 @@ export default {
 
 .header-middle,
 .search {
-  display: none;
-  @include for-regular-desktops-up {
-    display: block;
-  }
+  display: inline-block;
 }
-/*.search {*/
-/*  @media (max-width: 991px) {*/
-/*    display: block;*/
-/*    */
-/*    & .button-search {*/
-/*      right: auto;*/
-/*    }*/
-/*  }*/
-/*}*/
 
 .pointer {
   cursor: pointer;
@@ -226,10 +212,5 @@ export default {
 .main-nav .dropdown-item,
 .main-nav .dropdown-toggle {
   text-transform: capitalize;
-}
-
-.main-header {
-  /*display: flex;*/
-  /*justify-content: space-between;*/
 }
 </style>
