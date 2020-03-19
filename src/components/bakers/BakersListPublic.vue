@@ -27,6 +27,18 @@
       <template slot="stakingBalance" slot-scope="row">
         {{ row.item.stakingBalance | tezos }}
       </template>
+      <template slot="rolls" slot-scope="row">
+        {{ row.item.rolls | formatInteger }}
+      </template>
+      <template slot="blocks" slot-scope="row">
+        {{ row.item.blocks | formatInteger }}
+      </template>
+      <template slot="endorsements" slot-scope="row">
+        {{ row.item.endorsements | formatInteger }}
+      </template>
+      <template slot="activeDelegators" slot-scope="row">
+        {{ row.item.activeDelegators | formatInteger }}
+      </template>
       <template slot="bakingSince" slot-scope="row">
         {{ row.item.bakingSince | timeformat(dateFormat) }}
       </template>

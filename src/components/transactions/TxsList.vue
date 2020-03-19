@@ -17,23 +17,23 @@
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
         >
-          <span>{{ row.item.operationGroupHash | longhash(35) }}</span>
+          {{ row.item.operationGroupHash | longhash(35) }}
         </b-link>
       </template>
 
       <template slot="level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
-          <span>{{ row.item.blockLevel }}</span>
+          {{ row.item.blockLevel | formatInteger }}
         </b-link>
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat(dateFormat) }}</span>
+        {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
 
       <template slot="from" slot-scope="row">
         <b-link :to="{ name: 'account', params: { account: row.item.source } }">
-          <span>{{ row.item.source | longhash(20) }}</span>
+          {{ row.item.source | longhash(20) }}
         </b-link>
       </template>
 
@@ -41,14 +41,14 @@
         <b-link
           :to="{ name: 'account', params: { account: row.item.destination } }"
         >
-          <span>{{ row.item.destination | longhash(20) }}</span>
+          {{ row.item.destination | longhash(20) }}
         </b-link>
       </template>
       <template slot="amount" slot-scope="row">
-        <span>{{ row.item.amount | tezos }}</span>
+        {{ row.item.amount | tezos }}
       </template>
       <template slot="fee" slot-scope="row">
-        <span>{{ row.item.fee | tezos }}</span>
+        {{ row.item.fee | tezos }}
       </template>
     </b-table>
 

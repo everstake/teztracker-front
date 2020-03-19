@@ -15,26 +15,26 @@
     >
       <template slot="level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.level } }">
-          <span>{{ row.item.level }}</span>
+          {{ row.item.level | formatInteger }}
         </b-link>
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat(dateFormat) }}</span>
+        {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
 
       <template slot="baker" slot-scope="row">
         <b-link :to="{ name: 'baker', params: { baker: row.item.baker } }">
-          <span>{{ row.item.baker | longhash(42) }}</span>
+          {{ row.item.baker | longhash(42) }}
         </b-link>
       </template>
 
       <template slot="volume" slot-scope="row">
-        <span>{{ row.item.volume | tezos }}</span>
+        {{ row.item.volume | tezos }}
       </template>
 
       <template slot="fees" slot-scope="row">
-        <span>{{ row.item.fees | tezos }}</span>
+        {{ row.item.fees | tezos }}
       </template>
     </b-table>
 

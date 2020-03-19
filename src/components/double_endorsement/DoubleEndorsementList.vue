@@ -17,22 +17,22 @@
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
         >
-          <span>{{ row.item.operationGroupHash | longhash(35) }}</span>
+          {{ row.item.operationGroupHash | longhash(35) }}
         </b-link>
       </template>
 
       <template slot="level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
-          <span>{{ row.item.blockLevel }}</span>
+          {{ row.item.blockLevel | formatInteger }}
         </b-link>
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat(dateFormat) }}</span>
+        {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
       <template slot="denounced_level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.level } }">
-          <span>{{ row.item.level }}</span>
+          {{ row.item.level | formatInteger }}
         </b-link>
       </template>
     </b-table>
