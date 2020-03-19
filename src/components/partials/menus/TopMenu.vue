@@ -134,7 +134,7 @@
               <font-awesome-icon icon="cog" />
             </template>
             <b-form-group
-              label="Date format"
+              label="Table date format"
             >
               <DateFormatSwitcher class="pointer" :isSwitchOnly="true" />
             </b-form-group>

@@ -72,6 +72,7 @@ export default {
     }
     
     & .dropdown-menu {
+      box-sizing: content-box;
       font-size: 14px;
       padding: 5px;
     }
