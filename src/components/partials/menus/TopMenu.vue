@@ -146,7 +146,7 @@
             <b-dropdown-item
               v-for="network in networkList"
               @click="changeRouteNetwork(network)"
-              class="dropdown-item pointer"
+              class="pointer"
               :key="generateKey()"
             >
               {{ network }}

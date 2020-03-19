@@ -16,6 +16,20 @@ body {
   padding-right: 30px;
 }
 
+.main-header .navbar .form-group {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.main-header .navbar .col-form-label,
+.main-header .navbar .col-form-label + div {
+  padding: 0 5px;
+}
+
+.main-header .navbar .col-form-label {
+  padding-bottom: 5px;
+}
+
 .main-header .dropdown-item {
   font-size: 14px;
 }

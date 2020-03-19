@@ -1,6 +1,6 @@
 <template>
   <b-form-checkbox v-if="isSwitchOnly" v-model="isUSDateFormat" name="date-format" switch>
-    {{ isUSDateFormat ? "US format" : "Standard format" }}
+    {{ isUSDateFormat ? "US date" : "Standard date" }}
   </b-form-checkbox>
 
   <b-dropdown v-else id="blocks" variant="link" class="custom-dropdown">
