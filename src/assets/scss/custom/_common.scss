@@ -207,6 +207,24 @@ li
   color: $color-black;
 }
 
+@media (min-width: 991px) {
+  .main-header .search .search-query {
+    padding: 0 28px 0 10px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .main-header .search .search-query {
+    padding: 0 48px 0 10px;
+  }
+}
+
+@media (max-width: 991px) {
+  .main-header .search .search-query {
+    padding: 0 68px 0 10px;
+  }
+}
+
 .main-header .search .button-search {
   position: absolute;
   top: 0;
