@@ -139,9 +139,6 @@
               <DateFormatSwitcher class="pointer" :isSwitchOnly="true" />
             </b-form-group>
           </b-nav-item-dropdown>
-<!--          <b-nav-item>-->
-<!--            <DateFormatSwitcher class="pointer" :isSwitchOnly="false" />-->
-<!--          </b-nav-item>-->
           <b-nav-item-dropdown class="text-capitalize" :text="currentNetwork" right :disabled="!networkChangable">
             <b-dropdown-item
               v-for="network in networkList"
