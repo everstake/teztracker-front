@@ -148,7 +148,7 @@
               <b-dropdown-item
                 :to="{ name: 'protocol_amendment' }"
               >
-                Protocol amendments
+                Protocol amendment
               </b-dropdown-item>
 
               <b-dropdown-item
@@ -190,7 +190,7 @@
         </ul>
       </nav>
     </div>
-    <div class="search">
+    <div v-if="isSearchVisible" class="search">
       <Search />
     </div>
 
@@ -215,6 +215,22 @@ export default {
     OverlayHamburgerMenu,
     DateFormatSwitcher,
     Logo
+  },
+  data() {
+    return {
+      isSearchVisible: true
+    };
+  },
+  watch: {
+    $route: {
+      deep: true,
+      immediate: true,
+      handler(to) {
+        if (to.name === 'network') {
+          this.isSearchVisible = false;
+        }
+      }
+    }
   },
   mixins: [network, uuid],
   computed: {

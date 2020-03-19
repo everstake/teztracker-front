@@ -168,11 +168,11 @@
       <b-container fluid>
         <b-row>
           <b-col lg="12" xl="6" class="mb-3">
-            <BlocksCard />
+            <BlocksCard :per-page="false" />
           </b-col>
 
           <b-col lg="12" xl="6">
-            <TxsCard />
+            <TxsCard :per-page="false" />
           </b-col>
         </b-row>
       </b-container>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!hide">
     <label for="perPageSelect" class="mb-1">
       Items per page
     </label>
@@ -21,6 +21,12 @@ export default {
       perPage: this.$constants.PER_PAGE,
       perPageOptions: this.$constants.PER_PAGE_OPTIONS
     };
+  },
+  props: {
+    hide: {
+      type: Boolean,
+      default: false
+    }
   },
   watch: {
     perPage: {

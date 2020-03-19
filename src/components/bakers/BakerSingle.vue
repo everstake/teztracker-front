@@ -79,7 +79,7 @@
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
-                  <b-col lg="4" class="label">Endorsed blocks</b-col>
+                  <b-col lg="4" class="label"># of endorsements</b-col>
                   <b-col lg="8" class="text-accent">
                     {{ bakerInfo.endorsements }}
                   </b-col>

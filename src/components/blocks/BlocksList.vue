@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="d-flex justify-content-between mb-4">
-      <PerPageSelect @per-page="$_setPerPage" />
+    <div class="d-flex justify-content-between mb-4" v-if="perPage">
+      <PerPageSelect @per-page="$_setPerPage" :hide="true" />
     </div>
 
     <b-table
@@ -43,7 +43,7 @@
       :per-page="perPage"
     />
   </div>
-</template>
+</template>items
 
 <script>
 import { mapState } from "vuex";
