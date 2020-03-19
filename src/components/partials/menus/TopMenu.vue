@@ -129,11 +129,19 @@
       
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-<!--          <b-nav-item-dropdown>-->
-<!--            <b-nav-text>-->
-<!--              <DateFormatSwitcher class="pointer" :isSwitchOnly="false" />-->
-<!--            </b-nav-text>-->
-<!--          </b-nav-item-dropdown>-->
+          <b-nav-item-dropdown class="date-switcher">
+            <template slot="button-content">
+              <font-awesome-icon icon="cog" />
+            </template>
+            <b-form-group
+              label="Date format"
+            >
+              <DateFormatSwitcher class="pointer" :isSwitchOnly="true" />
+            </b-form-group>
+          </b-nav-item-dropdown>
+<!--          <b-nav-item>-->
+<!--            <DateFormatSwitcher class="pointer" :isSwitchOnly="false" />-->
+<!--          </b-nav-item>-->
           <b-nav-item-dropdown class="text-capitalize" :text="currentNetwork" right :disabled="!networkChangable">
             <b-dropdown-item
               v-for="network in networkList"
@@ -144,7 +152,7 @@
               {{ network }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-form class="search">
+          <b-nav-form v-if="isSearchVisible" class="search">
             <Search :placeholder="'Block, txn or address'" />
           </b-nav-form>
         </b-navbar-nav>
@@ -170,6 +178,22 @@ export default {
     Logo
   },
   mixins: [network, uuid],
+  data() {
+    return {
+      isSearchVisible: true
+    };
+  },
+  watch: {
+    $route: {
+      deep: true,
+      immediate: true,
+      handler(to) {
+        if (to.name === 'network') {
+          this.isSearchVisible = false;
+        }
+      }
+    }
+  },
   computed: {
     ...mapState("app", {
       network: state => state.network

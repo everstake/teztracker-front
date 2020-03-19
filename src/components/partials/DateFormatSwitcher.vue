@@ -1,14 +1,7 @@
 <template>
-  <b-form-group
-    v-if="isSwitchOnly"
-    label="Date format:"
-    class="date-switcher mb-0"
-    label-class="font-weight-semi-bold"
-  >
-    <b-form-checkbox v-model="isUSDateFormat" name="date-format" switch>
-      {{ isUSDateFormat ? "US date format" : "Standard date format" }}
-    </b-form-checkbox>
-  </b-form-group>
+  <b-form-checkbox v-if="isSwitchOnly" v-model="isUSDateFormat" name="date-format" switch>
+    {{ isUSDateFormat ? "US date format" : "Standard date format" }}
+  </b-form-checkbox>
 
   <b-dropdown v-else id="blocks" variant="link" class="custom-dropdown">
     <template #button-content>
@@ -69,13 +62,17 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .date-switcher {
     cursor: pointer;
 
     & label,
     & input {
       cursor: pointer;
+    }
+    
+    & .dropdown-menu {
+      padding: 5px;
     }
   }
 </style>
