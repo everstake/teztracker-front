@@ -463,6 +463,7 @@ li
   background: $color-white;
   border: none;
   padding: 10px 15px 10px;
+  //padding: 10px 35px 10px;
 }
 
 .main-content section .card .card-header h3 {
@@ -513,9 +514,18 @@ li
   float: left;
 }
 
+.main-content .card-body {
+  padding: 10px 15px;
+}
+
 .main-content section.cycle-counter .card__header,
 .main-content section.cycle-counter .card__body {
   padding: 10px 15px;
+}
+
+.main-content section.cycle-counter .card-body {
+  padding-top: 15px;
+  padding-bottom: 5px;
 }
 
 .main-content section.cycle-counter .card .card-header .title span {
@@ -639,6 +649,10 @@ section
 .main-content section .card .card-body {
   width: 100%;
   float: left;
+}
+
+.main-content section .card .card-body .card__no-padding {
+  padding: 0;
 }
 
 .main-content section .dashboard__card .card-body {
