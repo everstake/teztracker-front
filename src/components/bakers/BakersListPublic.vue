@@ -122,7 +122,7 @@ export default {
     ...mapState({
       publicBakers: state => state.accounts.publicBakers,
       count: state => state.accounts.counts,
-      dateFormat: state => state.dateFormat
+      dateFormat: state => state.app.dateFormat
     }),
     bakersFormatted() {
       if (!this.publicBakers || this.publicBakers.length === 0) return [];
