@@ -95,7 +95,7 @@ export default {
     ...mapState({
       blocks: state => state.blocks.blocks,
       count: state => state.blocks.counts,
-      dateFormat: state => state.dateFormat
+      dateFormat: state => state.app.dateFormat
     })
   }
 };
