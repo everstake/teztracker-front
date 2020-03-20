@@ -166,11 +166,11 @@
       <b-container fluid>
         <b-row>
           <b-col lg="12" xl="6" class="mb-3 dashboard__card">
-            <BlocksCard />
+            <BlocksCard :per-page="false" />
           </b-col>
 
           <b-col lg="12" xl="6 dashboard__card">
-            <TxsCard />
+            <TxsCard :per-page="false" />
           </b-col>
         </b-row>
       </b-container>

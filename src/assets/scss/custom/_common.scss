@@ -730,6 +730,10 @@ section
   float: left;
 }
 
+.main-content section .card .card-body .card__pointer {
+  cursor: pointer;
+}
+
 .main-content section .card .card-body .card__no-padding {
   padding: 0;
 }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect @per-page="$_setPerPage" />
+      <PerPageSelect @per-page="$_setPerPage" :hide="true" />
     </div>
 
     <b-table

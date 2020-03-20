@@ -30,22 +30,21 @@
 
                 <b-row class="item-info">
                   <b-col lg="4" class="label">Address</b-col>
-                  <b-col lg="8" class="text-accent">
-                    <span id="hash">
+                  <b-col lg="8" class="text-accent card__pointer">
+                    <span id="hash" @click="copyToClipboard()">
                       <span ref="textToCopy">
                         {{ hash }}
                       </span>
-                      <b-tooltip ref="tooltip" triggers="hover" target="hash">
-                        Copy to clipboard
-                      </b-tooltip>
                       <span class="icon">
                         <font-awesome-icon
-                          @click="copyToClipboard()"
                           class="icon-primary"
                           :icon="['fas', 'copy']"
                         />
                       </span>
                     </span>
+                    <b-tooltip ref="tooltip" triggers="hover" target="hash">
+                      Copy to clipboard
+                    </b-tooltip>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -79,7 +78,7 @@
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
-                  <b-col lg="4" class="label">Endorsed blocks</b-col>
+                  <b-col lg="4" class="label"># of endorsements</b-col>
                   <b-col lg="8" class="text-accent">
                     {{ bakerInfo.endorsements }}
                   </b-col>
