@@ -253,7 +253,7 @@ li
 .main-content .promo-section .promo-top .promo-search .search {
   width: 85%;
   position: relative;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
 }
 
 .main-content .promo-section .promo-top .promo-search .search .search-form--invalid .search-query,
@@ -513,6 +513,11 @@ li
   float: left;
 }
 
+.main-content section.cycle-counter .card__header,
+.main-content section.cycle-counter .card__body {
+  padding: 10px 15px;
+}
+
 .main-content section.cycle-counter .card .card-header .title span {
   font-size: 20px;
   font-weight: 600;
@@ -634,6 +639,9 @@ section
 .main-content section .card .card-body {
   width: 100%;
   float: left;
+}
+
+.main-content section .dashboard__card .card-body {
   padding-top: 0;
   padding-bottom: 5px;
 }
