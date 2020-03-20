@@ -163,6 +163,11 @@ span a.baker, .link {
   border: none;
 }
 
+.main-header .date-switcher .dropdown-menu {
+  left: auto;
+  right: 0;
+}
+
 .main-header .header-middle .main-nav ul li .dropdown-menu {
   top: 10px !important;
   border: 1px solid $color-white--grey;
