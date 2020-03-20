@@ -12,6 +12,7 @@
       :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
+      :tbody-tr-class="$_defineRowClass"
     >
       <template slot="txhash" slot-scope="row">
         <b-link
@@ -67,6 +68,7 @@ import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 import setPerPage from "@/mixins/setPerPage";
+import defineRowClass from "@/mixins/defineRowClass";
 
 export default {
   name: "TxsList",
@@ -74,7 +76,7 @@ export default {
     PerPageSelect,
     Pagination
   },
-  mixins: [handleCurrentPageChange, setPerPage],
+  mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
   props: {
     block: {
       type: Object
@@ -95,10 +97,26 @@ export default {
         { key: "level", label: "Block ID" },
         { key: "timestamp", label: "Timestamp" },
         { key: "txhash", label: "Transactions Hash" },
-        { key: "from", label: "From", class: !this.isTableComplete ? 'd-none' : '' },
-        { key: "to", label: "To", class: !this.isTableComplete ? 'd-none' : '' },
-        { key: "amount", label: "Amount", class: !this.isTableComplete ? 'd-none' : '' },
-        { key: "fee", label: "Fees", class: !this.isTableComplete ? 'd-none' : '' }
+        {
+          key: "from",
+          label: "From",
+          class: !this.isTableComplete ? "d-none" : ""
+        },
+        {
+          key: "to",
+          label: "To",
+          class: !this.isTableComplete ? "d-none" : ""
+        },
+        {
+          key: "amount",
+          label: "Amount",
+          class: !this.isTableComplete ? "d-none" : ""
+        },
+        {
+          key: "fee",
+          label: "Fees",
+          class: !this.isTableComplete ? "d-none" : ""
+        }
       ]
     };
   },
@@ -134,7 +152,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations('operations', [SET_TX_COUNT]),
+    ...mapMutations("operations", [SET_TX_COUNT]),
     async reload(page = 1) {
       const props = {
         page,

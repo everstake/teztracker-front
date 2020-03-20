@@ -12,6 +12,7 @@
       :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
+      :tbody-tr-class="$_defineRowClass"
     >
       <template slot="txhash" slot-scope="row">
         <b-link
@@ -63,6 +64,7 @@ import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 import setPerPage from "@/mixins/setPerPage";
+import defineRowClass from "@/mixins/defineRowClass";
 
 export default {
   name: "OriginationsList",
@@ -70,7 +72,7 @@ export default {
     PerPageSelect,
     Pagination
   },
-  mixins: [handleCurrentPageChange, setPerPage],
+  mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
   props: ["account"],
   data() {
     return {
