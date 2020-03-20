@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect @per-page="$_setPerPage" :hide="true" />
+      <PerPageSelect @per-page="$_setPerPage" :hide="!showPerPageFilter" />
     </div>
 
     <b-table
@@ -85,6 +85,10 @@ export default {
       type: String
     },
     isTableComplete: {
+      type: Boolean,
+      default: true
+    },
+    showPerPageFilter: {
       type: Boolean,
       default: true
     }
