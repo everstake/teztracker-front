@@ -20,13 +20,13 @@
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
         >
-          <span>{{ row.item.operationGroupHash | longhash(35) }}</span>
+          {{ row.item.operationGroupHash | longhash(35) }}
         </b-link>
       </template>
 
       <template slot="block" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.level } }">
-          <span>{{ row.item.level }}</span>
+          {{ row.item.level | formatInteger }}
         </b-link>
       </template>
 
@@ -34,12 +34,12 @@
         <b-link
           :to="{ name: 'account', params: { account: row.item.delegate } }"
         >
-          <span>{{ row.item.delegate | longhash(42) }}</span>
+          {{ row.item.delegate | longhash(42) }}
         </b-link>
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat(dateFormat) }}</span>
+        {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
     </b-table>
 

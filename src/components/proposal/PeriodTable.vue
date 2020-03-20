@@ -28,8 +28,12 @@
                         <b-link
                           :to="{ name: 'baker', params: { baker: row.item.pkh } }"
                         >
-                      <span>{{row.item.name || row.item.pkh | longhash(35)}}</span>
+                          {{row.item.name || row.item.pkh | longhash(35)}}
                         </b-link>
+                      </template>
+  
+                      <template slot="rolls" slot-scope="row">
+                        {{ row.item.rolls | formatInteger }}
                       </template>
 
                       <template slot="blockLevel" slot-scope="row">
@@ -39,7 +43,7 @@
                             params: { level: row.item.blockLevel }
                           }"
                         >
-                          <span>{{ row.item.blockLevel }}</span>
+                           {{ row.item.blockLevel | formatInteger }}
                         </b-link>
                       </template>
 
@@ -55,12 +59,12 @@
                             params: { voteHash: row.item.operation }
                           }"
                         >
-                          <span>{{ row.item.operation | longhash(35) }}</span>
+                           {{ row.item.operation | longhash(35) }}
                         </b-link>
                       </template>
 
                       <template slot="timestamp" slot-scope="row">
-                        <span>{{ formatDate(row.item.timestamp) }}</span>
+                        {{ formatDate(row.item.timestamp) }}
                       </template>
                     </b-table>
                     <div class="vote-table__button-wrapper">
@@ -99,6 +103,9 @@
                         row.item.name || row.item.pkh | longhash(35)
                       }}</span>
                         </b-link>
+                      </template>
+                      <template slot="rolls" slot-scope="row">
+                        {{ row.item.rolls | formatInteger }}
                       </template>
                     </b-table>
                     <div class="vote-table__button-wrapper">

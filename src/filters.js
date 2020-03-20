@@ -1,5 +1,6 @@
 import Vue from "vue";
 import moment from "moment";
+import numeral from "numeral";
 
 Vue.filter("bignum", function(num, delimiter) {
   if (!num || num < 1000) {
@@ -33,7 +34,9 @@ Vue.filter("longhash", function(hash, length) {
 
 Vue.filter("tezos", function(amount) {
   if (amount > 0) {
-    return amount / Vue.prototype.$constants.XTZ + " XTZ";
+    return (
+      numeral(amount / Vue.prototype.$constants.XTZ).format("0,0[.]000000") + " XTZ"
+    );
   }
   return "0 XTZ";
   //return amount + "ꜩ";
@@ -41,7 +44,7 @@ Vue.filter("tezos", function(amount) {
 
 Vue.filter("tezosCapacity", function(amount) {
   if (amount > 0) {
-    return `${amount} XTZ`;
+    return `${numeral(amount).format("0,0[.]000000")} XTZ`;
   }
   return "0 XTZ";
 });
@@ -60,7 +63,7 @@ Vue.filter("getAge", function(timestamp) {
       timestamp * Vue.prototype.$constants.THOUSAND_MILLISECONDS) /
       Vue.prototype.$constants.DAY_IN_MILLISECONDS
   );
-  return value + " days";
+  return numeral(value).format("0,0") + " days";
 });
 
 Vue.filter("getPercentageICOActiveAddresses", function(num) {
@@ -69,4 +72,8 @@ Vue.filter("getPercentageICOActiveAddresses", function(num) {
       (num * 100) / Vue.prototype.$constants.ALL_ICO_ACTIVE_ADDRESSES
     ).toFixed(2);
   }
+});
+
+Vue.filter("formatInteger", num => {
+  return numeral(num).format("0,0");
 });

@@ -10,19 +10,19 @@
       class="transactions-table table-responsive-md"
     >
       <template slot="cycle" slot-scope="row">
-        <span>{{ row.item.cycle }}</span>
+        {{ row.item.cycle | formatInteger }}
       </template>
 
       <template slot="level" slot-scope="row">
         <b-link
           :to="{ name: 'block', params: { level: row.item.snapshot_block } }"
         >
-          <span>{{ row.item.snapshot_block }}</span>
+          {{ row.item.snapshot_block | formatInteger }}
         </b-link>
       </template>
 
       <template slot="rolls" slot-scope="row">
-        <span>{{ row.item.rolls }}</span>
+        {{ row.item.rolls | formatInteger }}
       </template>
     </b-table>
 

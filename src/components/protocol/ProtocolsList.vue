@@ -18,7 +18,7 @@
         <b-link
           :to="{ name: 'block', params: { level: row.item.startBlock } }"
         >
-          <span>{{ row.item.startBlock }}</span>
+          {{ row.item.startBlock | formatInteger }}
         </b-link>
       </template>
 
@@ -26,7 +26,7 @@
         <b-link
           :to="{ name: 'block', params: { level: row.item.endBlock } }"
         >
-          <span>{{ row.item.endBlock }}</span>
+          {{ row.item.endBlock | formatInteger }}
         </b-link>
       </template>
     </b-table>
