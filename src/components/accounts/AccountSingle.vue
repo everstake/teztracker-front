@@ -16,7 +16,7 @@
         <div class="card-divider"></div>
 
         <b-card-body>
-          <b-row class="item-info ml-1 mr-1">
+          <b-row class="item-info  mr-1">
             <b-col lg="2">
               <span class="label">Manager</span>
             </b-col>
@@ -25,7 +25,7 @@
             </b-col>
           </b-row>
 
-          <b-row class="item-info ml-1 mr-1">
+          <b-row class="item-info  mr-1">
             <b-col lg="2">
               <span class="label">Delegate</span>
             </b-col>
@@ -34,7 +34,7 @@
             </b-col>
           </b-row>
 
-          <b-row class="item-info ml-1 mr-1">
+          <b-row class="item-info  mr-1">
             <b-col lg="2">
               <span class="label">Balance</span>
             </b-col>
@@ -46,7 +46,7 @@
             </b-col>
           </b-row>
 
-          <b-row class="item-info ml-1 mr-1" v-if="baker">
+          <b-row class="item-info  mr-1" v-if="baker">
             <b-col lg="4">
               <span class="value">Current Deposits</span>
 
