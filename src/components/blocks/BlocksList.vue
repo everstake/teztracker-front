@@ -25,7 +25,7 @@
 
       <template slot="baker" slot-scope="row">
         <b-link :to="{ name: 'baker', params: { baker: row.item.baker } }">
-          {{ row.item.baker | longhash(42) }}
+          {{ row.item.bakerName || row.item.baker | longhash(42) }}
         </b-link>
       </template>
 
@@ -35,6 +35,9 @@
 
       <template slot="fees" slot-scope="row">
         {{ row.item.fees | tezos }}
+      </template>
+      <template slot="endorsements" slot-scope="row">
+        {{ row.item.endorsements | formatInteger }}
       </template>
     </b-table>
 
@@ -79,6 +82,11 @@ export default {
         { key: "timestamp", label: "Timestamp" },
         { key: "baker", label: "Baker" },
         {
+          key: "number_of_operations",
+          label: "# of operations",
+          class: !this.isTableComplete ? "d-none" : ""
+        },
+        {
           key: "volume",
           label: "Volume",
           class: !this.isTableComplete ? "d-none" : ""
@@ -86,6 +94,11 @@ export default {
         {
           key: "fees",
           label: "Fees",
+          class: !this.isTableComplete ? "d-none" : ""
+        },
+        {
+          key: "endorsements",
+          label: "# of endorsements",
           class: !this.isTableComplete ? "d-none" : ""
         }
       ]
