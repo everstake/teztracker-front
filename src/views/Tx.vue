@@ -13,6 +13,7 @@
             :op-hash="txInfo.operationGroupHash"
             :level="txInfo.blockLevel"
             :fee="txInfo.fee"
+            :status="txInfo.status"
           />
         </b-container>
       </section>
@@ -39,6 +40,7 @@
                     :per-page="0"
                     borderless
                     class="transactions-table table-responsive-md"
+                    :tbody-tr-class="$_defineRowClass"
                   >
                     <template slot="from" slot-scope="row">
                       <b-link
@@ -97,6 +99,7 @@ import TxSingle from "../components/transactions/TxSingle";
 import { mapState } from "vuex";
 import Pagination from "../components/partials/Pagination";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
+import defineRowClass from "@/mixins/defineRowClass";
 
 export default {
   name: "Tx",
@@ -106,7 +109,7 @@ export default {
     TxSingle,
     Pagination
   },
-  mixins: [handleCurrentPageChange],
+  mixins: [handleCurrentPageChange, defineRowClass],
   data() {
     return {
       perPage: this.$constants.PER_PAGE,
