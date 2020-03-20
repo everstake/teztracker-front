@@ -19,6 +19,16 @@
         {{ slotProps.field.value | tezos }}
         ({{ $_convert(slotProps.field.value) }})
       </template>
+      <template v-else-if="slotProps.field.key === 'Status'">
+        <span
+          :class="{
+            'text-danger': slotProps.field.value === 'Failed',
+            'text-success': slotProps.field.value !== 'Failed'
+          }"
+        >
+          {{ slotProps.field.value }}
+        </span>
+      </template>
     </template>
   </StatisticsCard>
 </template>
@@ -31,7 +41,7 @@ import convert from "../../mixins/convert";
 
 export default {
   name: "TxSingle",
-  props: ["timestamp", "opHash", "level", "fee"],
+  props: ["timestamp", "opHash", "level", "fee", "status"],
   mixins: [convert],
   components: {
     StatisticsCard
@@ -42,19 +52,31 @@ export default {
       dateFormat: state => state.dateFormat
     }),
     txInfoRestructured() {
-      return [
+      const res = [
         { key: "Included in Block", value: this.level },
         { key: "Timestamp", value: this.timestamp },
-        { key: "Operation hash", value: this.opHash },
-        { key: "Fee", value: this.fee }
+        { key: "Operation hash", value: this.opHash }
       ];
+      if (this.fee) {
+        res.push({ key: "Fee", value: this.fee });
+      }
+      if (this.status) {
+        res.push({
+          key: "Status",
+          value: this.mapOperationStatus(this.status)
+        });
+      }
+      return res;
     }
   },
   async created() {
     await this[GET_APP_INFO]();
   },
   methods: {
-    ...mapActions('app', [GET_APP_INFO])
+    ...mapActions("app", [GET_APP_INFO]),
+    mapOperationStatus(status) {
+      return status === "applied" ? "Success" : "Failed";
+    }
   }
 };
 </script>
