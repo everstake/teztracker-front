@@ -148,7 +148,7 @@
               <b-dropdown-item
                 :to="{ name: 'protocol_amendment' }"
               >
-                Protocol amendment
+                Protocol amendments
               </b-dropdown-item>
 
               <b-dropdown-item
