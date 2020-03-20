@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex justify-content-between mb-4">
+    <div class="d-flex justify-content-between mb-2">
       <PerPageSelect @per-page="$_setPerPage" />
     </div>
 

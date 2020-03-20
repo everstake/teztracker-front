@@ -253,7 +253,7 @@ li
 .main-content .promo-section .promo-top .promo-search .search {
   width: 85%;
   position: relative;
-  margin-bottom: 30px;
+  margin-bottom: 5px;
 }
 
 .main-content .promo-section .promo-top .promo-search .search .search-form--invalid .search-query,
@@ -313,31 +313,40 @@ li
 }
 
 .main-content .promo-section .promo-tiles {
-  margin: 1.6rem 0;
-}
-.main-content .promo-section .promo-tiles:last-child {
-  margin: 1.6rem 0 0;
+  margin: 0;
 }
 
 .main-content .promo-section .promo-tiles .tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: 100%;
   border-radius: 4px;
   border: solid 1px $color-white--grey;
   background: $color-white;
   -webkit-box-shadow: 0px 0px 15px 7px $color-black--opacity-02;
   box-shadow: 0px 0px 15px 7px $color-black--opacity-02;
-  padding: 15px;
+  padding: 5px 15px 10px;
 }
 
 .main-content .promo-section .promo-tiles .tile .tile-icon {
-  width: 40px;
-  height: 40px;
+  position: relative;
+  width: 30px;
+  height: 30px;
   border: 1px solid $color-white--grey;
   border-radius: 4px;
-  margin: 30px auto 14px;
+  margin: 10px auto 10px;
   padding: 5px 0 0;
   font-size: 20px;
   color: $color-white--grey;
+}
+
+.main-content .promo-section .promo-tiles .tile .tile-icon > svg {
+  width: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .main-content .promo-section .promo-tiles .tile .tile-icon i {
@@ -349,18 +358,20 @@ li
   display: block;
   text-align: center;
   font-weight: 300;
-  font-size: 32px;
-  line-height: 39px;
+  font-size: 20px;
+  line-height: 1;
   color: $color-black;
 }
 
+.main-content .promo-section .promo-tiles .tile .counter + div {
+  line-height: 1;
+}
+
 .main-content .promo-section .promo-tiles .tile .percentage {
-  display: block;
-  height: 22px;
+  display: inline-block;
+  margin-bottom: 5px;
   text-align: center;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 22px;
+  font-size: 12px;
 }
 
 .main-content .promo-section .promo-tiles .tile .percentage.green {
@@ -378,10 +389,9 @@ li
 .main-content .promo-section .promo-tiles .tile .tile-name {
   display: block;
   text-align: center;
-  margin-top: 10px;
   font-size: 14px;
+  line-height: 1;
   font-weight: 600;
-  line-height: 17px;
   text-align: center;
   text-transform: uppercase;
   color: $color-grey;
@@ -452,7 +462,8 @@ li
   float: left;
   background: $color-white;
   border: none;
-  padding: 18px 28px 9px;
+  padding: 10px 15px 10px;
+  //padding: 10px 35px 10px;
 }
 
 .main-content section .card .card-header h3 {
@@ -503,6 +514,20 @@ li
   float: left;
 }
 
+.main-content .card-body {
+  padding: 10px 15px;
+}
+
+.main-content section.cycle-counter .card__header,
+.main-content section.cycle-counter .card__body {
+  padding: 10px 15px;
+}
+
+.main-content section.cycle-counter .card-body {
+  padding-top: 15px;
+  padding-bottom: 5px;
+}
+
 .main-content section.cycle-counter .card .card-header .title span {
   font-size: 20px;
   font-weight: 600;
@@ -511,24 +536,31 @@ li
   color: $color-grey;
 }
 
+.main-content section.cycle-counter .card-body > .progress-labels {
+  margin-bottom: 3px;
+}
+
+
 .progress {
-  height: 8px;
+  height: 6px;
   background-color: $color-white--grey;
 }
 .progress .progress-bar {
   background-color: $color-brand;
 }
 .progress-labels {
-  margin-bottom: 8px;
   width: 100%;
   font-size: 14px;
   font-weight: 600;
-  line-height: 16px;
   text-transform: uppercase;
   color: $color-grey;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.voting-progress .progress-labels {
+  flex-direction: column;
 }
 
 .main-content
@@ -617,7 +649,15 @@ section
 .main-content section .card .card-body {
   width: 100%;
   float: left;
-  /* padding: 9px 28px 18px; */
+}
+
+.main-content section .card .card-body .card__no-padding {
+  padding: 0;
+}
+
+.main-content section .dashboard__card .card-body {
+  padding-top: 0;
+  padding-bottom: 5px;
 }
 
 .main-content section .card .card-body .table thead tr th {
@@ -767,7 +807,6 @@ section
 }
 
 .promo-footer {
-  /* padding: 2rem 0; */
   padding: 15px;
   background-color: $color-teal--light;
 }
