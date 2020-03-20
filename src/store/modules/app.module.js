@@ -31,7 +31,6 @@ export const mutations = {
   },
   [SET_DATE_FORMAT](state, info) {
     if (Vue.prototype.$helpers.isLocalStorageAvailable()) {
-      console.log(123213, info)
       localStorage.setItem("defaultDateFormat", info);
     }
     state.dateFormat = info;
