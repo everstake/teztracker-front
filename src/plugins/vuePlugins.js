@@ -13,7 +13,10 @@ import {
   FormSelectPlugin,
   LayoutPlugin,
   FormGroupPlugin,
-  FormCheckboxPlugin
+  FormCheckboxPlugin,
+  NavbarPlugin,
+  FormInputPlugin,
+  BForm
 } from "bootstrap-vue";
 import {
   FontAwesomeIcon,
@@ -64,6 +67,10 @@ Vue.use(BreadcrumbPlugin);
 Vue.use(FormSelectPlugin);
 Vue.use(FormGroupPlugin);
 Vue.use(FormCheckboxPlugin);
+Vue.use(NavbarPlugin);
+Vue.use(FormInputPlugin);
+
+Vue.component('b-form', BForm)
 
 dom.watch();
 library.add(

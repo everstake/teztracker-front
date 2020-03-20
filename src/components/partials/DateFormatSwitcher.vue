@@ -1,13 +1,7 @@
 <template>
-  <b-form-group v-if="isSwitchOnly"
-                label="Date format:"
-                class="mb-0"
-                label-class="font-weight-semi-bold"
-  >
-    <b-form-checkbox v-model="isUSDateFormat" name="date-format" switch>
-      {{ isUSDateFormat ? "US date format" : "Standard date format" }}
-    </b-form-checkbox>
-  </b-form-group>
+  <b-form-checkbox v-if="isSwitchOnly" v-model="isUSDateFormat" name="date-format" switch>
+    {{ isUSDateFormat ? "US date" : "Standard date" }}
+  </b-form-checkbox>
 
   <b-dropdown v-else id="blocks" variant="link" class="custom-dropdown">
     <template #button-content>
@@ -47,7 +41,7 @@ export default {
   },
   computed: {
     ...mapState("app", {
-      dateFormat: state => state.app.dateFormat
+      dateFormat: state => state.dateFormat
     })
   },
   watch: {
@@ -57,6 +51,7 @@ export default {
         const userDefaultDateFormat = value
           ? this.$constants.DATE_FORMAT_US
           : this.$constants.DATE_FORMAT;
+
         this[SET_DATE_FORMAT](userDefaultDateFormat);
       }
     }
@@ -66,3 +61,19 @@ export default {
   }
 };
 </script>
+
+<style lang="scss">
+  .date-switcher {
+    cursor: pointer;
+
+    & label,
+    & input {
+      cursor: pointer;
+    }
+    
+    & .dropdown-menu {
+      /*font-size: 14px;*/
+      /*padding: 1px;*/
+    }
+  }
+</style>

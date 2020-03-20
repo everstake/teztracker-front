@@ -1,28 +1,28 @@
 <template>
-  <form
+  <b-form
     :class="error ? 'search-form--invalid' : ''"
-    action
+    class="search__form"
     @submit.prevent="onSubmit"
   >
-    <input
+    <b-form-input
       type="text"
       v-model.trim="searchQuery"
-      placeholder="Search for block, txn or address"
+      :placeholder="placeholder"
       class="search-query"
       @input="error = ''"
       :readonly="loading"
     />
 
-    <span v-if="error" class="search-form--error">{{ error }}</span>
+<!--    <span v-if="error" class="search-form&#45;&#45;error">{{ error }}</span>-->
 
-    <button type="submit" class="button-search" :disabled="loading">
+    <b-button @click="onSubmit" class="button-search" :disabled="loading">
       <font-awesome-icon
-        class="icon-white"
+        :class="loading ? 'spinner' : 'icon-white'"
         :icon="loading ? 'spinner' : 'search'"
         :spin="loading"
       />
-    </button>
-  </form>
+    </b-button>
+  </b-form>
 </template>
 
 <script>
@@ -39,6 +39,12 @@ export default {
       error: "",
       loading: false
     };
+  },
+  props: {
+    placeholder: {
+      type: String,
+      default: 'Search block, txn or address'
+    }
   },
   methods: {
     resolveSearch(props, status) {
@@ -151,6 +157,21 @@ export default {
 
 <style scoped>
 .icon-white {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: white;
+}
+
+.main-header .search-query {
+  position: relative;
+  display: inline-flex;
+}
+
+.main-header .search__form .search-query,
+.main-header .search__form .search-query::placeholder {
+  font-size: 14px;
+  color: rgba(0,0,0,0.5);
 }
 </style>
