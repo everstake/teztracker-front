@@ -18,7 +18,7 @@
     </CardHeader>
 
     <b-card-body>
-      <TxsList :is-table-complete="false" />
+      <TxsList :show-per-page-filter="showPerPageFilter" :is-table-complete="false" />
     </b-card-body>
   </b-card>
 </template>
@@ -37,6 +37,7 @@ export default {
     Counter,
     TxsList
   },
+  props: ['showPerPageFilter'],
   computed: {
     ...mapState('operations', {
       count: state => state.counts.txs
