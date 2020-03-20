@@ -56,6 +56,19 @@
                       <OriginationsList :account="hash"/>
                     </b-card-body>
                   </b-tab>
+                  <b-tab title="Other">
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">Other operations</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+
+                    <b-card-body>
+<!--                      <OperationsList :account="hash"/>-->
+                    </b-card-body>
+                  </b-tab>
                 </b-tabs>
               </b-card>
             </b-col>

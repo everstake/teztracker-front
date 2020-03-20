@@ -73,6 +73,9 @@ const TzAPI = {
       ...opts
     });
   },
+  getOperations(opts = {}) {
+    return get(this.API_URL(), "operations", opts);
+  },
   getOriginations(opts = {}) {
     return get(this.API_URL(), "operations", {
       operation_kind: "origination",

@@ -18,6 +18,17 @@
         <b-card-body>
           <b-row class="item-info ml-1 mr-1">
             <b-col lg="2">
+              <span class="label">Created</span>
+            </b-col>
+            <b-col lg="10">
+              <span class="value">
+                {{ account.createdAt | timeformat(dateFormat) }}
+              </span>
+            </b-col>
+          </b-row>
+          
+          <b-row class="item-info ml-1 mr-1">
+            <b-col lg="2">
               <span class="label">Manager</span>
             </b-col>
             <b-col lg="10">
@@ -42,6 +53,17 @@
               <span class="value">
                 {{ account.balance | tezos }}
                 ({{ $_convert(account.balance) }})
+              </span>
+            </b-col>
+          </b-row>
+
+          <b-row class="item-info ml-1 mr-1">
+            <b-col lg="2">
+              <span class="label">Last active</span>
+            </b-col>
+            <b-col lg="10">
+              <span class="value">
+                {{ account.lastActive | timeformat(dateFormat) }}
               </span>
             </b-col>
           </b-row>
@@ -122,7 +144,8 @@ export default {
   },
   computed: {
     ...mapState('app', {
-      info: state => state.priceInfo
+      info: state => state.priceInfo,
+      dateFormat: state => state.dateFormat
     })
   },
   watch: {
