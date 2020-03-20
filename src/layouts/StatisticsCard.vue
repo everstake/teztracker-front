@@ -17,7 +17,7 @@
           <b-row
             v-for="(field, index) in fields"
             :key="index"
-            class="item-info ml-1 mr-1"
+            class="item-info mr-1"
           >
             <b-col :lg="3">
               <span class="label">{{ field.key }}</span>

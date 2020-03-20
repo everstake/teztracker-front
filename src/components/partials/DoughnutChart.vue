@@ -22,6 +22,10 @@ export default {
         backgroundColors = this.backgroundColors.slice(0, this.options.data.length);
       }
 
+      data = [
+        ...data.map(p => p < 1 ? '1' : p)
+      ]
+
       const options = {
         cutoutPercentage: 90,
         responsive: true,
@@ -67,6 +71,16 @@ export default {
               }
               return bodyItem.lines;
             }
+
+            tooltipModel.body[0].lines = [
+              ...tooltipModel.body[0].lines.map(line => {
+                if (line.substr(line.length - 3) === ': 1') {
+                  line = `${line.slice(1, - 2)} >1`
+                }
+
+                return line;
+              })
+            ]
 
             if (tooltipModel.body) {
               var titleLines = tooltipModel.title || [];

@@ -25,7 +25,7 @@
         <b-card-body>
           <b-container fluid>
             <b-row>
-              <b-col lg="6">
+              <b-col class="card__no-padding" lg="6">
                 <span class="text-accent">General info</span>
 
                 <b-row class="item-info">

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex justify-content-between mb-4" v-if="perPage">
+    <div class="d-flex justify-content-between mb-2">
       <PerPageSelect @per-page="$_setPerPage" :hide="true" />
     </div>
 
@@ -15,26 +15,26 @@
     >
       <template slot="level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.level } }">
-          <span>{{ row.item.level }}</span>
+          {{ row.item.level | formatInteger }}
         </b-link>
       </template>
 
       <template slot="timestamp" slot-scope="row">
-        <span>{{ row.item.timestamp | timeformat(dateFormat) }}</span>
+        {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
 
       <template slot="baker" slot-scope="row">
         <b-link :to="{ name: 'baker', params: { baker: row.item.baker } }">
-          <span>{{ row.item.baker | longhash(42) }}</span>
+          {{ row.item.baker | longhash(42) }}
         </b-link>
       </template>
 
       <template slot="volume" slot-scope="row">
-        <span>{{ row.item.volume | tezos }}</span>
+        {{ row.item.volume | tezos }}
       </template>
 
       <template slot="fees" slot-scope="row">
-        <span>{{ row.item.fees | tezos }}</span>
+        {{ row.item.fees | tezos }}
       </template>
     </b-table>
 
@@ -43,7 +43,7 @@
       :per-page="perPage"
     />
   </div>
-</template>items
+</template>
 
 <script>
 import { mapState } from "vuex";

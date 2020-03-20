@@ -118,8 +118,6 @@ export default {
 
 <style lang="scss" scoped>
 .protocol-amendment {
-  padding-top: 90px;
-
   &__col {
     margin-bottom: 30px;
   }

@@ -57,7 +57,7 @@
                         <span>Proposal:</span> {{ voter.proposal | longhash(9) }}
                       </div>
                     </div>
-                    <div class="vote-card__recent-rolls font font--mini">{{ voter.rolls }}</div>
+                    <div class="vote-card__recent-rolls font font--mini">{{ voter.rolls | formatInteger }}</div>
                   </div>
                   <b-row>
                     <b-col class="vote-card__progress" cols="12" sm="12" md="12" lg="6" xl="6">
@@ -152,6 +152,7 @@ import CardSection from '@/components/partials/CardSection';
 import DoughnutChart from "@/components/partials/DoughnutChart";
 import uuid from '@/mixins/uuid'
 import getPercentage from "@/utils/getPercentage";
+import numeral from "numeral";
 
 export default {
   name: "PeriodProposal",
@@ -216,7 +217,7 @@ export default {
     },
     getParticipationCount() {
       const { votesAvailable, votesCast } = this.proposal.voteStats;
-      return `${votesCast} / ${votesAvailable}`;
+      return `${numeral(votesCast).format("0,0")} / ${numeral(votesAvailable).format("0,0")}`;
     },
     getBakersParticipationCount() {
       const { numVoters, numVotersTotal } = this.proposal.voteStats;
@@ -228,7 +229,7 @@ export default {
     },
     getUndecidedCount() {
       const { votesAvailable, votesCast } = this.proposal.voteStats;
-      return `${votesAvailable - votesCast} / ${votesAvailable}`;
+      return `${numeral(votesAvailable - votesCast).format("0,0")} / ${numeral(votesAvailable).format("0,0")}`;
     },
     getNonVotersCount() {
       const { numVotersTotal, numVoters } = this.proposal.voteStats;

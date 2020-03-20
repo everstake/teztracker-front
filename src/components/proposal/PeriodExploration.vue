@@ -138,7 +138,7 @@
                     </div>
                   </div>
                   <div class="vote-card__recent-rolls font font--mini">
-                    {{ proposal.voteStats.votesCast }}
+                    {{ proposal.voteStats.votesCast | formatInteger}}
                   </div>
                 </div>
                 <div class="vote-card__container-space-between">
@@ -171,7 +171,7 @@
                 <div class="ballot__container font font--mini">
                   <span class="vote__ballot--yay font font--mini">
                     {{getVotesPercentage[0]}}%
-                    ({{ getVotes.yay }})
+                    ({{ getVotes.yay | formatInteger }})
                   </span>
                   Yay
                 </div>
@@ -189,7 +189,7 @@
                 <div class="ballot__container font font--mini">
                   <span class="vote__ballot--nay font font--mini">
                     {{getVotesPercentage[1]}}%
-                    ({{ getVotes.nay }})
+                    ({{ getVotes.nay | formatInteger }})
                   </span>
                   Nay
                 </div>
@@ -207,7 +207,7 @@
                 <div class="ballot__container font font--mini">
                   <span class="vote__ballot--pass font font--mini">
                     {{getVotesPercentage[2]}}%
-                    ({{ getVotes.pass }})
+                    ({{ getVotes.pass | formatInteger }})
                   </span>
                   Pass
                 </div>

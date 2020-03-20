@@ -80,6 +80,7 @@ import { SET_BAKING_RIGHTS_COUNT } from "@/store/mutations.types";
 import uniq from "lodash/uniq";
 import Pagination from "../partials/Pagination";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
+import numeral from "numeral";
 
 export default {
   name: "BakingRightsList",
@@ -128,7 +129,7 @@ export default {
             data[i].rights[j].priority === data[i].baker_priority;
 
           blocks.push({
-            level: data[i].level,
+            level: numeral(data[i].level).format("0,0"),
             baker: data[i].baker,
             block_hash: data[i].block_hash,
             priority: data[i].rights[j].priority,
