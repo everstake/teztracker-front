@@ -25,9 +25,9 @@ const constants = {
   BLOCKS_IN_CYCLE_TESTNET: 2048, // twice lesser than in mainnet
   CYCLES_IN_VOTING_PERIOD: 8,
   API_BASE_URLS: {
-    mainnet: "https://api-teztracker.everstake.one/v2/data/tezos/mainnet/",
-    babylonnet: "https://api-teztracker.everstake.one/v2/data/tezos/babylonnet/",
-    carthagenet: "https://api-teztracker.everstake.one/v2/data/tezos/carthagenet/"
+    mainnet: process.env.VUE_APP_ROOT_API + "/tezos/mainnet/",
+    babylonnet: process.env.VUE_APP_ROOT_API + "/tezos/babylonnet/",
+    carthagenet: process.env.VUE_APP_ROOT_API + "/tezos/carthagenet/"
   },
   SEARCH_PREFIXES: {
     account: ["tz", "KT"],

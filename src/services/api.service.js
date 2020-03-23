@@ -29,7 +29,7 @@ async function get(api, path, query, isStandard = true) {
   return result;
 }
 
-const votingEndpoint = "https://api-teztracker.everstake.one/v2/data/mainnet/";
+const votingEndpoint = process.env.VUE_APP_ROOT_API + "/mainnet/";
 
 const TzAPI = {
   API_URL() {
