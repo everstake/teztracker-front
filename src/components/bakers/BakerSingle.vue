@@ -84,7 +84,8 @@
                   </b-col>
                 </b-row>
               </b-col>
-              <b-col lg="6">
+              
+              <b-col class="p-0 px-lg-3" lg="6">
                 <span class="text-accent">Balances</span>
 
                 <b-row class="item-info">

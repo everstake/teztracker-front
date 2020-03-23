@@ -29,11 +29,13 @@ async function get(api, path, query, isStandard = true) {
   return result;
 }
 
-const votingEndpoint = "https://api-teztracker.everstake.one/v2/data/mainnet/";
+// const votingEndpoint = "https://api-teztracker.everstake.one/v2/data/mainnet/";
+const votingEndpoint = "https://api-dev-teztracker.everstake.one/v2/data/mainnet/";
 
 const TzAPI = {
   API_URL() {
-    return Vue.prototype.$constants.API_BASE_URLS[state.network];
+    // return Vue.prototype.$constants.API_BASE_URLS[state.network];
+    return Vue.prototype.$constants.DEV_API_BASE_URLS[state.network];
   },
   getVotingUrl() {
     return votingEndpoint;

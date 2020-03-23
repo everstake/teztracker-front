@@ -82,6 +82,11 @@ export default {
         { key: "timestamp", label: "Timestamp" },
         { key: "baker", label: "Baker" },
         {
+          key: "priority",
+          label: "Priority",
+          class: !this.isTableComplete ? "d-none" : ""
+        },
+        {
           key: "number_of_operations",
           label: "# of operations",
           class: !this.isTableComplete ? "d-none" : ""

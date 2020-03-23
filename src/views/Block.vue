@@ -1,7 +1,7 @@
 <template>
   <PageContentContainer page-name="Block page">
     <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs"/>
+      <Breadcrumbs :crumbs="crumbs" />
     </template>
 
     <template #content>
@@ -11,7 +11,13 @@
         </b-container>
       </section>
 
-      <section>
+      <section class="mt-0">
+        <b-container fluid>
+          <EndorsementsSlots />
+        </b-container>
+      </section>
+
+      <section class="mt-0">
         <b-container fluid>
           <b-row>
             <b-col lg="12">
@@ -27,7 +33,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <TxsList :block="block"/>
+                      <TxsList :block="block" />
                     </b-card-body>
                   </b-tab>
                   <b-tab title="Endorsements">
@@ -40,7 +46,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <EndorsementsList :block="block.level"/>
+                      <EndorsementsList :block="block.level" />
                     </b-card-body>
                   </b-tab>
                 </b-tabs>
@@ -57,6 +63,7 @@
 import PageContentContainer from "../layouts/PageContentContainer";
 import Breadcrumbs from "../components/partials/Breadcrumbs";
 import BlockSingle from "../components/blocks/BlockSingle";
+import EndorsementsSlots from "../components/endorsements/EndorsementsSlots";
 import EndorsementsList from "../components/endorsements/EndorsementsList";
 import TxsList from "../components/transactions/TxsList";
 
@@ -66,6 +73,7 @@ export default {
     PageContentContainer,
     Breadcrumbs,
     BlockSingle,
+    EndorsementsSlots,
     EndorsementsList,
     TxsList
   },
@@ -80,9 +88,9 @@ export default {
     },
     crumbs() {
       return [
-        {toRouteName: "network", text: "Home"},
-        {toRouteName: "blocks", text: "Blocks page"},
-        {toRouteName: "block", text: this.level}
+        { toRouteName: "network", text: "Home" },
+        { toRouteName: "blocks", text: "Blocks page" },
+        { toRouteName: "block", text: this.level }
       ];
     }
   },
@@ -104,12 +112,11 @@ export default {
       }
       this.block = result.data.block;
     }
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-
 .main-content section .card .nav-tabs {
   @include for-phone-only {
     margin: 0;
