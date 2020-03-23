@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex justify-content-between mb-4">
+    <div class="d-flex justify-content-between mb-2">
       <PerPageSelect @per-page="$_setPerPage" />
     </div>
 
@@ -26,6 +26,18 @@
       </template>
       <template slot="stakingBalance" slot-scope="row">
         {{ row.item.stakingBalance | tezos }}
+      </template>
+      <template slot="rolls" slot-scope="row">
+        {{ row.item.rolls | formatInteger }}
+      </template>
+      <template slot="blocks" slot-scope="row">
+        {{ row.item.blocks | formatInteger }}
+      </template>
+      <template slot="endorsements" slot-scope="row">
+        {{ row.item.endorsements | formatInteger }}
+      </template>
+      <template slot="activeDelegators" slot-scope="row">
+        {{ row.item.activeDelegators | formatInteger }}
       </template>
       <template slot="bakingSince" slot-scope="row">
         {{ row.item.bakingSince | timeformat(dateFormat) }}
@@ -65,10 +77,30 @@ export default {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
         { key: "accountId", label: "Baker" },
-        { key: "stakingCapacity", label: "Capacity" },
-        { key: "fee", label: "Fee" },
-        { key: "stakingBalance", label: "Total balance" },
-        { key: "rolls", label: "Rolls" },
+        {
+          key: "stakingCapacity",
+          label: "Capacity",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "fee",
+          label: "Fee",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "stakingBalance",
+          label: "Total balance",
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "rolls",
+          label: "Rolls",
+          sortable: true,
+          sortDirection: "desc"
+        },
         {
           key: "blocks",
           label: "Blocks",

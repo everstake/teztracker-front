@@ -29,5 +29,6 @@ export default {
   justify-content: space-between;
   align-items: baseline;
   flex-direction: row;
+  margin-bottom: 0;
 }
 </style>

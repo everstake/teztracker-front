@@ -8,7 +8,7 @@
               <li class="font font--mini tz-breadcrumbs__item">
                 <router-link :to="{ name: 'network' }" class="tz-breadcrumbs__link">Home</router-link>
               </li>
-              <li class="active font font--mini tz-breadcrumbs__item">Protocol amendment</li>
+              <li class="active font font--mini tz-breadcrumbs__item">Protocol amendments</li>
             </ol>
           </b-col>
         </b-row>
@@ -118,8 +118,6 @@ export default {
 
 <style lang="scss" scoped>
 .protocol-amendment {
-  padding-top: 90px;
-
   &__col {
     margin-bottom: 30px;
   }

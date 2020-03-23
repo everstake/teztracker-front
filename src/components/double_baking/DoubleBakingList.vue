@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="d-flex justify-content-between mb-4">
+    <div class="d-flex justify-content-between mb-2">
       <PerPageSelect @per-page="$_setPerPage" />
     </div>
 
@@ -17,18 +17,18 @@
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
         >
-          <span>{{ row.item.operationGroupHash | longhash(25) }}</span>
+          {{ row.item.operationGroupHash | longhash(25) }}
         </b-link>
       </template>
 
       <template slot="level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
-          <span>{{ row.item.blockLevel }}</span>
+          {{ row.item.blockLevel | formatInteger }}
         </b-link>
       </template>
 
       <template slot="age" slot-scope="row">
-        <span>{{ row.item.timestamp | getAge }}</span>
+        {{ row.item.timestamp | getAge }}
       </template>
       <template slot="baker" slot-scope="row">
         <router-link
@@ -41,7 +41,7 @@
         >
       </template>
       <template slot="baker_rewards" slot-scope="row">
-        <span>{{ row.item.doubleBake.baker_reward | tezos }}</span>
+        {{ row.item.doubleBake.baker_reward | tezos }}
       </template>
       <template slot="offender" slot-scope="row">
         <router-link
@@ -60,14 +60,14 @@
             params: { level: row.item.doubleBake.denounced_level }
           }"
         >
-          <span>{{ row.item.doubleBake.denounced_level }}</span>
+          {{ row.item.doubleBake.denounced_level | formatInteger }}
         </b-link>
       </template>
       <template slot="lost_deposits" slot-scope="row">
-        <span>{{ row.item.doubleBake.lost_deposits | tezos }}</span>
+        {{ row.item.doubleBake.lost_deposits | tezos }}
       </template>
       <template slot="lost_rewards" slot-scope="row">
-        <span>{{ row.item.doubleBake.lost_rewards | tezos }}</span>
+        {{ row.item.doubleBake.lost_rewards | tezos }}
       </template>
     </b-table>
 

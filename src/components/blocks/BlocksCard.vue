@@ -18,7 +18,7 @@
     </CardHeader>
 
     <b-card-body>
-      <BlocksList :is-table-complete="false" />
+      <BlocksList :show-per-page-filter="showPerPageFilter" :is-table-complete="false" />
     </b-card-body>
   </b-card>
 </template>
@@ -38,6 +38,7 @@ export default {
     Counter,
     BlocksList
   },
+  props: ['showPerPageFilter'],
   computed: {
     ...mapState("blocks", {
       count: state => state.counts.blocks
