@@ -78,7 +78,7 @@ export default {
     }
   },
   created() {
-    this.reload(Number(this.level));
+    this.reload(this.level);
   }
 };
 </script>
