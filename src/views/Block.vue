@@ -46,7 +46,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <EndorsementsList :block="block.level" />
+                      <EndorsementsList :block-hash="block.hash" />
                     </b-card-body>
                   </b-tab>
                 </b-tabs>

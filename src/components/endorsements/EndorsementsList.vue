@@ -61,6 +61,12 @@ import setPerPage from "@/mixins/setPerPage";
 
 export default {
   name: "EndorsementsList",
+  props: {
+    blockHash: {
+      type: String,
+      default: ""
+    }
+  },
   components: {
     PerPageSelect,
     Pagination
@@ -92,11 +98,10 @@ export default {
   watch: {
     currentPage: {
       async handler(value) {
-        await this.reload({ page: value, block: this.level });
+        await this.reload({ page: value, block: this.blockHash });
       }
     },
-    level: {
-      immediate: true,
+    blockHash: {
       async handler(value) {
         if (this.isBlockEndorsements) {
           await this.reload({ block: value });
@@ -106,7 +111,7 @@ export default {
     perPage: {
       async handler() {
         if (!this.isBlockEndorsements) {
-          await this.reload({ block: this.level });
+          await this.reload({ block: this.blockHash });
         }
       }
     }
@@ -116,23 +121,23 @@ export default {
       this.perPage = this.$constants.ENDORSEMENTS_LIMIT;
     } else {
       this.perPage = this.$constants.PER_PAGE;
-      await this.reload({ block: this.level });
+      await this.reload({ block: this.blockHash });
     }
   },
   methods: {
-    ...mapMutations('blocks', [SET_ENDORSEMENTS_COUNT]),
+    ...mapMutations("blocks", [SET_ENDORSEMENTS_COUNT]),
     async reload({ page = 1, block = 0 } = {}) {
+      console.log(block);
       const props = {
         page,
         limit: this.perPage
       };
       let result;
-      if (block > 0) {
+      if (this.isBlockEndorsements) {
         props.block_id = block;
         // TODO: Refactor API service
-        delete props.limit;
         delete props.page;
-        result = await this.$api.getBlockEndorsements(props);
+        result = await this.$api.getEndorsements(props);
       } else {
         result = await this.$api.getEndorsements(props);
       }

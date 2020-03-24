@@ -28,6 +28,10 @@
           {{ row.item.bakerName || row.item.baker | longhash(42) }}
         </b-link>
       </template>
+  
+      <template slot="number_of_operations" slot-scope="row">
+        {{ row.item.number_of_operations | formatInteger }}
+      </template>
 
       <template slot="volume" slot-scope="row">
         {{ row.item.volume | tezos }}

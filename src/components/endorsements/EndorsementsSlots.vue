@@ -14,19 +14,19 @@
 
     <b-card-body>
       <div class="slots">
-        <div
+        <b-link
+          v-for="(slot, index) in slots"
+          :key="index"
+          :to="{ name: 'tx', params: { txhash: slot } }"
+          :disabled="!slot"
           :class="{
-            slots__item: true,
+            'slots__item link': true,
             'slots__item--active': Boolean(slot),
             'slots__item--inactive': !Boolean(slot)
           }"
-          v-for="(slot, index) in slots"
-          :key="index"
         >
-          <b-link :to="{ name: 'tx', params: { txhash: slot } }" class="link">
-            {{ index }}
-          </b-link>
-        </div>
+          {{ index }}
+        </b-link>
       </div>
     </b-card-body>
   </b-card>
@@ -59,7 +59,6 @@ export default {
   methods: {
     async reload(block = 0) {
       let result;
-      console.log(block);
       result = await this.$api.getBlockEndorsements({ block_id: block });
 
       if (result.status !== this.$constants.STATUS_SUCCESS) {
@@ -84,15 +83,31 @@ export default {
 
   &__item {
     text-align: center;
-    padding: 6px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
 
     &--active {
       background-color: $color-brand--opacity-2;
+      
+      &:hover {
+        background-color: $color-brand--opacity-4;
+      }
     }
 
     &--inactive {
       background-color: $color-error--opacity-2;
+      
+      &:hover {
+        background-color: $color-error--opacity-4;
+      }
     }
+  }
+}
+
+@include for-phone-only {
+  .slots__item {
+    padding: 6px;
   }
 }
 </style>

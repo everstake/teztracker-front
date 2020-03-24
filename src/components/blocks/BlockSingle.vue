@@ -91,7 +91,7 @@
             <b-row class="item-info">
               <b-col lg="4" class="label">Protocol version</b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.protocol }}
+                {{ this.block.protocol | longhash(9)}}
               </b-col>
             </b-row>
             <b-row class="item-info">
