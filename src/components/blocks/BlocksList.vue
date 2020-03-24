@@ -102,7 +102,7 @@ export default {
         },
         {
           key: "fees",
-          label: "Fees",
+          label: "Fee",
           class: !this.isTableComplete ? "d-none" : ""
         },
         {

@@ -82,8 +82,8 @@ export default {
         { key: "txhash", label: "Origination hash" },
         { key: "level", label: "Block ID" },
         { key: "timestamp", label: "Timestamp" },
-        { key: "to", label: "To" },
         { key: "from", label: "From" },
+        { key: "to", label: "To" },
         { key: "amount", label: "Amount" }
       ]
     };

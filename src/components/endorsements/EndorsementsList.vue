@@ -77,10 +77,10 @@ export default {
       endorsements: [],
       count: 0,
       fields: [
-        { key: "txhash", label: "Endorsement hash" },
-        { key: "block", label: "Endorsed Block" },
         { key: "endorser", label: "Endorser" },
-        { key: "timestamp", label: "Timestamp" }
+        { key: "block", label: "Endorsed Block" },
+        { key: "timestamp", label: "Timestamp" },
+        { key: "txhash", label: "Endorsement hash" }
       ]
     };
   },
@@ -127,7 +127,6 @@ export default {
   methods: {
     ...mapMutations("blocks", [SET_ENDORSEMENTS_COUNT]),
     async reload({ page = 1, block = 0 } = {}) {
-      console.log(block);
       const props = {
         page,
         limit: this.perPage

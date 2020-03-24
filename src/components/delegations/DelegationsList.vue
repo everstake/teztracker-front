@@ -89,7 +89,7 @@ export default {
         { key: "to", label: "To" },
         { key: "level", label: "Block ID" },
         { key: "timestamp", label: "Timestamp" },
-        { key: "fee", label: "Fees" }
+        { key: "fee", label: "Fee" }
       ]
     };
   },

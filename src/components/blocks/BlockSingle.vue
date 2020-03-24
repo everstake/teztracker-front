@@ -3,7 +3,7 @@
     <b-card-header>
       <div class="break-word">
         <h3>
-          <span class="text">{{ level }}</span>
+          <span class="text">{{ block.level }}</span>
         </h3>
         <span class="subtitle">Block information</span>
       </div>
@@ -136,19 +136,7 @@ export default {
     }),
     ...mapGetters("app", {
       currentNetwork: 'getAppNetwork',
-    }),
-    level() {
-      return this.$route.params.level;
-    },
-    blockRestructured() {
-      return [
-        { key: "Hash", value: this.block.hash },
-        { key: "Timestamp", value: this.block.timestamp },
-        { key: "Volume", value: this.block.volume },
-        { key: "Cycle", value: this.block.metaCycle },
-        { key: "Baker", value: this.block.baker }
-      ];
-    }
+    })
   }
 };
 </script>

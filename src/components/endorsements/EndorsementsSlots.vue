@@ -1,35 +1,42 @@
 <template>
-  <b-card no-body>
-    <b-card-header>
-      <div class="break-word">
-        <h3>
-          <span class="text">
-            Block endorsements
-          </span>
-        </h3>
-      </div>
+  <section
+    v-if="endorsements && endorsements.length !== 0"
+    class="mt-0"
+  >
+    <b-container fluid>
+      <b-card no-body>
+        <b-card-header>
+          <div class="break-word">
+            <h3>
+              <span class="text">
+                Block endorsements
+              </span>
+            </h3>
+          </div>
 
-      <div class="card-divider w-100 mt-3"></div>
-    </b-card-header>
+          <div class="card-divider w-100 mt-3"></div>
+        </b-card-header>
 
-    <b-card-body>
-      <div class="slots">
-        <b-link
-          v-for="(slot, index) in slots"
-          :key="index"
-          :to="{ name: 'tx', params: { txhash: slot } }"
-          :disabled="!slot"
-          :class="{
-            'slots__item link': true,
-            'slots__item--active': Boolean(slot),
-            'slots__item--inactive': !Boolean(slot)
-          }"
-        >
-          {{ index }}
-        </b-link>
-      </div>
-    </b-card-body>
-  </b-card>
+        <b-card-body>
+          <div class="slots">
+            <b-link
+              v-for="(slot, index) in slots"
+              :key="index"
+              :to="{ name: 'tx', params: { txhash: slot } }"
+              :disabled="!slot"
+              :class="{
+                'slots__item link': true,
+                'slots__item--active': Boolean(slot),
+                'slots__item--inactive': !Boolean(slot)
+              }"
+            >
+              {{ index }}
+            </b-link>
+          </div>
+        </b-card-body>
+      </b-card>
+    </b-container>
+  </section>
 </template>
 
 <script>
@@ -89,7 +96,7 @@ export default {
 
     &--active {
       background-color: $color-brand--opacity-2;
-      
+
       &:hover {
         background-color: $color-brand--opacity-4;
       }
@@ -97,7 +104,7 @@ export default {
 
     &--inactive {
       background-color: $color-error--opacity-2;
-      
+
       &:hover {
         background-color: $color-error--opacity-4;
       }

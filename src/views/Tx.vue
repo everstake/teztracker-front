@@ -123,7 +123,7 @@ export default {
         { key: "from", label: "From" },
         { key: "to", label: "To" },
         { key: "amount", label: "Amount" },
-        { key: "fee", label: "Fees" },
+        { key: "fee", label: "Fee" },
         { key: "gas", label: "Gas Limit" },
         { key: "storage", label: "Storage Limit" }
       ],
