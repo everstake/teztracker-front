@@ -16,9 +16,18 @@
         <div class="card-divider"></div>
 
         <b-card-body>
+          <b-row class="item-info mr-1">
+            <b-col lg="2">
+              <span class="label">Manager</span>
+            </b-col>
+            <b-col lg="10">
+              <span class="value">{{ account.manager }}</span>
+            </b-col>
+          </b-row>
+          
           <b-row class="item-info  mr-1">
             <b-col lg="2">
-              <span class="label">Created</span>
+              <span class="label">Created on</span>
             </b-col>
             <b-col lg="10">
               <span class="value">
@@ -26,13 +35,13 @@
               </span>
             </b-col>
           </b-row>
-          
-          <b-row class="item-info ml-1 mr-1">
+
+          <b-row class="item-info  mr-1">
             <b-col lg="2">
-              <span class="label">Manager</span>
+              <span class="label">Status</span>
             </b-col>
             <b-col lg="10">
-              <span class="value">{{ account.manager }}</span>
+              <span class="value">{{ account.revealed ? 'revealed' : 'unrevealed' }}</span>
             </b-col>
           </b-row>
 
@@ -41,7 +50,7 @@
               <span class="label">Delegate</span>
             </b-col>
             <b-col lg="10">
-              <span class="value">{{ account.delegateValue }}</span>
+              <span class="value">{{ account.delegateValue || false }}</span>
             </b-col>
           </b-row>
 
@@ -53,6 +62,17 @@
               <span class="value">
                 {{ account.balance | tezos }}
                 ({{ $_convert(account.balance) }})
+              </span>
+            </b-col>
+          </b-row>
+
+          <b-row class="item-info mr-1">
+            <b-col lg="2">
+              <span class="label"># of Ops&Txs</span>
+            </b-col>
+            <b-col lg="10">
+              <span class="value">
+                {{ account.operations + account.transactions }}
               </span>
             </b-col>
           </b-row>
@@ -122,6 +142,14 @@
           </b-row>
         </b-card-body>
       </b-card>
+
+      <b-card class="card-offset">
+        <b-card-body>
+          <b-row class="item-info">
+            <slot name="chart"></slot>
+          </b-row>
+        </b-card-body>
+      </b-card>
     </b-col>
   </b-row>
 </template>
@@ -139,7 +167,8 @@ export default {
     return {
       baker: false,
       bakerInfo: {},
-      account: {}
+      account: {},
+      balance: []
     };
   },
   computed: {
@@ -219,5 +248,9 @@ export default {
     display: inline-block;
     padding-left: .5rem;
     font-size: 16px;
+  }
+  
+  .card-offset {
+    margin-top: 51px;
   }
 </style>

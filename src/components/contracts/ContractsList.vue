@@ -52,7 +52,7 @@ import withCustomAction from "../partials/withCustomAction";
 const PaginationWithCustomAction = withCustomAction(
   Pagination,
   "accounts",
-  "GET_CONTRACTS"
+  "GET_CONTRACTS",
 );
 
 export default {
@@ -62,6 +62,7 @@ export default {
     PaginationWithCustomAction
   },
   mixins: [setPerPage],
+  props: ['account'],
   data() {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,

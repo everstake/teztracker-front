@@ -29,7 +29,7 @@ async function get(api, path, query, isStandard = true) {
   return result;
 }
 
-const votingEndpoint = "https://api-teztracker.everstake.one/v2/data/mainnet/";
+const votingEndpoint = "https://api-dev-teztracker.everstake.one/v2/data/mainnet/";
 
 const TzAPI = {
   API_URL() {
@@ -44,6 +44,13 @@ const TzAPI = {
   getAccount(opts = {}) {
     const { account } = opts;
     return get(this.API_URL(), `accounts/${account}`, opts);
+  },
+  getAccountBalance(opts = {}) {
+    const { account } = opts;
+    return get(this.API_URL(), `accounts/balances/${account}`, {
+      from: opts.from,
+      to: opts.to
+    }, false);
   },
   getContracts(opts = {}) {
     return get(this.API_URL(), "contracts", opts);
@@ -74,7 +81,7 @@ const TzAPI = {
     });
   },
   getOperations(opts = {}) {
-    return get(this.API_URL(), "operations", opts);
+    return get(this.API_URL(), "operations", opts, false);
   },
   getOriginations(opts = {}) {
     return get(this.API_URL(), "operations", {
