@@ -41,6 +41,8 @@
       <template slot="timestamp" slot-scope="row">
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
+      
+      <slot name="table-template"></slot>
     </b-table>
 
     <Pagination
@@ -66,6 +68,7 @@ export default {
     Pagination
   },
   mixins: [handleCurrentPageChange, setPerPage],
+  props: ["account"],
   data() {
     return {
       endorsements: [],
@@ -127,6 +130,9 @@ export default {
         limit: this.perPage
       };
       let result;
+      if (this.account) {
+        props.account_id = this.account;
+      }
       if (block > 0) {
         props.block_id = block;
         // TODO: Refactor API service
