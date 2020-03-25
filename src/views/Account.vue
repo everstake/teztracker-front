@@ -7,7 +7,14 @@
     <template #content>
       <section>
         <b-container fluid>
-          <AccountSingle :hash="hash"/>
+          <AccountSingle :hash="hash">
+            <template #chart>
+              <h3 class="card__title">
+                <span class="card__title--strong">Balance in the last 30 days</span>
+              </h3>
+              <LineChart class="account-line-chart" :chartData="chartData"></LineChart>
+            </template>
+          </AccountSingle>
         </b-container>
       </section>
 
@@ -27,7 +34,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <TxsList :account="hash"/>
+                      <TxsList @onTransactions="setChartData" :account="hash"/>
                     </b-card-body>
                   </b-tab>
                   <b-tab title="Delegations">
@@ -56,6 +63,19 @@
                       <OriginationsList :account="hash"/>
                     </b-card-body>
                   </b-tab>
+                  <b-tab title="Other">
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">Other operations</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+
+                    <b-card-body>
+                      <OperationsList :account="hash"/>
+                    </b-card-body>
+                  </b-tab>
                 </b-tabs>
               </b-card>
             </b-col>
@@ -67,34 +87,68 @@
 </template>
 
 <script>
-  import PageContentContainer from "../layouts/PageContentContainer";
-  import Breadcrumbs from "../components/partials/Breadcrumbs";
-  import AccountSingle from "../components/accounts/AccountSingle";
-  import TxsList from "../components/transactions/TxsList";
-  import DelegationsList from "../components/delegations/DelegationsList";
-  import OriginationsList from "../components/originations/OriginationsList";
+import PageContentContainer from "../layouts/PageContentContainer";
+import Breadcrumbs from "../components/partials/Breadcrumbs";
+import AccountSingle from "../components/accounts/AccountSingle";
+import TxsList from "../components/transactions/TxsList";
+import DelegationsList from "../components/delegations/DelegationsList";
+import OriginationsList from "../components/originations/OriginationsList";
+import LineChart from "@/components/partials/LineChart";
+import OperationsList from "@/components/operations/OperationsList";
+import ContractsList from "@/components/contracts/ContractsList";
 
-  export default {
-    name: "Account",
-    components: {
-      PageContentContainer,
-      Breadcrumbs,
-      AccountSingle,
-      TxsList,
-      DelegationsList,
-      OriginationsList
-    },
-    computed: {
-      hash() {
-        return this.$route.params.account;
-      },
-      crumbs() {
-        return [
-          {toRouteName: "network", text: "Home"},
-          {toRouteName: "accounts", text: "Accounts page"},
-          {toRouteName: "account", text: this.hash}
-        ];
+export default {
+  name: "Account",
+  components: {
+    PageContentContainer,
+    Breadcrumbs,
+    AccountSingle,
+    TxsList,
+    DelegationsList,
+    OriginationsList,
+    LineChart,
+    OperationsList,
+    ContractsList
+  },
+  data() {
+    return {
+      chartData: null
+    }
+  },
+  methods: {
+    async setChartData(acc) {
+      if (acc !== undefined) {
+        const now = new Date();
+        const oneMonthAgo = now.setMonth(now.getMonth() - 1);
+        const balance = await this.$api.getAccountBalance({ account: acc, from: Math.round(oneMonthAgo / 1000), to: Math.round((new Date()).getTime() / 1000) });
+        this.chartData = balance.data;
+        return balance.data;
       }
     }
-  };
+  },
+  async mounted() {
+    await this.setChartData();
+  },
+  computed: {
+    hash() {
+      return this.$route.params.account;
+    },
+    crumbs() {
+      return [
+        {toRouteName: "network", text: "Home"},
+        {toRouteName: "accounts", text: "Accounts page"},
+        {toRouteName: "account", text: this.hash}
+      ];
+    }
+  }
+};
 </script>
+
+<style lang="scss">
+.account-line-chart {
+  & canvas {
+    width: 100% !important;
+    height: auto;
+  }
+}
+</style>
