@@ -29,14 +29,12 @@ async function get(api, path, query, isStandard = true) {
   return result;
 }
 
-const votingEndpoint = process.env.VUE_APP_ROOT_API + "/mainnet/";
-
 const TzAPI = {
   API_URL() {
     return Vue.prototype.$constants.API_BASE_URLS[state.network];
   },
   getVotingUrl() {
-    return votingEndpoint;
+    return Vue.prototype.$constants.API_BASE_URLS.voting;
   },
   getAccounts(opts = {}) {
     return get(this.API_URL(), "accounts", opts);
