@@ -22,7 +22,9 @@
         <b-link
           :to="{
             name: 'account',
-            params: { network: currentNetwork, account: row.item.destination }
+            params: {
+              network: currentNetwork,
+              account: row.item.destination || row.item.delegate || row.item.pkh }
           }"
         >
           {{
@@ -33,7 +35,12 @@
         </b-link>
       </template>
       <template slot="amount" slot-scope="row">
-        {{ row.item.amount | tezos }}
+        <template v-if="row.item.amount">
+          {{ row.item.amount | tezos }}
+        </template>
+        <template v-else>
+          {{ row.item.balance | tezos }}
+        </template>
       </template>
       <template slot="fee" slot-scope="row">
         {{ row.item.fee | tezos }}

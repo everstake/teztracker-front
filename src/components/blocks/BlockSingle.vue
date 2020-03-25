@@ -112,6 +112,15 @@
                 </template>
               </b-col>
             </b-row>
+            <b-row
+              v-if="this.block.originations"
+              class="item-info"
+            >
+              <b-col lg="4" class="label">Originated accounts</b-col>
+              <b-col lg="8" class="text-accent">
+                 {{ this.block.originations }}
+              </b-col>
+            </b-row>
           </b-col>
         </b-row>
       </b-container>
