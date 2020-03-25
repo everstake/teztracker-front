@@ -76,19 +76,6 @@
                       <OperationsList :account="hash"/>
                     </b-card-body>
                   </b-tab>
-                  <b-tab title="Contracts">
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">Contracts</span>
-                        </h3>
-                      </div>
-                    </b-card-header>
-
-                    <b-card-body>
-                      <ContractsList :account="hash"/>
-                    </b-card-body>
-                  </b-tab>
                 </b-tabs>
               </b-card>
             </b-col>
