@@ -34,7 +34,7 @@
 
       <template slot="from" slot-scope="row">
         <b-link :to="{ name: 'account', params: { account: row.item.source } }">
-          {{ row.item.source | longhash(20) }}
+          {{ row.item.sourceName || row.item.source | longhash(20) }}
         </b-link>
       </template>
 
@@ -42,7 +42,7 @@
         <b-link
           :to="{ name: 'account', params: { account: row.item.destination } }"
         >
-          {{ row.item.destination | longhash(20) }}
+          {{ row.item.destinationName || row.item.destination | longhash(20) }}
         </b-link>
       </template>
       <template slot="amount" slot-scope="row">
