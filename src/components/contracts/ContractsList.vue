@@ -21,10 +21,19 @@
         </b-link>
       </template>
       <template slot="manager" slot-scope="row">
-        <span>{{ row.item.manager | longhash(35) }}</span>
+  
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.accountId } }"
+        >
+          <span>{{ row.item.manager | longhash(35) }}</span>
+        </b-link>
       </template>
       <template slot="delegateValue" slot-scope="row">
-        <span>{{ row.item.delegateValue | longhash(20) }}</span>
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.accountId } }"
+        >
+          <span>{{ row.item.delegateValue | longhash(35) }}</span>
+        </b-link>
       </template>
       <template slot="balance" slot-scope="row">
         <span>{{ row.item.balance | tezos }}</span>

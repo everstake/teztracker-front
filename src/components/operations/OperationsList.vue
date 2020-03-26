@@ -87,6 +87,9 @@ export default {
   },
   methods: {
     async reload(page = 1) {
+      const operationKinds = ['endorsement', 'origination', 'origination', 'activate_account', 'double_endorsement_evidence']
+	    let dataResult = [];
+      let operationsCount = 0;
       const props = {
         page,
         limit: this.perPage
@@ -94,9 +97,23 @@ export default {
       if (this.account) {
         props.account_id = this.account;
       }
-      const operations = await this.$api.getOperations(props);
-      this.operations = operations.data.filter(o => !(o.kind === 'transaction' || o.kind === 'delegation' || o.kind === 'origination'));
-      this.count = operations.count;
+
+      for (let i = 0; i < operationKinds.length; i += 1) {
+        const data = await this.$api.getOperations({
+          ...props,
+          operation_kind: operationKinds[i]
+        });
+
+        dataResult = [
+          ...dataResult,
+	        ...data.data
+        ]
+
+	      operationsCount += data.count;
+      }
+
+      this.operations = dataResult;
+      this.count = operationsCount;
     }
   }
 };
