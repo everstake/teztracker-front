@@ -163,7 +163,6 @@ export default {
       this.setTableFields();
     },
     setTableFields() {
-      console.log(this.isBaker)
       if (this.isBaker) {
         this.fields = [
           { key: "level", label: "Endorsed Block" },
@@ -173,16 +172,14 @@ export default {
           { key: "slots", label: "Slots" },
           { key: "timestamp", label: "Timestamp" }
         ];
-
-        return;
+      } else {
+        this.fields = [
+          { key: "level", label: "Endorsed Block" },
+          { key: "txhash", label: "Endorsements Hash" },
+          { key: "endorser", label: "Endorser" },
+          { key: "timestamp", label: "Timestamp" }
+        ];
       }
-
-      this.fields = [
-        { key: "level", label: "Endorsed Block" },
-        { key: "txhash", label: "Endorsements Hash" },
-        { key: "endorser", label: "Endorser" },
-        { key: "timestamp", label: "Timestamp" }
-      ];
     }
   }
 };
