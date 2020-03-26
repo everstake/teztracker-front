@@ -59,7 +59,7 @@
 
           <b-row class="item-info mr-1">
             <b-col lg="2">
-              <span class="label"># of Ops&Txs</span>
+              <span class="label"># of operations and transactions</span>
             </b-col>
             <b-col lg="10">
               <span class="value">
