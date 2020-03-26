@@ -4,16 +4,12 @@
       <b-card no-body>
         <b-card-header>
           <h3
-            v-if="Object.keys(bakerInfo).length !== 0"
             id="card-title"
             class="card__title"
           >
-            <span class="text">
+            <span class="text card-title__text">
               <template v-if="bakerInfo.name">
                 {{ bakerInfo.name }}
-              </template>
-              <template v-else>
-                {{ hash }}
               </template>
             </span>
           </h3>
@@ -224,7 +220,6 @@ export default {
   display: inline-flex;
   align-items: center;
   padding-right: 0 !important; /* outweigh selector cascade from public styles */
-  cursor: pointer;
 }
 
 .icon-primary {
