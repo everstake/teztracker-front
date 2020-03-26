@@ -29,6 +29,12 @@
           {{ row.item.operationGroupHash | longhash(35) }}
         </b-link>
       </template>
+  
+      <template slot="blockLevel" slot-scope="row">
+        <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
+          {{ row.item.blockLevel | formatInteger }}
+        </b-link>
+      </template>
 
       <template slot="endorser" slot-scope="row">
         <b-link
@@ -160,9 +166,9 @@ export default {
       console.log(this.isBaker)
       if (this.isBaker) {
         this.fields = [
-          { key: "block", label: "Block ID" },
-          { key: "txhash", label: "Endorsements Hash" },
           { key: "level", label: "Endorsed Block" },
+          { key: "txhash", label: "Endorsements Hash" },
+          { key: "blockLevel", label: "Included in Block" },
           { key: "endorser", label: "Endorser" },
           { key: "slots", label: "Slots" },
           { key: "timestamp", label: "Timestamp" }
@@ -172,7 +178,7 @@ export default {
       }
 
       this.fields = [
-        { key: "block", label: "Block ID" },
+        { key: "level", label: "Endorsed Block" },
         { key: "txhash", label: "Endorsements Hash" },
         { key: "endorser", label: "Endorser" },
         { key: "timestamp", label: "Timestamp" }
