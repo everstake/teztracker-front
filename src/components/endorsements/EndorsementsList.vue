@@ -16,17 +16,17 @@
       borderless
       class="transactions-table table-responsive-md"
     >
+      <template slot="block" slot-scope="row">
+        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
+          {{ row.item.level | formatInteger }}
+        </b-link>
+      </template>
+
       <template slot="txhash" slot-scope="row">
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
         >
           {{ row.item.operationGroupHash | longhash(35) }}
-        </b-link>
-      </template>
-
-      <template slot="block" slot-scope="row">
-        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
-          {{ row.item.level | formatInteger }}
         </b-link>
       </template>
 
@@ -37,12 +37,20 @@
           {{ row.item.delegate | longhash(42) }}
         </b-link>
       </template>
+  
+      <template slot="level" slot-scope="row">
+        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
+          {{ row.item.level | formatInteger }}
+        </b-link>
+      </template>
+      
+      <template slot="slots" slot-scope="row">
+          {{ row.item.slots }}
+      </template>
 
       <template slot="timestamp" slot-scope="row">
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
-      
-      <slot name="table-template"></slot>
     </b-table>
 
     <Pagination
@@ -68,17 +76,12 @@ export default {
     Pagination
   },
   mixins: [handleCurrentPageChange, setPerPage],
-  props: ["account"],
+  props: ["account", "isBaker"],
   data() {
     return {
       endorsements: [],
       count: 0,
-      fields: [
-        { key: "txhash", label: "Endorsements Hash" },
-        { key: "block", label: "Endorsed Block" },
-        { key: "endorser", label: "Endorser" },
-        { key: "timestamp", label: "Timestamp" }
-      ]
+      fields: []
     };
   },
   computed: {
@@ -150,6 +153,30 @@ export default {
       this.count = result.count;
       this.endorsements = result.data;
       this[SET_ENDORSEMENTS_COUNT](this.count);
+
+      this.setTableFields();
+    },
+    setTableFields() {
+      console.log(this.isBaker)
+      if (this.isBaker) {
+        this.fields = [
+          { key: "block", label: "Block ID" },
+          { key: "txhash", label: "Endorsements Hash" },
+          { key: "level", label: "Endorsed Block" },
+          { key: "endorser", label: "Endorser" },
+          { key: "slots", label: "Slots" },
+          { key: "timestamp", label: "Timestamp" }
+        ];
+
+        return;
+      }
+
+      this.fields = [
+        { key: "block", label: "Block ID" },
+        { key: "txhash", label: "Endorsements Hash" },
+        { key: "endorser", label: "Endorser" },
+        { key: "timestamp", label: "Timestamp" }
+      ];
     }
   }
 };
