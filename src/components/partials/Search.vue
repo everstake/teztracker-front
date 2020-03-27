@@ -44,7 +44,7 @@ export default {
   props: {
     placeholder: {
       type: String,
-      default: "Search block, txn or address"
+      default: "Search block, tx or address"
     }
   },
   methods: {
