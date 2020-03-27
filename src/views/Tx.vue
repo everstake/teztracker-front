@@ -18,7 +18,10 @@
         </b-container>
       </section>
 
-      <section>
+      <section
+        v-if="!operationsWithHiddenTxTable.includes(txInfo.kind)"
+        class="mt-0"
+      >
         <b-container fluid>
           <b-row>
             <b-col lg="12">
@@ -120,9 +123,15 @@ export default {
         { key: "from", label: "From" },
         { key: "to", label: "To" },
         { key: "amount", label: "Amount" },
-        { key: "fee", label: "Fees" },
+        { key: "fee", label: "Fee" },
         { key: "gas", label: "Gas Limit" },
         { key: "storage", label: "Storage Limit" }
+      ],
+      operationsWithHiddenTxTable: [
+        "endorsement",
+        "activate_account",
+        "double_baking_evidence",
+        "double_endorsement_evidence"
       ]
     };
   },

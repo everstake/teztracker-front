@@ -66,7 +66,7 @@ export default {
       activations: [],
       count: 0,
       fields: [
-        { key: "txhash", label: "Origination Hash" },
+        { key: "txhash", label: "Operation hash" },
         { key: "level", label: "Block ID" },
         { key: "timestamp", label: "Timestamp" },
         { key: "to", label: "To" }

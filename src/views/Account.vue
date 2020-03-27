@@ -1,17 +1,17 @@
 <template>
   <PageContentContainer page-name="Account page">
     <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs"/>
+      <Breadcrumbs :crumbs="crumbs" />
     </template>
 
     <template #content>
       <section>
         <b-container fluid>
-          <AccountSingle :hash="hash"/>
+          <AccountSingle :hash="hash" />
         </b-container>
       </section>
 
-      <section>
+      <section class="mt-0">
         <b-container fluid>
           <b-row>
             <b-col lg="12">

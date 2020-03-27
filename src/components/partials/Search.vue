@@ -13,7 +13,7 @@
       :readonly="loading"
     />
 
-<!--    <span v-if="error" class="search-form&#45;&#45;error">{{ error }}</span>-->
+    <!--    <span v-if="error" class="search-form&#45;&#45;error">{{ error }}</span>-->
 
     <b-button @click="onSubmit" class="button-search" :disabled="loading">
       <font-awesome-icon
@@ -30,6 +30,7 @@ import isFinite from "lodash/isFinite";
 import startsWith from "lodash/startsWith";
 import some from "lodash/some";
 import flatten from "lodash/flatten";
+import numeral from "numeral";
 
 export default {
   name: "Search",
@@ -43,7 +44,7 @@ export default {
   props: {
     placeholder: {
       type: String,
-      default: 'Search block, txn or address'
+      default: "Search block, tx or address"
     }
   },
   methods: {
@@ -69,23 +70,35 @@ export default {
 
       // block id
       if (isFinite(parseInt(searchStr))) {
-        const { status } = await this.$api.getBlock({ block: searchStr });
-        routerSettings = { name: "block", params: { level: searchStr } };
+        const searchStrFormatted = numeral(searchStr).format("0");
+        const { status } = await this.$api.getBlock({
+          block: searchStrFormatted
+        });
+        routerSettings = {
+          name: "block",
+          params: { level: searchStrFormatted }
+        };
         requestStatus = status;
       }
 
       //block hash
       for (const prefix of this.$constants.SEARCH_PREFIXES.block) {
         if (startsWith(searchStr, prefix)) {
-          const { status } = await this.$api.getBlock({ block: searchStr });
-          routerSettings = { name: "block", params: { level: searchStr } };
+          // const { status } = await this.$api.getBlock({ block: searchStr });
+          const res = await this.$api.getBlock({ block: searchStr });
+          const { status } = res;
+          const { level } = res.data.block;
+          // routerSettings = { name: "block", params: { level: searchStr } };
+          routerSettings = { name: "block", params: { level } };
           requestStatus = status;
         }
       }
       //transactions
       for (const prefix of this.$constants.SEARCH_PREFIXES.operation) {
         if (startsWith(searchStr, prefix)) {
-          const { status } = await this.$api.getTransactions({ txhash: searchStr });
+          const { status } = await this.$api.getTransactions({
+            txhash: searchStr
+          });
           routerSettings = { name: "tx", params: { txhash: searchStr } };
           requestStatus = status;
         }
@@ -172,6 +185,6 @@ export default {
 .main-header .search__form .search-query,
 .main-header .search__form .search-query::placeholder {
   font-size: 14px;
-  color: rgba(0,0,0,0.5);
+  color: rgba(0, 0, 0, 0.5);
 }
 </style>
