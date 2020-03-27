@@ -100,7 +100,7 @@ export default {
       fields: [
         { key: "level", label: "Block ID" },
         { key: "timestamp", label: "Timestamp" },
-        { key: "txhash", label: "Transactions Hash" },
+        { key: "txhash", label: "Transaction hash" },
         {
           key: "from",
           label: "From",
@@ -118,7 +118,7 @@ export default {
         },
         {
           key: "fee",
-          label: "Fees",
+          label: "Fee",
           class: !this.isTableComplete ? "d-none" : ""
         }
       ]

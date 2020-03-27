@@ -162,6 +162,9 @@ const TzAPI = {
   },
   getProtocols(opts = {}) {
     return get(this.getVotingUrl(), `protocols`, opts);
+  },
+  getOperations(opts = {}) {
+    return get(this.API_URL(), "operations", opts);
   }
 };
 

@@ -100,15 +100,15 @@ export default {
       double_baking: [],
       count: 0,
       fields: [
-        { key: "txhash", label: "Origination Hash" },
+        { key: "txhash", label: "Operation hash" },
         { key: "level", label: "Block ID" },
         { key: "age", label: "Age" },
         { key: "baker", label: "Baker" },
-        { key: "baker_rewards", label: "Baker Rewards" },
+        { key: "baker_rewards", label: "Baker rewards" },
         { key: "offender", label: "Offender" },
-        { key: "denounced_level", label: "Denounced Level" },
-        { key: "lost_deposits", label: "Lost Deposits" },
-        { key: "lost_rewards", label: "Lost Rewards" }
+        { key: "denounced_level", label: "Denounced level" },
+        { key: "lost_deposits", label: "Lost deposits" },
+        { key: "lost_rewards", label: "Lost rewards" }
       ]
     };
   },

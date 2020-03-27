@@ -1,7 +1,7 @@
 <template>
   <PageContentContainer page-name="Account page">
     <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs"/>
+      <Breadcrumbs :crumbs="crumbs" />
     </template>
 
     <template #content>
@@ -18,7 +18,7 @@
         </b-container>
       </section>
 
-      <section>
+      <section class="mt-0">
         <b-container fluid>
           <b-row>
             <b-col lg="12">

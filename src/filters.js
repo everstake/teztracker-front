@@ -35,7 +35,8 @@ Vue.filter("longhash", function(hash, length) {
 Vue.filter("tezos", function(amount) {
   if (amount > 0) {
     return (
-      numeral(amount / Vue.prototype.$constants.XTZ).format("0,0[.]000000") + " XTZ"
+      numeral(amount / Vue.prototype.$constants.XTZ).format("0,0[.]000000") +
+      " XTZ"
     );
   }
   return "0 XTZ";

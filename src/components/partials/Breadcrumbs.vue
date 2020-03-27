@@ -1,5 +1,5 @@
 <template>
-  <b-breadcrumb class="ml-2">
+  <b-breadcrumb>
     <b-breadcrumb-item
       v-for="(crumb, index) in crumbs"
       :key="index"
