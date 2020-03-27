@@ -24,15 +24,11 @@ const constants = {
   BLOCKS_IN_CYCLE_MAINNET: 4096,
   BLOCKS_IN_CYCLE_TESTNET: 2048, // twice lesser than in mainnet
   CYCLES_IN_VOTING_PERIOD: 8,
-  // API_BASE_URLS: {
-  //   mainnet: "https://api-teztracker.everstake.one/v2/data/tezos/mainnet/",
-  //   babylonnet: "https://api-teztracker.everstake.one/v2/data/tezos/babylonnet/",
-  //   carthagenet: "https://api-teztracker.everstake.one/v2/data/tezos/carthagenet/"
-  // },
   API_BASE_URLS: {
-    mainnet: "https://api-dev-teztracker.everstake.one/v2/data/tezos/mainnet/",
-    babylonnet: "https://api-dev-teztracker.everstake.one/v2/data/tezos/babylonnet/",
-    carthagenet: "https://api-dev-teztracker.everstake.one/v2/data/tezos/carthagenet/"
+    mainnet: process.env.VUE_APP_ROOT_API + "/v2/data/tezos/mainnet/",
+    babylonnet: process.env.VUE_APP_ROOT_API + "/v2/data/tezos/babylonnet/",
+    carthagenet: process.env.VUE_APP_ROOT_API + "/v2/data/tezos/carthagenet/",
+    voting: process.env.VUE_APP_ROOT_API + "/v2/data/mainnet/"
   },
   SEARCH_PREFIXES: {
     account: ["tz", "KT"],
