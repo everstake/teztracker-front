@@ -153,13 +153,11 @@
       </b-card>
 
       <b-card class="card-offset">
-        <b-card-body>
-          <b-row class="item-info">
-            <b-col lg="12">
-              <slot class="chart" name="chart"></slot>
-            </b-col>
-          </b-row>
-        </b-card-body>
+        <b-row class="item-info">
+          <b-col lg="12">
+            <slot v-bind:balance="account.balance" class="chart" name="chart"></slot>
+          </b-col>
+        </b-row>
       </b-card>
     </b-col>
   </b-row>

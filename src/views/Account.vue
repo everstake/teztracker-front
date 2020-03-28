@@ -8,11 +8,11 @@
       <section>
         <b-container fluid>
           <AccountSingle :hash="hash">
-            <template #chart>
+            <template #chart="props">
               <h3 class="card__title account__title">
                 <span class="card__title--strong">Balance in the last 30 days</span>
               </h3>
-              <LineChart class="account-line-chart" :chartData="chartData"></LineChart>
+              <LineChart :balance="props.balance" class="account-line-chart" :chartData="chartData"></LineChart>
             </template>
           </AccountSingle>
         </b-container>
