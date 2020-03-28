@@ -17,50 +17,78 @@
         <router-link
           class="baker"
           :to="{ name: 'baker', params: { baker: row.item.block_0.delegate } }"
-          >{{ row.item.block_0.delegate | longhash(19) }}</router-link
         >
+          {{
+            row.item.block_0.delegate_name ||
+              row.item.block_0.delegate | longhash(19)
+          }}
+        </router-link>
       </template>
       <template slot="block_1" slot-scope="row">
         <router-link
           class="baker"
           :to="{ name: 'baker', params: { baker: row.item.block_1.delegate } }"
-          >{{ row.item.block_1.delegate | longhash(19) }}</router-link
         >
+          {{
+            row.item.block_1.delegate_name ||
+              row.item.block_1.delegate | longhash(19)
+          }}
+        </router-link>
       </template>
       <template slot="block_2" slot-scope="row">
         <router-link
           class="baker"
           :to="{ name: 'baker', params: { baker: row.item.block_2.delegate } }"
-          >{{ row.item.block_2.delegate | longhash(19) }}</router-link
         >
+          {{
+            row.item.block_2.delegate_name ||
+              row.item.block_2.delegate | longhash(19)
+          }}
+        </router-link>
       </template>
       <template slot="block_3" slot-scope="row">
         <router-link
           class="baker"
           :to="{ name: 'baker', params: { baker: row.item.block_3.delegate } }"
-          >{{ row.item.block_3.delegate | longhash(19) }}</router-link
         >
+          {{
+            row.item.block_3.delegate_name ||
+              row.item.block_3.delegate | longhash(19)
+          }}
+        </router-link>
       </template>
       <template slot="block_4" slot-scope="row">
         <router-link
           class="baker"
           :to="{ name: 'baker', params: { baker: row.item.block_4.delegate } }"
-          >{{ row.item.block_4.delegate | longhash(19) }}</router-link
         >
+          {{
+            row.item.block_4.delegate_name ||
+              row.item.block_4.delegate | longhash(19)
+          }}
+        </router-link>
       </template>
       <template slot="block_5" slot-scope="row">
         <router-link
           class="baker"
           :to="{ name: 'baker', params: { baker: row.item.block_5.delegate } }"
-          >{{ row.item.block_5.delegate | longhash(19) }}</router-link
         >
+          {{
+            row.item.block_5.delegate_name ||
+              row.item.block_5.delegate | longhash(19)
+          }}
+        </router-link>
       </template>
       <template slot="block_6" slot-scope="row">
         <router-link
           class="baker"
           :to="{ name: 'baker', params: { baker: row.item.block_6.delegate } }"
-          >{{ row.item.block_6.delegate | longhash(19) }}</router-link
         >
+          {{
+            row.item.block_6.delegate_name ||
+              row.item.block_6.delegate | longhash(19)
+          }}
+        </router-link>
       </template>
     </b-table>
 
@@ -102,7 +130,7 @@ export default {
     };
   },
   computed: {
-    ...mapState('blocks', {
+    ...mapState("blocks", {
       count: state => state.counts
     })
   },
@@ -117,7 +145,7 @@ export default {
     await this.reload();
   },
   methods: {
-    ...mapMutations('blocks', [SET_FUTURE_BAKING_RIGHTS_COUNT]),
+    ...mapMutations("blocks", [SET_FUTURE_BAKING_RIGHTS_COUNT]),
     parseResponse(data) {
       const blocks = [];
       for (let i = 0; i < data.length; i++) {
@@ -127,7 +155,8 @@ export default {
             baker: data[i].baker,
             block_hash: data[i].block_hash,
             priority: data[i].rights[j].priority,
-            delegate: data[i].rights[j].delegate
+            delegate: data[i].rights[j].delegate,
+            delegate_name: data[i].rights[j].delegate_name
           });
         }
       }

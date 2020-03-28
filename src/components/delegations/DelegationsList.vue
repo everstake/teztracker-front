@@ -24,16 +24,16 @@
 
       <template slot="from" slot-scope="row">
         <b-link :to="{ name: 'account', params: { account: row.item.source } }">
-          {{ row.item.source | longhash(20) }}
+          {{ row.item.sourceName || row.item.source | longhash(20) }}
         </b-link>
       </template>
 
       <template slot="to" slot-scope="row">
         <b-link
           :to="{ name: 'account', params: { account: row.item.delegate } }"
-          v-if="row.item.delegate"
+          v-if="row.item.delegateName || row.item.delegate"
         >
-          {{ row.item.delegate | longhash(20) }}
+          {{ row.item.delegateName || row.item.delegate | longhash(20) }}
         </b-link>
         <span v-else>unset</span>
       </template>

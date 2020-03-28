@@ -15,7 +15,7 @@
             params: { network: currentNetwork, account: row.item.source }
           }"
         >
-          {{ row.item.source | longhash(20) }}
+          {{ row.item.sourceName || row.item.source | longhash(20) }}
         </b-link>
       </template>
       <template slot="destination" slot-scope="row">
@@ -24,13 +24,17 @@
             name: 'account',
             params: {
               network: currentNetwork,
-              account: row.item.destination || row.item.delegate || row.item.pkh }
+              account: row.item.destination || row.item.delegate || row.item.pkh
+            }
           }"
         >
           {{
-             row.item.destination | longhash(20)
-             || row.item.delegate | longhash(20)
-             || row.item.pkh | longhash(20)
+            row.item.destinationName | longhash(20) ||
+              row.item.delegateName | longhash(20) ||
+              row.item.pkhName | longhash(20) ||
+              row.item.destination | longhash(20) ||
+              row.item.delegate | longhash(20) ||
+              row.item.pkh | longhash(20)
           }}
         </b-link>
       </template>

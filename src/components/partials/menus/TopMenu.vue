@@ -149,7 +149,7 @@
             </b-dropdown-text>
           </b-nav-item-dropdown>
           <b-nav-form v-if="isSearchVisible" class="search">
-            <Search :placeholder="'Block, txn or address'" />
+            <Search :placeholder="'Block, tx or address'" />
           </b-nav-form>
         </b-navbar-nav>
       </b-collapse>
