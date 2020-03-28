@@ -38,15 +38,6 @@
 
           <b-row class="item-info  mr-1">
             <b-col lg="2">
-              <span class="label">Status</span>
-            </b-col>
-            <b-col lg="10">
-              <span class="value">{{ account.revealed ? 'revealed' : 'unrevealed' }}</span>
-            </b-col>
-          </b-row>
-
-          <b-row class="item-info  mr-1">
-            <b-col lg="2">
               <span class="label">Delegate</span>
             </b-col>
             <b-col lg="10">
@@ -68,7 +59,7 @@
 
           <b-row class="item-info mr-1">
             <b-col lg="2">
-              <span class="label"># of Ops&Txs</span>
+              <span class="label"># of operations and transactions</span>
             </b-col>
             <b-col lg="10">
               <span class="value">
@@ -84,6 +75,24 @@
             <b-col lg="10">
               <span class="value">
                 {{ account.lastActive | timeformat(dateFormat) }}
+              </span>
+            </b-col>
+          </b-row>
+  
+  
+          <b-row class="item-info  mr-1">
+            <b-col lg="2">
+              <span class="label">Status</span>
+            </b-col>
+            <b-col lg="10">
+              <span
+                class="value value--capitalize"
+                :class="{
+                  'text-success': account.revealed,
+                  'text-danger': !account.revealed
+                }"
+              >
+                {{ account.revealed ? 'revealed' : 'unrevealed' }}
               </span>
             </b-col>
           </b-row>
@@ -144,11 +153,11 @@
       </b-card>
 
       <b-card class="card-offset">
-        <b-card-body>
-          <b-row class="item-info">
-            <slot name="chart"></slot>
-          </b-row>
-        </b-card-body>
+        <b-row class="item-info">
+          <b-col lg="12">
+            <slot v-bind:balance="account.balance" class="chart" name="chart"></slot>
+          </b-col>
+        </b-row>
       </b-card>
     </b-col>
   </b-row>
@@ -252,5 +261,9 @@ export default {
   
   .card-offset {
     margin-top: 51px;
+  }
+  
+  .value--capitalize {
+    text-transform: capitalize;
   }
 </style>

@@ -27,7 +27,11 @@
         <span>{{ row.item.createdAt | timeformat(dateFormat) }}</span>
       </template>
       <template v-if="row.item.delegateValue" slot="delegateValue" slot-scope="row">
-        <span>{{ row.item.delegateValue }}</span>
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.accountId } }"
+        >
+          <span>{{ row.item.delegateValue | longhash(35) }}</span>
+        </b-link>
       </template>
     </b-table>
 

@@ -8,11 +8,11 @@
       <section>
         <b-container fluid>
           <AccountSingle :hash="hash">
-            <template #chart>
-              <h3 class="card__title">
+            <template #chart="props">
+              <h3 class="card__title account__title">
                 <span class="card__title--strong">Balance in the last 30 days</span>
               </h3>
-              <LineChart class="account-line-chart" :chartData="chartData"></LineChart>
+              <LineChart :balance="props.balance" class="account-line-chart" :chartData="chartData"></LineChart>
             </template>
           </AccountSingle>
         </b-container>
@@ -95,7 +95,6 @@ import DelegationsList from "../components/delegations/DelegationsList";
 import OriginationsList from "../components/originations/OriginationsList";
 import LineChart from "@/components/partials/LineChart";
 import OperationsList from "@/components/operations/OperationsList";
-import ContractsList from "@/components/contracts/ContractsList";
 
 export default {
   name: "Account",
@@ -107,8 +106,7 @@ export default {
     DelegationsList,
     OriginationsList,
     LineChart,
-    OperationsList,
-    ContractsList
+    OperationsList
   },
   data() {
     return {
@@ -144,11 +142,16 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.account-line-chart {
-  & canvas {
+<style lang="scss" scoped>
+.account {
+  &__title {
+    display: block;
+  }
+
+  &-line-chart {
     width: 100% !important;
     height: auto;
+    max-height: 350px;
   }
 }
 </style>

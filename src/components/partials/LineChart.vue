@@ -1,65 +1,90 @@
 <script>
 import { Line } from "vue-chartjs";
+import ceil from "lodash/ceil"
+import { mapState } from 'vuex'
 
 export default {
   name: "LineChart",
   extends: Line,
-  props: ["chartData"],
+  props: ["chartData", "balance"],
   watch: {
+    balance: {
+      immediate: true,
+	    handler() {
+        if (this.data.length > 0) {
+          this.initChart();
+        }
+      }
+    },
     chartData: {
       immediate: true,
       deep: true,
-      handler(val) {
-        if (val !== null) {
-          this.setDates();
+      handler(data) {
+        if (data !== null) {
+          if (data.length > 0) {
+            this.setData(data);
+          }
 
-	        val.forEach(item => {
-            const findedDay = new Date(item.timestamp * 1000).toLocaleDateString("en-US");
-            const index = this.data.findIndex(item => item.day === findedDay);
-
-            if (index > -1) {
-              item.day = findedDay;
-
-              this.data = [
-                ...this.data.slice(0, index),
-	              item,
-	              ...this.data.slice(index + 1)
-              ]
-
-            }
-          });
-
-          this.initChart();
+          if (this.balance) {
+            this.initChart();
+          }
         }
       }
     }
   },
+	mounted() {
+    this.setDates();
+	},
   data() {
     return {
-      data: []
+      data: [],
+      oneMonthDateRange: {
+        timestamps: [],
+		    localeDateStrings: []
+	    }
     };
   },
   methods: {
+    setData(balances) {
+      if (balances.length < 30) {
+        balances.forEach(item => {
+          const findedDay = new Date(item.timestamp * 1000).toLocaleDateString("en-US");
+          const index = this.data.findIndex(item => item.day === findedDay);
+
+          if (index > -1) {
+            item.day = findedDay;
+
+            for (let i = index; i < this.data.length; i += 1) {
+              if (!this.data[i].balance) {
+                this.data[i].balance = item.balance;
+              }
+            }
+          }
+        });
+      } else {
+        this.data = balances;
+      }
+    },
     initChart() {
+      const { price } = this.info;
       const options = {
         responsive: true,
         maintainAspectRatio: false,
         scales: {
           yAxes: [
             {
-              display: false,
-              stacked: true,
+              display: true,
               gridLines: {
                 display: false
               },
               ticks: {
-                suggestedMin: 0,
-                suggestedMax: 100,
                 beginAtZero: true,
-                stepSize: 20
+                stepSize: 20,
+                callback: value => `${value} XTZ`
               }
             }
-          ]
+          ],
+	        
         },
         tooltips: {
           enabled: false,
@@ -92,9 +117,14 @@ export default {
 
             tooltipModel.body[0].lines = [
               ...tooltipModel.body[0].lines.map(line => {
-                return `${line} XTZ`;
+                let result = 0;
+                if (line || line > 0) {
+                  const tez = line.split(' ')[1];
+                  result = ceil(tez * price, 2);
+                }
+                return `${line} XTZ ($${result})`;
               })
-            ]
+            ];
 
             if (tooltipModel.body) {
               var titleLines = tooltipModel.title || [];
@@ -146,13 +176,17 @@ export default {
         }
       };
 
+      const isDataEmpty = this.data.every(item => item.balance === null);
+
+      
       return this.renderChart(
         {
-	        labels: [...this.data.map(item => item.day.split('/')[1])],
+	        labels: this.oneMonthDateRange.localeDateStrings,
           datasets: [
             {
               label: "Balance",
-              data: this.data.map(item => item.balance / 1000000),
+              data: this.data.map(({ balance }) =>  balance ? balance / 1000000 : isDataEmpty ? this.balance / 1000000 : null),
+              // data: this.data.map(({ balance }) => balance / 1000000),
               backgroundColor: [
                 "rgb(224, 239, 236)"
               ],
@@ -174,18 +208,27 @@ export default {
       const dates = [];
 
       for (let i = 0; i < 30; i += 1) {
-        let date = oneMonthAgo + day * i;
+        let timestamp = oneMonthAgo + day * i;
+        const toLocaleDateString = new Date(timestamp).toLocaleDateString("en-US");
+
+        this.oneMonthDateRange.timestamps.push(timestamp);
+        this.oneMonthDateRange.localeDateStrings.push(toLocaleDateString);
 
         dates.push({
-          timestamp: date,
-          day: new Date(date).toLocaleDateString("en-US"),
-	        balance: 0
+          timestamp,
+          day: toLocaleDateString,
+	        balance: null
         });
       }
 
       this.data = dates;
     }
-  }
+  },
+  computed: {
+    ...mapState('app', {
+      info: state => state.priceInfo,
+    })
+  },
 };
 </script>
 
