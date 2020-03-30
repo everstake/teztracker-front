@@ -24,10 +24,6 @@ export default {
           if (data.length > 0) {
             this.setData(data);
           }
-
-          if (this.balance) {
-            this.initChart();
-          }
         }
       }
     }
@@ -178,7 +174,11 @@ export default {
 
       const isDataEmpty = this.data.every(item => item.balance === null);
 
-      
+      if (!isDataEmpty) {
+        // const index = this.oneMonthDateRange.localeDateStrings.findIndex(date => date === this.chartData[0].day);
+        // this.oneMonthDateRange.localeDateStrings = this.oneMonthDateRange.localeDateStrings.map((date, idx) => idx <= index ? '' : date);
+      }
+
       return this.renderChart(
         {
 	        labels: this.oneMonthDateRange.localeDateStrings,
@@ -186,7 +186,6 @@ export default {
             {
               label: "Balance",
               data: this.data.map(({ balance }) =>  balance ? balance / 1000000 : isDataEmpty ? this.balance / 1000000 : null),
-              // data: this.data.map(({ balance }) => balance / 1000000),
               backgroundColor: [
                 "rgb(224, 239, 236)"
               ],
