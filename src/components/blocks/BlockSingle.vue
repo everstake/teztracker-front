@@ -1,11 +1,15 @@
 <template>
   <b-card no-body>
     <b-card-header>
-      <div class="break-word">
-        <h3>
-          <span class="text">{{ block.level }}</span>
-        </h3>
-        <span class="subtitle">Block information</span>
+      <div class="card__block-nav">
+        <div v-if="this.$route.params.level > 0" @click="onNavigation('prev')" class="card__block-prev"><font-awesome-icon icon="chevron-left" class="ml-1"/></div>
+        <div class="break-word">
+          <h3>
+            <span class="text">{{ block.level }}</span>
+          </h3>
+          <span class="subtitle">Block information</span>
+        </div>
+        <div  @click="onNavigation('next')" class="card__block-next"><font-awesome-icon icon="chevron-right" class="mr-1"/></div>
       </div>
 
       <div class="card-divider w-100 mt-3"></div>
@@ -129,7 +133,8 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import {mapState, mapGetters, mapActions} from "vuex";
+import { GET_BLOCK_HEAD } from "@/store/actions.types"
 
 export default {
   name: "BlockSingle",
@@ -139,13 +144,35 @@ export default {
       required: true
     }
   },
+  methods: {
+    ...mapActions('blocks', [GET_BLOCK_HEAD]),
+    onNavigation(position) {
+      const { currentNetwork } = this;
+      const level = this.$route.params.level;
+
+      if (position === 'prev') {
+        this.$router.push({ name: this.$route.name, params: { network: currentNetwork, level: level > 0 ? level - 1 : 0 } });
+      }
+      
+      if (position === 'next') {
+        this.$router.push({ name: this.$route.name, params: { network: currentNetwork, level: Number(level) + 1 } });
+      }
+    }
+  },
   computed: {
     ...mapState("app", {
       dateFormat: state => state.dateFormat,
     }),
+    ...mapState('blocks', {
+      head: state => state.headBlock
+    }),
     ...mapGetters("app", {
       currentNetwork: 'getAppNetwork',
     })
+  },
+  async created() {
+    await this[GET_BLOCK_HEAD]();
+    console.log(this.head)
   }
 };
 </script>
