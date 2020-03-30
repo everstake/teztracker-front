@@ -1,7 +1,7 @@
 <template>
   <div v-if="!hide">
     <label for="perPageSelect" class="mb-1">
-      Items per page
+      {{ $t("perPageSelect.itemsPerPage") }}
     </label>
     <b-select
       id="perPageSelect"

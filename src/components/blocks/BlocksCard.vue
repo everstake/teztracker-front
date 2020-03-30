@@ -2,23 +2,24 @@
   <b-card no-body>
     <CardHeader>
       <template v-slot:left-content class="text">
-        <h4 class="tz-title--bold">Blocks list</h4>
+        <h4 class="tz-title--bold">
+          {{ $t("listTypes.blocksList") }}
+        </h4>
         <!--        <Dropdown dropdownTitle="This year" />-->
       </template>
       <template v-slot:right-content class="text">
         <Counter show-line :count="count" />
-        <div class="counter">
-          <div class="tz_link">
-            <router-link class="tz-dropdown-item" :to="{ name: 'blocks' }">
-              View all
-            </router-link>
-          </div>
-        </div>
+        <router-link class="link fs-14" :to="{ name: 'blocks' }">
+          {{ $t("common.viewAll") }}
+        </router-link>
       </template>
     </CardHeader>
 
     <b-card-body>
-      <BlocksList :show-per-page-filter="showPerPageFilter" :is-table-complete="false" />
+      <BlocksList
+        :show-per-page-filter="showPerPageFilter"
+        :is-table-complete="false"
+      />
     </b-card-body>
   </b-card>
 </template>
@@ -38,7 +39,7 @@ export default {
     Counter,
     BlocksList
   },
-  props: ['showPerPageFilter'],
+  props: ["showPerPageFilter"],
   computed: {
     ...mapState("blocks", {
       count: state => state.counts.blocks

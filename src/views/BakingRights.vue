@@ -12,7 +12,9 @@
               <b-card class="mb-3" no-body>
                 <CardHeader>
                   <template #left-content class="text">
-                    <h4 class="tz-title--bold">Future Baking Rights</h4>
+                    <h4 class="tz-title--bold">
+                      {{ $t("listTypes.futureBakingRightsList") }}
+                    </h4>
                   </template>
                   <template #right-content class="text">
                     <Counter show-line :count="count.future_baking_rights" />
@@ -27,7 +29,9 @@
               <b-card no-body>
                 <CardHeader>
                   <template #left-content class="text">
-                    <h4 class="tz-title--bold">Past Baking Rights</h4>
+                    <h4 class="tz-title--bold">
+                      {{ $t("listTypes.pastBakingRightsList") }}
+                    </h4>
                   </template>
                   <template #right-content class="text">
                     <Counter show-line :count="count.baking_rights" />
@@ -68,8 +72,8 @@ export default {
   data() {
     return {
       crumbs: [
-        { toRouteName: "network", text: "Home" },
-        { toRouteName: "baking_rights", text: "Baking Rights" }
+        { toRouteName: "network", text: this.$t("common.home") },
+        { toRouteName: "baking_rights", text: this.$t("common.bakingRights") }
       ]
     };
   },

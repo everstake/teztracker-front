@@ -4,47 +4,44 @@
       <section class="promo-section">
         <b-row class="promo-top justify-content-md-center align-items-center">
           <b-col lg="6" class="promo-search">
-            <h1>Tezos (XTZ) Blockchain Explorer</h1>
             <div class="search">
-              <Search/>
+              <Search />
             </div>
-            <p>
-              Tezos blockchain - Version
-              <span>1.01.00</span>
-            </p>
           </b-col>
           <b-col lg="4" class="promo-image">
-            <img src="../assets/img/promo-img.svg" height="270px" alt/>
+            <img src="../assets/img/promo-img.svg" height="270px" alt />
           </b-col>
         </b-row>
 
-        <CycleCounter/>
+        <CycleCounter />
 
         <div class="tz-row promo-tiles">
           <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'lightbulb']"/>
+                <font-awesome-icon :icon="['far', 'lightbulb']" />
               </div>
               <span class="counter">{{ stakingRatio }}%</span>
               <div v-if="info.staking_ratio > 0">
                 <span class="percentage green">
-                  <font-awesome-icon icon="caret-up"/>
+                  <font-awesome-icon icon="caret-up" />
                 </span>
               </div>
               <div v-else>
                 <span class="percentage red">
-                  <font-awesome-icon icon="caret-down"/>
+                  <font-awesome-icon icon="caret-down" />
                 </span>
               </div>
-              <span class="tile-name">Staking ratio</span>
+              <span class="tile-name">
+                {{ $t("index.stakingRatio") }}
+              </span>
             </div>
           </div>
 
           <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'star']"/>
+                <font-awesome-icon :icon="['far', 'star']" />
               </div>
               <div class="voting-progress">
                 <b-progress
@@ -56,7 +53,8 @@
                     {{ votingProgressPercent }}%
                   </div>
                   <div class="tile-name">
-                    {{ timeLeftTillVotingPeriodEnd }} - Until voting period end
+                    {{ timeLeftTillVotingPeriodEnd }} -
+                    {{ $t("index.untilVotingEnd") }}
                   </div>
                 </div>
               </div>
@@ -66,18 +64,20 @@
           <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'folder']"/>
+                <font-awesome-icon :icon="['far', 'folder']" />
               </div>
               <span class="counter">{{ head.level | bignum }}</span>
               <span class="percentage"></span>
-              <span class="tile-name">Block Height</span>
+              <span class="tile-name">
+                {{ $t("index.blockHeight") }}
+              </span>
             </div>
           </div>
 
           <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'user']"/>
+                <font-awesome-icon :icon="['far', 'user']" />
               </div>
 
               <span class="counter">
@@ -85,11 +85,13 @@
                   v-if="head.baker"
                   class="baker"
                   :to="{ name: 'account', params: { account: head.baker } }"
-                >{{ head.baker | longhash(13) }}</router-link
+                  >{{ head.baker | longhash(13) }}</router-link
                 >
               </span>
               <span class="percentage"></span>
-              <span class="tile-name">Latest baker</span>
+              <span class="tile-name">
+                {{ $t("index.latestBaker") }}
+              </span>
             </div>
           </div>
         </div>
@@ -98,54 +100,60 @@
           <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'chart-bar']"/>
+                <font-awesome-icon :icon="['far', 'chart-bar']" />
               </div>
               <span class="counter">${{ info.price }}</span>
               <div v-if="info.price_24h_change > 0">
                 <span class="percentage green">
-                  <font-awesome-icon icon="caret-up"/>
+                  <font-awesome-icon icon="caret-up" />
                   {{ priceChange }}%
                 </span>
               </div>
               <div v-else>
                 <span class="percentage red">
-                  <font-awesome-icon icon="caret-down"/>
+                  <font-awesome-icon icon="caret-down" />
                   {{ priceChange }}%
                 </span>
               </div>
 
-              <span class="tile-name">Price</span>
+              <span class="tile-name">
+                {{ $t("index.price") }}
+              </span>
             </div>
           </div>
 
           <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'bookmark']"/>
+                <font-awesome-icon :icon="['far', 'bookmark']" />
               </div>
               <span class="counter"
-              >{{ info.volume_24h | bignum(",") }} XTZ</span
+                >{{ info.volume_24h | bignum(",") }} XTZ</span
               >
               <span class="percentage"></span>
-              <span class="tile-name">Trading Volume</span>
+              <span class="tile-name">
+                {{ $t("index.tradingVol") }}
+              </span>
             </div>
           </div>
 
           <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'gem']"/>
+                <font-awesome-icon :icon="['far', 'gem']" />
               </div>
               <span class="counter">${{ info.market_cap | bignum(",") }}</span>
               <span class="percentage"></span>
-              <span class="tile-name">Market cap</span>
+              <span class="tile-name">
+                {{ $t("index.marketCap") }}
+              </span>
             </div>
           </div>
 
           <div class="tz-row__item text-center">
             <div class="tile">
               <div class="tile-icon text-center">
-                <font-awesome-icon :icon="['far', 'hourglass']"/>
+                <font-awesome-icon :icon="['far', 'hourglass']" />
               </div>
               <span class="counter">
                 {{
@@ -155,7 +163,9 @@
                 }}
               </span>
               <span class="percentage"></span>
-              <span class="tile-name">Circulating Supply</span>
+              <span class="tile-name">
+                {{ $t("index.circulatingSupply") }}
+              </span>
             </div>
           </div>
         </div>
@@ -185,33 +195,56 @@
           <b-col lg="6">
             <b-row>
               <b-col lg="12">
-                <h2>More about Tezos</h2>
+                <h2>
+                  {{ $t("index.moreAboutTezos") }}
+                </h2>
               </b-col>
             </b-row>
             <b-row>
               <b-col lg="3">
                 <ul>
                   <li>
-                    <a href="https://tezos.com" target=”_blank”>What is Tezos?</a>
+                    <a href="https://tezos.com" target="_blank">
+                      {{ $t("index.whatIsTezos") }}
+                    </a>
                   </li>
                   <li>
-                    <a href="https://tezos.com/static/white_paper-2dc8c02267a8fb86bd67a108199441bf.pdf" target=”_blank”>White Paper</a>
+                    <a
+                      href="https://tezos.com/static/white_paper-2dc8c02267a8fb86bd67a108199441bf.pdf"
+                      target="”_blank”"
+                    >
+                      {{ $t("index.whitePaper") }}
+                    </a>
                   </li>
                   <li>
-                    <a href="https://faucet.tzalpha.net/" target=”_blank”>Testnet Faucet</a>
+                    <a href="https://faucet.tzalpha.net/" target="_blank">
+                      {{ $t("index.testnetFaucet") }}
+                    </a>
                   </li>
                 </ul>
               </b-col>
               <b-col lg="3">
                 <ul>
                   <li>
-                    <a href="https://tezos.gitlab.io/introduction/howtouse.html" target=”_blank”>How to Run Tezos?</a>
+                    <a
+                      href="https://tezos.gitlab.io/introduction/howtouse.html"
+                      target="”_blank”"
+                    >
+                      {{ $t("index.howToRunTezos") }}
+                    </a>
                   </li>
                   <li>
-                    <a href="https://gitlab.com/tezos/tezos" target=”_blank”>Git repository</a>
+                    <a href="https://gitlab.com/tezos/tezos" target="_blank">
+                      {{ $t("index.gitRepo") }}
+                    </a>
                   </li>
                   <li>
-                    <a href="https://hub.docker.com/r/tezos/tezos" target=”_blank”>Docker images</a>
+                    <a
+                      href="https://hub.docker.com/r/tezos/tezos"
+                      target="”_blank”"
+                    >
+                      {{ $t("index.dockerImages") }}
+                    </a>
                   </li>
                 </ul>
               </b-col>
@@ -347,20 +380,20 @@ export default {
     padding-bottom: 1.6rem;
     padding-right: 0.8rem;
     padding-left: 0.8rem;
-    
+
     &:first-child {
       padding-left: 0;
     }
-    
+
     &:last-child {
       padding-right: 0;
     }
-  
+
     @media (max-width: 1280px) {
       &:nth-child(odd) {
         padding-left: 0;
       }
-    
+
       &:nth-child(even) {
         padding-right: 0;
       }

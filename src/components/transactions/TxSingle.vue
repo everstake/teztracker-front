@@ -1,29 +1,29 @@
 <template>
   <StatisticsCard
     :title="opHash"
-    subtitle="Transaction information"
+    :subtitle="$t('infoTypes.txInfo')"
     :fields="txInfoRestructured"
   >
     <template #value="slotProps">
       <router-link
-        v-if="slotProps.field.key === 'Included in Block'"
+        v-if="slotProps.field.key === $t('common.includedInBlock')"
         class="link"
         :to="{ name: 'block', params: { level } }"
       >
         {{ slotProps.field.value }}
       </router-link>
-      <template v-else-if="slotProps.field.key === 'Timestamp'">
+      <template v-else-if="slotProps.field.key === $t('common.timestamp')">
         {{ slotProps.field.value | timeformat(dateFormat) }}
       </template>
-      <template v-else-if="slotProps.field.key === 'Fee'">
+      <template v-else-if="slotProps.field.key === $t('common.fee')">
         {{ slotProps.field.value | tezos }}
         ({{ $_convert(slotProps.field.value) }})
       </template>
-      <template v-else-if="slotProps.field.key === 'Status'">
+      <template v-else-if="slotProps.field.key === $t('statusTypes.status')">
         <span
           :class="{
-            'text-danger': slotProps.field.value === 'Failed',
-            'text-success': slotProps.field.value !== 'Failed'
+            'text-danger': slotProps.field.value === $t('statusTypes.status'),
+            'text-success': slotProps.field.value !== $t('statusTypes.status')
           }"
         >
           {{ slotProps.field.value }}
@@ -53,16 +53,16 @@ export default {
     }),
     txInfoRestructured() {
       const res = [
-        { key: "Included in Block", value: this.level },
-        { key: "Timestamp", value: this.timestamp },
-        { key: "Operation hash", value: this.opHash }
+        { key: this.$t("common.includedInBlock"), value: this.level },
+        { key: this.$t("common.timestamp"), value: this.timestamp },
+        { key: this.$t("hashTypes.opHash"), value: this.opHash }
       ];
       if (this.fee) {
-        res.push({ key: "Fee", value: this.fee });
+        res.push({ key: this.$t("common.fee"), value: this.fee });
       }
       if (this.status) {
         res.push({
-          key: "Status",
+          key: this.$t("statusTypes.status"),
           value: this.mapOperationStatus(this.status)
         });
       }
@@ -75,7 +75,9 @@ export default {
   methods: {
     ...mapActions("app", [GET_APP_INFO]),
     mapOperationStatus(status) {
-      return status === "applied" ? "Success" : "Failed";
+      return status === "applied"
+        ? this.$t("statusTypes.success")
+        : this.$t("statusTypes.failed");
     }
   }
 };

@@ -124,7 +124,7 @@ export default {
       fields: [
         {
           key: "priority",
-          label: "Priority"
+          label: this.$t("common.priority")
         }
       ]
     };
@@ -165,7 +165,7 @@ export default {
       const fields = [
         {
           key: "priority",
-          label: "Priority"
+          label: this.$t("common.priority")
         }
       ];
       const result = [];
@@ -184,7 +184,7 @@ export default {
           }
           fields.push({
             key: `block_${i}`,
-            label: `Block ${levels[i]}`
+            label: `${this.$tc("common.block", 1)} ${levels[i]}`
           });
           const blockId = levels[i];
           const block = blocks.find(

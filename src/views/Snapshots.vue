@@ -12,10 +12,12 @@
               <b-card no-body>
                 <CardHeader>
                   <template #left-content class="text">
-                    <h4 class="tz-title--bold">Snapshots list</h4>
+                    <h4 class="tz-title--bold">
+                      {{ $t("listTypes.snapshotsList") }}
+                    </h4>
                   </template>
                   <template #right-content class="text">
-                    <Counter show-line :count="count.snapshots"/>
+                    <Counter show-line :count="count.snapshots" />
                   </template>
                 </CardHeader>
 
@@ -51,13 +53,13 @@ export default {
   data() {
     return {
       crumbs: [
-        { toRouteName: "network", text: "Home" },
-        { toRouteName: "snapshots", text: "Snapshots page" }
+        { toRouteName: "network", text: this.$t("common.home") },
+        { toRouteName: "snapshots", text: this.$t("pageTypes.snapshotsPage") }
       ]
     };
   },
   computed: {
-    ...mapState('blocks', {
+    ...mapState("blocks", {
       count: state => state.counts
     })
   }

@@ -2,23 +2,24 @@
   <b-card no-body>
     <CardHeader>
       <template v-slot:left-content class="text">
-        <h4 class="tz-title--bold">Transaction list</h4>
-<!--        <Dropdown dropdownTitle="This year" />-->
+        <h4 class="tz-title--bold">
+          {{ $t("listTypes.txsList") }}
+        </h4>
+        <!--        <Dropdown dropdownTitle="This year" />-->
       </template>
       <template v-slot:right-content class="text">
         <Counter show-line :count="count" />
-        <div class="counter">
-          <div class="tz_link">
-            <router-link class="tz-dropdown-item" :to="{ name: 'txs' }"
-              >View all</router-link
-            >
-          </div>
-        </div>
+        <router-link class="link fs-14" :to="{ name: 'txs' }">
+          {{ $t("common.viewAll") }}
+        </router-link>
       </template>
     </CardHeader>
 
     <b-card-body>
-      <TxsList :show-per-page-filter="showPerPageFilter" :is-table-complete="false" />
+      <TxsList
+        :show-per-page-filter="showPerPageFilter"
+        :is-table-complete="false"
+      />
     </b-card-body>
   </b-card>
 </template>
@@ -37,9 +38,9 @@ export default {
     Counter,
     TxsList
   },
-  props: ['showPerPageFilter'],
+  props: ["showPerPageFilter"],
   computed: {
-    ...mapState('operations', {
+    ...mapState("operations", {
       count: state => state.counts.txs
     })
   }
@@ -47,7 +48,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .line {
   display: block;
   float: left;

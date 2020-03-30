@@ -12,10 +12,12 @@
               <b-card no-body>
                 <CardHeader>
                   <template #left-content class="text">
-                    <h4 class="tz-title--bold">Delegations list</h4>
+                    <h4 class="tz-title--bold">
+                      {{ $t("listTypes.delegationsList") }}
+                    </h4>
                   </template>
                   <template #right-content class="text">
-                    <Counter show-line :count="count.delegations"/>
+                    <Counter show-line :count="count.delegations" />
                   </template>
                 </CardHeader>
 
@@ -51,13 +53,16 @@ export default {
   data() {
     return {
       crumbs: [
-        { toRouteName: "network", text: "Home" },
-        { toRouteName: "delegations", text: "Delegations page" }
+        { toRouteName: "network", text: this.$t("common.home") },
+        {
+          toRouteName: "delegations",
+          text: this.$t("pageTypes.delegationsPage")
+        }
       ]
     };
   },
   computed: {
-    ...mapState('operations', {
+    ...mapState("operations", {
       count: state => state.counts
     })
   }

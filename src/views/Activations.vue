@@ -14,7 +14,9 @@
               <b-card no-body>
                 <CardHeader>
                   <template #left-content class="text">
-                    <h4 class="tz-title--bold">Activations list</h4>
+                    <h4 class="tz-title--bold">
+                      {{ $t("listTypes.activationsList") }}
+                    </h4>
                   </template>
                   <template #right-content class="text">
                     <Counter show-line :count="count.activations" />
@@ -55,8 +57,8 @@ export default {
   data() {
     return {
       crumbs: [
-        { toRouteName: "network", text: "Home" },
-        { toRouteName: "activations", text: "Activations page" }
+        { toRouteName: "network", text: this.$t("common.home") },
+        { toRouteName: "activations", text: this.$t("pageTypes.activationsPage") }
       ]
     };
   },

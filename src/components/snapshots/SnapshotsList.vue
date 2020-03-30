@@ -53,9 +53,9 @@ export default {
       snapshots: [],
       count: 0,
       fields: [
-        { key: "cycle", label: "Cycles" },
-        { key: "level", label: "Block ID" },
-        { key: "rolls", label: "Amount of rolls" }
+        { key: "cycle", label: this.$tc("common.cycle", 2) },
+        { key: "level", label: this.$t("common.blockId") },
+        { key: "rolls", label: this.$t("common.rolls") }
       ]
     };
   },

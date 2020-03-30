@@ -5,38 +5,30 @@
         <b-card no-body>
           <b-card-header>
             <div class="cycle-counter__title title text-center">
-              Cycle counter
+              {{ $t("counters.cycleCounter") }}
             </div>
           </b-card-header>
 
           <b-card-body>
             <div class="progress-labels">
               <div class="cycle-label mr-2">
-                Cycle - {{ head.metaCycle }}
+                {{ $tc("common.cycle", 1) }} - {{ head.metaCycle }}
               </div>
-              <div class="tezos-label">
-                Tezos {{ $_network }}
-              </div>
+              <div class="tezos-label">Tezos {{ $_network }}</div>
             </div>
 
             <b-row>
               <b-col>
-                <b-progress
-                  :value="cyclePercent"
-                  :max="100"
-                  class="mb-2"
-                />
+                <b-progress :value="cyclePercent" :max="100" class="mb-2" />
               </b-col>
             </b-row>
 
             <b-row>
               <b-col>
                 <div class="progress-labels">
-                  <div class="percentage mr-2">
-                    {{ cyclePercent }}%
-                  </div>
+                  <div class="percentage mr-2">{{ cyclePercent }}%</div>
                   <div class="timer">
-                    {{ timeLeft }} - Until cycle end
+                    {{ timeLeft }} - {{ $t("counters.untilEnd") }}
                   </div>
                 </div>
               </b-col>
@@ -77,23 +69,24 @@ export default {
       ).add(this.info.blocks_in_cycle - this.head.metaCyclePosition, "minutes");
       const duration = moment.duration(d.diff(moment()));
       return `${
-        duration.days() > 0 ? duration.days() + "d" : ""
-      } ${duration.hours()}h ${duration.minutes()}m`;
+        duration.days() > 0 ? duration.days() + this.$t("counters.d") : ""
+      } ${duration.hours()}${this.$t(
+        "counters.h"
+      )} ${duration.minutes()}${this.$t("counters.m")}`;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
 .cycle-counter {
   margin-top: 0;
   padding: 0;
-  
+
   @include for-phone-only {
     padding: 0;
   }
-  
+
   &__title {
     font-size: 15px;
   }

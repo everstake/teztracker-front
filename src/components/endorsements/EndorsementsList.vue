@@ -77,10 +77,10 @@ export default {
       endorsements: [],
       count: 0,
       fields: [
-        { key: "endorser", label: "Endorser" },
-        { key: "block", label: "Endorsed Block" },
-        { key: "timestamp", label: "Timestamp" },
-        { key: "txhash", label: "Endorsement hash" }
+        { key: "endorser", label: this.$t("endorsementsList.endorser") },
+        { key: "block", label: this.$t("endorsementsList.endorsedBlock") },
+        { key: "timestamp", label: this.$t("common.timestamp") },
+        { key: "txhash", label: this.$t("hashTypes.endorsementHash") }
       ]
     };
   },

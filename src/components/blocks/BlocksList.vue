@@ -28,7 +28,7 @@
           {{ row.item.bakerName || row.item.baker | longhash(42) }}
         </b-link>
       </template>
-  
+
       <template slot="number_of_operations" slot-scope="row">
         {{ row.item.number_of_operations | formatInteger }}
       </template>
@@ -86,32 +86,32 @@ export default {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
-        { key: "level", label: "Block ID" },
-        { key: "timestamp", label: "Timestamp" },
-        { key: "baker", label: "Baker" },
+        { key: "level", label: this.$t("common.blockId") },
+        { key: "timestamp", label: this.$t("common.timestamp") },
+        { key: "baker", label: this.$tc("common.baker", 1) },
         {
           key: "priority",
-          label: "Priority",
+          label: this.$t("common.priority"),
           class: !this.isTableComplete ? "d-none" : ""
         },
         {
           key: "number_of_operations",
-          label: "# of operations",
+          label: this.$t("numberOf.#OfOperations"),
           class: !this.isTableComplete ? "d-none" : ""
         },
         {
           key: "volume",
-          label: "Volume",
+          label: this.$t("blocksList.volume"),
           class: !this.isTableComplete ? "d-none" : ""
         },
         {
           key: "fees",
-          label: "Fee",
+          label: this.$t("common.fee"),
           class: !this.isTableComplete ? "d-none" : ""
         },
         {
           key: "endorsements",
-          label: "# of endorsements",
+          label: this.$t("numberOf.#OfEndorsements"),
           class: !this.isTableComplete ? "d-none" : ""
         }
       ]

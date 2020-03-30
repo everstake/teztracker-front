@@ -21,39 +21,45 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Transactions list</span>
+                          <span class="text">
+                            {{ $t("listTypes.txsList") }}
+                          </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <TxsList :account="hash"/>
+                      <TxsList :account="hash" />
                     </b-card-body>
                   </b-tab>
                   <b-tab title="Delegations">
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Delegations</span>
+                          <span class="text">
+                            {{ $t("listTypes.delegationsList") }}
+                          </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <DelegationsList :account="hash"/>
+                      <DelegationsList :account="hash" />
                     </b-card-body>
                   </b-tab>
                   <b-tab title="Originations">
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Originations</span>
+                          <span class="text">
+                            {{ $t("listTypes.originationsList") }}
+                          </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <OriginationsList :account="hash"/>
+                      <OriginationsList :account="hash" />
                     </b-card-body>
                   </b-tab>
                 </b-tabs>
@@ -67,34 +73,34 @@
 </template>
 
 <script>
-  import PageContentContainer from "../layouts/PageContentContainer";
-  import Breadcrumbs from "../components/partials/Breadcrumbs";
-  import AccountSingle from "../components/accounts/AccountSingle";
-  import TxsList from "../components/transactions/TxsList";
-  import DelegationsList from "../components/delegations/DelegationsList";
-  import OriginationsList from "../components/originations/OriginationsList";
+import PageContentContainer from "../layouts/PageContentContainer";
+import Breadcrumbs from "../components/partials/Breadcrumbs";
+import AccountSingle from "../components/accounts/AccountSingle";
+import TxsList from "../components/transactions/TxsList";
+import DelegationsList from "../components/delegations/DelegationsList";
+import OriginationsList from "../components/originations/OriginationsList";
 
-  export default {
-    name: "Account",
-    components: {
-      PageContentContainer,
-      Breadcrumbs,
-      AccountSingle,
-      TxsList,
-      DelegationsList,
-      OriginationsList
+export default {
+  name: "Account",
+  components: {
+    PageContentContainer,
+    Breadcrumbs,
+    AccountSingle,
+    TxsList,
+    DelegationsList,
+    OriginationsList
+  },
+  computed: {
+    hash() {
+      return this.$route.params.account;
     },
-    computed: {
-      hash() {
-        return this.$route.params.account;
-      },
-      crumbs() {
-        return [
-          {toRouteName: "network", text: "Home"},
-          {toRouteName: "accounts", text: "Accounts page"},
-          {toRouteName: "account", text: this.hash}
-        ];
-      }
+    crumbs() {
+      return [
+        { toRouteName: "network", text: this.$t("common.home") },
+        { toRouteName: "accounts", text: this.$t("pageTypes.accsPage") },
+        { toRouteName: "account", text: this.hash }
+      ];
     }
-  };
+  }
+};
 </script>

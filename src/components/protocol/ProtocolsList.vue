@@ -59,10 +59,10 @@ export default {
     return {
       protocols: [],
       fields: [
-        { key: "id", label: "Protocol" },
-        { key: "hash", label: "Hash" },
-        { key: "startBlock", label: "Starting Block" },
-        { key: "endBlock", label: "Ending Block" }
+        { key: "id", label: this.$tc("protocolsList.protocol", 1) },
+        { key: "hash", label: this.$t("hashTypes.hash") },
+        { key: "startBlock", label: this.$t("protocolsList.startingBlock") },
+        { key: "endBlock", label: this.$t("protocolsList.endingBlock") }
       ]
     };
   },

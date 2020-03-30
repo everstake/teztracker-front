@@ -84,12 +84,12 @@ export default {
       delegations: [],
       count: 0,
       fields: [
-        { key: "txhash", label: "Delegation hash" },
-        { key: "from", label: "From" },
-        { key: "to", label: "To" },
-        { key: "level", label: "Block ID" },
-        { key: "timestamp", label: "Timestamp" },
-        { key: "fee", label: "Fee" }
+        { key: "txhash", label: this.$t("hashTypes.delegationHash") },
+        { key: "from", label: this.$t("common.from") },
+        { key: "to", label: this.$t("common.to") },
+        { key: "level", label: this.$t("common.blockId") },
+        { key: "timestamp", label: this.$t("common.timestamp") },
+        { key: "fee", label: this.$t("common.fee") }
       ]
     };
   },

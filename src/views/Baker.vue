@@ -21,7 +21,9 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Transactions list</span>
+                          <span class="text">
+                            {{ $t("listTypes.txsList") }}
+                          </span>
                         </h3>
                       </div>
                     </b-card-header>
@@ -34,7 +36,9 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Delegations</span>
+                          <span class="text">
+                            {{ $t("listTypes.delegationsList") }}
+                          </span>
                         </h3>
                       </div>
                     </b-card-header>
@@ -47,7 +51,9 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Originations</span>
+                          <span class="text">
+                            {{ $t("listTypes.originationsList") }}
+                          </span>
                         </h3>
                       </div>
                     </b-card-header>
@@ -90,8 +96,8 @@ export default {
     },
     crumbs() {
       return [
-        { toRouteName: "network", text: "Home" },
-        { toRouteName: "bakers", text: "Bakers page" },
+        { toRouteName: "network", text: this.$t("common.home") },
+        { toRouteName: "bakers", text: this.$t("pageTypes.bakersPage") },
         { toRouteName: "baker", text: this.hash }
       ];
     }

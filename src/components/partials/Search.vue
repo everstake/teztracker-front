@@ -44,7 +44,7 @@ export default {
   props: {
     placeholder: {
       type: String,
-      default: "Search block, tx or address"
+      default() { return this.$t('search.placeholder') }
     }
   },
   methods: {

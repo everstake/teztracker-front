@@ -98,27 +98,27 @@ export default {
       transactions: [],
       count: 0,
       fields: [
-        { key: "level", label: "Block ID" },
-        { key: "timestamp", label: "Timestamp" },
-        { key: "txhash", label: "Transaction hash" },
+        { key: "level", label: this.$t("common.blockId") },
+        { key: "timestamp", label: this.$t("common.timestamp") },
+        { key: "txhash", label: this.$t("hashTypes.txHash") },
         {
           key: "from",
-          label: "From",
+          label: this.$t("common.from"),
           class: !this.isTableComplete ? "d-none" : ""
         },
         {
           key: "to",
-          label: "To",
+          label: this.$t("common.to"),
           class: !this.isTableComplete ? "d-none" : ""
         },
         {
           key: "amount",
-          label: "Amount",
+          label: this.$t("common.amount"),
           class: !this.isTableComplete ? "d-none" : ""
         },
         {
           key: "fee",
-          label: "Fee",
+          label: this.$t("common.fee"),
           class: !this.isTableComplete ? "d-none" : ""
         }
       ]

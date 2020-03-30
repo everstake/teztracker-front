@@ -5,7 +5,7 @@
         <b-card no-body>
           <b-card-header>
             <div class="title text-center">
-              Percentage of ICO addresses activated
+              {{ $t('counters.icoPercent') }}
             </div>
           </b-card-header>
 
