@@ -12,7 +12,7 @@
               <b-card no-body>
                 <CardHeader>
                   <template #left-content class="text">
-                    <h4 class="tz-title--bold">Accounts list</h4>
+                    <h4 class="tz-title--bold">Account list</h4>
                   </template>
                   <template #right-content class="text">
                     <Counter show-line :count="count.accounts" />
