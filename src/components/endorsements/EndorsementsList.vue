@@ -71,8 +71,8 @@ export default {
       endorsements: [],
       count: 0,
       fields: [
-        { key: "txhash", label: "Endorsements Hash" },
         { key: "block", label: "Endorsed Block" },
+        { key: "txhash", label: "Endorsements Hash" },
         { key: "endorser", label: "Endorser" },
         { key: "timestamp", label: "Timestamp" }
       ]
