@@ -59,11 +59,11 @@
 
           <b-row class="item-info mr-1">
             <b-col lg="2">
-              <span class="label"># of operations and transactions</span>
+              <span class="label"># of operations</span>
             </b-col>
             <b-col lg="10">
               <span class="value">
-                {{ account.operations + account.transactions }}
+                {{ account.operations }}
               </span>
             </b-col>
           </b-row>
@@ -207,6 +207,7 @@ export default {
         });
       }
       this.account = result.data;
+      console.log('account',this.account)
       if (result.data.bakerInfo) {
         this.bakerInfo = result.data.bakerInfo;
         this.baker = true;
