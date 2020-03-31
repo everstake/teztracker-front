@@ -51,7 +51,7 @@
       </template>
       
       <template slot="slots" slot-scope="row">
-          {{ row.item.slots }}
+          {{ row.item.slots.slice(1, -1) }}
       </template>
 
       <template slot="timestamp" slot-scope="row">
