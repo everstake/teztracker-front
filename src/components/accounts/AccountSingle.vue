@@ -207,7 +207,6 @@ export default {
         });
       }
       this.account = result.data;
-      console.log('account',this.account)
       if (result.data.bakerInfo) {
         this.bakerInfo = result.data.bakerInfo;
         this.baker = true;

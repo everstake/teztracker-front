@@ -1,39 +1,53 @@
 <script>
 import { Line } from "vue-chartjs";
-import ceil from "lodash/ceil"
-import { mapState } from 'vuex'
+import ceil from "lodash/ceil";
+import { mapState } from 'vuex';
+import moment from 'moment';
 
 export default {
   name: "LineChart",
   extends: Line,
   props: ["chartData", "balance"],
   watch: {
-    balance: {
-      immediate: true,
-	    handler() {
-        if (this.data.length > 0) {
-          this.initChart();
-        }
-      }
-    },
     chartData: {
       immediate: true,
       deep: true,
       handler(data) {
         if (data !== null) {
-          if (data.length > 0) {
-            this.setData(data);
-          }
+          this.updatedData = data;
         }
       }
+    },
+    isNeededDataReceived: {
+      immediate: false,
+	    handler(status) {
+        if (status) {
+          this.updateData();
+          this.initChart();
+        }
+	    }
     }
   },
-	mounted() {
-    this.setDates();
+  computed: {
+    ...mapState('app', {
+      info: state => state.priceInfo
+    }),
+	  isNeededDataReceived() {
+      if (this.chartData === null || !this.balance) return false;
+      return this.balance >= 0 && this.chartData.length > 0;
+    }
+  },
+	created() {
+    if (this.data.length === 0) {
+      this.setDates();
+    }
 	},
   data() {
     return {
       data: [],
+	    updatedData: [],
+	    finalData: [],
+	    previousBalance: null,
       oneMonthDateRange: {
         timestamps: [],
 		    localeDateStrings: []
@@ -41,24 +55,74 @@ export default {
     };
   },
   methods: {
-    setData(balances) {
-      if (balances.length < 30) {
-        balances.forEach(item => {
-          const findedDay = new Date(item.timestamp * 1000).toLocaleDateString("en-US");
-          const index = this.data.findIndex(item => item.day === findedDay);
+    updateData() {
+      const props = this.updatedData.sort((a, b) => a.timestamp - b.timestamp);
 
-          if (index > -1) {
-            item.day = findedDay;
+      // one operation but without balance
+      if (props.length === 1 && !props[0].balance) {
+        this.data = this.data.map(operation => ({...operation, balance: 0}))
+        return;
+      }
 
-            for (let i = index; i < this.data.length; i += 1) {
-              if (!this.data[i].balance) {
-                this.data[i].balance = item.balance;
-              }
+      // no operations
+      if (props.length === 0) {
+        this.data = this.data.map(operation => ({...operation, balance: (this.balance / 1000000).toFixed()}))
+        return;
+      }
+
+      if (props.length === 1) {
+        this.data = this.data.map(operation => ({...operation, balance: props[0].balance / 1000000}));
+        return;
+      }
+
+      if (props.length < 30) {
+        let currentBalance = props[0].balance / 1000000;
+        let firstOperationDay = new Date(props[1].timestamp * 1000).toLocaleDateString("en-US");
+        const firstOperationIndex = this.data.findIndex(item => item.day === firstOperationDay);
+
+        for (let i = 0; i < firstOperationIndex; i += 1) {
+          this.data[i].balance = currentBalance;
+        }
+
+        for (let i = firstOperationIndex; i < this.data.length; i += 1) {
+          const dataDay = this.data[i].day;
+          props.forEach(item => {
+            const propsDay = new Date(item.timestamp * 1000).toLocaleDateString("en-US");
+
+            if (propsDay === dataDay) {
+              currentBalance = item.balance / 1000000;
             }
+
+            this.data[i].balance = currentBalance;
+          });
+        }
+      } else {
+        const indexes = [];
+
+        props.forEach((operation, propsIndex) => {
+          const day = new Date(operation.timestamp * 1000).toLocaleDateString("en-US")
+          const a = moment(day,'M/D/YYYY');
+
+          let dataIndex = this.data.findIndex(item => {
+            const b = moment(item.day,'M/D/YYYY');
+            const diffDays = b.diff(a, 'days');
+            return diffDays === 0;
+          });
+
+          if (dataIndex > -1) {
+	          indexes.push({propsIndex, dataIndex})
           }
         });
-      } else {
-        this.data = balances;
+
+        this.data = this.data.map((item, index) => {
+          const findedIndex = indexes.find(({ dataIndex }) => index === dataIndex);
+          const result = props[findedIndex.propsIndex].balance;
+
+          return {
+            ...item,
+            balance: result / 1000000
+          };
+        })
       }
     },
     initChart() {
@@ -75,12 +139,10 @@ export default {
               },
               ticks: {
                 beginAtZero: true,
-                stepSize: 20,
                 callback: value => `${value} XTZ`
               }
             }
-          ],
-	        
+          ]
         },
         tooltips: {
           enabled: false,
@@ -171,21 +233,13 @@ export default {
           }
         }
       };
-
-      const isDataEmpty = this.data.every(item => item.balance === null);
-
-      if (!isDataEmpty) {
-        // const index = this.oneMonthDateRange.localeDateStrings.findIndex(date => date === this.chartData[0].day);
-        // this.oneMonthDateRange.localeDateStrings = this.oneMonthDateRange.localeDateStrings.map((date, idx) => idx <= index ? '' : date);
-      }
-
       return this.renderChart(
         {
-	        labels: this.oneMonthDateRange.localeDateStrings,
+	        labels: this.data.map(({ day }) => day),
           datasets: [
             {
               label: "Balance",
-              data: this.data.map(({ balance }) =>  balance ? balance / 1000000 : isDataEmpty ? this.balance / 1000000 : null),
+	            data: this.data.map(({ balance }) => balance),
               backgroundColor: [
                 "rgb(224, 239, 236)"
               ],
@@ -198,16 +252,12 @@ export default {
       );
     },
     setDates() {
-      const now = new Date();
-      now.setHours(0);
-      now.setMinutes(0);
-      now.setSeconds(0);
-      const oneMonthAgo = now.setMonth(now.getMonth() - 1);
+      const thirdyDaysAgoDate = this.getThirdyDaysAgoDate();
       const day = 60 * 60 * 24 * 1000;
       const dates = [];
 
       for (let i = 0; i < 30; i += 1) {
-        let timestamp = oneMonthAgo + day * i;
+        let timestamp = thirdyDaysAgoDate + day * i;
         const toLocaleDateString = new Date(timestamp).toLocaleDateString("en-US");
 
         this.oneMonthDateRange.timestamps.push(timestamp);
@@ -221,14 +271,14 @@ export default {
       }
 
       this.data = dates;
-    }
-  },
-  computed: {
-    ...mapState('app', {
-      info: state => state.priceInfo,
-    })
+    },
+	  getThirdyDaysAgoDate() {
+      const now = new Date();
+      now.setHours(0);
+      now.setMinutes(0);
+      now.setSeconds(0);
+      return now.setDate(now.getDate() - 29);
+	  }
   },
 };
 </script>
-
-<style lang="scss" scoped></style>
