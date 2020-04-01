@@ -100,8 +100,8 @@ export default {
       double_baking: [],
       count: 0,
       fields: [
-        { key: "txhash", label: "Operation hash" },
         { key: "level", label: "Block ID" },
+        { key: "txhash", label: "Origination Hash" },
         { key: "age", label: "Age" },
         { key: "baker", label: "Baker" },
         { key: "baker_rewards", label: "Baker rewards" },

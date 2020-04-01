@@ -87,7 +87,7 @@ export default {
   },
   methods: {
     async reload(page = 1) {
-      const operationKinds = ['endorsement', 'origination', 'origination', 'activate_account', 'double_endorsement_evidence']
+      const operationKinds = ['endorsement', 'activate_account', 'double_endorsement_evidence']
 	    let dataResult = [];
       let operationsCount = 0;
       const props = {

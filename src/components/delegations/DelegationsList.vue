@@ -84,12 +84,12 @@ export default {
       delegations: [],
       count: 0,
       fields: [
-        { key: "txhash", label: "Delegation hash" },
+        { key: "level", label: "Block ID" },
+        { key: "txhash", label: "Delegations Hash" },
         { key: "from", label: "From" },
         { key: "to", label: "To" },
-        { key: "level", label: "Block ID" },
-        { key: "timestamp", label: "Timestamp" },
-        { key: "fee", label: "Fee" }
+        { key: "fee", label: "Fees" },
+        { key: "timestamp", label: "Timestamp" }
       ]
     };
   },

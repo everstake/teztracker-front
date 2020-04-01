@@ -59,11 +59,11 @@
 
           <b-row class="item-info mr-1">
             <b-col lg="2">
-              <span class="label"># of operations and transactions</span>
+              <span class="label"># of operations</span>
             </b-col>
             <b-col lg="10">
               <span class="value">
-                {{ account.operations + account.transactions }}
+                {{ account.operations }}
               </span>
             </b-col>
           </b-row>

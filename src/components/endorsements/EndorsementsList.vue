@@ -93,6 +93,12 @@ export default {
     return {
       endorsements: [],
       count: 0,
+      fields: [
+        { key: "block", label: "Endorsed Block" },
+        { key: "txhash", label: "Endorsements Hash" },
+        { key: "endorser", label: "Endorser" },
+        { key: "timestamp", label: "Timestamp" }
+      ]
       fields: []
     };
   },

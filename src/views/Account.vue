@@ -12,7 +12,7 @@
               <h3 class="card__title account__title">
                 <span class="card__title--strong">Balance in the last 30 days</span>
               </h3>
-              <LineChart :balance="props.balance" class="account-line-chart" :chartData="chartData"></LineChart>
+              <LineChart :chartData="chartData" :balance="props.balance" class="account-line-chart"></LineChart>
             </template>
           </AccountSingle>
         </b-container>
