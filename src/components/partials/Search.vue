@@ -31,6 +31,8 @@ import startsWith from "lodash/startsWith";
 import some from "lodash/some";
 import flatten from "lodash/flatten";
 import numeral from "numeral";
+import { mapActions, mapState } from "vuex";
+import { GET_PUBLIC_BAKERS } from "@/store/actions.types"
 
 export default {
   name: "Search",
@@ -48,6 +50,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions("accounts", [GET_PUBLIC_BAKERS]),
     resolveSearch(props, status) {
       if (status !== this.$constants.STATUS_SUCCESS) {
         return this.$router.push({ name: status });
@@ -60,8 +63,8 @@ export default {
 
       const searchStr = this.searchQuery;
       const isFormValid = this.validateForm();
-      let routerSettings;
-      let requestStatus;
+      let routerSettings = null;
+      let requestStatus = null;
 
       if (!isFormValid) {
         this.loading = false;
@@ -112,6 +115,34 @@ export default {
         }
       }
 
+
+      if (routerSettings === null && requestStatus === null) {
+        const fetchedBakersSize = this.publicBakers.length;
+        const foundedBakerIndex = () => this.publicBakers.findIndex(baker => baker.bakerInfo.name.toLowerCase() === searchStr.trim().toLowerCase());
+
+        if (fetchedBakersSize === 0) {
+          await this[GET_PUBLIC_BAKERS]();
+        }
+
+        if (foundedBakerIndex() >= 0) {
+          const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
+          routerSettings = { name: "account", params: { account: this.publicBakers[foundedBakerIndex()].accountId } };
+          requestStatus = status;
+        } else {
+          if (fetchedBakersSize <= 10) {
+            await this[GET_PUBLIC_BAKERS]({ limit: this.publicBakersCount });
+          }
+
+          if (foundedBakerIndex() >= 0) {
+            const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
+            routerSettings = { name: "account", params: { account: this.publicBakers[foundedBakerIndex()].accountId } };
+            requestStatus = status;
+          } else {
+            this.error = 'Public baker not found.'
+          }
+        }
+      }
+
       this.searchQuery = "";
       this.loading = false;
 
@@ -148,22 +179,28 @@ export default {
     },
     validateForm() {
       const { searchQuery } = this;
-      const queryIncludesPrefix = this.findQueryPrefix(searchQuery);
+      // const queryIncludesPrefix = this.findQueryPrefix(searchQuery);
 
       if (searchQuery === "") {
         this.error = "Search string should not be empty.";
         return false;
       }
 
-      if (!queryIncludesPrefix) {
-        this.error = `Search for an ${Object.keys(
-          this.$constants.SEARCH_PREFIXES
-        ).join(" or ")}.`;
-        return false;
-      }
+      // if (!queryIncludesPrefix) {
+      //   this.error = `Search for an ${Object.keys(
+      //     this.$constants.SEARCH_PREFIXES
+      //   ).join(" or ")}.`;
+      //   return false;
+      // }
 
       return true;
     }
+  },
+  computed: {
+    ...mapState("accounts", {
+      publicBakers: state => state.publicBakers,
+      publicBakersCount: state => state.counts.publicBakers
+    })
   }
 };
 </script>
