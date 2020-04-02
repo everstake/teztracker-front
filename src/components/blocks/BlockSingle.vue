@@ -2,14 +2,14 @@
   <b-card no-body>
     <b-card-header>
       <div class="card__block-nav">
-        <div v-if="this.$route.params.level > 0" @click="onNavigation('prev')" class="card__block-prev"><font-awesome-icon icon="chevron-left" class="ml-1"/></div>
+        <div :disabled="Number($route.params.level) === 0" @click="onNavigation('prev', Number($route.params.level) === 0)" :class="{ 'card__block-prev--disabled': Number($route.params.level) === 0 }" class="card__block-prev"><font-awesome-icon icon="chevron-left" class="ml-1"/></div>
         <div class="break-word">
           <h3>
             <span class="text">{{ block.level }}</span>
           </h3>
           <span class="subtitle">Block information</span>
         </div>
-        <div  @click="onNavigation('next')" class="card__block-next"><font-awesome-icon icon="chevron-right" class="mr-1"/></div>
+        <div :disabled="Number(head.level) === Number($route.params.level)" @click="onNavigation('next', Number(head.level) === Number($route.params.level))" :class="{ 'card__block-next--disabled': Number(head.level) === Number($route.params.level) }" class="card__block-next"><font-awesome-icon icon="chevron-right" class="mr-1"/></div>
       </div>
 
       <div class="card-divider w-100 mt-3"></div>
@@ -146,7 +146,11 @@ export default {
   },
   methods: {
     ...mapActions('blocks', [GET_BLOCK_HEAD]),
-    onNavigation(position) {
+    onNavigation(position, disabled) {
+      if (disabled) {
+        return false;
+      }
+
       const { currentNetwork } = this;
       const level = this.$route.params.level;
 
@@ -172,7 +176,6 @@ export default {
   },
   async created() {
     await this[GET_BLOCK_HEAD]();
-    console.log(this.head)
   }
 };
 </script>
