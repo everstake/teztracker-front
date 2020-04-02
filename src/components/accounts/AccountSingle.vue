@@ -16,12 +16,23 @@
         <div class="card-divider"></div>
 
         <b-card-body>
-          <b-row class="item-info  mr-1">
+          <b-row class="item-info mr-1">
             <b-col lg="2">
               <span class="label">Manager</span>
             </b-col>
             <b-col lg="10">
               <span class="value">{{ account.manager }}</span>
+            </b-col>
+          </b-row>
+          
+          <b-row class="item-info  mr-1">
+            <b-col lg="2">
+              <span class="label">Created on</span>
+            </b-col>
+            <b-col lg="10">
+              <span class="value">
+                {{ account.createdAt | timeformat(dateFormat) }}
+              </span>
             </b-col>
           </b-row>
 
@@ -30,7 +41,7 @@
               <span class="label">Delegate</span>
             </b-col>
             <b-col lg="10">
-              <span class="value">{{ account.delegateValue }}</span>
+              <span class="value">{{ account.delegateValue || false }}</span>
             </b-col>
           </b-row>
 
@@ -46,7 +57,47 @@
             </b-col>
           </b-row>
 
-          <b-row class="item-info  mr-1" v-if="baker">
+          <b-row class="item-info mr-1">
+            <b-col lg="2">
+              <span class="label"># of operations</span>
+            </b-col>
+            <b-col lg="10">
+              <span class="value">
+                {{ account.operations }}
+              </span>
+            </b-col>
+          </b-row>
+
+          <b-row class="item-info mr-1">
+            <b-col lg="2">
+              <span class="label">Last active</span>
+            </b-col>
+            <b-col lg="10">
+              <span class="value">
+                {{ account.lastActive | timeformat(dateFormat) }}
+              </span>
+            </b-col>
+          </b-row>
+  
+  
+          <b-row class="item-info  mr-1">
+            <b-col lg="2">
+              <span class="label">Status</span>
+            </b-col>
+            <b-col lg="10">
+              <span
+                class="value value--capitalize"
+                :class="{
+                  'text-success': account.revealed,
+                  'text-danger': !account.revealed
+                }"
+              >
+                {{ account.revealed ? 'revealed' : 'unrevealed' }}
+              </span>
+            </b-col>
+          </b-row>
+
+          <b-row class="item-info mr-1" v-if="baker">
             <b-col lg="4">
               <span class="value">Current Deposits</span>
 
@@ -100,6 +151,14 @@
           </b-row>
         </b-card-body>
       </b-card>
+
+      <b-card class="card-offset">
+        <b-row class="item-info">
+          <b-col lg="12">
+            <slot v-bind:balance="account.balance" class="chart" name="chart"></slot>
+          </b-col>
+        </b-row>
+      </b-card>
     </b-col>
   </b-row>
 </template>
@@ -117,12 +176,14 @@ export default {
     return {
       baker: false,
       bakerInfo: {},
-      account: {}
+      account: {},
+      balance: []
     };
   },
   computed: {
     ...mapState('app', {
-      info: state => state.priceInfo
+      info: state => state.priceInfo,
+      dateFormat: state => state.dateFormat
     })
   },
   watch: {
@@ -196,5 +257,13 @@ export default {
     display: inline-block;
     padding-left: .5rem;
     font-size: 16px;
+  }
+  
+  .card-offset {
+    margin-top: 51px;
+  }
+  
+  .value--capitalize {
+    text-transform: capitalize;
   }
 </style>

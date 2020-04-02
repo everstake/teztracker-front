@@ -2,7 +2,7 @@
 import { Doughnut } from "vue-chartjs";
 
 export default {
-  name: "Bar",
+  name: "DoughnutChart",
   props: ["options", "backgroundColors"],
   extends: Doughnut,
 	mounted() {

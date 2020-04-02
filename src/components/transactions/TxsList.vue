@@ -99,8 +99,7 @@ export default {
       count: 0,
       fields: [
         { key: "level", label: "Block ID" },
-        { key: "timestamp", label: "Timestamp" },
-        { key: "txhash", label: "Transaction hash" },
+        { key: "txhash", label: "Transactions Hash" },
         {
           key: "from",
           label: "From",
@@ -120,7 +119,8 @@ export default {
           key: "fee",
           label: "Fee",
           class: !this.isTableComplete ? "d-none" : ""
-        }
+        },
+        { key: "timestamp", label: "Timestamp" }
       ]
     };
   },
@@ -175,6 +175,9 @@ export default {
         });
       }
       this.transactions = data.data;
+
+      const transactionsChartData = this.transactions.map(tx => ({amount: tx.amount, timestamp: tx.timestamp}));
+      this.$emit('onTransactions', this.account)
       this.count = data.count;
       this[SET_TX_COUNT](this.count);
     }

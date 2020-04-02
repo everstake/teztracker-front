@@ -1,7 +1,7 @@
 import Vue from "vue";
 import * as ACTIONS from "@/store/actions.types";
 
-const withCustomAction = (pagination, storeModuleNamespace, customAction) => {
+const withCustomAction = (pagination, storeModuleNamespace, customAction, payload = {}) => {
   const originalProps = pagination.props || [];
 
   return Vue.component("withCustomAction", {
@@ -25,7 +25,8 @@ const withCustomAction = (pagination, storeModuleNamespace, customAction) => {
           `${[storeModuleNamespace]}/${ACTIONS[customAction]}`,
           {
             page,
-            limit: this.perPage
+            limit: this.perPage,
+            ...payload
           }
         );
       }
