@@ -19,11 +19,12 @@
         </b-link>
       </template>
       <template slot="stakingCapacity" slot-scope="row">
-        {{ row.item.stakingCapacity | tezosCapacity }}
+        {{
+          (row.item.stakingCapacity - row.item.stakingBalance / $constants.XTZ)
+            | tezosCapacity
+        }}
       </template>
-      <template slot="fee" slot-scope="row">
-        {{ row.item.fee }} %
-      </template>
+      <template slot="fee" slot-scope="row"> {{ row.item.fee }} % </template>
       <template slot="stakingBalance" slot-scope="row">
         {{ row.item.stakingBalance | tezos }}
       </template>
@@ -91,7 +92,7 @@ export default {
         },
         {
           key: "stakingBalance",
-          label: "Total balance",
+          label: "Staking balance",
           sortable: true,
           sortDirection: "desc"
         },

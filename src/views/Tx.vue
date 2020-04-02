@@ -1,7 +1,7 @@
 <template>
   <PageContentContainer page-name="Transaction page">
     <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs"/>
+      <Breadcrumbs :crumbs="crumbs" />
     </template>
 
     <template #content>
@@ -18,7 +18,10 @@
         </b-container>
       </section>
 
-      <section>
+      <section
+        v-if="!operationsWithHiddenTxTable.includes(txInfo.kind)"
+        class="mt-0"
+      >
         <b-container fluid>
           <b-row>
             <b-col lg="12">
@@ -45,35 +48,40 @@
                     <template slot="from" slot-scope="row">
                       <b-link
                         :to="{
-                        name: 'account',
-                        params: { account: row.item.source }
-                      }"
+                          name: 'account',
+                          params: { account: row.item.source }
+                        }"
                       >
-                        <span>{{ row.item.source | longhash(20) }}</span>
+                        {{
+                          row.item.sourceName || row.item.source | longhash(20)
+                        }}
                       </b-link>
                     </template>
 
                     <template slot="to" slot-scope="row">
                       <b-link
                         :to="{
-                        name: 'account',
-                        params: { account: row.item.destination }
-                      }"
+                          name: 'account',
+                          params: { account: row.item.destination }
+                        }"
                       >
-                        <span>{{ row.item.destination | longhash(20) }}</span>
+                        {{
+                          row.item.destinationName ||
+                            row.item.destination | longhash(20)
+                        }}
                       </b-link>
                     </template>
                     <template slot="amount" slot-scope="row">
-                      <span>{{ row.item.amount | tezos }}</span>
+                      {{ row.item.amount | tezos }}
                     </template>
                     <template slot="fee" slot-scope="row">
-                      <span>{{ row.item.fee | tezos }}</span>
+                      {{ row.item.fee | tezos }}
                     </template>
                     <template slot="gas" slot-scope="row">
-                      <span>{{ row.item.gasLimit }}</span>
+                      {{ row.item.gasLimit }}
                     </template>
                     <template slot="storage" slot-scope="row">
-                      <span>{{ row.item.storageLimit }}</span>
+                      {{ row.item.storageLimit }}
                     </template>
                   </b-table>
 
@@ -120,14 +128,20 @@ export default {
         { key: "from", label: "From" },
         { key: "to", label: "To" },
         { key: "amount", label: "Amount" },
-        { key: "fee", label: "Fees" },
+        { key: "fee", label: "Fee" },
         { key: "gas", label: "Gas Limit" },
         { key: "storage", label: "Storage Limit" }
+      ],
+      operationsWithHiddenTxTable: [
+        "endorsement",
+        "activate_account",
+        "double_baking_evidence",
+        "double_endorsement_evidence"
       ]
     };
   },
   computed: {
-    ...mapState('operations', {
+    ...mapState("operations", {
       counts: state => state.counts
     }),
     txhash() {
@@ -135,9 +149,9 @@ export default {
     },
     crumbs() {
       return [
-        {toRouteName: "network", text: "Home"},
-        {toRouteName: "txs", text: "Transactions page"},
-        {toRouteName: "tx", text: this.txhash}
+        { toRouteName: "network", text: "Home" },
+        { toRouteName: "txs", text: "Transactions page" },
+        { toRouteName: "tx", text: this.txhash }
       ];
     }
   },

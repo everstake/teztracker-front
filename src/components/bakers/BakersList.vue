@@ -83,7 +83,7 @@ export default {
         },
         {
           key: "stakingBalance",
-          label: "Total balance",
+          label: "Staking balance",
           sortable: true,
           sortDirection: "desc"
         },

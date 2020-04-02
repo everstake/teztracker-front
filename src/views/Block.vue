@@ -1,7 +1,7 @@
 <template>
   <PageContentContainer page-name="Block page">
     <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs"/>
+      <Breadcrumbs :crumbs="crumbs" />
     </template>
 
     <template #content>
@@ -11,7 +11,9 @@
         </b-container>
       </section>
 
-      <section>
+      <EndorsementsSlots />
+
+      <section class="mt-0">
         <b-container fluid>
           <b-row>
             <b-col lg="12">
@@ -27,7 +29,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <TxsList :block="block"/>
+                      <TxsList :block="block" />
                     </b-card-body>
                   </b-tab>
                   <b-tab title="Endorsements">
@@ -40,7 +42,19 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <EndorsementsList :block="block.level"/>
+                      <EndorsementsList :block-hash="block.hash" />
+                    </b-card-body>
+                  </b-tab>
+                  <b-tab title="Other">
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">Other operations list</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+                    <b-card-body>
+                      <BlockOtherOperationsList :block-hash="block.hash" />
                     </b-card-body>
                   </b-tab>
                 </b-tabs>
@@ -57,8 +71,10 @@
 import PageContentContainer from "../layouts/PageContentContainer";
 import Breadcrumbs from "../components/partials/Breadcrumbs";
 import BlockSingle from "../components/blocks/BlockSingle";
+import EndorsementsSlots from "../components/endorsements/EndorsementsSlots";
 import EndorsementsList from "../components/endorsements/EndorsementsList";
 import TxsList from "../components/transactions/TxsList";
+import BlockOtherOperationsList from "../components/blocks/BlockOtherOperationsList";
 
 export default {
   name: "Block",
@@ -66,8 +82,10 @@ export default {
     PageContentContainer,
     Breadcrumbs,
     BlockSingle,
+    EndorsementsSlots,
     EndorsementsList,
-    TxsList
+    TxsList,
+    BlockOtherOperationsList
   },
   data() {
     return {
@@ -80,9 +98,9 @@ export default {
     },
     crumbs() {
       return [
-        {toRouteName: "network", text: "Home"},
-        {toRouteName: "blocks", text: "Blocks page"},
-        {toRouteName: "block", text: this.level}
+        { toRouteName: "network", text: "Home" },
+        { toRouteName: "blocks", text: "Blocks page" },
+        { toRouteName: "block", text: this.level }
       ];
     }
   },
@@ -104,12 +122,11 @@ export default {
       }
       this.block = result.data.block;
     }
-  },
+  }
 };
 </script>
 
 <style lang="scss" scoped>
-
 .main-content section .card .nav-tabs {
   @include for-phone-only {
     margin: 0;

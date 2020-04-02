@@ -11,7 +11,7 @@
         </b-container>
       </section>
 
-      <section>
+      <section class="mt-0">
         <b-container fluid>
           <b-row>
             <b-col lg="12">
@@ -56,6 +56,20 @@
                       <OriginationsList :account="hash" />
                     </b-card-body>
                   </b-tab>
+
+                  <b-tab title="Endorsements">
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">Endorsements</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+
+                    <b-card-body>
+                      <EndorsementsList :is-baker="true" :account="hash"></EndorsementsList>
+                    </b-card-body>
+                  </b-tab>
                 </b-tabs>
               </b-card>
             </b-col>
@@ -73,6 +87,7 @@ import BakerSingle from "../components/bakers/BakerSingle";
 import TxsList from "../components/transactions/TxsList";
 import DelegationsList from "../components/delegations/DelegationsList";
 import OriginationsList from "../components/originations/OriginationsList";
+import EndorsementsList from "../components/endorsements/EndorsementsList";
 
 export default {
   name: "Baker",
@@ -82,7 +97,8 @@ export default {
     BakerSingle,
     TxsList,
     DelegationsList,
-    OriginationsList
+    OriginationsList,
+    EndorsementsList
   },
   computed: {
     hash() {

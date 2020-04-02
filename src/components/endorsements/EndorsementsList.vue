@@ -16,6 +16,12 @@
       borderless
       class="transactions-table table-responsive-md"
     >
+      <template slot="block" slot-scope="row">
+        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
+          {{ row.item.level | formatInteger }}
+        </b-link>
+      </template>
+
       <template slot="txhash" slot-scope="row">
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
@@ -23,10 +29,10 @@
           {{ row.item.operationGroupHash | longhash(35) }}
         </b-link>
       </template>
-
-      <template slot="block" slot-scope="row">
-        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
-          {{ row.item.level | formatInteger }}
+  
+      <template slot="blockLevel" slot-scope="row">
+        <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
+          {{ row.item.blockLevel | formatInteger }}
         </b-link>
       </template>
 
@@ -34,8 +40,18 @@
         <b-link
           :to="{ name: 'account', params: { account: row.item.delegate } }"
         >
-          {{ row.item.delegate | longhash(42) }}
+          {{ row.item.delegateName || row.item.delegate | longhash(42) }}
         </b-link>
+      </template>
+  
+      <template slot="level" slot-scope="row">
+        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
+          {{ row.item.level | formatInteger }}
+        </b-link>
+      </template>
+      
+      <template slot="slots" slot-scope="row">
+          {{ row.item.slots }}
       </template>
 
       <template slot="timestamp" slot-scope="row">
@@ -66,16 +82,12 @@ export default {
     Pagination
   },
   mixins: [handleCurrentPageChange, setPerPage],
+  props: ["blockHash", "account", "isBaker"],
   data() {
     return {
       endorsements: [],
       count: 0,
-      fields: [
-        { key: "block", label: "Endorsed Block" },
-        { key: "txhash", label: "Endorsements Hash" },
-        { key: "endorser", label: "Endorser" },
-        { key: "timestamp", label: "Timestamp" }
-      ]
+      fields: []
     };
   },
   computed: {
@@ -92,11 +104,10 @@ export default {
   watch: {
     currentPage: {
       async handler(value) {
-        await this.reload({ page: value, block: this.level });
+        await this.reload({ page: value, block: this.blockHash });
       }
     },
-    level: {
-      immediate: true,
+    blockHash: {
       async handler(value) {
         if (this.isBlockEndorsements) {
           await this.reload({ block: value });
@@ -106,7 +117,7 @@ export default {
     perPage: {
       async handler() {
         if (!this.isBlockEndorsements) {
-          await this.reload({ block: this.level });
+          await this.reload({ block: this.blockHash });
         }
       }
     }
@@ -116,23 +127,25 @@ export default {
       this.perPage = this.$constants.ENDORSEMENTS_LIMIT;
     } else {
       this.perPage = this.$constants.PER_PAGE;
-      await this.reload({ block: this.level });
+      await this.reload({ block: this.blockHash });
     }
   },
   methods: {
-    ...mapMutations('blocks', [SET_ENDORSEMENTS_COUNT]),
+    ...mapMutations("blocks", [SET_ENDORSEMENTS_COUNT]),
     async reload({ page = 1, block = 0 } = {}) {
       const props = {
         page,
         limit: this.perPage
       };
       let result;
-      if (block > 0) {
+      if (this.account) {
+        props.account_id = this.account;
+      }
+      if (this.isBlockEndorsements) {
         props.block_id = block;
         // TODO: Refactor API service
-        delete props.limit;
         delete props.page;
-        result = await this.$api.getBlockEndorsements(props);
+        result = await this.$api.getEndorsements(props);
       } else {
         result = await this.$api.getEndorsements(props);
       }
@@ -144,6 +157,27 @@ export default {
       this.count = result.count;
       this.endorsements = result.data;
       this[SET_ENDORSEMENTS_COUNT](this.count);
+
+      this.setTableFields();
+    },
+    setTableFields() {
+      if (this.isBaker) {
+        this.fields = [
+          { key: "level", label: "Endorsed Block" },
+          { key: "txhash", label: "Endorsements Hash" },
+          { key: "blockLevel", label: "Included in Block" },
+          { key: "endorser", label: "Endorser" },
+          { key: "slots", label: "Slots" },
+          { key: "timestamp", label: "Timestamp" }
+        ];
+      } else {
+        this.fields = [
+          { key: "level", label: "Endorsed Block" },
+          { key: "txhash", label: "Endorsements Hash" },
+          { key: "endorser", label: "Endorser" },
+          { key: "timestamp", label: "Timestamp" }
+        ];
+      }
     }
   }
 };

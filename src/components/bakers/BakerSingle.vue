@@ -82,8 +82,19 @@
                     {{ bakerInfo.endorsements }}
                   </b-col>
                 </b-row>
+                <b-row class="item-info">
+                  <b-col lg="4" class="label">Capacity</b-col>
+                  <b-col lg="8" class="text-accent">
+                    {{
+                      (bakerInfo.stakingCapacity -
+                        bakerInfo.stakingBalance / $constants.XTZ)
+                        | tezosCapacity
+                    }}
+                  </b-col>
+                </b-row>
               </b-col>
-              <b-col lg="6">
+
+              <b-col class="p-0 px-lg-3" lg="6">
                 <span class="text-accent">Balances</span>
 
                 <b-row class="item-info">

@@ -162,7 +162,7 @@ export default {
               },
               ticks: {
                 beginAtZero: true,
-                callback: value => `${value} XTZ`
+                callback: value => `${value < 1 ? value.toFixed(3) : value} XTZ`
               }
             }
           ]
