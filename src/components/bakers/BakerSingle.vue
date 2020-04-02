@@ -243,7 +243,7 @@ export default {
 .icon {
   display: inline-block;
   padding-left: 0.5rem;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .label {
