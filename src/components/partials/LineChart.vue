@@ -22,8 +22,6 @@ export default {
       immediate: false,
 	    handler(status) {
         if (status) {
-          console.log('this.chartData', this.chartData)
-          console.log('this.balance', this.balance)
           this.updateData();
           this.initChart();
         }
