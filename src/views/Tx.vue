@@ -157,6 +157,18 @@ export default {
     },
     getOperationKind() {
       switch (this.txInfo.kind) {
+        case 'activate_account':
+          return 'activation'
+        break;
+        case 'origination':
+          return 'origination'
+        break;
+        case 'delegation':
+          return 'delegation'
+        break;
+        case 'endorsement':
+          return 'endorsement'
+        break;
         case 'double_baking_evidence':
           return 'double baking'
         break;
