@@ -135,9 +135,11 @@ export default {
           }
         });
 
+        let currentBalance = null;
         this.data = this.data.map((item, index) => {
           const findedIndex = indexes.find(({ dataIndex }) => index === dataIndex);
-          const result = props[findedIndex.propsIndex].balance;
+          const result = findedIndex ? props[findedIndex.propsIndex].balance : currentBalance ? currentBalance : 0;
+          currentBalance = result;
 
           return {
             ...item,
