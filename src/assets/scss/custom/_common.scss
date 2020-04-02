@@ -729,6 +729,24 @@ section
   background-repeat: repeat-x;
 }
 
+.main-content section .card .card__block-nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-content section .card .card__block-prev,
+.main-content section .card .card__block-next {
+  cursor: pointer;
+}
+
+.main-content section .card .card__block-prev--disabled,
+.main-content section .card .card__block-next--disabled {
+  color: rgba(0,0,0,0.3);
+  cursor: text;
+}
+
 .main-content section .card .card-body {
   width: 100%;
   float: left;
