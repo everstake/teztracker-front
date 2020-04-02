@@ -60,6 +60,7 @@
     </b-table>
 
     <Pagination
+      v-if="!disablePagination"
       @change="$_handleCurrentPageChange"
       :total-rows="count"
       :per-page="perPage"
@@ -82,7 +83,7 @@ export default {
     Pagination
   },
   mixins: [handleCurrentPageChange, setPerPage],
-  props: ["blockHash", "account", "isBaker"],
+  props: ["blockHash", "account", "isBaker", "disablePagination"],
   data() {
     return {
       endorsements: [],
