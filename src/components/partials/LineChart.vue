@@ -22,6 +22,8 @@ export default {
       immediate: false,
 	    handler(status) {
         if (status) {
+          console.log('this.chartData', this.chartData)
+          console.log('this.balance', this.balance)
           this.updateData();
           this.initChart();
         }
@@ -33,7 +35,9 @@ export default {
       info: state => state.priceInfo
     }),
 	  isNeededDataReceived() {
-      if (this.chartData === null || !this.balance) return false;
+      if (this.chartData === null || this.balance === undefined) {
+        return false;
+      };
       return this.balance >= 0 && this.chartData.length > 0;
     }
   },
@@ -57,7 +61,6 @@ export default {
   methods: {
     updateData() {
       const props = this.updatedData.sort((a, b) => a.timestamp - b.timestamp);
-
       // handle 1 operation but without balance
       if (props.length === 1 && !props[0].balance) {
         this.data = this.data.map(operation => ({...operation, balance: 0}))
