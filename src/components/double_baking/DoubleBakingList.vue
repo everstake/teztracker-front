@@ -27,8 +27,8 @@
         </b-link>
       </template>
 
-      <template slot="age" slot-scope="row">
-        {{ row.item.timestamp | getAge }}
+      <template slot="timestamp" slot-scope="row">
+        {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
       <template slot="baker" slot-scope="row">
         <router-link
@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+  import { mapMutations, mapState } from "vuex";
 import { SET_DOUBLE_BAKING_COUNT } from "@/store/mutations.types";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
@@ -102,13 +102,13 @@ export default {
       fields: [
         { key: "level", label: "Block ID" },
         { key: "txhash", label: "Origination Hash" },
-        { key: "age", label: "Age" },
-        { key: "baker", label: "Baker" },
+        { key: "baker", label: "Accuser" },
         { key: "baker_rewards", label: "Baker rewards" },
         { key: "offender", label: "Offender" },
         { key: "denounced_level", label: "Denounced level" },
         { key: "lost_deposits", label: "Lost deposits" },
-        { key: "lost_rewards", label: "Lost rewards" }
+        { key: "lost_rewards", label: "Lost rewards" },
+        { key: "timestamp", label: "Timestamp" }
       ]
     };
   },
@@ -143,6 +143,11 @@ export default {
       this.count = data.count;
       this[SET_DOUBLE_BAKING_COUNT](this.count);
     }
+  },
+  computed: {
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
+    })
   }
 };
 </script>

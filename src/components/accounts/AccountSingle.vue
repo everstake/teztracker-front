@@ -254,9 +254,12 @@ export default {
   }
 
   .icon {
-    display: inline-block;
-    padding-left: .5rem;
-    font-size: 16px;
+    position: absolute;
+    top: 0;
+    right: -15px;
+    margin-left: 10px;
+    font-size: 12px;
+    color: #309282;
   }
   
   .card-offset {
