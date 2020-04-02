@@ -33,7 +33,9 @@ export default {
       info: state => state.priceInfo
     }),
 	  isNeededDataReceived() {
-      if (this.chartData === null || !this.balance) return false;
+      if (this.chartData === null || this.balance === undefined) {
+        return false;
+      };
       return this.balance >= 0 && this.chartData.length > 0;
     }
   },
@@ -57,24 +59,43 @@ export default {
   methods: {
     updateData() {
       const props = this.updatedData.sort((a, b) => a.timestamp - b.timestamp);
-
-      // one operation but without balance
+      // handle 1 operation but without balance
       if (props.length === 1 && !props[0].balance) {
         this.data = this.data.map(operation => ({...operation, balance: 0}))
         return;
       }
 
-      // no operations
+      // handle 0 operations
       if (props.length === 0) {
         this.data = this.data.map(operation => ({...operation, balance: (this.balance / 1000000).toFixed()}))
         return;
       }
 
+      // handle 1 operation
       if (props.length === 1) {
-        this.data = this.data.map(operation => ({...operation, balance: props[0].balance / 1000000}));
+        const operationInThisMonth = this.data.some(operation => operation.day === new Date(props[0].timestamp * 1000).toLocaleDateString("en-US"));
+        let currentBalance = operationInThisMonth ?  0 : props[0].balance / 1000000;
+
+        this.data = this.data.map(operation => {
+          const operationDay = new Date(operation.timestamp).toLocaleDateString("en-US");
+          const updatedDay = new Date(props[0].timestamp * 1000).toLocaleDateString("en-US");
+          const updatedDayIndex = this.data.findIndex(item => item.day === operationDay);
+
+          for (let i = 0; i < updatedDayIndex; i += 1) {
+            this.data[i].balance = currentBalance;
+          }
+
+          for (let i = updatedDayIndex; i < this.data.length; i += 1) {
+            if (updatedDay === operationDay) {
+              currentBalance = props[0].balance / 1000000;
+            }
+          }
+          return { ...operation, balance: currentBalance };
+        });
         return;
       }
 
+	    // handle <30 and >30 operations
       if (props.length < 30) {
         let currentBalance = props[0].balance / 1000000;
         let firstOperationDay = new Date(props[1].timestamp * 1000).toLocaleDateString("en-US");
