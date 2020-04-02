@@ -77,28 +77,16 @@ import setPerPage from "@/mixins/setPerPage";
 
 export default {
   name: "EndorsementsList",
-  props: {
-    blockHash: {
-      type: String,
-      default: ""
-    }
-  },
   components: {
     PerPageSelect,
     Pagination
   },
   mixins: [handleCurrentPageChange, setPerPage],
-  props: ["account", "isBaker"],
+  props: ["blockHash", "account", "isBaker"],
   data() {
     return {
       endorsements: [],
       count: 0,
-      fields: [
-        { key: "block", label: "Endorsed Block" },
-        { key: "txhash", label: "Endorsements Hash" },
-        { key: "endorser", label: "Endorser" },
-        { key: "timestamp", label: "Timestamp" }
-      ]
       fields: []
     };
   },
