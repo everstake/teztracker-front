@@ -7,7 +7,7 @@
             <h3>
               <span class="text">{{ title }}</span>
             </h3>
-            <span class="subtitle">{{ subtitle }}</span>
+            <span class="subtitle subtitle--capitalize">{{ subtitle }}</span>
           </div>
 
           <div class="card-divider w-100 mt-3"></div>
@@ -57,3 +57,11 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  .subtitle {
+    &--capitalize {
+      text-transform: capitalize;
+    }
+  }
+</style>
