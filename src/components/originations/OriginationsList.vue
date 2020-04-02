@@ -79,12 +79,12 @@ export default {
       originations: [],
       count: 0,
       fields: [
-        { key: "txhash", label: "Origination hash" },
         { key: "level", label: "Block ID" },
-        { key: "timestamp", label: "Timestamp" },
-        { key: "from", label: "From" },
+        { key: "txhash", label: "Origination hash" },
         { key: "to", label: "To" },
-        { key: "amount", label: "Amount" }
+        { key: "from", label: "From" },
+        { key: "amount", label: "Amount" },
+        { key: "timestamp", label: "Timestamp" }
       ]
     };
   },

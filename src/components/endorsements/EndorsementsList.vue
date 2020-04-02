@@ -16,6 +16,12 @@
       borderless
       class="transactions-table table-responsive-md"
     >
+      <template slot="block" slot-scope="row">
+        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
+          {{ row.item.level | formatInteger }}
+        </b-link>
+      </template>
+
       <template slot="txhash" slot-scope="row">
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
@@ -23,10 +29,10 @@
           {{ row.item.operationGroupHash | longhash(35) }}
         </b-link>
       </template>
-
-      <template slot="block" slot-scope="row">
-        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
-          {{ row.item.level | formatInteger }}
+  
+      <template slot="blockLevel" slot-scope="row">
+        <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
+          {{ row.item.blockLevel | formatInteger }}
         </b-link>
       </template>
 
@@ -36,6 +42,16 @@
         >
           {{ row.item.delegateName || row.item.delegate | longhash(42) }}
         </b-link>
+      </template>
+  
+      <template slot="level" slot-scope="row">
+        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
+          {{ row.item.level | formatInteger }}
+        </b-link>
+      </template>
+      
+      <template slot="slots" slot-scope="row">
+          {{ row.item.slots }}
       </template>
 
       <template slot="timestamp" slot-scope="row">
@@ -61,27 +77,17 @@ import setPerPage from "@/mixins/setPerPage";
 
 export default {
   name: "EndorsementsList",
-  props: {
-    blockHash: {
-      type: String,
-      default: ""
-    }
-  },
   components: {
     PerPageSelect,
     Pagination
   },
   mixins: [handleCurrentPageChange, setPerPage],
+  props: ["blockHash", "account", "isBaker"],
   data() {
     return {
       endorsements: [],
       count: 0,
-      fields: [
-        { key: "endorser", label: "Endorser" },
-        { key: "block", label: "Endorsed Block" },
-        { key: "timestamp", label: "Timestamp" },
-        { key: "txhash", label: "Endorsement hash" }
-      ]
+      fields: []
     };
   },
   computed: {
@@ -132,6 +138,9 @@ export default {
         limit: this.perPage
       };
       let result;
+      if (this.account) {
+        props.account_id = this.account;
+      }
       if (this.isBlockEndorsements) {
         props.block_id = block;
         // TODO: Refactor API service
@@ -148,6 +157,27 @@ export default {
       this.count = result.count;
       this.endorsements = result.data;
       this[SET_ENDORSEMENTS_COUNT](this.count);
+
+      this.setTableFields();
+    },
+    setTableFields() {
+      if (this.isBaker) {
+        this.fields = [
+          { key: "level", label: "Endorsed Block" },
+          { key: "txhash", label: "Endorsements Hash" },
+          { key: "blockLevel", label: "Included in Block" },
+          { key: "endorser", label: "Endorser" },
+          { key: "slots", label: "Slots" },
+          { key: "timestamp", label: "Timestamp" }
+        ];
+      } else {
+        this.fields = [
+          { key: "level", label: "Endorsed Block" },
+          { key: "txhash", label: "Endorsements Hash" },
+          { key: "endorser", label: "Endorser" },
+          { key: "timestamp", label: "Timestamp" }
+        ];
+      }
     }
   }
 };

@@ -550,14 +550,18 @@ li
   margin-bottom: 0;
 }
 
-.main-content section .card .card-header h3 .text {
+.main-content section .card .card-header h3 .text,
+.main-content section .card h3 .card__title--strong {
   display: inline-block;
   font-size: 16px;
   font-weight: 700;
-  line-height: 20px;
   text-overflow: ellipsis;
   overflow: hidden;
   word-break: break-all;
+}
+
+.main-content section .card h3 .card__title--strong {
+  cursor: text;
 }
 
 .main-content section .card .card-header h3 .counter {
