@@ -1,8 +1,8 @@
 <template>
-<!--  :subtitle="$t('infoTypes.txInfo')"-->
+<!--:subtitle="`${kind || 'transaction'} information`"-->
   <StatisticsCard
     :title="opHash"
-    :subtitle="`${kind || 'transaction'} information`"
+    :subtitle="$t(`infoTypes.${kind}Info`)"
     :fields="txInfoRestructured"
   >
     <template #value="slotProps">

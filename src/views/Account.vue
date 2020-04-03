@@ -10,7 +10,9 @@
           <AccountSingle :hash="hash">
             <template #chart="props">
               <h3 class="card__title account__title">
-                <span class="card__title--strong">Balance in the last 30 days</span>
+                <span class="card__title--strong">
+                  {{ $t("accPage.balInThirtyDays") }}
+                </span>
               </h3>
               <LineChart :chartData="chartData" :balance="props.balance" class="account-line-chart"></LineChart>
             </template>
@@ -73,7 +75,9 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Other operations</span>
+                          <span class="text">
+                            {{ $t("listTypes.otherOpsList") }}
+                          </span>
                         </h3>
                       </div>
                     </b-card-header>

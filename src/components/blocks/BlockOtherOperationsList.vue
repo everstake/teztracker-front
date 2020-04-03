@@ -90,7 +90,7 @@ export default {
         { key: "amount", label: this.$t("common.amount") },
         { key: "fee", label: this.$t("common.fee") },
         { key: "operationGroupHash", label: this.$t("hashTypes.opHash") },
-        { key: "kind", label: this.$t("blockOtherOpsList.opType") }
+        { key: "kind", label: this.$t("common.opType") }
       ],
       operations: [],
       count: 0,

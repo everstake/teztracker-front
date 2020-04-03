@@ -172,13 +172,13 @@ export default {
           return 'endorsement'
         break;
         case 'double_baking_evidence':
-          return 'double baking'
+          return 'dblBaking'
         break;
         case 'double_endorsement_evidence':
-          return 'double endorsement'
+          return 'dblEndorsement'
         break;
         default:
-          return 'transaction'
+          return 'tx'
       }
     }
   },

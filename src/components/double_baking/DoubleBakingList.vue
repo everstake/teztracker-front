@@ -102,8 +102,7 @@ export default {
       fields: [
         { key: "level", label: this.$t("common.blockId") },
         { key: "txhash", label: this.$t("hashTypes.opHash") },
-        // Accuser
-        { key: "baker", label: this.$tc("common.baker", 1) },
+        { key: "baker", label: this.$t("dblBakingList.accuser") },
         { key: "baker_rewards", label: this.$t("dblBakingList.bakerRewards") },
         { key: "offender", label: this.$t("dblBakingList.offender") },
         { key: "denounced_level", label: this.$t("common.denouncedLvl") },

@@ -35,7 +35,9 @@
           
           <b-row class="item-info  mr-1">
             <b-col lg="2">
-              <span class="label">Created on</span>
+              <span class="label">
+                {{ $t("accSingle.created") }}
+              </span>
             </b-col>
             <b-col lg="10">
               <span class="value">
@@ -71,7 +73,9 @@
 
           <b-row class="item-info mr-1">
             <b-col lg="2">
-              <span class="label"># of operations</span>
+              <span class="label">
+                {{ $t("numberOf.#OfOperations") }}
+              </span>
             </b-col>
             <b-col lg="10">
               <span class="value">
@@ -82,7 +86,9 @@
 
           <b-row class="item-info mr-1">
             <b-col lg="2">
-              <span class="label">Last active</span>
+              <span class="label">
+                 {{ $t("accSingle.lastActive") }}
+              </span>
             </b-col>
             <b-col lg="10">
               <span class="value">
@@ -94,7 +100,9 @@
   
           <b-row class="item-info  mr-1">
             <b-col lg="2">
-              <span class="label">Status</span>
+              <span class="label">
+                {{ $t("statusTypes.status") }}
+              </span>
             </b-col>
             <b-col lg="10">
               <span
@@ -104,61 +112,8 @@
                   'text-danger': !account.revealed
                 }"
               >
-                {{ account.revealed ? 'revealed' : 'unrevealed' }}
+                {{ account.revealed ? $t("statusTypes.revealed") : $t("statusTypes.unrevealed") }}
               </span>
-            </b-col>
-          </b-row>
-
-          <b-row class="item-info mr-1" v-if="baker">
-            <b-col lg="4">
-              <span class="value">Current Deposits</span>
-
-              <b-row class="item-info">
-                <b-col lg="6">
-                  <span class="label">Baking</span>
-                </b-col>
-                <b-col lg="6">
-                  <span class="value">{{
-                    bakerInfo.bakingDeposits | tezos
-                  }}</span>
-                </b-col>
-              </b-row>
-
-              <b-row class="item-info">
-                <b-col lg="6">
-                  <span class="label">Endorsement</span>
-                </b-col>
-                <b-col lg="6">
-                  <span class="value">{{
-                    bakerInfo.endorsementDeposits | tezos
-                  }}</span>
-                </b-col>
-              </b-row>
-            </b-col>
-            <b-col lg="8">
-              <span class="value">Pending Rewards</span>
-
-              <b-row class="item-info">
-                <b-col lg="3">
-                  <span class="label">Baking</span>
-                </b-col>
-                <b-col lg="9">
-                  <span class="value">{{
-                    bakerInfo.bakingRewards | tezos
-                  }}</span>
-                </b-col>
-              </b-row>
-
-              <b-row class="item-info">
-                <b-col lg="3">
-                  <span class="label">Endorsement</span>
-                </b-col>
-                <b-col lg="9">
-                  <span class="value">{{
-                    bakerInfo.endorsementRewards | tezos
-                  }}</span>
-                </b-col>
-              </b-row>
             </b-col>
           </b-row>
         </b-card-body>
@@ -186,8 +141,6 @@ export default {
   mixins: [convert],
   data() {
     return {
-      baker: false,
-      bakerInfo: {},
       account: {},
       balance: []
     };

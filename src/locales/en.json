@@ -28,7 +28,8 @@
     "loading": "Loading",
     "protocolAmendments": "Protocol amendments",
     "vote": "Vote",
-    "home": "Home"
+    "home": "Home",
+    "opType": "Operation type"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -79,6 +80,12 @@
   },
   "infoTypes": {
     "txInfo": "Transaction information",
+    "endorsementInfo": "Endorsement information",
+    "delegationInfo": "Delegation information",
+    "originationInfo": "Origination information",
+    "activationInfo": "Activation information",
+    "dblBakingInfo": "Double-baking information",
+    "dblEndorsementInfo": "Double-endorsement information",
     "blockInfo": "Block information",
     "bakerInfo": "Baker information",
     "accInfo": "Account information",
@@ -97,7 +104,9 @@
   "statusTypes": {
     "status": "Status",
     "success": "Success",
-    "failed": "Failed"
+    "failed": "Failed",
+    "revealed": "Revealed",
+    "unrevealed": "Unrevealed"
   },
   "numberOf": {
     "#OfDelegators": "# of delegators",
@@ -130,17 +139,20 @@
     "outOf": "out of",
     "originatedAccs": "Originated accounts"
   },
+  "accSingle": {
+    "created": "Created",
+    "lastActive": "Last active"
+  },
   "blocksList": {
     "volume": "Volume"
   },
-  "blockOtherOpsList": {
-    "opType": "Operation type"
-  },
   "endorsementsList": {
     "endorser": "Endorser",
-    "endorsedBlock": "Endorsed block"
+    "endorsedBlock": "Endorsed block",
+    "slots": "Slots"
   },
   "dblBakingList": {
+    "accuser": "Accuser",
     "age": "Age",
     "bakerRewards": "Baker rewards",
     "offender": "Offender",
@@ -230,6 +242,9 @@
     "page": "Page",
     "pageNotFound":"Page is not found",
     "smthWrong": "Something went wrong"
+  },
+  "accPage": {
+    "balInThirtyDays": "Balance in the last 30 days"
   },
   "txPage": {
     "gasLimit": "Gas limit",

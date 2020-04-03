@@ -166,11 +166,9 @@ export default {
         this.fields = [
           { key: "level", label: this.$t("endorsementsList.endorsedBlock") },
           { key: "txhash", label: this.$t("hashTypes.endorsementHash") },
-          // Translate
-          { key: "blockLevel", label: "Included in Block" },
+          { key: "blockLevel", label: this.$t("common.includedInBlock") },
           { key: "endorser", label: this.$t("endorsementsList.endorser") },
-          // Translate
-          { key: "slots", label: "Slots" },
+          { key: "slots", label: this.$t("endorsementsList.slots") },
           { key: "timestamp", label: this.$t("common.timestamp") }
         ];
       } else {
