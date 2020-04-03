@@ -76,12 +76,12 @@ export default {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
-        { key: "accountId", label: "Contract" },
-        { key: "manager", label: "Manager" },
-        { key: "delegateValue", label: "Delegate" },
+        { key: "accountId", label: this.$tc("common.contract", 1) },
+        { key: "manager", label: this.$t("common.manager") },
+        { key: "delegateValue", label: this.$t("common.delegate") },
         {
           key: "balance",
-          label: "Balance",
+          label: this.$t("common.balance"),
           sortable: true,
           sortDirection: "desc"
         },

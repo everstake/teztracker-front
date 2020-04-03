@@ -77,45 +77,45 @@ export default {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
-        { key: "accountId", label: "Baker" },
+        { key: "accountId", label: this.$tc("common.baker", 1) },
         {
           key: "stakingCapacity",
-          label: "Capacity",
+          label: this.$t("common.capacity"),
           sortable: true,
           sortDirection: "desc"
         },
         {
           key: "fee",
-          label: "Fee",
+          label: this.$t("common.fee"),
           sortable: true,
           sortDirection: "desc"
         },
         {
           key: "stakingBalance",
-          label: "Staking balance",
+          label: this.$t("common.stakingBal"),
           sortable: true,
           sortDirection: "desc"
         },
         {
           key: "rolls",
-          label: "Rolls",
+          label: this.$t("common.rolls"),
           sortable: true,
           sortDirection: "desc"
         },
         {
           key: "blocks",
-          label: "Blocks",
+          label: this.$tc("common.block", 2),
           sortable: true,
           sortDirection: "desc"
         },
         {
           key: "endorsements",
-          label: "Endorsements",
+          label: this.$tc("opTypes.endorsement", 2),
           sortable: true,
           sortDirection: "desc"
         },
-        { key: "activeDelegators", label: "# of delegators" },
-        { key: "bakingSince", label: "Baking since" }
+        { key: "activeDelegators", label: this.$t("numberOf.#OfDelegators") },
+        { key: "bakingSince", label: this.$t("common.bakingSince") }
       ]
     };
   },

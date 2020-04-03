@@ -100,15 +100,15 @@ export default {
       double_baking: [],
       count: 0,
       fields: [
-        { key: "level", label: "Block ID" },
-        { key: "txhash", label: "Origination Hash" },
-        { key: "baker", label: "Accuser" },
-        { key: "baker_rewards", label: "Baker rewards" },
-        { key: "offender", label: "Offender" },
-        { key: "denounced_level", label: "Denounced level" },
-        { key: "lost_deposits", label: "Lost deposits" },
-        { key: "lost_rewards", label: "Lost rewards" },
-        { key: "timestamp", label: "Timestamp" }
+        { key: "level", label: this.$t("common.blockId") },
+        { key: "txhash", label: this.$t("hashTypes.opHash") },
+        { key: "baker", label: this.$t("dblBakingList.accuser") },
+        { key: "baker_rewards", label: this.$t("dblBakingList.bakerRewards") },
+        { key: "offender", label: this.$t("dblBakingList.offender") },
+        { key: "denounced_level", label: this.$t("common.denouncedLvl") },
+        { key: "lost_deposits", label: this.$t("dblBakingList.lostDeposits") },
+        { key: "lost_rewards", label: this.$t("dblBakingList.lostRewards") },
+        { key: "timestamp", label: this.$t("common.timestamp") }
       ]
     };
   },

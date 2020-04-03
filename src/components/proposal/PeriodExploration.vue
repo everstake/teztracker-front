@@ -3,12 +3,26 @@
     <CardSection :fluid="true">
       <template>
         <b-row>
-          <b-col cols="12" sm="10" md="12" lg="12" xl="4" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info margin-bottom">
-            <div class="vote-card vote-card__container--height-equal vote-card-chart">
+          <b-col
+            cols="12"
+            sm="10"
+            md="12"
+            lg="12"
+            xl="4"
+            offset-cols="0"
+            offset-sm="1"
+            offset-md="0"
+            class="vote__info margin-bottom"
+          >
+            <div
+              class="vote-card vote-card__container--height-equal vote-card-chart"
+            >
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
-                  <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold font font-mini">
-                    Proposals
+                  <p
+                    class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold font font-mini"
+                  >
+                    {{ $tc("voting.proposal", 2) }}
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
@@ -16,36 +30,58 @@
                   <div class="vote-card__chart vote__chart">
                     <DoughnutChart
                       :options="{
-                        data: [proposal.ballots.yay, proposal.ballots.nay, proposal.ballots.pass],
-                        labels: ['Yay', 'Nay', 'Pass'],
+                        data: [
+                          proposal.ballots.yay,
+                          proposal.ballots.nay,
+                          proposal.ballots.pass
+                        ],
+                        labels: [
+                          $t('voting.votes.yay'),
+                          $t('voting.votes.nay'),
+                          $t('voting.votes.pass')
+                        ],
                         percents: false,
                         legend: getDoughnutLegendPosition
-                    }"
+                      }"
                       :backgroundColors="backgroundColors"
                     />
                   </div>
-                  <div class="vote-card__container--space-between vote-card__container--wrap mt-5">
                   <div
-                    v-for="(percentage, index) in getVotesPercentage"
-                    :key="generateKey()"
-                    class="vote-chart__label"
-                    :style="{
-                    color: backgroundColors[index]
-                  }"
+                    class="vote-card__container--space-between vote-card__container--wrap mt-5"
                   >
-                    {{ percentage }}%
+                    <div
+                      v-for="(percentage, index) in getVotesPercentage"
+                      :key="generateKey()"
+                      class="vote-chart__label"
+                      :style="{
+                        color: backgroundColors[index]
+                      }"
+                    >
+                      {{ percentage }}%
+                    </div>
                   </div>
-                </div>
                 </div>
               </div>
             </div>
           </b-col>
           <!--separate-->
-          <b-col cols="12" sm="10" md="12" lg="12" xl="8" offset-cols="0" offset-sm="1" offset-md="0" class="vote__info margin-bottom">
+          <b-col
+            cols="12"
+            sm="10"
+            md="12"
+            lg="12"
+            xl="8"
+            offset-cols="0"
+            offset-sm="1"
+            offset-md="0"
+            class="vote__info margin-bottom"
+          >
             <div class="vote-card vote-card__container--height-equal">
               <div class="vote-card__header">
                 <div class="vote-card__container-space-between">
-                  <p class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold">
+                  <p
+                    class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold"
+                  >
                     {{ proposal.proposal.title || proposal.proposal.hash }}
                   </p>
                 </div>
@@ -53,27 +89,36 @@
                 <div class="vote-card__recent">
                   <div>
                     <div class="vote-card__recent-name font font--mini">
-                      Hash
+                      {{ $t("hashTypes.hash") }}
                     </div>
                   </div>
-                  <div class="vote-card__recent-rolls font font--mini">{{ proposal.proposal.hash }}</div>
+                  <div class="vote-card__recent-rolls font font--mini">
+                    {{ proposal.proposal.hash }}
+                  </div>
                 </div>
                 <div class="vote-card__recent font font--mini">
                   <div>
                     <div class="vote-card__recent-name font font--mini">
-                      Proposer
+                      {{ $t("voting.proposer") }}
                     </div>
                   </div>
-                  <div class="vote-card__recent-rolls font font--mini">{{ proposal.proposal.proposer.name }}</div>
+                  <div class="vote-card__recent-rolls font font--mini">
+                    {{ proposal.proposal.proposer.name }}
+                  </div>
                 </div>
                 <div class="vote-card__recent">
                   <div>
                     <div class="vote-card__recent-name font font--mini">
-                      Proposer file
+                      {{ $t("voting.proposalFile") }}
                     </div>
                   </div>
                   <div class="vote-card__recent-rolls font font--mini">
-                    <a :href="proposal.proposal.proposalFile" class="vote-card__link vote-card__link--active" target="_blank">{{ proposal.proposal.proposalFile }}</a>
+                    <a
+                      :href="proposal.proposal.proposalFile"
+                      class="vote-card__link vote-card__link--active"
+                      target="_blank"
+                      >{{ proposal.proposal.proposalFile }}</a
+                    >
                   </div>
                 </div>
                 <b-row class="mb-3 mt-3">
@@ -81,9 +126,9 @@
                     <div class="vote-card__container-space-between">
                       <span
                         class="vote-card__percentage vote-card-supermajority"
-                        :style="{left: `${proposal.ballots.supermajority}%`}"
+                        :style="{ left: `${proposal.ballots.supermajority}%` }"
                       >
-                        Supermajority
+                        {{ $t("voting.superMajority") }}
                         {{ proposal.ballots.supermajority }}%
                       </span>
                     </div>
@@ -96,15 +141,25 @@
 
                   <b-col cols="12">
                     <div class="vote-card__container-space-between">
-                      <span class="vote-card__percentage vote-card-quorum"
-                            :style="{left: `${(proposal.ballots.quorum * 100).toFixed(2)}%`}"
+                      <span
+                        class="vote-card__percentage vote-card-quorum"
+                        :style="{
+                          left: `${(proposal.ballots.quorum * 100).toFixed(2)}%`
+                        }"
                       >
-                        Quorum
-                        {{(proposal.ballots.quorum * 100).toFixed(2)}}%
+                        {{ $t("voting.quorum") }}
+                        {{ (proposal.ballots.quorum * 100).toFixed(2) }}%
                       </span>
                     </div>
                     <b-progress
-                      :value="Number(getPercentage(proposal.voteStats.votesAvailable, proposal.voteStats.votesCast).toFixed(2))"
+                      :value="
+                        Number(
+                          getPercentage(
+                            proposal.voteStats.votesAvailable,
+                            proposal.voteStats.votesCast
+                          ).toFixed(2)
+                        )
+                      "
                       :max="100"
                       class="mb-2"
                     />
@@ -113,17 +168,22 @@
                 <div class="vote-card__recent">
                   <div>
                     <div class="vote-card__recent-name font font--mini">
-                      Percent of votes
+                      {{ $t("voting.percentOfVotes") }}
                     </div>
                   </div>
                   <div class="vote-card__recent-rolls font font--mini">
-                    {{getPercentage(proposal.voteStats.votesAvailable, proposal.voteStats.votesCast).toFixed(2)}}%
+                    {{
+                      getPercentage(
+                        proposal.voteStats.votesAvailable,
+                        proposal.voteStats.votesCast
+                      ).toFixed(2)
+                    }}%
                   </div>
                 </div>
                 <div class="vote-card__recent">
                   <div>
                     <div class="vote-card__recent-name font font--mini">
-                      Bakers vote
+                      {{ $t("voting.bakersVotes") }}
                     </div>
                   </div>
                   <div class="vote-card__recent-rolls font font--mini">
@@ -134,16 +194,33 @@
                 <div class="vote-card__recent font font--mini">
                   <div>
                     <div class="vote-card__recent-name font font--mini">
-                      Votes cast
+                      {{ $t("voting.votesCast") }}
                     </div>
                   </div>
                   <div class="vote-card__recent-rolls font font--mini">
-                    {{ proposal.voteStats.votesCast | formatInteger}}
+                    {{ proposal.voteStats.votesCast | formatInteger }}
                   </div>
                 </div>
                 <div class="vote-card__container-space-between">
-                 <span class="vote-card__percentage"><span class="vote-card__percentage-label">Period starts:</span> {{ formatToCalendarDate(proposal.period.startTime, 'DD.MM.YY') }}</span>
-                 <span class="vote-card__percentage"><span class="vote-card__percentage-label">Period ends:</span> {{ formatToCalendarDate(proposal.period.endTime, 'DD.MM.YY') }}</span>
+                  <span class="vote-card__percentage"
+                    ><span class="vote-card__percentage-label"
+                      >{{ $t("voting.periodStarts") }}:</span
+                    >
+                    {{
+                      formatToCalendarDate(
+                        proposal.period.startTime,
+                        "DD.MM.YY"
+                      )
+                    }}</span
+                  >
+                  <span class="vote-card__percentage"
+                    ><span class="vote-card__percentage-label"
+                      >{{ $t("voting.periodEnds") }}:</span
+                    >
+                    {{
+                      formatToCalendarDate(proposal.period.endTime, "DD.MM.YY")
+                    }}</span
+                  >
                 </div>
                 <b-progress
                   :value="formatToUnixTime(proposal.period.startTime)"
@@ -160,56 +237,95 @@
     <CardSection :fluid="true" class="ballots margin-bottom">
       <template>
         <b-row>
-          <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0" class="ballot__col">
+          <b-col
+            cols="12"
+            sm="10"
+            md="4"
+            offset-cols="0"
+            offset-sm="1"
+            offset-md="0"
+            class="ballot__col"
+          >
             <div class="vote-card">
               <div
                 @click="enableSorting('yay')"
-                :class="{'vote__ballot--active': sortBy === 'yay'}"
+                :class="{ 'vote__ballot--active': sortBy === 'yay' }"
                 class="vote__ballot ballot"
               >
-                <img class="ballot__icon" src="../../assets/icons/yay.svg" alt="Yay">
+                <img
+                  class="ballot__icon"
+                  src="../../assets/icons/yay.svg"
+                  alt="Yay"
+                />
                 <div class="ballot__container font font--mini">
                   <span class="vote__ballot--yay font font--mini">
-                    {{getVotesPercentage[0]}}%
-                    ({{ getVotes.yay | formatInteger }})
+                    {{ getVotesPercentage[0] }}% ({{
+                      getVotes.yay | formatInteger
+                    }})
                   </span>
-                  Yay
+                  {{ $t("voting.votes.yay") }}
                 </div>
               </div>
             </div>
           </b-col>
-          <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0" class="ballot__col">
+          <b-col
+            cols="12"
+            sm="10"
+            md="4"
+            offset-cols="0"
+            offset-sm="1"
+            offset-md="0"
+            class="ballot__col"
+          >
             <div class="vote-card">
               <div
                 @click="enableSorting('nay')"
-                :class="{'vote__ballot--active': sortBy === 'nay'}"
+                :class="{ 'vote__ballot--active': sortBy === 'nay' }"
                 class="vote__ballot ballot"
               >
-                <img class="ballot__icon" src="../../assets/icons/nay.svg" alt="Nay">
+                <img
+                  class="ballot__icon"
+                  src="../../assets/icons/nay.svg"
+                  alt="Nay"
+                />
                 <div class="ballot__container font font--mini">
                   <span class="vote__ballot--nay font font--mini">
-                    {{getVotesPercentage[1]}}%
-                    ({{ getVotes.nay | formatInteger }})
+                    {{ getVotesPercentage[1] }}% ({{
+                      getVotes.nay | formatInteger
+                    }})
                   </span>
-                  Nay
+                  {{ $t("voting.votes.nay") }}
                 </div>
               </div>
             </div>
           </b-col>
-          <b-col cols="12" sm="10" md="4" offset-cols="0" offset-sm="1" offset-md="0" class="ballot__col">
+          <b-col
+            cols="12"
+            sm="10"
+            md="4"
+            offset-cols="0"
+            offset-sm="1"
+            offset-md="0"
+            class="ballot__col"
+          >
             <div class="vote-card">
               <div
                 @click="enableSorting('pass')"
-                :class="{'vote__ballot--active': sortBy === 'pass'}"
+                :class="{ 'vote__ballot--active': sortBy === 'pass' }"
                 class="vote__ballot ballot"
               >
-                <img class="ballot__icon" src="../../assets/icons/pass.svg" alt="Pass">
+                <img
+                  class="ballot__icon"
+                  src="../../assets/icons/pass.svg"
+                  alt="Pass"
+                />
                 <div class="ballot__container font font--mini">
                   <span class="vote__ballot--pass font font--mini">
-                    {{getVotesPercentage[2]}}%
-                    ({{ getVotes.pass | formatInteger }})
+                    {{ getVotesPercentage[2] }}% ({{
+                      getVotes.pass | formatInteger
+                    }})
                   </span>
-                  Pass
+                  {{ $t("voting.votes.pass") }}
                 </div>
               </div>
             </div>
@@ -221,30 +337,30 @@
 </template>
 
 <script>
-import CardSection from '@/components/partials/CardSection';
-import uuid from '@/mixins/uuid';
+import CardSection from "@/components/partials/CardSection";
+import uuid from "@/mixins/uuid";
 import DoughnutChart from "@/components/partials/DoughnutChart";
-import moment from 'moment';
+import moment from "moment";
 import getPercentage from "@/utils/getPercentage";
 
 export default {
   name: "PeriodExploration",
-	components: {
+  components: {
     CardSection,
     DoughnutChart
   },
   props: [
     "proposal",
-    'voters',
-    'backgroundColors',
-    'sortBy',
-    'getDoughnutLegendPosition'
+    "voters",
+    "backgroundColors",
+    "sortBy",
+    "getDoughnutLegendPosition"
   ],
   mixins: [uuid],
   methods: {
     getPercentage: (...args) => getPercentage(...args),
     enableSorting(arg) {
-      this.$emit('sortTableBy', arg)
+      this.$emit("sortTableBy", arg);
     },
     formatToCalendarDate(date, format) {
       return moment(date).format(format);
@@ -253,13 +369,13 @@ export default {
       return moment(date).unix();
     },
     handleResize() {
-      this.$emit('setDoughnutLegendPosition', window.innerWidth);
+      this.$emit("setDoughnutLegendPosition", window.innerWidth);
     }
   },
   computed: {
     getVotes() {
       const { yay = 0, nay = 0, pass = 0 } = this.proposal.ballots;
-      return {yay, nay, pass}
+      return { yay, nay, pass };
     },
     getVotesPercentage() {
       const { votesAvailable } = this.proposal.voteStats;
@@ -282,11 +398,11 @@ export default {
     }
   },
   created() {
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener("resize", this.handleResize);
     this.handleResize();
   },
   destroyed() {
-    window.removeEventListener('resize', this.handleResize);
+    window.removeEventListener("resize", this.handleResize);
   }
 };
 </script>

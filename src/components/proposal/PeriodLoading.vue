@@ -8,7 +8,7 @@
           <div class="vote-card vote-card__empty margin-bottom">
             <div class="vote-card__header">
               <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered font font--regular vote__loading">
-                Loading
+                {{ $t("common.loading") }}
               </p>
             </div>
           </div>

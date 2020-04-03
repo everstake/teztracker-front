@@ -9,7 +9,7 @@
           <div class="break-word">
             <h3>
               <span class="text">
-                Block endorsements
+                {{ $t("endorsementsSlots.blockEndorsements") }}
               </span>
             </h3>
           </div>

@@ -6,9 +6,16 @@
           <b-col lg="12">
             <ol class="ml-2 tz-breadcrumbs__list">
               <li class="font font--mini tz-breadcrumbs__item">
-                <router-link :to="{ name: 'network' }" class="tz-breadcrumbs__link">Home</router-link>
+                <router-link
+                  :to="{ name: 'network' }"
+                  class="tz-breadcrumbs__link"
+                >
+                  {{ $t("common.home") }}
+                </router-link>
               </li>
-              <li class="active font font--mini tz-breadcrumbs__item">Protocol amendments</li>
+              <li class="active font font--mini tz-breadcrumbs__item">
+                {{ $t("common.protocolAmendments") }}
+              </li>
             </ol>
           </b-col>
         </b-row>
@@ -18,15 +25,10 @@
     <div v-if="loading">
       <b-container fluid>
         <b-row>
-          <b-col
-            sm="12"
-            md="6"
-            lg="4"
-            class="mb-4"
-          >
+          <b-col sm="12" md="6" lg="4" class="mb-4">
             <div class="protocol-amendment__card">
               <div class="protocol-amendment__loading font font--regular">
-                Loading
+                {{ $t("common.loading") }}
               </div>
             </div>
           </b-col>
@@ -46,7 +48,11 @@
           >
             <ProtocolAmendmentCard
               :name="protocol.title"
-              :period="protocol.period === currentPeriodId ? 'current' : 'past'"
+              :period="
+                protocol.period === currentPeriodId
+                  ? $t('protocolPeriods.current')
+                  : $t('protocolPeriods.past')
+              "
               :id="protocol.period"
               @handleClick="handleProtocolClick(protocol.period)"
             />
@@ -59,11 +65,11 @@
 
 <script>
 import ProtocolAmendmentCard from "@/components/protocol/ProtocolAmendmentCard";
-import uuid from '@/mixins/uuid';
+import uuid from "@/mixins/uuid";
 import uniqBy from "lodash/uniqBy";
 
 export default {
-  name: "Bakers",
+  name: "ProtocolAmendment",
   components: {
     ProtocolAmendmentCard
   },
@@ -84,18 +90,20 @@ export default {
         return this.$router.replace({ name: status });
       }
 
-      this.$router.push({ name: 'period', params: { id } })
+      this.$router.push({ name: "period", params: { id } });
     }
   },
   async created() {
     const protocols = await this.$api.getProposals({});
     const periods = await this.$api.getPeriods({});
-    const sortedProtocols = protocols.data.sort((a, b) => a.period < b.period ? 1 : -1);
-    const uniqProtocols = uniqBy(sortedProtocols, 'period');
+    const sortedProtocols = protocols.data.sort((a, b) =>
+      a.period < b.period ? 1 : -1
+    );
+    const uniqProtocols = uniqBy(sortedProtocols, "period");
 
     const mappedProtocols = uniqProtocols.map(protocol => {
       if (protocol.title.includes(protocol.hash.slice(0, 8))) {
-        protocol.title = protocol.title.split(' ')[0];
+        protocol.title = protocol.title.split(" ")[0];
 
         if (protocol.period === 21) {
           protocol.title = `${protocol.title} 1.0`;

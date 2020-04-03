@@ -7,9 +7,7 @@
     <div class="protocol-amendment__period font font--regular">
       {{ period }}
     </div>
-    <div
-      class="protocol-amendment__name font font--regular"
-    >
+    <div class="protocol-amendment__name font font--regular">
       {{ name }}
     </div>
   </div>

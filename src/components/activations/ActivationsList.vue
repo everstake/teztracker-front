@@ -66,10 +66,10 @@ export default {
       activations: [],
       count: 0,
       fields: [
-        { key: "level", label: "Block ID" },
-        { key: "txhash", label: "Origination Hash" },
-        { key: "to", label: "To" },
-        { key: "timestamp", label: "Timestamp" }
+        { key: "level", label: this.$t("common.blockId") },
+        { key: "txhash", label: this.$t("hashTypes.opHash") },
+        { key: "to", label: this.$t("common.to") },
+        { key: "timestamp", label: this.$t("common.timestamp") }
       ]
     };
   },
@@ -92,7 +92,7 @@ export default {
     await this.reload();
   },
   methods: {
-    ...mapMutations('operations', [SET_ACTIVATIONS_COUNT]),
+    ...mapMutations("operations", [SET_ACTIVATIONS_COUNT]),
     async reload(page = 1) {
       const props = {
         page,

@@ -8,7 +8,7 @@
           <div class="vote-card vote-card__empty margin-bottom">
             <div class="vote-card__header">
               <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered font font--regular">
-                There is no proposals on this period.
+                {{ $t("voting.emptyProposal") }}
               </p>
             </div>
           </div>

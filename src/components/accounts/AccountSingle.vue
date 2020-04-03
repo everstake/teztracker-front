@@ -6,10 +6,16 @@
           <div class="break-word">
             <h3 id="card-title" class="card__title" @click="copyToClipboard()">
               <span ref="textToCopy" class="text">{{ hash }}</span>
-              <span class="icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span>
+              <span class="icon"
+                ><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"
+              /></span>
             </h3>
-            <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
-            <div class="subtitle">Account Information</div>
+            <b-tooltip ref="tooltip" triggers="hover" target="card-title">
+              {{ $t("common.copyToClipboard") }}
+            </b-tooltip>
+            <div class="subtitle">
+              {{ $t("infoTypes.accInfo") }}
+            </div>
           </div>
         </b-card-header>
 
@@ -18,7 +24,9 @@
         <b-card-body>
           <b-row class="item-info mr-1">
             <b-col lg="2">
-              <span class="label">Manager</span>
+              <span class="label">
+                {{ $t("common.manager") }}
+              </span>
             </b-col>
             <b-col lg="10">
               <span class="value">{{ account.manager }}</span>
@@ -27,7 +35,9 @@
           
           <b-row class="item-info  mr-1">
             <b-col lg="2">
-              <span class="label">Created on</span>
+              <span class="label">
+                {{ $t("accSingle.created") }}
+              </span>
             </b-col>
             <b-col lg="10">
               <span class="value">
@@ -38,7 +48,9 @@
 
           <b-row class="item-info  mr-1">
             <b-col lg="2">
-              <span class="label">Delegate</span>
+              <span class="label">
+                {{ $t("common.delegate") }}
+              </span>
             </b-col>
             <b-col lg="10">
               <span class="value">{{ account.delegateValue || false }}</span>
@@ -47,7 +59,9 @@
 
           <b-row class="item-info  mr-1">
             <b-col lg="2">
-              <span class="label">Balance</span>
+              <span class="label">
+                {{ $t("common.balance") }}
+              </span>
             </b-col>
             <b-col lg="10">
               <span class="value">
@@ -59,7 +73,9 @@
 
           <b-row class="item-info mr-1">
             <b-col lg="2">
-              <span class="label"># of operations</span>
+              <span class="label">
+                {{ $t("numberOf.#OfOperations") }}
+              </span>
             </b-col>
             <b-col lg="10">
               <span class="value">
@@ -70,7 +86,9 @@
 
           <b-row class="item-info mr-1">
             <b-col lg="2">
-              <span class="label">Last active</span>
+              <span class="label">
+                 {{ $t("accSingle.lastActive") }}
+              </span>
             </b-col>
             <b-col lg="10">
               <span class="value">
@@ -82,7 +100,9 @@
   
           <b-row class="item-info  mr-1">
             <b-col lg="2">
-              <span class="label">Status</span>
+              <span class="label">
+                {{ $t("statusTypes.status") }}
+              </span>
             </b-col>
             <b-col lg="10">
               <span
@@ -92,61 +112,8 @@
                   'text-danger': !account.revealed
                 }"
               >
-                {{ account.revealed ? 'revealed' : 'unrevealed' }}
+                {{ account.revealed ? $t("statusTypes.revealed") : $t("statusTypes.unrevealed") }}
               </span>
-            </b-col>
-          </b-row>
-
-          <b-row class="item-info mr-1" v-if="baker">
-            <b-col lg="4">
-              <span class="value">Current Deposits</span>
-
-              <b-row class="item-info">
-                <b-col lg="6">
-                  <span class="label">Baking</span>
-                </b-col>
-                <b-col lg="6">
-                  <span class="value">{{
-                    bakerInfo.bakingDeposits | tezos
-                  }}</span>
-                </b-col>
-              </b-row>
-
-              <b-row class="item-info">
-                <b-col lg="6">
-                  <span class="label">Endorsement</span>
-                </b-col>
-                <b-col lg="6">
-                  <span class="value">{{
-                    bakerInfo.endorsementDeposits | tezos
-                  }}</span>
-                </b-col>
-              </b-row>
-            </b-col>
-            <b-col lg="8">
-              <span class="value">Pending Rewards</span>
-
-              <b-row class="item-info">
-                <b-col lg="3">
-                  <span class="label">Baking</span>
-                </b-col>
-                <b-col lg="9">
-                  <span class="value">{{
-                    bakerInfo.bakingRewards | tezos
-                  }}</span>
-                </b-col>
-              </b-row>
-
-              <b-row class="item-info">
-                <b-col lg="3">
-                  <span class="label">Endorsement</span>
-                </b-col>
-                <b-col lg="9">
-                  <span class="value">{{
-                    bakerInfo.endorsementRewards | tezos
-                  }}</span>
-                </b-col>
-              </b-row>
             </b-col>
           </b-row>
         </b-card-body>
@@ -174,8 +141,6 @@ export default {
   mixins: [convert],
   data() {
     return {
-      baker: false,
-      bakerInfo: {},
       account: {},
       balance: []
     };
@@ -198,7 +163,7 @@ export default {
     await this.reload(this.hash);
   },
   methods: {
-    ...mapActions('app', [GET_APP_INFO]),
+    ...mapActions("app", [GET_APP_INFO]),
     async reload(acc) {
       const result = await this.$api.getAccount({ account: acc });
       if (result.status !== this.$constants.STATUS_SUCCESS) {
@@ -207,12 +172,6 @@ export default {
         });
       }
       this.account = result.data;
-      if (result.data.bakerInfo) {
-        this.bakerInfo = result.data.bakerInfo;
-        this.baker = true;
-      } else {
-        this.baker = false;
-      }
     },
     copyToClipboard() {
       const selection = window.getSelection();
@@ -222,7 +181,7 @@ export default {
       selection.addRange(range);
 
       try {
-        document.execCommand('copy');
+        document.execCommand("copy");
       } catch (err) {
         selection.removeAllRanges();
       }
@@ -232,26 +191,26 @@ export default {
 </script>
 
 <style>
-  .tooltip .tooltip-inner {
-    font-size: 13px;
-  }
+.tooltip .tooltip-inner {
+  font-size: 13px;
+}
 </style>
 
 <style lang="scss" scoped>
-  .card-header .title {
-    word-break: break-word;
-  }
+.card-header .title {
+  word-break: break-word;
+}
 
-  .card__title {
-    display: inline-flex;
-    align-items: center;
-    padding-right: 0 !important; /* outweigh selector cascade from public styles */
-    cursor: pointer;
-  }
+.card__title {
+  display: inline-flex;
+  align-items: center;
+  padding-right: 0 !important; /* outweigh selector cascade from public styles */
+  cursor: pointer;
+}
 
-  .icon-primary {
-    color: $color-brand;
-  }
+.icon-primary {
+  color: $color-brand;
+}
 
   .icon {
     position: absolute;

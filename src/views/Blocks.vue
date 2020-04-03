@@ -12,7 +12,9 @@
               <b-card no-body>
                 <CardHeader>
                   <template #left-content class="text">
-                    <h4 class="tz-title--bold">Blocks list</h4>
+                    <h4 class="tz-title--bold">
+                      {{ $t("listTypes.blocksList") }}
+                    </h4>
                   </template>
                   <template #right-content class="text">
                     <Counter show-line :count="count.blocks"/>
@@ -51,8 +53,8 @@ export default {
   data() {
     return {
       crumbs: [
-        { toRouteName: "network", text: "Home" },
-        { toRouteName: "blocks", text: "Blocks Page" }
+        { toRouteName: "network", text: this.$t("common.home") },
+        { toRouteName: "blocks", text: this.$t("pageTypes.blocksPage") }
       ]
     };
   },

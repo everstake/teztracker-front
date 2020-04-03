@@ -85,12 +85,12 @@ export default {
   data() {
     return {
       fields: [
-        { key: "source", label: "From" },
-        { key: "destination", label: "To" },
-        { key: "amount", label: "Amount" },
-        { key: "fee", label: "Fee" },
-        { key: "operationGroupHash", label: "Opearation hash" },
-        { key: "kind", label: "Operation type" }
+        { key: "source", label: this.$t("common.from") },
+        { key: "destination", label: this.$t("common.to") },
+        { key: "amount", label: this.$t("common.amount") },
+        { key: "fee", label: this.$t("common.fee") },
+        { key: "operationGroupHash", label: this.$t("hashTypes.opHash") },
+        { key: "kind", label: this.$t("common.opType") }
       ],
       operations: [],
       count: 0,
@@ -102,11 +102,11 @@ export default {
         "double_endorsement_evidence"
       ],
       operationTypesMap: {
-        delegation: "Delegation",
-        origination: "Origination",
-        activate_account: "Activation",
-        double_baking_evidence: "Double baking",
-        double_endorsement_evidence: "Double endorsement"
+        delegation: this.$tc("opTypes.delegation", 1),
+        origination: this.$tc("opTypes.origination", 1),
+        activate_account: this.$tc("opTypes.activation", 1),
+        double_baking_evidence: this.$t("opTypes.doubleBaking"),
+        double_endorsement_evidence: this.$tc("opTypes.doubleEndorsement", 1)
       }
     };
   },

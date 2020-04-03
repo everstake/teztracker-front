@@ -66,10 +66,10 @@ export default {
       double_endorsement: [],
       count: 0,
       fields: [
-        { key: "level", label: "Block ID" },
-        { key: "txhash", label: "Origination Hash" },
-        { key: "denounced_level", label: "Denounced Level" },
-        { key: "timestamp", label: "Timestamp" }
+        { key: "level", label: this.$t("common.blockId") },
+        { key: "txhash", label: this.$t("hashTypes.opHash") },
+        { key: "denounced_level", label: this.$t("common.denouncedLvl") },
+        { key: "timestamp", label: this.$t("common.timestamp") },
       ]
     };
   },

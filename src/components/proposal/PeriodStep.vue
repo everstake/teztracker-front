@@ -24,7 +24,7 @@
                   }"
                   class="proposal-step__link font font--mini"
                 >
-                  {{ period }}
+                  {{ $t(`voting.periodTypes.${period}`) }}
                 </router-link>
               </li>
             </ul>

@@ -164,19 +164,19 @@ export default {
     setTableFields() {
       if (this.isBaker) {
         this.fields = [
-          { key: "level", label: "Endorsed Block" },
-          { key: "txhash", label: "Endorsements Hash" },
-          { key: "blockLevel", label: "Included in Block" },
-          { key: "endorser", label: "Endorser" },
-          { key: "slots", label: "Slots" },
-          { key: "timestamp", label: "Timestamp" }
+          { key: "level", label: this.$t("endorsementsList.endorsedBlock") },
+          { key: "txhash", label: this.$t("hashTypes.endorsementHash") },
+          { key: "blockLevel", label: this.$t("common.includedInBlock") },
+          { key: "endorser", label: this.$t("endorsementsList.endorser") },
+          { key: "slots", label: this.$t("endorsementsList.slots") },
+          { key: "timestamp", label: this.$t("common.timestamp") }
         ];
       } else {
         this.fields = [
-          { key: "level", label: "Endorsed Block" },
-          { key: "txhash", label: "Endorsements Hash" },
-          { key: "endorser", label: "Endorser" },
-          { key: "timestamp", label: "Timestamp" }
+          { key: "level", label: this.$t("endorsementsList.endorsedBlock") },
+          { key: "txhash", label: this.$t("hashTypes.endorsementHash") },
+          { key: "endorser", label: this.$t("endorsementsList.endorser") },
+          { key: "timestamp", label: this.$t("common.timestamp") },
         ];
       }
     }

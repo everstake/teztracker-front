@@ -4,10 +4,10 @@
       <Logo/>
     </div>
     <div class="footer__description">
-      <div class="copyright">© {{ currentYear }} TZ Tracker. All rights reserved.</div>
+      <div class="copyright">© {{ currentYear }} TezTracker. {{ $t("footer.allRights") }}.</div>
       <div class="contacts">
         <a href="mailto:inbox@everstake.one" class="contacts__item">
-          <i class="far fa-envelope"></i> Contact Us
+          <i class="far fa-envelope"></i> {{ $t("footer.contactUs") }}
         </a>
       </div>
     </div>

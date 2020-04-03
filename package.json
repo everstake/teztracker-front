@@ -5,12 +5,13 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "staging": "vue-cli-service build --mode staging",
-    "lint": "vue-cli-service lint",
-    "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
+    "test:e2e": "vue-cli-service test:e2e",
+    "lint": "vue-cli-service lint",
+    "i18n:report": "vue-cli-service i18n:report --src './src/**/*.?(js|vue)' --locales './src/locales/**/*.json'",
+    "lint:fix": "prettier-eslint --write \"{,!(node_modules)/**/}*.{js,jsx,vue}\"",
     "report": "vue-cli-service build --report",
-    "lint:fix": "prettier-eslint --write \"{,!(node_modules)/**/}*.{js,jsx,vue}\""
+    "staging": "vue-cli-service build --mode staging"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
@@ -33,11 +34,13 @@
     "vue": "^2.6.10",
     "vue-chartjs": "^3.5.0",
     "vue-gtag": "^1.6.2",
+    "vue-i18n": "^8.0.0",
     "vue-perfect-scrollbar": "^0.2.1",
     "vue-router": "^3.0.7",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@kazupon/vue-i18n-loader": "^0.3.0",
     "@vue/cli-plugin-babel": "^3.9.0",
     "@vue/cli-plugin-e2e-cypress": "^3.9.0",
     "@vue/cli-plugin-eslint": "^3.9.0",
@@ -55,8 +58,9 @@
     "eslint-plugin-vue": "^5.0.0",
     "prettier": "^1.19.1",
     "prettier-eslint-cli": "^5.0.0",
+    "uuid": "^7.0.1",
+    "vue-cli-plugin-i18n": "~0.6.1",
     "vue-template-compiler": "^2.6.10",
-    "webpack-bundle-analyzer": "^3.6.0",
-    "uuid": "^7.0.1"
+    "webpack-bundle-analyzer": "^3.6.0"
   }
 }

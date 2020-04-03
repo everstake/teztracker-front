@@ -67,10 +67,10 @@ export default {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
-        { key: "accountId", label: "Account" },
+        { key: "accountId", label: this.$tc("common.acc", 1) },
         {
           key: "balance",
-          label: "Amount",
+          label: this.$t("common.amount"),
           sortable: true,
           sortDirection: "desc"
         },

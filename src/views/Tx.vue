@@ -30,7 +30,9 @@
                 <b-card-header>
                   <div class="break-word">
                     <h3>
-                      <span class="text">Transactions list</span>
+                      <span class="text">
+                        {{ $t("listTypes.txsList") }}
+                      </span>
                     </h3>
                   </div>
                 </b-card-header>
@@ -126,12 +128,12 @@ export default {
       txInfo: {},
       count: 0,
       fields: [
-        { key: "from", label: "From" },
-        { key: "to", label: "To" },
-        { key: "amount", label: "Amount" },
-        { key: "fee", label: "Fee" },
-        { key: "gas", label: "Gas Limit" },
-        { key: "storage", label: "Storage Limit" }
+        { key: "from", label: this.$t("common.from") },
+        { key: "to", label: this.$t("common.to") },
+        { key: "amount", label: this.$t("common.amount") },
+        { key: "fee", label: this.$t("common.fee") },
+        { key: "gas", label: this.$t("txPage.gasLimit") },
+        { key: "storage", label: this.$t("txPage.storageLimit") }
       ],
       operationsWithHiddenTxTable: [
         "endorsement",
@@ -150,8 +152,8 @@ export default {
     },
     crumbs() {
       return [
-        { toRouteName: "network", text: "Home" },
-        { toRouteName: "txs", text: "Transactions page" },
+        { toRouteName: "network", text: this.$t("common.home") },
+        { toRouteName: "txs", text: this.$t("pageTypes.txsPage") },
         { toRouteName: "tx", text: this.txhash }
       ];
     },
@@ -170,13 +172,13 @@ export default {
           return 'endorsement'
         break;
         case 'double_baking_evidence':
-          return 'double baking'
+          return 'dblBaking'
         break;
         case 'double_endorsement_evidence':
-          return 'double endorsement'
+          return 'dblEndorsement'
         break;
         default:
-          return 'transaction'
+          return 'tx'
       }
     }
   },

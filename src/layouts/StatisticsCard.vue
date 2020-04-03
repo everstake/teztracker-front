@@ -9,7 +9,7 @@
               <span class="icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span>
             </h3>
             <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
-            <div class="subtitle subtitle--capitalize">{{ subtitle }}</div>
+            <div class="subtitle">{{ subtitle }}</div>
           </div>
 
           <div class="card-divider w-100 mt-3"></div>

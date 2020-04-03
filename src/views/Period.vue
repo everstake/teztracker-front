@@ -1,12 +1,17 @@
 <template>
   <div class="main-content vote-content">
     <!-- Breadcrumbs start -->
-    <PeriodBreadcrumbs :currentPeriodType="currentPeriodType" :loading="loading" />
+    <PeriodBreadcrumbs
+      :currentPeriodType="currentPeriodType"
+      :loading="loading"
+    />
     <!-- Breadcrumbs end -->
 
     <!-- Period Steps start -->
     <PeriodStep
-      :shownCondition="currentPeriodType === 'proposal' && proposals.length === 0"
+      :shownCondition="
+        currentPeriodType === 'proposal' && proposals.length === 0
+      "
       :periodTypes="periodTypes"
       :currentPeriodType="proposal.period.periodType"
       :currentPeriodId="proposal.period.id"
@@ -16,8 +21,19 @@
     <!-- Period Steps end -->
 
     <PeriodLoading v-if="loading" />
-    <EmptyProposal v-else-if="!loading && currentPeriodType === 'proposal' && proposals.length === 0" />
-    <PeriodNotFound v-else-if="!loading && (proposal.period.periodType === '' || isNaN(Number($route.params.id)) || typeof(Number($route.params.id)) !== 'number')" />
+    <EmptyProposal
+      v-else-if="
+        !loading && currentPeriodType === 'proposal' && proposals.length === 0
+      "
+    />
+    <PeriodNotFound
+      v-else-if="
+        !loading &&
+          (proposal.period.periodType === '' ||
+            isNaN(Number($route.params.id)) ||
+            typeof Number($route.params.id) !== 'number')
+      "
+    />
     <div v-else>
       <!-- Proposal period start -->
       <PeriodProposal
@@ -75,17 +91,20 @@
       <PeriodTable
         v-if="currentPeriodType === 'proposal' && proposals.length > 0"
         :voters="voters"
-        :nonVoters='nonVoters'
-        :votersFields='votersFields'
+        :nonVoters="nonVoters"
+        :votersFields="votersFields"
         :nonVotersFields="nonVotersFields"
         @onShowClick="handleShowClick"
       />
 
       <PeriodTable
-        v-if="currentPeriodType === 'exploration' || currentPeriodType === 'promotion'"
+        v-if="
+          currentPeriodType === 'exploration' ||
+            currentPeriodType === 'promotion'
+        "
         :voters="filteredVoters"
-        :nonVoters='nonVoters'
-        :votersFields='ballotFields'
+        :nonVoters="nonVoters"
+        :votersFields="ballotFields"
         :nonVotersFields="nonVotersFields"
         @onShowClick="handleShowClick"
       />
@@ -96,18 +115,23 @@
 
 <script>
 import PeriodStep from "@/components/proposal/PeriodStep";
-import uuid from '@/mixins/uuid';
-import PeriodProposal from '@/components/proposal/PeriodProposal';
-import PeriodExploration from '@/components/proposal/PeriodExploration';
-import PeriodTesting from '@/components/proposal/PeriodTesting';
-import PeriodBreadcrumbs from '@/components/proposal/PeriodBreadcrumbs';
+import uuid from "@/mixins/uuid";
+import PeriodProposal from "@/components/proposal/PeriodProposal";
+import PeriodExploration from "@/components/proposal/PeriodExploration";
+import PeriodTesting from "@/components/proposal/PeriodTesting";
+import PeriodBreadcrumbs from "@/components/proposal/PeriodBreadcrumbs";
 import PeriodTable from "@/components/proposal/PeriodTable";
 import PeriodLoading from "@/components/proposal/PeriodLoading";
 import EmptyProposal from "@/components/proposal/EmptyProposal";
 import PeriodNotFound from "@/components/proposal/PeriodNotFound";
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 import {
-  GET_PERIODS, GET_PROPOSAL_PERIOD, GET_PROPOSALS, GET_VOTERS, GET_NON_VOTERS, GET_BALLOTS
+  GET_PERIODS,
+  GET_PROPOSAL_PERIOD,
+  GET_PROPOSALS,
+  GET_VOTERS,
+  GET_NON_VOTERS,
+  GET_BALLOTS
 } from "@/store/actions.types";
 
 export default {
@@ -125,26 +149,26 @@ export default {
   },
   data() {
     return {
-      periodTypes: ['proposal', 'exploration', 'testing', 'promotion'],
+      periodTypes: ["proposal", "exploration", "testing", "promotion"],
       votersFields: [
-        { key: "pkh", label: "Baker" },
-        { key: "rolls", label: "Number of voters" },
-        { key: "proposal", label: "Vote" },
-        { key: "blockLevel", label: "Block" },
-        { key: "timestamp", label: "Timestamp" },
-        { key: "operation", label: "Vote hash" }
+        { key: "pkh", label: this.$tc("common.baker", 1) },
+        { key: "rolls", label: this.$t("numberOf.#OfVotes") },
+        { key: "proposal", label: this.$t("common.vote") },
+        { key: "blockLevel", label: this.$tc("common.block", 1) },
+        { key: "timestamp", label: this.$t("common.timestamp") },
+        { key: "operation", label: this.$t("hashTypes.voteHash") }
       ],
       nonVotersFields: [
-        { key: "pkh", label: "Baker" },
-        { key: "rolls", label: "Number of voters" }
+        { key: "pkh", label: this.$tc("common.baker", 1) },
+        { key: "rolls", label: this.$t("numberOf.#OfVotes") }
       ],
       ballotFields: [
-        { key: "pkh", label: "Baker" },
-        { key: "rolls", label: "Number of voters" },
-        { key: "decision", label: "Vote" },
-        { key: "blockLevel", label: "Block" },
-        { key: "timestamp", label: "Timestamp" },
-        { key: "operation", label: "Vote hash" }
+        { key: "pkh", label: this.$tc("common.baker", 1) },
+        { key: "rolls", label: this.$t("numberOf.#OfVotes") },
+        { key: "decision", label: this.$t("common.vote") },
+        { key: "blockLevel", label: this.$tc("common.block", 1) },
+        { key: "timestamp", label: this.$t("common.timestamp") },
+        { key: "operation", label: this.$t("hashTypes.voteHash") }
       ],
       backgroundColors: {
         proposal: ["#309282", "#9ea0a5"],
@@ -159,7 +183,14 @@ export default {
   },
   mixins: [uuid],
   methods: {
-    ...mapActions('period', [GET_PROPOSAL_PERIOD, GET_PERIODS, GET_PROPOSALS, GET_VOTERS, GET_NON_VOTERS, GET_BALLOTS]),
+    ...mapActions("period", [
+      GET_PROPOSAL_PERIOD,
+      GET_PERIODS,
+      GET_PROPOSALS,
+      GET_VOTERS,
+      GET_NON_VOTERS,
+      GET_BALLOTS
+    ]),
     async enableTableSort(arg) {
       if (arg === this.filterTable) {
         this.filterTable = false;
@@ -170,18 +201,18 @@ export default {
     },
     handleShowClick({ type, limit }) {
       this.filterTable = false;
-      if (type === 'voters') {
+      if (type === "voters") {
         switch (this.currentPeriodType) {
-          case 'proposal':
+          case "proposal":
             this.fetchVoters(this.proposal.period.id, limit);
             break;
-          case 'exploration':
-          case 'promotion':
+          case "exploration":
+          case "promotion":
             this.fetchBallots(this.proposal.period.id, limit);
         }
       }
 
-      if (type === 'nonVoters') {
+      if (type === "nonVoters") {
         let nonVotersLimit = limit >= 300 ? 300 : limit;
         this.fetchNonVoters(this.proposal.period.id, nonVotersLimit);
       }
@@ -209,7 +240,7 @@ export default {
     }
   },
   computed: {
-    ...mapState('period', {
+    ...mapState("period", {
       votersCount: state => state.counts.voters,
       proposal: state => state.period,
       periods: state => state.periods,
@@ -218,16 +249,16 @@ export default {
       nonVoters: state => state.nonVoters
     }),
     filteredVoters() {
-      if (this.filterTable === 'yay') {
-        return this.voters.filter(voter => voter.decision === 'yay');
+      if (this.filterTable === "yay") {
+        return this.voters.filter(voter => voter.decision === "yay");
       }
 
-      if (this.filterTable === 'nay') {
-        return this.voters.filter(voter => voter.decision === 'nay');
+      if (this.filterTable === "nay") {
+        return this.voters.filter(voter => voter.decision === "nay");
       }
 
-      if (this.filterTable === 'pass') {
-        return this.voters.filter(voter => voter.decision === 'pass');
+      if (this.filterTable === "pass") {
+        return this.voters.filter(voter => voter.decision === "pass");
       }
 
       return this.voters;
@@ -238,26 +269,45 @@ export default {
     getPeriodStepsLinks() {
       const currentPeriodId = this.proposal.period.id;
       const currentPeriodType = this.proposal.period.periodType;
-      const currentPeriodIndex = this.periods.findIndex(period => period.id === currentPeriodId);
-      const currentPeriodTypeIndex = this.periodTypes.findIndex(period => period === currentPeriodType);
+      const currentPeriodIndex = this.periods.findIndex(
+        period => period.id === currentPeriodId
+      );
+      const currentPeriodTypeIndex = this.periodTypes.findIndex(
+        period => period === currentPeriodType
+      );
       let tempResult = [];
       const result = [];
 
       switch (currentPeriodTypeIndex) {
         case 0:
-          tempResult = this.periods.slice(currentPeriodIndex, currentPeriodIndex + 4);
+          tempResult = this.periods.slice(
+            currentPeriodIndex,
+            currentPeriodIndex + 4
+          );
           break;
         case 1:
-          tempResult = this.periods.slice(currentPeriodIndex - 1, currentPeriodIndex + 3);
+          tempResult = this.periods.slice(
+            currentPeriodIndex - 1,
+            currentPeriodIndex + 3
+          );
           break;
         case 2:
-          tempResult = this.periods.slice(currentPeriodIndex - 2, currentPeriodIndex + 2);
+          tempResult = this.periods.slice(
+            currentPeriodIndex - 2,
+            currentPeriodIndex + 2
+          );
           break;
         case 3:
-          tempResult = this.periods.slice(currentPeriodIndex - 3, currentPeriodIndex + 1);
+          tempResult = this.periods.slice(
+            currentPeriodIndex - 3,
+            currentPeriodIndex + 1
+          );
           break;
         case 4:
-          tempResult = this.periods.slice(currentPeriodIndex - 4, currentPeriodIndex);
+          tempResult = this.periods.slice(
+            currentPeriodIndex - 4,
+            currentPeriodIndex
+          );
           break;
         default:
           [null, null, null, null];
@@ -275,22 +325,22 @@ export default {
     },
     getDoughnutLegendPosition() {
       if (this.window.width <= 480) {
-        return { position: 'bottom', align: 'center' };
+        return { position: "bottom", align: "center" };
       }
 
       if (this.window.width >= 481 && this.window.width <= 767) {
-        return { position: 'bottom', align: 'center' };
+        return { position: "bottom", align: "center" };
       }
 
       if (this.window.width >= 768 && this.window.width <= 1024) {
-        return { position: 'bottom', align: 'center' };
+        return { position: "bottom", align: "center" };
       }
 
       if (this.window.width >= 1025 && this.window.width <= 1199) {
-        return { position: 'bottom', align: 'center' }
+        return { position: "bottom", align: "center" };
       }
 
-      return { position: 'bottom', align: 'center' };
+      return { position: "bottom", align: "center" };
     }
   },
   async created() {
@@ -300,13 +350,13 @@ export default {
     await this.fetchPeriods(id);
 
     switch (this.currentPeriodType) {
-      case 'proposal':
+      case "proposal":
         await this.fetchProposals(id);
         await this.fetchVoters(id);
         await this.fetchNonVoters(id);
         break;
-      case 'exploration':
-      case 'promotion':
+      case "exploration":
+      case "promotion":
         await this.fetchNonVoters(id);
         await this.fetchBallots(id);
         break;

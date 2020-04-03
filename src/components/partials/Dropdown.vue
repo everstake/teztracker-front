@@ -5,11 +5,11 @@
       <font-awesome-icon icon="angle-down" class="ml-1"/>
     </template>
 
-    <b-dropdown-item-button @click="selectItem('This month')">
-      This month
+    <b-dropdown-item-button @click="selectItem($t('aggregateBy.month'))">
+      {{ $t("aggregateBy.month") }}
     </b-dropdown-item-button>
-    <b-dropdown-item-button @click="selectItem('This year')">
-      This year
+    <b-dropdown-item-button @click="selectItem($t('aggregateBy.year'))">
+      T{{ $t("aggregateBy.year") }}
     </b-dropdown-item-button>
   </b-dropdown>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <PageContentContainer page-name="Vote page">
+  <PageContentContainer>
     <template #breadcrumbs>
       <Breadcrumbs :crumbs="crumbs" />
     </template>
@@ -9,24 +9,30 @@
         <b-container fluid>
           <StatisticsCard
             :title="voteHash"
-            subtitle="Vote information"
+            :subtitle="$t('infoTypes.voteInfo')"
             :fields="voteInfoRestructured"
           >
             <template #value="slotProps">
-              <template v-if="slotProps.field.key === 'Timestamp'">
+              <template v-if="slotProps.field.key === $t('common.timestamp')">
                 {{ slotProps.field.value | timeformat(dateFormat) }}
               </template>
-              <template v-else-if="slotProps.field.key === 'Source'">
+              <template v-else-if="slotProps.field.key === $t('votePage.source')">
                 <router-link
-                  :to="{ name: 'account', params: { account: slotProps.field.value } }"
+                  :to="{
+                    name: 'account',
+                    params: { account: slotProps.field.value }
+                  }"
                   class="baker"
                 >
                   {{ slotProps.field.value }}
                 </router-link>
               </template>
-              <template v-else-if="slotProps.field.key === 'Included in block'">
+              <template v-else-if="slotProps.field.key === $t('common.includedInBlock')">
                 <router-link
-                  :to="{ name: 'block', params: { level: slotProps.field.value } }"
+                  :to="{
+                    name: 'block',
+                    params: { level: slotProps.field.value }
+                  }"
                   class="baker"
                 >
                   {{ slotProps.field.value }}
@@ -58,14 +64,14 @@ export default {
       voteInfo: {},
       // Map voteInfo keys with formatted ones
       voteInfoKeysMap: {
-        blockHash: "Hash",
-        ballot: "Vote",
-        blockLevel: "Included in block",
-        kind: "Kind",
-        operationGroupHash: "Operation hash",
-        proposal: "Proposal",
-        source: "Source",
-        timestamp: "Timestamp"
+        blockHash: this.$t("hashTypes.hash"),
+        ballot: this.$t("common.vote"),
+        blockLevel: this.$t("common.includedInBlock"),
+        kind: this.$t("votePage.kind"),
+        operationGroupHash: this.$t("hashTypes.opHash"),
+        proposal: this.$tc("voting.proposal", 1),
+        source: this.$t("votePage.source"),
+        timestamp: this.$t("common.timestamp")
       },
       crumbs: []
     };
@@ -122,13 +128,18 @@ export default {
     next(vm => {
       if (from.params.id) {
         vm.crumbs = [
-          { toRouteName: "network", text: "Home" },
-          { toRouteName: from.name, text: from.name, params: { id: from.params.id } },
+          { toRouteName: "network", text: vm.$t("common.home") },
+          {
+            toRouteName: from.name,
+            text:
+              from.name[0].toUpperCase() + from.name.slice(1) + " " + from.params.id,
+            params: { id: from.params.id }
+          },
           { toRouteName: "vote", text: vm.voteHash }
         ];
       } else {
         vm.crumbs = [
-          { toRouteName: "network", text: "Home" },
+          { toRouteName: "network", text: vm.$t("common.home") },
           { toRouteName: "vote", text: vm.voteHash }
         ];
       }

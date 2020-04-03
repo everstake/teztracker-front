@@ -10,7 +10,9 @@
           <AccountSingle :hash="hash">
             <template #chart="props">
               <h3 class="card__title account__title">
-                <span class="card__title--strong">Balance in the last 30 days</span>
+                <span class="card__title--strong">
+                  {{ $t("accPage.balInThirtyDays") }}
+                </span>
               </h3>
               <LineChart :chartData="chartData" :balance="props.balance" class="account-line-chart"></LineChart>
             </template>
@@ -28,46 +30,54 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Transactions list</span>
+                          <span class="text">
+                            {{ $t("listTypes.txsList") }}
+                          </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <TxsList @onTransactions="setChartData" :account="hash"/>
+                      <TxsList @onTransactions="setChartData" :account="hash" />
                     </b-card-body>
                   </b-tab>
                   <b-tab title="Delegations">
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Delegations</span>
+                          <span class="text">
+                            {{ $t("listTypes.delegationsList") }}
+                          </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <DelegationsList :account="hash"/>
+                      <DelegationsList :account="hash" />
                     </b-card-body>
                   </b-tab>
                   <b-tab title="Originations">
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Originations</span>
+                          <span class="text">
+                            {{ $t("listTypes.originationsList") }}
+                          </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <OriginationsList :account="hash"/>
+                      <OriginationsList :account="hash" />
                     </b-card-body>
                   </b-tab>
                   <b-tab title="Other">
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Other operations</span>
+                          <span class="text">
+                            {{ $t("listTypes.otherOpsList") }}
+                          </span>
                         </h3>
                       </div>
                     </b-card-header>
@@ -133,9 +143,9 @@ export default {
     },
     crumbs() {
       return [
-        {toRouteName: "network", text: "Home"},
-        {toRouteName: "accounts", text: "Accounts page"},
-        {toRouteName: "account", text: this.hash}
+        { toRouteName: "network", text: this.$t("common.home") },
+        { toRouteName: "accounts", text: this.$t("pageTypes.accsPage") },
+        { toRouteName: "account", text: this.hash }
       ];
     }
   }
