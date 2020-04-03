@@ -66,10 +66,10 @@ export default {
       activations: [],
       count: 0,
       fields: [
-        { key: "txhash", label: this.$t("hashTypes.opHash") },
         { key: "level", label: this.$t("common.blockId") },
-        { key: "timestamp", label: this.$t("common.timestamp") },
-        { key: "to", label: this.$t("common.to") }
+        { key: "txhash", label: this.$t("hashTypes.opHash") },
+        { key: "to", label: this.$t("common.to") },
+        { key: "timestamp", label: this.$t("common.timestamp") }
       ]
     };
   },

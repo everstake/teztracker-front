@@ -21,13 +21,25 @@
         </b-link>
       </template>
       <template slot="manager" slot-scope="row">
-        <span>{{ row.item.manager | longhash(35) }}</span>
+  
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.accountId } }"
+        >
+          <span>{{ row.item.manager | longhash(35) }}</span>
+        </b-link>
       </template>
       <template slot="delegateValue" slot-scope="row">
-        <span>{{ row.item.delegateValue | longhash(20) }}</span>
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.accountId } }"
+        >
+          <span>{{ row.item.delegateValue | longhash(35) }}</span>
+        </b-link>
       </template>
       <template slot="balance" slot-scope="row">
         <span>{{ row.item.balance | tezos }}</span>
+      </template>
+      <template slot="createdAt" slot-scope="row">
+        <span>{{ row.item.createdAt | timeformat(dateFormat) }}</span>
       </template>
     </b-table>
 
@@ -49,7 +61,7 @@ import withCustomAction from "../partials/withCustomAction";
 const PaginationWithCustomAction = withCustomAction(
   Pagination,
   "accounts",
-  "GET_CONTRACTS"
+  "GET_CONTRACTS",
 );
 
 export default {
@@ -59,6 +71,7 @@ export default {
     PaginationWithCustomAction
   },
   mixins: [setPerPage],
+  props: ['account'],
   data() {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
@@ -71,7 +84,8 @@ export default {
           label: this.$t("common.balance"),
           sortable: true,
           sortDirection: "desc"
-        }
+        },
+        { key: "createdAt", label: "Created" }
       ]
     };
   },
@@ -79,6 +93,9 @@ export default {
     ...mapState("accounts", {
       contracts: state => state.contracts,
       count: state => state.counts
+    }),
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
     })
   }
 };

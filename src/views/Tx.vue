@@ -14,6 +14,7 @@
             :level="txInfo.blockLevel"
             :fee="txInfo.fee"
             :status="txInfo.status"
+            :kind="getOperationKind"
           />
         </b-container>
       </section>
@@ -155,6 +156,30 @@ export default {
         { toRouteName: "txs", text: this.$t("pageTypes.txsPage") },
         { toRouteName: "tx", text: this.txhash }
       ];
+    },
+    getOperationKind() {
+      switch (this.txInfo.kind) {
+        case 'activate_account':
+          return 'activation'
+        break;
+        case 'origination':
+          return 'origination'
+        break;
+        case 'delegation':
+          return 'delegation'
+        break;
+        case 'endorsement':
+          return 'endorsement'
+        break;
+        case 'double_baking_evidence':
+          return 'double baking'
+        break;
+        case 'double_endorsement_evidence':
+          return 'double endorsement'
+        break;
+        default:
+          return 'transaction'
+      }
     }
   },
   async created() {

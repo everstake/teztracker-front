@@ -35,7 +35,9 @@ import {
   faAngleRight,
   faAngleDoubleLeft,
   faAngleDoubleRight,
-  faCog
+  faCog,
+  faChevronLeft,
+  faChevronRight
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faLightbulb,
@@ -85,7 +87,9 @@ library.add(
   faAngleRight,
   faAngleDoubleLeft,
   faAngleDoubleRight,
-  faCog
+  faCog,
+  faChevronLeft,
+  faChevronRight
 );
 library.add(
   faLightbulb,

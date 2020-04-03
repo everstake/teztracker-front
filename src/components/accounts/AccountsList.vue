@@ -23,6 +23,16 @@
       <template slot="balance" slot-scope="row">
         <span>{{ row.item.balance | tezos }}</span>
       </template>
+      <template slot="createdAt" slot-scope="row">
+        <span>{{ row.item.createdAt | timeformat(dateFormat) }}</span>
+      </template>
+      <template v-if="row.item.delegateValue" slot="delegateValue" slot-scope="row">
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.accountId } }"
+        >
+          <span>{{ row.item.delegateValue | longhash(35) }}</span>
+        </b-link>
+      </template>
     </b-table>
 
     <div class="pagination-block">
@@ -63,7 +73,9 @@ export default {
           label: this.$t("common.amount"),
           sortable: true,
           sortDirection: "desc"
-        }
+        },
+        { key: "delegateValue", label: "Delegate" },
+        { key: "createdAt", label: "Created" }
       ]
     };
   },
@@ -71,6 +83,9 @@ export default {
     ...mapState("accounts", {
       accounts: state => state.accounts,
       count: state => state.counts
+    }),
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
     })
   }
 };

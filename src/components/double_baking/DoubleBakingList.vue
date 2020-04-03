@@ -27,8 +27,8 @@
         </b-link>
       </template>
 
-      <template slot="age" slot-scope="row">
-        {{ row.item.timestamp | getAge }}
+      <template slot="timestamp" slot-scope="row">
+        {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
       <template slot="baker" slot-scope="row">
         <router-link
@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+  import { mapMutations, mapState } from "vuex";
 import { SET_DOUBLE_BAKING_COUNT } from "@/store/mutations.types";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
@@ -100,15 +100,16 @@ export default {
       double_baking: [],
       count: 0,
       fields: [
-        { key: "txhash", label: this.$t("hashTypes.opHash") },
         { key: "level", label: this.$t("common.blockId") },
-        { key: "age", label: this.$t("dblBakingList.age") },
+        { key: "txhash", label: this.$t("hashTypes.opHash") },
+        // Accuser
         { key: "baker", label: this.$tc("common.baker", 1) },
         { key: "baker_rewards", label: this.$t("dblBakingList.bakerRewards") },
         { key: "offender", label: this.$t("dblBakingList.offender") },
         { key: "denounced_level", label: this.$t("common.denouncedLvl") },
         { key: "lost_deposits", label: this.$t("dblBakingList.lostDeposits") },
-        { key: "lost_rewards", label: this.$t("dblBakingList.lostRewards") }
+        { key: "lost_rewards", label: this.$t("dblBakingList.lostRewards") },
+        { key: "timestamp", label: this.$t("common.timestamp") }
       ]
     };
   },
@@ -143,6 +144,11 @@ export default {
       this.count = data.count;
       this[SET_DOUBLE_BAKING_COUNT](this.count);
     }
+  },
+  computed: {
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
+    })
   }
 };
 </script>

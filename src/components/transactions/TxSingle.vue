@@ -1,7 +1,8 @@
 <template>
+<!--  :subtitle="$t('infoTypes.txInfo')"-->
   <StatisticsCard
     :title="opHash"
-    :subtitle="$t('infoTypes.txInfo')"
+    :subtitle="`${kind || 'transaction'} information`"
     :fields="txInfoRestructured"
   >
     <template #value="slotProps">
@@ -41,7 +42,7 @@ import convert from "../../mixins/convert";
 
 export default {
   name: "TxSingle",
-  props: ["timestamp", "opHash", "level", "fee", "status"],
+  props: ["timestamp", "opHash", "level", "fee", "status", "kind"],
   mixins: [convert],
   components: {
     StatisticsCard

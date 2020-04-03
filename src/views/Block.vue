@@ -46,7 +46,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <EndorsementsList :block-hash="block.hash" />
+                      <EndorsementsList :disable-pagination="true" :block-hash="block.hash" />
                     </b-card-body>
                   </b-tab>
                   <b-tab title="Other">

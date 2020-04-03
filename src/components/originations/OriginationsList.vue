@@ -79,12 +79,12 @@ export default {
       originations: [],
       count: 0,
       fields: [
-        { key: "txhash", label: this.$t("hashTypes.originationHash") },
         { key: "level", label: this.$t("common.blockId") },
-        { key: "timestamp", label: this.$t("common.timestamp") },
+        { key: "txhash", label: this.$t("hashTypes.originationHash") },
         { key: "from", label: this.$t("common.from") },
         { key: "to", label: this.$t("common.to") },
-        { key: "amount", label: this.$t("common.amount") }
+        { key: "amount", label: this.$t("common.amount") },
+        { key: "timestamp", label: this.$t("common.timestamp") },
       ]
     };
   },

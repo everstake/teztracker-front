@@ -43,6 +43,13 @@ const TzAPI = {
     const { account } = opts;
     return get(this.API_URL(), `accounts/${account}`, opts);
   },
+  getAccountBalance(opts = {}) {
+    const { account } = opts;
+    return get(this.API_URL(), `accounts/balances/${account}`, {
+      from: opts.from,
+      to: opts.to
+    }, false);
+  },
   getContracts(opts = {}) {
     return get(this.API_URL(), "contracts", opts);
   },
@@ -70,6 +77,9 @@ const TzAPI = {
       operation_kind: "delegation",
       ...opts
     });
+  },
+  getOperations(opts = {}) {
+    return get(this.API_URL(), "operations", opts, false);
   },
   getOriginations(opts = {}) {
     return get(this.API_URL(), "operations", {

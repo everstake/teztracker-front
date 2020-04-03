@@ -4,11 +4,10 @@
       <b-card no-body>
         <b-card-header>
           <h3
-            v-if="Object.keys(bakerInfo).length !== 0"
             id="card-title"
             class="card__title"
           >
-            <span class="text">
+            <span class="text card-title__text">
               <template v-if="bakerInfo.name">
                 {{ bakerInfo.name }}
               </template>
@@ -53,7 +52,7 @@
                     </b-tooltip>
                   </b-col>
                 </b-row>
-                <b-row class="item-info">
+                <b-row class="item-info" v-if="bakerInfo.name">
                   <b-col lg="4" class="label">
                     {{ $t("common.fee") }}
                   </b-col>
@@ -275,7 +274,6 @@ export default {
   display: inline-flex;
   align-items: center;
   padding-right: 0 !important; /* outweigh selector cascade from public styles */
-  cursor: pointer;
 }
 
 .icon-primary {
@@ -285,7 +283,7 @@ export default {
 .icon {
   display: inline-block;
   padding-left: 0.5rem;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .label {
