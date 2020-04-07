@@ -1,3 +1,274 @@
 {
-  "message": "привет i18n !!"
+  "common": {
+    "copyToClipboard": "Copy to clipboard",
+    "stakingBal": "Staking balance",
+    "balance": "Balance",
+    "rolls": "Rolls",
+    "bakingSince": "Baking since",
+    "baker": "Baker | Bakers",
+    "capacity": "Capacity",
+    "fee": "Fee",
+    "block": "Block | Blocks",
+    "from": "From",
+    "to": "To",
+    "amount": "Amount",
+    "timestamp": "Timestamp",
+    "cycle": "Cycle | Cycles",
+    "blockId": "Block id",
+    "priority": "Priority",
+    "denouncedLvl": "Denounced level",
+    "viewAll": "View all",
+    "manager": "Manager",
+    "delegate": "Delegate",
+    "includedInBlock": "Included in block",
+    "snapshot": "Snapshot | Snapshots",
+    "bakingRights": "Baking rights",
+    "contract": "Contract | Контракты",
+    "acc": "Account | Аккаунты",
+    "loading": "Loading",
+    "protocolAmendments": "Protocol amendments",
+    "vote": "Vote",
+    "home": "Home",
+    "opType": "Operation type"
+  },
+  "opTypes": {
+    "tx": "Transaction | Transactions",
+    "endorsement": "Endorsement | Endorsements",
+    "delegation": "Delegation | Delegations",
+    "origination": "Origination | Originations",
+    "activation": "Activation | Activations",
+    "doubleBaking": "Double-baking",
+    "doubleEndorsement": "Double-endorsement | Double-endorsements"
+  },
+  "listTypes": {
+    "txsList": "Transactions list",
+    "endorsementsList": "Endorsements list",
+    "delegationsList": "Delegations list",
+    "originationsList": "Originations list",
+    "activationsList": "Activations list",
+    "dblBakingList": "Double-baking list",
+    "dblEndorsementsList": "Double-endorsements list",
+    "otherOpsList": "Other operations list",
+    "blocksList": "Blocks list",
+    "snapshotsList": "Snapshots list",
+    "futureBakingRightsList": "Future baking rights list",
+    "pastBakingRightsList": "Past baking rights list",
+    "bakersList": "Bakers list",
+    "publicBakersList": "Public bakers list",
+    "accsList": "Accounts list",
+    "contractsList": "Contracts list",
+    "protocolsList": "Protocols list",
+    "votersList": "Voters list",
+    "nonVotersList": "Non-voters list"
+  },
+  "pageTypes": {
+    "txsPage": "Transactions page",
+    "endorsementsPage": "Endorsements page",
+    "delegationsPage": "Delegations page",
+    "originationsPage": "Originations page",
+    "activationsPage": "Activations page",
+    "dblBakingPage": "Double-baking page",
+    "dblEndorsementsPage": "Double-endorsements page",
+    "blocksPage": "Blocks page",
+    "snapshotsPage": "Snapshots page",
+    "bakersPage": "Bakers page",
+    "allBakersPage": "All bakers page",
+    "publicBakersPage": "Public bakers page",
+    "accsPage": "Accounts page",
+    "contractsPage": "Contracts page",
+    "protocolsPage": "Protocols page"
+  },
+  "infoTypes": {
+    "txInfo": "Transaction information",
+    "endorsementInfo": "Endorsement information",
+    "delegationInfo": "Delegation information",
+    "originationInfo": "Origination information",
+    "activationInfo": "Activation information",
+    "dblBakingInfo": "Double-baking information",
+    "dblEndorsementInfo": "Double-endorsement information",
+    "blockInfo": "Block information",
+    "bakerInfo": "Baker information",
+    "accInfo": "Account information",
+    "generalInfo": "General information",
+    "voteInfo": "Vote information"
+  },
+  "hashTypes": {
+    "hash": "Hash",
+    "txHash": "Transaction hash",
+    "endorsementHash": "Endorsement hash",
+    "delegationHash": "Delegation hash",
+    "originationHash": "Origination hash",
+    "opHash": "Operation hash",
+    "voteHash": "Vote hash"
+  },
+  "statusTypes": {
+    "status": "Status",
+    "success": "Success",
+    "failed": "Failed",
+    "revealed": "Revealed",
+    "unrevealed": "Unrevealed"
+  },
+  "numberOf": {
+    "#OfDelegators": "# of delegators",
+    "#OfEndorsements": "# of endorsements",
+    "#OfOperations": "# of operations",
+    "#OfVotes": "# of votes"
+  },
+  "bakerSingle": {
+    "address": "Address",
+    "blocksBaked": "Blocks baked",
+    "balances": "Balances",
+    "totalBal": "Total balance",
+    "liquidBal": "Liquid balance",
+    "currDeposits": "Current deposits",
+    "baking": "Baking",
+    "endorsement": "Endorsement",
+    "pendingRewards": "Pending rewards"
+  },
+  "blockSingle": {
+    "bakerFee": "Baker's fee",
+    "bakerPriority": "Baker's priority",
+    "txVol": "Transaction volume",
+    "dblBakingEvidence": "Double-baking evidence",
+    "dblEndorsementEvidence": "Double-endorsement evidence",
+    "blockTime": "Block time",
+    "blockFitness": "Block fitness",
+    "gasUsed": "Gas used",
+    "protocolVersion": "Protocol version",
+    "cyclePosition": "Cycle position",
+    "outOf": "out of",
+    "originatedAccs": "Originated accounts"
+  },
+  "accSingle": {
+    "created": "Created",
+    "lastActive": "Last active"
+  },
+  "blocksList": {
+    "volume": "Volume"
+  },
+  "endorsementsList": {
+    "endorser": "Endorser",
+    "endorsedBlock": "Endorsed block",
+    "slots": "Slots"
+  },
+  "dblBakingList": {
+    "accuser": "Accuser",
+    "age": "Age",
+    "bakerRewards": "Baker rewards",
+    "offender": "Offender",
+    "lostDeposits": "Lost deposits",
+    "lostRewards": "Lost rewards"
+  },
+  "protocolsList": {
+    "protocol": "Protocol | Protocols",
+    "startingBlock": "Starting block",
+    "endingBlock": "Ending block"
+  },
+  "endorsementsSlots": {
+    "blockEndorsements": "Block endorsements"
+  },
+  "counters": {
+    "cycleCounter": "Cycle counter",
+    "untilEnd": "Until cycle end",
+    "d": "D",
+    "h": "H",
+    "m": "M",
+    "icoPercent": "Percentage of ICO addresses activated"
+  },
+  "footer": {
+    "allRights": "All rights reserved",
+    "contactUs": "Contact us"
+  },
+  "header": {
+    "allBakers": "All bakers",
+    "publicBakers": "Public bakers",
+    "dateFormat": "Date format"
+  },
+  "dateSwitcher": {
+    "usFormat": "US",
+    "standardFormat": "Standard"
+  },
+  "aggregateBy": {
+    "year": "This year",
+    "month": "This month"
+  },
+  "perPageSelect": {
+    "itemsPerPage": "Items per page"
+  },
+  "search": {
+    "placeholder": "Block, tx or address"
+  },
+  "voting": {
+    "emptyProposal": "There are no proposals in this period.",
+    "proposal": "Proposal | Proposals",
+    "votes": {
+      "yay": "Yay",
+      "nay": "Nay",
+      "pass": "Pass"
+    },
+    "proposer": "Proposer",
+    "proposalFile": "Proposal file",
+    "superMajority": "Super-majority",
+    "quorum": "Quorum",
+    "percentOfVotes": "Percent of votes",
+    "bakersVotes": "Bakers' votes",
+    "votesCast": "Votes cast",
+    "periodStarts": "Period starts",
+    "periodEnds": "Period ends",
+    "periodNotFound": "Period {id} was not found.",
+    "generalVotingStats": "General voting stats",
+    "recentVotes": "Recent votes",
+    "voter": "Voter",
+    "participation": "Participation",
+    "undecided": "Undecided",
+    "votesAvailable": "Votes available",
+    "nonVoters": "Non-voters",
+    "upVotes": "Upvotes",
+    "proposalDescription": "Proposal description",
+    "periodTypes": {
+      "proposal": "Proposal",
+      "exploration": "Exploration",
+      "testing": "Testing",
+      "promotion": "Promotion"
+    },
+    "showAll": "Show all",
+    "showLess": "Show less"
+  },
+  "protocolPeriods": {
+    "current": "Current",
+    "past": "Past"
+  },
+  "errPages": {
+    "page": "Page",
+    "pageNotFound":"Page is not found",
+    "smthWrong": "Something went wrong"
+  },
+  "accPage": {
+    "balInThirtyDays": "Balance in the last 30 days"
+  },
+  "txPage": {
+    "gasLimit": "Gas limit",
+    "storageLimit": "Storage limit"
+  },
+  "votePage": {
+    "kind": "Kind",
+    "source": "Source"
+  },
+  "index": {
+    "stakingRatio": "Staking ratio",
+    "untilVotingEnd": "Until voting period end",
+    "blockHeight": "Block height",
+    "latestBaker": "Latest baker",
+    "price": "Price",
+    "tradingVol": "Trading volume",
+    "marketCap": "Market cap",
+    "circulatingSupply": "Circulating supply",
+    "moreAboutTezos": "More about Tezos",
+    "whatIsTezos": "What is Tezos?",
+    "whitePaper": "White paper",
+    "testnetFaucet": "Testnet faucet",
+    "howToRunTezos": "How to run Tezos?",
+    "gitRepo": "Git repository",
+    "dockerImages": "Docker images"
+  }
 }

@@ -103,7 +103,7 @@
               {{ $t("header.publicBakers") }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown text="Accounts">
+          <b-nav-item-dropdown :text="$tc('common.acc', 2)">
             <b-dropdown-item
               :to="{ name: 'accounts', params: { network: currentNetwork } }"
             >
@@ -155,6 +155,7 @@
               <DateFormatSwitcher class="pointer" :isSwitchOnly="true" />
             </b-dropdown-text>
           </b-nav-item-dropdown>
+          <LanguageSwitcher />
           <b-nav-form v-if="isSearchVisible" class="search">
             <Search :placeholder="$t('search.placeholder')" />
           </b-nav-form>
@@ -171,6 +172,7 @@ import network from "../../../mixins/network";
 import Search from "../Search";
 import uuid from "@/mixins/uuid";
 import DateFormatSwitcher from "@/components/partials/DateFormatSwitcher";
+import LanguageSwitcher from "@/components/partials/LanguageSwitcher";
 import Logo from "../icons/Logo";
 
 export default {
@@ -178,6 +180,7 @@ export default {
   components: {
     Search,
     DateFormatSwitcher,
+    LanguageSwitcher,
     Logo
   },
   mixins: [network, uuid],
