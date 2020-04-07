@@ -10,7 +10,7 @@
     </template>
 
     <b-dropdown-text>
-      <b-form-group label="Date format:" class="mb-0">
+      <b-form-group label="Date format:" class="mb-0 date-switcher__label">
         <b-form-checkbox v-model="isUSDateFormat" name="date-format" switch>
           {{ isUSDateFormat ? $t("dateSwitcher.usFormat") : $t("dateSwitcher.standardFormat") }}
         </b-form-checkbox>

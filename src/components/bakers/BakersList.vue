@@ -68,7 +68,7 @@ export default {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       // The key property must coincide with the corresponding keys in the data items
       fields: [
-        { key: "accountId", label: this.$tc("common.baker", 1) },
+        { key: "accountId", label: this.$tc("common.baker", 1), disableClear: true },
         {
           key: "blocks",
           label: this.$tc("common.block", 2),
@@ -93,7 +93,7 @@ export default {
           sortable: true,
           sortDirection: "desc"
         },
-        { key: "bakingSince", label: this.$t("common.bakingSince") }
+        { key: "bakingSince", label: this.$t("common.bakingSince"), disableClear: true }
       ]
     };
   },

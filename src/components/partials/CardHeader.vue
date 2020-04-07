@@ -31,4 +31,8 @@ export default {
   flex-direction: row;
   margin-bottom: 0;
 }
+
+.card-title_right {
+  text-align: right;
+}
 </style>

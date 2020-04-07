@@ -14,6 +14,7 @@ body {
 .main-header .navbar {
   padding-left: 30px;
   padding-right: 30px;
+  align-items: baseline;
 }
 
 .main-header .navbar .form-group {
@@ -36,6 +37,10 @@ body {
 
 .main-header .dropdown-item.active, .dropdown-item:active {
   background-color: #309282;
+}
+
+.dropdown-toggle:after {
+  vertical-align: middle;
 }
 
 @media (max-width: 991px) {
@@ -736,6 +741,10 @@ section
   align-items: center;
 }
 
+.main-content section .card .card__block-nav h3 {
+  text-align: center;
+}
+
 .main-content section .card .card__block-prev,
 .main-content section .card .card__block-next {
   cursor: pointer;
@@ -864,7 +873,7 @@ section
 }
 
 .main-content section .card .card-body .pagination .page-item .page-link:focus {
-  box-shadow: 0 0 0 0.2rem $color-brand--opacity-2;
+  box-shadow: none;
 }
 
 .main-content section .card .card-body .item-info .value {
@@ -1040,4 +1049,53 @@ section
 @keyframes nprogress-spinner {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+
+/**/
+.main-content section .card .card-body .table thead tr th {
+  position: relative;
+}
+
+.table.b-table>thead>tr>th[aria-sort][aria-sort="descending"]::before, .table.b-table>tfoot>tr>th[aria-sort][aria-sort="descending"]::before,
+.table.b-table>thead>tr>th[aria-sort][aria-sort="ascending"]::before, .table.b-table>tfoot>tr>th[aria-sort][aria-sort="ascending"]::before,
+.table.b-table>thead>tr>th[aria-sort]::before, .table.b-table>tfoot>tr>th[aria-sort]::before{
+  content: none;
+}
+
+.table.b-table>thead>tr>th[aria-sort][aria-sort="ascending"]::after,
+.table.b-table>tfoot>tr>th[aria-sort][aria-sort="ascending"]::after {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  content: '';
+  border-top: 0;
+  border-right: .3em solid transparent;
+  border-bottom: .3em solid;
+  border-left: .3em solid transparent;
+}
+
+.table.b-table>thead>tr>th[aria-sort][aria-sort="descending"]::after,
+.table.b-table>tfoot>tr>th[aria-sort][aria-sort="descending"]::after {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  content: '';
+  border-top: .3em solid;
+  border-right: .3em solid transparent;
+  border-bottom: 0;
+  border-left: .3em solid transparent;
+}
+
+.table.b-table>thead>tr>th[aria-sort]::after,
+.table.b-table>tfoot>tr>th[aria-sort]::after {
+  margin-left: 7px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  content: '';
+  border-top: 0;
+  border-right: .3em solid transparent;
+  border-bottom: .3em solid;
+  border-left: .3em solid transparent;
 }

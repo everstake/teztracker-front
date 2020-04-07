@@ -71,7 +71,7 @@
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
-                <div class="vote-card__body">
+                <div class="vote-card__body pt0">
                   <p
                     class="vote-card__font-size--14 vote-card__weight--bold font font--mini"
                   >
@@ -373,3 +373,9 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoper>
+.pt0 {
+  padding-top: 0;
+}
+</style>
