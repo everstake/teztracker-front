@@ -50,6 +50,10 @@ const TzAPI = {
       to: opts.to
     }, false);
   },
+  getAccountBaking(opts = {}) {
+    const { account } = opts;
+    return get(this.API_URL(), `accounts/baking/${account}`, opts);
+  },
   getContracts(opts = {}) {
     return get(this.API_URL(), "contracts", opts);
   },
@@ -162,9 +166,6 @@ const TzAPI = {
   },
   getProtocols(opts = {}) {
     return get(this.getVotingUrl(), `protocols`, opts);
-  },
-  getOperations(opts = {}) {
-    return get(this.API_URL(), "operations", opts);
   }
 };
 

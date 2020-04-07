@@ -76,6 +76,20 @@
                       <EndorsementsList :is-baker="true" :account="hash"></EndorsementsList>
                     </b-card-body>
                   </b-tab>
+
+                  <b-tab title="Baking">
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">Baking</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+
+                    <b-card-body>
+                      <BakingList :account="hash"></BakingList>
+                    </b-card-body>
+                  </b-tab>
                 </b-tabs>
               </b-card>
             </b-col>
@@ -94,6 +108,7 @@ import TxsList from "../components/transactions/TxsList";
 import DelegationsList from "../components/delegations/DelegationsList";
 import OriginationsList from "../components/originations/OriginationsList";
 import EndorsementsList from "../components/endorsements/EndorsementsList";
+import BakingList from "../components/bakers/BakingList";
 
 export default {
   name: "Baker",
@@ -104,7 +119,8 @@ export default {
     TxsList,
     DelegationsList,
     OriginationsList,
-    EndorsementsList
+    EndorsementsList,
+    BakingList
   },
   computed: {
     hash() {
