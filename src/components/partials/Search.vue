@@ -5,6 +5,7 @@
     @submit.prevent="onSubmit"
   >
     <b-form-input
+      ref="searchInput"
       type="text"
       v-model.trim="searchQuery"
       :placeholder="placeholder"
@@ -144,6 +145,7 @@ export default {
             this.searchQuery = "";
           } else {
             this.error = 'Public baker not found.'
+            this.$refs.searchInput.$el.focus();
           }
         }
       }
