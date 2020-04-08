@@ -130,7 +130,7 @@ export default {
 
         if (foundedBakerIndex() >= 0) {
           const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
-          routerSettings = { name: "account", params: { account: this.publicBakers[foundedBakerIndex()].accountId } };
+          routerSettings = { name: "baker", params: { baker: this.publicBakers[foundedBakerIndex()].accountId } };
           requestStatus = status;
           this.searchQuery = "";
         } else {
@@ -140,7 +140,7 @@ export default {
 
           if (foundedBakerIndex() >= 0) {
             const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
-            routerSettings = { name: "account", params: { account: this.publicBakers[foundedBakerIndex()].accountId } };
+            routerSettings = { name: "baker", params: { baker: this.publicBakers[foundedBakerIndex()].accountId } };
             requestStatus = status;
             this.searchQuery = "";
           } else {
