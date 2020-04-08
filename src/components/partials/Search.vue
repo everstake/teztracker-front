@@ -94,6 +94,7 @@ export default {
           // routerSettings = { name: "block", params: { level: searchStr } };
           routerSettings = { name: "block", params: { level } };
           requestStatus = status;
+          this.searchQuery = "";
         }
       }
       //transactions
@@ -104,6 +105,7 @@ export default {
           });
           routerSettings = { name: "tx", params: { txhash: searchStr } };
           requestStatus = status;
+          this.searchQuery = "";
         }
       }
       //account
@@ -112,6 +114,7 @@ export default {
           const { status } = await this.$api.getAccount({ account: searchStr });
           routerSettings = { name: "account", params: { account: searchStr } };
           requestStatus = status;
+          this.searchQuery = "";
         }
       }
 
@@ -128,6 +131,7 @@ export default {
           const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
           routerSettings = { name: "account", params: { account: this.publicBakers[foundedBakerIndex()].accountId } };
           requestStatus = status;
+          this.searchQuery = "";
         } else {
           if (fetchedBakersSize <= 10) {
             await this[GET_PUBLIC_BAKERS]({ limit: this.publicBakersCount });
@@ -137,13 +141,13 @@ export default {
             const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
             routerSettings = { name: "account", params: { account: this.publicBakers[foundedBakerIndex()].accountId } };
             requestStatus = status;
+            this.searchQuery = "";
           } else {
             this.error = 'Public baker not found.'
           }
         }
       }
 
-      this.searchQuery = "";
       this.loading = false;
 
       this.resolveSearch(routerSettings, requestStatus);
