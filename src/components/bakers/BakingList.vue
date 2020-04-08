@@ -92,8 +92,11 @@ export default {
 
 <style lang="scss">
 	.baking-list-row {
+		cursor: pointer;
+
 		&:focus {
-			outline-color: $color-brand;
+			color: $color-brand;
+			outline: 2px solid rgba(48, 146, 130, .4);
 		}
 	}
 </style>
