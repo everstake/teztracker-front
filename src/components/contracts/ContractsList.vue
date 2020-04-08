@@ -21,12 +21,13 @@
         </b-link>
       </template>
       <template slot="manager" slot-scope="row">
-  
         <b-link
+          v-if="row.item.manager"
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
           <span>{{ row.item.manager | longhash(35) }}</span>
         </b-link>
+        <span v-else>----</span>
       </template>
       <template slot="delegateValue" slot-scope="row">
         <b-link
