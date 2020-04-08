@@ -74,8 +74,8 @@ export default {
           sortable: true,
           sortDirection: "desc"
         },
-        { key: "delegateValue", label: "Delegate" },
-        { key: "createdAt", label: "Created" }
+        { key: "delegateValue", label: this.$t("common.delegate") },
+        { key: "createdAt", label: this.$t("accSingle.created") }
       ]
     };
   },

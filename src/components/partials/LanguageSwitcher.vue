@@ -41,7 +41,10 @@ export default {
       if (this.$helpers.isLocalStorageAvailable) {
         localStorage.setItem("lang", lang);
       }
+      
       this.$i18n.locale = lang;
+  
+      this.$eventBus.$emit("lang-change", this.currLang);
     },
     defineInitialLang() {
       if (

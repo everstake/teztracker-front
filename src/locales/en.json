@@ -29,7 +29,8 @@
     "protocolAmendments": "Protocol amendments",
     "vote": "Vote",
     "home": "Home",
-    "opType": "Operation type"
+    "opType": "Operation type",
+    "other": "Other"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -153,7 +154,6 @@
   },
   "dblBakingList": {
     "accuser": "Accuser",
-    "age": "Age",
     "bakerRewards": "Baker rewards",
     "offender": "Offender",
     "lostDeposits": "Lost deposits",
@@ -175,14 +175,21 @@
     "m": "M",
     "icoPercent": "Percentage of ICO addresses activated"
   },
-  "footer": {
-    "allRights": "All rights reserved",
-    "contactUs": "Contact us"
-  },
   "header": {
     "allBakers": "All bakers",
     "publicBakers": "Public bakers",
-    "dateFormat": "Date format"
+    "dateFormat": "Date format",
+    "operations": "Operations",
+    "governance": "Governance"
+  },
+  "nets": {
+    "mainnet": "Mainnet",
+    "babylonnet": "Babylonnet",
+    "carthagenet": "Carthagenet"
+  },
+  "footer": {
+    "allRights": "All rights reserved",
+    "contactUs": "Contact us"
   },
   "dateSwitcher": {
     "usFormat": "US",
@@ -218,7 +225,7 @@
     "periodNotFound": "Period {id} was not found.",
     "generalVotingStats": "General voting stats",
     "recentVotes": "Recent votes",
-    "voter": "Voter",
+    "voter": "Voter | Voters",
     "participation": "Participation",
     "undecided": "Undecided",
     "votesAvailable": "Votes available",

@@ -15,7 +15,7 @@
           >
             <b-card no-body>
               <b-tabs>
-                <b-tab title="Voters" active>
+                <b-tab :title="$tc('voting.voter', 2)" active>
                   <b-card-header>
                     <div class="break-word">
                       <h3>
@@ -90,7 +90,7 @@
                     </div>
                   </b-card-body>
                 </b-tab>
-                <b-tab title="Non-voters">
+                <b-tab :title="$t('voting.nonVoters')">
                   <b-card-header>
                     <div class="break-word">
                       <h3>

@@ -8,6 +8,8 @@ import "./plugins/tezosApi";
 import "./plugins/vuePlugins";
 // Helper functions
 import "./plugins/helpers";
+// Event bus
+import "./plugins/eventBus";
 // Filters
 import "./filters";
 import router from "./router";
