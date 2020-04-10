@@ -16,7 +16,8 @@ import {
   FormCheckboxPlugin,
   NavbarPlugin,
   FormInputPlugin,
-  BForm
+  BForm,
+  ModalPlugin
 } from "bootstrap-vue";
 import {
   FontAwesomeIcon,
@@ -71,6 +72,7 @@ Vue.use(FormGroupPlugin);
 Vue.use(FormCheckboxPlugin);
 Vue.use(NavbarPlugin);
 Vue.use(FormInputPlugin);
+Vue.use(ModalPlugin);
 
 Vue.component('b-form', BForm)
 

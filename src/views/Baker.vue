@@ -81,13 +81,25 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Baking</span>
+                          <span class="text">Baking History</span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <BakingList :account="hash"></BakingList>
+                      <BakerBakingList :account="hash"></BakerBakingList>
+                    </b-card-body>
+  
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">Endorsing History</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+  
+                    <b-card-body>
+                      <BakerEndorsingList :account="hash"></BakerEndorsingList>
                     </b-card-body>
                   </b-tab>
                 </b-tabs>
@@ -108,7 +120,8 @@ import TxsList from "../components/transactions/TxsList";
 import DelegationsList from "../components/delegations/DelegationsList";
 import OriginationsList from "../components/originations/OriginationsList";
 import EndorsementsList from "../components/endorsements/EndorsementsList";
-import BakingList from "../components/bakers/BakingList";
+import BakerBakingList from "../components/bakers/BakerBakingList";
+import BakerEndorsingList from "../components/bakers/BakerEndorsingList";
 
 export default {
   name: "Baker",
@@ -120,7 +133,8 @@ export default {
     DelegationsList,
     OriginationsList,
     EndorsementsList,
-    BakingList
+    BakerBakingList,
+    BakerEndorsingList
   },
   computed: {
     hash() {

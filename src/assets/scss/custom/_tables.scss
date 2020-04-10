@@ -4,3 +4,8 @@
     background-color: $color-brand--opacity-2;
   }
 }
+
+.baking-list .table-primary, .table-primary>th, .table-primary>td,
+.endorsing-list .table-primary, .table-primary>th, .table-primary>td {
+  background-color: $color-brand;
+}
