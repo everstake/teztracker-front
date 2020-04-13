@@ -6,7 +6,6 @@
       :total-rows="totalRows"
       :per-page="perPage"
       :align="align"
-      :limit="4"
     />
   </div>
 </template>
