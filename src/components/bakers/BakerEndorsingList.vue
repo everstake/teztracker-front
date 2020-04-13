@@ -9,7 +9,7 @@
 			:items="data"
 			:fields="fields"
 			:current-page="currentPage"
-			:per-page="perPage"
+			:per-page="0"
 			borderless
 			class="transactions-table table-responsive-md"
 			@row-selected="handleRowClick"
@@ -90,14 +90,12 @@
     props: ['account'],
     data() {
       return {
-        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
         fields: [
           { key: "cycle", label: 'Cycle' },
           { key: "slots", label: this.$t("endorsementsList.slots") },
           { key: "missed", label: 'Missed' },
           { key: "rewards", label: 'Rewards' }
         ],
-        data: [],
 	      selectedRow: {
           cycleId: null,
 		      data: null,
@@ -108,10 +106,12 @@
             { key: "rewards", label: 'Rewards' },
             { key: "timestamp", label: this.$t("common.timestamp") }
 		      ],
-		      currentPage: 1
+		      currentPage: this.$constants.INITIAL_CURRENT_PAGE
 	      },
-        count: 0,
-	      total: null
+        count: null,
+	      total: null,
+        future: [],
+        data: []
       };
     },
 	  computed: {
@@ -141,10 +141,14 @@
     },
     methods: {
       async handleRowClick(row) {
-        const { cycle: cycleId } = row[0];
-        if (cycleId === 'Total') return;
-        this.cycleId = cycleId;
-        const data = await this.$api.getAccountEndorsingItem({ account: this.account, cycleId });
+        if (row.length === 0) return;
+
+        const isRowTotal = row[0].cycle === 'Total';
+        if (isRowTotal) return;
+        
+        this.cycleId = row[0].cycle;
+
+        const data = await this.$api.getAccountEndorsingItem({ account: this.account, cycleId: row[0].cycle });
         this.selectedRow.data = data.data;
         this.selectedRow.count = data.count;
         this.$bvModal.show('modal-endorsing');
@@ -155,16 +159,25 @@
           limit: this.perPage,
           account: this.account
         };
+        
+        if (page === 1) {
+          const total = await this.$api.getAccountEndorsingTotal({account: this.account});
+          const data = await this.$api.getAccountEndorsing(props);
 
-        const data = await this.$api.getAccountEndorsing(props);
-
-        this.count = data.count + 1;
-        this.data = [{...this.total}, ...data.data];
+          this.total = total.data;
+          this.data = [
+            {...total.data, cycle: 'Total'},
+            ...data.data
+          ];
+          this.count = data.count + 1;
+        } else {
+          const data = await this.$api.getAccountEndorsing(props);
+          this.data = data.data;
+        }
       },
       async reloadAccountEndorsingItem(page = 1) {
         const props = {
           page,
-          limit: this.selectedRow.perPage,
           account: this.account,
           cycleId: this.cycleId
         };
@@ -180,8 +193,6 @@
     },
     async created() {
       this.reload();
-      const total = await this.$api.getAccountEndorsingTotal({account: this.account});
-      this.total = {...total.data, cycle: 'Total'};
     }
   };
 </script>

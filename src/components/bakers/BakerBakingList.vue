@@ -9,7 +9,7 @@
 			:items="data"
 			:fields="fields"
 			:current-page="currentPage"
-			:per-page="perPage"
+			:per-page="0"
 			borderless
 			class="transactions-table table-responsive-md"
 			@row-selected="handleRowClick"
@@ -36,7 +36,7 @@
 					:items="selectedRow.data"
 					:fields="selectedRow.fields"
 					:current-page="selectedRow.currentPage"
-					:per-page="selectedRow.perPage"
+					:per-page="0"
 					borderless
 					class="transactions-table table-responsive-md baker-baking-table"
 				>
@@ -93,7 +93,6 @@ export default {
         { key: "stolen", label: 'Stolen' },
         { key: "rewards", label: 'Rewards' }
       ],
-      data: [],
       selectedRow: {
         data: null,
         count: 0,
@@ -106,8 +105,9 @@ export default {
         currentPage: 1
       },
       count: 0,
-	    total: null,
-      cycleId: null
+      total: null,
+      future: [],
+      data: []
     };
   },
   computed: {
@@ -126,22 +126,28 @@ export default {
       await this.reload({page: value});
     },
     'selectedRow.currentPage': {
+      deep: true,
       async handler(value) {
-        await this.reload(value);
+        await this.reloadAccountBakingItem(value);
       }
     },
 	  'selectedRow.perPage': {
+      deep: true,
       async handler() {
-        await this.reload();
+        await this.reloadAccountBakingItem();
       }
     }
   },
   methods: {
     async handleRowClick(row) {
-      const { cycle: cycleId } = row[0];
-      if (cycleId === 'Total') return;
-      this.cycleId = cycleId;
-      const data = await this.$api.getAccountBakingItem({ account: this.account, cycleId });
+      if (row.length === 0) return;
+      const isRowFuture = this.future.find(findedItem => findedItem.cycle === row[0].cycle);
+      const isRowTotal = row[0].cycle === 'Total';
+      if (isRowFuture || isRowTotal) return;
+
+      this.cycleId = row[0].cycle;
+
+      const data = await this.$api.getAccountBakingItem({ account: this.account, cycleId: row[0].cycle });
       this.selectedRow.data = data.data;
       this.selectedRow.count = data.count;
       this.$bvModal.show('modal-baking');
@@ -153,19 +159,43 @@ export default {
         account: this.account
       };
 
-      const data = await this.$api.getAccountBaking(props);
+      if (page === 1) {
+        const total = await this.$api.getAccountBakingTotal({account: this.account});
+        const future = await this.$api.getAccountBakingFuture({ account: this.account });
+        const data = await this.$api.getAccountBaking(props);
 
-      this.count = data.count;
-      this.data = [...data.data];
+        this.total = total.data;
+        this.future = future.data;
+        this.data = [
+          {...total.data, cycle: 'Total'},
+          ...future.data,
+          ...data.data
+        ];
+
+        this.count = data.count + future.data.length + 1;
+      } else {
+        const data = await this.$api.getAccountBaking(props);
+        this.data = data.data;
+      }
+    },
+    async reloadAccountBakingItem(page = 1) {
+      const props = {
+        page,
+        account: this.account,
+        cycleId: this.cycleId
+      };
+
+      const data = await this.$api.getAccountBakingItem(props);
+      this.selectedRow.data = data.data;
+      this.selectedRow.count = data.count;
+
     },
     handleModalPagination(page) {
       this.selectedRow.currentPage = page;
     }
   },
   async created() {
-	  this.reload();
-    const total = await this.$api.getAccountBakingTotal({account: this.account});
-    this.total = {...total.data, cycle: 'Total'};
+    this.reload();
   }
 };
 </script>

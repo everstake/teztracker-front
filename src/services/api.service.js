@@ -56,11 +56,15 @@ const TzAPI = {
   },
   getAccountBakingItem(opts = {}) {
     const { account, cycleId } = opts;
-    return get(this.API_URL(), `accounts/baking/${account}/blocks/${cycleId}`, {}, true );
+    return get(this.API_URL(), `accounts/baking/${account}/blocks/${cycleId}`, opts, true );
   },
   getAccountBakingTotal(opts = {}) {
     const { account } = opts;
     return get(this.API_URL(), `accounts/baking/${account}/total`, opts );
+  },
+  getAccountBakingFuture(opts = {}) {
+    const { account } = opts;
+    return get(this.API_URL(), `accounts/baking/${account}/future`, opts );
   },
   getAccountEndorsing(opts = {}) {
     const { account } = opts;
@@ -73,6 +77,10 @@ const TzAPI = {
   getAccountEndorsingTotal(opts = {}) {
     const { account } = opts;
     return get(this.API_URL(), `accounts/endorsing/${account}/total`, opts );
+  },
+  getAccountEndorsingFuture(opts = {}) {
+    const { account } = opts;
+    return get(this.API_URL(), `accounts/endorsing/${account}/future`, opts );
   },
   getContracts(opts = {}) {
     return get(this.API_URL(), "contracts", opts);
