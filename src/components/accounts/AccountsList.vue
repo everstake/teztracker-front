@@ -70,7 +70,7 @@ export default {
         { key: "accountId", label: this.$tc("common.acc", 1) },
         {
           key: "balance",
-          label: this.$t("common.amount"),
+          label: this.$t("common.balance"),
           sortable: true,
           sortDirection: "desc"
         },

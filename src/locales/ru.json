@@ -110,7 +110,7 @@
 		"unrevealed": "Скрыт"
 	},
 	"numberOf": {
-		"#OfDelegators": "Количество делегатов",
+		"#OfDelegators": "Количество делегаторов",
 		"#OfEndorsements": "Количество заверений",
 		"#OfOperations": "Количество операций",
 		"#OfVotes": "Количество голосов"
