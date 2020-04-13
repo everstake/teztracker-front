@@ -85,7 +85,7 @@ export default {
           sortable: true,
           sortDirection: "desc"
         },
-        { key: "createdAt", label: "Created" }
+        { key: "createdAt", label: this.$t("accSingle.created") }
       ]
     };
   },

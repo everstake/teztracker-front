@@ -13,7 +13,7 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item-dropdown text="Blocks">
+          <b-nav-item-dropdown :text="$tc('common.block', 2)">
             <b-dropdown-item
               :to="{ name: 'blocks', params: { network: currentNetwork } }"
             >
@@ -33,7 +33,7 @@
               {{ $tc("common.bakingRights", 2) }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown text="Operations">
+          <b-nav-item-dropdown :text="$t('header.operations')">
             <b-dropdown-item
               :to="{ name: 'txs', params: { network: currentNetwork } }"
             >
@@ -88,7 +88,7 @@
               {{ $tc("opTypes.doubleEndorsement", 2) }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown text="Bakers">
+          <b-nav-item-dropdown :text="$tc('common.baker', 2)">
             <b-dropdown-item
               :to="{ name: 'bakers', params: { network: currentNetwork } }"
             >
@@ -103,7 +103,7 @@
               {{ $t("header.publicBakers") }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown text="Accounts">
+          <b-nav-item-dropdown :text="$tc('common.acc', 2)">
             <b-dropdown-item
               :to="{ name: 'accounts', params: { network: currentNetwork } }"
             >
@@ -116,7 +116,7 @@
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown
-            text="Governance"
+            :text="$t('header.governance')"
             :disabled="currentNetwork !== 'mainnet'"
           >
             <b-dropdown-item :to="{ name: 'protocol_amendment' }">
@@ -132,8 +132,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown
-            class="text-capitalize"
-            :text="currentNetwork"
+            :text="$t(`nets.${currentNetwork}`)"
             right
             :disabled="!networkChangable"
           >
@@ -143,7 +142,7 @@
               class="pointer"
               :key="generateKey()"
             >
-              {{ network }}
+              {{ $t(`nets.${network}`) }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown class="date-switcher">
@@ -155,6 +154,7 @@
               <DateFormatSwitcher class="pointer" :isSwitchOnly="true" />
             </b-dropdown-text>
           </b-nav-item-dropdown>
+          <LanguageSwitcher />
           <b-nav-form v-if="isSearchVisible" class="search">
             <Search :placeholder="$t('search.placeholder')" />
           </b-nav-form>
@@ -171,6 +171,7 @@ import network from "../../../mixins/network";
 import Search from "../Search";
 import uuid from "@/mixins/uuid";
 import DateFormatSwitcher from "@/components/partials/DateFormatSwitcher";
+import LanguageSwitcher from "@/components/partials/LanguageSwitcher";
 import Logo from "../icons/Logo";
 
 export default {
@@ -178,6 +179,7 @@ export default {
   components: {
     Search,
     DateFormatSwitcher,
+    LanguageSwitcher,
     Logo
   },
   mixins: [network, uuid],
