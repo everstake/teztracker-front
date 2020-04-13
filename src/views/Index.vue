@@ -323,20 +323,19 @@ export default {
     ...mapActions("app", [GET_APP_INFO]),
     ...mapActions("blocks", [GET_BLOCK_HEAD])
   },
-  beforeRouteUpdate(to, name, next) {
-    if (this.interval !== null) {
-      clearInterval(this.interval);
-    }
-
-    next();
-  },
   async created() {
+    this.interval = setInterval(async () => {
+      await this[GET_APP_INFO]();
+    }, 10000);
+
     await Promise.all([
       await this[GET_APP_INFO](),
       await this[GET_BLOCK_HEAD]()
     ]);
-    this.interval = setInterval(() => this[GET_APP_INFO](), 10000);
-  
+  },
+  beforeRouteUpdate(to, from, next) {
+    clearInterval(this.interval);
+    next();
   }
 };
 </script>
