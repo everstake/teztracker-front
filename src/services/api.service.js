@@ -52,6 +52,7 @@ const TzAPI = {
   },
   getAccountRewards(opts = {}) {
     const { account } = opts;
+    delete opts.account;
     return get(this.API_URL(), `accounts/rewards/${account}`, opts);
   },
   getContracts(opts = {}) {
