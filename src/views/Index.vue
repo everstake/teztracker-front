@@ -277,7 +277,7 @@ export default {
   },
   data() {
     return {
-      interval: {}
+      interval: null
     };
   },
   computed: {
@@ -319,12 +319,16 @@ export default {
         .fromNow(true);
     }
   },
-  beforeDestroy() {
-    clearInterval(this.interval);
-  },
   methods: {
     ...mapActions("app", [GET_APP_INFO]),
     ...mapActions("blocks", [GET_BLOCK_HEAD])
+  },
+  beforeRouteUpdate(to, name, next) {
+    if (this.interval !== null) {
+      clearInterval(this.interval);
+    }
+
+    next();
   },
   async created() {
     await Promise.all([
@@ -332,6 +336,7 @@ export default {
       await this[GET_BLOCK_HEAD]()
     ]);
     this.interval = setInterval(() => this[GET_APP_INFO](), 10000);
+  
   }
 };
 </script>
