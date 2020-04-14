@@ -6,12 +6,13 @@
     "rolls": "Rolls",
     "bakingSince": "Baking since",
     "baker": "Baker | Bakers",
-    "capacity": "Capacity",
+    "capacityAvailable": "Available capacity",
     "fee": "Fee",
     "block": "Block | Blocks",
     "from": "From",
     "to": "To",
     "amount": "Amount",
+    "amountDelegated": "Delegated amount",
     "timestamp": "Timestamp",
     "cycle": "Cycle | Cycles",
     "blockId": "Block id",
@@ -30,7 +31,8 @@
     "vote": "Vote",
     "home": "Home",
     "opType": "Operation type",
-    "other": "Other"
+    "other": "Other",
+    "endorser": "Endorser"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -140,6 +142,14 @@
     "outOf": "out of",
     "originatedAccs": "Originated accounts"
   },
+  "txSingle": {
+    "secret": "Secret",
+    "slotsEndorsed": "Slots endorsed",
+    "confirmations": "Confirmations",
+    "deposit": "Deposit",
+    "reward": "Reward",
+    "amountClaimed": "Claimed amount"
+  },
   "accSingle": {
     "created": "Created",
     "lastActive": "Last active"
@@ -148,7 +158,6 @@
     "volume": "Volume"
   },
   "endorsementsList": {
-    "endorser": "Endorser",
     "endorsedBlock": "Endorsed block",
     "slots": "Slots"
   },
@@ -255,7 +264,12 @@
   },
   "txPage": {
     "gasLimit": "Gas limit",
-    "storageLimit": "Storage limit"
+    "storageLimit": "Storage limit",
+    "txDetails": "Transaction details",
+    "delegationDetails": "Delegation details",
+    "originationDetails": "Origination details",
+    "originator": "Originator",
+    "originatedAcc": "Originated account"
   },
   "votePage": {
     "kind": "Kind",

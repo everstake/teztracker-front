@@ -6,12 +6,13 @@
 		"rolls": "Роллы",
 		"bakingSince": "Активен с",
 		"baker": "Бейкер | Бейкеры",
-		"capacity": "Объем",
+		"capacityAvailable": "Доступный объем",
 		"fee": "Комиссия",
 		"block": "Блок | Блоки",
 		"from": "Отправитель",
 		"to": "Получатель",
 		"amount": "Количество",
+		"amountDelegated": "Делегированная сумма",
 		"timestamp": "Дата/время",
 		"cycle": "Цикл | Циклы",
 		"blockId": "Id блока",
@@ -30,7 +31,8 @@
 		"vote": "Голос",
 		"home": "Главная",
 		"opType": "Тип операции",
-		"other": "Другое"
+		"other": "Другое",
+		"endorser": "Заеверитель"
 	},
 	"opTypes": {
 		"tx": "Транзакция | Транзакции",
@@ -140,6 +142,14 @@
 		"outOf": "из",
 		"originatedAccs": "Созданные аккаунты"
 	},
+	"txSingle": {
+		"secret": "Секрет",
+		"slotsEndorsed": "Заверенные слоты",
+    "confirmations": "Подтверждения",
+    "deposit": "Депозит",
+    "reward": "Вознаграждение",
+    "amountClaimed": "Активированное количество"
+	},
 	"accSingle": {
 		"created": "Создан",
 		"lastActive": "Последнее посещение"
@@ -148,7 +158,6 @@
 		"volume": "Объем"
 	},
 	"endorsementsList": {
-		"endorser": "Заеверитель",
 		"endorsedBlock": "Заверенный блок",
 		"slots": "Слоты"
 	},
@@ -255,7 +264,12 @@
 	},
 	"txPage": {
 		"gasLimit": "Лимит газа",
-		"storageLimit": "Лимит хранения"
+		"storageLimit": "Лимит хранения",
+		"txDetails": "Подробности транзакции",
+		"delegationDetails": "Подробности о делегации",
+		"originationDetails": "Подробности о создании",
+		"originator": "Создатель",
+		"originatedAcc": "Созданный аккаунт"
 	},
 	"votePage": {
 		"kind": "Вид",
