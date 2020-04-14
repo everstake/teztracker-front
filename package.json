@@ -33,6 +33,7 @@
     "sass-loader": "^8.0.2",
     "vue": "^2.6.10",
     "vue-chartjs": "^3.5.0",
+    "vue-flag-icon": "^1.0.6",
     "vue-gtag": "^1.6.2",
     "vue-i18n": "^8.0.0",
     "vue-perfect-scrollbar": "^0.2.1",

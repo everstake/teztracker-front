@@ -1,3 +1,281 @@
 {
-  "message": "привет i18n !!"
+	"common": {
+		"copyToClipboard": "Скопировать в буфер обмена",
+		"stakingBal": "Стейкинг-баланс",
+		"balance": "Баланс",
+		"rolls": "Роллы",
+		"bakingSince": "Активен с",
+		"baker": "Бейкер | Бейкеры",
+		"capacity": "Объем",
+		"fee": "Комиссия",
+		"block": "Блок | Блоки",
+		"from": "Отправитель",
+		"to": "Получатель",
+		"amount": "Количество",
+		"timestamp": "Дата/время",
+		"cycle": "Цикл | Циклы",
+		"blockId": "Id блока",
+		"priority": "Приоритет",
+		"denouncedLvl": "Обвиняемый уровень",
+		"viewAll": "Посмотреть все",
+		"manager": "Менеджер",
+		"delegate": "Делегат",
+		"includedInBlock": "Включено в блок",
+		"snapshot": "Снепшот | Снепшоты",
+		"bakingRights": "Права на бейкинг",
+		"contract": "Контракт | Контракты",
+		"acc": "Аккаунт | Аккаунты",
+		"loading": "Загрузка",
+		"protocolAmendments": "Изменения протокола",
+		"vote": "Голос",
+		"home": "Главная",
+		"opType": "Тип операции",
+		"other": "Другое"
+	},
+	"opTypes": {
+		"tx": "Транзакция | Транзакции",
+		"endorsement": "Заверение | Заверения",
+		"delegation": "Делегация | Делегации",
+		"origination": "Создание | Создания",
+		"activation": "Активация | Активации",
+		"doubleBaking": "Двойной бейкинг",
+		"doubleEndorsement": "Двойное заверение | Двойные заверения"
+	},
+	"listTypes": {
+		"txsList": "Список транзакций",
+		"endorsementsList": "Список заверений",
+		"delegationsList": "Список делегаций",
+		"originationsList": "Список созданий",
+		"activationsList": "Список активаций",
+		"dblBakingList": "Список двойных бейкингов",
+		"dblEndorsementsList": "Список двойных заверений",
+		"otherOpsList": "Список других операций",
+		"blocksList": "Список блоков",
+		"snapshotsList": "Список снепшотов",
+		"futureBakingRightsList": "Список будущих прав на бейкинг",
+		"pastBakingRightsList": "Список прошлых прав на бейкинг",
+		"bakersList": "Список бейкеров",
+		"publicBakersList": "Список публичных бейкеров",
+		"accsList": "Список аккаунтов",
+		"contractsList": "Список контрактов",
+		"protocolsList": "Список протоколов",
+		"votersList": "Список голосующих",
+		"nonVotersList": "Список неголосующих"
+	},
+	"pageTypes": {
+		"txsPage": "Страница транзакций",
+		"endorsementsPage": "Страница заверений",
+		"delegationsPage": "Страница делегаций",
+		"originationsPage": "Страница созданий",
+		"activationsPage": "Страница активаций",
+		"dblBakingPage": "Страница двойного бейкинга",
+		"dblEndorsementsPage": "Страница двойных заверений",
+		"blocksPage": "Страница блоков",
+		"snapshotsPage": "Страница снепшотов",
+		"bakersPage": "Страница бейкеров",
+		"allBakersPage": "Страница всех бейкеров",
+		"publicBakersPage": "Страница публичных бейкеров",
+		"accsPage": "Страница аккаунтов",
+		"contractsPage": "Страница контрактов",
+		"protocolsPage": "Страница протоколов"
+	},
+	"infoTypes": {
+		"txInfo": "Информация о транзакции",
+		"endorsementInfo": "Информация о заверении",
+		"delegationInfo": "Информация о делегации",
+		"originationInfo": "Информация о создании",
+		"activationInfo": "Информация об активации",
+		"dblBakingInfo": "Информация о двойном бейкинге",
+		"dblEndorsementInfo": "Информация о двойном заверении",
+		"blockInfo": "Информация о блоке",
+		"bakerInfo": "Информация о бейкере",
+		"accInfo": "Информация об аккаунте",
+		"generalInfo": "Общая информация",
+		"voteInfo": "Информация о голосе"
+	},
+	"hashTypes": {
+		"hash": "Хеш",
+		"txHash": "Хеш транзакции",
+		"endorsementHash": "Хеш заверения",
+		"delegationHash": "Хеш делегации",
+		"originationHash": "Хеш создания",
+		"opHash": "Хеш операции",
+		"voteHash": "Хеш голоса"
+	},
+	"statusTypes": {
+		"status": "Статус",
+		"success": "Успешно",
+		"failed": "Неудачно",
+		"revealed": "Открыт",
+		"unrevealed": "Скрыт"
+	},
+	"numberOf": {
+		"#OfDelegators": "Количество делегаторов",
+		"#OfEndorsements": "Количество заверений",
+		"#OfOperations": "Количество операций",
+		"#OfVotes": "Количество голосов"
+	},
+	"bakerSingle": {
+		"address": "Адрес",
+		"blocksBaked": "Блоков произведено",
+		"balances": "Балансы",
+		"totalBal": "Итоговый баланс",
+		"liquidBal": "Ликвидный баланс",
+		"currDeposits": "Текущие депозиты",
+		"baking": "Бейкинг",
+		"endorsement": "Заверение",
+		"pendingRewards": "Ожидаемые вознаграждения"
+	},
+	"blockSingle": {
+		"bakerFee": "Комиссия бейкера",
+		"bakerPriority": "Приоритет бейкера",
+		"txVol": "Объем транзакции",
+		"dblBakingEvidence": "Свидетельство о двойном бейкинге",
+		"dblEndorsementEvidence": "Свидетельство о двойном заверении",
+		"blockTime": "Время блока",
+		"blockFitness": "Пригодность блока",
+		"gasUsed": "Использовано газа",
+		"protocolVersion": "Версия протокола",
+		"cyclePosition": "Позиция в цикле",
+		"outOf": "из",
+		"originatedAccs": "Созданные аккаунты"
+	},
+	"accSingle": {
+		"created": "Создан",
+		"lastActive": "Последнее посещение"
+	},
+	"blocksList": {
+		"volume": "Объем"
+	},
+	"endorsementsList": {
+		"endorser": "Заеверитель",
+		"endorsedBlock": "Заверенный блок",
+		"slots": "Слоты"
+	},
+	"dblBakingList": {
+		"accuser": "Обвинитель",
+		"bakerRewards": "Вознаграждения бейкера",
+		"offender": "Нарушитель",
+		"lostDeposits": "Утерянные депозиты",
+		"lostRewards": "Утерянные вознаграждения"
+	},
+	"protocolsList": {
+		"protocol": "Протокол | Протоколы",
+		"startingBlock": "Стартовый блок",
+		"endingBlock": "Конечный блок"
+	},
+	"endorsementsSlots": {
+		"blockEndorsements": "Заверения блока"
+	},
+	"counters": {
+		"cycleCounter": "Счетчик циклов",
+		"untilEnd": "До конца цикла",
+		"d": "Д",
+		"h": "Ч",
+		"m": "М",
+		"icoPercent": "Процент активированных адресов ICO"
+	},
+	"header": {
+		"allBakers": "Все бейкеры",
+		"publicBakers": "Публичные бейкеры",
+		"dateFormat": "Формат даты",
+		"operations": "Операции",
+		"governance": "Управление"
+	},
+	"nets": {
+		"mainnet": "Основная сеть",
+		"babylonnet": "Вавилон",
+		"carthagenet": "Карфаген"
+	},
+	"footer": {
+		"allRights": "Все права защищены",
+		"contactUs": "Свяжитесь с нами"
+	},
+	"dateSwitcher": {
+		"usFormat": "США",
+		"standardFormat": "Стандартный"
+	},
+	"aggregateBy": {
+		"year": "Этот год",
+		"month": "Этот месяц"
+	},
+	"perPageSelect": {
+		"itemsPerPage": "Элементов на странице"
+	},
+	"search": {
+		"placeholder": "Блок, транзакция или адрес"
+	},
+	"voting": {
+		"emptyProposal": "В этом периоде предложений нет.",
+		"proposal": "Предложение | Предложения",
+		"votes": {
+			"yay": "За",
+			"nay": "Против",
+			"pass": "Пасс"
+		},
+		"proposer": "Предлагающий",
+		"proposalFile": "Файл предложения",
+		"superMajority": "Абсолютное большинство",
+		"quorum": "Кворум",
+		"percentOfVotes": "Процент голосов",
+		"bakersVotes": "Голоса бейкеров",
+		"votesCast": "Поданные голоса",
+		"periodStarts": "Период начинается",
+		"periodEnds": "Период заканчивается",
+		"periodNotFound": "Период {id} не был найден.",
+		"generalVotingStats": "Общая статистика голосования",
+		"recentVotes": "Недавние голоса",
+		"voter": "Голосующий | Голосующие",
+		"participation": "Участие",
+		"undecided": "Воздержавшиеся",
+		"votesAvailable": "Доступные голоса",
+		"nonVoters": "Неголосующие",
+		"upVotes": "Голоса 'за'",
+		"proposalDescription": "Описание предложения",
+		"periodTypes": {
+			"proposal": "Предложение",
+			"exploration": "Исследование",
+			"testing": "Тестирование",
+			"promotion": "Продвижение"
+		},
+		"showAll": "Показать все",
+		"showLess": "Показать меньше"
+	},
+	"protocolPeriods": {
+		"current": "Текущий",
+		"past": "Прошедший"
+	},
+	"errPages": {
+		"page": "Страница",
+		"pageNotFound": "Страница не найдена",
+		"smthWrong": "Что-то пошло не так"
+	},
+	"accPage": {
+		"balInThirtyDays": "Баланс за последние 30 дней"
+	},
+	"txPage": {
+		"gasLimit": "Лимит газа",
+		"storageLimit": "Лимит хранения"
+	},
+	"votePage": {
+		"kind": "Вид",
+		"source": "Источник"
+	},
+	"index": {
+		"stakingRatio": "Коэффициент стейкинга",
+		"untilVotingEnd": "До окончания периода голосования",
+		"blockHeight": "Высота блока",
+		"latestBaker": "Последний бейкер",
+		"price": "Цена",
+		"tradingVol": "Объем торгов",
+		"marketCap": "Рыночная капитализация",
+		"circulatingSupply": "Оборотное предложение",
+		"moreAboutTezos": "Подробнее о Tezos",
+		"whatIsTezos": "Что такое Tezos?",
+		"whitePaper": "Белая бумага",
+		"testnetFaucet": "Testnet-кран",
+		"howToRunTezos": "Как запустить Tezos?",
+		"gitRepo": "Git-репозиторий",
+		"dockerImages": "Docker-образы"
+	}
 }

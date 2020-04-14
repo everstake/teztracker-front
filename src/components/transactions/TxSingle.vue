@@ -23,8 +23,8 @@
       <template v-else-if="slotProps.field.key === $t('statusTypes.status')">
         <span
           :class="{
-            'text-danger': slotProps.field.value === $t('statusTypes.status'),
-            'text-success': slotProps.field.value !== $t('statusTypes.status')
+            'text-danger': slotProps.field.value === $t('statusTypes.failed'),
+            'text-success': slotProps.field.value !== $t('statusTypes.success')
           }"
         >
           {{ slotProps.field.value }}

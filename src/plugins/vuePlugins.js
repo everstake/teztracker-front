@@ -54,6 +54,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { dom } from "@fortawesome/fontawesome-svg-core";
 import router from "../router";
 import VueGtag from "vue-gtag";
+import FlagIcon from 'vue-flag-icon'
 
 Vue.use(LinkPlugin);
 Vue.use(TablePlugin);
@@ -71,6 +72,7 @@ Vue.use(FormGroupPlugin);
 Vue.use(FormCheckboxPlugin);
 Vue.use(NavbarPlugin);
 Vue.use(FormInputPlugin);
+Vue.use(FlagIcon);
 
 Vue.component('b-form', BForm)
 

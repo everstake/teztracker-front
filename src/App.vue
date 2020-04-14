@@ -1,7 +1,7 @@
 <template>
   <div id="app" :key="$route.path || getAppNetwork">
     <TopMenu />
-    <router-view></router-view>
+    <router-view :key="langChangeKey"></router-view>
     <Footer showLogo />
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 import TopMenu from "./components/partials/menus/TopMenu";
 import Footer from "./components/partials/menus/Footer";
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   name: "app",
@@ -18,7 +18,17 @@ export default {
     Footer
   },
   computed: {
-    ...mapGetters('app', ['getAppNetwork'])
+    ...mapGetters("app", ["getAppNetwork"])
+  },
+  data() {
+    return {
+      langChangeKey: 0
+    };
+  },
+  created() {
+    this.$eventBus.$on("lang-change", val => {
+      this.langChangeKey += val;
+    });
   }
 };
 </script>
