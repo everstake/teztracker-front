@@ -12,10 +12,6 @@
 			:per-page="0"
 			borderless
 			class="transactions-table table-responsive-md"
-			@row-selected="handleRowClick"
-			selectable
-			:select-mode="'single'"
-			:tbody-tr-class="'baking-list-row'"
 		>
 		</b-table>
 
@@ -111,18 +107,6 @@ export default {
     },
     async perPage(value) {
       await this.reload({page: value});
-    },
-    'selectedRow.currentPage': {
-      deep: true,
-      async handler(value) {
-        await this.reloadAccountRewards(value);
-      }
-    },
-	  'selectedRow.perPage': {
-      deep: true,
-      async handler() {
-        await this.reloadAccountRewards();
-      }
     }
   },
   methods: {
@@ -137,9 +121,9 @@ export default {
       };
 
       const data = await this.$api.getAccountRewards(props);
-      console.log(data)
+      this.data = data.data;
+      this.count = data.count;
     },
-    async reloadAccountRewards(page = 1) {},
     handleModalPagination(page) {
       this.selectedRow.currentPage = page;
     }
