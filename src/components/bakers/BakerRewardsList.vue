@@ -54,28 +54,15 @@ export default {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
-        { key: "cycle", label: 'Cycle' },
-        { key: "stakingBalance", label: 'Staking Balance' },
-        { key: "baking", label: 'Baking' },
-        { key: "delegators", label: this.$t("bakerSingle") },
+        { key: "cycle", label: this.$tc("common.cycle", 1) },
+        { key: "stakingBalance", label: this.$t("common.stakingBal") },
+        { key: "baking", label: this.$t("bakerSingle.baking") },
+        { key: "delegators", label: this.$t("common.delegators") },
         { key: "endorsements", label: this.$tc("opTypes.endorsement", 2) },
         { key: "losses", label: this.$t("common.losses") },
-        { key: "fees", label: this.$t("common.fees") }
+        { key: "fees", label: this.$t("common.fee") }
       ],
-      selectedRow: {
-        data: null,
-        count: 0,
-        fields: [
-          { key: "level", label: this.$t("common.blockId") },
-          { key: "priority", label: 'Priority' },
-          { key: "reward", label: 'Rewards' },
-          { key: "timestamp", label: this.$t("common.timestamp") }
-        ],
-        currentPage: 1
-      },
       count: 0,
-      total: null,
-      future: [],
       data: []
     };
   },
@@ -92,13 +79,10 @@ export default {
       }
     },
     async perPage(value) {
-      await this.reload({page: value});
+      await this.reload({ page: value });
     }
   },
   methods: {
-    async handleRowClick(row) {
-      return row;
-    },
     async reload(page = 1) {
       const props = {
         page,
@@ -109,9 +93,6 @@ export default {
       const data = await this.$api.getAccountRewards(props);
       this.data = data.data;
       this.count = data.count;
-    },
-    handleModalPagination(page) {
-      this.selectedRow.currentPage = page;
     }
   },
   async created() {

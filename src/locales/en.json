@@ -8,7 +8,6 @@
     "baker": "Baker | Bakers",
     "capacity": "Capacity",
     "fee": "Fee",
-    "fees": "Fees",
     "block": "Block | Blocks",
     "from": "From",
     "to": "To",
@@ -32,7 +31,9 @@
     "home": "Home",
     "opType": "Operation type",
     "other": "Other",
-    "losses": "Losses"
+    "losses": "Losses",
+    "delegators": "Delegators",
+    "reward": "Reward | Rewards"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
