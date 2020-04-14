@@ -29,28 +29,6 @@
 			:total-rows="count"
 			:per-page="perPage"
 		/>
-
-		<div>
-			<b-modal id="modal-baking" size="lg" centered hide-header hide-footer>
-				<b-table
-					show-empty
-					:items="selectedRow.data"
-					:fields="selectedRow.fields"
-					:current-page="selectedRow.currentPage"
-					:per-page="0"
-					borderless
-					class="transactions-table table-responsive-md baker-baking-table"
-				>
-				</b-table>
-				
-				<Pagination
-					v-model="selectedRow.currentPage"
-					@change="handleModalPagination"
-					:total-rows="selectedRow.count"
-					:per-page="selectedRow.perPage"
-				/>
-			</b-modal>
-		</div>
 	</div>
 </template>
 
@@ -77,12 +55,12 @@ export default {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
         { key: "cycle", label: 'Cycle' },
-        { key: "stakingBalance", label: 'StakingBalance' },
+        { key: "stakingBalance", label: 'Staking Balance' },
         { key: "baking", label: 'Baking' },
-        { key: "delegators", label: 'Delegators' },
-        { key: "endorsements", label: 'Endorsements' },
-        { key: "losses", label: 'Losses' },
-        { key: "fees", label: 'Fees' }
+        { key: "delegators", label: this.$t("bakerSingle") },
+        { key: "endorsements", label: this.$tc("opTypes.endorsement", 2) },
+        { key: "losses", label: this.$t("common.losses") },
+        { key: "fees", label: this.$t("common.fees") }
       ],
       selectedRow: {
         data: null,

@@ -8,6 +8,7 @@
     "baker": "Baker | Bakers",
     "capacity": "Capacity",
     "fee": "Fee",
+    "fees": "Fees",
     "block": "Block | Blocks",
     "from": "From",
     "to": "To",
@@ -29,7 +30,8 @@
     "protocolAmendments": "Protocol amendments",
     "vote": "Vote",
     "home": "Home",
-    "opType": "Operation type"
+    "opType": "Operation type",
+    "losses": "Losses"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
