@@ -13,6 +13,14 @@
 			borderless
 			class="transactions-table table-responsive-md"
 		>
+			<template slot="stakingBalance" slot-scope="row">
+				{{ row.item.stakingBalance | tezos }}
+			</template>
+			
+			<template slot="fees" slot-scope="row">
+				{{ row.item.fees || '----' }}
+			</template>
+			
 		</b-table>
 
 		<Pagination
