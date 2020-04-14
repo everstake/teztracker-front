@@ -3,11 +3,11 @@ export default {
     $_network() {
       switch (this.$route.params.network) {
         case "mainnet":
-          return "Mainnet";
+          return this.$t("nets.mainnet");
         case "babylonnet":
-          return "Babylonnet";
+          return this.$t("nets.babylonnet");
         case "carthagenet":
-          return "Carthagenet";
+          return this.$t("nets.carthagenet");
         default:
           return "Mainnet";
       }

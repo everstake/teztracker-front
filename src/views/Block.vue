@@ -19,7 +19,7 @@
             <b-col lg="12">
               <b-card no-body>
                 <b-tabs>
-                  <b-tab title="Transactions" active>
+                  <b-tab :title="$tc('opTypes.tx', 2)" active>
                     <b-card-header>
                       <div class="break-word">
                         <h3>
@@ -34,7 +34,7 @@
                       <TxsList :block="block" />
                     </b-card-body>
                   </b-tab>
-                  <b-tab title="Endorsements">
+                  <b-tab :title="$tc('opTypes.endorsement', 2)">
                     <b-card-header>
                       <div class="break-word">
                         <h3>
@@ -49,7 +49,7 @@
                       <EndorsementsList :disable-pagination="true" :block-hash="block.hash" />
                     </b-card-body>
                   </b-tab>
-                  <b-tab title="Other">
+                  <b-tab :title="$t('common.other')">
                     <b-card-header>
                       <div class="break-word">
                         <h3>
