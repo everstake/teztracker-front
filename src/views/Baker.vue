@@ -77,7 +77,7 @@
                     </b-card-body>
                   </b-tab>
   
-                  <b-tab title="Rewards">
+                  <b-tab :title="$tc('common.reward', 2)">
                     <b-card-header>
                       <div class="break-word">
                         <h3>
