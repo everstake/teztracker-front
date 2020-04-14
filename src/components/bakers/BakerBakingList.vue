@@ -15,7 +15,7 @@
 			@row-selected="handleRowClick"
 			selectable
 			:select-mode="'single'"
-			:tbody-tr-class="'baking-list-row'"
+			:tbody-tr-class=getRowClass
 		>
 			<template slot="rewards" slot-scope="row">
 				{{row.item.rewards | tezos}}
@@ -107,7 +107,8 @@ export default {
       count: 0,
       total: null,
       future: [],
-      data: []
+      data: [],
+	    loading: false
     };
   },
   computed: {
@@ -139,8 +140,22 @@ export default {
     }
   },
   methods: {
+    getRowClass(item) {
+      if (item === null || !item.class) {
+        return 'baking-list-row';
+      };
+
+      let type;
+      if (typeof item === "object") {
+        type = item.class === 'total' ? 'is-total' : item.class === 'future' ? 'is-future' : '';
+      }
+
+      return `baking-list-row ${type}`;
+    },
     async handleRowClick(row) {
-      if (row.length === 0) return;
+      if (this.loading || row.length === 0) return;
+      this.loading = true;
+
       const isRowFuture = this.future.find(findedItem => findedItem.cycle === row[0].cycle);
       const isRowTotal = row[0].cycle === 'Total';
       if (isRowFuture || isRowTotal) return;
@@ -151,6 +166,7 @@ export default {
       this.selectedRow.data = data.data;
       this.selectedRow.count = data.count;
       this.$bvModal.show('modal-baking');
+      this.loading = false;
     },
     async reload(page = 1) {
       const props = {
@@ -165,10 +181,10 @@ export default {
         const data = await this.$api.getAccountBaking(props);
 
         this.total = total.data;
-        this.future = future.data;
+        this.future = future.data.map(item => ({...item, class: 'future'}));
         this.data = [
-          {...total.data, cycle: 'Total'},
-          ...future.data,
+          {...total.data, cycle: 'Total', class: 'total'},
+          ...this.future,
           ...data.data
         ];
 
@@ -201,22 +217,66 @@ export default {
 </script>
 
 <style lang="scss">
-	.is-total {
-		background-color: green;
+	.is {
+		&-total {
+			background-color: rgba(48, 146, 130, .7);
+			pointer-events: none;
+			
+			& td {
+				font-weight: 600;
+			}
+		}
+		&-future {
+			background-color: rgba(48, 146, 130, .3);
+			pointer-events: none;
+		}
 	}
 	.baking-list-row {
 		cursor: pointer;
 		
-		&:focus {
+		&:focus,
+		&:active,
+		&:hover {
 			outline: none;
+		}
+	}
+	
+	.baking-list-row {
+		&.b-table-row-selected {
+			background: none;
+			
+			& td,
+			& th,
+			& tr {
+				background-color: rgba(48, 146, 130, .7);
+			}
+		}
+		
+		&.is-total.b-table-row-selected {
+			background-color: #fff;
+			
+			& td,
+			& th,
+			& tr {
+				background-color: rgba(48, 146, 130, .7);
+			}
+			
+			&.is-future.b-table-row-selected {
+				& td,
+				& th,
+				& tr {
+					background-color: rgba(48, 146, 130, .3);
+				}
+			}
 		}
 	}
 	
 	.baker-baking-table a {
 		color: $color-brand;
 	}
-
-	.page-item.active .page-link,
+	
+  .page-link,
+  .page-item.active .page-link,
 	.page-item.disabled .page-link,
 	.page-link {
 		background-color: transparent;
@@ -224,11 +284,18 @@ export default {
 		border: none;
 		outline: none;
 	}
+  
+  .page-link {
+	  color: #9ea0a5;
+  }
 	
 	.page-item:focus,
 	.page-link:focus {
 		box-shadow: none;
 		outline: none;
 	}
-	
+
+	.page-link:hover {
+		color: #309282;
+	}
 </style>

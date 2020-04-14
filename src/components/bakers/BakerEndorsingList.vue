@@ -1,226 +1,271 @@
 <template>
-	<div class="endorsing-list">
-		<div class="d-flex justify-content-between mb-2">
-			<PerPageSelect @per-page="$_setPerPage" />
-		</div>
-		
-		<b-table
-			show-empty
-			:items="data"
-			:fields="fields"
-			:current-page="currentPage"
-			:per-page="0"
-			borderless
-			class="transactions-table table-responsive-md"
-			@row-selected="handleRowClick"
-			selectable
-			:select-mode="'single'"
-			:tbody-tr-class="'endorsing-list-row'"
-		>
-			<template slot="rewards" slot-scope="row">
-				{{row.item.rewards | tezos}}
-			</template>
-		</b-table>
-		
-		<Pagination
-			v-model="currentPage"
-			@change="$_handleCurrentPageChange"
-			:total-rows="count"
-			:per-page="perPage"
-		/>
-		
-		<div>
-			<b-modal id="modal-endorsing" size="xl" centered hide-header hide-footer>
-				<b-table
-					show-empty
-					:items="selectedRow.data"
-					:fields="selectedRow.fields"
-					:current-page="selectedRow.currentPage"
-					:per-page="selectedRow.perPage"
-					borderless
-					class="transactions-table table-responsive-md baker-endorsing-table"
-				>
-					<template slot="level" slot-scope="row">
-						<b-link :to="{ name: 'block', params: { level: row.item.level } }">
-							{{ row.item.level | formatInteger }}
-						</b-link>
-					</template>
-					<template slot="reward" slot-scope="row">
-						{{row.item.reward | tezos}}
-					</template>
-					<template slot="avgPriority" slot-scope="row">
-						{{ row.item.avgPriority === 0 ? 0 : row.item.avgPriority.toFixed(3) }}
-					</template>
-					<template slot="rewards" slot-scope="row">
-						{{row.item.reward | tezos}}
-					</template>
-					<template slot="timestamp" slot-scope="row">
-						{{ row.item.timestamp | timeformat(dateFormat) }}
-					</template>
-				</b-table>
-				
-				<Pagination
-					v-model="selectedRow.currentPage"
-					@change="handleModalPagination"
-					:total-rows="selectedRow.count"
-					:per-page="selectedRow.perPage"
-				/>
-			</b-modal>
-		</div>
+<div class="endorsing-list">
+	<div class="d-flex justify-content-between mb-2">
+		<PerPageSelect @per-page="$_setPerPage" />
 	</div>
+	
+	<b-table
+		show-empty
+		:items="data"
+		:fields="fields"
+		:current-page="currentPage"
+		:per-page="0"
+		borderless
+		class="transactions-table table-responsive-md"
+		@row-selected="handleRowClick"
+		selectable
+		:select-mode="'single'"
+		:tbody-tr-class=getRowClass
+	>
+		<template slot="rewards" slot-scope="row">
+			{{row.item.rewards | tezos}}
+		</template>
+	</b-table>
+	
+	<Pagination
+		v-model="currentPage"
+		@change="$_handleCurrentPageChange"
+		:total-rows="count"
+		:per-page="perPage"
+	/>
+	
+	<div>
+		<b-modal id="modal-endorsing" size="xl" centered hide-header hide-footer>
+			<b-table
+				show-empty
+				:items="selectedRow.data"
+				:fields="selectedRow.fields"
+				:current-page="selectedRow.currentPage"
+				:per-page="0"
+				borderless
+				class="transactions-table table-responsive-md baker-endorsing-table"
+			>
+				<template slot="level" slot-scope="row">
+					<b-link :to="{ name: 'block', params: { level: row.item.level } }">
+						{{ row.item.level | formatInteger }}
+					</b-link>
+				</template>
+				<template slot="reward" slot-scope="row">
+					{{row.item.reward | tezos}}
+				</template>
+				<template slot="avgPriority" slot-scope="row">
+					{{ row.item.avgPriority === 0 ? 0 : row.item.avgPriority.toFixed(3) }}
+				</template>
+				<template slot="rewards" slot-scope="row">
+					{{row.item.reward | tezos}}
+				</template>
+				<template slot="timestamp" slot-scope="row">
+					{{ row.item.timestamp | timeformat(dateFormat) }}
+				</template>
+			</b-table>
+			
+			<Pagination
+				v-model="selectedRow.currentPage"
+				@change="handleModalPagination"
+				:total-rows="selectedRow.count"
+				:per-page="selectedRow.perPage"
+			/>
+		</b-modal>
+	</div>
+</div>
 </template>
 
 <script>
-  import PerPageSelect from "@/components/partials/PerPageSelect";
-  import Pagination from "../partials/Pagination";
-  import setPerPage from "@/mixins/setPerPage";
-  import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-  import { mapState } from "vuex"
+import PerPageSelect from "@/components/partials/PerPageSelect";
+import Pagination from "../partials/Pagination";
+import setPerPage from "@/mixins/setPerPage";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
+import { mapState } from "vuex"
 
-  export default {
-    name: "BakerEndorsingList",
-    components: {
-      PerPageSelect,
-      Pagination
-    },
-    mixins: [
-      setPerPage,
-      handleCurrentPageChange
-    ],
-    props: ['account'],
-    data() {
-      return {
-        fields: [
-          { key: "cycle", label: 'Cycle' },
+export default {
+  name: "BakerEndorsingList",
+  components: {
+    PerPageSelect,
+    Pagination
+  },
+  mixins: [
+    setPerPage,
+    handleCurrentPageChange
+  ],
+  props: ['account'],
+  data() {
+    return {
+      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+	    perPage: 20,
+      fields: [
+        { key: "cycle", label: 'Cycle' },
+        { key: "slots", label: this.$t("endorsementsList.slots") },
+        { key: "missed", label: 'Missed' },
+        { key: "rewards", label: 'Rewards' }
+      ],
+      selectedRow: {
+        cycleId: null,
+	      data: null,
+	      count: 0,
+	      fields: [
+          { key: "level", label: this.$t("common.blockId") },
           { key: "slots", label: this.$t("endorsementsList.slots") },
-          { key: "missed", label: 'Missed' },
-          { key: "rewards", label: 'Rewards' }
-        ],
-	      selectedRow: {
-          cycleId: null,
-		      data: null,
-		      count: 0,
-		      fields: [
-            { key: "level", label: this.$t("common.blockId") },
-            { key: "slots", label: this.$t("endorsementsList.slots") },
-            { key: "rewards", label: 'Rewards' },
-            { key: "timestamp", label: this.$t("common.timestamp") }
-		      ],
-		      currentPage: this.$constants.INITIAL_CURRENT_PAGE
-	      },
-        count: null,
-	      total: null,
-        future: [],
-        data: []
-      };
-    },
-	  computed: {
-      ...mapState("app", {
-        dateFormat: state => state.dateFormat
-      }),
-	  },
-    watch: {
-      currentPage: {
-        async handler(value) {
-          await this.reload(value);
-        }
+          { key: "rewards", label: 'Rewards' },
+          { key: "timestamp", label: this.$t("common.timestamp") }
+	      ],
+	      currentPage: 1
       },
-      async perPage() {
-        await this.reload();
-      },
-      'selectedRow.currentPage': {
-        async handler(value) {
-          await this.reloadAccountEndorsingItem(value);
-        }
-      },
-      'selectedRow.perPage': {
-        async handler() {
-          await this.reloadAccountEndorsingItem();
-        }
+      count: 0,
+      total: null,
+      future: [],
+      data: [],
+	    loading: false
+    };
+  },
+  computed: {
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
+    }),
+  },
+  watch: {
+    currentPage: {
+      immediate: true,
+      async handler(value) {
+        await this.reload(value);
       }
     },
-    methods: {
-      async handleRowClick(row) {
-        if (row.length === 0) return;
-
-        const isRowTotal = row[0].cycle === 'Total';
-        if (isRowTotal) return;
-        
-        this.cycleId = row[0].cycle;
-
-        const data = await this.$api.getAccountEndorsingItem({ account: this.account, cycleId: row[0].cycle });
-        this.selectedRow.data = data.data;
-        this.selectedRow.count = data.count;
-        this.$bvModal.show('modal-endorsing');
-      },
-      async reload(page = 1) {
-        const props = {
-          page,
-          limit: this.perPage,
-          account: this.account
-        };
-        
-        if (page === 1) {
-          const total = await this.$api.getAccountEndorsingTotal({account: this.account});
-          const data = await this.$api.getAccountEndorsing(props);
-
-          this.total = total.data;
-          this.data = [
-            {...total.data, cycle: 'Total'},
-            ...data.data
-          ];
-          this.count = data.count + 1;
-        } else {
-          const data = await this.$api.getAccountEndorsing(props);
-          this.data = data.data;
-        }
-      },
-      async reloadAccountEndorsingItem(page = 1) {
-        const props = {
-          page,
-          account: this.account,
-          cycleId: this.cycleId
-        };
-
-        const data = await this.$api.getAccountEndorsingItem(props);
-        this.selectedRow.data = data.data;
-        this.selectedRow.count = data.count;
-
-      },
-	    handleModalPagination(page) {
-        this.selectedRow.currentPage = page;
-	    }
+    async perPage() {
+      await this.reload();
     },
-    async created() {
-      this.reload();
+    'selectedRow.currentPage': {
+      deep: true,
+      async handler(value) {
+        await this.reloadAccountEndorsingItem(value);
+      }
+    },
+    'selectedRow.perPage': {
+      deep: true,
+      async handler() {
+        await this.reloadAccountEndorsingItem();
+      }
     }
-  };
+  },
+  methods: {
+    getRowClass(item) {
+      if (item === null || !item.class) {
+        return 'endorsing-list-row';
+      };
+
+      let type;
+      if (typeof item === "object") {
+        type = item.class === 'total' ? 'is-total' : item.class === 'future' ? 'is-future' : '';
+      }
+
+      return `endorsing-list-row ${type}`;
+    },
+    async handleRowClick(row) {
+      if (this.loading || row.length === 0) return;
+      this.loading = true;
+
+      const isRowTotal = row[0].cycle === 'Total';
+      if (isRowTotal) return;
+      
+      this.cycleId = row[0].cycle;
+
+      const data = await this.$api.getAccountEndorsingItem({ account: this.account, cycleId: row[0].cycle });
+      this.selectedRow.data = data.data;
+      this.selectedRow.count = data.count;
+      this.$bvModal.show('modal-endorsing');
+      this.loading = false;
+    },
+    async reload(page = 1) {
+      const props = {
+        page,
+        limit: this.perPage,
+        account: this.account
+      };
+      
+      if (page === 1) {
+        const total = await this.$api.getAccountEndorsingTotal({account: this.account});
+        const data = await this.$api.getAccountEndorsing(props);
+
+        this.total = total.data;
+        this.data = [
+          {...total.data, cycle: 'Total', class: 'total'},
+          ...data.data
+        ];
+
+        this.count = data.count;
+      } else {
+        const data = await this.$api.getAccountEndorsing(props);
+        this.data = data.data;
+      }
+    },
+    async reloadAccountEndorsingItem(page = 1) {
+      const props = {
+        page,
+        account: this.account,
+        cycleId: this.cycleId
+      };
+
+      const data = await this.$api.getAccountEndorsingItem(props);
+      this.selectedRow.data = data.data;
+      this.selectedRow.count = data.count;
+
+    },
+    handleModalPagination(page) {
+      this.selectedRow.currentPage = page;
+    }
+  },
+  async created() {
+    this.reload();
+  }
+};
 </script>
 
 <style lang="scss">
-	.endorsing-list-row {
-		cursor: pointer;
-		
-		& a {
-			color: $color-brand;
-		}
-		
-		&:focus {
-			outline: none;
-		}
-		
-		&.b-table-row-selected {
-			color: #fff;
-		}
-	}
+.endorsing-list-row {
+	cursor: pointer;
 	
-	.baker-endorsing-table a {
+	& a {
 		color: $color-brand;
 	}
 	
-	.endorsing-list .page-link {
-		background-color: transparent;
-		color: #309282;
-		border: none;
+	&:focus {
+		outline: none;
 	}
+	
+	&.b-table-row-selected {
+		background: none;
+		
+		& td,
+		& th,
+		& tr {
+			background-color: rgba(48, 146, 130, .7);
+		}
+	}
+	
+	&.is-total.b-table-row-selected {
+		background-color: #fff;
+		
+		& td,
+		& th,
+		& tr {
+			background-color: rgba(48, 146, 130, .7);
+		}
+		
+		&.is-future.b-table-row-selected {
+			& td,
+			& th,
+			& tr {
+				background-color: rgba(48, 146, 130, .3);
+			}
+		}
+	}
+}
+
+.baker-endorsing-table a {
+	color: $color-brand;
+}
+
+.endorsing-list .page-link {
+	background-color: transparent;
+	color: #309282;
+	border: none;
+}
 </style>
