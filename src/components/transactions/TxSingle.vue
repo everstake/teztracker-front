@@ -140,12 +140,13 @@ export default {
           key: this.$t("txSingle.reward"),
           value: this.endorsementReward
         });
-      } else if (this.reward) {
-        res.push({
-          key: this.$t("txSingle.reward"),
-          value: this.reward
-        });
       }
+      // else if (this.reward) {
+      //   res.push({
+      //     key: this.$t("txSingle.reward"),
+      //     value: this.reward
+      //   });
+      // }
       if (this.claimedAmount && this.kind === 'activation') {
         res.push({
           key: this.$t("txSingle.amountClaimed"),
