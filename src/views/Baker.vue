@@ -81,7 +81,7 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">{{ $t('bakerSingle.baking') }}</span>
+                          <span class="text">{{ $t('listTypes.bakingList') }}</span>
                         </h3>
                       </div>
                     </b-card-header>
@@ -93,7 +93,7 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Endorsing History</span>
+                          <span class="text">{{ $t('listTypes.endorsementsList') }}</span>
                         </h3>
                       </div>
                     </b-card-header>

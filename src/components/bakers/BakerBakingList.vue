@@ -93,13 +93,13 @@ export default {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
-        { key: "cycle", label: 'Cycle' },
-        { key: "blocks", label: 'Blocks' },
+        { key: "cycle", label: this.$tc('common.cycle', 1) },
+        { key: "blocks", label: this.$tc("common.block", 2) },
         { key: "avgPriority", label: 'AvgPriority' },
         { key: "missed", label: 'Missed' },
         { key: "stolen", label: 'Stolen' },
-        { key: "rewards", label: 'Rewards' },
-        { key: "status", label: 'Status' }
+        { key: "rewards", label: this.$tc('common.reward', 2) },
+        { key: "status", label: this.$tc('statusTypes.status') }
       ],
       selectedRow: {
         type: null,

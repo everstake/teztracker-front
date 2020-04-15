@@ -92,10 +92,10 @@ export default {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
-        { key: "cycle", label: 'Cycle' },
+        { key: "cycle", label: this.$tc('common.cycle', 1) },
         { key: "slots", label: this.$t("endorsementsList.slots") },
         { key: "missed", label: 'Missed' },
-        { key: "rewards", label: 'Rewards' }
+        { key: "rewards", label: this.$tc('common.reward', 2) }
       ],
       selectedRow: {
         cycleId: null,
@@ -104,7 +104,7 @@ export default {
 	      fields: [
           { key: "level", label: this.$t("common.blockId") },
           { key: "slots", label: this.$t("endorsementsList.slots") },
-          { key: "rewards", label: 'Rewards' },
+          { key: "rewards", label: this.$tc('common.reward', 2) },
           { key: "timestamp", label: this.$t("common.timestamp") }
 	      ],
 	      currentPage: 1

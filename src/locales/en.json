@@ -30,7 +30,8 @@
     "vote": "Vote",
     "home": "Home",
     "opType": "Operation type",
-    "other": "Other"
+    "other": "Other",
+    "reward": "Reward | Rewards"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
