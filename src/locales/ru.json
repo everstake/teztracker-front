@@ -144,7 +144,7 @@
 	},
 	"txSingle": {
 		"secret": "Секрет",
-		"slotsEndorsed": "Заверенные слоты",
+		"slotsEndorsed": "Заверенны(й/е) слот(ы)",
     "confirmations": "Подтверждения",
     "deposit": "Депозит",
     "reward": "Вознаграждение",

@@ -144,7 +144,7 @@
   },
   "txSingle": {
     "secret": "Secret",
-    "slotsEndorsed": "Slots endorsed",
+    "slotsEndorsed": "Slot(s) endorsed",
     "confirmations": "Confirmations",
     "deposit": "Deposit",
     "reward": "Reward",
