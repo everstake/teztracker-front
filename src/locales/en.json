@@ -30,7 +30,8 @@
     "vote": "Vote",
     "home": "Home",
     "opType": "Operation type",
-    "other": "Other"
+    "other": "Other",
+    "baking": "Baking"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -77,7 +78,9 @@
     "publicBakersPage": "Public bakers page",
     "accsPage": "Accounts page",
     "contractsPage": "Contracts page",
-    "protocolsPage": "Protocols page"
+    "protocolsPage": "Protocols page",
+    "generalChartsPage": "General charts page",
+    "bakingChartsPage": "Baking charts page"
   },
   "infoTypes": {
     "txInfo": "Transaction information",
@@ -122,7 +125,6 @@
     "totalBal": "Total balance",
     "liquidBal": "Liquid balance",
     "currDeposits": "Current deposits",
-    "baking": "Baking",
     "endorsement": "Endorsement",
     "pendingRewards": "Pending rewards"
   },
@@ -180,7 +182,9 @@
     "publicBakers": "Public bakers",
     "dateFormat": "Date format",
     "operations": "Operations",
-    "governance": "Governance"
+    "governance": "Governance",
+    "charts": "Charts",
+    "general": "General"
   },
   "nets": {
     "mainnet": "Mainnet",
@@ -277,5 +281,8 @@
     "howToRunTezos": "How to run Tezos?",
     "gitRepo": "Git repository",
     "dockerImages": "Docker images"
+  },
+  "charts": {
+    "numOfBlocks": "Number of blocks"
   }
 }

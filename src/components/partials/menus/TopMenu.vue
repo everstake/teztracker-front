@@ -127,6 +127,17 @@
               {{ $t("listTypes.protocolsList") }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
+          <b-nav-item-dropdown
+            :text="$t('header.charts')"
+            :disabled="currentNetwork !== 'mainnet'"
+          >
+            <b-dropdown-item :to="{ name: 'general_charts' }">
+              {{ $t("header.general") }}
+            </b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'baking_charts' }">
+              {{ $t("common.baking") }}
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

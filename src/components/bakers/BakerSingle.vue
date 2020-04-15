@@ -150,7 +150,7 @@
 
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.baking") }}
+                    {{ $t("common.baking") }}
                   </b-col>
                   <b-col lg="8" class="text-accent">{{
                     bakerInfo.bakingDeposits | tezos
@@ -171,7 +171,7 @@
 
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.baking") }}
+                    {{ $t("common.baking") }}
                   </b-col>
                   <b-col lg="8" class="text-accent">{{
                     bakerInfo.bakingRewards | tezos
