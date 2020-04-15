@@ -142,9 +142,10 @@ export default {
 		box-shadow: none;
 		outline: none;
 	}
-	
+
 	.rewards-list-row {
 		&.active {
+			font-weight: 600;
 			background-color: rgba(48, 146, 130, .7);
 		}
 	}
