@@ -47,6 +47,7 @@
 		"delegationsList": "Список делегаций",
 		"originationsList": "Список созданий",
 		"activationsList": "Список активаций",
+		"bakingList": "Список бейкингов",
 		"dblBakingList": "Список двойных бейкингов",
 		"dblEndorsementsList": "Список двойных заверений",
 		"otherOpsList": "Список других операций",
@@ -124,7 +125,9 @@
 		"currDeposits": "Текущие депозиты",
 		"baking": "Бейкинг",
 		"endorsement": "Заверение",
-		"pendingRewards": "Ожидаемые вознаграждения"
+		"pendingRewards": "Ожидаемые вознаграждения",
+		"bakingHistory": "История бейкинга",
+		"endorsingHistory": "История заверения"
 	},
 	"blockSingle": {
 		"bakerFee": "Комиссия бейкера",
