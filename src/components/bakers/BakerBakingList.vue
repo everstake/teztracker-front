@@ -18,7 +18,7 @@
 			:tbody-tr-class=getRowClass
 		>
 			<template slot="rewards" slot-scope="row">
-				{{row.item.rewards | tezos}}
+				{{ row.item.rewards | tezos }}
 			</template>
 		</b-table>
 
@@ -48,8 +48,14 @@
 					<template slot="reward" slot-scope="row">
 						{{row.item.reward | tezos}}
 					</template>
+					<template slot="deposit" slot-scope="row">
+						{{row.item.deposit | tezos}}
+					</template>
 					<template slot="timestamp" slot-scope="row">
 						{{ row.item.timestamp | timeformat(dateFormat) }}
+					</template>
+					<template slot="estimated_time" slot-scope="row">
+						{{ formatDate(row.item.estimated_time) }}
 					</template>
 				</b-table>
 				
@@ -70,6 +76,7 @@ import Pagination from "../partials/Pagination";
 import setPerPage from "@/mixins/setPerPage";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 import { mapState } from "vuex"
+import moment from "moment"
 
 export default {
   name: "BakerBakingList",
@@ -91,17 +98,14 @@ export default {
         { key: "avgPriority", label: 'AvgPriority' },
         { key: "missed", label: 'Missed' },
         { key: "stolen", label: 'Stolen' },
-        { key: "rewards", label: 'Rewards' }
+        { key: "rewards", label: 'Rewards' },
+        { key: "status", label: 'Status' }
       ],
       selectedRow: {
+        type: null,
         data: null,
         count: 0,
-        fields: [
-          { key: "level", label: this.$t("common.blockId") },
-          { key: "priority", label: 'Priority' },
-          { key: "reward", label: 'Rewards' },
-          { key: "timestamp", label: this.$t("common.timestamp") }
-        ],
+        fields: [],
         currentPage: 1
       },
       count: 0,
@@ -140,17 +144,31 @@ export default {
     }
   },
   methods: {
+    formatDate(date) {
+      return moment(date).format(this.dateFormat);
+    },
     getRowClass(item) {
-      if (item === null || !item.class) {
+      if (item === null || (!item.class || !item.status)) {
         return 'baking-list-row';
-      };
-
-      let type;
-      if (typeof item === "object") {
-        type = item.class === 'total' ? 'is-total' : item.class === 'future' ? 'is-future' : '';
       }
 
-      return `baking-list-row ${type}`;
+      const classes = ['baking-list-row'];
+
+      if (typeof item === "object") {
+        if (item.class && item.class === 'total') {
+          classes.push('is-total');
+        }
+
+        if (item.class && item.class === 'future') {
+          classes.push('is-future');
+        }
+
+        if (item.status && item.status === 'active') {
+          classes.push('is-active');
+        }
+      }
+      
+      return classes.join(' ');
     },
     async handleRowClick(row) {
       if (this.loading || row.length === 0) return;
@@ -158,13 +176,38 @@ export default {
 
       const isRowFuture = this.future.find(findedItem => findedItem.cycle === row[0].cycle);
       const isRowTotal = row[0].cycle === 'Total';
-      if (isRowFuture || isRowTotal) return;
 
+      if (isRowTotal) return;
+
+			let modalData;
+			let modalFields;
       this.cycleId = row[0].cycle;
 
-      const data = await this.$api.getAccountBakingItem({ account: this.account, cycleId: row[0].cycle });
-      this.selectedRow.data = data.data;
-      this.selectedRow.count = data.count;
+      if (isRowFuture) {
+        this.selectedRow.type = 'future';
+        modalData = await this.$api.getAccountBakingRightsFuture({ account: this.account, cycleId: row[0].cycle });
+
+        modalFields = [
+          { key: "level", label: this.$t("common.blockId") },
+          { key: "priority", label: 'Priority' },
+          { key: "reward", label: 'Rewards' },
+          { key: "deposit", label: 'Deposit' },
+          { key: "estimated_time", label: 'Estimated time' }
+	      ];
+      } else {
+        modalData = await this.$api.getAccountBakingItem({ account: this.account, cycleId: row[0].cycle });
+
+        modalFields = [
+          { key: "level", label: this.$t("common.blockId") },
+          { key: "priority", label: 'Priority' },
+          { key: "reward", label: 'Rewards' },
+          { key: "timestamp", label: this.$t("common.timestamp") }
+        ];
+      }
+
+      this.selectedRow.fields = modalFields;
+      this.selectedRow.data = modalData.data;
+      this.selectedRow.count = modalData.count;
       this.$bvModal.show('modal-baking');
       this.loading = false;
     },
@@ -180,10 +223,10 @@ export default {
         const future = await this.$api.getAccountBakingFuture({ account: this.account });
         const data = await this.$api.getAccountBaking(props);
 
-        this.total = total.data;
+        this.total = { ...total.data, status: 'Total' };
         this.future = future.data.map(item => ({...item, class: 'future'}));
         this.data = [
-          {...total.data, cycle: 'Total', class: 'total'},
+          {...total.data, cycle: 'Total', class: 'total', status: 'Total'},
           ...this.future,
           ...data.data
         ];
@@ -201,7 +244,15 @@ export default {
         cycleId: this.cycleId
       };
 
-      const data = await this.$api.getAccountBakingItem(props);
+      const { type } = this.selectedRow;
+      let data;
+
+      if (type !== null && type !== 'future') {
+	      data = await this.$api.getAccountBakingItem(props);
+      } else {
+        data = await this.$api.getAccountBakingRightsFuture(props);
+      }
+
       this.selectedRow.data = data.data;
       this.selectedRow.count = data.count;
 
@@ -228,7 +279,6 @@ export default {
 		}
 		&-future {
 			background-color: rgba(48, 146, 130, .3);
-			pointer-events: none;
 		}
 	}
 	.baking-list-row {
@@ -268,6 +318,11 @@ export default {
 					background-color: rgba(48, 146, 130, .3);
 				}
 			}
+		}
+		
+		&.is-future.is-active {
+			font-weight: 600;
+			background-color: rgba(48, 146, 130, .7);
 		}
 	}
 	

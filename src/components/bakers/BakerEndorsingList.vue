@@ -91,7 +91,6 @@ export default {
   data() {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-	    perPage: 20,
       fields: [
         { key: "cycle", label: 'Cycle' },
         { key: "slots", label: this.$t("endorsementsList.slots") },

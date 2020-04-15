@@ -58,6 +58,10 @@ const TzAPI = {
     const { account, cycleId } = opts;
     return get(this.API_URL(), `accounts/baking/${account}/blocks/${cycleId}`, opts, true );
   },
+  getAccountBakingRightsFuture(opts = {}) {
+    const { account, cycleId } = opts;
+    return get(this.API_URL(), `accounts/baking/${account}/future_baking_rights/${cycleId}`, opts, true );
+  },
   getAccountBakingTotal(opts = {}) {
     const { account } = opts;
     return get(this.API_URL(), `accounts/baking/${account}/total`, opts );
