@@ -12,6 +12,7 @@
 			:per-page="0"
 			borderless
 			class="transactions-table table-responsive-md"
+			:tbody-tr-class=getRowClass
 		>
 			<template slot="stakingBalance" slot-scope="row">
 				{{ row.item.stakingBalance | tezos }}
@@ -20,7 +21,6 @@
 			<template slot="fees" slot-scope="row">
 				{{ row.item.fees || '----' }}
 			</template>
-			
 		</b-table>
 
 		<Pagination
@@ -60,7 +60,8 @@ export default {
         { key: "delegators", label: this.$t("common.delegators") },
         { key: "endorsements", label: this.$tc("opTypes.endorsement", 2) },
         { key: "losses", label: this.$t("common.losses") },
-        { key: "fees", label: this.$t("common.fee") }
+        { key: "fees", label: this.$t("common.fee") },
+        { key: "status", label: this.$t("statusTypes.status") },
       ],
       count: 0,
       data: []
@@ -83,6 +84,16 @@ export default {
     }
   },
   methods: {
+    getRowClass(item) {
+      if (item === null || !item.status) {
+        return 'rewards-list-row';
+      }
+
+      if (typeof item === "object") {
+        const { status } = item;
+        return `rewards-list-row ${status === 'active' ? 'active' : ''}`;
+      }
+    },
     async reload(page = 1) {
       const props = {
         page,
@@ -130,6 +141,12 @@ export default {
 	.page-link:focus {
 		box-shadow: none;
 		outline: none;
+	}
+	
+	.rewards-list-row {
+		&.active {
+			background-color: rgba(48, 146, 130, .7);
+		}
 	}
 	
 </style>
