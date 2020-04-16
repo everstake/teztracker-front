@@ -22,6 +22,7 @@ export default {
           scales: {
             yAxes: [
               {
+                // type: "logarithmic",
                 display: true,
                 gridLines: {
                   display: false
@@ -33,23 +34,31 @@ export default {
             ]
           },
           tooltips: {
-            enabled: Boolean(this.customTooltip)
+            enabled: Boolean(this.customTooltip),
+            titleFontFamily: "Montserrat Alternates"
           },
           elements: {
             line: {
-              borderColor: ["#309182"],
-              borderWidth: 3,
-              fill: "black"
+              borderColor: "rgba(48, 146, 130, 0.6)",
+              borderWidth: 2,
+              fill: true,
+              backgroundColor: "rgba(48, 146, 130, 0.15)",
+              tension: 0.2
+              // cubicInterpolationMode: 'monotone',
             },
             point: {
-
+              borderColor: "rgb(48, 146, 130)",
+              backgroundColor: "rgb(48, 146, 130, 1)",
+              radius: 2,
+              hitRadius: 10,
+              hoverRadius: 4,
+              hoverBorderWidth: 2
             }
           }
         };
       }
     }
   },
-  // created() won't work
   mounted() {
     this.renderChart(this.chartData, this.options);
   }
