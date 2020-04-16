@@ -95,9 +95,9 @@ export default {
       fields: [
         { key: "cycle", label: this.$tc('common.cycle', 1) },
         { key: "blocks", label: this.$tc("common.block", 2) },
-        { key: "avgPriority", label: 'AvgPriority' },
-        { key: "missed", label: 'Missed' },
-        { key: "stolen", label: 'Stolen' },
+        { key: "avgPriority", label: this.$t("bakerSingle.avgPriority") },
+        { key: "missed", label: this.$t("bakerSingle.missed") },
+        { key: "stolen", label: this.$t("bakerSingle.stolen") },
         { key: "rewards", label: this.$tc('common.reward', 2) },
         { key: "status", label: this.$tc('statusTypes.status') }
       ],
@@ -173,7 +173,7 @@ export default {
       if (this.loading || row.length === 0) return;
       this.loading = true;
 
-      const isRowFuture = this.future.find(findedItem => findedItem.cycle === row[0].cycle);
+      const isRowFuture = row[0].class === 'future';
       const isRowTotal = row[0].cycle === 'Total';
 
       if (isRowTotal) return;
@@ -188,18 +188,19 @@ export default {
 
         modalFields = [
           { key: "level", label: this.$t("common.blockId") },
-          { key: "priority", label: 'Priority' },
-          { key: "reward", label: 'Rewards' },
-          { key: "deposit", label: 'Deposit' },
+          { key: "priority", label: this.$t("common.priority") },
+          { key: "reward", label: this.$tc('common.reward', 2) },
+          { key: "deposit", label: this.$t('common.deposit') },
           { key: "estimated_time", label: 'Estimated time' }
 	      ];
       } else {
+        this.selectedRow.type = 'baking';
         modalData = await this.$api.getAccountBakingItem({ account: this.account, cycleId: row[0].cycle });
 
         modalFields = [
           { key: "level", label: this.$t("common.blockId") },
-          { key: "priority", label: 'Priority' },
-          { key: "reward", label: 'Rewards' },
+          { key: "priority", label: this.$t("common.priority") },
+          { key: "reward", label: this.$tc('common.reward', 2) },
           { key: "timestamp", label: this.$t("common.timestamp") }
         ];
       }
@@ -246,7 +247,7 @@ export default {
       const { type } = this.selectedRow;
       let data;
 
-      if (type !== null && type !== 'future') {
+      if (type === 'baking') {
 	      data = await this.$api.getAccountBakingItem(props);
       } else {
         data = await this.$api.getAccountBakingRightsFuture(props);
