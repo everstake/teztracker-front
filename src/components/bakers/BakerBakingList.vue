@@ -122,7 +122,6 @@ export default {
   },
   watch: {
     currentPage: {
-      immediate: true,
       async handler(value) {
         await this.reload(value);
       }
