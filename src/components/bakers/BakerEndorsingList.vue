@@ -95,7 +95,8 @@ export default {
         { key: "cycle", label: this.$tc('common.cycle', 1) },
         { key: "slots", label: this.$t("endorsementsList.slots") },
         { key: "missed", label: 'Missed' },
-        { key: "rewards", label: this.$tc('common.reward', 2) }
+        { key: "rewards", label: this.$tc('common.reward', 2) },
+        { key: "status", label: this.$tc('statusTypes.status') }
       ],
       selectedRow: {
         cycleId: null,
@@ -146,16 +147,23 @@ export default {
   },
   methods: {
     getRowClass(item) {
-      if (item === null || !item.class) {
+      if (item === null || !item.status) {
         return 'endorsing-list-row';
-      };
-
-      let type;
-      if (typeof item === "object") {
-        type = item.class === 'total' ? 'is-total' : item.class === 'future' ? 'is-future' : '';
       }
 
-      return `endorsing-list-row ${type}`;
+      const classes = ['endorsing-list-row'];
+
+      if (typeof item === "object") {
+        if (item.class && item.class === 'total') {
+          classes.push('is-total');
+        }
+
+        if (item.status && item.status === 'active') {
+          classes.push('is-active');
+        }
+      }
+
+      return classes.join(' ');
     },
     async handleRowClick(row) {
       if (this.loading || row.length === 0) return;
@@ -183,9 +191,9 @@ export default {
         const total = await this.$api.getAccountEndorsingTotal({account: this.account});
         const data = await this.$api.getAccountEndorsing(props);
 
-        this.total = total.data;
+        this.total = { ...total.data, status: 'Total' };
         this.data = [
-          {...total.data, cycle: 'Total', class: 'total'},
+          {...total.data, cycle: 'Total', class: 'total', status: 'Total'},
           ...data.data
         ];
 
@@ -255,6 +263,11 @@ export default {
 				background-color: rgba(48, 146, 130, .3);
 			}
 		}
+	}
+	
+	&.is-active {
+		font-weight: 600;
+		background-color: rgba(48, 146, 130, .5);
 	}
 }
 

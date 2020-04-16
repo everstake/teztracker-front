@@ -167,7 +167,7 @@ export default {
           classes.push('is-active');
         }
       }
-      
+
       return classes.join(' ');
     },
     async handleRowClick(row) {
@@ -322,7 +322,7 @@ export default {
 		
 		&.is-future.is-active {
 			font-weight: 600;
-			background-color: rgba(48, 146, 130, .7);
+			background-color: rgba(48, 146, 130, .5);
 		}
 	}
 	
