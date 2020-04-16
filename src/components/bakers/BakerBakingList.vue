@@ -147,7 +147,7 @@ export default {
       return moment(date).format(this.dateFormat);
     },
     getRowClass(item) {
-      if (item === null || (!item.class || !item.status)) {
+      if (item === null || !item.status) {
         return 'baking-list-row';
       }
 
@@ -319,7 +319,7 @@ export default {
 			}
 		}
 		
-		&.is-future.is-active {
+		&.is-active {
 			font-weight: 600;
 			background-color: rgba(48, 146, 130, .5);
 		}
