@@ -171,6 +171,9 @@
 		"endorsedBlock": "Заверенный блок",
 		"slots": "Слоты"
 	},
+	"delegationsList": {
+		"delegationAmount": "Сумма делегирования"
+	},
 	"dblBakingList": {
 		"accuser": "Обвинитель",
 		"bakerRewards": "Вознаграждения бейкера",
