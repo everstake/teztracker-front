@@ -54,10 +54,7 @@ Vue.filter("tezosToFixed", function(amount) {
 });
 
 Vue.filter("tezosCapacity", function(amount) {
-  if (amount > 0) {
-    return `${numeral(amount).format("0,0[.]000000")} XTZ`;
-  }
-  return "0 XTZ";
+  return `${numeral(amount).format("0,0[.]000000")} XTZ`;
 });
 
 Vue.filter("addPercent", function(amount) {

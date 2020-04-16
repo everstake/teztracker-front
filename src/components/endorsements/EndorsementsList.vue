@@ -167,7 +167,7 @@ export default {
           { key: "level", label: this.$t("endorsementsList.endorsedBlock") },
           { key: "txhash", label: this.$t("hashTypes.endorsementHash") },
           { key: "blockLevel", label: this.$t("common.includedInBlock") },
-          { key: "endorser", label: this.$t("endorsementsList.endorser") },
+          { key: "endorser", label: this.$t("common.endorser") },
           { key: "slots", label: this.$t("endorsementsList.slots") },
           { key: "timestamp", label: this.$t("common.timestamp") }
         ];
@@ -175,7 +175,7 @@ export default {
         this.fields = [
           { key: "level", label: this.$t("endorsementsList.endorsedBlock") },
           { key: "txhash", label: this.$t("hashTypes.endorsementHash") },
-          { key: "endorser", label: this.$t("endorsementsList.endorser") },
+          { key: "endorser", label: this.$t("common.endorser") },
           { key: "timestamp", label: this.$t("common.timestamp") },
         ];
       }
