@@ -16,7 +16,7 @@
 			:tbody-tr-class=getRowClass
 		>
 			<template slot="stakingBalance" slot-scope="row">
-				{{ row.item.stakingBalance | tezos }}
+				{{ row.item.stakingBalance | tezosToFixed }}
 			</template>
 			
 			<template slot="fees" slot-scope="row">
