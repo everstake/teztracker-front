@@ -32,7 +32,9 @@
     "home": "Home",
     "opType": "Operation type",
     "other": "Other",
-    "endorser": "Endorser"
+    "endorser": "Endorser",
+    "reward": "Reward | Rewards",
+    "deposit": "Deposit"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -49,6 +51,7 @@
     "delegationsList": "Delegations list",
     "originationsList": "Originations list",
     "activationsList": "Activations list",
+    "bakingList": "Baking list",
     "dblBakingList": "Double-baking list",
     "dblEndorsementsList": "Double-endorsements list",
     "otherOpsList": "Other operations list",
@@ -126,7 +129,12 @@
     "currDeposits": "Current deposits",
     "baking": "Baking",
     "endorsement": "Endorsement",
-    "pendingRewards": "Pending rewards"
+    "pendingRewards": "Pending rewards",
+    "bakingHistory": "Baking history",
+    "endorsingHistory": "Endorsing History",
+    "missed": "Missed",
+    "stolen": "Stolen",
+    "avgPriority": "Average priority"
   },
   "blockSingle": {
     "bakerFee": "Baker's fee",

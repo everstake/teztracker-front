@@ -32,7 +32,9 @@
 		"home": "Главная",
 		"opType": "Тип операции",
 		"other": "Другое",
-		"endorser": "Заеверитель"
+		"endorser": "Заеверитель",
+		"reward": "Вознаграждение | Вознаграждения",
+		"deposit": "Депозит"
 	},
 	"opTypes": {
 		"tx": "Транзакция | Транзакции",
@@ -49,6 +51,7 @@
 		"delegationsList": "Список делегаций",
 		"originationsList": "Список созданий",
 		"activationsList": "Список активаций",
+		"bakingList": "Список бейкингов",
 		"dblBakingList": "Список двойных бейкингов",
 		"dblEndorsementsList": "Список двойных заверений",
 		"otherOpsList": "Список других операций",
@@ -126,7 +129,12 @@
 		"currDeposits": "Текущие депозиты",
 		"baking": "Бейкинг",
 		"endorsement": "Заверение",
-		"pendingRewards": "Ожидаемые вознаграждения"
+		"pendingRewards": "Ожидаемые вознаграждения",
+		"bakingHistory": "История бейкинга",
+		"endorsingHistory": "История заверения",
+		"missed": "Пропущенные",
+		"stolen": "Украденные",
+		"avgPriority": "Средний приоритет"
 	},
 	"blockSingle": {
 		"bakerFee": "Комиссия бейкера",
