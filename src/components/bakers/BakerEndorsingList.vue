@@ -94,7 +94,7 @@ export default {
       fields: [
         { key: "cycle", label: this.$tc('common.cycle', 1) },
         { key: "slots", label: this.$t("endorsementsList.slots") },
-        { key: "missed", label: 'Missed' },
+        { key: "missed", label: this.$t("bakerSingle.missed") },
         { key: "rewards", label: this.$tc('common.reward', 2) },
         { key: "status", label: this.$tc('statusTypes.status') }
       ],

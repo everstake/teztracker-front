@@ -31,7 +31,8 @@
     "home": "Home",
     "opType": "Operation type",
     "other": "Other",
-    "reward": "Reward | Rewards"
+    "reward": "Reward | Rewards",
+    "deposit": "Deposit"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -128,7 +129,10 @@
     "endorsement": "Endorsement",
     "pendingRewards": "Pending rewards",
     "bakingHistory": "Baking history",
-    "endorsingHistory": "Endorsing History"
+    "endorsingHistory": "Endorsing History",
+    "missed": "Missed",
+    "stolen": "Stolen",
+    "avgPriority": "Average priority"
   },
   "blockSingle": {
     "bakerFee": "Baker's fee",
