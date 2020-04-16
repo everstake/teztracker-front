@@ -50,6 +50,11 @@ const TzAPI = {
       to: opts.to
     }, false);
   },
+  getAccountRewards(opts = {}) {
+    const { account } = opts;
+    delete opts.account;
+    return get(this.API_URL(), `accounts/rewards/${account}`, opts);
+  },
   getAccountBaking(opts = {}) {
     const { account } = opts;
     return get(this.API_URL(), `accounts/baking/${account}`, opts);

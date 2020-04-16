@@ -85,11 +85,11 @@
                         </h3>
                       </div>
                     </b-card-header>
-
+    
                     <b-card-body>
                       <BakerBakingList :account="hash"></BakerBakingList>
                     </b-card-body>
-  
+    
                     <b-card-header>
                       <div class="break-word">
                         <h3>
@@ -97,9 +97,23 @@
                         </h3>
                       </div>
                     </b-card-header>
-  
+    
                     <b-card-body>
                       <BakerEndorsingList :account="hash"></BakerEndorsingList>
+                    </b-card-body>
+                  </b-tab>
+                  
+                  <b-tab :title="$tc('common.reward', 2)">
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">{{ $t('listTypes.rewardsList') }}</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+    
+                    <b-card-body>
+                      <BakerRewardsList :account="hash"></BakerRewardsList>
                     </b-card-body>
                   </b-tab>
                 </b-tabs>
@@ -120,6 +134,7 @@ import TxsList from "../components/transactions/TxsList";
 import DelegationsList from "../components/delegations/DelegationsList";
 import OriginationsList from "../components/originations/OriginationsList";
 import EndorsementsList from "../components/endorsements/EndorsementsList";
+import BakerRewardsList from "@/components/bakers/BakerRewardsList";
 import BakerBakingList from "../components/bakers/BakerBakingList";
 import BakerEndorsingList from "../components/bakers/BakerEndorsingList";
 
@@ -133,6 +148,7 @@ export default {
     DelegationsList,
     OriginationsList,
     EndorsementsList,
+    BakerRewardsList,
     BakerBakingList,
     BakerEndorsingList
   },
