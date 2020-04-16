@@ -11,7 +11,10 @@
     <div class="card-divider"></div>
 
     <b-card-body>
-      <LineChart :chart-data="numOfBlocks" />
+      <LineChart
+        :chart-data="chartData"
+        :x-axes-max-ticks-limit="xAxesMaxTicksLimit"
+      />
     </b-card-body>
   </b-card>
 </template>
@@ -29,41 +32,122 @@ export default {
     LineChart
   },
   data() {
-    return {};
+    return {
+      numOfBlocksInitial: [],
+      columns: "blocks",
+      period: "day",
+      xAxesMaxTicksLimit: 28
+    };
   },
   computed: {
     ...mapState("app", {
       dateFormat: state => state.dateFormat
     }),
+    dateFormatWithoutTime() {
+      return this.dateFormat.split(" ")[0];
+    },
     last30days() {
       return [...new Array(30)]
         .map((i, idx) =>
-          moment()
+          moment
             .utc()
             .startOf("day")
             .subtract(idx, "days")
-            .format("DD/MM/YYYY")
+            .format(this.dateFormatWithoutTime)
         )
         .reverse();
     },
-    numOfBlocks() {
+    fromTimestamp() {
+      if (!this.last30days || !this.last30days.length) return null;
+
+      return moment
+        .utc(this.last30days[0], this.dateFormatWithoutTime) // need format?
+        .startOf("day")
+        .valueOf();
+    },
+    toTimestamp() {
+      if (!this.last30days || !this.last30days.length) return null;
+
+      return moment
+        .utc(
+          this.last30days[this.last30days.length - 1],
+          this.dateFormatWithoutTime
+        ) // need format?
+        .endOf("day")
+        .valueOf();
+    },
+    numOfBlocksReformatted() {
+      if (!this.numOfBlocksInitial || !this.numOfBlocksInitial.length) {
+        return [];
+      }
+
+      return this.transformInitialDataToChartFormat(
+        this.numOfBlocksInitial,
+        this.dateFormatWithoutTime
+      );
+    },
+    numOfBlocksData() {
+      if (!this.numOfBlocksReformatted || !this.numOfBlocksReformatted.length) {
+        return [];
+      }
+
+      let lastKnownVal;
+      return this.last30days.map(date => {
+        return (
+          this.numOfBlocksReformatted.find(pointObj => {
+            const isFound = pointObj.x === date;
+
+            if (isFound) {
+              lastKnownVal = pointObj.y;
+              return isFound;
+            }
+          }) || {
+            x: date,
+            y: lastKnownVal || 0
+          }
+        );
+      });
+    },
+    chartData() {
       return {
         labels: this.last30days,
         datasets: [
           {
             label: this.$t("charts.numOfBlocks"),
-            data: [
-              { x: "17/03/2020", y: 2 },
-              { x: "18/03/2020", y: 3 },
-              { x: "22/03/2020", y: 6 },
-              { x: "23/03/2020", y: 3 }
-            ]
+            data: this.numOfBlocksData,
+            spanGaps: true
           }
         ]
       };
     }
+  },
+  created() {
+    this.reload({
+      columns: this.columns,
+      period: this.period,
+      from: this.fromTimestamp,
+      to: this.toTimestamp
+    });
+  },
+  methods: {
+    transformInitialDataToChartFormat(initialArr, dateFormat) {
+      return initialArr.map(dataObj => {
+        return {
+          x: moment(dataObj.timestamp).format(dateFormat),
+          y: dataObj.blocks
+        };
+      });
+    },
+    async reload(opts) {
+      const response = await this.$api.getCharts(opts);
+      if (response.status !== this.$constants.STATUS_SUCCESS) {
+        return this.$router.replace({
+          name: response.status
+        });
+      }
+
+      this.numOfBlocksInitial = response.data;
+    }
   }
 };
 </script>
-
-<style scoped></style>

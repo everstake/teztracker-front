@@ -175,9 +175,7 @@ export default {
         });
       }
       this.transactions = data.data;
-
-      const transactionsChartData = this.transactions.map(tx => ({amount: tx.amount, timestamp: tx.timestamp}));
-      this.$emit('onTransactions', this.account)
+      this.$emit('onTransactions', this.account);
       this.count = data.count;
       this[SET_TX_COUNT](this.count);
     }

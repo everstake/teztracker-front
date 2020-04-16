@@ -7,7 +7,7 @@
     <template #content>
       <section>
         <b-container fluid>
-          <b-row>
+          <b-row class="mb-4">
             <b-col>
               <ChartNumOfBlocks />
             </b-col>

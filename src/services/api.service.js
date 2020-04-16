@@ -45,10 +45,15 @@ const TzAPI = {
   },
   getAccountBalance(opts = {}) {
     const { account } = opts;
-    return get(this.API_URL(), `accounts/balances/${account}`, {
-      from: opts.from,
-      to: opts.to
-    }, false);
+    return get(
+      this.API_URL(),
+      `accounts/balances/${account}`,
+      {
+        from: opts.from,
+        to: opts.to
+      },
+      false
+    );
   },
   getContracts(opts = {}) {
     return get(this.API_URL(), "contracts", opts);
@@ -135,10 +140,10 @@ const TzAPI = {
     return get(this.API_URL(), "future_baking_rights", opts);
   },
   getPeriod(opts = {}) {
-    return get(this.getVotingUrl(), 'period', opts);
+    return get(this.getVotingUrl(), "period", opts);
   },
   getPeriods(opts = {}) {
-    return get(this.getVotingUrl(), 'periods', opts);
+    return get(this.getVotingUrl(), "periods", opts);
   },
   getProposals(opts = {}) {
     return get(this.getVotingUrl(), `proposals`, opts);
@@ -163,8 +168,32 @@ const TzAPI = {
   getProtocols(opts = {}) {
     return get(this.getVotingUrl(), `protocols`, opts);
   },
-  getOperations(opts = {}) {
-    return get(this.API_URL(), "operations", opts);
+  // getOperations(opts = {}) {
+  //   return get(this.API_URL(), "operations", opts);
+  // },
+  getCharts(opts = {}) {
+    // return get(this.API_URL(), "charts", opts, false);
+    return Promise.resolve({
+      status: 200,
+      data: [
+        { timestamp: 1584921600000, blocks: 20 },
+        { timestamp: 1585008000000, blocks: 2 },
+        { timestamp: 1585094400000, blocks: 4 },
+        { timestamp: 1585267200000, blocks: 10 },
+        { timestamp: 1585353600000, blocks: 1 },
+        { timestamp: 1585526400000, blocks: 12 },
+        { timestamp: 1585612800000, blocks: 21 },
+        { timestamp: 1585699200000, blocks: 14 },
+        { timestamp: 1585785600000, blocks: 22 },
+        { timestamp: 1586131200000, blocks: 79 },
+        { timestamp: 1586217600000, blocks: 37 },
+        { timestamp: 1586304000000, blocks: 39 },
+        { timestamp: 1586390400000, blocks: 112 },
+        { timestamp: 1586563200000, blocks: 44 },
+        { timestamp: 1586649600000, blocks: 99 },
+        { timestamp: 1586736000000, blocks: 100 }
+      ]
+    });
   }
 };
 
