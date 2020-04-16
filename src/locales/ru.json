@@ -63,7 +63,8 @@
 		"contractsList": "Список контрактов",
 		"protocolsList": "Список протоколов",
 		"votersList": "Список голосующих",
-		"nonVotersList": "Список неголосующих"
+		"nonVotersList": "Список неголосующих",
+		"rewardsList": "Список вознаграждений"
 	},
 	"pageTypes": {
 		"txsPage": "Страница транзакций",

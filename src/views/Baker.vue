@@ -81,7 +81,7 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Delegate Rewards</span>
+                          <span class="text">{{ $t('listTypes.rewardsList') }}</span>
                         </h3>
                       </div>
                     </b-card-header>

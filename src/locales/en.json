@@ -63,7 +63,8 @@
     "contractsList": "Contracts list",
     "protocolsList": "Protocols list",
     "votersList": "Voters list",
-    "nonVotersList": "Non-voters list"
+    "nonVotersList": "Non-voters list",
+    "rewardsList": "Rewards list"
   },
   "pageTypes": {
     "txsPage": "Transactions page",
