@@ -67,7 +67,7 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Endorsements</span>
+                          <span class="text">{{ $t('listTypes.endorsementsList') }}</span>
                         </h3>
                       </div>
                     </b-card-header>
@@ -76,7 +76,33 @@
                       <EndorsementsList :is-baker="true" :account="hash"></EndorsementsList>
                     </b-card-body>
                   </b-tab>
-  
+
+                  <b-tab :title="$t('bakerSingle.baking')">
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">{{ $t('listTypes.bakingList') }}</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+    
+                    <b-card-body>
+                      <BakerBakingList :account="hash"></BakerBakingList>
+                    </b-card-body>
+    
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">{{ $t('listTypes.endorsementsList') }}</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+    
+                    <b-card-body>
+                      <BakerEndorsingList :account="hash"></BakerEndorsingList>
+                    </b-card-body>
+                  </b-tab>
+                  
                   <b-tab :title="$tc('common.reward', 2)">
                     <b-card-header>
                       <div class="break-word">
@@ -109,6 +135,8 @@ import DelegationsList from "../components/delegations/DelegationsList";
 import OriginationsList from "../components/originations/OriginationsList";
 import EndorsementsList from "../components/endorsements/EndorsementsList";
 import BakerRewardsList from "@/components/bakers/BakerRewardsList";
+import BakerBakingList from "../components/bakers/BakerBakingList";
+import BakerEndorsingList from "../components/bakers/BakerEndorsingList";
 
 export default {
   name: "Baker",
@@ -120,7 +148,9 @@ export default {
     DelegationsList,
     OriginationsList,
     EndorsementsList,
-    BakerRewardsList
+    BakerRewardsList,
+    BakerBakingList,
+    BakerEndorsingList
   },
   computed: {
     hash() {
