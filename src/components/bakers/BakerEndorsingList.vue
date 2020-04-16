@@ -45,6 +45,11 @@
 						{{ row.item.level | formatInteger }}
 					</b-link>
 				</template>
+				<template slot="blockLevel" slot-scope="row">
+					<b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
+						{{ row.item.blockLevel | formatInteger }}
+					</b-link>
+				</template>
 				<template slot="reward" slot-scope="row">
 					{{row.item.reward | tezos}}
 				</template>
@@ -99,15 +104,11 @@ export default {
         { key: "status", label: this.$tc('statusTypes.status') }
       ],
       selectedRow: {
+        type: null,
         cycleId: null,
 	      data: null,
 	      count: 0,
-	      fields: [
-          { key: "level", label: this.$t("common.blockId") },
-          { key: "slots", label: this.$t("endorsementsList.slots") },
-          { key: "rewards", label: this.$tc('common.reward', 2) },
-          { key: "timestamp", label: this.$t("common.timestamp") }
-	      ],
+	      fields: [],
 	      currentPage: 1
       },
       count: 0,
@@ -158,7 +159,7 @@ export default {
         }
 
         if (item.class && item.class === 'future') {
-          classes.push('is-future is--disabled');
+          classes.push('is-future');
         }
 
         if (item.status && item.status === 'active') {
@@ -175,13 +176,37 @@ export default {
       const isRowFuture = row[0].class === 'future';
       const isRowTotal = row[0].cycle === 'Total';
 
-      if (isRowTotal || isRowFuture) return;
+      if (isRowTotal) return;
 
+      let modalData;
+      let modalFields;
       this.cycleId = row[0].cycle;
 
-      const data = await this.$api.getAccountEndorsingItem({ account: this.account, cycleId: row[0].cycle });
-      this.selectedRow.data = data.data;
-      this.selectedRow.count = data.count;
+      if (isRowFuture) {
+        this.selectedRow.type = 'future';
+        modalData = await this.$api.getAccountEndorsingRightsFuture({ account: this.account, cycleId: row[0].cycle });
+
+        modalFields = [
+          { key: "blockLevel", label: this.$t("common.blockId") },
+          { key: "slots", label: this.$t("endorsementsList.slots") },
+          { key: "rewards", label: this.$tc('common.reward', 2) },
+          { key: "timestamp", label: this.$t("common.timestamp") }
+        ];
+      } else {
+        this.selectedRow.type = 'endorsing';
+        modalData = await this.$api.getAccountEndorsingItem({ account: this.account, cycleId: row[0].cycle });
+
+        modalFields = [
+          { key: "level", label: this.$t("common.blockId") },
+          { key: "slots", label: this.$t("endorsementsList.slots") },
+          { key: "rewards", label: this.$tc('common.reward', 2) },
+          { key: "timestamp", label: this.$t("common.timestamp") }
+        ];
+      }
+
+      this.selectedRow.fields = modalFields;
+      this.selectedRow.data = modalData.data;
+      this.selectedRow.count = modalData.count;
       this.$bvModal.show('modal-endorsing');
       this.loading = false;
     },
@@ -218,7 +243,15 @@ export default {
         cycleId: this.cycleId
       };
 
-      const data = await this.$api.getAccountEndorsingItem(props);
+      const { type } = this.selectedRow;
+      let data;
+
+      if (type === 'endorsing') {
+        data = await this.$api.getAccountEndorsingItem(props);
+      } else {
+        data = await this.$api.getAccountEndorsingRightsFuture(props);
+      }
+      
       this.selectedRow.data = data.data;
       this.selectedRow.count = data.count;
 

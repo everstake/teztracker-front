@@ -78,6 +78,10 @@ const TzAPI = {
     const { account, cycleId } = opts;
     return get(this.API_URL(), `accounts/endorsing/${account}/endorsements/${cycleId}`, opts );
   },
+  getAccountEndorsingRightsFuture(opts = {}) {
+    const { account, cycleId } = opts;
+    return get(this.API_URL(), `accounts/endorsing/${account}/future_endorsement_rights/${cycleId}`, opts, true );
+  },
   getAccountEndorsingTotal(opts = {}) {
     const { account } = opts;
     return get(this.API_URL(), `accounts/endorsing/${account}/total`, opts );
