@@ -3,10 +3,7 @@
     <b-col lg="12">
       <b-card no-body>
         <b-card-header>
-          <h3
-            id="card-title"
-            class="card__title"
-          >
+          <h3 id="card-title" class="card__title">
             <span class="text card-title__text">
               <template v-if="bakerInfo.name">
                 {{ bakerInfo.name }}
@@ -102,12 +99,12 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("common.capacity") }}
+                    {{ $t("common.capacityAvailable") }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
                     {{
-                      (bakerInfo.stakingCapacity -
-                        bakerInfo.stakingBalance / $constants.XTZ)
+                      ((bakerInfo.stakingCapacity - bakerInfo.stakingBalance) /
+                        $constants.XTZ)
                         | tezosCapacity
                     }}
                   </b-col>
@@ -145,7 +142,7 @@
                 </b-row>
 
                 <span class="text-accent">
-                   {{ $t("bakerSingle.currDeposits") }}
+                  {{ $t("bakerSingle.currDeposits") }}
                 </span>
 
                 <b-row class="item-info">
