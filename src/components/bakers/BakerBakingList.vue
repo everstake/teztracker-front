@@ -1,73 +1,73 @@
 <template>
-	<div class="baking-list">
-		<div class="d-flex justify-content-between mb-2">
-			<PerPageSelect @per-page="$_setPerPage" />
-		</div>
-
-		<b-table
-			show-empty
-			:items="data"
-			:fields="fields"
-			:current-page="currentPage"
-			:per-page="0"
-			borderless
-			class="transactions-table table-responsive-md"
-			@row-selected="handleRowClick"
-			selectable
-			:select-mode="'single'"
-			:tbody-tr-class=getRowClass
-		>
-			<template slot="rewards" slot-scope="row">
-				{{ row.item.rewards | tezos }}
-			</template>
-		</b-table>
-
-		<Pagination
-			v-model="currentPage"
-			@change="$_handleCurrentPageChange"
-			:total-rows="count"
-			:per-page="perPage"
-		/>
-
-		<div>
-			<b-modal id="modal-baking" size="lg" centered hide-header hide-footer>
-				<b-table
-					show-empty
-					:items="selectedRow.data"
-					:fields="selectedRow.fields"
-					:current-page="selectedRow.currentPage"
-					:per-page="0"
-					borderless
-					class="transactions-table table-responsive-md baker-baking-table"
-				>
-					<template slot="level" slot-scope="row">
-						<b-link :to="{ name: 'block', params: { level: row.item.level } }">
-							{{ row.item.level | formatInteger }}
-						</b-link>
-					</template>
-					<template slot="reward" slot-scope="row">
-						{{row.item.reward | tezos}}
-					</template>
-					<template slot="deposit" slot-scope="row">
-						{{row.item.deposit | tezos}}
-					</template>
-					<template slot="timestamp" slot-scope="row">
-						{{ row.item.timestamp | timeformat(dateFormat) }}
-					</template>
-					<template slot="estimated_time" slot-scope="row">
-						{{ formatDate(row.item.estimated_time) }}
-					</template>
-				</b-table>
-				
-				<Pagination
-					v-model="selectedRow.currentPage"
-					@change="handleModalPagination"
-					:total-rows="selectedRow.count"
-					:per-page="selectedRow.perPage"
-				/>
-			</b-modal>
-		</div>
+<div class="baking-list">
+	<div class="d-flex justify-content-between mb-2">
+		<PerPageSelect @per-page="$_setPerPage" />
 	</div>
+
+	<b-table
+		show-empty
+		:items="data"
+		:fields="fields"
+		:current-page="currentPage"
+		:per-page="0"
+		borderless
+		class="transactions-table table-responsive-md"
+		@row-selected="handleRowClick"
+		selectable
+		:select-mode="'single'"
+		:tbody-tr-class=getRowClass
+	>
+		<template slot="rewards" slot-scope="row">
+			{{ row.item.rewards | tezos }}
+		</template>
+	</b-table>
+
+	<Pagination
+		v-model="currentPage"
+		@change="$_handleCurrentPageChange"
+		:total-rows="count"
+		:per-page="perPage"
+	/>
+
+	<div>
+		<b-modal id="modal-baking" size="lg" centered hide-header hide-footer>
+			<b-table
+				show-empty
+				:items="selectedRow.data"
+				:fields="selectedRow.fields"
+				:current-page="selectedRow.currentPage"
+				:per-page="0"
+				borderless
+				class="transactions-table table-responsive-md baker-baking-table"
+			>
+				<template slot="level" slot-scope="row">
+					<b-link :to="{ name: 'block', params: { level: row.item.level } }">
+						{{ row.item.level | formatInteger }}
+					</b-link>
+				</template>
+				<template slot="reward" slot-scope="row">
+					{{row.item.reward | tezos}}
+				</template>
+				<template slot="deposit" slot-scope="row">
+					{{row.item.deposit | tezos}}
+				</template>
+				<template slot="timestamp" slot-scope="row">
+					{{ row.item.timestamp | timeformat(dateFormat) }}
+				</template>
+				<template slot="estimated_time" slot-scope="row">
+					{{ formatDate(row.item.estimated_time) }}
+				</template>
+			</b-table>
+			
+			<Pagination
+				v-model="selectedRow.currentPage"
+				@change="handleModalPagination"
+				:total-rows="selectedRow.count"
+				:per-page="selectedRow.perPage"
+			/>
+		</b-modal>
+	</div>
+</div>
 </template>
 
 <script>
@@ -219,7 +219,7 @@ export default {
       };
 
       if (page === 1) {
-        const total = await this.$api.getAccountBakingTotal({account: this.account});
+        const total = await this.$api.getAccountBakingTotal({ account: this.account });
         const future = await this.$api.getAccountBakingFuture({ account: this.account });
         const data = await this.$api.getAccountBaking(props);
 
@@ -279,6 +279,10 @@ export default {
 		}
 		&-future {
 			background-color: rgba(48, 146, 130, .3);
+		}
+		
+		&--disabled {
+			pointer-events: none;
 		}
 	}
 	.baking-list-row {

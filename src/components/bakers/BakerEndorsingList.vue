@@ -18,7 +18,7 @@
 		:tbody-tr-class=getRowClass
 	>
 		<template slot="rewards" slot-scope="row">
-			{{row.item.rewards | tezos}}
+			{{ row.item.rewards | tezos }}
 		</template>
 	</b-table>
 	
@@ -157,6 +157,10 @@ export default {
           classes.push('is-total');
         }
 
+        if (item.class && item.class === 'future') {
+          classes.push('is-future is--disabled');
+        }
+
         if (item.status && item.status === 'active') {
           classes.push('is-active');
         }
@@ -168,9 +172,11 @@ export default {
       if (this.loading || row.length === 0) return;
       this.loading = true;
 
+      const isRowFuture = row[0].class === 'future';
       const isRowTotal = row[0].cycle === 'Total';
-      if (isRowTotal) return;
-      
+
+      if (isRowTotal || isRowFuture) return;
+
       this.cycleId = row[0].cycle;
 
       const data = await this.$api.getAccountEndorsingItem({ account: this.account, cycleId: row[0].cycle });
@@ -185,13 +191,16 @@ export default {
         limit: this.perPage,
         account: this.account
       };
-      
+
       if (page === 1) {
-        const total = await this.$api.getAccountEndorsingTotal({account: this.account});
+        const total = await this.$api.getAccountEndorsingTotal({ account: this.account });
+        const future = await this.$api.getAccountEndorsingFuture({ account: this.account });
         const data = await this.$api.getAccountEndorsing(props);
 
         this.total = { ...total.data, status: 'Total' };
+        this.future = future.data.map(item => ({...item, class: 'future'}));
         this.data = [
+          ...this.future,
           {...total.data, cycle: 'Total', class: 'total', status: 'Total'},
           ...data.data
         ];
