@@ -226,8 +226,8 @@ export default {
         this.total = { ...total.data, status: 'Total' };
         this.future = future.data.map(item => ({...item, class: 'future'}));
         this.data = [
-          {...total.data, cycle: 'Total', class: 'total', status: 'Total'},
           ...this.future,
+          {...total.data, cycle: 'Total', class: 'total', status: 'Total'},
           ...data.data
         ];
 
