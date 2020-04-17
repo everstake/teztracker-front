@@ -15,12 +15,23 @@
             :fee="txInfo.fee"
             :status="txInfo.status"
             :kind="getOperationKind"
+            :cycle="txInfo.cycle"
+            :confirmations="txInfo.confirmations"
+            :secret="txInfo.secret"
+            :account="txInfo.pkh"
+            :delegate="txInfo.delegate"
+            :delegate-name="txInfo.delegateName"
+            :slots="txInfo.slots"
+            :endorsement-deposit="txInfo.endorsementDeposit"
+            :endorsement-reward="txInfo.endorsementReward"
+            :reward="txInfo.reward"
+            :claimed-amount="txInfo.claimedAmount"
           />
         </b-container>
       </section>
 
       <section
-        v-if="!operationsWithHiddenTxTable.includes(txInfo.kind)"
+        v-if="!operationsWithHiddenTxTable.includes(txInfo.kind) && transactions.length"
         class="mt-0"
       >
         <b-container fluid>
@@ -31,7 +42,15 @@
                   <div class="break-word">
                     <h3>
                       <span class="text">
-                        {{ $t("listTypes.txsList") }}
+                        <template v-if="txInfo.kind === 'delegation'">
+                          {{ $t("txPage.delegationDetails") }}
+                        </template>
+                        <template v-else-if="txInfo.kind === 'origination'">
+                          {{ $t("txPage.originationDetails") }}
+                        </template>
+                        <template v-else>
+                          {{ $t("txPage.txDetails") }}
+                        </template>
                       </span>
                     </h3>
                   </div>
@@ -65,12 +84,14 @@
                       <b-link
                         :to="{
                           name: 'account',
-                          params: { account: row.item.destination }
+                          params: { account: row.item.destination || row.item.delegate }
                         }"
                       >
                         {{
                           row.item.destinationName ||
-                            row.item.destination | longhash(20)
+                            row.item.destination ||
+                            row.item.delegateName ||
+                            row.item.delegate | longhash(20)
                         }}
                       </b-link>
                     </template>
@@ -81,10 +102,26 @@
                       {{ row.item.fee | tezos }}
                     </template>
                     <template slot="gas" slot-scope="row">
-                      {{ row.item.gasLimit }}
+                      {{ row.item.gasLimit | formatInteger }}
                     </template>
                     <template slot="storage" slot-scope="row">
                       {{ row.item.storageLimit }}
+                    </template>
+                    <template slot="delegationAmount" slot-scope="row">
+                      {{ row.item.delegationAmount | tezos }}
+                    </template>
+                    <template slot="balance" slot-scope="row">
+                      {{ row.item.balance | tezos }}
+                    </template>
+                    <template slot="originatedContracts" slot-scope="row">
+                      <b-link
+                        :to="{
+                          name: 'account',
+                          params: { account: row.item.originatedContracts }
+                        }"
+                      >
+                        {{ row.item.originatedContracts | longhash(20) }}
+                      </b-link>
                     </template>
                   </b-table>
 
@@ -127,14 +164,6 @@ export default {
       transactions: [],
       txInfo: {},
       count: 0,
-      fields: [
-        { key: "from", label: this.$t("common.from") },
-        { key: "to", label: this.$t("common.to") },
-        { key: "amount", label: this.$t("common.amount") },
-        { key: "fee", label: this.$t("common.fee") },
-        { key: "gas", label: this.$t("txPage.gasLimit") },
-        { key: "storage", label: this.$t("txPage.storageLimit") }
-      ],
       operationsWithHiddenTxTable: [
         "endorsement",
         "activate_account",
@@ -159,27 +188,56 @@ export default {
     },
     getOperationKind() {
       switch (this.txInfo.kind) {
-        case 'activate_account':
-          return 'activation'
-        break;
-        case 'origination':
-          return 'origination'
-        break;
-        case 'delegation':
-          return 'delegation'
-        break;
-        case 'endorsement':
-          return 'endorsement'
-        break;
-        case 'double_baking_evidence':
-          return 'dblBaking'
-        break;
-        case 'double_endorsement_evidence':
-          return 'dblEndorsement'
-        break;
+        case "activate_account":
+          return "activation";
+        case "origination":
+          return "origination";
+        case "delegation":
+          return "delegation";
+        case "endorsement":
+          return "endorsement";
+        case "double_baking_evidence":
+          return "dblBaking";
+        case "double_endorsement_evidence":
+          return "dblEndorsement";
         default:
-          return 'tx'
+          return "tx";
       }
+    },
+    fields() {
+      let res =[];
+  
+      if (this.getOperationKind === "origination") {
+        res = [
+          { key: "from", label: this.$t("txPage.originator")},
+          { key: "originatedContracts", label: this.$t("txPage.originatedAcc")},
+          { key: "balance", label: this.$t("common.balance") },
+          { key: "to", label: this.$t("common.delegate") },
+          { key: "fee", label: this.$t("common.fee") },
+          { key: "gas", label: this.$t("txPage.gasLimit") },
+          { key: "storage", label: this.$t("txPage.storageLimit") }
+        ];
+      } else if (this.getOperationKind === "delegation") {
+        res = [
+          { key: "from", label: this.$t("common.from") },
+          { key: "to", label: this.$t("common.to") },
+          { key: "delegationAmount", label: this.$t("common.amountDelegated") },
+          { key: "fee", label: this.$t("common.fee") },
+          { key: "gas", label: this.$t("txPage.gasLimit") },
+          { key: "storage", label: this.$t("txPage.storageLimit") }
+        ];
+      } else {
+        res = [
+          { key: "from", label: this.$t("common.from") },
+          { key: "to", label: this.$t("common.to") },
+          { key: "amount", label: this.$t("common.amount") },
+          { key: "fee", label: this.$t("common.fee") },
+          { key: "gas", label: this.$t("txPage.gasLimit") },
+          { key: "storage", label: this.$t("txPage.storageLimit") }
+        ]
+      }
+
+      return res;
     }
   },
   async created() {

@@ -6,12 +6,13 @@
     "rolls": "Rolls",
     "bakingSince": "Baking since",
     "baker": "Baker | Bakers",
-    "capacity": "Capacity",
+    "capacityAvailable": "Available capacity",
     "fee": "Fee",
     "block": "Block | Blocks",
     "from": "From",
     "to": "To",
     "amount": "Amount",
+    "amountDelegated": "Delegated amount",
     "timestamp": "Timestamp",
     "cycle": "Cycle | Cycles",
     "blockId": "Block id",
@@ -29,7 +30,13 @@
     "protocolAmendments": "Protocol amendments",
     "vote": "Vote",
     "home": "Home",
-    "opType": "Operation type"
+    "opType": "Operation type",
+    "other": "Other",
+    "endorser": "Endorser",
+    "losses": "Losses",
+    "delegators": "Delegators",
+    "reward": "Reward | Rewards",
+    "deposit": "Deposit"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -46,6 +53,7 @@
     "delegationsList": "Delegations list",
     "originationsList": "Originations list",
     "activationsList": "Activations list",
+    "bakingList": "Baking list",
     "dblBakingList": "Double-baking list",
     "dblEndorsementsList": "Double-endorsements list",
     "otherOpsList": "Other operations list",
@@ -59,7 +67,8 @@
     "contractsList": "Contracts list",
     "protocolsList": "Protocols list",
     "votersList": "Voters list",
-    "nonVotersList": "Non-voters list"
+    "nonVotersList": "Non-voters list",
+    "rewardsList": "Rewards list"
   },
   "pageTypes": {
     "txsPage": "Transactions page",
@@ -123,7 +132,12 @@
     "currDeposits": "Current deposits",
     "baking": "Baking",
     "endorsement": "Endorsement",
-    "pendingRewards": "Pending rewards"
+    "pendingRewards": "Pending rewards",
+    "bakingHistory": "Baking history",
+    "endorsingHistory": "Endorsing History",
+    "missed": "Missed",
+    "stolen": "Stolen",
+    "avgPriority": "Average priority"
   },
   "blockSingle": {
     "bakerFee": "Baker's fee",
@@ -139,6 +153,14 @@
     "outOf": "out of",
     "originatedAccs": "Originated accounts"
   },
+  "txSingle": {
+    "secret": "Secret",
+    "slotsEndorsed": "Slot(s) endorsed",
+    "confirmations": "Confirmations",
+    "deposit": "Deposit",
+    "reward": "Reward",
+    "amountClaimed": "Claimed amount"
+  },
   "accSingle": {
     "created": "Created",
     "lastActive": "Last active"
@@ -147,13 +169,11 @@
     "volume": "Volume"
   },
   "endorsementsList": {
-    "endorser": "Endorser",
     "endorsedBlock": "Endorsed block",
     "slots": "Slots"
   },
   "dblBakingList": {
     "accuser": "Accuser",
-    "age": "Age",
     "bakerRewards": "Baker rewards",
     "offender": "Offender",
     "lostDeposits": "Lost deposits",
@@ -175,14 +195,21 @@
     "m": "M",
     "icoPercent": "Percentage of ICO addresses activated"
   },
-  "footer": {
-    "allRights": "All rights reserved",
-    "contactUs": "Contact us"
-  },
   "header": {
     "allBakers": "All bakers",
     "publicBakers": "Public bakers",
-    "dateFormat": "Date format"
+    "dateFormat": "Date format",
+    "operations": "Operations",
+    "governance": "Governance"
+  },
+  "nets": {
+    "mainnet": "Mainnet",
+    "babylonnet": "Babylonnet",
+    "carthagenet": "Carthagenet"
+  },
+  "footer": {
+    "allRights": "All rights reserved",
+    "contactUs": "Contact us"
   },
   "dateSwitcher": {
     "usFormat": "US",
@@ -218,7 +245,7 @@
     "periodNotFound": "Period {id} was not found.",
     "generalVotingStats": "General voting stats",
     "recentVotes": "Recent votes",
-    "voter": "Voter",
+    "voter": "Voter | Voters",
     "participation": "Participation",
     "undecided": "Undecided",
     "votesAvailable": "Votes available",
@@ -248,7 +275,12 @@
   },
   "txPage": {
     "gasLimit": "Gas limit",
-    "storageLimit": "Storage limit"
+    "storageLimit": "Storage limit",
+    "txDetails": "Transaction details",
+    "delegationDetails": "Delegation details",
+    "originationDetails": "Origination details",
+    "originator": "Originator",
+    "originatedAcc": "Originated account"
   },
   "votePage": {
     "kind": "Kind",

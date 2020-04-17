@@ -361,6 +361,15 @@ li
   color: $color-black;
 }
 
+.main-content .promo-section .promo-top .promo-search .search .search-query:focus,
+.main-header .search__form .search-query:focus {
+  box-shadow: 0 0 0 0.2rem rgba(48,146,130,0.25); //green
+}
+
+.main-content .promo-section .promo-top .promo-search .search-form--invalid .search-query:focus,
+.main-header .search-form--invalid .search-query:focus {
+  box-shadow: 0 0 0 0.2rem rgba(299,105,104,0.25);
+}
 .main-content .promo-section .promo-top .promo-search .search .button-search {
   position: absolute;
   top: 0;
@@ -372,6 +381,22 @@ li
   color: $color-white;
   font-size: 25px;
   background-color: $color-brand;
+}
+
+.main-content .promo-section .promo-top .promo-search .search .button-search:focus,
+.main-header .search .button-search:focus {
+  box-shadow: 0 0 0 0.2rem rgba(48,146,130,0.25);
+}
+
+.main-content .promo-section .promo-top .promo-search .search-form--invalid .button-search:focus,
+.main-header .search-form--invalid .button-search:focus, {
+  box-shadow: 0 0 0 0.2rem rgba(299,105,104,0.25);
+}
+
+.main-header .search .button-search:active:focus {
+  background-color: #309282;
+  border-color: transparent;
+  box-shadow: 0 0 0 0.2rem rgba(48,146,130,0.25);
 }
 
 .main-content .promo-section .promo-top .promo-search .search .button-search i {

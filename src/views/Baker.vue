@@ -17,7 +17,7 @@
             <b-col lg="12">
               <b-card no-body>
                 <b-tabs>
-                  <b-tab title="Transactions" active>
+                  <b-tab :title="$tc('opTypes.tx', 2)" active>
                     <b-card-header>
                       <div class="break-word">
                         <h3>
@@ -32,7 +32,7 @@
                       <TxsList :account="hash" />
                     </b-card-body>
                   </b-tab>
-                  <b-tab title="Delegations">
+                  <b-tab :title="$tc('opTypes.delegation', 2)">
                     <b-card-header>
                       <div class="break-word">
                         <h3>
@@ -47,7 +47,7 @@
                       <DelegationsList :account="hash" />
                     </b-card-body>
                   </b-tab>
-                  <b-tab title="Originations">
+                  <b-tab :title="$tc('opTypes.origination', 2)">
                     <b-card-header>
                       <div class="break-word">
                         <h3>
@@ -63,17 +63,57 @@
                     </b-card-body>
                   </b-tab>
 
-                  <b-tab title="Endorsements">
+                  <b-tab :title="$tc('opTypes.endorsement', 2)">
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">Endorsements</span>
+                          <span class="text">{{ $t('listTypes.endorsementsList') }}</span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
                       <EndorsementsList :is-baker="true" :account="hash"></EndorsementsList>
+                    </b-card-body>
+                  </b-tab>
+
+                  <b-tab :title="$t('bakerSingle.baking')">
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">{{ $t('listTypes.bakingList') }}</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+    
+                    <b-card-body>
+                      <BakerBakingList :account="hash"></BakerBakingList>
+                    </b-card-body>
+    
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">{{ $t('listTypes.endorsementsList') }}</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+    
+                    <b-card-body>
+                      <BakerEndorsingList :account="hash"></BakerEndorsingList>
+                    </b-card-body>
+                  </b-tab>
+                  
+                  <b-tab :title="$tc('common.reward', 2)">
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">{{ $t('listTypes.rewardsList') }}</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+    
+                    <b-card-body>
+                      <BakerRewardsList :account="hash"></BakerRewardsList>
                     </b-card-body>
                   </b-tab>
                 </b-tabs>
@@ -94,6 +134,9 @@ import TxsList from "../components/transactions/TxsList";
 import DelegationsList from "../components/delegations/DelegationsList";
 import OriginationsList from "../components/originations/OriginationsList";
 import EndorsementsList from "../components/endorsements/EndorsementsList";
+import BakerRewardsList from "@/components/bakers/BakerRewardsList";
+import BakerBakingList from "../components/bakers/BakerBakingList";
+import BakerEndorsingList from "../components/bakers/BakerEndorsingList";
 
 export default {
   name: "Baker",
@@ -104,7 +147,10 @@ export default {
     TxsList,
     DelegationsList,
     OriginationsList,
-    EndorsementsList
+    EndorsementsList,
+    BakerRewardsList,
+    BakerBakingList,
+    BakerEndorsingList
   },
   computed: {
     hash() {

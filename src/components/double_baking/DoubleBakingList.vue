@@ -35,39 +35,39 @@
           class="baker"
           :to="{
             name: 'baker',
-            params: { baker: row.item.doubleBake.evidence_baker }
+            params: { baker: row.item.doubleOperationDetails.evidence_baker }
           }"
-          >{{ row.item.doubleBake.evidence_baker | longhash(20) }}</router-link
+          >{{ row.item.doubleOperationDetails.evidence_baker | longhash(20) }}</router-link
         >
       </template>
       <template slot="baker_rewards" slot-scope="row">
-        {{ row.item.doubleBake.baker_reward | tezos }}
+        {{ row.item.doubleOperationDetails.baker_reward | tezos }}
       </template>
       <template slot="offender" slot-scope="row">
         <router-link
           class="baker"
           :to="{
             name: 'baker',
-            params: { baker: row.item.doubleBake.offender }
+            params: { baker: row.item.doubleOperationDetails.offender }
           }"
-          >{{ row.item.doubleBake.offender | longhash(20) }}</router-link
+          >{{ row.item.doubleOperationDetails.offender | longhash(20) }}</router-link
         >
       </template>
       <template slot="denounced_level" slot-scope="row">
         <b-link
           :to="{
             name: 'block',
-            params: { level: row.item.doubleBake.denounced_level }
+            params: { level: row.item.doubleOperationDetails.denounced_level }
           }"
         >
-          {{ row.item.doubleBake.denounced_level | formatInteger }}
+          {{ row.item.doubleOperationDetails.denounced_level | formatInteger }}
         </b-link>
       </template>
       <template slot="lost_deposits" slot-scope="row">
-        {{ row.item.doubleBake.lost_deposits | tezos }}
+        {{ row.item.doubleOperationDetails.lost_deposits | tezos }}
       </template>
       <template slot="lost_rewards" slot-scope="row">
-        {{ row.item.doubleBake.lost_rewards | tezos }}
+        {{ row.item.doubleOperationDetails.lost_rewards | tezos }}
       </template>
     </b-table>
 

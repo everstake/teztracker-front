@@ -84,7 +84,7 @@
                   >
                     <div>
                       <div class="vote-card__recent-proposal font font--mini">
-                        <span>{{ $t("voting.voter") }}:</span>
+                        <span>{{ $tc("voting.voter", 1) }}:</span>
                         {{ voter.title || voter.pkh }}
                       </div>
                       <div class="vote-card__recent-proposal font font--mini">

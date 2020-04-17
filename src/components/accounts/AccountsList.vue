@@ -70,12 +70,12 @@ export default {
         { key: "accountId", label: this.$tc("common.acc", 1) },
         {
           key: "balance",
-          label: this.$t("common.amount"),
+          label: this.$t("common.balance"),
           sortable: true,
           sortDirection: "desc"
         },
-        { key: "delegateValue", label: "Delegate" },
-        { key: "createdAt", label: "Created" }
+        { key: "delegateValue", label: this.$t("common.delegate") },
+        { key: "createdAt", label: this.$t("accSingle.created") }
       ]
     };
   },
