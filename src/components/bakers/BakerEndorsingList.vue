@@ -18,7 +18,7 @@
 		:tbody-tr-class=getRowClass
 	>
 		<template slot="rewards" slot-scope="row">
-			{{ row.item.rewards | tezos }}
+			{{ row.item.rewards | tezosToFixed }}
 		</template>
 	</b-table>
 	
@@ -51,13 +51,16 @@
 					</b-link>
 				</template>
 				<template slot="reward" slot-scope="row">
-					{{row.item.reward | tezos}}
+					{{row.item.reward | tezosToFixed }}
 				</template>
 				<template slot="avgPriority" slot-scope="row">
-					{{ row.item.avgPriority === 0 ? 0 : row.item.avgPriority.toFixed(3) }}
+					{{ row.item.avgPriority }}
 				</template>
 				<template slot="rewards" slot-scope="row">
-					{{row.item.reward | tezos}}
+					{{row.item.reward | tezosToFixed }}
+				</template>
+				<template slot="deposit" slot-scope="row">
+					{{row.item.deposit | tezosToFixed }}
 				</template>
 				<template slot="timestamp" slot-scope="row">
 					{{ row.item.timestamp | timeformat(dateFormat) }}
@@ -162,8 +165,12 @@ export default {
           classes.push('is-future');
         }
 
-        if (item.status && item.status === 'active') {
+        if (item.status === 'active') {
           classes.push('is-active');
+        }
+
+        if (item.status === 'frozen') {
+          classes.push('is-frozen')
         }
       }
 
@@ -190,6 +197,7 @@ export default {
           { key: "blockLevel", label: this.$t("common.blockId") },
           { key: "slots", label: this.$t("endorsementsList.slots") },
           { key: "rewards", label: this.$tc('common.reward', 2) },
+          { key: "deposit", label: this.$t('common.deposit') },
           { key: "timestamp", label: this.$t("common.timestamp") }
         ];
       } else {
@@ -200,6 +208,7 @@ export default {
           { key: "level", label: this.$t("common.blockId") },
           { key: "slots", label: this.$t("endorsementsList.slots") },
           { key: "rewards", label: this.$tc('common.reward', 2) },
+          { key: "deposit", label: this.$t('common.deposit') },
           { key: "timestamp", label: this.$t("common.timestamp") }
         ];
       }
