@@ -1098,6 +1098,12 @@ section
   border-right: .3em solid transparent;
   border-bottom: .3em solid;
   border-left: .3em solid transparent;
+
+  @include for-desktop-down {
+    top: auto;
+    bottom: 18px;
+    transform: none;
+  }
 }
 
 .table.b-table>thead>tr>th[aria-sort][aria-sort="descending"]::after,
@@ -1110,6 +1116,12 @@ section
   border-right: .3em solid transparent;
   border-bottom: 0;
   border-left: .3em solid transparent;
+
+  @include for-desktop-down {
+    top: auto;
+    bottom: 18px;
+    transform: none;
+  }
 }
 
 .table.b-table>thead>tr>th[aria-sort]::after,
@@ -1123,4 +1135,12 @@ section
   border-right: .3em solid transparent;
   border-bottom: .3em solid;
   border-left: .3em solid transparent;
+
+  @include for-desktop-down {
+    margin-left: 5px;
+    display: inline-block;
+    top: auto;
+    bottom: 18px;
+    transform: none;
+  }
 }

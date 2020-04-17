@@ -5,6 +5,7 @@
     </div>
 
     <b-table
+      responsive
       show-empty
       :items="delegations"
       :fields="fields"

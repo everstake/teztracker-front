@@ -8,6 +8,7 @@
     </div>
 
     <b-table
+      responsive
       show-empty
       :items="endorsements"
       :fields="fields"
@@ -40,7 +41,7 @@
         <b-link
           :to="{ name: 'account', params: { account: row.item.delegate } }"
         >
-          {{ row.item.delegateName || row.item.delegate | longhash(42) }}
+          {{ row.item.delegateName || row.item.delegate | longhash(35) }}
         </b-link>
       </template>
   
