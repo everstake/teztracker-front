@@ -46,7 +46,7 @@ Vue.filter("tezos", function(amount) {
 Vue.filter("tezosToFixed", function(amount) {
   if (amount > 0) {
     return (
-      numeral(amount / Vue.prototype.$constants.XTZ).format("0,0[.]") +
+      numeral(amount / Vue.prototype.$constants.XTZ).format("0,0") +
       " XTZ"
     );
   }

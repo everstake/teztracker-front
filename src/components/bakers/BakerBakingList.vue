@@ -17,8 +17,11 @@
 		:select-mode="'single'"
 		:tbody-tr-class=getRowClass
 	>
+		<template slot="avgPriority" slot-scope="row">
+			{{ row.item.avgPriority }}
+		</template>
 		<template slot="rewards" slot-scope="row">
-			{{ row.item.rewards | tezos }}
+			{{ row.item.rewards | tezosToFixed }}
 		</template>
 	</b-table>
 
@@ -46,10 +49,10 @@
 					</b-link>
 				</template>
 				<template slot="reward" slot-scope="row">
-					{{row.item.reward | tezos}}
+					{{row.item.reward | tezosToFixed }}
 				</template>
 				<template slot="deposit" slot-scope="row">
-					{{row.item.deposit | tezos}}
+					{{row.item.deposit | tezosToFixed }}
 				</template>
 				<template slot="timestamp" slot-scope="row">
 					{{ row.item.timestamp | timeformat(dateFormat) }}
@@ -162,8 +165,12 @@ export default {
           classes.push('is-future');
         }
 
-        if (item.status && item.status === 'active') {
+        if (item.status === 'active') {
           classes.push('is-active');
+        }
+
+        if (item.status === 'frozen') {
+          classes.push('is-frozen')
         }
       }
 
@@ -201,6 +208,7 @@ export default {
           { key: "level", label: this.$t("common.blockId") },
           { key: "priority", label: this.$t("common.priority") },
           { key: "reward", label: this.$tc('common.reward', 2) },
+          { key: "deposit", label: this.$t('common.deposit') },
           { key: "timestamp", label: this.$t("common.timestamp") }
         ];
       }
@@ -278,11 +286,15 @@ export default {
 			}
 		}
 		&-future {
-			background-color: rgba(48, 146, 130, .3);
+			background-color: rgba(48, 146, 130, .4);
 		}
 		
 		&--disabled {
 			pointer-events: none;
+		}
+		
+		&-frozen {
+			background-color: rgba(158, 160, 165, .4);
 		}
 	}
 	.baking-list-row {
