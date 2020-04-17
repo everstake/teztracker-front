@@ -1,7 +1,7 @@
 <template>
 	<div class="baking-list">
 		<div class="d-flex justify-content-between mb-2">
-			<PerPageSelect @per-page="$_setPerPage" />
+			<PerPageSelect @per-page="$_setPerPage" :default-per-page="perPage" />
 		</div>
 
 		<b-table
@@ -10,13 +10,21 @@
 			:items="data"
 			:fields="fields"
 			:current-page="currentPage"
-			:per-page="0"
 			borderless
 			class="transactions-table table-responsive-md"
 			:tbody-tr-class=getRowClass
 		>
 			<template slot="stakingBalance" slot-scope="row">
 				{{ row.item.stakingBalance | tezosToFixed }}
+			</template>
+			<template slot="baking" slot-scope="row">
+				{{ row.item.baking | tezosToFixed }}
+			</template>
+			<template slot="endorsements" slot-scope="row">
+				{{ row.item.endorsements | tezosToFixed }}
+			</template>
+			<template slot="losses" slot-scope="row">
+				{{ row.item.losses | tezosToFixed }}
 			</template>
 			
 			<template slot="fees" slot-scope="row">
@@ -54,6 +62,7 @@ export default {
   data() {
     return {
       currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+	    perPage: 20,
       fields: [
         { key: "cycle", label: this.$tc("common.cycle", 1) },
         { key: "stakingBalance", label: this.$t("common.stakingBal") },
@@ -77,7 +86,16 @@ export default {
     currentPage: {
       immediate: true,
       async handler(value) {
-        await this.reload(value);
+	      let result;
+
+        if (typeof value === 'object') {
+          const { page } = value;
+          result = page;
+        } else {
+          result = value;
+        }
+
+        await this.reload(result);
       }
     },
     async perPage(value) {
@@ -90,10 +108,25 @@ export default {
         return 'rewards-list-row';
       }
 
+      let classes = ['rewards-list-row'];
+
       if (typeof item === "object") {
         const { status } = item;
-        return `rewards-list-row ${status === 'active' ? 'active' : ''}`;
+
+        if (status === 'active') {
+          classes.push('active');
+        }
+
+        if (status === 'pending') {
+          classes.push('pending');
+        }
+
+        if (status === 'frozen') {
+          classes.push('frozen');
+        }
       }
+
+      return classes.join(' ');
     },
     async reload(page = 1) {
       const props = {
@@ -101,6 +134,8 @@ export default {
         limit: this.perPage,
         account: this.account
       };
+
+      this.$_setPerPage(this.perPage);
 
       const data = await this.$api.getAccountRewards(props);
       this.data = data.data;
@@ -148,6 +183,14 @@ export default {
 		&.active {
 			font-weight: 600;
 			background-color: rgba(48, 146, 130, .7);
+		}
+		
+		&.frozen {
+			background-color: rgba(158, 160, 165, .4);
+		}
+		
+		&.pending {
+			background-color: rgba(48, 146, 130, .4);
 		}
 	}
 	

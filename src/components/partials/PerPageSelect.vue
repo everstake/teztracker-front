@@ -26,9 +26,22 @@ export default {
     hide: {
       type: Boolean,
       default: false
+    },
+    defaultPerPage: {
+      type: Number,
+      default: 0
     }
   },
   watch: {
+    defaultPerPage: {
+      immediate: true,
+      handler(value) {
+        if (value) {
+          this.perPage = value;
+          this.$emit("per-page", value);
+        }
+      }
+    },
     perPage: {
       immediate: true,
       handler(value) {
