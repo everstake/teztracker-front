@@ -5,7 +5,6 @@
     </div>
 
     <b-table
-      responsive
       show-empty
       :items="accounts"
       :fields="fields"
@@ -34,7 +33,7 @@
         >
           <span>{{ row.item.delegateValue | longhash(35) }}</span>
         </b-link>
-        <span>----</span>
+        <span v-else>----</span>
       </template>
     </b-table>
 
