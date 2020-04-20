@@ -89,8 +89,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.mb-30 {
-  margin-bottom: 30px;
-}
-</style>
+<style lang="scss" scoped></style>

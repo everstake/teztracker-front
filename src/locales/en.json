@@ -287,6 +287,8 @@
     "numOfBlocks": "Number of blocks",
     "avgBlockDelay": "Average block delay",
     "feesPerDay": "Fees per day",
-    "delegationVol": "Delegation volume"
+    "delegationVol": "Delegation volume",
+    "bakersPerDay": "Bakers per day",
+    "rollsDist": "Rolls distribution"
   }
 }

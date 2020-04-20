@@ -286,6 +286,8 @@
 	"charts": {
 		"numOfBlocks": "Количество блоков",
 		"avgBlockDelay": "Средняя задержка блока",
-		"feesPerDay": "Комиссий в день"
+		"feesPerDay": "Комиссий в день",
+		"bakersPerDay": "Бейкеров в день",
+		"rollsDist": "Рампределние роллов"
 	}
 }
