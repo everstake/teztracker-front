@@ -3,7 +3,7 @@
     <CardHeader>
       <template #left-content class="text">
         <h4 class="tz-title--bold">
-          {{ $t("charts.numOfBlocks") }}
+          {{ $t("numberOf.#OfOperations") }}
         </h4>
       </template>
     </CardHeader>
@@ -25,7 +25,7 @@ import LineChart from "../../partials/chart-types/LineChart.vue";
 import chartsData from "../../../mixins/charts/chartsData";
 
 export default {
-  name: "ChartNumOfBlocks",
+  name: "ChartNumOfOps",
   components: {
     CardHeader,
     LineChart
@@ -33,13 +33,13 @@ export default {
   mixins: [chartsData],
   data() {
     return {
-      columns: "blocks",
+      columns: "operations",
       period: "day",
       xAxesMaxTicksLimit: 28
     };
   },
   computed: {
-    numOfBlocksData() {
+    numOfOpsData() {
       if (
         !this.$_chartDataInitialReformatted ||
         !this.$_chartDataInitialReformatted.length
@@ -69,8 +69,8 @@ export default {
         labels: this.$_last30days,
         datasets: [
           {
-            label: this.$t("charts.numOfBlocks"),
-            data: this.numOfBlocksData,
+            label: this.$t("numberOf.#OfOperations"),
+            data: this.numOfOpsData,
             spanGaps: true
           }
         ]

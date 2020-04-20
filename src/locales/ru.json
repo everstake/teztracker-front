@@ -31,7 +31,8 @@
 		"home": "Главная",
 		"opType": "Тип операции",
 		"other": "Другое",
-		"baking": "Бейкинг"
+		"baking": "Бейкинг",
+		"txVol": "Объем транзакциий"
 	},
 	"opTypes": {
 		"tx": "Транзакция | Транзакции",
@@ -78,7 +79,9 @@
 		"publicBakersPage": "Страница публичных бейкеров",
 		"accsPage": "Страница аккаунтов",
 		"contractsPage": "Страница контрактов",
-		"protocolsPage": "Страница протоколов"
+		"protocolsPage": "Страница протоколов",
+		"generalChartsPage": "Страница общих графиков",
+		"bakingChartsPage": "Страница графиков бейкинга"
 	},
 	"infoTypes": {
 		"txInfo": "Информация о транзакции",
@@ -114,7 +117,8 @@
 		"#OfDelegators": "Количество делегаторов",
 		"#OfEndorsements": "Количество заверений",
 		"#OfOperations": "Количество операций",
-		"#OfVotes": "Количество голосов"
+		"#OfVotes": "Количество голосов",
+		"#OfWhaleAccs": "Количество китов"
 	},
 	"bakerSingle": {
 		"address": "Адрес",
@@ -129,7 +133,6 @@
 	"blockSingle": {
 		"bakerFee": "Комиссия бейкера",
 		"bakerPriority": "Приоритет бейкера",
-		"txVol": "Объем транзакции",
 		"dblBakingEvidence": "Свидетельство о двойном бейкинге",
 		"dblEndorsementEvidence": "Свидетельство о двойном заверении",
 		"blockTime": "Время блока",
@@ -281,6 +284,8 @@
 		"dockerImages": "Docker-образы"
 	},
 	"charts": {
-		"numOfBlocks": "Количество блоков"
+		"numOfBlocks": "Количество блоков",
+		"avgBlockDelay": "Средняя задержка блока",
+		"feesPerDay": "Комиссий в день"
 	}
 }

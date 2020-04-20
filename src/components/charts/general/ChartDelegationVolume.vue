@@ -3,7 +3,7 @@
     <CardHeader>
       <template #left-content class="text">
         <h4 class="tz-title--bold">
-          {{ $t("charts.numOfBlocks") }}
+          {{ $t("charts.delegationVol") }}
         </h4>
       </template>
     </CardHeader>
@@ -14,6 +14,8 @@
       <LineChart
         :chart-data="chartData"
         :x-axes-max-ticks-limit="xAxesMaxTicksLimit"
+        :y-ticks-callback="$_yTicksCallback"
+        :tooltips-label-callback="$_tooltipsLabelCallback"
       />
     </b-card-body>
   </b-card>
@@ -23,23 +25,24 @@
 import CardHeader from "../../partials/CardHeader";
 import LineChart from "../../partials/chart-types/LineChart.vue";
 import chartsData from "../../../mixins/charts/chartsData";
+import xtzChartDataType from "../../../mixins/charts/xtzChartDataType";
 
 export default {
-  name: "ChartNumOfBlocks",
+  name: "ChartDelegationVolume",
   components: {
     CardHeader,
     LineChart
   },
-  mixins: [chartsData],
+  mixins: [chartsData, xtzChartDataType],
   data() {
     return {
-      columns: "blocks",
+      columns: "delegation_volume",
       period: "day",
       xAxesMaxTicksLimit: 28
     };
   },
   computed: {
-    numOfBlocksData() {
+    delegationVolumeData() {
       if (
         !this.$_chartDataInitialReformatted ||
         !this.$_chartDataInitialReformatted.length
@@ -69,8 +72,8 @@ export default {
         labels: this.$_last30days,
         datasets: [
           {
-            label: this.$t("charts.numOfBlocks"),
-            data: this.numOfBlocksData,
+            label: this.$t("charts.delegationVol"),
+            data: this.delegationVolumeData,
             spanGaps: true
           }
         ]

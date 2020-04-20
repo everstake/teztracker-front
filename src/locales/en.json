@@ -31,7 +31,8 @@
     "home": "Home",
     "opType": "Operation type",
     "other": "Other",
-    "baking": "Baking"
+    "baking": "Baking",
+    "txVol": "Transactions volume"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -116,7 +117,8 @@
     "#OfDelegators": "# of delegators",
     "#OfEndorsements": "# of endorsements",
     "#OfOperations": "# of operations",
-    "#OfVotes": "# of votes"
+    "#OfVotes": "# of votes",
+    "#OfWhaleAccs": "# of whale accounts"
   },
   "bakerSingle": {
     "address": "Address",
@@ -131,7 +133,6 @@
   "blockSingle": {
     "bakerFee": "Baker's fee",
     "bakerPriority": "Baker's priority",
-    "txVol": "Transaction volume",
     "dblBakingEvidence": "Double-baking evidence",
     "dblEndorsementEvidence": "Double-endorsement evidence",
     "blockTime": "Block time",
@@ -283,6 +284,9 @@
     "dockerImages": "Docker images"
   },
   "charts": {
-    "numOfBlocks": "Number of blocks"
+    "numOfBlocks": "Number of blocks",
+    "avgBlockDelay": "Average block delay",
+    "feesPerDay": "Fees per day",
+    "delegationVol": "Delegation volume"
   }
 }

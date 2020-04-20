@@ -3,7 +3,7 @@
     <CardHeader>
       <template #left-content class="text">
         <h4 class="tz-title--bold">
-          {{ $t("charts.numOfBlocks") }}
+          {{ $t("numberOf.#OfWhaleAccs") }}
         </h4>
       </template>
     </CardHeader>
@@ -25,7 +25,7 @@ import LineChart from "../../partials/chart-types/LineChart.vue";
 import chartsData from "../../../mixins/charts/chartsData";
 
 export default {
-  name: "ChartNumOfBlocks",
+  name: "ChartNumOfWhaleAccs",
   components: {
     CardHeader,
     LineChart
@@ -39,7 +39,7 @@ export default {
     };
   },
   computed: {
-    numOfBlocksData() {
+    numOfWhaleAccsData() {
       if (
         !this.$_chartDataInitialReformatted ||
         !this.$_chartDataInitialReformatted.length
@@ -69,8 +69,8 @@ export default {
         labels: this.$_last30days,
         datasets: [
           {
-            label: this.$t("charts.numOfBlocks"),
-            data: this.numOfBlocksData,
+            label: this.$t("numberOf.#OfWhaleAccs"),
+            data: this.numOfWhaleAccsData,
             spanGaps: true
           }
         ]
