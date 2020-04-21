@@ -31,7 +31,8 @@ const constants = {
     voting: process.env.VUE_APP_ROOT_API + "/v2/data/mainnet/"
   },
   SEARCH_PREFIXES: {
-    account: ["tz", "KT"],
+    baker: ["tz"],
+    account: ["KT"],
     operation: ["o"],
     block: ["B"]
   },

@@ -4,25 +4,47 @@
     class="search__form"
     @submit.prevent="onSubmit"
   >
-    <b-form-input
-      ref="searchInput"
-      type="text"
-      v-model.trim="searchQuery"
-      :placeholder="placeholder"
-      class="search-query"
-      @input="error = ''"
-      :readonly="loading"
-    />
-
-    <!--    <span v-if="error" class="search-form&#45;&#45;error">{{ error }}</span>-->
-
-    <b-button @click="onSubmit" class="button-search" :disabled="loading">
-      <font-awesome-icon
-        :class="loading ? 'spinner' : 'icon-white'"
-        :icon="loading ? 'spinner' : 'search'"
-        :spin="loading"
+    <div class="search-form__input">
+      <b-form-input
+        ref="searchInput"
+        type="text"
+        v-model.trim="searchQuery"
+        :placeholder="placeholder"
+        class="search-query"
+        @input="handleInputChange"
+        :readonly="loading && !publicBakersFetching"
+        autocomplete="off"
       />
-    </b-button>
+
+      <!--    <span v-if="error" class="search-form&#45;&#45;error">{{ error }}</span>-->
+
+      <b-button @click="onSubmit" class="button-search" :disabled="loading">
+        <font-awesome-icon
+          :class="loading ? 'spinner' : 'icon-white'"
+          :icon="loading ? 'spinner' : 'search'"
+          :spin="loading"
+        />
+      </b-button>
+    </div>
+    <div
+      v-if="isPublicBakersFetched && this.validateForm()"
+      class="search-form__dropdown"
+    >
+      <ul class="search-form__list">
+        <li
+          v-for="baker in filterPublicBakersBySearchQuery"
+          :key="generateKey()"
+          @click="handleDropdownClick(baker.accountId)"
+          :class="{
+            'search-form__item--selectable': true,
+            'search-form__item--active': baker.class === 'active'
+          }"
+          class="search-form__item"
+        >
+          {{ baker.bakerInfo.name }}
+        </li>
+      </ul>
+    </div>
   </b-form>
 </template>
 
@@ -33,15 +55,18 @@ import some from "lodash/some";
 import flatten from "lodash/flatten";
 import numeral from "numeral";
 import { mapActions, mapState } from "vuex";
-import { GET_PUBLIC_BAKERS } from "@/store/actions.types"
+import { GET_PUBLIC_BAKERS } from "@/store/actions.types";
+import uuid from "@/mixins/uuid";
 
 export default {
   name: "Search",
+  mixins: [uuid],
   data() {
     return {
       searchQuery: "",
       error: "",
-      loading: false
+      loading: false,
+      publicBakersFetching: false
     };
   },
   props: {
@@ -51,6 +76,30 @@ export default {
     }
   },
   methods: {
+    async searchByPublicBaker(accountId) {
+      const { status } = await this.$api.getAccount({ account: accountId });
+      const routerSettings = { name: "baker", params: { baker: accountId } };
+      const requestStatus = status;
+      this.resolveSearch(routerSettings, requestStatus);
+      // this.searchQuery = "";
+    },
+    async fetchPublicBakers(limit) {
+      this.publicBakersFetching = true;
+      await this[GET_PUBLIC_BAKERS]({ limit });
+      this.publicBakersFetching = false;
+    },
+    handleDropdownClick(accountId) {
+      const findedBaker = this.publicBakers.find(baker => baker.accountId === accountId);
+      findedBaker.class = 'active';
+      this.searchByPublicBaker(accountId);
+    },
+    async handleInputChange() {
+      this.error = '';
+
+      if (!this.isPublicBakersFetched && !this.loading) {
+        await this.fetchPublicBakers(30);
+      }
+    },
     ...mapActions("accounts", [GET_PUBLIC_BAKERS]),
     resolveSearch(props, status) {
       if (status !== this.$constants.STATUS_SUCCESS) {
@@ -119,24 +168,29 @@ export default {
         }
       }
 
+      // baker
+      for (const prefix of this.$constants.SEARCH_PREFIXES.baker) {
+        if (startsWith(searchStr, prefix)) {
+          const { status } = await this.$api.getAccount({ account: searchStr });
+          routerSettings = { name: "baker", params: { baker: searchStr } };
+          requestStatus = status;
+          this.searchQuery = "";
+        }
+      }
 
       if (routerSettings === null && requestStatus === null) {
-        const fetchedBakersSize = this.publicBakers.length;
-        const foundedBakerIndex = () => this.publicBakers.findIndex(baker => baker.bakerInfo.name.toLowerCase() === searchStr.trim().toLowerCase());
-
-        if (fetchedBakersSize === 0) {
-          await this[GET_PUBLIC_BAKERS]();
-        }
-
-        if (foundedBakerIndex() >= 0) {
-          const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
-          routerSettings = { name: "baker", params: { baker: this.publicBakers[foundedBakerIndex()].accountId } };
+        const filteredBakers = this.publicBakers.filter(({ bakerInfo }) => bakerInfo.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
+        if (filteredBakers.length > 0) {
+          const { accountId } = filteredBakers[0];
+          const findedBaker = this.publicBakers.find(baker => baker.accountId === accountId);
+          findedBaker.class = 'active';
+          const { status } = await this.$api.getAccount({ account: filteredBakers[0].accountId });
+          routerSettings = { name: "baker", params: { baker: filteredBakers[0].accountId } };
           requestStatus = status;
           this.searchQuery = "";
         } else {
-          if (fetchedBakersSize <= 10) {
-            await this[GET_PUBLIC_BAKERS]({ limit: this.publicBakersCount });
-          }
+          const fetchedBakersSize = this.publicBakers.length;
+          const foundedBakerIndex = () => this.publicBakers.findIndex(baker => baker.bakerInfo.name.toLowerCase() === searchStr.toLowerCase());
 
           if (foundedBakerIndex() >= 0) {
             const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
@@ -144,8 +198,19 @@ export default {
             requestStatus = status;
             this.searchQuery = "";
           } else {
-            this.error = 'Public baker not found.'
-            this.$refs.searchInput.$el.focus();
+            if (fetchedBakersSize <= 30) {
+              await this[GET_PUBLIC_BAKERS]({ limit: this.publicBakersCount });
+            }
+
+            if (foundedBakerIndex() >= 0) {
+              const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
+              routerSettings = { name: "baker", params: { baker: this.publicBakers[foundedBakerIndex()].accountId } };
+              requestStatus = status;
+              this.searchQuery = "";
+            } else {
+              this.error = 'Public baker not found.'
+              this.$refs.searchInput.$el.focus();
+            }
           }
         }
       }
@@ -155,9 +220,7 @@ export default {
       this.resolveSearch(routerSettings, requestStatus);
     },
     findQueryPrefix(searchQuery) {
-      const prefixesArray = flatten(
-        Object.values(this.$constants.SEARCH_PREFIXES)
-      );
+      const prefixesArray = flatten(Object.values(this.$constants.SEARCH_PREFIXES));
       let findedPrefix = null;
 
       const findId = () => {
@@ -203,6 +266,15 @@ export default {
     }
   },
   computed: {
+    isPublicBakersFetched() {
+      return this.publicBakers.length > 0;
+    },
+    filterPublicBakersBySearchQuery() {
+      const { publicBakers } = this;
+      const { searchQuery } = this;
+
+      return publicBakers.filter(({ bakerInfo }) => bakerInfo.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    },
     ...mapState("accounts", {
       publicBakers: state => state.publicBakers,
       publicBakersCount: state => state.counts.publicBakers
@@ -211,7 +283,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .icon-white {
   position: absolute;
   top: 50%;
@@ -229,5 +301,61 @@ export default {
 .main-header .search__form .search-query::placeholder {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.5);
+}
+
+.search-form {
+  position: relative;
+
+  &__input {
+    margin-bottom: 5px;
+  }
+
+  &__dropdown {
+    z-index: 3;
+    position: absolute;
+    left: 0;
+    right: 0;
+    max-height: 200px;
+    overflow: auto;
+    background-color: #fff;
+    border: 1px solid #d8d8d8;
+    border-radius: 3px;
+  }
+
+  &__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    font-size: 14px;
+    color: #212529;
+    padding: 10px 20px;
+
+    &--selectable,
+    &--active {
+      cursor: pointer;
+    }
+
+    &:hover,
+    &:focus {
+      color: #16181b;
+      text-decoration: none;
+      background-color: #f8f9fa;
+    }
+
+    &:active {
+      color: #fff;
+      background-color: $color-brand;
+    }
+
+    &--active,
+    &--active:hover,
+    &--active:focus {
+      color: #fff;
+      background-color: $color-brand;
+    }
+  }
 }
 </style>
