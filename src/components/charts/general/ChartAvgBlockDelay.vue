@@ -14,6 +14,8 @@
       <LineChart
         :chart-data="chartData"
         :x-axes-max-ticks-limit="xAxesMaxTicksLimit"
+        :y-ticks-callback="formatSeconds"
+        :tooltips-label-callback="this.tooltipsLabelCallback"
       />
     </b-card-body>
   </b-card>
@@ -84,6 +86,28 @@ export default {
       from: this.$_fromTimestamp,
       to: this.$_toTimestamp
     });
+  },
+  methods: {
+    formatSeconds(seconds) {
+      const date = new Date(0);
+      date.setSeconds(seconds); // specify value for SECONDS here
+      // more than a minute
+      if (seconds > 59) {
+        return `${date.getMinutes()} m ${date.getSeconds()} s`;
+      }
+      // more than an hour
+      if (seconds > 86399) {
+        return `${date.getHours()} h ${date.getMinutes()} m ${date.getSeconds()} s`;
+      }
+
+      // just seconds
+      return `${date.getSeconds()} s`;
+    },
+    tooltipsLabelCallback(tooltipItem, data) {
+      return `${data.datasets[0].label}: ${this.formatSeconds(
+        tooltipItem.value
+      )}`;
+    }
   }
 };
 </script>

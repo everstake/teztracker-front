@@ -11,7 +11,10 @@
     <div class="card-divider"></div>
 
     <b-card-body>
-      <PieChart :chart-data="chartData" />
+      <PieChart
+        :chart-data="chartData"
+        :tooltips-label-callback="tooltipsLabelCallback"
+      />
     </b-card-body>
   </b-card>
 </template>
@@ -29,28 +32,32 @@ export default {
   data() {
     return {
       totalRolls: 707687567 / 8,
-      twentyColors: [
+      palette: [
+        "#0B6E4B",
+        "#178E64",
+        "#339B76",
+        "#51B08F",
+        "#83CFB4",
         "#0A6858",
         "#168774",
         "#309282",
         "#4DA798",
         "#7FCABE",
-        "#1C7062",
-        "#328678",
-        "#519E91",
-        "#80C0B6",
-        "#B7E1DA",
-        "#338D7E",
+        "#0B5C64",
+        "#167881",
+        "#2F848C",
+        "#4C9AA1",
+        "#7EC0C7",
+        "#0F4B68",
+        "#1B6386",
+        "#357392",
+        "#528BA7",
+        "#83B3CA",
         "#09312A",
         "#17443D",
         "#274E48",
         "#3C6A63",
-        "#5A837C",
-        "#0EC0A2",
-        "#30CDB3",
-        "#54DAC4",
-        "#84E9D8"
-        
+        "#5A837C"
       ],
       bakers: [
         {
@@ -159,7 +166,7 @@ export default {
   computed: {
     bakersData() {
       return this.bakers.map(baker => {
-        return baker.rolls / 8 * 100 / this.totalRolls;
+        return `${(((baker.rolls / 8) * 100) / this.totalRolls).toFixed(6)}`;
       });
     },
     chartData() {
@@ -167,13 +174,17 @@ export default {
         datasets: [
           {
             data: this.bakersData,
-            backgroundColor: this.twentyColors,
-            borderWidth: 1,
-            weight: 10
+            backgroundColor: this.palette,
+            borderWidth: 1
           }
         ],
         labels: this.bakers.map(baker => baker.name || baker.address)
       };
+    }
+  },
+  methods: {
+    tooltipsLabelCallback(tooltipItem, data) {
+      return `${data.labels[tooltipItem.index]}: ${data.datasets[0].data[tooltipItem.index]}%`;
     }
   }
 };

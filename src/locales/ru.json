@@ -287,7 +287,9 @@
 		"numOfBlocks": "Количество блоков",
 		"avgBlockDelay": "Средняя задержка блока",
 		"feesPerDay": "Комиссий в день",
+		"delegationVol": "Объем делегаций",
 		"bakersPerDay": "Бейкеров в день",
-		"rollsDist": "Рампределние роллов"
+		"rollsDist": "Распределние роллов",
+		"prioritiesPerCycle": "Приоритеты за цикл"
 	}
 }

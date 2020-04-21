@@ -1,6 +1,6 @@
 <template>
   <header class="main-header">
-    <b-navbar toggleable="lg" :sticky="true">
+    <b-navbar toggleable="xl" :sticky="true">
       <b-navbar-brand href="#">
         <router-link
           :to="{ name: 'network', params: { network: currentNetwork } }"

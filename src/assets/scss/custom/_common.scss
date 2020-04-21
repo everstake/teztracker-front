@@ -38,12 +38,14 @@ body {
   background-color: #309282;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 1199px) {
   .main-header .search {
     display: inline-flex;
     margin-top: 5px;
   }
+}
 
+@media (max-width: 991px) {
   .main-header .search__form {
     position: relative;
   }
@@ -384,7 +386,7 @@ li
 }
 
 .main-content .promo-section .promo-top .promo-search .search-form--invalid .button-search:focus,
-.main-header .search-form--invalid .button-search:focus, {
+.main-header .search-form--invalid .button-search:focus {
   box-shadow: 0 0 0 0.2rem rgba(299,105,104,0.25);
 }
 

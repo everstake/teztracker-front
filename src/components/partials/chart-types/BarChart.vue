@@ -1,29 +1,19 @@
 <script>
-import { Line, mixins } from "vue-chartjs";
+import { Bar, mixins } from "vue-chartjs";
 const { reactiveProp } = mixins;
 
 export default {
-  name: "LineChart",
-  extends: Line,
+  name: "BarChart",
+  extends: Bar,
   mixins: [reactiveProp],
   props: {
-    customTooltip: {
-      type: Function,
-      default() {
-        return null;
-      }
-    },
-    ticksStepSize: {
-      type: Number,
-      default: 0
-    },
     yAxesType: {
       type: String,
       default: "linear"
     },
-    xAxesMaxTicksLimit: {
+    yAxesMaxTicksLimit: {
       type: Number,
-      default: 0
+      default: 14
     },
     yTicksCallback: {
       type: Function,
@@ -69,7 +59,7 @@ export default {
                   fontFamily: "Montserrat Alternates",
                   fontColor: "#2d2e2c",
                   beginAtZero: true,
-                  stepSize: this.ticksStepSize,
+                  maxTicksLimit: this.yAxesMaxTicksLimit,
                   callback: this.yTicksCallback
                 }
               }
@@ -80,15 +70,15 @@ export default {
                   drawOnChartArea: false
                 },
                 ticks: {
-                  maxTicksLimit: this.xAxesMaxTicksLimit,
+                  maxTicksLimit: 10,
                   fontColor: "#2d2e2c",
-                  fontFamily: "Montserrat Alternates"
+                  fontFamily: "Montserrat Alternates",
+                  beginAtZero: true
                 }
               }
             ]
           },
           tooltips: {
-            enabled: Boolean(this.customTooltip),
             titleFontFamily: "Montserrat Alternates",
             bodyFontFamily: "Montserrat Alternates",
             displayColors: false,
@@ -98,23 +88,6 @@ export default {
             cornerRadius: 4,
             callbacks: {
               label: this.tooltipsLabelCallback
-            }
-          },
-          elements: {
-            line: {
-              borderColor: "rgba(48, 146, 130, 0.6)",
-              borderWidth: 2,
-              fill: true,
-              backgroundColor: "rgba(48, 146, 130, 0.15)",
-              cubicInterpolationMode: "monotone"
-            },
-            point: {
-              borderColor: "rgb(48, 146, 130)",
-              backgroundColor: "rgb(48, 146, 130, 1)",
-              radius: 2,
-              hitRadius: 6,
-              hoverRadius: 4,
-              hoverBorderWidth: 2
             }
           }
         };

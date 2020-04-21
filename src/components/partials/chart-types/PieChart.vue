@@ -7,6 +7,12 @@ export default {
   extends: Pie,
   mixins: [reactiveProp],
   props: {
+    tooltipsLabelCallback: {
+      type: Function,
+      default(tooltipItem, data) {
+        return `${data.labels[tooltipItem.index]}: ${data.datasets[0].data[tooltipItem.index]}`;
+      }
+    },
     options: {
       type: Object,
       default() {
@@ -20,18 +26,15 @@ export default {
             }
           },
           tooltips: {
-            // enabled: Boolean(this.customTooltip),
             titleFontFamily: "Montserrat Alternates",
             bodyFontFamily: "Montserrat Alternates",
             displayColors: false,
             backgroundColor: "rgba(33, 37, 41, 0.8)",
             bodyAlign: "center",
             titleAlign: "center",
-            cornerRadius: 4
-          },
-          elements: {
-            arc: {
-              // backgroundColor: "rgba(48, 146, 130, 0.15)",
+            cornerRadius: 4,
+            callbacks: {
+              label: this.tooltipsLabelCallback
             }
           }
         };
