@@ -28,7 +28,7 @@
 			</template>
 			
 			<template slot="fees" slot-scope="row">
-				{{ row.item.fees || '----' }}
+				{{ row.item.fees | tezosToFixed }}
 			</template>
 		</b-table>
 
