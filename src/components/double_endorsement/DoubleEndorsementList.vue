@@ -30,10 +30,43 @@
       <template slot="timestamp" slot-scope="row">
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
+      <template slot="baker" slot-scope="row">
+        <router-link
+          class="baker"
+          :to="{
+            name: 'baker',
+            params: { baker: row.item.doubleOperationDetails.evidence_baker }
+          }"
+        >{{ row.item.doubleOperationDetails.evidence_baker | longhash(20) }}</router-link>
+      </template>
+      <template slot="baker_rewards" slot-scope="row">
+        {{ row.item.doubleOperationDetails.baker_reward | tezos }}
+      </template>
+      <template slot="offender" slot-scope="row">
+        <router-link
+          class="baker"
+          :to="{
+            name: 'baker',
+            params: { baker: row.item.doubleOperationDetails.offender }
+          }"
+        >{{ row.item.doubleOperationDetails.offender | longhash(20) }}</router-link
+        >
+      </template>
       <template slot="denounced_level" slot-scope="row">
-        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
-          {{ row.item.level | formatInteger }}
+        <b-link
+          :to="{
+            name: 'block',
+            params: { level: row.item.doubleOperationDetails.denounced_level }
+          }"
+        >
+          {{ row.item.doubleOperationDetails.denounced_level | formatInteger }}
         </b-link>
+      </template>
+      <template slot="lost_deposits" slot-scope="row">
+        {{ row.item.doubleOperationDetails.lost_deposits | tezos }}
+      </template>
+      <template slot="lost_rewards" slot-scope="row">
+        {{ row.item.doubleOperationDetails.lost_rewards | tezos }}
       </template>
     </b-table>
 
@@ -68,8 +101,13 @@ export default {
       fields: [
         { key: "level", label: this.$t("common.blockId") },
         { key: "txhash", label: this.$t("hashTypes.opHash") },
+        { key: "baker", label: this.$t("dblBakingList.accuser") },
+        { key: "baker_rewards", label: this.$t("dblBakingList.bakerRewards") },
+        { key: "offender", label: this.$t("dblBakingList.offender") },
         { key: "denounced_level", label: this.$t("common.denouncedLvl") },
-        { key: "timestamp", label: this.$t("common.timestamp") },
+        { key: "lost_deposits", label: this.$t("dblBakingList.lostDeposits") },
+        { key: "lost_rewards", label: this.$t("dblBakingList.lostRewards") },
+        { key: "timestamp", label: this.$t("common.timestamp") }
       ]
     };
   },
