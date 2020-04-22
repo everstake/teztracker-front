@@ -45,10 +45,11 @@ Vue.filter("tezos", function(amount) {
 
 Vue.filter("tezosToFixed", function(amount) {
   if (amount > 0) {
-    return (
-      numeral(amount / Vue.prototype.$constants.XTZ).format("0,0") +
-      " XTZ"
-    );
+    if (numeral(amount / Vue.prototype.$constants.XTZ).format("0,0") == 0) {
+      return `${numeral(amount / Vue.prototype.$constants.XTZ).format("0,0[.]000000")} XTZ`;
+    } else {
+      return `${numeral(amount / Vue.prototype.$constants.XTZ).format("0,0")} XTZ`
+    }
   }
   return "0 XTZ";
 });
