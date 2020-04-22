@@ -6,7 +6,7 @@
 				<h3 id="card-title" class="card__title">
           <span class="text card-title__text">
             <template>
-              {{ props.operationGroupHash }}
+              {{ props.blockHash }}
             </template>
           </span>
 				</h3>
@@ -41,7 +41,7 @@
 								<b-col lg="7" class="text-accent card__pointer">
                   <span id="hash" @click="copyToClipboard()">
                     <span ref="textToCopy">
-                      {{ props.blockHash }}
+                      {{ props.operationGroupHash }}
                     </span>
                     <span class="icon">
                       <font-awesome-icon
@@ -124,7 +124,7 @@
 							
 							<b-row class="item-info">
 								<b-col lg="4" class="label">{{ $t('dblBakingList.accuserRewards') }}</b-col>
-								<b-col lg="7" class="text-accent"> {{ props.doubleOperationDetails.baker_reward }} </b-col>
+								<b-col lg="7" class="text-accent"> {{ props.doubleOperationDetails.baker_reward | tezos }} </b-col>
 							</b-row>
 							
 							<b-row class="item-info">
