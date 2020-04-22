@@ -11,8 +11,14 @@
     <div class="card-divider"></div>
 
     <b-card-body>
+      <div v-if="isChartDataInitialLoading" class="min-h-400 vote__loading">
+        {{ $t("common.loading") }}
+      </div>
+
       <LineChart
+        v-else
         :chart-data="chartData"
+        :y-axes-begin-at-zero="false"
         :x-axes-max-ticks-limit="xAxesMaxTicksLimit"
       />
     </b-card-body>
@@ -34,15 +40,26 @@ export default {
   data() {
     return {
       columns: "blocks",
-      period: "day",
+      period: "D",
       xAxesMaxTicksLimit: 28
     };
   },
   computed: {
+    chartDataInitialReformatted() {
+      if (!this.chartDataInitial || !this.chartDataInitial.length) {
+        return [];
+      }
+
+      return this.$_transformInitialDataToChartFormat(
+        this.chartDataInitial,
+        this.$_dateFormatWithoutTime,
+        "blocks"
+      );
+    },
     numOfBlocksData() {
       if (
-        !this.$_chartDataInitialReformatted ||
-        !this.$_chartDataInitialReformatted.length
+        !this.chartDataInitialReformatted ||
+        !this.chartDataInitialReformatted.length
       ) {
         return [];
       }
@@ -50,7 +67,7 @@ export default {
       let lastKnownVal;
       return this.$_last30days.map(date => {
         return (
-          this.$_chartDataInitialReformatted.find(pointObj => {
+          this.chartDataInitialReformatted.find(pointObj => {
             const isFound = pointObj.x === date;
 
             if (isFound) {
@@ -59,7 +76,7 @@ export default {
             }
           }) || {
             x: date,
-            y: lastKnownVal || 0
+            y: lastKnownVal || NaN
           }
         );
       });

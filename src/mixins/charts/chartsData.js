@@ -4,7 +4,8 @@ import moment from "moment";
 export default {
   data() {
     return {
-      chartDataInitial: []
+      chartDataInitial: [],
+      isChartDataInitialLoading: true
     };
   },
   computed: {
@@ -31,7 +32,7 @@ export default {
       return moment
         .utc(this.$_last30days[0], this.$_dateFormatWithoutTime) // need format?
         .startOf("day")
-        .valueOf();
+        .unix();
     },
     $_toTimestamp() {
       if (!this.$_last30days || !this.$_last30days.length) return null;
@@ -42,7 +43,7 @@ export default {
           this.$_dateFormatWithoutTime
         ) // need format?
         .endOf("day")
-        .valueOf();
+        .unix();
     },
     $_chartDataInitialReformatted() {
       if (!this.chartDataInitial || !this.chartDataInitial.length) {
@@ -56,23 +57,36 @@ export default {
     }
   },
   methods: {
-    $_transformInitialDataToChartFormat(initialArr, dateFormat) {
+    $_transformInitialDataToChartFormat(
+      initialArr,
+      dateFormat,
+      dataEntity,
+      dataFormatter
+    ) {
       return initialArr.map(dataObj => {
         return {
-          x: moment(dataObj.timestamp).format(dateFormat),
-          y: dataObj.blocks
+          x: moment.unix(dataObj.timestamp).format(dateFormat),
+          y: dataFormatter
+            ? dataFormatter(dataObj[dataEntity])
+            : dataObj[dataEntity]
         };
       });
     },
     async $_loadChartDataInitial(opts) {
-      const response = await this.$api.getCharts(opts);
-      if (response.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.replace({
-          name: response.status
-        });
-      }
+      try {
+        this.isChartDataInitialLoading = true;
 
-      this.chartDataInitial = response.data;
+        const response = await this.$api.getCharts(opts);
+        if (response.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: response.status
+          });
+        }
+
+        this.chartDataInitial = response.data;
+      } finally {
+        this.isChartDataInitialLoading = false;
+      }
     }
   }
 };

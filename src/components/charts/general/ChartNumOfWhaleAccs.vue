@@ -78,12 +78,12 @@ export default {
     }
   },
   created() {
-    this.$_loadChartDataInitial({
-      columns: this.columns,
-      period: this.period,
-      from: this.$_fromTimestamp,
-      to: this.$_toTimestamp
-    });
+    // this.$_loadChartDataInitial({
+    //   columns: this.columns,
+    //   period: this.period,
+    //   from: this.$_fromTimestamp,
+    //   to: this.$_toTimestamp
+    // });
   }
 };
 </script>

@@ -11,7 +11,12 @@
     <div class="card-divider"></div>
 
     <b-card-body>
+      <div v-if="isChartDataInitialLoading" class="min-h-400 vote__loading">
+        {{ $t("common.loading") }}
+      </div>
+
       <LineChart
+        v-else
         :chart-data="chartData"
         :x-axes-max-ticks-limit="xAxesMaxTicksLimit"
         :y-ticks-callback="$_yTicksCallback"
@@ -36,16 +41,28 @@ export default {
   mixins: [chartsData, xtzChartDataType],
   data() {
     return {
-      columns: "tx_volume",
-      period: "day",
+      columns: "volume",
+      period: "D",
       xAxesMaxTicksLimit: 28
     };
   },
   computed: {
+    chartDataInitialReformatted() {
+      if (!this.chartDataInitial || !this.chartDataInitial.length) {
+        return [];
+      }
+
+      return this.$_transformInitialDataToChartFormat(
+        this.chartDataInitial,
+        this.$_dateFormatWithoutTime,
+        "transactionVolume",
+        this.$helpers.formatXtz
+      );
+    },
     txVolumeData() {
       if (
-        !this.$_chartDataInitialReformatted ||
-        !this.$_chartDataInitialReformatted.length
+        !this.chartDataInitialReformatted ||
+        !this.chartDataInitialReformatted.length
       ) {
         return [];
       }
@@ -53,7 +70,7 @@ export default {
       let lastKnownVal;
       return this.$_last30days.map(date => {
         return (
-          this.$_chartDataInitialReformatted.find(pointObj => {
+          this.chartDataInitialReformatted.find(pointObj => {
             const isFound = pointObj.x === date;
 
             if (isFound) {
@@ -62,7 +79,7 @@ export default {
             }
           }) || {
             x: date,
-            y: lastKnownVal || 0
+            y: lastKnownVal || NaN
           }
         );
       });

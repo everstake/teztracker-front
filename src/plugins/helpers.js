@@ -8,6 +8,9 @@ const helpers = {
     } catch (e) {
       return false;
     }
+  },
+  formatXtz(value) {
+    return value / Vue.prototype.$constants.XTZ;
   }
 };
 

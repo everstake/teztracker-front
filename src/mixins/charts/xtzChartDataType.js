@@ -1,3 +1,5 @@
+import numeral from "numeral";
+
 export default {
   methods: {
     $_yTicksCallback(label) {
@@ -11,7 +13,9 @@ export default {
       return `${label} XTZ`;
     },
     $_tooltipsLabelCallback(tooltipItem, data) {
-      return `${data.datasets[0].label}: ${tooltipItem.value} XTZ`;
+      return `${data.datasets[0].label}: ${numeral(tooltipItem.value).format(
+        "0,0[.]000000"
+      )} XTZ`;
     }
   }
 };

@@ -34,7 +34,7 @@ export default {
   data() {
     return {
       columns: "bakers",
-      period: "day",
+      period: "D",
       xAxesMaxTicksLimit: 28
     };
   },

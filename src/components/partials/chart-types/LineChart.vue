@@ -1,5 +1,6 @@
 <script>
 import { Line, mixins } from "vue-chartjs";
+import numeral from "numeral";
 const { reactiveProp } = mixins;
 
 export default {
@@ -13,13 +14,17 @@ export default {
         return null;
       }
     },
-    ticksStepSize: {
+    yTicksStepSize: {
       type: Number,
       default: 0
     },
     yAxesType: {
       type: String,
       default: "linear"
+    },
+    yAxesBeginAtZero: {
+      type: Boolean,
+      default: true
     },
     xAxesMaxTicksLimit: {
       type: Number,
@@ -41,7 +46,9 @@ export default {
     tooltipsLabelCallback: {
       type: Function,
       default(tooltipItem, data) {
-        return `${data.datasets[0].label}: ${tooltipItem.value}`;
+        return `${data.datasets[0].label}: ${numeral(tooltipItem.value).format(
+          "0,0[.]000000"
+        )}`;
       }
     },
     options: {
@@ -68,9 +75,9 @@ export default {
                 ticks: {
                   fontFamily: "Montserrat Alternates",
                   fontColor: "#2d2e2c",
-                  beginAtZero: true,
-                  stepSize: this.ticksStepSize,
-                  callback: this.yTicksCallback
+                  beginAtZero: this.yAxesBeginAtZero,
+                  stepSize: this.yTicksStepSize,
+                  callback: this.yTicksCallback,
                 }
               }
             ],

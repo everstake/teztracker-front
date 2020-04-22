@@ -11,9 +11,15 @@
     <div class="card-divider"></div>
 
     <b-card-body>
+      <div v-if="isChartDataInitialLoading" class="min-h-400 vote__loading">
+        {{ $t("common.loading") }}
+      </div>
+
       <LineChart
+        v-else
         :chart-data="chartData"
         :x-axes-max-ticks-limit="xAxesMaxTicksLimit"
+        :y-axes-begin-at-zero="false"
         :y-ticks-callback="formatSeconds"
         :tooltips-label-callback="this.tooltipsLabelCallback"
       />
@@ -35,16 +41,27 @@ export default {
   mixins: [chartsData],
   data() {
     return {
-      columns: "block_delay",
-      period: "day",
+      columns: "avg_block_delay",
+      period: "D",
       xAxesMaxTicksLimit: 28
     };
   },
   computed: {
+    chartDataInitialReformatted() {
+      if (!this.chartDataInitial || !this.chartDataInitial.length) {
+        return [];
+      }
+
+      return this.$_transformInitialDataToChartFormat(
+        this.chartDataInitial,
+        this.$_dateFormatWithoutTime,
+        "averageDelay"
+      );
+    },
     avgBlockDelayData() {
       if (
-        !this.$_chartDataInitialReformatted ||
-        !this.$_chartDataInitialReformatted.length
+        !this.chartDataInitialReformatted ||
+        !this.chartDataInitialReformatted.length
       ) {
         return [];
       }
@@ -52,7 +69,7 @@ export default {
       let lastKnownVal;
       return this.$_last30days.map(date => {
         return (
-          this.$_chartDataInitialReformatted.find(pointObj => {
+          this.chartDataInitialReformatted.find(pointObj => {
             const isFound = pointObj.x === date;
 
             if (isFound) {
@@ -90,18 +107,22 @@ export default {
   methods: {
     formatSeconds(seconds) {
       const date = new Date(0);
-      date.setSeconds(seconds); // specify value for SECONDS here
+      date.setMilliseconds(seconds * 1000); // specify value for MILLISECONDS here
+      // less than a second
+      if (seconds < 1) {
+        return `${date.getMilliseconds()} ms`;
+      }
       // more than a minute
       if (seconds > 59) {
-        return `${date.getMinutes()} m ${date.getSeconds()} s`;
+        return `${date.getMinutes()} m ${date.getSeconds()} s ${date.getMilliseconds()} ms`;
       }
       // more than an hour
       if (seconds > 86399) {
-        return `${date.getHours()} h ${date.getMinutes()} m ${date.getSeconds()} s`;
+        return `${date.getHours()} h ${date.getMinutes()} m ${date.getSeconds()} s ${date.getMilliseconds()} ms`;
       }
 
       // just seconds
-      return `${date.getSeconds()} s`;
+      return `${date.getSeconds()} s ${date.getMilliseconds()} ms`;
     },
     tooltipsLabelCallback(tooltipItem, data) {
       return `${data.datasets[0].label}: ${this.formatSeconds(
