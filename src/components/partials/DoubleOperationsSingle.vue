@@ -14,8 +14,8 @@
 					<span v-if="props.kind === 'double_baking_evidence'">
 						{{ $t("infoTypes.dblBakingInfo") }}
 					</span>
-					<span v-else-if="props.kind === 'double_baking_evidence'">
-						{{ $t("infoTypes.dblBakingInfo") }}
+					<span v-else-if="props.kind === 'double_endorsement_evidence'">
+						{{ $t("infoTypes.dblEndorsementInfo") }}
 					</span>
 				</div>
 			</b-card-header>
@@ -119,16 +119,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "DoubleOperationsSingle",
-  props: {
-    props: {
-      type: Object,
-	    default: () => ({
-        doubleOperationDetails: {
-          evidence_baker_name: '123'
-        }
-	    })
-    }
-  },
+  props: ['props'],
   computed: {
     ...mapState("app", {
       dateFormat: state => state.dateFormat
