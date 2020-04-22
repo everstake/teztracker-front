@@ -59,7 +59,7 @@
 
 					<template slot="delegator" slot-scope="row">
 						<router-link
-							:to="{ name: 'baker', params: { baker: row.item.delegator } }"
+							:to="{ name: 'account', params: { account: row.item.delegator } }"
 						>
 						{{ row.item.delegator }}
 						</router-link>
@@ -70,7 +70,7 @@
 					</template>
 
 					<template slot="share" slot-scope="row">
-						{{ row.item.share | toFixedNoRounding }}
+						{{ row.item.share | toFixedNoRounding }}%
 					</template>
 				</b-table>
 				
