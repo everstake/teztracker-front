@@ -91,7 +91,7 @@ export default {
       fields: [
         { key: "level", label: this.$t("common.blockId") },
         { key: "txhash", label: this.$t("hashTypes.delegationHash") },
-        { key: "delegationAmount", label: this.$t("delegationsList.delegationAmount") },
+        { key: "delegationAmount", label: this.$t("common.amountDelegated") },
         { key: "from", label: this.$t("common.from") },
         { key: "to", label: this.$t("common.to") },
         { key: "fee", label: this.$t("common.fee") },
