@@ -8,6 +8,7 @@
       <section>
         <b-container fluid>
           <TxSingle
+            v-if="txInfo.kind && (txInfo.kind !== 'double_baking_evidence' && txInfo.kind !== 'double_endorsement_evidence')"
             :block-hash="txInfo.blockHash"
             :timestamp="txInfo.timestamp"
             :op-hash="txInfo.operationGroupHash"
@@ -27,6 +28,7 @@
             :reward="txInfo.reward"
             :claimed-amount="txInfo.claimedAmount"
           />
+          <DoubleOperationsSingle v-else-if="dataFetched" :props="txInfo" />
         </b-container>
       </section>
 
@@ -148,6 +150,7 @@ import { mapState } from "vuex";
 import Pagination from "../components/partials/Pagination";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 import defineRowClass from "@/mixins/defineRowClass";
+import DoubleOperationsSingle from "@/components/partials/DoubleOperationsSingle";
 
 export default {
   name: "Tx",
@@ -155,7 +158,8 @@ export default {
     PageContentContainer,
     Breadcrumbs,
     TxSingle,
-    Pagination
+    Pagination,
+    DoubleOperationsSingle
   },
   mixins: [handleCurrentPageChange, defineRowClass],
   data() {
@@ -169,7 +173,8 @@ export default {
         "activate_account",
         "double_baking_evidence",
         "double_endorsement_evidence"
-      ]
+      ],
+      dataFetched: false
     };
   },
   computed: {
@@ -276,6 +281,7 @@ export default {
       }
       this.transactions = data.data;
       this.txInfo = this.transactions[0] || {};
+      this.dataFetched = true;
       this.count = data.count;
     }
   }
