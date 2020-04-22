@@ -144,8 +144,7 @@ const TzAPI = {
     });
   },
   getDoubleEndorsement(opts = {}) {
-    return get(this.API_URL(), "operations", {
-      operation_kind: "double_endorsement_evidence",
+    return get(this.API_URL(), "double_endorsements", {
       ...opts
     });
   },
