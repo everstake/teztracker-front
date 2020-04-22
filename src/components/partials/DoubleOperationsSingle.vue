@@ -6,7 +6,7 @@
 				<h3 id="card-title" class="card__title">
           <span class="text card-title__text">
             <template>
-              {{ props.blockHash }}
+              {{ props.operationGroupHash }}
             </template>
           </span>
 				</h3>
@@ -27,8 +27,16 @@
 					<b-row>
 						<b-col class="card__no-padding" lg="6">
 							<b-row class="item-info">
+								<b-col lg="4" class="label">{{ $t('common.includedInBlock') }}</b-col>
+								<b-col lg="7" class="text-accent value">
+									<router-link class="color-accent" :to="{ name: 'block', params: { level: props.blockLevel } }">
+										{{ props.blockLevel }}
+									</router-link>
+								</b-col>
+							</b-row>
+							<b-row class="item-info">
 								<b-col lg="4" class="label">
-									{{ $t("bakerSingle.address") }}
+									{{ $t("hashTypes.opHash") }}
 								</b-col>
 								<b-col lg="7" class="text-accent card__pointer">
                   <span id="hash" @click="copyToClipboard()">
@@ -51,7 +59,7 @@
 								<b-col lg="4" class="label">
 									{{ $t("dblBakingList.accuser") }}
 								</b-col>
-								<b-col lg="7" class="text-accent card__pointer">
+								<b-col lg="7" class="text-accent">
                   <span>
                       {{ props.doubleOperationDetails.evidence_baker_name || props.doubleOperationDetails.evidence_baker }}
                   </span>
@@ -61,10 +69,18 @@
 								<b-col lg="4" class="label">
 									{{ $tc("common.cycle", 1) }}
 								</b-col>
-								<b-col lg="7" class="text-accent card__pointer">
+								<b-col lg="7" class="text-accent">
                   <span>
                       {{ props.cycle }}
                   </span>
+								</b-col>
+							</b-row>
+							<b-row class="item-info">
+								<b-col lg="4" class="label">
+									{{ $t("common.timestamp") }}
+								</b-col>
+								<b-col lg="7" class="value">
+									{{ props.timestamp | timeformat(dateFormat) }}
 								</b-col>
 							</b-row>
 						</b-col>
@@ -103,6 +119,20 @@
 								</b-col>
 								<b-col lg="6" class="text-accent">
 									{{ props.doubleOperationDetails.lost_rewards | tezos }}
+								</b-col>
+							</b-row>
+							
+							<b-row class="item-info">
+								<b-col lg="4" class="label">{{ $t('dblBakingList.accuserRewards') }}</b-col>
+								<b-col lg="7" class="text-accent"> {{ props.doubleOperationDetails.baker_reward }} </b-col>
+							</b-row>
+							
+							<b-row class="item-info">
+								<b-col lg="4" class="label">
+									{{ $t("txSingle.confirmations") }}
+								</b-col>
+								<b-col lg="7" class="value">
+									{{ props.confirmations | formatInteger }}
 								</b-col>
 							</b-row>
 						</b-col>
