@@ -27,7 +27,7 @@
       </b-button>
     </div>
     <div
-      v-if="isPublicBakersFetched && this.validateForm()"
+      v-if="filterPublicBakersBySearchQuery.length > 0 && validateForm()"
       class="search-form__dropdown"
     >
       <ul class="search-form__list">
@@ -81,7 +81,6 @@ export default {
       const routerSettings = { name: "baker", params: { baker: accountId } };
       const requestStatus = status;
       this.resolveSearch(routerSettings, requestStatus);
-      // this.searchQuery = "";
     },
     async fetchPublicBakers(limit) {
       this.publicBakersFetching = true;
@@ -179,40 +178,42 @@ export default {
       }
 
       if (routerSettings === null && requestStatus === null) {
-        const filteredBakers = this.publicBakers.filter(({ bakerInfo }) => bakerInfo.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
-        if (filteredBakers.length > 0) {
-          const { accountId } = filteredBakers[0];
-          const findedBaker = this.publicBakers.find(baker => baker.accountId === accountId);
-          findedBaker.class = 'active';
-          const { status } = await this.$api.getAccount({ account: filteredBakers[0].accountId });
-          routerSettings = { name: "baker", params: { baker: filteredBakers[0].accountId } };
-          requestStatus = status;
-          this.searchQuery = "";
-        } else {
-          const fetchedBakersSize = this.publicBakers.length;
-          const foundedBakerIndex = () => this.publicBakers.findIndex(baker => baker.bakerInfo.name.toLowerCase() === searchStr.toLowerCase());
-
-          if (foundedBakerIndex() >= 0) {
-            const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
-            routerSettings = { name: "baker", params: { baker: this.publicBakers[foundedBakerIndex()].accountId } };
-            requestStatus = status;
-            this.searchQuery = "";
-          } else {
-            if (fetchedBakersSize <= 30) {
-              await this[GET_PUBLIC_BAKERS]({ limit: this.publicBakersCount });
-            }
-
-            if (foundedBakerIndex() >= 0) {
-              const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
-              routerSettings = { name: "baker", params: { baker: this.publicBakers[foundedBakerIndex()].accountId } };
-              requestStatus = status;
-              this.searchQuery = "";
-            } else {
-              this.error = 'Public baker not found.'
-              this.$refs.searchInput.$el.focus();
-            }
-          }
-        }
+        console.log('form submitted')
+        console.log(this.filterPublicBakersBySearchQuery[0])
+        // const filteredBakers = this.publicBakers.filter(({ bakerInfo }) => bakerInfo.name.toLowerCase().includes(this.searchQuery.toLowerCase()));
+        // if (filteredBakers.length > 0) {
+        //   // const { accountId } = filteredBakers[0];
+        //   // const findedBaker = this.publicBakers.find(baker => baker.accountId === accountId);
+        //   // findedBaker.class = 'active';
+        //   const { status } = await this.$api.getAccount({ account: filteredBakers[0].accountId });
+        //   routerSettings = { name: "baker", params: { baker: filteredBakers[0].accountId } };
+        //   requestStatus = status;
+        //   this.searchQuery = "";
+        // } else {
+        //   const fetchedBakersSize = this.publicBakers.length;
+        //   const foundedBakerIndex = () => this.publicBakers.findIndex(baker => baker.bakerInfo.name.toLowerCase() === searchStr.toLowerCase());
+        //
+        //   if (foundedBakerIndex() >= 0) {
+        //     const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
+        //     routerSettings = { name: "baker", params: { baker: this.publicBakers[foundedBakerIndex()].accountId } };
+        //     requestStatus = status;
+        //     this.searchQuery = "";
+        //   } else {
+        //     if (fetchedBakersSize <= 30) {
+        //       await this[GET_PUBLIC_BAKERS]({ limit: this.publicBakersCount });
+        //     }
+        //
+        //     if (foundedBakerIndex() >= 0) {
+        //       const { status } = await this.$api.getAccount({ account: this.publicBakers[foundedBakerIndex()].accountId });
+        //       routerSettings = { name: "baker", params: { baker: this.publicBakers[foundedBakerIndex()].accountId } };
+        //       requestStatus = status;
+        //       this.searchQuery = "";
+        //     } else {
+        //       this.error = 'Public baker not found.'
+        //       this.$refs.searchInput.$el.focus();
+        //     }
+        //   }
+        // }
       }
 
       this.loading = false;
