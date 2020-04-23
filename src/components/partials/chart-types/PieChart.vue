@@ -10,7 +10,9 @@ export default {
     tooltipsLabelCallback: {
       type: Function,
       default(tooltipItem, data) {
-        return `${data.labels[tooltipItem.index]}: ${data.datasets[0].data[tooltipItem.index]}`;
+        return `${data.labels[tooltipItem.index]}: ${
+          data.datasets[0].data[tooltipItem.index]
+        }`;
       }
     },
     options: {
@@ -19,10 +21,13 @@ export default {
         return {
           responsive: true,
           maintainAspectRatio: false,
+          aspectRatio: 0.9,
           legend: {
             labels: {
               fontFamily: "Montserrat Alternates",
-              fontColor: "#2d2e2c"
+              fontColor: "#2d2e2c",
+              boxWidth: 12,
+              usePointStyle: true
             }
           },
           tooltips: {

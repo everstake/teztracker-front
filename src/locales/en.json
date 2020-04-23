@@ -290,6 +290,7 @@
     "delegationVol": "Delegation volume",
     "bakersPerDay": "Bakers per day",
     "rollsDist": "Rolls distribution",
-    "prioritiesPerCycle": "Priorities per cycle"
+    "prioritiesPerCycle": "Priorities per cycle",
+    "andHigher": "and higher"
   }
 }

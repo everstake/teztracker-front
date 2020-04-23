@@ -290,6 +290,7 @@
 		"delegationVol": "Объем делегаций",
 		"bakersPerDay": "Бейкеров в день",
 		"rollsDist": "Распределние роллов",
-		"prioritiesPerCycle": "Приоритеты за цикл"
+		"prioritiesPerCycle": "Приоритеты за цикл",
+		"andHigher": "и выше"
 	}
 }

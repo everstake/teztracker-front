@@ -11,7 +11,12 @@
     <div class="card-divider"></div>
 
     <b-card-body>
+      <div v-if="isChartDataInitialLoading" class="min-h-400 vote__loading">
+        {{ $t("common.loading") }}
+      </div>
+
       <BarChart
+        v-else
         :chart-data="chartData"
         y-axes-type="logarithmic"
         :y-axes-max-ticks-limit="yAxesMaxTicksLimit"
@@ -25,7 +30,6 @@
 <script>
 import CardHeader from "../../partials/CardHeader";
 import BarChart from "../../partials/chart-types/BarChart.vue";
-import chartsData from "../../../mixins/charts/chartsData";
 
 export default {
   name: "ChartPrioritiesPerCycle",
@@ -33,64 +37,119 @@ export default {
     CardHeader,
     BarChart
   },
-  mixins: [chartsData],
   data() {
     return {
-      columns: "blocks_priority",
-      period: "D",
-      yAxesMaxTicksLimit: 14
+      chartDataInitial: [],
+      isChartDataInitialLoading: true,
+      cyclesLimit: 10,
+      yAxesMaxTicksLimit: 14,
     };
   },
   computed: {
+    cycles() {
+      if (!this.chartDataInitial || !this.chartDataInitial.length) {
+        return [];
+      }
+
+      return this.chartDataInitial
+        .map(cycleObj => `${this.$tc("common.cycle", 1)} ${cycleObj.cycle}`)
+        .reverse();
+    },
+    priorities() {
+      if (!this.chartDataInitial || !this.chartDataInitial.length) {
+        return [];
+      }
+
+      return this.chartDataInitial.reduce(
+        (acc, cycleObj, index) => {
+          acc.zeroPriority.push(
+            ((cycleObj.zeroPriority / cycleObj.blocks) * 100).toFixed(6)
+          );
+          acc.firstPriority.push(
+            ((cycleObj.firstPriority / cycleObj.blocks) * 100).toFixed(6)
+          );
+          acc.secondPriority.push(
+            ((cycleObj.secondPriority / cycleObj.blocks) * 100).toFixed(6)
+          );
+          acc.thirdPriority.push(
+            ((cycleObj.thirdPriority / cycleObj.blocks) * 100).toFixed(6)
+          );
+
+          if (index === this.chartDataInitial.length - 1) {
+            acc.zeroPriority.reverse();
+            acc.firstPriority.reverse();
+            acc.secondPriority.reverse();
+            acc.thirdPriority.reverse();
+          }
+
+          return acc;
+        },
+        {
+          zeroPriority: [],
+          firstPriority: [],
+          secondPriority: [],
+          thirdPriority: []
+        }
+      );
+    },
     chartData() {
       return {
-        labels: [
-          "Cycle 0",
-          "Cycle 1",
-          "Cycle 2",
-          "Cycle 3",
-          "Cycle 4",
-          "Cycle 5",
-          "Cycle 6",
-          "Cycle 7",
-          "Cycle 8",
-          "Cycle 9"
-        ],
+        labels: this.cycles,
         datasets: [
           {
-            label: "Priority 0",
+            label: `${this.$t("common.priority")} 0`,
             backgroundColor: "#0A6858",
-            data: [90, 80, 85, 75, 95, 90, 83, 78, 87, 92]
+            data: this.priorities.zeroPriority
           },
           {
-            label: "Priority 1",
+            label: `${this.$t("common.priority")} 1`,
             backgroundColor: "#309282",
-            data: [18, 13, 21, 20, 4, 6, 15, 19, 12, 7]
+            data: this.priorities.firstPriority
           },
           {
-            label: "Priority 2",
+            label: `${this.$t("common.priority")} 2`,
             backgroundColor: "#7FCABE",
-            data: [2, 7, 4, 10, 1, 4, 2, 3, 2, 1]
+            data: this.priorities.secondPriority
           },
           {
-            label: "Priority 3 and higher",
+            label: `${this.$t("common.priority")} 3 ${this.$t(
+              "charts.andHigher"
+            )}`,
             backgroundColor: "#83CFB4",
-            data: [0.06, 0.05, 0.02, 0.004, 0.005, 0.02, 0.009, 0.0045, 0.02, 0.007]
+            data: this.priorities.thirdPriority
           }
         ]
       };
     }
+  },
+  created() {
+    this.loadChartDataInitial({
+      limit: this.cyclesLimit
+    });
   },
   methods: {
     yTicksCallback(label) {
       return `${label}%`;
     },
     tooltipsLabelCallback(tooltipItem, data) {
-      return `${data.datasets[0].label}: ${tooltipItem.value}%`;
-    }
-  },
-  created() {
+      return `${data.datasets[tooltipItem.datasetIndex].label}: ${tooltipItem.value}%`;
+    },
+    async loadChartDataInitial(opts) {
+      try {
+        this.isChartDataInitialLoading = true;
 
+        const response = await this.$api.getBlocksPriorityChart(opts);
+        if (response.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: response.status
+          });
+        }
+
+        this.chartDataInitial = response.data;
+      } finally {
+        this.isChartDataInitialLoading = false;
+      }
+    }
   }
 };
 </script>

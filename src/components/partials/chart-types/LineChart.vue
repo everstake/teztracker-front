@@ -57,6 +57,21 @@ export default {
         return {
           responsive: true,
           maintainAspectRatio: false,
+          onResize(chart, size) {
+            const lessTicks = size.width < 575;
+            console.log(size.width);
+            console.log(lessTicks);
+
+            if (lessTicks) {
+              // TODO: Find a way to get rid of the hardcoded value
+              //  The value from props, data or computed doesn't work
+              chart.options.scales.xAxes[0].ticks.maxTicksLimit = 10;
+            } else {
+              // TODO: Find a way to get rid of the hardcoded value
+              //  The value from props, data or computed doesn't work
+              chart.options.scales.xAxes[0].ticks.maxTicksLimit = 15;
+            }
+          },
           legend: {
             labels: {
               fontFamily: "Montserrat Alternates",
@@ -77,7 +92,7 @@ export default {
                   fontColor: "#2d2e2c",
                   beginAtZero: this.yAxesBeginAtZero,
                   stepSize: this.yTicksStepSize,
-                  callback: this.yTicksCallback,
+                  callback: this.yTicksCallback
                 }
               }
             ],
