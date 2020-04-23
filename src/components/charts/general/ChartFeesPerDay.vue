@@ -56,7 +56,7 @@ export default {
       return this.$_transformInitialDataToChartFormat(
         this.chartDataInitial,
         this.$_dateFormatWithoutTime,
-        "fees",
+        this.columns,
         this.$helpers.formatXtz
       );
     },

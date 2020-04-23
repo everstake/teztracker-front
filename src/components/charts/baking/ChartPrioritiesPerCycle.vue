@@ -42,7 +42,7 @@ export default {
       chartDataInitial: [],
       isChartDataInitialLoading: true,
       cyclesLimit: 10,
-      yAxesMaxTicksLimit: 14,
+      yAxesMaxTicksLimit: 14
     };
   },
   computed: {
@@ -132,7 +132,9 @@ export default {
       return `${label}%`;
     },
     tooltipsLabelCallback(tooltipItem, data) {
-      return `${data.datasets[tooltipItem.datasetIndex].label}: ${tooltipItem.value}%`;
+      return `${data.datasets[tooltipItem.datasetIndex].label}: ${
+        tooltipItem.value
+      }%`;
     },
     async loadChartDataInitial(opts) {
       try {

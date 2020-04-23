@@ -52,7 +52,7 @@ export default {
       return this.$_transformInitialDataToChartFormat(
         this.chartDataInitial,
         this.$_dateFormatWithoutTime,
-        "operations"
+        this.columns
       );
     },
     numOfOpsData() {

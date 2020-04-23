@@ -53,7 +53,7 @@ export default {
       return this.$_transformInitialDataToChartFormat(
         this.chartDataInitial,
         this.$_dateFormatWithoutTime,
-        "blocks"
+        this.columns
       );
     },
     numOfBlocksData() {

@@ -78,7 +78,7 @@ export default {
             }
           }) || {
             x: date,
-            y: lastKnownVal || 0
+            y: lastKnownVal || NaN
           }
         );
       });

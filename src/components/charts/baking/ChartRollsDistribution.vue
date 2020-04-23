@@ -16,7 +16,7 @@
       </div>
 
       <PieChart
-        class="m"
+        class="rolls-chart-container"
         v-else
         :chart-data="chartData"
         :tooltips-label-callback="tooltipsLabelCallback"
@@ -130,18 +130,13 @@ export default {
 </script>
 
 <style lang="scss">
-.m {
+.rolls-chart-container {
   min-height: auto;
   max-height: 400px;
-  
+
   @media (max-width: 575px) {
     max-height: 100%;
     min-height: 590px;
   }
-
-  /*canvas[pie-chart] {*/
-  /*  width: 100% !important;*/
-  /*  height: auto !important;*/
-  /*}*/
 }
 </style>
