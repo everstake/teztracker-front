@@ -214,7 +214,8 @@ export default {
 
   .icon {
     position: absolute;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
     right: -15px;
     margin-left: 10px;
     font-size: 12px;
@@ -222,7 +223,7 @@ export default {
   }
   
   .card-offset {
-    margin-top: 51px;
+    margin-top: 1.6rem;
   }
   
   .value--capitalize {

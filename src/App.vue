@@ -22,12 +22,14 @@ export default {
   },
   data() {
     return {
-      langChangeKey: 0
+      langChangeKey: null
     };
   },
   created() {
     this.$eventBus.$on("lang-change", val => {
-      this.langChangeKey += val;
+      if (this.langChangeKey !== val) {
+        this.langChangeKey = val;
+      }
     });
   }
 };

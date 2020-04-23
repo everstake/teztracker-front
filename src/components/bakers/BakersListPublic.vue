@@ -5,6 +5,7 @@
     </div>
 
     <b-table
+      responsive
       show-empty
       :items="bakersFormatted"
       :fields="fields"
@@ -20,7 +21,7 @@
       </template>
       <template slot="stakingCapacity" slot-scope="row">
         {{
-          (row.item.stakingCapacity - row.item.stakingBalance / $constants.XTZ)
+          ((row.item.stakingCapacity - row.item.stakingBalance) / $constants.XTZ)
             | tezosCapacity
         }}
       </template>
@@ -80,7 +81,7 @@ export default {
         { key: "accountId", label: this.$tc("common.baker", 1) },
         {
           key: "stakingCapacity",
-          label: this.$t("common.capacity"),
+          label: this.$t("common.capacityAvailable"),
           sortable: true,
           sortDirection: "desc"
         },

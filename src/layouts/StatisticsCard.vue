@@ -94,10 +94,13 @@ export default {
 
   .icon {
     position: absolute;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
     right: -15px;
     margin-left: 10px;
     font-size: 12px;
     color: #309282;
   }
+
+ 
 </style>

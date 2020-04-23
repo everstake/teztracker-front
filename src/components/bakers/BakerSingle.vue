@@ -3,10 +3,7 @@
     <b-col lg="12">
       <b-card no-body>
         <b-card-header>
-          <h3
-            id="card-title"
-            class="card__title"
-          >
+          <h3 id="card-title" class="card__title">
             <span class="text card-title__text">
               <template v-if="bakerInfo.name">
                 {{ bakerInfo.name }}
@@ -36,7 +33,7 @@
                     {{ $t("bakerSingle.address") }}
                   </b-col>
                   <b-col lg="8" class="text-accent card__pointer">
-                    <span id="hash" @click="copyToClipboard()">
+                    <span class="hash" id="hash" @click="copyToClipboard()">
                       <span ref="textToCopy">
                         {{ hash }}
                       </span>
@@ -102,12 +99,12 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("common.capacity") }}
+                    {{ $t("common.capacityAvailable") }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
                     {{
-                      (bakerInfo.stakingCapacity -
-                        bakerInfo.stakingBalance / $constants.XTZ)
+                      ((bakerInfo.stakingCapacity - bakerInfo.stakingBalance) /
+                        $constants.XTZ)
                         | tezosCapacity
                     }}
                   </b-col>
@@ -145,7 +142,7 @@
                 </b-row>
 
                 <span class="text-accent">
-                   {{ $t("bakerSingle.currDeposits") }}
+                  {{ $t("bakerSingle.currDeposits") }}
                 </span>
 
                 <b-row class="item-info">
@@ -280,10 +277,18 @@ export default {
   color: $color-brand;
 }
 
+.hash {
+  position: relative;
+}
+
 .icon {
-  display: inline-block;
-  padding-left: 0.5rem;
-  font-size: 15px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -15px;
+  margin-left: 10px;
+  font-size: 12px;
+  color: #309282;
 }
 
 .label {

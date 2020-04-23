@@ -116,3 +116,11 @@
 .text-accent {
   @extend .fs-16, .font-weight-bold;
 }
+
+.color-accent {
+  color: $color-brand;
+
+  &:hover {
+    color: $color-brand;
+  }
+}

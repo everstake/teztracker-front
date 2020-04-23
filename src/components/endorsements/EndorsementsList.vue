@@ -8,6 +8,7 @@
     </div>
 
     <b-table
+      responsive
       show-empty
       :items="endorsements"
       :fields="fields"
@@ -26,7 +27,7 @@
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
         >
-          {{ row.item.operationGroupHash | longhash(35) }}
+          {{ row.item.operationGroupHash | longhash(30) }}
         </b-link>
       </template>
   
@@ -40,7 +41,8 @@
         <b-link
           :to="{ name: 'account', params: { account: row.item.delegate } }"
         >
-          {{ row.item.delegateName || row.item.delegate | longhash(42) }}
+          <span v-if="row.item.delegateName">{{ row.item.delegateName }}</span>
+          <span v-else>{{ row.item.delegate | longhash(16) }}</span>
         </b-link>
       </template>
   
@@ -167,7 +169,7 @@ export default {
           { key: "level", label: this.$t("endorsementsList.endorsedBlock") },
           { key: "txhash", label: this.$t("hashTypes.endorsementHash") },
           { key: "blockLevel", label: this.$t("common.includedInBlock") },
-          { key: "endorser", label: this.$t("endorsementsList.endorser") },
+          { key: "endorser", label: this.$t("common.endorser") },
           { key: "slots", label: this.$t("endorsementsList.slots") },
           { key: "timestamp", label: this.$t("common.timestamp") }
         ];
@@ -175,7 +177,7 @@ export default {
         this.fields = [
           { key: "level", label: this.$t("endorsementsList.endorsedBlock") },
           { key: "txhash", label: this.$t("hashTypes.endorsementHash") },
-          { key: "endorser", label: this.$t("endorsementsList.endorser") },
+          { key: "endorser", label: this.$t("common.endorser") },
           { key: "timestamp", label: this.$t("common.timestamp") },
         ];
       }

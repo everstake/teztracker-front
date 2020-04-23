@@ -55,6 +55,55 @@ const TzAPI = {
       false
     );
   },
+  getAccountRewards(opts = {}) {
+    const { account } = opts;
+    delete opts.account;
+    return get(this.API_URL(), `accounts/rewards/${account}`, opts);
+  },
+  getAccountBaking(opts = {}) {
+    const { account } = opts;
+    return get(this.API_URL(), `accounts/baking/${account}`, opts);
+  },
+  getAccountBakingItem(opts = {}) {
+    const { account, cycleId } = opts;
+    return get(this.API_URL(), `accounts/baking/${account}/blocks/${cycleId}`, opts, true );
+  },
+  getAccountBakingRightsFuture(opts = {}) {
+    const { account, cycleId } = opts;
+    return get(this.API_URL(), `accounts/baking/${account}/future_baking_rights/${cycleId}`, opts, true );
+  },
+  getAccountRewardsDelegators(opts = {}) {
+    const { account, cycleId } = opts;
+    return get(this.API_URL(), `accounts/${account}/delegators/${cycleId}`, opts, true );
+  },
+  getAccountBakingTotal(opts = {}) {
+    const { account } = opts;
+    return get(this.API_URL(), `accounts/baking/${account}/total`, opts );
+  },
+  getAccountBakingFuture(opts = {}) {
+    const { account } = opts;
+    return get(this.API_URL(), `accounts/baking/${account}/future`, opts );
+  },
+  getAccountEndorsing(opts = {}) {
+    const { account } = opts;
+    return get(this.API_URL(), `accounts/endorsing/${account}`, opts );
+  },
+  getAccountEndorsingItem(opts = {}) {
+    const { account, cycleId } = opts;
+    return get(this.API_URL(), `accounts/endorsing/${account}/endorsements/${cycleId}`, opts );
+  },
+  getAccountEndorsingRightsFuture(opts = {}) {
+    const { account, cycleId } = opts;
+    return get(this.API_URL(), `accounts/endorsing/${account}/future_endorsement_rights/${cycleId}`, opts, true );
+  },
+  getAccountEndorsingTotal(opts = {}) {
+    const { account } = opts;
+    return get(this.API_URL(), `accounts/endorsing/${account}/total`, opts );
+  },
+  getAccountEndorsingFuture(opts = {}) {
+    const { account } = opts;
+    return get(this.API_URL(), `accounts/endorsing/${account}/future`, opts );
+  },
   getContracts(opts = {}) {
     return get(this.API_URL(), "contracts", opts);
   },
@@ -104,8 +153,7 @@ const TzAPI = {
     });
   },
   getDoubleEndorsement(opts = {}) {
-    return get(this.API_URL(), "operations", {
-      operation_kind: "double_endorsement_evidence",
+    return get(this.API_URL(), "double_endorsements", {
       ...opts
     });
   },

@@ -17,7 +17,7 @@
           <div class="card-divider w-100 mt-3"></div>
         </b-card-header>
 
-        <b-card-body>
+        <b-card-body class="slots-body">
           <div class="slots">
             <b-link
               v-for="(slot, index) in slots"
@@ -87,6 +87,10 @@ export default {
 .slots {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  
+  &-body {
+    padding-bottom: 20px;
+  }
 
   &__item {
     text-align: center;

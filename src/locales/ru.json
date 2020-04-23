@@ -6,12 +6,13 @@
 		"rolls": "Роллы",
 		"bakingSince": "Активен с",
 		"baker": "Бейкер | Бейкеры",
-		"capacity": "Объем",
+		"capacityAvailable": "Доступный объем",
 		"fee": "Комиссия",
 		"block": "Блок | Блоки",
 		"from": "Отправитель",
 		"to": "Получатель",
 		"amount": "Количество",
+		"amountDelegated": "Делегированная сумма",
 		"timestamp": "Дата/время",
 		"cycle": "Цикл | Циклы",
 		"blockId": "Id блока",
@@ -31,6 +32,12 @@
 		"home": "Главная",
 		"opType": "Тип операции",
 		"other": "Другое",
+		"endorser": "Заеверитель",
+		"losses": "Потери",
+		"delegator": "Делегатор | Делегаторы",
+		"reward": "Вознаграждение | Вознаграждения",
+		"deposit": "Депозит",
+		"share": "Доля",
 		"baking": "Бейкинг",
 		"txVol": "Объем транзакциий"
 	},
@@ -49,6 +56,7 @@
 		"delegationsList": "Список делегаций",
 		"originationsList": "Список созданий",
 		"activationsList": "Список активаций",
+		"bakingList": "Список бейкингов",
 		"dblBakingList": "Список двойных бейкингов",
 		"dblEndorsementsList": "Список двойных заверений",
 		"otherOpsList": "Список других операций",
@@ -62,7 +70,8 @@
 		"contractsList": "Список контрактов",
 		"protocolsList": "Список протоколов",
 		"votersList": "Список голосующих",
-		"nonVotersList": "Список неголосующих"
+		"nonVotersList": "Список неголосующих",
+		"rewardsList": "Список вознаграждений"
 	},
 	"pageTypes": {
 		"txsPage": "Страница транзакций",
@@ -128,7 +137,12 @@
 		"liquidBal": "Ликвидный баланс",
 		"currDeposits": "Текущие депозиты",
 		"endorsement": "Заверение",
-		"pendingRewards": "Ожидаемые вознаграждения"
+		"pendingRewards": "Ожидаемые вознаграждения",
+		"bakingHistory": "История бейкинга",
+		"endorsingHistory": "История заверения",
+		"missed": "Пропущенные",
+		"stolen": "Украденные",
+		"avgPriority": "Средний приоритет"
 	},
 	"blockSingle": {
 		"bakerFee": "Комиссия бейкера",
@@ -143,6 +157,14 @@
 		"outOf": "из",
 		"originatedAccs": "Созданные аккаунты"
 	},
+	"txSingle": {
+		"secret": "Секрет",
+		"slotsEndorsed": "Заверенны(й/е) слот(ы)",
+    "confirmations": "Подтверждения",
+    "deposit": "Депозит",
+    "reward": "Вознаграждение",
+    "amountClaimed": "Активированное количество"
+	},
 	"accSingle": {
 		"created": "Создан",
 		"lastActive": "Последнее посещение"
@@ -151,13 +173,16 @@
 		"volume": "Объем"
 	},
 	"endorsementsList": {
-		"endorser": "Заеверитель",
 		"endorsedBlock": "Заверенный блок",
 		"slots": "Слоты"
+	},
+	"delegationsList": {
+		"delegationAmount": "Сумма делегирования"
 	},
 	"dblBakingList": {
 		"accuser": "Обвинитель",
 		"bakerRewards": "Вознаграждения бейкера",
+		"accuserRewards": "Вознаграждения обвинителя",
 		"offender": "Нарушитель",
 		"lostDeposits": "Утерянные депозиты",
 		"lostRewards": "Утерянные вознаграждения"
@@ -260,7 +285,12 @@
 	},
 	"txPage": {
 		"gasLimit": "Лимит газа",
-		"storageLimit": "Лимит хранения"
+		"storageLimit": "Лимит хранения",
+		"txDetails": "Подробности транзакции",
+		"delegationDetails": "Подробности о делегации",
+		"originationDetails": "Подробности о создании",
+		"originator": "Создатель",
+		"originatedAcc": "Созданный аккаунт"
 	},
 	"votePage": {
 		"kind": "Вид",

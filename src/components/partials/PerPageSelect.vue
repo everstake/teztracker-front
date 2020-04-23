@@ -26,9 +26,22 @@ export default {
     hide: {
       type: Boolean,
       default: false
+    },
+    defaultPerPage: {
+      type: Number,
+      default: 0
     }
   },
   watch: {
+    defaultPerPage: {
+      immediate: true,
+      handler(value) {
+        if (value) {
+          this.perPage = value;
+          this.$emit("per-page", value);
+        }
+      }
+    },
     perPage: {
       immediate: true,
       handler(value) {
@@ -41,6 +54,8 @@ export default {
 
 <style lang="scss" scoped>
 .custom-select--themed {
+  display: block;
+
   &:focus {
     border-color: $color-brand;
     box-shadow: 0 0 0 0.2rem $color-brand--opacity-2;
