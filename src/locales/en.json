@@ -175,6 +175,7 @@
   "dblBakingList": {
     "accuser": "Accuser",
     "bakerRewards": "Baker rewards",
+    "accuserRewards": "Accuser rewards",
     "offender": "Offender",
     "lostDeposits": "Lost deposits",
     "lostRewards": "Lost rewards"

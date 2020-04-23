@@ -177,6 +177,7 @@
 	"dblBakingList": {
 		"accuser": "Обвинитель",
 		"bakerRewards": "Вознаграждения бейкера",
+		"accuserRewards": "Вознаграждения обвинителя",
 		"offender": "Нарушитель",
 		"lostDeposits": "Утерянные депозиты",
 		"lostRewards": "Утерянные вознаграждения"
