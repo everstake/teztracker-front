@@ -34,9 +34,10 @@
     "other": "Other",
     "endorser": "Endorser",
     "losses": "Losses",
-    "delegators": "Delegators",
+    "delegator": "Delegator | Delegators",
     "reward": "Reward | Rewards",
-    "deposit": "Deposit"
+    "deposit": "Deposit",
+    "share": "Share"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
