@@ -25,6 +25,7 @@
 <script>
 import CardHeader from "../../partials/CardHeader";
 import BarChart from "../../partials/chart-types/BarChart.vue";
+import chartsData from "../../../mixins/charts/chartsData";
 
 export default {
   name: "ChartPrioritiesPerCycle",
@@ -32,8 +33,11 @@ export default {
     CardHeader,
     BarChart
   },
+  mixins: [chartsData],
   data() {
     return {
+      columns: "blocks_priority",
+      period: "D",
       yAxesMaxTicksLimit: 14
     };
   },
@@ -84,6 +88,9 @@ export default {
     tooltipsLabelCallback(tooltipItem, data) {
       return `${data.datasets[0].label}: ${tooltipItem.value}%`;
     }
+  },
+  created() {
+
   }
 };
 </script>

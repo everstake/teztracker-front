@@ -170,6 +170,9 @@ const TzAPI = {
   },
   getCharts(opts = {}) {
     return get(this.API_URL(), "charts", opts, false);
+  },
+  getBakersRollsChart(opts = {}) {
+    return get(this.API_URL(), "charts/bakers", opts, false);
   }
 };
 

@@ -11,7 +11,12 @@
     <div class="card-divider"></div>
 
     <b-card-body>
+      <div v-if="isChartDataInitialLoading" class="min-h-400 vote__loading">
+        {{ $t("common.loading") }}
+      </div>
+
       <PieChart
+        v-else
         :chart-data="chartData"
         :tooltips-label-callback="tooltipsLabelCallback"
       />
@@ -31,7 +36,8 @@ export default {
   },
   data() {
     return {
-      totalRolls: 707687567 / 8,
+      chartDataInitial: [],
+      isChartDataInitialLoading: true,
       palette: [
         "#0B6E4B",
         "#178E64",
@@ -58,116 +64,27 @@ export default {
         "#274E48",
         "#3C6A63",
         "#5A837C"
-      ],
-      bakers: [
-        {
-          name: "Baker A",
-          address: "Baker A",
-          rolls: 28472
-        },
-        {
-          name: "Baker B",
-          address: "Baker B",
-          rolls: 22067
-        },
-        {
-          name: "Baker C",
-          address: "Baker C",
-          rolls: 20385
-        },
-        {
-          name: "Baker D",
-          address: "Baker D",
-          rolls: 5865
-        },
-        {
-          name: "Baker E",
-          address: "Baker E",
-          rolls: 5857
-        },
-        {
-          name: "Baker F",
-          address: "Baker F",
-          rolls: 5280
-        },
-        {
-          name: "Baker G",
-          address: "Baker G",
-          rolls: 5083
-        },
-        {
-          name: "Baker H",
-          address: "Baker H",
-          rolls: 4831
-        },
-        {
-          name: "Baker I",
-          address: "Baker I",
-          rolls: 4751
-        },
-        {
-          name: "Baker J",
-          address: "Baker J",
-          rolls: 3750
-        },
-        {
-          name: "Baker K",
-          address: "Baker K",
-          rolls: 3603
-        },
-        {
-          name: "Baker L",
-          address: "Baker L",
-          rolls: 3566
-        },
-        {
-          name: "Baker M",
-          address: "Baker M",
-          rolls: 3376
-        },
-        {
-          name: "Baker N",
-          address: "Baker N",
-          rolls: 3200
-        },
-        {
-          name: "Baker O",
-          address: "Baker O",
-          rolls: 3140
-        },
-        {
-          name: "Baker P",
-          address: "Baker P",
-          rolls: 2941
-        },
-        {
-          name: "Baker Q",
-          address: "Baker Q",
-          rolls: 2933
-        },
-        {
-          name: "Baker R",
-          address: "Baker R",
-          rolls: 2900
-        },
-        {
-          name: "Baker S",
-          address: "Baker S",
-          rolls: 2509
-        },
-        {
-          name: "Baker T",
-          address: "Baker T",
-          rolls: 2421
-        }
       ]
     };
   },
   computed: {
     bakersData() {
-      return this.bakers.map(baker => {
-        return `${(((baker.rolls / 8) * 100) / this.totalRolls).toFixed(6)}`;
+      if (!this.chartDataInitial || !this.chartDataInitial.length) {
+        return [];
+      }
+
+      return this.chartDataInitial.map(baker => {
+        return baker.percent.toFixed(6);
       });
+    },
+    bakersLabels() {
+      if (!this.chartDataInitial || !this.chartDataInitial.length) {
+        return [];
+      }
+
+      return this.chartDataInitial.map(
+        baker => baker.baker_name || baker.baker
+      );
     },
     chartData() {
       return {
@@ -178,13 +95,34 @@ export default {
             borderWidth: 1
           }
         ],
-        labels: this.bakers.map(baker => baker.name || baker.address)
+        labels: this.bakersLabels
       };
     }
   },
+  created() {
+    this.loadChartDataInitial();
+  },
   methods: {
     tooltipsLabelCallback(tooltipItem, data) {
-      return `${data.labels[tooltipItem.index]}: ${data.datasets[0].data[tooltipItem.index]}%`;
+      return `${data.labels[tooltipItem.index]}: ${
+        data.datasets[0].data[tooltipItem.index]
+      }%`;
+    },
+    async loadChartDataInitial(opts) {
+      try {
+        this.isChartDataInitialLoading = true;
+
+        const response = await this.$api.getBakersRollsChart(opts);
+        if (response.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: response.status
+          });
+        }
+
+        this.chartDataInitial = response.data;
+      } finally {
+        this.isChartDataInitialLoading = false;
+      }
     }
   }
 };
