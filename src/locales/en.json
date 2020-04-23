@@ -187,6 +187,9 @@
   "endorsementsSlots": {
     "blockEndorsements": "Block endorsements"
   },
+  "delegationsList": {
+    "delegationAmount": "Delegation amount"
+  },
   "counters": {
     "cycleCounter": "Cycle counter",
     "untilEnd": "Until cycle end",

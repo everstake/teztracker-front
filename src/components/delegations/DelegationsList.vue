@@ -23,9 +23,13 @@
         </b-link>
       </template>
 
+      <template slot="delegationAmount" slot-scope="row">
+        {{ row.item.delegationAmount | tezos }}
+      </template>
+
       <template slot="from" slot-scope="row">
         <b-link :to="{ name: 'account', params: { account: row.item.source } }">
-          {{ row.item.sourceName || row.item.source | longhash(20) }}
+          {{ row.item.sourceName || row.item.source | longhash(15) }}
         </b-link>
       </template>
 
@@ -34,7 +38,7 @@
           :to="{ name: 'account', params: { account: row.item.delegate } }"
           v-if="row.item.delegateName || row.item.delegate"
         >
-          {{ row.item.delegateName || row.item.delegate | longhash(20) }}
+          {{ row.item.delegateName || row.item.delegate | longhash(15) }}
         </b-link>
         <span v-else>unset</span>
       </template>
@@ -87,6 +91,7 @@ export default {
       fields: [
         { key: "level", label: this.$t("common.blockId") },
         { key: "txhash", label: this.$t("hashTypes.delegationHash") },
+        { key: "delegationAmount", label: this.$t("common.amountDelegated") },
         { key: "from", label: this.$t("common.from") },
         { key: "to", label: this.$t("common.to") },
         { key: "fee", label: this.$t("common.fee") },
