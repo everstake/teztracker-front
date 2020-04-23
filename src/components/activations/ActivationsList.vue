@@ -5,6 +5,7 @@
     </div>
 
     <b-table
+      responsive
       show-empty
       :items="activations"
       :fields="fields"
@@ -27,14 +28,14 @@
         </b-link>
       </template>
 
-      <template slot="timestamp" slot-scope="row">
-        {{ row.item.timestamp | timeformat(dateFormat) }}
-      </template>
-
       <template slot="to" slot-scope="row">
         <b-link :to="{ name: 'account', params: { account: row.item.pkh } }">
-          {{ row.item.pkh | longhash(20) }}
+          {{ row.item.pkh }}
         </b-link>
+      </template>
+
+      <template slot="timestamp" slot-scope="row">
+        {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
     </b-table>
 
