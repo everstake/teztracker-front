@@ -115,7 +115,7 @@ export default {
       fields: [
         { key: "cycle", label: this.$tc("common.cycle", 1) },
         { key: "stakingBalance", label: this.$t("common.stakingBal") },
-        { key: "baking", label: this.$t("bakerSingle.baking") },
+        { key: "baking", label: this.$t("common.baking") },
         { key: "delegators", label: this.$tc("common.delegator", 2) },
         { key: "endorsements", label: this.$tc("opTypes.endorsement", 2) },
         { key: "losses", label: this.$t("common.losses") },
