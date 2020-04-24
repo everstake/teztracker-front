@@ -104,7 +104,8 @@
     "bakerInfo": "Baker information",
     "accInfo": "Account information",
     "generalInfo": "General information",
-    "voteInfo": "Vote information"
+    "voteInfo": "Vote information",
+    "contractInfo": "Contact information"
   },
   "hashTypes": {
     "hash": "Hash",

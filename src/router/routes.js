@@ -145,7 +145,7 @@ export default [
   /* Accounts group */
   // Accounts
   { path: "/:network/accounts", name: "accounts", component: Accounts },
-  { path: "/:network/account/:account", name: "account", component: Account },
+  { path: "/:network/account/:account", name: "account", component: Account, props: true },
   // Contracts
   { path: "/:network/contracts", name: "contracts", component: Contracts },
   /* Accounts group end */
