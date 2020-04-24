@@ -189,11 +189,15 @@
     "startingBlock": "Starting block",
     "endingBlock": "Ending block"
   },
-  "endorsementsSlots": {
-    "blockEndorsements": "Block endorsements"
-  },
   "delegationsList": {
     "delegationAmount": "Delegation amount"
+  },
+  "revealsList": {
+    "reveal": "Reveal",
+    "publicKey": "Public key"
+  },
+  "endorsementsSlots": {
+    "blockEndorsements": "Block endorsements"
   },
   "counters": {
     "cycleCounter": "Cycle counter",

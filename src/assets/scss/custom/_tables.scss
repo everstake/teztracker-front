@@ -6,3 +6,10 @@
   }
 }
 
+.wide-col {
+  @include for-desktop-up {
+    width: 290px;
+  }
+}
+
+
