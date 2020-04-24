@@ -105,6 +105,11 @@
           </b-nav-item-dropdown>
           <b-nav-item-dropdown :text="$tc('common.acc', 2)">
             <b-dropdown-item
+              :to="{ name: 'top_accounts', params: { network: currentNetwork } }"
+            >
+              {{ $t("common.topAcc") }}
+            </b-dropdown-item>
+            <b-dropdown-item
               :to="{ name: 'accounts', params: { network: currentNetwork } }"
             >
               {{ $tc("common.acc", 2) }}

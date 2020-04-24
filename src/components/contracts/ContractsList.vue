@@ -15,7 +15,7 @@
     >
       <template slot="accountId" slot-scope="row">
         <router-link
-          :to="{ name: 'account', params: { account: row.item.accountId, accountType: 'contract' } }"
+          :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
           <span>{{ row.item.accountId | longhash(35) }}</span>
         </router-link>

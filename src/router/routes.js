@@ -37,6 +37,7 @@ const Baker = () => import("../views/Baker.vue");
 const Accounts = () => import("../views/Accounts.vue");
 // import Account from "./components/pages/account.vue";
 const Account = () => import("../views/Account.vue");
+const TopAccounts = () => import("../views/TopAccounts.vue");
 // Contracts
 const Contracts = () => import("../views/Contracts.vue");
 /* Accounts group end */
@@ -145,7 +146,8 @@ export default [
   /* Accounts group */
   // Accounts
   { path: "/:network/accounts", name: "accounts", component: Accounts },
-  { path: "/:network/account/:account", name: "account", component: Account, props: true },
+  { path: "/:network/account/:account", name: "account", component: Account },
+  { path: "/:network/top_accounts", name: "top_accounts", component: TopAccounts },
   // Contracts
   { path: "/:network/contracts", name: "contracts", component: Contracts },
   /* Accounts group end */
