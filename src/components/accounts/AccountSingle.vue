@@ -14,7 +14,8 @@
               {{ $t("common.copyToClipboard") }}
             </b-tooltip>
             <div class="subtitle">
-              {{ $t("infoTypes.accInfo") }}
+              <span v-if="type === 'account'">{{ $t("infoTypes.accInfo") }}</span>
+              <span v-else-if="type === 'contract'">{{ $t("infoTypes.contractInfo") }}</span>
             </div>
           </div>
         </b-card-header>
@@ -137,7 +138,7 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   name: "AccountSingle",
-  props: ["hash"],
+  props: ["hash", "type"],
   mixins: [convert],
   data() {
     return {

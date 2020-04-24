@@ -7,7 +7,7 @@
     <template #content>
       <section>
         <b-container fluid>
-          <AccountSingle :hash="hash">
+          <AccountSingle :hash="hash" :type="accountType">
             <template #chart="props">
               <h3 class="card__title account__title">
                 <span class="card__title--strong">
@@ -117,6 +117,12 @@ export default {
     OriginationsList,
     LineChart,
     OperationsList
+  },
+  props: {
+    accountType: {
+      type: String,
+      default: 'account'
+    }
   },
   data() {
     return {

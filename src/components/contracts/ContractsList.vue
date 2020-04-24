@@ -14,11 +14,11 @@
       class="transactions-table table-responsive-md"
     >
       <template slot="accountId" slot-scope="row">
-        <b-link
-          :to="{ name: 'account', params: { account: row.item.accountId } }"
+        <router-link
+          :to="{ name: 'account', params: { account: row.item.accountId, accountType: 'contract' } }"
         >
           <span>{{ row.item.accountId | longhash(35) }}</span>
-        </b-link>
+        </router-link>
       </template>
       <template slot="manager" slot-scope="row">
         <b-link
@@ -31,7 +31,7 @@
       </template>
       <template slot="delegateValue" slot-scope="row">
         <b-link
-          :to="{ name: 'account', params: { account: row.item.accountId } }"
+          :to="{ name: 'account', params: { account: row.item.delegateValue } }"
         >
           <span>{{ row.item.delegateValue | longhash(35) }}</span>
         </b-link>
