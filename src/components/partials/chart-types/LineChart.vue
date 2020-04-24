@@ -63,8 +63,6 @@ export default {
           maintainAspectRatio: false,
           onResize(chart, size) {
             const lessTicks = size.width < 575;
-            console.log(size.width);
-            console.log(lessTicks);
 
             if (lessTicks) {
               // TODO: Find a way to get rid of the hardcoded value
