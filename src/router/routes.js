@@ -51,6 +51,11 @@ const Protocols = () => import("@/views/Protocols.vue");
 const Vote = () => import("../views/Vote.vue");
 /* Votes group end */
 
+/* Charts group */
+const ChartsBaking = () => import("../views/chart-views/ChartsBaking.vue");
+const ChartsGeneral = () => import("../views/chart-views/ChartsGeneral.vue");
+/* Charts group end */
+
 // Errors
 const NotFound = () => import("../views/errors/NotFound.vue");
 const ServerError = () => import("../views/errors/ServerError.vue");
@@ -130,7 +135,11 @@ export default [
 
   // Bakers
   { path: "/:network/bakers", name: "bakers", component: Bakers },
-  { path: "/:network/public_bakers", name: "public_bakers", component: BakersPublic },
+  {
+    path: "/:network/public_bakers",
+    name: "public_bakers",
+    component: BakersPublic
+  },
   { path: "/:network/baker/:baker", name: "baker", component: Baker },
 
   /* Accounts group */
@@ -143,14 +152,36 @@ export default [
 
   /* Governance group */
   // Votes
-  { path: "/:network/protocol_amendment", redirect: { name: 'protocol_amendment' }},
-  { path: "/mainnet/protocol_amendment", name: 'protocol_amendment', component: ProtocolAmendment },
-  { path: "/:network/protocols", redirect: { name: 'protocols' } },
-  { path: '/mainnet/protocols', name: 'protocols', component: Protocols },
-  { path: "/:network/period/:id", redirect: { name: "period" }},
-  { path: '/mainnet/period/:id', name: 'period', component: Period },
+  {
+    path: "/:network/protocol_amendment",
+    redirect: { name: "protocol_amendment" }
+  },
+  {
+    path: "/mainnet/protocol_amendment",
+    name: "protocol_amendment",
+    component: ProtocolAmendment
+  },
+  { path: "/:network/protocols", redirect: { name: "protocols" } },
+  { path: "/mainnet/protocols", name: "protocols", component: Protocols },
+  { path: "/:network/period/:id", redirect: { name: "period" } },
+  { path: "/mainnet/period/:id", name: "period", component: Period },
   { path: "/:network/vote/:voteHash", name: "vote", component: Vote },
   /* Governance group end */
+
+  /* Charts group */
+  {
+    path: "/mainnet/charts/baking",
+    name: "baking_charts",
+    component: ChartsBaking
+  },
+  { path: "/:network/charts/baking", redirect: { name: "baking_charts" } },
+  {
+    path: "/mainnet/charts/general",
+    name: "general_charts",
+    component: ChartsGeneral
+  },
+  { path: "/:network/charts/general", redirect: { name: "general_charts" } },
+  /* Charts group end */
 
   // Errors
   { path: "/:network/404", name: "404", component: NotFound },

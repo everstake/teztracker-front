@@ -37,7 +37,9 @@
 		"delegator": "Делегатор | Делегаторы",
 		"reward": "Вознаграждение | Вознаграждения",
 		"deposit": "Депозит",
-		"share": "Доля"
+		"share": "Доля",
+		"baking": "Бейкинг",
+		"txVol": "Объем транзакциий"
 	},
 	"opTypes": {
 		"tx": "Транзакция | Транзакции",
@@ -86,7 +88,9 @@
 		"publicBakersPage": "Страница публичных бейкеров",
 		"accsPage": "Страница аккаунтов",
 		"contractsPage": "Страница контрактов",
-		"protocolsPage": "Страница протоколов"
+		"protocolsPage": "Страница протоколов",
+		"generalChartsPage": "Страница общих графиков",
+		"bakingChartsPage": "Страница графиков бейкинга"
 	},
 	"infoTypes": {
 		"txInfo": "Информация о транзакции",
@@ -122,7 +126,8 @@
 		"#OfDelegators": "Количество делегаторов",
 		"#OfEndorsements": "Количество заверений",
 		"#OfOperations": "Количество операций",
-		"#OfVotes": "Количество голосов"
+		"#OfVotes": "Количество голосов",
+		"#OfWhaleAccs": "Количество китов"
 	},
 	"bakerSingle": {
 		"address": "Адрес",
@@ -131,7 +136,6 @@
 		"totalBal": "Итоговый баланс",
 		"liquidBal": "Ликвидный баланс",
 		"currDeposits": "Текущие депозиты",
-		"baking": "Бейкинг",
 		"endorsement": "Заверение",
 		"pendingRewards": "Ожидаемые вознаграждения",
 		"bakingHistory": "История бейкинга",
@@ -143,7 +147,6 @@
 	"blockSingle": {
 		"bakerFee": "Комиссия бейкера",
 		"bakerPriority": "Приоритет бейкера",
-		"txVol": "Объем транзакции",
 		"dblBakingEvidence": "Свидетельство о двойном бейкинге",
 		"dblEndorsementEvidence": "Свидетельство о двойном заверении",
 		"blockTime": "Время блока",
@@ -205,7 +208,9 @@
 		"publicBakers": "Публичные бейкеры",
 		"dateFormat": "Формат даты",
 		"operations": "Операции",
-		"governance": "Управление"
+		"governance": "Управление",
+		"charts": "Графики",
+		"general": "Общее"
 	},
 	"nets": {
 		"mainnet": "Основная сеть",
@@ -307,5 +312,16 @@
 		"howToRunTezos": "Как запустить Tezos?",
 		"gitRepo": "Git-репозиторий",
 		"dockerImages": "Docker-образы"
+	},
+	"charts": {
+		"numOfBlocks": "Количество блоков",
+		"avgBlockDelay": "Средняя задержка блока",
+		"feesPerDay": "Комиссий в день",
+		"delegationVol": "Объем делегаций",
+		"bakersPerDay": "Бейкеров в день",
+		"rollsDist": "Распределние роллов",
+		"prioritiesPerCycle": "Приоритеты за цикл",
+		"andHigher": "и выше",
+		"accsWith500k": "Аккаунты с более чем 500,000 XTZ"
 	}
 }

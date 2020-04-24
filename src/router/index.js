@@ -18,7 +18,9 @@ router.beforeEach((to, from, next) => {
     network => network === to.params.network
   );
 
-  if (toRouteName.includes('protocol') || toRouteName.includes('period')) {
+  if (toRouteName.includes('protocol')
+      || toRouteName.includes('period')
+      || toRouteName.includes('charts')) {
     if (appState.networkChangable) store.commit("app/setAppNetworkChangable", false);
   } else {
     if (!appState.networkChangable) store.commit("app/setAppNetworkChangable", true);
