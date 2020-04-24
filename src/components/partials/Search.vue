@@ -112,9 +112,17 @@ export default {
       //account
       for (const prefix of this.$constants.SEARCH_PREFIXES.account) {
         if (startsWith(searchStr, prefix)) {
-          const { status } = await this.$api.getAccount({ account: searchStr });
-          routerSettings = { name: "account", params: { account: searchStr } };
-          requestStatus = status;
+          const { status, data } = await this.$api.getAccount({ account: searchStr });
+          const isBaker = data.bakerInfo;
+
+          if (isBaker) {
+            routerSettings = { name: "baker", params: { baker: searchStr } };
+            requestStatus = status;
+          } else {
+            routerSettings = { name: "account", params: { account: searchStr } };
+            requestStatus = status;
+          }
+
           this.searchQuery = "";
         }
       }

@@ -84,7 +84,7 @@
                 <router-link
                   v-if="head.baker"
                   class="baker"
-                  :to="{ name: 'account', params: { account: head.baker } }"
+                  :to="{ name: 'baker', params: { baker: head.baker } }"
                   >{{ head.baker | longhash(13) }}</router-link
                 >
               </span>
