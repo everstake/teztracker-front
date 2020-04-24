@@ -176,9 +176,6 @@
 		"endorsedBlock": "Заверенный блок",
 		"slots": "Слоты"
 	},
-	"delegationsList": {
-		"delegationAmount": "Сумма делегирования"
-	},
 	"dblBakingList": {
 		"accuser": "Обвинитель",
 		"bakerRewards": "Вознаграждения бейкера",
@@ -191,6 +188,13 @@
 		"protocol": "Протокол | Протоколы",
 		"startingBlock": "Стартовый блок",
 		"endingBlock": "Конечный блок"
+	},
+	"delegationsList": {
+		"delegationAmount": "Сумма делегирования"
+	},
+	"revealsList": {
+		"reveal": "Открытие",
+		"publicKey": "Публичный ключ"
 	},
 	"endorsementsSlots": {
 		"blockEndorsements": "Заверения блока"
