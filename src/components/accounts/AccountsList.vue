@@ -15,6 +15,13 @@
     >
       <template slot="accountId" slot-scope="row">
         <b-link
+          v-if="row.item.is_baker"
+          :to="{ name: 'baker', params: { baker: row.item.accountId } }"
+        >
+          <span>{{ row.item.accountId | longhash(35) }}</span>
+        </b-link>
+        <b-link
+          v-else
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
           <span>{{ row.item.accountId | longhash(35) }}</span>
