@@ -321,6 +321,7 @@
     "bakersPerDay": "Bakers per day",
     "rollsDist": "Rolls distribution",
     "prioritiesPerCycle": "Priorities per cycle",
-    "andHigher": "and higher"
+    "andHigher": "and higher",
+    "accsWith500k": "Accounts with more than 500,000 XTZ"
   }
 }

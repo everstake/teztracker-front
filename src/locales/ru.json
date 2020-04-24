@@ -321,6 +321,7 @@
 		"bakersPerDay": "Бейкеров в день",
 		"rollsDist": "Распределние роллов",
 		"prioritiesPerCycle": "Приоритеты за цикл",
-		"andHigher": "и выше"
+		"andHigher": "и выше",
+		"accsWith500k": "Аккаунты с более чем 500,000 XTZ"
 	}
 }

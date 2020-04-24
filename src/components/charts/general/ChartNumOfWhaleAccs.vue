@@ -6,7 +6,7 @@
           {{ $t("numberOf.#OfWhaleAccs") }} <br>
         </h4>
         <p class="fs-14 mb-0">
-          {{ 'Accounts with more than 500,000 XTZ'  }}
+          {{ $t("charts.accsWith500k") }}
         </p>
       </template>
     </CardHeader>
