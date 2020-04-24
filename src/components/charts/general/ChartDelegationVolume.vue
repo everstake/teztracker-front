@@ -19,6 +19,8 @@
         v-else
         :chart-data="chartData"
         :x-axes-max-ticks-limit="xAxesMaxTicksLimit"
+        y-axes-type="logarithmic"
+        :y-axes-max-ticks-limit="20"
         :y-ticks-callback="$_yTicksCallback"
         :tooltips-label-callback="$_tooltipsLabelCallback"
       />

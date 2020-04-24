@@ -26,6 +26,10 @@ export default {
       type: Boolean,
       default: true
     },
+    yAxesMaxTicksLimit: {
+      type: Number,
+      default: 0
+    },
     xAxesMaxTicksLimit: {
       type: Number,
       default: 0
@@ -88,6 +92,7 @@ export default {
                   color: "rgba(33, 37, 41, 0.1)"
                 },
                 ticks: {
+                  maxTicksLimit: this.yAxesMaxTicksLimit,
                   fontFamily: "Montserrat Alternates",
                   fontColor: "#2d2e2c",
                   beginAtZero: this.yAxesBeginAtZero,

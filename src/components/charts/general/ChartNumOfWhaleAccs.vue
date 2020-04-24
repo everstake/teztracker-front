@@ -3,8 +3,11 @@
     <CardHeader>
       <template #left-content class="text">
         <h4 class="tz-title--bold">
-          {{ $t("numberOf.#OfWhaleAccs") }}
+          {{ $t("numberOf.#OfWhaleAccs") }} <br>
         </h4>
+        <p class="fs-14 mb-0">
+          {{ 'Accounts with more than 500,000 XTZ'  }}
+        </p>
       </template>
     </CardHeader>
 

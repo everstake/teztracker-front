@@ -36,7 +36,7 @@
 
           <b-row>
             <b-col xl="6" class="mb-30">
-              <ChartDelegationVolume />
+              <ChartDelegationVolume class="chart-min-height" />
             </b-col>
             <b-col xl="6">
               <ChartNumOfWhaleAccs />
@@ -89,4 +89,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@media (min-width: 1200px) {
+  .chart-min-height {
+    min-height: 499px;
+  }
+}
+</style>
