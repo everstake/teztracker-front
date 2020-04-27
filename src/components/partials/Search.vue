@@ -54,7 +54,7 @@ import some from "lodash/some";
 import flatten from "lodash/flatten";
 import numeral from "numeral";
 import { mapActions, mapState } from "vuex";
-import { GET_PUBLIC_BAKERS } from "@/store/actions.types";
+import { GET_PUBLIC_BAKERS_SEARCH } from "@/store/actions.types";
 import uuid from "@/mixins/uuid";
 
 export default {
@@ -76,7 +76,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("accounts", [GET_PUBLIC_BAKERS]),
+    ...mapActions("accounts", [GET_PUBLIC_BAKERS_SEARCH]),
     async searchByPublicBaker(accountId) {
       const { status } = await this.$api.getAccount({ account: accountId });
       const routerSettings = { name: "baker", params: { baker: accountId } };
@@ -85,16 +85,24 @@ export default {
     },
     async fetchPublicBakers(limit) {
       this.publicBakersFetching = true;
-      await this[GET_PUBLIC_BAKERS]({ limit });
+      await this[GET_PUBLIC_BAKERS_SEARCH]({ limit });
       this.publicBakersFetching = false;
     },
     async handleDropdownClick(accountId) {
+      if (this.loading) {
+        return;
+      }
+
+      this.loading = true;
+
       const findedIndex = this.publicBakers.findIndex(baker => baker.accountId === accountId);
       const findedEntry = this.publicBakers[findedIndex];
       this.$set(this.publicBakers, findedIndex, {...findedEntry, class: 'active'});
       await this.searchByPublicBaker(accountId);
       delete findedEntry.class;
       this.$set(this.publicBakers, findedIndex, findedEntry);
+
+      this.loading = false;
     },
     async handleInputChange() {
       const { publicBakersDefaultLimit } = this;
@@ -112,6 +120,10 @@ export default {
       this.$router.push({ ...props });
     },
     async onSubmit() {
+      if (this.loading) {
+        return;
+      }
+
       this.loading = true;
 
       const searchStr = this.searchQuery;
@@ -180,9 +192,8 @@ export default {
           this.searchQuery = "";
         }
       }
-      
+
       if (routerSettings === null && requestStatus === null) {
-        if (this.loading) return;
         if (this.filterPublicBakersBySearchQuery.length > 0) {
           this.$set(this.filterPublicBakersBySearchQuery, 0, {...this.filterPublicBakersBySearchQuery[0], class: 'active'});
           const { status } = await this.$api.getAccount({ account: this.filterPublicBakersBySearchQuery[0].accountId });
@@ -191,7 +202,7 @@ export default {
         } else {
           const { publicBakersDefaultLimit } = this;
           const fetchedBakersSize = this.publicBakers.length;
-  
+
           if (fetchedBakersSize === publicBakersDefaultLimit) {
             await this.fetchPublicBakers({ limit: this.publicBakersCount });
           } else {
@@ -202,7 +213,7 @@ export default {
       }
 
       this.loading = false;
-
+  
       this.resolveSearch(routerSettings, requestStatus);
     },
     findQueryPrefix(searchQuery) {

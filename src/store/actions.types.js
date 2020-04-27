@@ -5,6 +5,7 @@ export const GET_BLOCK_BY_LEVEL = "getBlockByLevel";
 export const GET_SNAPSHOTS = "getSnapshots";
 export const GET_BAKERS = "getBakers";
 export const GET_PUBLIC_BAKERS = "getPublicBakers";
+export const GET_PUBLIC_BAKERS_SEARCH = "getPublicBakersSearch";
 export const GET_BAKING_RIGHTS = "getBakingRights";
 export const GET_DOUBLE_BAKING = "getDoubleBaking";
 export const GET_DOUBLE_ENDORSEMENT = "getDoubleEndorsement";
