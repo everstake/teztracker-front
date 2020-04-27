@@ -191,7 +191,7 @@ export default {
       this[SET_TX_COUNT](this.count);
     },
     getAccountName(row, rowHash) {
-      return `${row.item[`${rowHash}Name`] || row.item[rowHash]}`;
+      return `${row.item[`${rowHash}Name`] || row.item[rowHash].slice(0, 15)}...`;
     }
   }
 };
