@@ -34,8 +34,19 @@
       </template>
 
       <template slot="from" slot-scope="row">
-        <b-link :to="{ name: 'account', params: { account: row.item.source } }">
-          {{ row.item.sourceName || row.item.source | longhash(20) }}
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.source } }"
+          :class="row.item.sourceName === account ? 'source' : 'destination'"
+        >
+          <div>
+            {{ row.item.sourceName || row.item.destination | longhash(15) }}
+            <div v-if="account === row.item.source" class="icon">
+              <i class="icon__arrow--green"></i>
+            </div>
+            <div v-else-if="account === row.item.destination" class="icon">
+              <i class="icon__arrow--red"></i>
+            </div>
+          </div>
         </b-link>
       </template>
 
@@ -43,7 +54,7 @@
         <b-link
           :to="{ name: 'account', params: { account: row.item.destination } }"
         >
-          {{ row.item.destinationName || row.item.destination | longhash(20) }}
+          {{ row.item.destinationName || row.item.destination | longhash(15) }}
         </b-link>
       </template>
       <template slot="amount" slot-scope="row">
@@ -179,7 +190,44 @@ export default {
       this.$emit('onTransactions', this.account);
       this.count = data.count;
       this[SET_TX_COUNT](this.count);
+    },
+    getAccountName(row, rowHash) {
+      return `${row.item[`${rowHash}Name`] || row.item[rowHash].slice(0, 15)}...`;
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  .source,
+  .destination {
+    position: relative;
+    padding-left: 12px;
+  }
+  
+  .icon {
+    &__arrow--red:before {
+      position: absolute;
+      content: '';
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      color: #309282;
+      border-top: .3em solid transparent;
+      border-bottom: .3em solid transparent;
+      border-left: .3em solid;
+    }
+
+    &__arrow--green:before {
+      position: absolute;
+      content: '';
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      color: #e56968;
+      border-top: .3em solid transparent;
+      border-bottom: .3em solid transparent;
+      border-left: .3em solid;
+    }
+  }
+</style>
