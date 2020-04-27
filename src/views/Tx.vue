@@ -8,6 +8,11 @@
       <section>
         <b-container fluid>
           <TxSingle
+            v-if="
+              txInfo.kind &&
+                txInfo.kind !== 'double_baking_evidence' &&
+                txInfo.kind !== 'double_endorsement_evidence'
+            "
             :block-hash="txInfo.blockHash"
             :timestamp="txInfo.timestamp"
             :op-hash="txInfo.operationGroupHash"
@@ -27,110 +32,123 @@
             :reward="txInfo.reward"
             :claimed-amount="txInfo.claimedAmount"
           />
+          <DoubleOperationsSingle v-else-if="dataFetched" :props="txInfo" />
         </b-container>
       </section>
 
       <section
-        v-if="!operationsWithHiddenTxTable.includes(txInfo.kind) && transactions.length"
+        v-if="
+          !operationsWithHiddenTxTable.includes(txInfo.kind) &&
+            transactions.length
+        "
         class="mt-0"
       >
         <b-container fluid>
           <b-row>
             <b-col lg="12">
               <b-card no-body>
-                <b-card-header>
-                  <div class="break-word">
-                    <h3>
-                      <span class="text">
-                        <template v-if="txInfo.kind === 'delegation'">
-                          {{ $t("txPage.delegationDetails") }}
-                        </template>
-                        <template v-else-if="txInfo.kind === 'origination'">
-                          {{ $t("txPage.originationDetails") }}
-                        </template>
-                        <template v-else>
-                          {{ $t("txPage.txDetails") }}
-                        </template>
-                      </span>
-                    </h3>
-                  </div>
-                </b-card-header>
-
-                <b-card-body>
-                  <b-table
-                    show-empty
-                    :items="transactions"
-                    :fields="fields"
-                    :current-page="currentPage"
-                    :per-page="0"
-                    borderless
-                    class="transactions-table table-responsive-md"
-                    :tbody-tr-class="$_defineRowClass"
+                <b-tabs>
+                  <b-tab
+                    v-if="txInfo.kind !== 'activate_account'"
+                    :title="
+                      txInfo.kind === 'delegation'
+                        ? $t('txPage.delegationDetails')
+                        : txInfo.kind === 'origination'
+                        ? $t('txPage.originationDetails')
+                        : $t('txPage.txDetails')
+                    "
+                    active
                   >
-                    <template slot="from" slot-scope="row">
-                      <b-link
-                        :to="{
-                          name: 'account',
-                          params: { account: row.item.source }
-                        }"
+                    <b-card-body>
+                      <b-table
+                        show-empty
+                        :items="transactionsSorted.operations"
+                        :fields="fields"
+                        :current-page="currentPage"
+                        :per-page="0"
+                        borderless
+                        class="transactions-table table-responsive-md"
+                        :tbody-tr-class="$_defineRowClass"
                       >
-                        {{
-                          row.item.sourceName || row.item.source | longhash(20)
-                        }}
-                      </b-link>
-                    </template>
+                        <template slot="from" slot-scope="row">
+                          <b-link
+                            :to="{
+                              name: 'account',
+                              params: { account: row.item.source }
+                            }"
+                          >
+                            {{
+                              row.item.sourceName ||
+                                row.item.source | longhash(20)
+                            }}
+                          </b-link>
+                        </template>
 
-                    <template slot="to" slot-scope="row">
-                      <b-link
-                        :to="{
-                          name: 'account',
-                          params: { account: row.item.destination || row.item.delegate }
-                        }"
-                      >
-                        {{
-                          row.item.destinationName ||
-                            row.item.destination ||
-                            row.item.delegateName ||
-                            row.item.delegate | longhash(20)
-                        }}
-                      </b-link>
-                    </template>
-                    <template slot="amount" slot-scope="row">
-                      {{ row.item.amount | tezos }}
-                    </template>
-                    <template slot="fee" slot-scope="row">
-                      {{ row.item.fee | tezos }}
-                    </template>
-                    <template slot="gas" slot-scope="row">
-                      {{ row.item.gasLimit | formatInteger }}
-                    </template>
-                    <template slot="storage" slot-scope="row">
-                      {{ row.item.storageLimit }}
-                    </template>
-                    <template slot="delegationAmount" slot-scope="row">
-                      {{ row.item.delegationAmount | tezos }}
-                    </template>
-                    <template slot="balance" slot-scope="row">
-                      {{ row.item.balance | tezos }}
-                    </template>
-                    <template slot="originatedContracts" slot-scope="row">
-                      <b-link
-                        :to="{
-                          name: 'account',
-                          params: { account: row.item.originatedContracts }
-                        }"
-                      >
-                        {{ row.item.originatedContracts | longhash(20) }}
-                      </b-link>
-                    </template>
-                  </b-table>
+                        <template slot="to" slot-scope="row">
+                          <b-link
+                            :to="{
+                              name: 'account',
+                              params: {
+                                account:
+                                  row.item.destination || row.item.delegate
+                              }
+                            }"
+                          >
+                            {{
+                              row.item.destinationName ||
+                                row.item.destination ||
+                                row.item.delegateName ||
+                                row.item.delegate | longhash(20)
+                            }}
+                          </b-link>
+                        </template>
+                        <template slot="amount" slot-scope="row">
+                          {{ row.item.amount | tezos }}
+                        </template>
+                        <template slot="fee" slot-scope="row">
+                          {{ row.item.fee | tezos }}
+                        </template>
+                        <template slot="gas" slot-scope="row">
+                          {{ row.item.gasLimit | formatInteger }}
+                        </template>
+                        <template slot="storage" slot-scope="row">
+                          {{ row.item.storageLimit }}
+                        </template>
+                        <template slot="delegationAmount" slot-scope="row">
+                          {{ row.item.delegationAmount | tezos }}
+                        </template>
+                        <template slot="balance" slot-scope="row">
+                          {{ row.item.balance | tezos }}
+                        </template>
+                        <template slot="originatedContracts" slot-scope="row">
+                          <b-link
+                            :to="{
+                              name: 'account',
+                              params: { account: row.item.originatedContracts }
+                            }"
+                          >
+                            {{ row.item.originatedContracts | longhash(20) }}
+                          </b-link>
+                        </template>
+                      </b-table>
 
-                  <Pagination
-                    @change="$_handleCurrentPageChange"
-                    :total-rows="count"
-                    :per-page="perPage"
-                  />
-                </b-card-body>
+                      <Pagination
+                        @change="$_handleCurrentPageChange"
+                        :total-rows="count"
+                        :per-page="perPage"
+                      />
+                    </b-card-body>
+                  </b-tab>
+
+                  <b-tab
+                    v-if="operationsWithReveals.includes(txInfo.kind)"
+                    :title="$t('revealsList.reveal')"
+                  >
+                    <b-card-body>
+                      <RevealsList :items="transactionsSorted.reveals" />
+                    </b-card-body>
+                  </b-tab>
+                </b-tabs>
               </b-card>
             </b-col>
           </b-row>
@@ -148,6 +166,8 @@ import { mapState } from "vuex";
 import Pagination from "../components/partials/Pagination";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 import defineRowClass from "@/mixins/defineRowClass";
+import DoubleOperationsSingle from "@/components/partials/DoubleOperationsSingle";
+import RevealsList from "@/components/operations/RevealsList";
 
 export default {
   name: "Tx",
@@ -155,7 +175,9 @@ export default {
     PageContentContainer,
     Breadcrumbs,
     TxSingle,
-    Pagination
+    Pagination,
+    DoubleOperationsSingle,
+    RevealsList
   },
   mixins: [handleCurrentPageChange, defineRowClass],
   data() {
@@ -166,10 +188,16 @@ export default {
       count: 0,
       operationsWithHiddenTxTable: [
         "endorsement",
-        "activate_account",
         "double_baking_evidence",
         "double_endorsement_evidence"
-      ]
+      ],
+      operationsWithReveals: [
+        "transaction",
+        "delegation",
+        "origination",
+        "activate_account"
+      ],
+      dataFetched: false
     };
   },
   computed: {
@@ -205,12 +233,15 @@ export default {
       }
     },
     fields() {
-      let res =[];
-  
+      let res = [];
+
       if (this.getOperationKind === "origination") {
         res = [
-          { key: "from", label: this.$t("txPage.originator")},
-          { key: "originatedContracts", label: this.$t("txPage.originatedAcc")},
+          { key: "from", label: this.$t("txPage.originator") },
+          {
+            key: "originatedContracts",
+            label: this.$t("txPage.originatedAcc")
+          },
           { key: "balance", label: this.$t("common.balance") },
           { key: "to", label: this.$t("common.delegate") },
           { key: "fee", label: this.$t("common.fee") },
@@ -234,10 +265,29 @@ export default {
           { key: "fee", label: this.$t("common.fee") },
           { key: "gas", label: this.$t("txPage.gasLimit") },
           { key: "storage", label: this.$t("txPage.storageLimit") }
-        ]
+        ];
       }
 
       return res;
+    },
+    transactionsSorted() {
+      if (!this.transactions || !this.transactions.length) return {};
+
+      return this.transactions.reduce(
+        (acc, tx) => {
+          if (tx.kind === "reveal") {
+            acc.reveals.push(tx);
+          } else {
+            acc.operations.push(tx);
+          }
+
+          return acc;
+        },
+        {
+          operations: [],
+          reveals: []
+        }
+      );
     }
   },
   async created() {
@@ -276,6 +326,7 @@ export default {
       }
       this.transactions = data.data;
       this.txInfo = this.transactions[0] || {};
+      this.dataFetched = true;
       this.count = data.count;
     }
   }

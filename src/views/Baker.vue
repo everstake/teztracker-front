@@ -77,7 +77,7 @@
                     </b-card-body>
                   </b-tab>
 
-                  <b-tab :title="$t('bakerSingle.baking')">
+                  <b-tab :title="$t('common.baking')">
                     <b-card-header>
                       <div class="break-word">
                         <h3>

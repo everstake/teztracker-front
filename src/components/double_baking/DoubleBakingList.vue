@@ -80,7 +80,7 @@
 </template>
 
 <script>
-  import { mapMutations, mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import { SET_DOUBLE_BAKING_COUNT } from "@/store/mutations.types";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
@@ -111,6 +111,11 @@ export default {
         { key: "timestamp", label: this.$t("common.timestamp") }
       ]
     };
+  },
+  computed: {
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
+    })
   },
   watch: {
     currentPage: {
@@ -143,11 +148,6 @@ export default {
       this.count = data.count;
       this[SET_DOUBLE_BAKING_COUNT](this.count);
     }
-  },
-  computed: {
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
   }
 };
 </script>

@@ -34,9 +34,12 @@
     "other": "Other",
     "endorser": "Endorser",
     "losses": "Losses",
-    "delegators": "Delegators",
+    "delegator": "Delegator | Delegators",
     "reward": "Reward | Rewards",
-    "deposit": "Deposit"
+    "deposit": "Deposit",
+    "share": "Share",
+    "baking": "Baking",
+    "txVol": "Transactions volume"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -85,7 +88,9 @@
     "publicBakersPage": "Public bakers page",
     "accsPage": "Accounts page",
     "contractsPage": "Contracts page",
-    "protocolsPage": "Protocols page"
+    "protocolsPage": "Protocols page",
+    "generalChartsPage": "General charts page",
+    "bakingChartsPage": "Baking charts page"
   },
   "infoTypes": {
     "txInfo": "Transaction information",
@@ -99,7 +104,8 @@
     "bakerInfo": "Baker information",
     "accInfo": "Account information",
     "generalInfo": "General information",
-    "voteInfo": "Vote information"
+    "voteInfo": "Vote information",
+    "contractInfo": "Contact information"
   },
   "hashTypes": {
     "hash": "Hash",
@@ -121,7 +127,8 @@
     "#OfDelegators": "# of delegators",
     "#OfEndorsements": "# of endorsements",
     "#OfOperations": "# of operations",
-    "#OfVotes": "# of votes"
+    "#OfVotes": "# of votes",
+    "#OfWhaleAccs": "# of whale accounts"
   },
   "bakerSingle": {
     "address": "Address",
@@ -130,7 +137,6 @@
     "totalBal": "Total balance",
     "liquidBal": "Liquid balance",
     "currDeposits": "Current deposits",
-    "baking": "Baking",
     "endorsement": "Endorsement",
     "pendingRewards": "Pending rewards",
     "bakingHistory": "Baking history",
@@ -142,7 +148,6 @@
   "blockSingle": {
     "bakerFee": "Baker's fee",
     "bakerPriority": "Baker's priority",
-    "txVol": "Transaction volume",
     "dblBakingEvidence": "Double-baking evidence",
     "dblEndorsementEvidence": "Double-endorsement evidence",
     "blockTime": "Block time",
@@ -175,6 +180,7 @@
   "dblBakingList": {
     "accuser": "Accuser",
     "bakerRewards": "Baker rewards",
+    "accuserRewards": "Accuser rewards",
     "offender": "Offender",
     "lostDeposits": "Lost deposits",
     "lostRewards": "Lost rewards"
@@ -183,6 +189,13 @@
     "protocol": "Protocol | Protocols",
     "startingBlock": "Starting block",
     "endingBlock": "Ending block"
+  },
+  "delegationsList": {
+    "delegationAmount": "Delegation amount"
+  },
+  "revealsList": {
+    "reveal": "Reveal",
+    "publicKey": "Public key"
   },
   "endorsementsSlots": {
     "blockEndorsements": "Block endorsements"
@@ -200,7 +213,9 @@
     "publicBakers": "Public bakers",
     "dateFormat": "Date format",
     "operations": "Operations",
-    "governance": "Governance"
+    "governance": "Governance",
+    "charts": "Charts",
+    "general": "General"
   },
   "nets": {
     "mainnet": "Mainnet",
@@ -302,5 +317,16 @@
     "howToRunTezos": "How to run Tezos?",
     "gitRepo": "Git repository",
     "dockerImages": "Docker images"
+  },
+  "charts": {
+    "numOfBlocks": "Number of blocks",
+    "avgBlockDelay": "Average block delay",
+    "feesPerDay": "Fees per day",
+    "delegationVol": "Delegation volume",
+    "bakersPerDay": "Bakers per day",
+    "rollsDist": "Rolls distribution",
+    "prioritiesPerCycle": "Priorities per cycle",
+    "andHigher": "and higher",
+    "accsWith500k": "Accounts with more than 500,000 XTZ"
   }
 }

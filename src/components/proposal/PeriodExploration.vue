@@ -209,7 +209,7 @@
                     {{
                       formatToCalendarDate(
                         proposal.period.startTime,
-                        "DD.MM.YY"
+                        "DD.MM.YYYY"
                       )
                     }}</span
                   >
@@ -218,7 +218,7 @@
                       >{{ $t("voting.periodEnds") }}:</span
                     >
                     {{
-                      formatToCalendarDate(proposal.period.endTime, "DD.MM.YY")
+                      formatToCalendarDate(proposal.period.endTime, "DD.MM.YYYY")
                     }}</span
                   >
                 </div>

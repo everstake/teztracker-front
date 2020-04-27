@@ -15,6 +15,13 @@
     >
       <template slot="accountId" slot-scope="row">
         <b-link
+          v-if="row.item.is_baker"
+          :to="{ name: 'baker', params: { baker: row.item.accountId } }"
+        >
+          <span>{{ row.item.accountId | longhash(35) }}</span>
+        </b-link>
+        <b-link
+          v-else
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
           <span>{{ row.item.accountId | longhash(35) }}</span>
@@ -26,12 +33,14 @@
       <template slot="createdAt" slot-scope="row">
         <span>{{ row.item.createdAt | timeformat(dateFormat) }}</span>
       </template>
-      <template v-if="row.item.delegateValue" slot="delegateValue" slot-scope="row">
+      <template slot="delegateValue" slot-scope="row">
         <b-link
+          v-if="row.item.delegateValue"
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
           <span>{{ row.item.delegateValue | longhash(35) }}</span>
         </b-link>
+        <span v-else>----</span>
       </template>
     </b-table>
 

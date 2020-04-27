@@ -1,7 +1,15 @@
 .table {
   th:focus {
-    outline: $color-brand--opacity-2 auto 1px;
-    background-color: $color-brand--opacity-2;
+    outline: none;
+    //outline: $color-brand--opacity-2 auto 1px;
+    //background-color: $color-brand--opacity-2;
   }
 }
+
+.wide-col {
+  @include for-desktop-up {
+    width: 290px;
+  }
+}
+
 

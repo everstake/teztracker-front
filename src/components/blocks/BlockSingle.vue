@@ -22,8 +22,10 @@
               <b-col lg="4" class="label">
                 {{ $t("hashTypes.hash") }}
               </b-col>
-              <b-col lg="8" class="text-accent">
-                {{ this.block.hash }}
+              <b-col id="card-title" lg="8" class="text text-accent" @click="copyToClipboard()">
+                <span class="hash" ref="textToCopy">{{ this.block.hash }}</span>
+                <span class="icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span>
+                <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -65,7 +67,7 @@
             </b-row>
             <b-row class="item-info">
               <b-col lg="4" class="label">
-                {{ $t("blockSingle.txVol") }}
+                {{ $t("common.txVol") }}
               </b-col>
               <b-col lg="8" class="text-accent">
                 {{ this.block.volume | tezos }}
@@ -191,6 +193,19 @@ export default {
       if (position === 'next') {
         this.$router.push({ name: this.$route.name, params: { network: currentNetwork, level: Number(level) + 1 } });
       }
+    },
+    copyToClipboard() {
+      const selection = window.getSelection();
+      const range = window.document.createRange();
+      selection.removeAllRanges();
+      range.selectNode(this.$refs.textToCopy);
+      selection.addRange(range);
+    
+      try {
+        document.execCommand('copy');
+      } catch (err) {
+        selection.removeAllRanges();
+      }
     }
   },
   computed: {
@@ -209,3 +224,37 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.text {
+  position: relative;
+  cursor: pointer;
+}
+
+.text-accent {
+  font-weight: 600 !important;
+}
+
+.icon-primary {
+  color: $color-brand;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  right: auto;
+  margin-left: 10px;
+  font-size: 12px;
+  color: #309282;
+}
+
+.hash {
+  display: inline-block;
+  max-width: 300px;
+
+  @media (max-width: 992px) {
+    display: initial;
+    max-width: none;
+  }
+}
+</style>

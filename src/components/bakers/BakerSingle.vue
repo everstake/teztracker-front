@@ -33,7 +33,7 @@
                     {{ $t("bakerSingle.address") }}
                   </b-col>
                   <b-col lg="8" class="text-accent card__pointer">
-                    <span id="hash" @click="copyToClipboard()">
+                    <span class="hash" id="hash" @click="copyToClipboard()">
                       <span ref="textToCopy">
                         {{ hash }}
                       </span>
@@ -147,7 +147,7 @@
 
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.baking") }}
+                    {{ $t("common.baking") }}
                   </b-col>
                   <b-col lg="8" class="text-accent">{{
                     bakerInfo.bakingDeposits | tezos
@@ -168,7 +168,7 @@
 
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.baking") }}
+                    {{ $t("common.baking") }}
                   </b-col>
                   <b-col lg="8" class="text-accent">{{
                     bakerInfo.bakingRewards | tezos
@@ -277,10 +277,18 @@ export default {
   color: $color-brand;
 }
 
+.hash {
+  position: relative;
+}
+
 .icon {
-  display: inline-block;
-  padding-left: 0.5rem;
-  font-size: 15px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -15px;
+  margin-left: 10px;
+  font-size: 12px;
+  color: #309282;
 }
 
 .label {

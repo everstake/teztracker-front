@@ -84,7 +84,7 @@
                 <router-link
                   v-if="head.bakerName || head.baker"
                   class="baker"
-                  :to="{ name: 'account', params: { account: head.baker } }"
+                  :to="{ name: 'baker', params: { baker: head.baker } }"
                 >
                   <span v-if="head.bakerName"> {{ head.bakerName }}</span>
                   <span v-else>

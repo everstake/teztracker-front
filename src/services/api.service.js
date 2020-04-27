@@ -45,10 +45,15 @@ const TzAPI = {
   },
   getAccountBalance(opts = {}) {
     const { account } = opts;
-    return get(this.API_URL(), `accounts/balances/${account}`, {
-      from: opts.from,
-      to: opts.to
-    }, false);
+    return get(
+      this.API_URL(),
+      `accounts/balances/${account}`,
+      {
+        from: opts.from,
+        to: opts.to
+      },
+      false
+    );
   },
   getAccountRewards(opts = {}) {
     const { account } = opts;
@@ -66,6 +71,10 @@ const TzAPI = {
   getAccountBakingRightsFuture(opts = {}) {
     const { account, cycleId } = opts;
     return get(this.API_URL(), `accounts/baking/${account}/future_baking_rights/${cycleId}`, opts, true );
+  },
+  getAccountRewardsDelegators(opts = {}) {
+    const { account, cycleId } = opts;
+    return get(this.API_URL(), `accounts/${account}/delegators/${cycleId}`, opts, true );
   },
   getAccountBakingTotal(opts = {}) {
     const { account } = opts;
@@ -144,8 +153,7 @@ const TzAPI = {
     });
   },
   getDoubleEndorsement(opts = {}) {
-    return get(this.API_URL(), "operations", {
-      operation_kind: "double_endorsement_evidence",
+    return get(this.API_URL(), "double_endorsements", {
       ...opts
     });
   },
@@ -180,10 +188,10 @@ const TzAPI = {
     return get(this.API_URL(), "future_baking_rights", opts);
   },
   getPeriod(opts = {}) {
-    return get(this.getVotingUrl(), 'period', opts);
+    return get(this.getVotingUrl(), "period", opts);
   },
   getPeriods(opts = {}) {
-    return get(this.getVotingUrl(), 'periods', opts);
+    return get(this.getVotingUrl(), "periods", opts);
   },
   getProposals(opts = {}) {
     return get(this.getVotingUrl(), `proposals`, opts);
@@ -207,6 +215,15 @@ const TzAPI = {
   },
   getProtocols(opts = {}) {
     return get(this.getVotingUrl(), `protocols`, opts);
+  },
+  getCharts(opts = {}) {
+    return get(this.API_URL(), "charts", opts, false);
+  },
+  getBakersRollsChart(opts = {}) {
+    return get(this.API_URL(), "charts/bakers", opts, false);
+  },
+  getBlocksPriorityChart(opts = {}) {
+    return get(this.API_URL(), "charts/blocks_priority", opts, false);
   }
 };
 
