@@ -204,7 +204,7 @@ export default {
           const fetchedBakersSize = this.publicBakers.length;
 
           if (fetchedBakersSize === publicBakersDefaultLimit) {
-            await this.fetchPublicBakers({ limit: this.publicBakersCount });
+            await this.fetchPublicBakers(this.publicBakersCount);
           } else {
             this.error = 'Public baker not found.'
             this.$refs.searchInput.$el.focus();
