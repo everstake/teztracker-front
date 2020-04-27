@@ -34,16 +34,26 @@
       </template>
 
       <template slot="from" slot-scope="row">
-        <b-link :to="{ name: 'account', params: { account: row.item.source } }">
-          {{ row.item.sourceName || row.item.source | longhash(20) }}
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.source } }"
+          :class="row.item.sourceName ? 'source' : ''"
+        >
+          <div v-if="account === row.item.source" class="icon">
+            <i class="icon__arrow-bottom"></i>
+          </div>
+          {{ getAccountName(row, 'source') }}
         </b-link>
       </template>
 
       <template slot="to" slot-scope="row">
         <b-link
           :to="{ name: 'account', params: { account: row.item.destination } }"
+          :class="row.item.destinationName ? 'destination' : ''"
         >
-          {{ row.item.destinationName || row.item.destination | longhash(20) }}
+          <div v-if="account === row.item.destination" class="icon">
+            <i class="icon__arrow-top"></i>
+          </div>
+          {{ getAccountName(row, 'destination') }}
         </b-link>
       </template>
       <template slot="amount" slot-scope="row">
@@ -179,7 +189,46 @@ export default {
       this.$emit('onTransactions', this.account);
       this.count = data.count;
       this[SET_TX_COUNT](this.count);
+    },
+    getAccountName(row, rowHash) {
+      return `${row.item[`${rowHash}Name`] || row.item[rowHash]}`;
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+  .source,
+  .destination {
+    position: relative;
+    padding-left: 12px;
+  }
+  
+  .icon {
+    &__arrow-top:before {
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      color: #309282;
+      border-top: 0;
+      border-right: .3em solid transparent;
+      border-bottom: .3em solid;
+      border-left: .3em solid transparent;
+    }
+
+    &__arrow-bottom:before {
+      position: absolute;
+      content: '';
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      color: #e56968;
+      border-top: .3em solid;
+      border-right: .3em solid transparent;
+      border-bottom: 0;
+      border-left: .3em solid transparent;
+    }
+  }
+</style>
