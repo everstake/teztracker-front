@@ -26,6 +26,7 @@
     "bakingRights": "Baking rights",
     "contract": "Contract | Contracts",
     "acc": "Account | Accounts",
+    "topAcc": "Top accounts",
     "loading": "Loading",
     "protocolAmendments": "Protocol amendments",
     "vote": "Vote",
@@ -39,7 +40,8 @@
     "deposit": "Deposit",
     "share": "Share",
     "baking": "Baking",
-    "txVol": "Transactions volume"
+    "txVol": "Transactions volume",
+    "type": "Type"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -71,7 +73,8 @@
     "protocolsList": "Protocols list",
     "votersList": "Voters list",
     "nonVotersList": "Non-voters list",
-    "rewardsList": "Rewards list"
+    "rewardsList": "Rewards list",
+    "topAccountsList": "Top accounts list"
   },
   "pageTypes": {
     "txsPage": "Transactions page",
@@ -90,7 +93,8 @@
     "contractsPage": "Contracts page",
     "protocolsPage": "Protocols page",
     "generalChartsPage": "General charts page",
-    "bakingChartsPage": "Baking charts page"
+    "bakingChartsPage": "Baking charts page",
+    "topAccountsPage": "Top accounts page"
   },
   "infoTypes": {
     "txInfo": "Transaction information",

@@ -7,7 +7,7 @@
     <template #content>
       <section>
         <b-container fluid>
-          <AccountSingle :hash="hash" :type="accountType">
+          <AccountSingle :hash="hash">
             <template #chart="props">
               <h3 class="card__title account__title">
                 <span class="card__title--strong">

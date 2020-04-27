@@ -39,6 +39,9 @@ const TzAPI = {
   getAccounts(opts = {}) {
     return get(this.API_URL(), "accounts", opts);
   },
+  getTopAccounts(opts = {}) {
+    return get(this.API_URL(), "accounts/top_balance", opts);
+  },
   getAccount(opts = {}) {
     const { account } = opts;
     return get(this.API_URL(), `accounts/${account}`, opts);
