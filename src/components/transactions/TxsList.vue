@@ -36,24 +36,25 @@
       <template slot="from" slot-scope="row">
         <b-link
           :to="{ name: 'account', params: { account: row.item.source } }"
-          :class="row.item.sourceName ? 'source' : ''"
+          :class="row.item.sourceName === account ? 'source' : 'destination'"
         >
-          <div v-if="account === row.item.source" class="icon">
-            <i class="icon__arrow-bottom"></i>
+          <div>
+            {{ row.item.sourceName || row.item.destination | longhash(15) }}
+            <div v-if="account === row.item.source" class="icon">
+              <i class="icon__arrow--green"></i>
+            </div>
+            <div v-else-if="account === row.item.destination" class="icon">
+              <i class="icon__arrow--red"></i>
+            </div>
           </div>
-          {{ getAccountName(row, 'source') }}
         </b-link>
       </template>
 
       <template slot="to" slot-scope="row">
         <b-link
           :to="{ name: 'account', params: { account: row.item.destination } }"
-          :class="row.item.destinationName ? 'destination' : ''"
         >
-          <div v-if="account === row.item.destination" class="icon">
-            <i class="icon__arrow-top"></i>
-          </div>
-          {{ getAccountName(row, 'destination') }}
+          {{ row.item.destinationName || row.item.destination | longhash(15) }}
         </b-link>
       </template>
       <template slot="amount" slot-scope="row">
@@ -205,30 +206,28 @@ export default {
   }
   
   .icon {
-    &__arrow-top:before {
+    &__arrow--red:before {
       position: absolute;
       content: '';
       top: 50%;
-      left: 0;
+      right: 0;
       transform: translateY(-50%);
       color: #309282;
-      border-top: 0;
-      border-right: .3em solid transparent;
-      border-bottom: .3em solid;
-      border-left: .3em solid transparent;
+      border-top: .3em solid transparent;
+      border-bottom: .3em solid transparent;
+      border-left: .3em solid;
     }
 
-    &__arrow-bottom:before {
+    &__arrow--green:before {
       position: absolute;
       content: '';
       top: 50%;
-      left: 0;
+      right: 0;
       transform: translateY(-50%);
       color: #e56968;
-      border-top: .3em solid;
-      border-right: .3em solid transparent;
-      border-bottom: 0;
-      border-left: .3em solid transparent;
+      border-top: .3em solid transparent;
+      border-bottom: .3em solid transparent;
+      border-left: .3em solid;
     }
   }
 </style>
