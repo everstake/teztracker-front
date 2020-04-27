@@ -26,7 +26,6 @@ const constants = {
   CYCLES_IN_VOTING_PERIOD: 8,
   API_BASE_URLS: {
     mainnet: process.env.VUE_APP_ROOT_API + "/v2/data/tezos/mainnet/",
-    babylonnet: process.env.VUE_APP_ROOT_API + "/v2/data/tezos/babylonnet/",
     carthagenet: process.env.VUE_APP_ROOT_API + "/v2/data/tezos/carthagenet/",
     voting: process.env.VUE_APP_ROOT_API + "/v2/data/mainnet/"
   },

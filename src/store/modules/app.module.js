@@ -5,7 +5,7 @@ import { SET_APP_INFO, SET_APP_NETWORK, SET_APP_NETWORK_CHANGABLE, SET_DATE_FORM
 const initialState = {
   platform: "tezos",
   network: "mainnet",
-  networkList: ['mainnet', 'babylonnet', 'carthagenet'],
+  networkList: ['mainnet', 'carthagenet'],
   networkChangable: true,
   priceInfo: {},
   dateFormat: Vue.prototype.$constants.DATE_FORMAT
