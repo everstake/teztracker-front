@@ -35,12 +35,12 @@
           <DoubleOperationsSingle v-else-if="dataFetched" :props="txInfo" />
         </b-container>
       </section>
-
-      <section
-        v-if="
-          !operationsWithHiddenTxTable.includes(txInfo.kind) &&
-            transactions.length
-        "
+      
+      <section v-if="operationsWithHiddenTxTable.includes(txInfo.kind)
+                     && transactions.length
+                     && operationsWithDetails.includes(txInfo.kind)
+                     || operationsWithReveals.includes(txInfo.kind)
+                     && transactionsSorted.reveals && transactionsSorted.reveals.length"
         class="mt-0"
       >
         <b-container fluid>
@@ -141,7 +141,9 @@
                   </b-tab>
 
                   <b-tab
-                    v-if="operationsWithReveals.includes(txInfo.kind)"
+                    v-if="operationsWithReveals.includes(txInfo.kind)
+                          && transactionsSorted.reveals
+                          && transactionsSorted.reveals.length"
                     :title="$t('revealsList.reveal')"
                   >
                     <b-card-body>
@@ -190,6 +192,11 @@ export default {
         "endorsement",
         "double_baking_evidence",
         "double_endorsement_evidence"
+      ],
+      operationsWithDetails: [
+        "transaction",
+        "delegation",
+        "origination",
       ],
       operationsWithReveals: [
         "transaction",
