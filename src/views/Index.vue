@@ -82,11 +82,15 @@
 
               <span class="counter">
                 <router-link
-                  v-if="head.baker"
+                  v-if="head.bakerName || head.baker"
                   class="baker"
                   :to="{ name: 'baker', params: { baker: head.baker } }"
-                  >{{ head.baker | longhash(13) }}</router-link
                 >
+                  <span v-if="head.bakerName"> {{ head.bakerName }}</span>
+                  <span v-else>
+                    {{ head.baker | longhash(13) }}
+                  </span>
+                </router-link>
               </span>
               <span class="percentage"></span>
               <span class="tile-name">
