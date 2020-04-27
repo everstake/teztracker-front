@@ -1,4 +1,4 @@
-import { GET_ACCOUNTS, GET_BAKERS, GET_PUBLIC_BAKERS, GET_CONTRACTS } from "@/store/actions.types";
+import { GET_ACCOUNTS, GET_BAKERS, GET_PUBLIC_BAKERS, GET_CONTRACTS, GET_PUBLIC_BAKERS_SEARCH } from "@/store/actions.types";
 import { SET_ACCOUNTS, SET_BAKERS, SET_PUBLIC_BAKERS, SET_CONTRACTS } from "@/store/mutations.types";
 
 const initialState = {
@@ -21,6 +21,9 @@ export const actions = {
     commit(SET_BAKERS, await rootGetters.API.getBakers(params));
   },
   async [GET_PUBLIC_BAKERS]({ commit, rootGetters }, params) {
+    commit(SET_PUBLIC_BAKERS, await rootGetters.API.getPublicBakers(params));
+  },
+  async [GET_PUBLIC_BAKERS_SEARCH]({ commit, rootGetters }, params) {
     commit(SET_PUBLIC_BAKERS, await rootGetters.API.getPublicBakers(params));
   },
   async [GET_ACCOUNTS]({ commit, rootGetters }, params) {
