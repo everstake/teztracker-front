@@ -37,7 +37,7 @@
             name: 'baker',
             params: { baker: row.item.doubleOperationDetails.evidence_baker }
           }"
-        >{{ row.item.doubleOperationDetails.evidence_baker | longhash(20) }}</router-link>
+        >{{ row.item.doubleOperationDetails.evidence_baker_name || row.item.doubleOperationDetails.evidence_baker | longhash(20) }}</router-link>
       </template>
       <template slot="baker_rewards" slot-scope="row">
         {{ row.item.doubleOperationDetails.baker_reward | tezos }}
@@ -49,7 +49,7 @@
             name: 'baker',
             params: { baker: row.item.doubleOperationDetails.offender }
           }"
-        >{{ row.item.doubleOperationDetails.offender | longhash(20) }}</router-link
+        >{{ row.item.doubleOperationDetails.offender_name || row.item.doubleOperationDetails.offender | longhash(20) }}</router-link
         >
       </template>
       <template slot="denounced_level" slot-scope="row">
