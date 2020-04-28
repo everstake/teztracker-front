@@ -39,7 +39,7 @@
           :class="row.item.sourceName === account ? 'source' : 'destination'"
         >
           <div>
-            {{ row.item.sourceName || row.item.destination | longhash(15) }}
+            {{ row.item.sourceName || row.item.source | longhash(15) }}
             <div v-if="account === row.item.source" class="icon">
               <i class="icon__arrow--green"></i>
             </div>
