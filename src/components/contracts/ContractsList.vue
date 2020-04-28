@@ -31,10 +31,12 @@
       </template>
       <template slot="delegateValue" slot-scope="row">
         <b-link
+          v-if="row.item.delegateValue"
           :to="{ name: 'account', params: { account: row.item.delegateValue } }"
         >
-          <span>{{ row.item.delegateValue | longhash(35) }}</span>
+          <span>{{ row.item.delegateName || row.item.delegateValue | longhash(35) }}</span>
         </b-link>
+        <span v-else>----</span>
       </template>
       <template slot="balance" slot-scope="row">
         <span>{{ row.item.balance | tezos }}</span>
