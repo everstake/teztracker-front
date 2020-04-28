@@ -36,7 +36,7 @@
         </b-container>
       </section>
       
-      <section v-if="operationsWithHiddenTxTable.includes(txInfo.kind)
+      <section v-if="!operationsWithHiddenTxTable.includes(txInfo.kind)
                      && transactions.length
                      && operationsWithDetails.includes(txInfo.kind)
                      || operationsWithReveals.includes(txInfo.kind)
