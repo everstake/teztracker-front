@@ -1,7 +1,7 @@
 <template>
   <b-nav-item-dropdown variant="link" class="custom-dropdown" right>
     <template #button-content>
-      <flag :iso="mapEN(currLang)" />
+      <flag :iso="mapLangCode(currLang)" />
       {{ currLang.toUpperCase() }}
     </template>
 
@@ -10,7 +10,7 @@
       :key="index"
       @click="setLang(lang)"
     >
-      <flag :iso="mapEN(lang)" />
+      <flag :iso="mapLangCode(lang)" />
       {{ lang.toUpperCase() }}
     </b-dropdown-item>
   </b-nav-item-dropdown>
@@ -34,16 +34,16 @@ export default {
     this.setLang(this.defineInitialLang());
   },
   methods: {
-    mapEN(en) {
-      return en === "en" ? "us" : en;
+    mapLangCode(langCode) {
+      return langCode === "en" ? "us" : langCode === "zh" ? "cn" : langCode;
     },
     setLang(lang) {
       if (this.$helpers.isLocalStorageAvailable) {
         localStorage.setItem("lang", lang);
       }
-      
+
       this.$i18n.locale = lang;
-  
+
       this.$eventBus.$emit("lang-change", this.currLang);
     },
     defineInitialLang() {
