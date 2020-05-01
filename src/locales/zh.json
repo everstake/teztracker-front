@@ -1,0 +1,336 @@
+{
+  "common": {
+    "copyToClipboard": "拷贝到剪贴板",
+    "stakingBal": "持币生息余额",
+    "balance": "余额",
+    "rolls": "卷",
+    "bakingSince": "从…创建区块链",
+    "baker": "区块链服务创建者 | 区块链服务创建者",
+    "capacityAvailable": "可用容量",
+    "fee": "费用",
+    "block": "区块 | 区块",
+    "from": "从",
+    "to": "到",
+    "amount": "总额",
+    "amountDelegated": "委托数量",
+    "timestamp": "时间标记",
+    "cycle": "周期 | 周期",
+    "blockId": "信息块识别",
+    "priority": "优先次序",
+    "denouncedLvl": "遣责级别",
+    "viewAll": "查看全部",
+    "manager": "管理者",
+    "delegate": "委派",
+    "includedInBlock": "区块内",
+    "snapshot": "快照 | 快照",
+    "bakingRights": "创建区块权利",
+    "contract": "合同 | 合同",
+    "acc": "账户 | 账户",
+    "topAcc": "高级账户",
+    "loading": "加载中",
+    "protocolAmendments": "修正案",
+    "vote": "投票",
+    "home": "主页",
+    "opType": "操作类型",
+    "other": "其他",
+    "endorser": "背书人",
+    "losses": "损失",
+    "delegator": "受托人| 受托人",
+    "reward": "报酬| 报酬",
+    "deposit": "存款",
+    "share": "股份",
+    "baking": "创建区块",
+    "txVol": "交易量",
+    "type": "类型"
+  },
+  "opTypes": {
+    "tx": "交易 | 交易",
+    "endorsement": "背书| 背书",
+    "delegation": "委托 | 委托",
+    "origination": "源头| 源头",
+    "activation": "激活 | 激活",
+    "doubleBaking": "双重创建区块",
+    "doubleEndorsement": "双重背书| 双重背书"
+  },
+  "listTypes": {
+    "txsList": "交易列表",
+    "endorsementsList": "背书列表",
+    "delegationsList": "授权列表",
+    "originationsList": "源列表",
+    "activationsList": "激活列表",
+    "bakingList": "创建区块列表",
+    "dblBakingList": "双重创建区块列表",
+    "dblEndorsementsList": "双重背书列表",
+    "otherOpsList": "其他操作列表",
+    "blocksList": "区块列表",
+    "snapshotsList": "快照列表",
+    "futureBakingRightsList": "未来创建区块权利列表",
+    "pastBakingRightsList": "过去创建区块权利列表",
+    "bakersList": "区块创建者列表",
+    "publicBakersList": "公共区块创建者列表",
+    "accsList": "账户列表",
+    "contractsList": "合同列表",
+    "protocolsList": "草案列表",
+    "votersList": "选举人列表",
+    "nonVotersList": "投票弃权者列表",
+    "rewardsList": "报酬列表",
+    "topAccountsList": "高级账户列表"
+  },
+  "pageTypes": {
+    "txsPage": "交易页面",
+    "endorsementsPage": "背书页面",
+    "delegationsPage": "授权页面",
+    "originationsPage": "源页面",
+    "activationsPage": "激活页面",
+    "dblBakingPage": "双重创建区块页面",
+    "dblEndorsementsPage": "双重背书页面",
+    "blocksPage": "区块页面",
+    "snapshotsPage": "快照页面",
+    "bakersPage": "区块创建者页面",
+    "allBakersPage": "所有区块创建者页面",
+    "publicBakersPage": "公共区块创建者页面",
+    "accsPage": "账户页面",
+    "contractsPage": "合同页面",
+    "protocolsPage": "草案页面",
+    "generalChartsPage": "总图页面",
+    "bakingChartsPage": "区块创建图页面",
+    "topAccountsPage": "高级账户页面"
+  },
+  "infoTypes": {
+    "txInfo": "交易信息",
+    "endorsementInfo": "背书信息",
+    "delegationInfo": "授权信息",
+    "originationInfo": "源信息",
+    "activationInfo": "激活信息",
+    "dblBakingInfo": "双重创建区块信息",
+    "dblEndorsementInfo": "双重背书页面",
+    "blockInfo": "区块信息",
+    "bakerInfo": "区块创建者信息",
+    "accInfo": "账户信息",
+    "generalInfo": "总信息",
+    "voteInfo": "选举信息",
+    "contractInfo": "合同信息"
+  },
+  "hashTypes": {
+    "hash": "哈希函数",
+    "txHash": "交易哈希函数",
+    "endorsementHash": "背书哈希函数",
+    "delegationHash": "授权哈希函数",
+    "originationHash": "源哈希函数",
+    "opHash": "操作哈希函数",
+    "voteHash": "选举哈希函数"
+  },
+  "statusTypes": {
+    "status": "状态",
+    "success": "成功",
+    "failed": "失败",
+    "revealed": "显示",
+    "unrevealed": "未显示"
+  },
+  "numberOf": {
+    "#OfDelegators": "# 代表的",
+    "#OfEndorsements": "# 背书的",
+    "#OfOperations": "# 操作的",
+    "#OfVotes": "# 投票的",
+    "#OfWhaleAccs": "# 大账户的"
+  },
+  "bakerSingle": {
+    "address": "地址",
+    "blocksBaked": "创建区块",
+    "balances": "余额",
+    "totalBal": "合计余额",
+    "liquidBal": "流动资金结余",
+    "currDeposits": "活期存款",
+    "endorsement": "背书",
+    "pendingRewards": "预期报酬",
+    "bakingHistory": "创建区块历史",
+    "endorsingHistory": "背书历史",
+    "missed": "错过",
+    "stolen": "遗失",
+    "avgPriority": "平均优先级"
+  },
+  "blockSingle": {
+    "bakerFee": "区块链创建者费用",
+    "bakerPriority": "区块链创建者优先",
+    "dblBakingEvidence": "双重创建区块证明",
+    "dblEndorsementEvidence": "双重背书证明",
+    "blockTime": "区块时间",
+    "blockFitness": "区块适合度",
+    "gasUsed": "已使用燃料",
+    "protocolVersion": "草案版本",
+    "cyclePosition": "周期位置",
+    "outOf": "出于",
+    "originatedAccs": "原始账户"
+  },
+  "txSingle": {
+    "secret": "秘密",
+    "slotsEndorsed": "背书点",
+    "confirmations": "确认",
+    "deposit": "存款",
+    "reward": "报酬",
+    "amountClaimed": "申领款"
+  },
+  "accSingle": {
+    "created": "已创建的",
+    "lastActive": "上次活动"
+  },
+  "blocksList": {
+    "volume": "量"
+  },
+  "endorsementsList": {
+    "endorsedBlock": "背书区块",
+    "slots": "插槽"
+  },
+  "dblBakingList": {
+    "accuser": "控告者",
+    "bakerRewards": "区块链服务创建者报酬",
+    "accuserRewards": "控告者报酬",
+    "offender": "违法者",
+    "lostDeposits": "丢失存款",
+    "lostRewards": "丢失报酬"
+  },
+  "protocolsList": {
+    "protocol": "草案| 草案",
+    "startingBlock": "开始区块",
+    "endingBlock": "结束区块"
+  },
+  "delegationsList": {
+    "delegationAmount": "代表数量"
+  },
+  "revealsList": {
+    "reveal": "显示",
+    "publicKey": "公钥"
+  },
+  "endorsementsSlots": {
+    "blockEndorsements": "区块背书"
+  },
+  "counters": {
+    "cycleCounter": "周期计数器",
+    "untilEnd": "直到循环结束",
+    "d": "日",
+    "h": "小时",
+    "m": "月",
+    "icoPercent": "ICO地址被激活的百分比"
+  },
+  "header": {
+    "allBakers": "所有区块链服务创建者",
+    "publicBakers": "公共区块链服务创建者",
+    "dateFormat": "日期形式",
+    "operations": "操作",
+    "governance": "管控",
+    "charts": "图表",
+    "general": "指挥"
+  },
+  "nets": {
+    "mainnet": "主网",
+    "babylonnet": "巴比伦网",
+    "carthagenet": "迦太基网"
+  },
+  "footer": {
+    "allRights": "版权所有",
+    "contactUs": "联系我们"
+  },
+  "dateSwitcher": {
+    "usFormat": "我们",
+    "standardFormat": "标准"
+  },
+  "aggregateBy": {
+    "year": "今年",
+    "month": "本月"
+  },
+  "perPageSelect": {
+    "itemsPerPage": "每页项目"
+  },
+  "search": {
+    "placeholder": "块，文本或地址"
+  },
+  "voting": {
+    "emptyProposal": "在此期间没有提案.",
+    "proposal": "提案 |提案",
+    "votes": {
+      "yay": "是",
+      "nay": "否",
+      "pass": "过"
+    },
+    "proposer": "提案人",
+    "proposalFile": "提案",
+    "superMajority": "绝对多数制",
+    "quorum": "法定人数",
+    "percentOfVotes": "百分比的选票",
+    "bakersVotes": "区块链服务创建者选票",
+    "votesCast": "已投选票",
+    "periodStarts": "期始",
+    "periodEnds": "期终",
+    "periodNotFound": "周期{id}未找到.",
+    "generalVotingStats": "普选开始",
+    "recentVotes": "最近选票",
+    "voter": "投票人 | 投票人",
+    "participation": "参与",
+    "undecided": "未定",
+    "votesAvailable": "有效票",
+    "nonVoters": "投票弃权者",
+    "upVotes": "投票",
+    "proposalDescription": "提案描述",
+    "periodTypes": {
+      "proposal": "提案",
+      "exploration": "探索",
+      "testing": "测试",
+      "promotion": "提升"
+    },
+    "showAll": "显示全部",
+    "showLess": "显示部分"
+  },
+  "protocolPeriods": {
+    "current": "目前",
+    "past": "过去"
+  },
+  "errPages": {
+    "page": "网页",
+    "pageNotFound":"网页丢失",
+    "smthWrong": "出现错误"
+  },
+  "accPage": {
+    "balInThirtyDays": "最近30天的余额"
+  },
+  "txPage": {
+    "gasLimit": "燃料限制",
+    "storageLimit": "内存限制",
+    "txDetails": "交易明细",
+    "delegationDetails": "授权明细",
+    "originationDetails": "创建明细",
+    "originator": "创始人",
+    "originatedAcc": "创始人账户"
+  },
+  "votePage": {
+    "kind": "类",
+    "source": "源"
+  },
+  "index": {
+    "stakingRatio": "持币生息率",
+    "untilVotingEnd": "直到选举结束",
+    "blockHeight": "区块高度",
+    "latestBaker": "最新区块链服务创建者",
+    "price": "价格",
+    "tradingVol": "交易量",
+    "marketCap": "市场上限",
+    "circulatingSupply": "循环供应",
+    "moreAboutTezos": "了解更多关于Tezos",
+    "whatIsTezos": "Tezos是什么?",
+    "whitePaper": "白页",
+    "testnetFaucet": "测试网络",
+    "howToRunTezos": "如何运营Tezos?",
+    "gitRepo": "地址",
+    "dockerImages": "码头镜像"
+  },
+  "charts": {
+    "numOfBlocks": "区块数量",
+    "avgBlockDelay": "平均区块延迟",
+    "feesPerDay": "每日费用",
+    "delegationVol": "委托量",
+    "bakersPerDay": "每日区块链服务创建者",
+    "rollsDist": "分配卷",
+    "prioritiesPerCycle": "循环优先级",
+    "andHigher": "更高",
+    "accsWith500k": "超过500,000 XTZ的账户"
+  }
+}
