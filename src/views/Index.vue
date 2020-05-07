@@ -3,13 +3,13 @@
     <b-container fluid>
       <section class="promo-section">
         <b-row class="promo-top justify-content-md-center align-items-center">
-          <b-col lg="6" class="promo-search">
+          <b-col lg="6" xl="6" class="promo-search">
             <div class="search">
               <Search />
             </div>
           </b-col>
-          <b-col lg="4" class="promo-image">
-            <img src="../assets/img/promo-img.svg" height="270px" alt />
+          <b-col lg="6" xl="4" class="promo-image">
+            <img class="promo-image__src" src="../assets/img/promo-img.svg" height="270px" alt />
           </b-col>
         </b-row>
 
