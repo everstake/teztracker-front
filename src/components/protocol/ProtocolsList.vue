@@ -3,8 +3,9 @@
     <div class="d-flex justify-content-between mb-2">
       <PerPageSelect @per-page="$_setPerPage" />
     </div>
-
+    
     <b-table
+      responsive
       show-empty
       :items="protocols"
       :fields="fields"
@@ -32,6 +33,7 @@
     </b-table>
 
     <Pagination
+      v-if="isPaginationNeeded"
       @change="$_handleCurrentPageChange"
       :total-rows="protocolsCount"
       :per-page="perPage"
@@ -96,7 +98,10 @@ export default {
   computed: {
     ...mapState('period', {
       protocolsCount: state => state.counts.protocols
-    })
+    }),
+    isPaginationNeeded() {
+      return this.protocolsCount > 10;
+    }
   }
 };
 </script>

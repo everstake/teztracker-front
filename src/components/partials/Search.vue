@@ -50,8 +50,6 @@
 <script>
 import isFinite from "lodash/isFinite";
 import startsWith from "lodash/startsWith";
-import some from "lodash/some";
-import flatten from "lodash/flatten";
 import numeral from "numeral";
 import { mapActions, mapState } from "vuex";
 import { GET_PUBLIC_BAKERS_SEARCH } from "@/store/actions.types";
@@ -149,20 +147,21 @@ export default {
         requestStatus = status;
       }
 
-      //block hash
+      // block hash
       for (const prefix of this.$constants.SEARCH_PREFIXES.block) {
         if (startsWith(searchStr, prefix)) {
-          // const { status } = await this.$api.getBlock({ block: searchStr });
           const res = await this.$api.getBlock({ block: searchStr });
           const { status } = res;
-          const { level } = res.data.block;
-          // routerSettings = { name: "block", params: { level: searchStr } };
-          routerSettings = { name: "block", params: { level } };
+
+          if (res.data.block) {
+            const { level } = res.data.block;
+            routerSettings = { name: "block", params: { level } };
+          }
           requestStatus = status;
           this.searchQuery = "";
         }
       }
-      //transactions
+      // transactions
       for (const prefix of this.$constants.SEARCH_PREFIXES.operation) {
         if (startsWith(searchStr, prefix)) {
           const { status } = await this.$api.getTransactions({
@@ -173,7 +172,7 @@ export default {
           this.searchQuery = "";
         }
       }
-      //account
+      // account
       for (const prefix of this.$constants.SEARCH_PREFIXES.account) {
         if (startsWith(searchStr, prefix)) {
           const { status, data } = await this.$api.getAccount({ account: searchStr });
@@ -221,51 +220,16 @@ export default {
       }
 
       this.loading = false;
-  
+
       this.resolveSearch(routerSettings, requestStatus);
-    },
-    findQueryPrefix(searchQuery) {
-      const prefixesArray = flatten(Object.values(this.$constants.SEARCH_PREFIXES));
-      let findedPrefix = null;
-
-      const findId = () => {
-        if (isFinite(parseInt(searchQuery))) {
-          findedPrefix = parseInt(searchQuery);
-          return true;
-        }
-
-        return false;
-      };
-
-      const findPrefix = () => {
-        return some(prefixesArray, prefix => {
-          if (startsWith(searchQuery, prefix)) {
-            findedPrefix = prefix;
-            return true;
-          }
-
-          return false;
-        });
-      };
-
-      const queryHasPrefix = findId() || findPrefix();
-      return queryHasPrefix ? findedPrefix : false;
     },
     validateForm() {
       const { searchQuery } = this;
-      // const queryIncludesPrefix = this.findQueryPrefix(searchQuery);
 
       if (searchQuery === "") {
         this.error = "Search string should not be empty.";
         return false;
       }
-
-      // if (!queryIncludesPrefix) {
-      //   this.error = `Search for an ${Object.keys(
-      //     this.$constants.SEARCH_PREFIXES
-      //   ).join(" or ")}.`;
-      //   return false;
-      // }
 
       return true;
     }

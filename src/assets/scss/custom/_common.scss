@@ -420,7 +420,18 @@ li
 }
 
 .main-content .promo-section .promo-top .promo-image {
+  position: relative;
   margin: 26px 0;
+  height: 270px;
+  overflow: hidden;
+}
+
+.main-content .promo-section .promo-top .promo-image__src {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .main-content .promo-section .promo-tiles {
