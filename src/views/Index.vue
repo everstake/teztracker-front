@@ -225,6 +225,15 @@
                       {{ $t("index.testnetFaucet") }}
                     </a>
                   </li>
+                  <li>
+                    <a
+                      href="https://github.com/everstake/teztracker"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {{ $t("footer.backendRepo") }}
+                    </a>
+                  </li>
                 </ul>
               </b-col>
               <b-col lg="3">
@@ -248,6 +257,15 @@
                       target="”_blank”"
                     >
                       {{ $t("index.dockerImages") }}
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/everstake/teztracker-front"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {{ $t("footer.frontendRepo") }}
                     </a>
                   </li>
                 </ul>

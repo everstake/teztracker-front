@@ -228,7 +228,9 @@
   },
   "footer": {
     "allRights": "All rights reserved",
-    "contactUs": "Contact us"
+    "contactUs": "Contact us",
+    "backendRepo": "Backend repo",
+    "frontendRepo": "Frontend repo"
   },
   "dateSwitcher": {
     "usFormat": "US",
