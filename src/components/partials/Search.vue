@@ -76,8 +76,14 @@ export default {
   methods: {
     ...mapActions("accounts", [GET_PUBLIC_BAKERS_SEARCH]),
     async searchByPublicBaker(accountId) {
-      const { status } = await this.$api.getAccount({ account: accountId });
-      const routerSettings = { name: "baker", params: { baker: accountId } };
+      const data = await this.$api.getAccount({ account: accountId });
+      const status = data.status;
+      let routerSettings;
+      if (data.data.is_baker) {
+        routerSettings = { name: "baker", params: { baker: accountId } };
+      } else {
+        routerSettings = { name: "account", params: { account: accountId } };
+      }
       const requestStatus = status;
       this.resolveSearch(routerSettings, requestStatus);
     },
@@ -176,7 +182,7 @@ export default {
       for (const prefix of this.$constants.SEARCH_PREFIXES.account) {
         if (startsWith(searchStr, prefix)) {
           const { status, data } = await this.$api.getAccount({ account: searchStr });
-          const isBaker = data.bakerInfo;
+          const isBaker = data.is_baker;
 
           if (isBaker) {
             routerSettings = { name: "baker", params: { baker: searchStr } };
@@ -191,10 +197,15 @@ export default {
       }
 
       // baker
-      for (const prefix of this.$constants.SEARCH_PREFIXES.baker) {
+      for (const prefix of this.$constants.SEARCH_PREFIXES.account) {
         if (startsWith(searchStr, prefix)) {
-          const { status } = await this.$api.getAccount({ account: searchStr });
-          routerSettings = { name: "baker", params: { baker: searchStr } };
+          const data = await this.$api.getAccount({ account: searchStr });
+          const status = data.status;
+          if (data.data.is_baker) {
+            routerSettings = { name: "baker", params: { baker: searchStr } };
+          } else {
+            routerSettings = { name: "account", params: { account: searchStr } };
+          }
           requestStatus = status;
           this.searchQuery = "";
         }
@@ -203,9 +214,15 @@ export default {
       if (routerSettings === null && requestStatus === null) {
         if (this.filterPublicBakersBySearchQuery.length > 0) {
           this.$set(this.filterPublicBakersBySearchQuery, 0, {...this.filterPublicBakersBySearchQuery[0], class: 'active'});
-          const { status } = await this.$api.getAccount({ account: this.filterPublicBakersBySearchQuery[0].accountId });
-          routerSettings = { name: "baker", params: { baker: this.filterPublicBakersBySearchQuery[0].accountId } };
-          requestStatus = status;
+          const data = await this.$api.getAccount({ account: this.filterPublicBakersBySearchQuery[0].accountId });
+          const status = data.status;
+          if (data.data.is_baker) {
+            routerSettings = { name: "baker", params: { baker: this.filterPublicBakersBySearchQuery[0].accountId } };
+            requestStatus = status;
+          } else {
+            routerSettings = { name: "account", params: { baker: this.filterPublicBakersBySearchQuery[0].accountId } };
+            requestStatus = status;
+          }
         } else {
           const { publicBakersDefaultLimit } = this;
           const fetchedBakersSize = this.publicBakers.length;
