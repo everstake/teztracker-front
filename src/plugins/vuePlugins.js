@@ -56,6 +56,7 @@ import { dom } from "@fortawesome/fontawesome-svg-core";
 import router from "../router";
 import VueGtag from "vue-gtag";
 import FlagIcon from 'vue-flag-icon'
+import VueGtm from 'vue-gtm';
 
 Vue.use(LinkPlugin);
 Vue.use(TablePlugin);
@@ -112,3 +113,9 @@ Vue.component("font-awesome-layers", FontAwesomeLayers);
 Vue.component("font-awesome-layers-text", FontAwesomeLayersText);
 
 Vue.use(VueGtag, { config: { id: "UA-159555120-1" } }, router);
+Vue.use(VueGtm, {
+  id: "GTM-KX6RPKS",
+  debug: false, // Whether or not display console logs debugs (optional)
+  loadScript: true, // Whether or not to load the GTM Script (Helpful if you are including GTM manually, but need the dataLayer functionality in your components) (optional)
+  vueRouter: router, // Pass the router instance to automatically sync with router (optional)
+});
