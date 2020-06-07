@@ -4646,6 +4646,11 @@ find-up@^4.1.0:
     locate-path "^5.0.0"
     path-exists "^4.0.0"
 
+flag-icon-css@^2.8.0:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/flag-icon-css/-/flag-icon-css-2.9.0.tgz#5793c15244e3c63ae36631478a758a3fc29c86be"
+  integrity sha512-SeHvGEB43XFPZiJz6lFFRGHfp+Db+s1qGiClW70cZauQVbPM42wImlNUEuXSXs94kPchz7xvoxP0QK1y6FxLfg==
+
 flat-cache@^1.2.1:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/flat-cache/-/flat-cache-1.3.4.tgz#2c2ef77525cc2929007dfffa1dd314aa9c9dee6f"
@@ -10821,6 +10826,13 @@ vue-eslint-parser@^5.0.0:
     esquery "^1.0.1"
     lodash "^4.17.11"
 
+vue-flag-icon@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/vue-flag-icon/-/vue-flag-icon-1.0.6.tgz#0304fdfeebd982a6bf985c633c346ff3c6d2f9d7"
+  integrity sha1-AwT9/uvZgqa/mFxjPDRv88bS+dc=
+  dependencies:
+    flag-icon-css "^2.8.0"
+
 vue-functional-data-merge@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/vue-functional-data-merge/-/vue-functional-data-merge-3.1.0.tgz#08a7797583b7f35680587f8a1d51d729aa1dc657"
@@ -10830,6 +10842,11 @@ vue-gtag@^1.6.2:
   version "1.6.2"
   resolved "https://registry.yarnpkg.com/vue-gtag/-/vue-gtag-1.6.2.tgz#0e5cd7faf0a6aa635c2a7d4cb3ef80ab545a0198"
   integrity sha512-kKjVP+ch89IkGWfnszd02Lbg4W76rsPlrCZrRzDBoQaBPPx5TTQIL/bbt9hxcWDcRDNdAeh2NCYfijl/TAD+Mw==
+
+vue-gtm@^2.2.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/vue-gtm/-/vue-gtm-2.3.0.tgz#3bc41734921a071f243aa6fca308d105b7ea2fa7"
+  integrity sha512-hwRRyyO2U7LrwJw+6OB/gObvVjcEz770Ajne8XOldhpE9gL2CaloP3AEFTtKXmrsDE6z6A0mrXeWqjQ4vlyK9Q==
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
@@ -11130,9 +11147,9 @@ websocket-driver@>=0.5.1:
     websocket-extensions ">=0.1.1"
 
 websocket-extensions@>=0.1.1:
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.3.tgz#5d2ff22977003ec687a4b87073dfbbac146ccf29"
-  integrity sha512-nqHUnMXmBzT0w570r2JpJxfiSD1IzoI+HGVdd3aZ0yNi3ngvQ4jv1dtHt5VGxfI2yj5yqImPhOK4vmIh2xMbGg==
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/websocket-extensions/-/websocket-extensions-0.1.4.tgz#7f8473bc839dfd87608adb95d7eb075211578a42"
+  integrity sha512-OqedPIGOfsDlo31UNwYbCFMSaO9m9G/0faIHj5/dZFDMFqPTcx6UwqyOy3COEaEOg/9VsGIpdqn62W5KhoKSpg==
 
 whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   version "1.0.5"
