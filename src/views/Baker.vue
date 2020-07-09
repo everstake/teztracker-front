@@ -116,6 +116,20 @@
                       <BakerRewardsList :account="hash"></BakerRewardsList>
                     </b-card-body>
                   </b-tab>
+                  
+                  <b-tab title="Bonds">
+                    <b-card-header>
+                      <div class="break-word">
+                        <h3>
+                          <span class="text">Bonds list</span>
+                        </h3>
+                      </div>
+                    </b-card-header>
+
+                    <b-card-body>
+                      <BakerBondsList :account="hash"></BakerBondsList>
+                    </b-card-body>
+                  </b-tab>
                 </b-tabs>
               </b-card>
             </b-col>
@@ -137,6 +151,7 @@ import EndorsementsList from "../components/endorsements/EndorsementsList";
 import BakerRewardsList from "@/components/bakers/BakerRewardsList";
 import BakerBakingList from "../components/bakers/BakerBakingList";
 import BakerEndorsingList from "../components/bakers/BakerEndorsingList";
+import BakerBondsList from "../components/bakers/BakerBondsList";
 
 export default {
   name: "Baker",
@@ -150,7 +165,8 @@ export default {
     EndorsementsList,
     BakerRewardsList,
     BakerBakingList,
-    BakerEndorsingList
+    BakerEndorsingList,
+    BakerBondsList,
   },
   computed: {
     hash() {

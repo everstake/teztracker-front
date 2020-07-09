@@ -107,6 +107,10 @@ const TzAPI = {
     const { account } = opts;
     return get(this.API_URL(), `accounts/endorsing/${account}/future`, opts );
   },
+  getAccountBonds(opts = {}) {
+    const { account } = opts;
+    return get(this.API_URL(), `accounts/security_deposit/${account}/future`, opts );
+  },
   getContracts(opts = {}) {
     return get(this.API_URL(), "contracts", opts);
   },
