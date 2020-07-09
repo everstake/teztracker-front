@@ -28,6 +28,7 @@
 				<span v-else-if="row.item.status === 'active'">
 					<span v-if="row.item.actual_blocks_deposit">
 						{{ row.item.actual_blocks_deposit | tezosToFixed }}
+						({{ row.item.expected_blocks_deposit | tezosToFixed }})
 					</span>
 					<span v-else>-</span>
 				</span>
@@ -43,6 +44,7 @@
 				<span v-else-if="row.item.status === 'active'">
 					<span v-if="row.item.actual_endorsement_deposit">
 						{{ row.item.actual_endorsement_deposit | tezosToFixed }}
+						({{ row.item.expected_endorsement_deposit | tezosToFixed }})
 					</span>
 					<span v-else>-</span>
 				</span>
