@@ -30,7 +30,7 @@
 						{{ row.item.actual_blocks_deposit | tezosToFixed }}
 						({{ row.item.expected_blocks_deposit | tezosToFixed }})
 					</span>
-					<span v-else>-</span>
+					<span v-else>- ({{ row.item.expected_blocks_deposit | tezosToFixed }})</span>
 				</span>
 			</template>
 
@@ -46,7 +46,7 @@
 						{{ row.item.actual_endorsement_deposit | tezosToFixed }}
 						({{ row.item.expected_endorsement_deposit | tezosToFixed }})
 					</span>
-					<span v-else>-</span>
+					<span v-else>- ({{ row.item.expected_endorsement_deposit | tezosToFixed }})</span>
 				</span>
 			</template>
 
