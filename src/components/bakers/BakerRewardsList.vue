@@ -70,7 +70,7 @@
 					</template>
 
 					<template slot="share" slot-scope="row">
-						{{ row.item.share | toFixedNoRounding }}%
+						{{ (row.item.share * 100) | toFixedNoRounding }}%
 					</template>
 				</b-table>
 				
