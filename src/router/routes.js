@@ -40,6 +40,8 @@ const Account = () => import("../views/Account.vue");
 const TopAccounts = () => import("../views/TopAccounts.vue");
 // Contracts
 const Contracts = () => import("../views/Contracts.vue");
+const Assets = () => import("../views/Assets.vue");
+const Asset = () => import("../views/Asset.vue");
 /* Accounts group end */
 
 // Protocol amendment
@@ -150,6 +152,8 @@ export default [
   { path: "/:network/top_accounts", name: "top_accounts", component: TopAccounts },
   // Contracts
   { path: "/:network/contracts", name: "contracts", component: Contracts },
+  { path: "/:network/assets", name: "assets", component: Assets },
+  { path: "/:network/asset/:id", name: "asset", component: Asset },
   /* Accounts group end */
 
   /* Governance group */

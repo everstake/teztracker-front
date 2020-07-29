@@ -41,7 +41,11 @@
     "share": "股份",
     "baking": "创建区块",
     "txVol": "交易量",
-    "type": "类型"
+    "type": "类型",
+    "assets": "Assets",
+    "name": "Name",
+    "ordinalNumber": "Ordinal number",
+    "contractName": "Contract name"
   },
   "opTypes": {
     "tx": "交易 | 交易",
@@ -74,7 +78,8 @@
     "votersList": "选举人列表",
     "nonVotersList": "投票弃权者列表",
     "rewardsList": "报酬列表",
-    "topAccountsList": "高级账户列表"
+    "topAccountsList": "高级账户列表",
+    "assetsList": "Assets list"
   },
   "pageTypes": {
     "txsPage": "交易页面",
@@ -94,7 +99,8 @@
     "protocolsPage": "草案页面",
     "generalChartsPage": "总图页面",
     "bakingChartsPage": "区块创建图页面",
-    "topAccountsPage": "高级账户页面"
+    "topAccountsPage": "高级账户页面",
+    "assetsPage": "Assets page"
   },
   "infoTypes": {
     "txInfo": "交易信息",

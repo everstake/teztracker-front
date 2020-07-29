@@ -33,8 +33,8 @@ const TzAPI = {
   API_URL() {
     return Vue.prototype.$constants.API_BASE_URLS[state.network];
   },
-  getVotingUrl() {
-    return Vue.prototype.$constants.API_BASE_URLS.voting;
+  API_URL_WITHOUT_PLATFORM() {
+    return Vue.prototype.$constants.API_BASE_URLS.mainnetWithoutPlatform;
   },
   getAccounts(opts = {}) {
     return get(this.API_URL(), "accounts", opts);
@@ -198,17 +198,17 @@ const TzAPI = {
     return get(this.API_URL(), "future_baking_rights", opts);
   },
   getPeriod(opts = {}) {
-    return get(this.getVotingUrl(), "period", opts);
+    return get(this.API_URL_WITHOUT_PLATFORM(), "period", opts);
   },
   getPeriods(opts = {}) {
-    return get(this.getVotingUrl(), "periods", opts);
+    return get(this.API_URL_WITHOUT_PLATFORM(), "periods", opts);
   },
   getProposals(opts = {}) {
-    return get(this.getVotingUrl(), `proposals`, opts);
+    return get(this.API_URL_WITHOUT_PLATFORM(), `proposals`, opts);
   },
   getBallots(opts = {}) {
     const { id } = opts;
-    return get(this.getVotingUrl(), `ballots/${id}`, opts);
+    return get(this.API_URL_WITHOUT_PLATFORM(), `ballots/${id}`, opts);
   },
   getBallot(opts = {}) {
     return get(this.API_URL(), "operations", {
@@ -217,14 +217,14 @@ const TzAPI = {
   },
   getVoters(opts = {}) {
     const { id } = opts;
-    return get(this.getVotingUrl(), `proposal_votes/${id}`, opts);
+    return get(this.API_URL_WITHOUT_PLATFORM(), `proposal_votes/${id}`, opts);
   },
   getNonVoters(opts = {}) {
     const { id } = opts;
-    return get(this.getVotingUrl(), `non_voters/${id}`, opts);
+    return get(this.API_URL_WITHOUT_PLATFORM(), `non_voters/${id}`, opts);
   },
   getProtocols(opts = {}) {
-    return get(this.getVotingUrl(), `protocols`, opts);
+    return get(this.API_URL_WITHOUT_PLATFORM(), `protocols`, opts);
   },
   getCharts(opts = {}) {
     return get(this.API_URL(), "charts", opts, false);
@@ -234,6 +234,21 @@ const TzAPI = {
   },
   getBlocksPriorityChart(opts = {}) {
     return get(this.API_URL(), "charts/blocks_priority", opts, false);
+  },
+  getAssets(opts = {}) {
+    return get(this.API_URL_WITHOUT_PLATFORM(), "assets", opts);
+  },
+  getAssetsById(opts = {}) {
+    const { id } = opts;
+    return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${id}`, opts);
+  },
+  getAssetsOperationsById(opts = {}) {
+    const { id } = opts;
+    return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${id}/operations`, opts);
+  },
+  getAssetsHoldersById(opts = {}) {
+    const { id } = opts;
+    return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${id}/holders`, opts);
   }
 };
 

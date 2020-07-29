@@ -119,6 +119,11 @@
             >
               {{ $tc("common.contract", 2) }}
             </b-dropdown-item>
+            <b-dropdown-item
+              :to="{ name: 'assets', params: { network: currentNetwork } }"
+            >
+              {{ $t("common.assets") }}
+            </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown
             :text="$t('header.governance')"

@@ -27,7 +27,7 @@ const constants = {
   API_BASE_URLS: {
     mainnet: process.env.VUE_APP_ROOT_API + "/v2/data/tezos/mainnet/",
     carthagenet: process.env.VUE_APP_ROOT_API + "/v2/data/tezos/carthagenet/",
-    voting: process.env.VUE_APP_ROOT_API + "/v2/data/mainnet/"
+    mainnetWithoutPlatform: process.env.VUE_APP_ROOT_API + "/v2/data/mainnet/"
   },
   SEARCH_PREFIXES: {
     account: ["KT", "tz"],

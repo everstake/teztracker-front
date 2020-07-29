@@ -41,7 +41,11 @@
     "share": "Share",
     "baking": "Baking",
     "txVol": "Transactions volume",
-    "type": "Type"
+    "type": "Type",
+    "assets": "Assets",
+    "name": "Name",
+    "ordinalNumber": "Ordinal number",
+    "contractName": "Contract name"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -74,7 +78,8 @@
     "votersList": "Voters list",
     "nonVotersList": "Non-voters list",
     "rewardsList": "Rewards list",
-    "topAccountsList": "Top accounts list"
+    "topAccountsList": "Top accounts list",
+    "assetsList": "Assets list"
   },
   "pageTypes": {
     "txsPage": "Transactions page",
@@ -94,7 +99,8 @@
     "protocolsPage": "Protocols page",
     "generalChartsPage": "General charts page",
     "bakingChartsPage": "Baking charts page",
-    "topAccountsPage": "Top accounts page"
+    "topAccountsPage": "Top accounts page",
+    "assetsPage": "Assets page"
   },
   "infoTypes": {
     "txInfo": "Transaction information",

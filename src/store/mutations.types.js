@@ -28,6 +28,7 @@ export const SET_BAKERS = "setBakers";
 export const SET_PUBLIC_BAKERS = "setPublicBakers";
 export const SET_ACCOUNTS = "setAccounts";
 export const SET_CONTRACTS = "setContracts";
+export const SET_ASSETS = "setAssets";
 export const SET_PROPOSAL_PERIOD = "setProposalPeriod";
 export const SET_PERIODS = "setPeriods";
 export const SET_VOTERS_COUNT = "setVotersCount";

@@ -41,7 +41,11 @@
 		"share": "Доля",
 		"baking": "Бейкинг",
 		"txVol": "Объем транзакциий",
-		"type": "Тип"
+		"type": "Тип",
+		"assets": "Assets",
+		"name": "Name",
+		"ordinalNumber": "Ordinal number",
+		"contractName": "Contract name"
 	},
 	"opTypes": {
 		"tx": "Транзакция | Транзакции",
@@ -74,7 +78,8 @@
 		"votersList": "Список голосующих",
 		"nonVotersList": "Список неголосующих",
 		"rewardsList": "Список вознаграждений",
-		"topAccountsList": "Список топ аккаунтов"
+		"topAccountsList": "Список топ аккаунтов",
+		"assetsList": "Assets list"
 	},
 	"pageTypes": {
 		"txsPage": "Страница транзакций",
@@ -94,7 +99,8 @@
 		"protocolsPage": "Страница протоколов",
 		"generalChartsPage": "Страница общих графиков",
 		"bakingChartsPage": "Страница графиков бейкинга",
-		"topAccountsPage": "Страница топ аккаунтов"
+		"topAccountsPage": "Страница топ аккаунтов",
+		"assetsPage": "Assets page"
 	},
 	"infoTypes": {
 		"txInfo": "Информация о транзакции",
