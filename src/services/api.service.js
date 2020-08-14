@@ -239,16 +239,16 @@ const TzAPI = {
     return get(this.API_URL_WITHOUT_PLATFORM(), "assets", opts);
   },
   getAssetsById(opts = {}) {
-    const { id } = opts;
-    return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${id}`, opts);
+    const { asset_id } = opts;
+    return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${asset_id}`, opts);
   },
   getAssetsOperationsById(opts = {}) {
-    const { id } = opts;
-    return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${id}/operations`, opts);
+    const { assets_id } = opts;
+    return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${assets_id}/operations`, opts);
   },
   getAssetsHoldersById(opts = {}) {
-    const { id } = opts;
-    return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${id}/holders`, opts);
+    const { assets_id } = opts;
+    return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${assets_id}/holders`, opts);
   }
 };
 

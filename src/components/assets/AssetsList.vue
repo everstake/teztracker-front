@@ -15,12 +15,12 @@
     >
       <template slot="account_id" slot-scope="row">
         <router-link
-          :to="{ name: 'assets', params: { contract: row.item.account_id } }"
+          :to="{ name: 'asset', params: { id: row.item.account_id } }"
         >
           <span v-if="row.item.name">
             {{ row.item.name }}
           </span>
-          <span v-else>{{row.item.account_id | longhash(35) }}</span>
+          <span v-else>{{row.item.account_id | longhash(15) }}</span>
         </router-link>
       </template>
       <template slot="manager" slot-scope="row">
@@ -28,12 +28,12 @@
           v-if="row.item.manager"
           :to="{ name: 'account', params: { account: row.item.manager } }"
         >
-          <span>{{ row.item.manager | longhash(35) }}</span>
+          <span>{{ row.item.manager | longhash(15) }}</span>
         </b-link>
         <span v-else>----</span>
       </template>
       <template slot="name" slot-scope="row">
-        <span v-if="row.item.name">{{ row.item.name | longhash(35) }}</span>
+        <span v-if="row.item.name">{{ row.item.name }}</span>
         <span v-else>----</span>
       </template>
       <template slot="balance" slot-scope="row">
@@ -98,6 +98,6 @@ export default {
     ...mapState("app", {
       dateFormat: state => state.dateFormat
     })
-  }
+  },
 };
 </script>

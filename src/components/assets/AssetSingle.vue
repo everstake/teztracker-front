@@ -5,8 +5,8 @@
         <b-card-header>
           <h3 id="card-title" class="card__title">
             <span class="text card-title__text">
-              <template v-if="bakerInfo.name">
-                {{ bakerInfo.name }}
+              <template v-if="account.name">
+                {{ account.name }}
               </template>
               <template v-else>
                 {{ hash }}
@@ -14,7 +14,7 @@
             </span>
           </h3>
           <div class="subtitle">
-            {{ $t("infoTypes.bakerInfo") }}
+            {{ $t("infoTypes.assetInfo") }}
           </div>
         </b-card-header>
 
@@ -49,64 +49,12 @@
                     </b-tooltip>
                   </b-col>
                 </b-row>
-                <b-row class="item-info" v-if="bakerInfo.name">
-                  <b-col lg="4" class="label">
-                    {{ $t("common.fee") }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.fee | addPercent }}
-                  </b-col>
-                </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("common.bakingSince") }}
+                    {{ $t("accSingle.created") }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.bakingSince | timeformat(dateFormat) }}
-                  </b-col>
-                </b-row>
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t("common.rolls") }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.rolls }}
-                  </b-col>
-                </b-row>
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.blocksBaked") }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.blocks }}
-                  </b-col>
-                </b-row>
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t("numberOf.#OfDelegators") }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.activeDelegators }}
-                  </b-col>
-                </b-row>
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t("numberOf.#OfEndorsements") }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.endorsements }}
-                  </b-col>
-                </b-row>
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t("common.capacityAvailable") }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">
-                    {{
-                    ((bakerInfo.stakingCapacity - bakerInfo.stakingBalance) /
-                    $constants.XTZ)
-                    | tezosCapacity
-                    }}
+                    {{ account.created_at | timeformat(dateFormat) }}
                   </b-col>
                 </b-row>
               </b-col>
@@ -118,69 +66,11 @@
 
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.totalBal") }}
+                    {{ $t("common.balance") }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
-                    {{ bakerInfo.evaluatedBalance | tezos }}
+                    {{ account.balance | tezos }}
                   </b-col>
-                </b-row>
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.liquidBal") }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">{{
-                    account.balance | tezos
-                    }}</b-col>
-                </b-row>
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t("common.stakingBal") }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">{{
-                    bakerInfo.stakingBalance | tezos
-                    }}</b-col>
-                </b-row>
-
-                <span class="text-accent">
-                  {{ $t("bakerSingle.currDeposits") }}
-                </span>
-
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t("common.baking") }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">{{
-                    bakerInfo.bakingDeposits | tezos
-                    }}</b-col>
-                </b-row>
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.endorsement") }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">{{
-                    bakerInfo.endorsementDeposits | tezos
-                    }}</b-col>
-                </b-row>
-
-                <span class="text-accent">
-                  {{ $t("bakerSingle.pendingRewards") }}
-                </span>
-
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t("common.baking") }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">{{
-                    bakerInfo.bakingRewards | tezos
-                    }}</b-col>
-                </b-row>
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.endorsement") }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">{{
-                    bakerInfo.endorsementRewards | tezos
-                    }}</b-col>
                 </b-row>
               </b-col>
             </b-row>
@@ -231,7 +121,7 @@ export default {
   methods: {
     ...mapActions("app", [GET_APP_INFO]),
     async reload(acc) {
-      const result = await this.$api.getAccount({ account: acc });
+      const result = await this.$api.getAssetsById({ asset_id: acc });
       if (result.status !== this.$constants.STATUS_SUCCESS) {
         return this.$router.replace({
           name: result.status

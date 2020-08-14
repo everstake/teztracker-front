@@ -29,105 +29,37 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <TxsList :account="hash" />
+                      <AssetTabTxs :account="hash" />
                     </b-card-body>
                   </b-tab>
-                  <b-tab :title="$tc('opTypes.delegation', 2)">
+                  <b-tab :title="$tc('opTypes.holder', 2)" active>
                     <b-card-header>
                       <div class="break-word">
                         <h3>
                           <span class="text">
-                            {{ $t("listTypes.delegationsList") }}
+                            {{ $t("listTypes.holdersList") }}
                           </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <DelegationsList :account="hash" />
+                      <AssetTabHolders :account="hash" />
                     </b-card-body>
                   </b-tab>
-                  <b-tab :title="$tc('opTypes.origination', 2)">
+                  <b-tab :title="$tc('listTypes.otherOpsList', 2)" active>
                     <b-card-header>
                       <div class="break-word">
                         <h3>
                           <span class="text">
-                            {{ $t("listTypes.originationsList") }}
+                            {{ $t("listTypes.otherOpsList") }}
                           </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <OriginationsList :account="hash" />
-                    </b-card-body>
-                  </b-tab>
-
-                  <b-tab :title="$tc('opTypes.endorsement', 2)">
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">{{ $t('listTypes.endorsementsList') }}</span>
-                        </h3>
-                      </div>
-                    </b-card-header>
-
-                    <b-card-body>
-                      <EndorsementsList :is-baker="true" :account="hash"></EndorsementsList>
-                    </b-card-body>
-                  </b-tab>
-
-                  <b-tab :title="$t('common.baking')">
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">{{ $t('listTypes.bakingList') }}</span>
-                        </h3>
-                      </div>
-                    </b-card-header>
-
-                    <b-card-body>
-                      <BakerBakingList :account="hash"></BakerBakingList>
-                    </b-card-body>
-
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">{{ $t('listTypes.endorsementsList') }}</span>
-                        </h3>
-                      </div>
-                    </b-card-header>
-
-                    <b-card-body>
-                      <BakerEndorsingList :account="hash"></BakerEndorsingList>
-                    </b-card-body>
-                  </b-tab>
-
-                  <b-tab :title="$tc('common.reward', 2)">
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">{{ $t('listTypes.rewardsList') }}</span>
-                        </h3>
-                      </div>
-                    </b-card-header>
-
-                    <b-card-body>
-                      <BakerRewardsList :account="hash"></BakerRewardsList>
-                    </b-card-body>
-                  </b-tab>
-
-                  <b-tab title="Bonds">
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">Bonds list</span>
-                        </h3>
-                      </div>
-                    </b-card-header>
-
-                    <b-card-body>
-                      <BakerBondsList :account="hash"></BakerBondsList>
+                      <AssetTabOther :account="hash" />
                     </b-card-body>
                   </b-tab>
                 </b-tabs>
@@ -144,14 +76,9 @@
 import PageContentContainer from "../layouts/PageContentContainer";
 import Breadcrumbs from "../components/partials/Breadcrumbs";
 import AssetSingle from "../components/assets/AssetSingle";
-import TxsList from "../components/transactions/TxsList";
-import DelegationsList from "../components/delegations/DelegationsList";
-import OriginationsList from "../components/originations/OriginationsList";
-import EndorsementsList from "../components/endorsements/EndorsementsList";
-import BakerRewardsList from "@/components/bakers/BakerRewardsList";
-import BakerBakingList from "../components/bakers/BakerBakingList";
-import BakerEndorsingList from "../components/bakers/BakerEndorsingList";
-import BakerBondsList from "../components/bakers/BakerBondsList";
+import AssetTabTxs from "../components/assets/AssetTabTxs";
+import AssetTabHolders from "../components/assets/AssetTabHolders";
+import AssetTabOther from "../components/assets/AssetTabOther";
 
 export default {
   name: "Asset",
@@ -159,14 +86,9 @@ export default {
     PageContentContainer,
     Breadcrumbs,
     AssetSingle,
-    TxsList,
-    DelegationsList,
-    OriginationsList,
-    EndorsementsList,
-    BakerRewardsList,
-    BakerBakingList,
-    BakerEndorsingList,
-    BakerBondsList,
+    AssetTabTxs,
+    AssetTabHolders,
+    AssetTabOther,
   },
   computed: {
     hash() {

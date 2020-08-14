@@ -54,7 +54,8 @@
     "origination": "源头| 源头",
     "activation": "激活 | 激活",
     "doubleBaking": "双重创建区块",
-    "doubleEndorsement": "双重背书| 双重背书"
+    "doubleEndorsement": "双重背书| 双重背书",
+    "holder": "Holder | Holders"
   },
   "listTypes": {
     "txsList": "交易列表",
@@ -79,7 +80,8 @@
     "nonVotersList": "投票弃权者列表",
     "rewardsList": "报酬列表",
     "topAccountsList": "高级账户列表",
-    "assetsList": "Assets list"
+    "assetsList": "Assets list",
+    "holdersList": "Holders list"
   },
   "pageTypes": {
     "txsPage": "交易页面",
@@ -115,7 +117,8 @@
     "accInfo": "账户信息",
     "generalInfo": "总信息",
     "voteInfo": "选举信息",
-    "contractInfo": "合同信息"
+    "contractInfo": "合同信息",
+    "assetInfo": "Asset information"
   },
   "hashTypes": {
     "hash": "哈希函数",

@@ -54,7 +54,8 @@
 		"origination": "Создание | Создания",
 		"activation": "Активация | Активации",
 		"doubleBaking": "Двойной бейкинг",
-		"doubleEndorsement": "Двойное заверение | Двойные заверения"
+		"doubleEndorsement": "Двойное заверение | Двойные заверения",
+		"holder": "Holder | Holders"
 	},
 	"listTypes": {
 		"txsList": "Список транзакций",
@@ -79,7 +80,8 @@
 		"nonVotersList": "Список неголосующих",
 		"rewardsList": "Список вознаграждений",
 		"topAccountsList": "Список топ аккаунтов",
-		"assetsList": "Assets list"
+		"assetsList": "Assets list",
+		"holdersList": "Holders list"
 	},
 	"pageTypes": {
 		"txsPage": "Страница транзакций",
@@ -115,7 +117,8 @@
 		"accInfo": "Информация об аккаунте",
 		"generalInfo": "Общая информация",
 		"voteInfo": "Информация о голосе",
-		"contractInfo": "Информация о контракте"
+		"contractInfo": "Информация о контракте",
+		"assetInfo": "Asset information"
 	},
 	"hashTypes": {
 		"hash": "Хеш",

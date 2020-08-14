@@ -54,7 +54,8 @@
     "origination": "Origination | Originations",
     "activation": "Activation | Activations",
     "doubleBaking": "Double-baking",
-    "doubleEndorsement": "Double-endorsement | Double-endorsements"
+    "doubleEndorsement": "Double-endorsement | Double-endorsements",
+    "holder": "Holder | Holders"
   },
   "listTypes": {
     "txsList": "Transactions list",
@@ -79,7 +80,8 @@
     "nonVotersList": "Non-voters list",
     "rewardsList": "Rewards list",
     "topAccountsList": "Top accounts list",
-    "assetsList": "Assets list"
+    "assetsList": "Assets list",
+    "holdersList": "Holders list"
   },
   "pageTypes": {
     "txsPage": "Transactions page",
@@ -115,7 +117,8 @@
     "accInfo": "Account information",
     "generalInfo": "General information",
     "voteInfo": "Vote information",
-    "contractInfo": "Contact information"
+    "contractInfo": "Contact information",
+    "assetInfo": "Asset information"
   },
   "hashTypes": {
     "hash": "Hash",
