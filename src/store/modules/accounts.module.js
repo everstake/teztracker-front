@@ -57,7 +57,7 @@ export const mutations = {
     state.counts.contracts = data.count;
   },
   [SET_ASSETS](state, data) {
-    state.assets = data.data.map((assets, index) => ({ ...assets, id: index })).reverse();
+    state.assets = data.data.map((assets, index) => ({ ...assets, id: index + 1 }));
 
     state.counts.assets = data.count;
   }

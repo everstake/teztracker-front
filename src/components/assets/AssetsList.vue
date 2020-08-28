@@ -37,7 +37,7 @@
         <span v-else>----</span>
       </template>
       <template slot="balance" slot-scope="row">
-        <span>{{ row.item.balance | tezos }}</span>
+        <span>{{ row.item.balance | tezos(getAssetCurrency(row.item.name)) }}</span>
       </template>
       <template slot="created_at" slot-scope="row">
         <span>{{ row.item.created_at | timeformat(dateFormat) }}</span>
@@ -99,5 +99,22 @@ export default {
       dateFormat: state => state.dateFormat
     })
   },
+  methods: {
+    getAssetCurrency(asset) {
+      if (!asset) return 'XTZ';
+
+      const assets = [
+        { name: 'tzBTC', currency: 'tzBTC' },
+        { name: 'Staker DAO', currency: 'STKR' },
+        { name: 'USDtz', currency: 'USDtz' },
+      ];
+
+      const findedAsset = assets.find(({ name, currency }) => {
+        if (asset === name) return currency;
+      });
+
+      return findedAsset.currency;
+    }
+  }
 };
 </script>

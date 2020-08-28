@@ -51,10 +51,10 @@
         </b-link>
       </template>
       <template slot="amount" slot-scope="row">
-        {{ row.item.amount | tezos }}
+        {{ row.item.amount | tezos(currency) }}
       </template>
       <template slot="fee" slot-scope="row">
-        {{ row.item.fee | tezos }}
+        {{ row.item.fee | tezos(currency) }}
       </template>
     </b-table>
     
@@ -95,7 +95,8 @@
       showPerPageFilter: {
         type: Boolean,
         default: true
-      }
+      },
+      currency: String,
     },
     data() {
       return {

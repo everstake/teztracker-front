@@ -44,7 +44,7 @@
     "type": "类型",
     "assets": "Assets",
     "name": "Name",
-    "ordinalNumber": "Ordinal number",
+    "ordinalNumber": "#",
     "contractName": "Contract name"
   },
   "opTypes": {

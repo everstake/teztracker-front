@@ -7,7 +7,7 @@
     <template #content>
       <section>
         <b-container fluid>
-          <AssetSingle :hash="hash" />
+          <AssetSingle @onCurrencyChange="handleCurrencyChange" :hash="hash" />
         </b-container>
       </section>
 
@@ -29,7 +29,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <AssetTabTxs :account="hash" />
+                      <AssetTabTxs :currency="currency" :account="hash" />
                     </b-card-body>
                   </b-tab>
                   <b-tab :title="$tc('opTypes.holder', 2)" active>
@@ -44,7 +44,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <AssetTabHolders :account="hash" />
+                      <AssetTabHolders :currency="currency" :account="hash" />
                     </b-card-body>
                   </b-tab>
                   <b-tab :title="$tc('listTypes.otherOpsList', 2)" active>
@@ -59,7 +59,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <AssetTabOther :account="hash" />
+                      <AssetTabOther :currency="currency" :account="hash" />
                     </b-card-body>
                   </b-tab>
                 </b-tabs>
@@ -90,6 +90,11 @@ export default {
     AssetTabHolders,
     AssetTabOther,
   },
+  data() {
+    return {
+      currency: 'XTZ'
+    };
+  },
   computed: {
     hash() {
       return this.$route.params.id;
@@ -100,6 +105,11 @@ export default {
         { toRouteName: "assets", text: this.$t("pageTypes.assetsPage") },
         { toRouteName: "asset", text: this.hash }
       ];
+    }
+  },
+  methods: {
+    handleCurrencyChange(currency) {
+      this.currency = currency;
     }
   }
 };

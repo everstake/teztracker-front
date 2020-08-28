@@ -69,7 +69,7 @@
                     {{ $t("common.balance") }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
-                    {{ account.balance | tezos }}
+                    {{ account.balance | tezos(getAssetCurrency(account.name)) }}
                   </b-col>
                 </b-row>
               </b-col>
@@ -147,6 +147,23 @@ export default {
       } catch (err) {
         selection.removeAllRanges();
       }
+    },
+    getAssetCurrency(asset) {
+      if (!asset) return 'XTZ';
+
+      const assets = [
+        { name: 'tzBTC', currency: 'tzBTC' },
+        { name: 'Staker DAO', currency: 'STKR' },
+        { name: 'USDtz', currency: 'USDtz' },
+      ];
+
+      const findedAsset = assets.find(({ name, currency }) => {
+        if (asset === name) return currency;
+      });
+
+      this.$emit('onCurrencyChange', findedAsset.currency);
+
+      return findedAsset.currency;
     }
   }
 };

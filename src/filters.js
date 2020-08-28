@@ -32,15 +32,13 @@ Vue.filter("longhash", function(hash, length) {
   return hash.slice(0, l) + "...";
 });
 
-Vue.filter("tezos", function(amount) {
+Vue.filter("tezos", function(amount, currency = 'XTZ') {
   if (amount > 0) {
-    return (
-      numeral(amount / Vue.prototype.$constants.XTZ).format("0,0[.]000000") +
-      " XTZ"
-    );
+    const formattedAmount = numeral(amount / Vue.prototype.$constants.XTZ).format("0,0[.]000000");
+    return `${formattedAmount} ${currency}`;
   }
-  return "0 XTZ";
-  //return amount + "ꜩ";
+
+  return `0 ${currency}`;
 });
 
 Vue.filter("tezosToFixed", function(amount) {
