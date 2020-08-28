@@ -54,7 +54,7 @@
         {{ row.item.amount | tezos(currency) }}
       </template>
       <template slot="fee" slot-scope="row">
-        {{ row.item.fee | tezos(currency) }}
+        {{ row.item.fee | tezos }}
       </template>
     </b-table>
     
