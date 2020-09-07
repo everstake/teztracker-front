@@ -45,7 +45,7 @@
 		"assets": "Assets",
 		"name": "Name",
 		"ordinalNumber": "#",
-		"contractName": "Contract name"
+		"contractName": "Название контракта"
 	},
 	"opTypes": {
 		"tx": "Транзакция | Транзакции",

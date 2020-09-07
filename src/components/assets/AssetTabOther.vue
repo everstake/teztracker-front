@@ -105,7 +105,7 @@
         fields: [
           {
             key: "type",
-            label: "Type",
+            label: this.$t('common.type'),
           },
           {
             key: "from",
