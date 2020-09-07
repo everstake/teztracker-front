@@ -160,7 +160,7 @@ export default {
         return 'rewards-list-row';
       }
 
-      let classes = ['rewards-list-row'];
+      let classes = ['rewards-list-row', 'bonds-list-row'];
 
       if (typeof item === "object") {
         const { status } = item;
@@ -264,5 +264,8 @@ export default {
 			background-color: rgba(48, 146, 130, .4);
 		}
 	}
-	
+
+  .bonds-list-row {
+    cursor: text;
+  }
 </style>
