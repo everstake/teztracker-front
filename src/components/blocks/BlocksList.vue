@@ -9,7 +9,7 @@
       :items="blocks"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="perPage"
+      :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
     >
@@ -45,7 +45,8 @@
       </template>
     </b-table>
 
-    <PaginationWithCustomAction
+    <Pagination
+      @change="$_handleCurrentPageChange"
       :total-rows="Number(this.count.blocks)"
       :per-page="perPage"
     />
@@ -53,25 +54,28 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+  import {mapMutations, mapState} from 'vuex';
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import setPerPage from "@/mixins/setPerPage";
+import fetchListMixin from "@/mixins/fetchListMixin";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 
-import withCustomAction from "../partials/withCustomAction";
-const PaginationWithCustomAction = withCustomAction(
-  Pagination,
-  "blocks",
-  "GET_BLOCKS"
-);
+// import withCustomAction from "../partials/withCustomAction";
+  import {SET_BLOCK} from '@/store/mutations.types'
+// const PaginationWithCustomAction = withCustomAction(
+//   Pagination,
+//   "blocks",
+//   "GET_BLOCKS"
+// );
 
 export default {
   name: "BlocksList",
   components: {
     PerPageSelect,
-    PaginationWithCustomAction
+    Pagination
   },
-  mixins: [setPerPage],
+  mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
   props: {
     isTableComplete: {
       type: Boolean,
@@ -84,7 +88,6 @@ export default {
   },
   data() {
     return {
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
         { key: "level", label: this.$t("common.blockId") },
         { key: "timestamp", label: this.$t("common.timestamp") },
@@ -123,6 +126,17 @@ export default {
       count: state => state.blocks.counts,
       dateFormat: state => state.app.dateFormat
     })
+  },
+  methods: {
+    ...mapMutations("blocks", [SET_BLOCK]),
+    async reload(page = 1) {
+      const props = {
+        page,
+        limit: this.perPage
+      };
+      const data = await this.$api.getBlocks(props);
+      this[SET_BLOCK](data);
+    }
   }
 };
 </script>

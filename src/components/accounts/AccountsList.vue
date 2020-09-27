@@ -9,7 +9,7 @@
       :items="accounts"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="perPage"
+      :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
     >
@@ -45,7 +45,8 @@
     </b-table>
 
     <div class="pagination-block">
-      <PaginationWithCustomAction
+      <Pagination
+        @change="$_handleCurrentPageChange"
         :total-rows="count.accounts"
         :per-page="perPage"
       />
@@ -53,28 +54,30 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+  import {mapMutations, mapState} from 'vuex';
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import setPerPage from "@/mixins/setPerPage";
+import fetchListMixin from "@/mixins/fetchListMixin";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 
-import withCustomAction from "../partials/withCustomAction";
-const PaginationWithCustomAction = withCustomAction(
-  Pagination,
-  "accounts",
-  "GET_ACCOUNTS"
-);
+// import withCustomAction from "../partials/withCustomAction";
+  import {SET_ACCOUNTS} from '@/store/mutations.types'
+// const PaginationWithCustomAction = withCustomAction(
+//   Pagination,
+//   "accounts",
+//   "GET_ACCOUNTS"
+// );
 
 export default {
   name: "AccountsList",
   components: {
     PerPageSelect,
-    PaginationWithCustomAction
+    Pagination
   },
-  mixins: [setPerPage],
+  mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
   data() {
     return {
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
         { key: "accountId", label: this.$tc("common.acc", 1) },
         {
@@ -96,6 +99,17 @@ export default {
     ...mapState("app", {
       dateFormat: state => state.dateFormat
     })
+  },
+  methods: {
+    ...mapMutations("accounts", [SET_ACCOUNTS]),
+    async reload(page = 1) {
+      const props = {
+        page,
+        limit: this.perPage
+      };
+      const data = await this.$api.getAccounts(props);
+      this[SET_ACCOUNTS](data);
+    }
   }
 };
 </script>

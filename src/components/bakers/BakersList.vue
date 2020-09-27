@@ -9,7 +9,7 @@
       :items="bakersFormatted"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="perPage"
+      :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
     >
@@ -35,8 +35,8 @@
       </template>
     </b-table>
 
-    <PaginationWithCustomAction
-      v-model="currentPage"
+    <Pagination
+      @change="$_handleCurrentPageChange"
       :total-rows="count.bakers"
       :per-page="perPage"
     />
@@ -44,28 +44,23 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapMutations, mapState } from 'vuex';
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import setPerPage from "@/mixins/setPerPage";
-
-import withCustomAction from "../partials/withCustomAction";
-const PaginationWithCustomAction = withCustomAction(
-  Pagination,
-  "accounts",
-  "GET_BAKERS"
-);
+import fetchListMixin from "@/mixins/fetchListMixin";
+import { SET_BAKERS } from "@/store/mutations.types";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 
 export default {
   name: "BakersList",
   components: {
     PerPageSelect,
-    PaginationWithCustomAction
+    Pagination
   },
-  mixins: [setPerPage],
+  mixins: [fetchListMixin, handleCurrentPageChange, setPerPage],
   data() {
     return {
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       // The key property must coincide with the corresponding keys in the data items
       fields: [
         { key: "accountId", label: this.$tc("common.baker", 1), disableClear: true },
@@ -105,10 +100,20 @@ export default {
     }),
     bakersFormatted() {
       if (!this.bakers || this.bakers.length === 0) return [];
-
       return this.bakers.map(bakerObj => {
         return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
       });
+    }
+  },
+  methods: {
+    ...mapMutations("accounts", [SET_BAKERS]),
+    async reload(page = 1) {
+      const props = {
+        page,
+        limit: this.perPage
+      };
+      const data = await this.$api.getBakers(props);
+      this[SET_BAKERS](data);
     }
   }
 };
