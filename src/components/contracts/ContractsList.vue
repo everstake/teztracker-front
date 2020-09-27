@@ -34,7 +34,9 @@
           v-if="row.item.delegateValue"
           :to="{ name: 'account', params: { account: row.item.delegateValue } }"
         >
-          <span>{{ row.item.delegateName || row.item.delegateValue | longhash(35) }}</span>
+          <span>{{
+            row.item.delegateName || row.item.delegateValue | longhash(35)
+          }}</span>
         </b-link>
         <span v-else>----</span>
       </template>
@@ -55,20 +57,13 @@
 </template>
 
 <script>
-  import {mapMutations, mapState} from 'vuex';
+import { mapMutations, mapState } from "vuex";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import setPerPage from "@/mixins/setPerPage";
 import fetchListMixin from "@/mixins/fetchListMixin";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-
-// import withCustomAction from "../partials/withCustomAction";
-  import {SET_CONTRACTS} from '@/store/mutations.types'
-// const PaginationWithCustomAction = withCustomAction(
-//   Pagination,
-//   "accounts",
-//   "GET_CONTRACTS",
-// );
+import { SET_CONTRACTS } from "@/store/mutations.types";
 
 export default {
   name: "ContractsList",
@@ -77,7 +72,7 @@ export default {
     Pagination
   },
   mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
-  props: ['account'],
+  props: ["account"],
   data() {
     return {
       fields: [

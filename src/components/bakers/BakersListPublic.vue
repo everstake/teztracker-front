@@ -21,7 +21,8 @@
       </template>
       <template slot="stakingCapacity" slot-scope="row">
         {{
-          ((row.item.stakingCapacity - row.item.stakingBalance) / $constants.XTZ)
+          ((row.item.stakingCapacity - row.item.stakingBalance) /
+            $constants.XTZ)
             | tezosCapacity
         }}
       </template>
@@ -55,26 +56,19 @@
 </template>
 
 <script>
-  import {mapMutations, mapState} from 'vuex';
+import { mapMutations, mapState } from "vuex";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import setPerPage from "@/mixins/setPerPage";
 import fetchListMixin from "@/mixins/fetchListMixin";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-
-// import withCustomAction from "../partials/withCustomAction";
-  import {SET_PUBLIC_BAKERS} from '@/store/mutations.types'
-// const PaginationWithCustomAction = withCustomAction(
-//   Pagination,
-//   "accounts",
-//   "GET_PUBLIC_BAKERS"
-// );
+import { SET_PUBLIC_BAKERS } from "@/store/mutations.types";
 
 export default {
   name: "BakersListPublic",
   components: {
     PerPageSelect,
-    Pagination,
+    Pagination
   },
   mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
   data() {

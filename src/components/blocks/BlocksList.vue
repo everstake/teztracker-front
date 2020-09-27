@@ -54,20 +54,13 @@
 </template>
 
 <script>
-  import {mapMutations, mapState} from 'vuex';
+import { mapMutations, mapState } from "vuex";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import setPerPage from "@/mixins/setPerPage";
 import fetchListMixin from "@/mixins/fetchListMixin";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-
-// import withCustomAction from "../partials/withCustomAction";
-  import {SET_BLOCK} from '@/store/mutations.types'
-// const PaginationWithCustomAction = withCustomAction(
-//   Pagination,
-//   "blocks",
-//   "GET_BLOCKS"
-// );
+import { SET_BLOCK } from "@/store/mutations.types";
 
 export default {
   name: "BlocksList",
