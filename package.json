@@ -23,7 +23,7 @@
     "bootstrap-vue": "^2.0.0-rc.27",
     "chart.js": "^2.9.3",
     "core-js": "^2.6.5",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.24.0",
     "node-sass": "^4.13.1",
     "normalize.css": "^8.0.1",
