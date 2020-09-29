@@ -59,72 +59,72 @@
   </div>
 </template>
 <script>
-import { mapState, mapMutations } from "vuex";
-import { SET_ORIGINATIONS_COUNT } from "@/store/mutations.types";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-import setPerPage from "@/mixins/setPerPage";
-import defineRowClass from "@/mixins/defineRowClass";
+  import { mapState, mapMutations } from 'vuex';
+  import { SET_ORIGINATIONS_COUNT } from '@/store/mutations.types';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import setPerPage from '@/mixins/setPerPage';
+  import defineRowClass from '@/mixins/defineRowClass';
 
-export default {
-  name: "OriginationsList",
-  components: {
-    PerPageSelect,
-    Pagination
-  },
-  mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
-  props: ["account"],
-  data() {
-    return {
-      originations: [],
-      count: 0,
-      fields: [
-        { key: "level", label: this.$t("common.blockId") },
-        { key: "txhash", label: this.$t("hashTypes.originationHash") },
-        { key: "from", label: this.$t("common.from") },
-        { key: "to", label: this.$t("common.to") },
-        { key: "amount", label: this.$t("common.amount") },
-        { key: "timestamp", label: this.$t("common.timestamp") },
-      ]
-    };
-  },
-  computed: {
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.reload(value);
-      }
+  export default {
+    name: 'OriginationsList',
+    components: {
+      PerPageSelect,
+      Pagination,
     },
-    async perPage() {
-      await this.reload();
-    }
-  },
-  async created() {
-    await this.reload();
-  },
-  methods: {
-    ...mapMutations('operations', [SET_ORIGINATIONS_COUNT]),
-    async reload(page = 1) {
-      const props = {
-        page,
-        limit: this.perPage
+    mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
+    props: ['account'],
+    data() {
+      return {
+        originations: [],
+        count: 0,
+        fields: [
+          { key: 'level', label: this.$t('common.blockId') },
+          { key: 'txhash', label: this.$t('hashTypes.originationHash') },
+          { key: 'from', label: this.$t('common.from') },
+          { key: 'to', label: this.$t('common.to') },
+          { key: 'amount', label: this.$t('common.amount') },
+          { key: 'timestamp', label: this.$t('common.timestamp') },
+        ],
       };
-      if (this.block) {
-        props.block_id = this.block.hash;
-      }
-      if (this.account) {
-        props.account_id = this.account;
-      }
-      const data = await this.$api.getOriginations(props);
-      this.originations = data.data;
-      this.count = data.count;
-      this[SET_ORIGINATIONS_COUNT](this.count);
-    }
-  }
-};
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+    watch: {
+      currentPage: {
+        async handler(value) {
+          await this.reload(value);
+        },
+      },
+      async perPage() {
+        await this.reload();
+      },
+    },
+    async created() {
+      await this.reload();
+    },
+    methods: {
+      ...mapMutations('operations', [SET_ORIGINATIONS_COUNT]),
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        if (this.block) {
+          props.block_id = this.block.hash;
+        }
+        if (this.account) {
+          props.account_id = this.account;
+        }
+        const data = await this.$api.getOriginations(props);
+        this.originations = data.data;
+        this.count = data.count;
+        this[SET_ORIGINATIONS_COUNT](this.count);
+      },
+    },
+  };
 </script>

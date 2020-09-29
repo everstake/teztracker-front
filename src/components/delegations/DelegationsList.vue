@@ -68,78 +68,78 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-import { SET_DELEGATIONS_COUNT } from "@/store/mutations.types";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-import setPerPage from "@/mixins/setPerPage";
-import defineRowClass from "@/mixins/defineRowClass";
+  import { mapState, mapMutations } from 'vuex';
+  import { SET_DELEGATIONS_COUNT } from '@/store/mutations.types';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import setPerPage from '@/mixins/setPerPage';
+  import defineRowClass from '@/mixins/defineRowClass';
 
-export default {
-  name: "DelegationsList",
-  components: {
-    PerPageSelect,
-    Pagination
-  },
-  props: ["account"],
-  mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
-  data() {
-    return {
-      delegations: [],
-      count: 0,
-      fields: [
-        { key: "level", label: this.$t("common.blockId") },
-        { key: "txhash", label: this.$t("hashTypes.delegationHash") },
-        { key: "delegationAmount", label: this.$t("common.amountDelegated") },
-        { key: "from", label: this.$t("common.from") },
-        { key: "to", label: this.$t("common.to") },
-        { key: "fee", label: this.$t("common.fee") },
-        { key: "timestamp", label: this.$t("common.timestamp") },
-      ]
-    };
-  },
-  computed: {
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.reload(value);
-      }
+  export default {
+    name: 'DelegationsList',
+    components: {
+      PerPageSelect,
+      Pagination,
     },
-    async perPage() {
-      await this.reload();
-    }
-  },
-  async created() {
-    await this.reload();
-  },
-  methods: {
-    ...mapMutations('operations', [SET_DELEGATIONS_COUNT]),
-    async reload(page = 1) {
-      const props = {
-        page,
-        limit: this.perPage
+    props: ['account'],
+    mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
+    data() {
+      return {
+        delegations: [],
+        count: 0,
+        fields: [
+          { key: 'level', label: this.$t('common.blockId') },
+          { key: 'txhash', label: this.$t('hashTypes.delegationHash') },
+          { key: 'delegationAmount', label: this.$t('common.amountDelegated') },
+          { key: 'from', label: this.$t('common.from') },
+          { key: 'to', label: this.$t('common.to') },
+          { key: 'fee', label: this.$t('common.fee') },
+          { key: 'timestamp', label: this.$t('common.timestamp') },
+        ],
       };
-      if (this.block) {
-        props.block_id = this.block.hash;
-      }
-      if (this.account) {
-        props.account_id = this.account;
-      }
-      const data = await this.$api.getDelegations(props);
-      if (data.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.replace({
-          name: data.status
-        });
-      }
-      this.delegations = data.data;
-      this.count = data.count;
-      this[SET_DELEGATIONS_COUNT](this.count);
-    }
-  }
-};
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+    watch: {
+      currentPage: {
+        async handler(value) {
+          await this.reload(value);
+        },
+      },
+      async perPage() {
+        await this.reload();
+      },
+    },
+    async created() {
+      await this.reload();
+    },
+    methods: {
+      ...mapMutations('operations', [SET_DELEGATIONS_COUNT]),
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        if (this.block) {
+          props.block_id = this.block.hash;
+        }
+        if (this.account) {
+          props.account_id = this.account;
+        }
+        const data = await this.$api.getDelegations(props);
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+        this.delegations = data.data;
+        this.count = data.count;
+        this[SET_DELEGATIONS_COUNT](this.count);
+      },
+    },
+  };
 </script>

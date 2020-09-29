@@ -35,9 +35,12 @@
           class="baker"
           :to="{
             name: 'baker',
-            params: { baker: row.item.doubleOperationDetails.evidence_baker }
+            params: { baker: row.item.doubleOperationDetails.evidence_baker },
           }"
-          >{{ row.item.doubleOperationDetails.evidence_baker_name || row.item.doubleOperationDetails.evidence_baker | longhash(20) }}</router-link
+          >{{
+            row.item.doubleOperationDetails.evidence_baker_name ||
+              row.item.doubleOperationDetails.evidence_baker | longhash(20)
+          }}</router-link
         >
       </template>
       <template slot="baker_rewards" slot-scope="row">
@@ -48,16 +51,19 @@
           class="baker"
           :to="{
             name: 'baker',
-            params: { baker: row.item.doubleOperationDetails.offender }
+            params: { baker: row.item.doubleOperationDetails.offender },
           }"
-          >{{ row.item.doubleOperationDetails.offender_name || row.item.doubleOperationDetails.offender | longhash(20) }}</router-link
+          >{{
+            row.item.doubleOperationDetails.offender_name ||
+              row.item.doubleOperationDetails.offender | longhash(20)
+          }}</router-link
         >
       </template>
       <template slot="denounced_level" slot-scope="row">
         <b-link
           :to="{
             name: 'block',
-            params: { level: row.item.doubleOperationDetails.denounced_level }
+            params: { level: row.item.doubleOperationDetails.denounced_level },
           }"
         >
           {{ row.item.doubleOperationDetails.denounced_level | formatInteger }}
@@ -80,74 +86,80 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
-import { SET_DOUBLE_BAKING_COUNT } from "@/store/mutations.types";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-import setPerPage from "@/mixins/setPerPage";
+  import { mapMutations, mapState } from 'vuex';
+  import { SET_DOUBLE_BAKING_COUNT } from '@/store/mutations.types';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import setPerPage from '@/mixins/setPerPage';
 
-export default {
-  name: "DoubleBakingList",
-  components: {
-    PerPageSelect,
-    Pagination
-  },
-  mixins: [handleCurrentPageChange, setPerPage],
-  props: ["account"],
-  data() {
-    return {
-      double_baking: [],
-      count: 0,
-      fields: [
-        { key: "level", label: this.$t("common.blockId") },
-        { key: "txhash", label: this.$t("hashTypes.opHash") },
-        { key: "baker", label: this.$t("dblBakingList.accuser") },
-        { key: "baker_rewards", label: this.$t("dblBakingList.bakerRewards") },
-        { key: "offender", label: this.$t("dblBakingList.offender") },
-        { key: "denounced_level", label: this.$t("common.denouncedLvl") },
-        { key: "lost_deposits", label: this.$t("dblBakingList.lostDeposits") },
-        { key: "lost_rewards", label: this.$t("dblBakingList.lostRewards") },
-        { key: "timestamp", label: this.$t("common.timestamp") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.reload(value);
-      }
+  export default {
+    name: 'DoubleBakingList',
+    components: {
+      PerPageSelect,
+      Pagination,
     },
-    async perPage() {
-      await this.reload();
-    }
-  },
-  async created() {
-    await this.reload();
-  },
-  methods: {
-    ...mapMutations('operations', [SET_DOUBLE_BAKING_COUNT]),
-    async reload(page = 1) {
-      const props = {
-        page,
-        limit: this.perPage
+    mixins: [handleCurrentPageChange, setPerPage],
+    props: ['account'],
+    data() {
+      return {
+        double_baking: [],
+        count: 0,
+        fields: [
+          { key: 'level', label: this.$t('common.blockId') },
+          { key: 'txhash', label: this.$t('hashTypes.opHash') },
+          { key: 'baker', label: this.$t('dblBakingList.accuser') },
+          {
+            key: 'baker_rewards',
+            label: this.$t('dblBakingList.bakerRewards'),
+          },
+          { key: 'offender', label: this.$t('dblBakingList.offender') },
+          { key: 'denounced_level', label: this.$t('common.denouncedLvl') },
+          {
+            key: 'lost_deposits',
+            label: this.$t('dblBakingList.lostDeposits'),
+          },
+          { key: 'lost_rewards', label: this.$t('dblBakingList.lostRewards') },
+          { key: 'timestamp', label: this.$t('common.timestamp') },
+        ],
       };
-      if (this.block) {
-        props.block_id = this.block.hash;
-      }
-      if (this.account) {
-        props.account_id = this.account;
-      }
-      const data = await this.$api.getDoubleBaking(props);
-      this.double_baking = data.data;
-      this.count = data.count;
-      this[SET_DOUBLE_BAKING_COUNT](this.count);
-    }
-  }
-};
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+    watch: {
+      currentPage: {
+        async handler(value) {
+          await this.reload(value);
+        },
+      },
+      async perPage() {
+        await this.reload();
+      },
+    },
+    async created() {
+      await this.reload();
+    },
+    methods: {
+      ...mapMutations('operations', [SET_DOUBLE_BAKING_COUNT]),
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        if (this.block) {
+          props.block_id = this.block.hash;
+        }
+        if (this.account) {
+          props.account_id = this.account;
+        }
+        const data = await this.$api.getDoubleBaking(props);
+        this.double_baking = data.data;
+        this.count = data.count;
+        this[SET_DOUBLE_BAKING_COUNT](this.count);
+      },
+    },
+  };
 </script>

@@ -53,49 +53,49 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import setPerPage from "@/mixins/setPerPage";
+  import { mapState } from 'vuex';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import setPerPage from '@/mixins/setPerPage';
 
-import withCustomAction from "../partials/withCustomAction";
-const PaginationWithCustomAction = withCustomAction(
-  Pagination,
-  "accounts",
-  "GET_ACCOUNTS"
-);
+  import withCustomAction from '../partials/withCustomAction';
+  const PaginationWithCustomAction = withCustomAction(
+    Pagination,
+    'accounts',
+    'GET_ACCOUNTS',
+  );
 
-export default {
-  name: "AccountsList",
-  components: {
-    PerPageSelect,
-    PaginationWithCustomAction
-  },
-  mixins: [setPerPage],
-  data() {
-    return {
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      fields: [
-        { key: "accountId", label: this.$tc("common.acc", 1) },
-        {
-          key: "balance",
-          label: this.$t("common.balance"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        { key: "delegateValue", label: this.$t("common.delegate") },
-        { key: "createdAt", label: this.$t("accSingle.created") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState("accounts", {
-      accounts: state => state.accounts,
-      count: state => state.counts
-    }),
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
-  }
-};
+  export default {
+    name: 'AccountsList',
+    components: {
+      PerPageSelect,
+      PaginationWithCustomAction,
+    },
+    mixins: [setPerPage],
+    data() {
+      return {
+        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+        fields: [
+          { key: 'accountId', label: this.$tc('common.acc', 1) },
+          {
+            key: 'balance',
+            label: this.$t('common.balance'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          { key: 'delegateValue', label: this.$t('common.delegate') },
+          { key: 'createdAt', label: this.$t('accSingle.created') },
+        ],
+      };
+    },
+    computed: {
+      ...mapState('accounts', {
+        accounts: (state) => state.accounts,
+        count: (state) => state.counts,
+      }),
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+  };
 </script>

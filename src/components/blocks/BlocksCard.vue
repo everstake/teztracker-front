@@ -3,14 +3,14 @@
     <CardHeader>
       <template v-slot:left-content class="text">
         <h4 class="tz-title--bold">
-          {{ $t("listTypes.blocksList") }}
+          {{ $t('listTypes.blocksList') }}
         </h4>
         <!--        <Dropdown dropdownTitle="This year" />-->
       </template>
       <template v-slot:right-content class="text">
         <Counter show-line :count="count" />
         <router-link class="link fs-14" :to="{ name: 'blocks' }">
-          {{ $t("common.viewAll") }}
+          {{ $t('common.viewAll') }}
         </router-link>
       </template>
     </CardHeader>
@@ -25,25 +25,25 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import CardHeader from "../partials/CardHeader";
-// import Dropdown from "../partials/Dropdown";
-import Counter from "../partials/Counter";
-import BlocksList from "@/components/blocks/BlocksList";
+  import { mapState } from 'vuex';
+  import CardHeader from '../partials/CardHeader';
+  // import Dropdown from "../partials/Dropdown";
+  import Counter from '../partials/Counter';
+  import BlocksList from '@/components/blocks/BlocksList';
 
-export default {
-  name: "BlocksCard",
-  components: {
-    CardHeader,
-    // Dropdown,
-    Counter,
-    BlocksList
-  },
-  props: ["showPerPageFilter"],
-  computed: {
-    ...mapState("blocks", {
-      count: state => state.counts.blocks
-    })
-  }
-};
+  export default {
+    name: 'BlocksCard',
+    components: {
+      CardHeader,
+      // Dropdown,
+      Counter,
+      BlocksList,
+    },
+    props: ['showPerPageFilter'],
+    computed: {
+      ...mapState('blocks', {
+        count: (state) => state.counts.blocks,
+      }),
+    },
+  };
 </script>

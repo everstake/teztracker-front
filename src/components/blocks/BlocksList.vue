@@ -53,76 +53,76 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import setPerPage from "@/mixins/setPerPage";
+  import { mapState } from 'vuex';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import setPerPage from '@/mixins/setPerPage';
 
-import withCustomAction from "../partials/withCustomAction";
-const PaginationWithCustomAction = withCustomAction(
-  Pagination,
-  "blocks",
-  "GET_BLOCKS"
-);
+  import withCustomAction from '../partials/withCustomAction';
+  const PaginationWithCustomAction = withCustomAction(
+    Pagination,
+    'blocks',
+    'GET_BLOCKS',
+  );
 
-export default {
-  name: "BlocksList",
-  components: {
-    PerPageSelect,
-    PaginationWithCustomAction
-  },
-  mixins: [setPerPage],
-  props: {
-    isTableComplete: {
-      type: Boolean,
-      default: true
+  export default {
+    name: 'BlocksList',
+    components: {
+      PerPageSelect,
+      PaginationWithCustomAction,
     },
-    showPerPageFilter: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data() {
-    return {
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      fields: [
-        { key: "level", label: this.$t("common.blockId") },
-        { key: "timestamp", label: this.$t("common.timestamp") },
-        { key: "baker", label: this.$tc("common.baker", 1) },
-        {
-          key: "priority",
-          label: this.$t("common.priority"),
-          class: !this.isTableComplete ? "d-none" : ""
-        },
-        {
-          key: "number_of_operations",
-          label: this.$t("numberOf.#OfOperations"),
-          class: !this.isTableComplete ? "d-none" : ""
-        },
-        {
-          key: "volume",
-          label: this.$t("blocksList.volume"),
-          class: !this.isTableComplete ? "d-none" : ""
-        },
-        {
-          key: "fees",
-          label: this.$t("common.fee"),
-          class: !this.isTableComplete ? "d-none" : ""
-        },
-        {
-          key: "endorsements",
-          label: this.$t("numberOf.#OfEndorsements"),
-          class: !this.isTableComplete ? "d-none" : ""
-        }
-      ]
-    };
-  },
-  computed: {
-    ...mapState({
-      blocks: state => state.blocks.blocks,
-      count: state => state.blocks.counts,
-      dateFormat: state => state.app.dateFormat
-    })
-  }
-};
+    mixins: [setPerPage],
+    props: {
+      isTableComplete: {
+        type: Boolean,
+        default: true,
+      },
+      showPerPageFilter: {
+        type: Boolean,
+        default: true,
+      },
+    },
+    data() {
+      return {
+        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+        fields: [
+          { key: 'level', label: this.$t('common.blockId') },
+          { key: 'timestamp', label: this.$t('common.timestamp') },
+          { key: 'baker', label: this.$tc('common.baker', 1) },
+          {
+            key: 'priority',
+            label: this.$t('common.priority'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+          {
+            key: 'number_of_operations',
+            label: this.$t('numberOf.#OfOperations'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+          {
+            key: 'volume',
+            label: this.$t('blocksList.volume'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+          {
+            key: 'fees',
+            label: this.$t('common.fee'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+          {
+            key: 'endorsements',
+            label: this.$t('numberOf.#OfEndorsements'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+        ],
+      };
+    },
+    computed: {
+      ...mapState({
+        blocks: (state) => state.blocks.blocks,
+        count: (state) => state.blocks.counts,
+        dateFormat: (state) => state.app.dateFormat,
+      }),
+    },
+  };
 </script>

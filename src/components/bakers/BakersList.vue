@@ -44,72 +44,80 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import setPerPage from "@/mixins/setPerPage";
+  import { mapState } from 'vuex';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import setPerPage from '@/mixins/setPerPage';
 
-import withCustomAction from "../partials/withCustomAction";
-const PaginationWithCustomAction = withCustomAction(
-  Pagination,
-  "accounts",
-  "GET_BAKERS"
-);
+  import withCustomAction from '../partials/withCustomAction';
+  const PaginationWithCustomAction = withCustomAction(
+    Pagination,
+    'accounts',
+    'GET_BAKERS',
+  );
 
-export default {
-  name: "BakersList",
-  components: {
-    PerPageSelect,
-    PaginationWithCustomAction
-  },
-  mixins: [setPerPage],
-  data() {
-    return {
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      // The key property must coincide with the corresponding keys in the data items
-      fields: [
-        { key: "accountId", label: this.$tc("common.baker", 1), disableClear: true },
-        {
-          key: "blocks",
-          label: this.$tc("common.block", 2),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "endorsements",
-          label: this.$tc("opTypes.endorsement", 2),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "stakingBalance",
-          label: this.$t("common.stakingBal"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "rolls",
-          label: this.$t("common.rolls"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        { key: "bakingSince", label: this.$t("common.bakingSince"), disableClear: true }
-      ]
-    };
-  },
-  computed: {
-    ...mapState({
-      bakers: state => state.accounts.bakers,
-      count: state => state.accounts.counts,
-      dateFormat: state => state.app.dateFormat
-    }),
-    bakersFormatted() {
-      if (!this.bakers || this.bakers.length === 0) return [];
+  export default {
+    name: 'BakersList',
+    components: {
+      PerPageSelect,
+      PaginationWithCustomAction,
+    },
+    mixins: [setPerPage],
+    data() {
+      return {
+        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+        // The key property must coincide with the corresponding keys in the data items
+        fields: [
+          {
+            key: 'accountId',
+            label: this.$tc('common.baker', 1),
+            disableClear: true,
+          },
+          {
+            key: 'blocks',
+            label: this.$tc('common.block', 2),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'endorsements',
+            label: this.$tc('opTypes.endorsement', 2),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'stakingBalance',
+            label: this.$t('common.stakingBal'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'rolls',
+            label: this.$t('common.rolls'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'bakingSince',
+            label: this.$t('common.bakingSince'),
+            disableClear: true,
+          },
+        ],
+      };
+    },
+    computed: {
+      ...mapState({
+        bakers: (state) => state.accounts.bakers,
+        count: (state) => state.accounts.counts,
+        dateFormat: (state) => state.app.dateFormat,
+      }),
+      bakersFormatted() {
+        if (!this.bakers || this.bakers.length === 0) return [];
 
-      return this.bakers.map(bakerObj => {
-        return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
-      });
-    }
-  }
-};
+        return this.bakers.map((bakerObj) => {
+          return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
+        });
+      },
+    },
+  };
 </script>

@@ -9,12 +9,7 @@
         <b-container fluid>
           <AccountSingle :hash="hash">
             <template #chart="props">
-              <h3 class="card__title account__title">
-                <span class="card__title--strong">
-                  {{ $t("accPage.balInThirtyDays") }}
-                </span>
-              </h3>
-              <LineChart :chartData="chartData" :balance="props.balance" class="account-line-chart"></LineChart>
+              <ChartBalanceLast30Days :acc="acc" />
             </template>
           </AccountSingle>
         </b-container>
@@ -31,14 +26,14 @@
                       <div class="break-word">
                         <h3>
                           <span class="text">
-                            {{ $t("listTypes.txsList") }}
+                            {{ $t('listTypes.txsList') }}
                           </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <TxsList @onTransactions="setChartData" :account="hash" />
+                      <TxsList :account="hash" @onTransactions="setChartData" />
                     </b-card-body>
                   </b-tab>
                   <b-tab :title="$tc('opTypes.delegation', 2)">
@@ -46,7 +41,7 @@
                       <div class="break-word">
                         <h3>
                           <span class="text">
-                            {{ $t("listTypes.delegationsList") }}
+                            {{ $t('listTypes.delegationsList') }}
                           </span>
                         </h3>
                       </div>
@@ -61,7 +56,7 @@
                       <div class="break-word">
                         <h3>
                           <span class="text">
-                            {{ $t("listTypes.originationsList") }}
+                            {{ $t('listTypes.originationsList') }}
                           </span>
                         </h3>
                       </div>
@@ -76,14 +71,14 @@
                       <div class="break-word">
                         <h3>
                           <span class="text">
-                            {{ $t("listTypes.otherOpsList") }}
+                            {{ $t('listTypes.otherOpsList') }}
                           </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <OperationsList :account="hash"/>
+                      <OperationsList :account="hash" />
                     </b-card-body>
                   </b-tab>
                 </b-tabs>
@@ -97,77 +92,69 @@
 </template>
 
 <script>
-import PageContentContainer from "../layouts/PageContentContainer";
-import Breadcrumbs from "../components/partials/Breadcrumbs";
-import AccountSingle from "../components/accounts/AccountSingle";
-import TxsList from "../components/transactions/TxsList";
-import DelegationsList from "../components/delegations/DelegationsList";
-import OriginationsList from "../components/originations/OriginationsList";
-import LineChart from "@/components/partials/LineChart";
-import OperationsList from "@/components/operations/OperationsList";
+  import PageContentContainer from '../layouts/PageContentContainer';
+  import Breadcrumbs from '../components/partials/Breadcrumbs';
+  import AccountSingle from '../components/accounts/AccountSingle';
+  import ChartBalanceLast30Days from '@/components/charts/account/ChartBalanceLast30Days';
+  import TxsList from '../components/transactions/TxsList';
+  import DelegationsList from '../components/delegations/DelegationsList';
+  import OriginationsList from '../components/originations/OriginationsList';
+  import OperationsList from '@/components/operations/OperationsList';
 
-export default {
-  name: "Account",
-  components: {
-    PageContentContainer,
-    Breadcrumbs,
-    AccountSingle,
-    TxsList,
-    DelegationsList,
-    OriginationsList,
-    LineChart,
-    OperationsList
-  },
-  props: {
-    accountType: {
-      type: String,
-      default: 'account'
-    }
-  },
-  data() {
-    return {
-      chartData: null
-    }
-  },
-  methods: {
-    async setChartData(acc) {
-      if (acc !== undefined) {
-        const now = new Date();
-        const oneMonthAgo = now.setMonth(now.getMonth() - 1);
-        const balance = await this.$api.getAccountBalance({ account: acc, from: Math.round(oneMonthAgo / 1000), to: Math.round((new Date()).getTime() / 1000) });
-        this.chartData = balance.data;
-        return balance.data;
-      }
-    }
-  },
-  async mounted() {
-    await this.setChartData();
-  },
-  computed: {
-    hash() {
-      return this.$route.params.account;
+  export default {
+    name: 'Account',
+    components: {
+      PageContentContainer,
+      Breadcrumbs,
+      AccountSingle,
+      TxsList,
+      DelegationsList,
+      OriginationsList,
+      OperationsList,
+      ChartBalanceLast30Days,
     },
-    crumbs() {
-      return [
-        { toRouteName: "network", text: this.$t("common.home") },
-        { toRouteName: "accounts", text: this.$t("pageTypes.accsPage") },
-        { toRouteName: "account", text: this.hash }
-      ];
-    }
-  }
-};
+    props: {
+      accountType: {
+        type: String,
+        default: 'account',
+      },
+    },
+    data() {
+      return {
+        chartData: null,
+        acc: '',
+      };
+    },
+    computed: {
+      hash() {
+        return this.$route.params.account;
+      },
+      crumbs() {
+        return [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          { toRouteName: 'accounts', text: this.$t('pageTypes.accsPage') },
+          { toRouteName: 'account', text: this.hash },
+        ];
+      },
+    },
+    methods: {
+      setChartData(acc) {
+        this.acc = acc;
+      },
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-.account {
-  &__title {
-    display: block;
-  }
+  .account {
+    &__title {
+      display: block;
+    }
 
-  &-line-chart {
-    width: 100% !important;
-    height: auto;
-    max-height: 350px;
+    &-line-chart {
+      width: 100% !important;
+      height: auto;
+      max-height: 350px;
+    }
   }
-}
 </style>

@@ -1,4 +1,5 @@
-import Vue from "vue";
+import Vue from 'vue';
+import numeral from 'numeral';
 
 const helpers = {
   isLocalStorageAvailable() {
@@ -11,11 +12,14 @@ const helpers = {
   },
   formatXtz(value) {
     return value / Vue.prototype.$constants.XTZ;
-  }
+  },
+  formatUSD(amount) {
+    return `$${numeral(amount).format('0,0[.][00]')}`;
+  },
 };
 
 Vue.use({
   install() {
     Vue.prototype.$helpers = helpers;
-  }
+  },
 });

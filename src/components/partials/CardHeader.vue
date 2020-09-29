@@ -12,27 +12,27 @@
 </template>
 
 <script>
-export default {
-  name: "CardHeader"
-};
+  export default {
+    name: 'CardHeader',
+  };
 </script>
 
 <style lang="scss" scoped>
-.card-header .card-title {
-  @include for-phone-only {
-    h3,
-    h4 {
-      font-size: 14px;
+  .card-header .card-title {
+    @include for-phone-only {
+      h3,
+      h4 {
+        font-size: 14px;
+      }
     }
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-direction: row;
+    margin-bottom: 0;
   }
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  flex-direction: row;
-  margin-bottom: 0;
-}
 
-.card-title_right {
-  text-align: right;
-}
+  .card-title_right {
+    text-align: right;
+  }
 </style>

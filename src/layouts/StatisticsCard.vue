@@ -6,9 +6,13 @@
           <div class="break-word">
             <h3 id="card-title" class="card__title" @click="copyToClipboard()">
               <span ref="textToCopy" class="text">{{ title }}</span>
-              <span class="icon"><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"/></span>
+              <span class="icon"
+                ><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"
+              /></span>
             </h3>
-            <b-tooltip ref="tooltip" triggers="hover" target="card-title">Copy to clipboard</b-tooltip>
+            <b-tooltip ref="tooltip" triggers="hover" target="card-title"
+              >Copy to clipboard</b-tooltip
+            >
             <div class="subtitle">{{ subtitle }}</div>
           </div>
 
@@ -41,38 +45,38 @@
 </template>
 
 <script>
-export default {
-  name: "StatisticsCard",
-  props: {
-    title: {
-      type: String,
-      default: ""
+  export default {
+    name: 'StatisticsCard',
+    props: {
+      title: {
+        type: String,
+        default: '',
+      },
+      subtitle: {
+        type: String,
+        default: '',
+      },
+      fields: {
+        type: Array,
+        default: () => [],
+      },
     },
-    subtitle: {
-      type: String,
-      default: ""
-    },
-    fields: {
-      type: Array,
-      default: () => []
-    }
-  },
-  methods: {
-    copyToClipboard() {
-      const selection = window.getSelection();
-      const range = window.document.createRange();
-      selection.removeAllRanges();
-      range.selectNode(this.$refs.textToCopy);
-      selection.addRange(range);
-    
-      try {
-        document.execCommand('copy');
-      } catch (err) {
+    methods: {
+      copyToClipboard() {
+        const selection = window.getSelection();
+        const range = window.document.createRange();
         selection.removeAllRanges();
-      }
-    }
-  }
-};
+        range.selectNode(this.$refs.textToCopy);
+        selection.addRange(range);
+
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+          selection.removeAllRanges();
+        }
+      },
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
@@ -101,6 +105,4 @@ export default {
     font-size: 12px;
     color: #309282;
   }
-
- 
 </style>

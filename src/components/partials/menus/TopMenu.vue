@@ -17,107 +17,110 @@
             <b-dropdown-item
               :to="{ name: 'blocks', params: { network: currentNetwork } }"
             >
-              {{ $tc("common.block", 2) }}
+              {{ $tc('common.block', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{ name: 'snapshots', params: { network: currentNetwork } }"
             >
-              {{ $tc("common.snapshot", 2) }}
+              {{ $tc('common.snapshot', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
                 name: 'baking_rights',
-                params: { network: currentNetwork }
+                params: { network: currentNetwork },
               }"
             >
-              {{ $tc("common.bakingRights", 2) }}
+              {{ $tc('common.bakingRights', 2) }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown :text="$t('header.operations')">
             <b-dropdown-item
               :to="{ name: 'txs', params: { network: currentNetwork } }"
             >
-              {{ $tc("opTypes.tx", 2) }}
+              {{ $tc('opTypes.tx', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
                 name: 'endorsements',
-                params: { network: currentNetwork }
+                params: { network: currentNetwork },
               }"
             >
-              {{ $tc("opTypes.endorsement", 2) }}
+              {{ $tc('opTypes.endorsement', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
                 name: 'delegations',
-                params: { network: currentNetwork }
+                params: { network: currentNetwork },
               }"
             >
-              {{ $tc("opTypes.delegation", 2) }}
+              {{ $tc('opTypes.delegation', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
                 name: 'originations',
-                params: { network: currentNetwork }
+                params: { network: currentNetwork },
               }"
             >
-              {{ $tc("opTypes.origination", 2) }}
+              {{ $tc('opTypes.origination', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
                 name: 'activations',
-                params: { network: currentNetwork }
+                params: { network: currentNetwork },
               }"
             >
-              {{ $tc("opTypes.activation", 2) }}
+              {{ $tc('opTypes.activation', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
                 name: 'double_baking',
-                params: { network: currentNetwork }
+                params: { network: currentNetwork },
               }"
             >
-              {{ $tc("opTypes.doubleBaking", 2) }}
+              {{ $tc('opTypes.doubleBaking', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
                 name: 'double_endorsement',
-                params: { network: currentNetwork }
+                params: { network: currentNetwork },
               }"
             >
-              {{ $tc("opTypes.doubleEndorsement", 2) }}
+              {{ $tc('opTypes.doubleEndorsement', 2) }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown :text="$tc('common.baker', 2)">
             <b-dropdown-item
               :to="{ name: 'bakers', params: { network: currentNetwork } }"
             >
-              {{ $t("header.allBakers") }}
+              {{ $t('header.allBakers') }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
                 name: 'public_bakers',
-                params: { network: currentNetwork }
+                params: { network: currentNetwork },
               }"
             >
-              {{ $t("header.publicBakers") }}
+              {{ $t('header.publicBakers') }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown :text="$tc('common.acc', 2)">
             <b-dropdown-item
-              :to="{ name: 'top_accounts', params: { network: currentNetwork } }"
+              :to="{
+                name: 'top_accounts',
+                params: { network: currentNetwork },
+              }"
             >
-              {{ $t("common.topAcc") }}
+              {{ $t('common.topAcc') }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{ name: 'accounts', params: { network: currentNetwork } }"
             >
-              {{ $tc("common.acc", 2) }}
+              {{ $tc('common.acc', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{ name: 'contracts', params: { network: currentNetwork } }"
             >
-              {{ $tc("common.contract", 2) }}
+              {{ $tc('common.contract', 2) }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown
@@ -125,11 +128,11 @@
             :disabled="currentNetwork !== 'mainnet'"
           >
             <b-dropdown-item :to="{ name: 'protocol_amendment' }">
-              {{ $t("common.protocolAmendments") }}
+              {{ $t('common.protocolAmendments') }}
             </b-dropdown-item>
 
             <b-dropdown-item :to="{ name: 'protocols' }">
-              {{ $t("listTypes.protocolsList") }}
+              {{ $t('listTypes.protocolsList') }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown
@@ -137,10 +140,10 @@
             :disabled="currentNetwork !== 'mainnet'"
           >
             <b-dropdown-item :to="{ name: 'general_charts' }">
-              {{ $t("header.general") }}
+              {{ $t('header.general') }}
             </b-dropdown-item>
             <b-dropdown-item :to="{ name: 'baking_charts' }">
-              {{ $t("common.baking") }}
+              {{ $t('common.baking') }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -166,7 +169,7 @@
               <font-awesome-icon icon="cog" />
             </template>
             <b-dropdown-text>
-              {{ $t("header.dateFormat") }}
+              {{ $t('header.dateFormat') }}
               <DateFormatSwitcher class="pointer" :isSwitchOnly="true" />
             </b-dropdown-text>
           </b-nav-item-dropdown>
@@ -181,80 +184,80 @@
 </template>
 
 <script>
-import { mapMutations, mapState, mapGetters } from "vuex";
-import { SET_APP_NETWORK } from "@/store/mutations.types.js";
-import network from "../../../mixins/network";
-import Search from "../Search";
-import uuid from "@/mixins/uuid";
-import DateFormatSwitcher from "@/components/partials/DateFormatSwitcher";
-import LanguageSwitcher from "@/components/partials/LanguageSwitcher";
-import Logo from "../icons/Logo";
+  import { mapMutations, mapState, mapGetters } from 'vuex';
+  import { SET_APP_NETWORK } from '@/store/mutations.types.js';
+  import network from '../../../mixins/network';
+  import Search from '../Search';
+  import uuid from '@/mixins/uuid';
+  import DateFormatSwitcher from '@/components/partials/DateFormatSwitcher';
+  import LanguageSwitcher from '@/components/partials/LanguageSwitcher';
+  import Logo from '../icons/Logo';
 
-export default {
-  name: "TopMenu",
-  components: {
-    Search,
-    DateFormatSwitcher,
-    LanguageSwitcher,
-    Logo
-  },
-  mixins: [network, uuid],
-  data() {
-    return {
-      isSearchVisible: true
-    };
-  },
-  watch: {
-    $route: {
-      deep: true,
-      immediate: true,
-      handler(to) {
-        if (to.name === "network") {
-          this.isSearchVisible = false;
-        }
-      }
-    }
-  },
-  computed: {
-    ...mapState("app", {
-      network: state => state.network
-    }),
-    ...mapGetters("app", {
-      currentNetwork: "getAppNetwork",
-      networkList: "getAppNetworkList",
-      networkChangable: "getAppNetworkChangable"
-    })
-  },
-  methods: {
-    ...mapMutations("app", [SET_APP_NETWORK]),
-    isActive(...args) {
-      return args.includes(this.$route.name);
+  export default {
+    name: 'TopMenu',
+    components: {
+      Search,
+      DateFormatSwitcher,
+      LanguageSwitcher,
+      Logo,
     },
-    changeRouteNetwork(network) {
-      this[SET_APP_NETWORK](network);
+    mixins: [network, uuid],
+    data() {
+      return {
+        isSearchVisible: true,
+      };
+    },
+    watch: {
+      $route: {
+        deep: true,
+        immediate: true,
+        handler(to) {
+          if (to.name === 'network') {
+            this.isSearchVisible = false;
+          }
+        },
+      },
+    },
+    computed: {
+      ...mapState('app', {
+        network: (state) => state.network,
+      }),
+      ...mapGetters('app', {
+        currentNetwork: 'getAppNetwork',
+        networkList: 'getAppNetworkList',
+        networkChangable: 'getAppNetworkChangable',
+      }),
+    },
+    methods: {
+      ...mapMutations('app', [SET_APP_NETWORK]),
+      isActive(...args) {
+        return args.includes(this.$route.name);
+      },
+      changeRouteNetwork(network) {
+        this[SET_APP_NETWORK](network);
 
-      if (this.$route.name === "404" || this.$route.name === "500") {
-        this.$router.push({ name: "network", params: { network } });
-      } else {
-        this.$router.push({ name: this.$route.name, params: { network } });
-      }
-    }
-  }
-};
+        if (this.$route.name === '404' || this.$route.name === '500') {
+          this.$router.push({ name: 'network', params: { network } });
+        } else {
+          this.$router.push({ name: this.$route.name, params: { network } });
+        }
+      },
+    },
+  };
 </script>
 
 <style scoped lang="scss">
-.header-middle,
-.search {
-  display: inline-block;
-}
+  .header-middle,
+  .search {
+    display: inline-block;
+  }
 
-.pointer {
-  cursor: pointer;
-}
+  .pointer {
+    cursor: pointer;
+  }
 
-.main-nav .dropdown-item,
-.main-nav .dropdown-toggle {
-  text-transform: capitalize;
-}
+  .main-nav .dropdown-item,
+  .main-nav .dropdown-toggle {
+    text-transform: capitalize;
+  }
 </style>

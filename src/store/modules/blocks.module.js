@@ -4,8 +4,8 @@ import {
   GET_BLOCK_BY_LEVEL,
   GET_BAKING_RIGHTS,
   GET_FUTURE_BAKING_RIGHTS,
-  GET_SNAPSHOTS
-} from "@/store/actions.types";
+  GET_SNAPSHOTS,
+} from '@/store/actions.types';
 
 import {
   SET_BLOCK,
@@ -18,8 +18,8 @@ import {
   SET_FUTURE_BAKING_RIGHTS,
   SET_FUTURE_BAKING_RIGHTS_COUNT,
   SET_SNAPSHOTS,
-  SET_SNAPSHOTS_COUNT
-} from "@/store/mutations.types";
+  SET_SNAPSHOTS_COUNT,
+} from '@/store/mutations.types';
 
 const initialState = {
   headBlock: {},
@@ -33,8 +33,8 @@ const initialState = {
     snapshots: 0,
     baking_rights: 0,
     future_baking_rights: 0,
-    endorsements: 0
-  }
+    endorsements: 0,
+  },
 };
 
 export const state = { ...initialState };
@@ -47,7 +47,10 @@ export const actions = {
     commit(SET_BLOCK, await rootGetters.API.getBlocks(params));
   },
   async [GET_BLOCK_BY_LEVEL]({ commit, rootGetters }, params = {}) {
-    commit(SET_BLOCK_SINGLE, await rootGetters.API.getBlock({ block: params.block }));
+    commit(
+      SET_BLOCK_SINGLE,
+      await rootGetters.API.getBlock({ block: params.block }),
+    );
   },
   async [GET_SNAPSHOTS]({ commit, rootGetters }, params = {}) {
     commit(SET_SNAPSHOTS, await rootGetters.API.getSnapshots(params));
@@ -56,8 +59,11 @@ export const actions = {
     commit(SET_BAKING_RIGHTS, await rootGetters.API.baking_rights(params));
   },
   async [GET_FUTURE_BAKING_RIGHTS]({ commit, rootGetters }, params = {}) {
-    commit(SET_FUTURE_BAKING_RIGHTS, await rootGetters.API.future_baking_rights(params));
-  }
+    commit(
+      SET_FUTURE_BAKING_RIGHTS,
+      await rootGetters.API.future_baking_rights(params),
+    );
+  },
 };
 export const mutations = {
   [SET_BLOCK_HEAD](state, block) {
@@ -97,7 +103,7 @@ export const mutations = {
   },
   [SET_ENDORSEMENTS_COUNT](state, count) {
     state.counts.endorsements = count;
-  }
+  },
 };
 export const getters = {};
 
@@ -106,5 +112,5 @@ export default {
   state,
   actions,
   mutations,
-  getters
+  getters,
 };
