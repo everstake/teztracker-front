@@ -10,8 +10,8 @@ import {
   SET_ORIGINATIONS,
   SET_ORIGINATIONS_COUNT,
   SET_TRANSACTIONS,
-  SET_TX_COUNT
-} from "@/store/mutations.types";
+  SET_TX_COUNT,
+} from '@/store/mutations.types';
 
 import {
   GET_ACTIVATIONS,
@@ -19,8 +19,8 @@ import {
   GET_DOUBLE_BAKING,
   GET_DOUBLE_ENDORSEMENT,
   GET_ORIGINATIONS,
-  GET_TRANSACTIONS
-} from "@/store/actions.types";
+  GET_TRANSACTIONS,
+} from '@/store/actions.types';
 
 const initialState = {
   txs: [],
@@ -35,8 +35,8 @@ const initialState = {
     originations: 0,
     activations: 0,
     double_baking: 0,
-    double_endorsement: 0
-  }
+    double_endorsement: 0,
+  },
 };
 
 const state = { ...initialState };
@@ -58,8 +58,11 @@ export const actions = {
     commit(SET_DOUBLE_BAKING, await rootGetters.API.getDoubleBaking(params));
   },
   async [GET_DOUBLE_ENDORSEMENT]({ commit, getters }, params) {
-    commit(SET_DOUBLE_ENDORSEMENT, await getters.API.getDoubleEndorsement(params));
-  }
+    commit(
+      SET_DOUBLE_ENDORSEMENT,
+      await getters.API.getDoubleEndorsement(params),
+    );
+  },
 };
 
 export const mutations = {
@@ -104,7 +107,7 @@ export const mutations = {
   [SET_DOUBLE_ENDORSEMENT](state, double_endorsement) {
     state.double_endorsement = double_endorsement.data;
     state.counts.double_endorsement = double_endorsement.count;
-  }
+  },
 };
 
 export const getters = {};
@@ -114,5 +117,5 @@ export default {
   state,
   actions,
   mutations,
-  getters
+  getters,
 };

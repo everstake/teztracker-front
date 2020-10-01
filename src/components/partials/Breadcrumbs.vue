@@ -13,13 +13,13 @@
 </template>
 
 <script>
-export default {
-  name: "Breadcrumbs",
-  props: {
-    crumbs: {
-      type: Array,
-      required: true
-    }
-  }
-};
+  export default {
+    name: 'Breadcrumbs',
+    props: {
+      crumbs: {
+        type: Array,
+        required: true,
+      },
+    },
+  };
 </script>

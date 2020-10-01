@@ -1,15 +1,12 @@
 <template>
-  <section
-    v-if="endorsements && endorsements.length !== 0"
-    class="mt-0"
-  >
+  <section v-if="endorsements && endorsements.length !== 0" class="mt-0">
     <b-container fluid>
       <b-card no-body>
         <b-card-header>
           <div class="break-word">
             <h3>
               <span class="text">
-                {{ $t("endorsementsSlots.blockEndorsements") }}
+                {{ $t('endorsementsSlots.blockEndorsements') }}
               </span>
             </h3>
           </div>
@@ -27,7 +24,7 @@
               :class="{
                 'slots__item link': true,
                 'slots__item--active': Boolean(slot),
-                'slots__item--inactive': !Boolean(slot)
+                'slots__item--inactive': !Boolean(slot),
               }"
             >
               {{ index }}
@@ -40,85 +37,85 @@
 </template>
 
 <script>
-export default {
-  name: "EndorsementsSlots",
-  data() {
-    return {
-      endorsements: []
-    };
-  },
-  computed: {
-    level() {
-      return this.$route.params.level;
+  export default {
+    name: 'EndorsementsSlots',
+    data() {
+      return {
+        endorsements: [],
+      };
     },
-    slots() {
-      if (!this.endorsements || this.endorsements.length === 0) return [];
+    computed: {
+      level() {
+        return this.$route.params.level;
+      },
+      slots() {
+        if (!this.endorsements || this.endorsements.length === 0) return [];
 
-      const res = [];
-      this.endorsements.forEach(endorsementObj =>
-        JSON.parse(endorsementObj.slots).forEach(
-          slotNum => (res[slotNum] = endorsementObj.operationGroupHash)
-        )
-      );
-      return res;
-    }
-  },
-  methods: {
-    async reload(block = 0) {
-      let result;
-      result = await this.$api.getBlockEndorsements({ block_id: block });
+        const res = [];
+        this.endorsements.forEach((endorsementObj) =>
+          JSON.parse(endorsementObj.slots).forEach(
+            (slotNum) => (res[slotNum] = endorsementObj.operationGroupHash),
+          ),
+        );
+        return res;
+      },
+    },
+    methods: {
+      async reload(block = 0) {
+        let result;
+        result = await this.$api.getBlockEndorsements({ block_id: block });
 
-      if (result.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.replace({
-          name: result.status
-        });
-      }
+        if (result.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: result.status,
+          });
+        }
 
-      this.endorsements = result.data;
-    }
-  },
-  created() {
-    this.reload(this.level);
-  }
-};
+        this.endorsements = result.data;
+      },
+    },
+    created() {
+      this.reload(this.level);
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-.slots {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  
-  &-body {
-    padding-bottom: 20px;
-  }
+  .slots {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 
-  &__item {
-    text-align: center;
-    padding: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-
-    &--active {
-      background-color: $color-brand--opacity-2;
-
-      &:hover {
-        background-color: $color-brand--opacity-4;
-      }
+    &-body {
+      padding-bottom: 20px;
     }
 
-    &--inactive {
-      background-color: $color-error--opacity-2;
+    &__item {
+      text-align: center;
+      padding: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
 
-      &:hover {
-        background-color: $color-error--opacity-4;
+      &--active {
+        background-color: $color-brand--opacity-2;
+
+        &:hover {
+          background-color: $color-brand--opacity-4;
+        }
+      }
+
+      &--inactive {
+        background-color: $color-error--opacity-2;
+
+        &:hover {
+          background-color: $color-error--opacity-4;
+        }
       }
     }
   }
-}
 
-@include for-phone-only {
-  .slots__item {
-    padding: 6px;
+  @include for-phone-only {
+    .slots__item {
+      padding: 6px;
+    }
   }
-}
 </style>

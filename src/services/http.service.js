@@ -1,8 +1,8 @@
-import axios from "axios";
-import NProgress from "nprogress";
+import axios from 'axios';
+import NProgress from 'nprogress';
 
 NProgress.configure({
-  showSpinner: false
+  showSpinner: false,
 });
 
 let loaderTimeout = null;
@@ -29,25 +29,25 @@ const clearLoaderTimeout = () => {
 const http = axios.create();
 
 http.interceptors.request.use(
-  config => {
+  (config) => {
     startLoader();
     return config;
   },
-  error => {
+  (error) => {
     stopLoader();
     return Promise.reject(error);
-  }
+  },
 );
 
 http.interceptors.response.use(
-  response => {
+  (response) => {
     stopLoader();
     return response;
   },
-  error => {
+  (error) => {
     stopLoader();
     return Promise.reject(error);
-  }
+  },
 );
 
 export default http;

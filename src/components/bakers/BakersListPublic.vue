@@ -21,7 +21,8 @@
       </template>
       <template slot="stakingCapacity" slot-scope="row">
         {{
-          ((row.item.stakingCapacity - row.item.stakingBalance) / $constants.XTZ)
+          ((row.item.stakingCapacity - row.item.stakingBalance) /
+            $constants.XTZ)
             | tezosCapacity
         }}
       </template>
@@ -55,84 +56,84 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import setPerPage from "@/mixins/setPerPage";
+  import { mapState } from 'vuex';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import setPerPage from '@/mixins/setPerPage';
 
-import withCustomAction from "../partials/withCustomAction";
-const PaginationWithCustomAction = withCustomAction(
-  Pagination,
-  "accounts",
-  "GET_PUBLIC_BAKERS"
-);
+  import withCustomAction from '../partials/withCustomAction';
+  const PaginationWithCustomAction = withCustomAction(
+    Pagination,
+    'accounts',
+    'GET_PUBLIC_BAKERS',
+  );
 
-export default {
-  name: "BakersListPublic",
-  components: {
-    PerPageSelect,
-    PaginationWithCustomAction
-  },
-  mixins: [setPerPage],
-  data() {
-    return {
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      fields: [
-        { key: "accountId", label: this.$tc("common.baker", 1) },
-        {
-          key: "stakingCapacity",
-          label: this.$t("common.capacityAvailable"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "fee",
-          label: this.$t("common.fee"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "stakingBalance",
-          label: this.$t("common.stakingBal"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "rolls",
-          label: this.$t("common.rolls"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "blocks",
-          label: this.$tc("common.block", 2),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "endorsements",
-          label: this.$tc("opTypes.endorsement", 2),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        { key: "activeDelegators", label: this.$t("numberOf.#OfDelegators") },
-        { key: "bakingSince", label: this.$t("common.bakingSince") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState({
-      publicBakers: state => state.accounts.publicBakers,
-      count: state => state.accounts.counts,
-      dateFormat: state => state.app.dateFormat
-    }),
-    bakersFormatted() {
-      if (!this.publicBakers || this.publicBakers.length === 0) return [];
+  export default {
+    name: 'BakersListPublic',
+    components: {
+      PerPageSelect,
+      PaginationWithCustomAction,
+    },
+    mixins: [setPerPage],
+    data() {
+      return {
+        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+        fields: [
+          { key: 'accountId', label: this.$tc('common.baker', 1) },
+          {
+            key: 'stakingCapacity',
+            label: this.$t('common.capacityAvailable'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'fee',
+            label: this.$t('common.fee'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'stakingBalance',
+            label: this.$t('common.stakingBal'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'rolls',
+            label: this.$t('common.rolls'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'blocks',
+            label: this.$tc('common.block', 2),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'endorsements',
+            label: this.$tc('opTypes.endorsement', 2),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          { key: 'activeDelegators', label: this.$t('numberOf.#OfDelegators') },
+          { key: 'bakingSince', label: this.$t('common.bakingSince') },
+        ],
+      };
+    },
+    computed: {
+      ...mapState({
+        publicBakers: (state) => state.accounts.publicBakers,
+        count: (state) => state.accounts.counts,
+        dateFormat: (state) => state.app.dateFormat,
+      }),
+      bakersFormatted() {
+        if (!this.publicBakers || this.publicBakers.length === 0) return [];
 
-      return this.publicBakers.map(bakerObj => {
-        return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
-      });
-    }
-  }
-};
+        return this.publicBakers.map((bakerObj) => {
+          return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
+        });
+      },
+    },
+  };
 </script>

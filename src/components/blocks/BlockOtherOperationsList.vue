@@ -12,7 +12,7 @@
         <b-link
           :to="{
             name: 'account',
-            params: { network: currentNetwork, account: row.item.source }
+            params: { network: currentNetwork, account: row.item.source },
           }"
         >
           {{ row.item.sourceName || row.item.source | longhash(20) }}
@@ -24,8 +24,9 @@
             name: 'account',
             params: {
               network: currentNetwork,
-              account: row.item.destination || row.item.delegate || row.item.pkh
-            }
+              account:
+                row.item.destination || row.item.delegate || row.item.pkh,
+            },
           }"
         >
           {{
@@ -55,8 +56,8 @@
             name: 'tx',
             params: {
               network: currentNetwork,
-              txhash: row.item.operationGroupHash
-            }
+              txhash: row.item.operationGroupHash,
+            },
           }"
         >
           {{ row.item.operationGroupHash | longhash(35) }}
@@ -70,75 +71,75 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import defineRowClass from "@/mixins/defineRowClass";
+  import { mapGetters } from 'vuex';
+  import defineRowClass from '@/mixins/defineRowClass';
 
-export default {
-  name: "BlockOtherOperationsList",
-  mixins: [defineRowClass],
-  props: {
-    blockHash: {
-      type: String,
-      default: ""
-    }
-  },
-  data() {
-    return {
-      fields: [
-        { key: "source", label: this.$t("common.from") },
-        { key: "destination", label: this.$t("common.to") },
-        { key: "amount", label: this.$t("common.amount") },
-        { key: "fee", label: this.$t("common.fee") },
-        { key: "operationGroupHash", label: this.$t("hashTypes.opHash") },
-        { key: "kind", label: this.$t("common.opType") }
-      ],
-      operations: [],
-      count: 0,
-      operationTypes: [
-        "delegation",
-        "origination",
-        "activate_account",
-        "double_baking_evidence",
-        "double_endorsement_evidence"
-      ],
-      operationTypesMap: {
-        delegation: this.$tc("opTypes.delegation", 1),
-        origination: this.$tc("opTypes.origination", 1),
-        activate_account: this.$tc("opTypes.activation", 1),
-        double_baking_evidence: this.$t("opTypes.doubleBaking"),
-        double_endorsement_evidence: this.$tc("opTypes.doubleEndorsement", 1)
-      }
-    };
-  },
-  computed: {
-    ...mapGetters("app", {
-      currentNetwork: "getAppNetwork"
-    })
-  },
-  watch: {
-    blockHash(value) {
-      this.load(value, this.operationTypes);
-    }
-  },
-  methods: {
-    async load(blockHash, operationTypes) {
-      const res = await this.$api.getOperations({
-        block_id: blockHash,
-        operation_kind: operationTypes,
-        limit: 100
-      });
-
-      if (res.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.replace({
-          name: res.status
+  export default {
+    name: 'BlockOtherOperationsList',
+    mixins: [defineRowClass],
+    props: {
+      blockHash: {
+        type: String,
+        default: '',
+      },
+    },
+    data() {
+      return {
+        fields: [
+          { key: 'source', label: this.$t('common.from') },
+          { key: 'destination', label: this.$t('common.to') },
+          { key: 'amount', label: this.$t('common.amount') },
+          { key: 'fee', label: this.$t('common.fee') },
+          { key: 'operationGroupHash', label: this.$t('hashTypes.opHash') },
+          { key: 'kind', label: this.$t('common.opType') },
+        ],
+        operations: [],
+        count: 0,
+        operationTypes: [
+          'delegation',
+          'origination',
+          'activate_account',
+          'double_baking_evidence',
+          'double_endorsement_evidence',
+        ],
+        operationTypesMap: {
+          delegation: this.$tc('opTypes.delegation', 1),
+          origination: this.$tc('opTypes.origination', 1),
+          activate_account: this.$tc('opTypes.activation', 1),
+          double_baking_evidence: this.$t('opTypes.doubleBaking'),
+          double_endorsement_evidence: this.$tc('opTypes.doubleEndorsement', 1),
+        },
+      };
+    },
+    computed: {
+      ...mapGetters('app', {
+        currentNetwork: 'getAppNetwork',
+      }),
+    },
+    watch: {
+      blockHash(value) {
+        this.load(value, this.operationTypes);
+      },
+    },
+    methods: {
+      async load(blockHash, operationTypes) {
+        const res = await this.$api.getOperations({
+          block_id: blockHash,
+          operation_kind: operationTypes,
+          limit: 100,
         });
-      }
 
-      this.operations = res.data;
-      this.count = res.count;
-    }
-  }
-};
+        if (res.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: res.status,
+          });
+        }
+
+        this.operations = res.data;
+        this.count = res.count;
+      },
+    },
+  };
 </script>
 
 <style scoped></style>

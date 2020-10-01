@@ -13,7 +13,7 @@
                 <CardHeader>
                   <template #left-content class="text">
                     <h4 class="tz-title--bold">
-                      {{ $t("listTypes.protocolsList") }}
+                      {{ $t('listTypes.protocolsList') }}
                     </h4>
                   </template>
                   <template #right-content class="text">
@@ -34,34 +34,37 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import PageContentContainer from "../layouts/PageContentContainer";
-import Breadcrumbs from "../components/partials/Breadcrumbs";
-import CardHeader from "../components/partials/CardHeader";
-import Counter from "../components/partials/Counter";
-import ProtocolsList from "@/components/protocol/ProtocolsList";
+  import { mapState } from 'vuex';
+  import PageContentContainer from '../layouts/PageContentContainer';
+  import Breadcrumbs from '../components/partials/Breadcrumbs';
+  import CardHeader from '../components/partials/CardHeader';
+  import Counter from '../components/partials/Counter';
+  import ProtocolsList from '@/components/protocol/ProtocolsList';
 
-export default {
-  name: "Protocols",
-  components: {
-    PageContentContainer,
-    Breadcrumbs,
-    CardHeader,
-    ProtocolsList,
-    Counter
-  },
-  data() {
-    return {
-      crumbs: [
-        { toRouteName: "network", text: this.$t("common.home") },
-        { toRouteName: "protocols", text: this.$t("pageTypes.protocolsPage") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState('period', {
-      protocolsCount: state => state.counts.protocols
-    })
-  }
-};
+  export default {
+    name: 'Protocols',
+    components: {
+      PageContentContainer,
+      Breadcrumbs,
+      CardHeader,
+      ProtocolsList,
+      Counter,
+    },
+    data() {
+      return {
+        crumbs: [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          {
+            toRouteName: 'protocols',
+            text: this.$t('pageTypes.protocolsPage'),
+          },
+        ],
+      };
+    },
+    computed: {
+      ...mapState('period', {
+        protocolsCount: (state) => state.counts.protocols,
+      }),
+    },
+  };
 </script>

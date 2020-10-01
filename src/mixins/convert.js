@@ -1,11 +1,11 @@
-import { mapState } from "vuex";
-import ceil from "lodash/ceil";
+import { mapState } from 'vuex';
+import ceil from 'lodash/ceil';
 
 export default {
   computed: {
     ...mapState({
-      info: state => state.priceInfo
-    })
+      info: (state) => state.priceInfo,
+    }),
   },
   methods: {
     $_convert(tzAmount) {
@@ -14,7 +14,7 @@ export default {
         const tez = tzAmount / this.$constants.XTZ;
         result = ceil(tez * this.info.price, this.$constants.USD_PRECISION);
       }
-      return "$" + result;
-    }
-  }
+      return '$' + result;
+    },
+  },
 };

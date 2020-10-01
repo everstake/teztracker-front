@@ -1,14 +1,19 @@
-import Vue from "vue";
-import * as ACTIONS from "@/store/actions.types";
+import Vue from 'vue';
+import * as ACTIONS from '@/store/actions.types';
 
-const withCustomAction = (pagination, storeModuleNamespace, customAction, payload = {}) => {
+const withCustomAction = (
+  pagination,
+  storeModuleNamespace,
+  customAction,
+  payload = {},
+) => {
   const originalProps = pagination.props || [];
 
-  return Vue.component("withCustomAction", {
+  return Vue.component('withCustomAction', {
     render(h) {
       return h(pagination, {
         props: this.$props,
-        on: { ...this.$listeners, change: this.fireAction }
+        on: { ...this.$listeners, change: this.fireAction },
       });
     },
     props: { ...originalProps },
@@ -17,7 +22,7 @@ const withCustomAction = (pagination, storeModuleNamespace, customAction, payloa
       // Needed to repeat request if the number of per page items changes.
       perPage() {
         this.fireAction();
-      }
+      },
     },
     methods: {
       async fireAction(page = 1) {
@@ -26,14 +31,14 @@ const withCustomAction = (pagination, storeModuleNamespace, customAction, payloa
           {
             page,
             limit: this.perPage,
-            ...payload
-          }
+            ...payload,
+          },
         );
-      }
+      },
     },
     created() {
       this.fireAction();
-    }
+    },
   });
 };
 

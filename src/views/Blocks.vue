@@ -13,11 +13,11 @@
                 <CardHeader>
                   <template #left-content class="text">
                     <h4 class="tz-title--bold">
-                      {{ $t("listTypes.blocksList") }}
+                      {{ $t('listTypes.blocksList') }}
                     </h4>
                   </template>
                   <template #right-content class="text">
-                    <Counter show-line :count="count.blocks"/>
+                    <Counter show-line :count="count.blocks" />
                   </template>
                 </CardHeader>
 
@@ -34,34 +34,34 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import PageContentContainer from "../layouts/PageContentContainer";
-import Breadcrumbs from "../components/partials/Breadcrumbs";
-import BlocksList from "../components/blocks/BlocksList";
-import CardHeader from "../components/partials/CardHeader";
-import Counter from "../components/partials/Counter";
+  import { mapState } from 'vuex';
+  import PageContentContainer from '../layouts/PageContentContainer';
+  import Breadcrumbs from '../components/partials/Breadcrumbs';
+  import BlocksList from '../components/blocks/BlocksList';
+  import CardHeader from '../components/partials/CardHeader';
+  import Counter from '../components/partials/Counter';
 
-export default {
-  name: "Blocks",
-  components: {
-    PageContentContainer,
-    Breadcrumbs,
-    BlocksList,
-    CardHeader,
-    Counter
-  },
-  data() {
-    return {
-      crumbs: [
-        { toRouteName: "network", text: this.$t("common.home") },
-        { toRouteName: "blocks", text: this.$t("pageTypes.blocksPage") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState("blocks", {
-      count: state => state.counts
-    })
-  }
-};
+  export default {
+    name: 'Blocks',
+    components: {
+      PageContentContainer,
+      Breadcrumbs,
+      BlocksList,
+      CardHeader,
+      Counter,
+    },
+    data() {
+      return {
+        crumbs: [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          { toRouteName: 'blocks', text: this.$t('pageTypes.blocksPage') },
+        ],
+      };
+    },
+    computed: {
+      ...mapState('blocks', {
+        count: (state) => state.counts,
+      }),
+    },
+  };
 </script>

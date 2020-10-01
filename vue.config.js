@@ -5,11 +5,8 @@ module.exports = {
 
   configureWebpack: {
     plugins: [
-      new webpack.ContextReplacementPlugin(
-          /moment[/\\]locale$/,
-          /en|ru|cn/
-      )
-    ]
+      new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|ru|cn/),
+    ],
   },
 
   css: {
@@ -17,9 +14,9 @@ module.exports = {
     loaderOptions: {
       sass: {
         prependData: `@import "@/assets/scss/_variables";
-                      @import "@/assets/scss/_mixins";`
-      }
-    }
+                      @import "@/assets/scss/_mixins";`,
+      },
+    },
   },
 
   pluginOptions: {
@@ -27,7 +24,7 @@ module.exports = {
       locale: 'en',
       fallbackLocale: 'en',
       localeDir: 'locales',
-      enableInSFC: true
-    }
-  }
+      enableInSFC: true,
+    },
+  },
 };

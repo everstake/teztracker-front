@@ -15,13 +15,13 @@
 </template>
 
 <script>
-export default {
-  name: "PageContentContainer",
-  props: {
-    pageName: {
-      type: String,
-      default: ""
-    }
-  }
-};
+  export default {
+    name: 'PageContentContainer',
+    props: {
+      pageName: {
+        type: String,
+        default: '',
+      },
+    },
+  };
 </script>
