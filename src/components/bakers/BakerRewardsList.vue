@@ -111,7 +111,7 @@
         perPage: 20,
         fields: [
           { key: 'cycle', label: this.$tc('common.cycle', 1) },
-          { key: 'stakingBalance', label: this.$t('common.stakingBal') },
+          { key: 'stakingBalance', label: this.$t('common.delegatedBal') },
           { key: 'baking', label: this.$t('common.baking') },
           { key: 'delegators', label: this.$tc('common.delegator', 2) },
           { key: 'endorsements', label: this.$tc('opTypes.endorsement', 2) },

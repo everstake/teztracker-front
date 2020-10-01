@@ -2,6 +2,7 @@
   "common": {
     "copyToClipboard": "Copy to clipboard",
     "stakingBal": "Staking balance",
+    "delegatedBal": "Delegated balance",
     "balance": "Balance",
     "rolls": "Rolls",
     "bakingSince": "Baking since",

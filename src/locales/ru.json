@@ -2,6 +2,7 @@
 	"common": {
 		"copyToClipboard": "Скопировать в буфер обмена",
 		"stakingBal": "Стейкинг-баланс",
+		"delegatedBal": "Делегированный баланс",
 		"balance": "Баланс",
 		"rolls": "Роллы",
 		"bakingSince": "Активен с",
