@@ -2,6 +2,7 @@
   "common": {
     "copyToClipboard": "拷贝到剪贴板",
     "stakingBal": "持币生息余额",
+    "delegatedBal": "Delegated balance",
     "balance": "余额",
     "rolls": "卷",
     "bakingSince": "从…创建区块链",

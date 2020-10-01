@@ -326,6 +326,7 @@
 
     &__input {
       margin-bottom: 5px;
+      position: relative;
     }
 
     &__dropdown {

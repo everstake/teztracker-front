@@ -134,7 +134,7 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t('common.stakingBal') }}
+                    {{ $t('common.delegatedBal') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">{{
                     bakerInfo.stakingBalance | tezos
