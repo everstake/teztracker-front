@@ -333,5 +333,10 @@
     "prioritiesPerCycle": "循环优先级",
     "andHigher": "更高",
     "accsWith500k": "超过500,000 XTZ的账户"
+  },
+  "maintenance": {
+    "title": "Maintenance",
+    "p1": "Sorry, we're currently down for maintenance.",
+    "p2": "We'll be back up shortly. Please, return to us a bit later."
   }
 }
