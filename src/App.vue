@@ -1,22 +1,14 @@
 <template>
   <div id="app" :key="$route.path || getAppNetwork">
-    <TopMenu />
     <router-view :key="langChangeKey"></router-view>
-    <Footer showLogo />
   </div>
 </template>
 
 <script>
-  import TopMenu from './components/partials/menus/TopMenu';
-  import Footer from './components/partials/menus/Footer';
   import { mapGetters } from 'vuex';
 
   export default {
     name: 'app',
-    components: {
-      TopMenu,
-      Footer,
-    },
     computed: {
       ...mapGetters('app', ['getAppNetwork']),
     },
@@ -40,8 +32,5 @@
 
   #app {
     overflow-x: hidden;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
   }
 </style>

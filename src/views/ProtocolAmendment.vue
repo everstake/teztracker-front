@@ -1,69 +1,58 @@
 <template>
-  <div class="main-content protocol-amendment">
-    <div class="tz-breadcrumbs mt-4 mb-4">
-      <b-container fluid>
-        <b-row>
-          <b-col lg="12">
-            <ol class="ml-2 tz-breadcrumbs__list">
-              <li class="font font--mini tz-breadcrumbs__item">
-                <router-link
-                  :to="{ name: 'network' }"
-                  class="tz-breadcrumbs__link"
-                >
-                  {{ $t('common.home') }}
-                </router-link>
-              </li>
-              <li class="active font font--mini tz-breadcrumbs__item">
-                {{ $t('common.protocolAmendments') }}
-              </li>
-            </ol>
-          </b-col>
-        </b-row>
-      </b-container>
-    </div>
+  <PageContentContainer>
+    <template #breadcrumbs>
+      <Breadcrumbs :crumbs="crumbs" />
+    </template>
 
-    <div v-if="loading">
-      <b-container fluid>
-        <b-row>
-          <b-col sm="12" md="6" lg="4" class="mb-4">
-            <div class="protocol-amendment__card">
-              <div class="protocol-amendment__loading font font--regular">
-                {{ $t('common.loading') }}
-              </div>
-            </div>
-          </b-col>
-        </b-row>
-      </b-container>
-    </div>
-    <div v-else>
-      <b-container fluid>
-        <b-row>
-          <b-col
-            sm="12"
-            md="6"
-            lg="4"
-            class="protocol-amendment__col"
-            v-for="protocol in protocols"
-            :key="generateKey()"
-          >
-            <ProtocolAmendmentCard
-              :name="protocol.title"
-              :period="
-                protocol.period === currentPeriodId
-                  ? $t('protocolPeriods.current')
-                  : $t('protocolPeriods.past')
-              "
-              :id="protocol.period"
-              @handleClick="handleProtocolClick(protocol.period)"
-            />
-          </b-col>
-        </b-row>
-      </b-container>
-    </div>
-  </div>
+    <template #content>
+      <section>
+        <div v-if="loading">
+          <b-container fluid>
+            <b-row>
+              <b-col sm="12" md="6" lg="4" class="mb-4">
+                <div class="protocol-amendment__card">
+                  <div class="protocol-amendment__loading font font--regular">
+                    {{ $t('common.loading') }}
+                  </div>
+                </div>
+              </b-col>
+            </b-row>
+          </b-container>
+        </div>
+
+        <div v-else>
+          <b-container fluid>
+            <b-row>
+              <b-col
+                v-for="protocol in protocols"
+                :key="generateKey()"
+                sm="12"
+                md="6"
+                lg="4"
+                class="protocol-amendment__col"
+              >
+                <ProtocolAmendmentCard
+                  :name="protocol.title"
+                  :period="
+                    protocol.period === currentPeriodId
+                      ? $t('protocolPeriods.current')
+                      : $t('protocolPeriods.past')
+                  "
+                  :id="protocol.period"
+                  @handleClick="handleProtocolClick(protocol.period)"
+                />
+              </b-col>
+            </b-row>
+          </b-container>
+        </div>
+      </section>
+    </template>
+  </PageContentContainer>
 </template>
 
 <script>
+  import PageContentContainer from '@/layouts/PageContentContainer';
+  import Breadcrumbs from '../components/partials/Breadcrumbs';
   import ProtocolAmendmentCard from '@/components/protocol/ProtocolAmendmentCard';
   import uuid from '@/mixins/uuid';
   import uniqBy from 'lodash/uniqBy';
@@ -71,6 +60,8 @@
   export default {
     name: 'ProtocolAmendment',
     components: {
+      Breadcrumbs,
+      PageContentContainer,
       ProtocolAmendmentCard,
     },
     mixins: [uuid],
@@ -79,6 +70,13 @@
         protocols: [],
         currentPeriodId: null,
         loading: true,
+        crumbs: [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          {
+            toRouteName: 'protocol_amendment',
+            text: this.$t('common.protocolAmendments'),
+          },
+        ],
       };
     },
     methods: {
