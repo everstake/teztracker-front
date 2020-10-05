@@ -8,7 +8,10 @@ body {
   display: block;
   background: $color-white;
   z-index: 100;
+  // FIXME: Debug position: sticky
   position: sticky;
+  //position: fixed;
+  //width: 100%;
   top: 0;
 }
 
@@ -264,6 +267,7 @@ span a.baker,
 
 .main-content {
   background-color: $color-teal--light;
+  //margin-top: 57px;
   flex: 1 0 auto;
 }
 

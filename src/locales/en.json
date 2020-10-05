@@ -335,5 +335,10 @@
     "prioritiesPerCycle": "Priorities per cycle",
     "andHigher": "and higher",
     "accsWith500k": "Accounts with more than 500,000 XTZ"
+  },
+  "maintenance": {
+    "title": "Maintenance",
+    "p1": "Sorry, we're currently down for maintenance.",
+    "p2": "We'll be back up shortly. Please, return to us a bit later."
   }
 }

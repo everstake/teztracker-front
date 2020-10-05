@@ -58,6 +58,8 @@ const ChartsGeneral = () => import('../views/chart-views/ChartsGeneral.vue');
 /* Charts group end */
 
 // Errors
+// TODO: Implement the logic of redirect
+// const Maintenance = () => import('../views/Maintenance.vue');
 const NotFound = () => import('../views/errors/NotFound.vue');
 const ServerError = () => import('../views/errors/ServerError.vue');
 
@@ -190,6 +192,12 @@ export default [
   /* Charts group end */
 
   // Errors
+  // TODO: Implement the logic of redirect
+  // {
+  //   path: '/:network/maintenance',
+  //   name: 'Maintenance',
+  //   component: Maintenance,
+  // },
   { path: '/:network/404', name: '404', component: NotFound },
   { path: '/:network/*', redirect: { name: '404' } },
   { path: '/:network/500', name: '500', component: ServerError },

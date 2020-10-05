@@ -16,6 +16,11 @@ const helpers = {
   formatUSD(amount) {
     return `$${numeral(amount).format('0,0[.][00]')}`;
   },
+  capitalize(string) {
+    if (typeof string !== 'string') return string;
+
+    return `${string[0].toUpperCase()}${string.slice(1)}`;
+  },
 };
 
 Vue.use({

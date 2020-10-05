@@ -8,7 +8,7 @@
     <b-dropdown-item
       v-for="(lang, index) in langs"
       :key="index"
-      @click="setLang(lang)"
+      @click="setLang(lang, true)"
     >
       <flag :iso="mapLangCode(lang)" />
       {{ lang.toUpperCase() }}
@@ -37,14 +37,16 @@
       mapLangCode(langCode) {
         return langCode === 'en' ? 'us' : langCode === 'zh' ? 'cn' : langCode;
       },
-      setLang(lang) {
+      setLang(lang, rerender = false) {
         if (this.$helpers.isLocalStorageAvailable) {
           localStorage.setItem('lang', lang);
         }
 
         this.$i18n.locale = lang;
 
-        this.$eventBus.$emit('lang-change', this.currLang);
+        if (rerender) {
+          this.$eventBus.$emit('lang-change', this.currLang);
+        }
       },
       defineInitialLang() {
         if (
