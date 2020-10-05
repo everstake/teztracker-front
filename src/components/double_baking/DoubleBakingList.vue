@@ -17,7 +17,7 @@
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
         >
-          {{ row.item.operationGroupHash | longhash(25) }}
+          {{ row.item.operationGroupHash | longhash }}
         </b-link>
       </template>
 
@@ -37,11 +37,14 @@
             name: 'baker',
             params: { baker: row.item.doubleOperationDetails.evidence_baker },
           }"
-          >{{
-            row.item.doubleOperationDetails.evidence_baker_name ||
-              row.item.doubleOperationDetails.evidence_baker | longhash(20)
-          }}</router-link
         >
+          <template v-if="row.item.doubleOperationDetails.evidence_baker_name">
+            {{ row.item.doubleOperationDetails.evidence_baker_name }}
+          </template>
+          <template v-else>
+            {{ row.item.doubleOperationDetails.evidence_baker | longhash }}
+          </template>
+        </router-link>
       </template>
       <template slot="baker_rewards" slot-scope="row">
         {{ row.item.doubleOperationDetails.baker_reward | tezos }}
@@ -53,11 +56,14 @@
             name: 'baker',
             params: { baker: row.item.doubleOperationDetails.offender },
           }"
-          >{{
-            row.item.doubleOperationDetails.offender_name ||
-              row.item.doubleOperationDetails.offender | longhash(20)
-          }}</router-link
         >
+          <template v-if="row.item.doubleOperationDetails.offender_name">
+            {{ row.item.doubleOperationDetails.offender_name }}
+          </template>
+          <template v-else>
+            {{ row.item.doubleOperationDetails.offender | longhash }}
+          </template>
+        </router-link>
       </template>
       <template slot="denounced_level" slot-scope="row">
         <b-link

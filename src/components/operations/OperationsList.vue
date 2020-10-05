@@ -21,7 +21,7 @@
 
       <template slot="blockHash" slot-scope="row">
         <b-link :to="{ name: 'tx', params: { txhash: row.item.blockHash } }">
-          {{ row.item.blockHash | longhash(20) }}
+          {{ row.item.blockHash | longhash }}
         </b-link>
       </template>
 

@@ -19,7 +19,7 @@
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
         >
-          {{ row.item.operationGroupHash | longhash(35) }}
+          {{ row.item.operationGroupHash | longhash }}
         </b-link>
       </template>
 
@@ -29,16 +29,26 @@
 
       <template slot="from" slot-scope="row">
         <b-link :to="{ name: 'account', params: { account: row.item.source } }">
-          {{ row.item.sourceName || row.item.source | longhash(15) }}
+          <template v-if="row.item.sourceName">
+            {{ row.item.sourceName }}
+          </template>
+          <template v-else>
+            {{ row.item.source | longhash }}
+          </template>
         </b-link>
       </template>
 
       <template slot="to" slot-scope="row">
         <b-link
-          :to="{ name: 'account', params: { account: row.item.delegate } }"
           v-if="row.item.delegateName || row.item.delegate"
+          :to="{ name: 'account', params: { account: row.item.delegate } }"
         >
-          {{ row.item.delegateName || row.item.delegate | longhash(15) }}
+          <template v-if="row.item.delegateName">
+            {{ row.item.delegateName }}
+          </template>
+          <template v-else>
+            {{ row.item.delegate | longhash }}
+          </template>
         </b-link>
         <span v-else>unset</span>
       </template>

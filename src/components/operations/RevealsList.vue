@@ -14,7 +14,7 @@
             params: { account: row.item.source },
           }"
         >
-          {{ row.item.sourceName || row.item.source | longhash(20) }}
+          {{ row.item.sourceName || row.item.source | longhash }}
         </b-link>
       </template>
       <template slot="fee" slot-scope="row">

@@ -19,7 +19,7 @@
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
         >
-          {{ row.item.operationGroupHash | longhash(35) }}
+          {{ row.item.operationGroupHash | longhash }}
         </b-link>
       </template>
 
@@ -39,7 +39,13 @@
           :class="row.item.sourceName === account ? 'source' : 'destination'"
         >
           <div>
-            {{ row.item.sourceName || row.item.source | longhash(15) }}
+            <template v-if="row.item.sourceName">
+              {{ row.item.sourceName }}
+            </template>
+            <template v-else>
+              {{ row.item.source | longhash }}
+            </template>
+
             <div v-if="account === row.item.source" class="icon">
               <i class="icon__arrow--green"></i>
             </div>
@@ -54,7 +60,12 @@
         <b-link
           :to="{ name: 'account', params: { account: row.item.destination } }"
         >
-          {{ row.item.destinationName || row.item.destination | longhash(15) }}
+          <template v-if="row.item.destinationName">
+            {{ row.item.destinationName }}
+          </template>
+          <template v-else>
+            {{ row.item.destination | longhash }}
+          </template>
         </b-link>
       </template>
       <template slot="amount" slot-scope="row">

@@ -18,13 +18,13 @@
           v-if="row.item.is_baker"
           :to="{ name: 'baker', params: { baker: row.item.accountId } }"
         >
-          <span>{{ row.item.accountId | longhash(35) }}</span>
+          <span>{{ row.item.accountId | longhash }}</span>
         </b-link>
         <b-link
           v-else
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
-          <span>{{ row.item.accountId | longhash(35) }}</span>
+          <span>{{ row.item.accountId | longhash }}</span>
         </b-link>
       </template>
       <template slot="balance" slot-scope="row">
@@ -38,7 +38,7 @@
           v-if="row.item.delegateValue"
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
-          <span>{{ row.item.delegateValue | longhash(35) }}</span>
+          <span>{{ row.item.delegateValue | longhash }}</span>
         </b-link>
         <span v-else>----</span>
       </template>

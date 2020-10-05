@@ -15,7 +15,12 @@
     >
       <template slot="accountId" slot-scope="row">
         <b-link :to="{ name: 'baker', params: { baker: row.item.accountId } }">
-          {{ row.item.name || row.item.accountId | longhash(35) }}
+          <template v-if="row.item.name">
+            {{ row.item.name }}
+          </template>
+          <template v-else>
+            {{ row.item.accountId | longhash }}
+          </template>
         </b-link>
       </template>
       <template slot="blocks" slot-scope="row">

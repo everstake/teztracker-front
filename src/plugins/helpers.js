@@ -21,6 +21,11 @@ const helpers = {
 
     return `${string[0].toUpperCase()}${string.slice(1)}`;
   },
+  truncateHash(hash, fromStart = 8, fromEnd = -5) {
+    if (!hash || typeof hash !== 'string') return hash;
+
+    return `${hash.slice(0, fromStart)}...${hash.slice(fromEnd)}`;
+  },
 };
 
 Vue.use({

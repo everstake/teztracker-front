@@ -15,7 +15,12 @@
             params: { network: currentNetwork, account: row.item.source },
           }"
         >
-          {{ row.item.sourceName || row.item.source | longhash(20) }}
+          <template v-if="row.item.sourceName">
+            {{ row.item.sourceName }}
+          </template>
+          <template v-else>
+            {{ row.item.source | longhash }}
+          </template>
         </b-link>
       </template>
       <template slot="destination" slot-scope="row">
@@ -29,14 +34,26 @@
             },
           }"
         >
-          {{
-            row.item.destinationName | longhash(20) ||
-              row.item.delegateName | longhash(20) ||
-              row.item.pkhName | longhash(20) ||
-              row.item.destination | longhash(20) ||
-              row.item.delegate | longhash(20) ||
-              row.item.pkh | longhash(20)
-          }}
+          <template
+            v-if="
+              row.item.destinationName ||
+                row.item.delegateName ||
+                row.item.pkhName
+            "
+          >
+            {{
+              row.item.destinationName ||
+                row.item.delegateName ||
+                row.item.pkhName
+            }}
+          </template>
+          <template v-else>
+            {{
+              row.item.destination | longhash() ||
+                row.item.delegate | longhash() ||
+                row.item.pkh | longhash()
+            }}
+          </template>
         </b-link>
       </template>
       <template slot="amount" slot-scope="row">
@@ -60,7 +77,7 @@
             },
           }"
         >
-          {{ row.item.operationGroupHash | longhash(35) }}
+          {{ row.item.operationGroupHash | longhash }}
         </b-link>
       </template>
       <template slot="kind" slot-scope="row">

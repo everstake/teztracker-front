@@ -25,7 +25,12 @@
 
       <template slot="baker" slot-scope="row">
         <b-link :to="{ name: 'baker', params: { baker: row.item.baker } }">
-          {{ row.item.bakerName || row.item.baker | longhash(42) }}
+          <template v-if="row.item.bakerName">
+            {{ row.item.bakerName }}
+          </template>
+          <template v-else>
+            {{ row.item.baker | longhash }}
+          </template>
         </b-link>
       </template>
 

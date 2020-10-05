@@ -17,7 +17,7 @@
         <router-link
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
-          <span>{{ row.item.accountId | longhash(35) }}</span>
+          <span>{{ row.item.accountId | longhash }}</span>
         </router-link>
       </template>
       <template slot="manager" slot-scope="row">
@@ -25,7 +25,7 @@
           v-if="row.item.manager"
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
-          <span>{{ row.item.manager | longhash(35) }}</span>
+          <span>{{ row.item.manager | longhash }}</span>
         </b-link>
         <span v-else>----</span>
       </template>
@@ -34,9 +34,14 @@
           v-if="row.item.delegateValue"
           :to="{ name: 'account', params: { account: row.item.delegateValue } }"
         >
-          <span>{{
-            row.item.delegateName || row.item.delegateValue | longhash(35)
-          }}</span>
+          <span>
+            <template v-if="row.item.delegateName">
+              {{ row.item.delegateName }}
+            </template>
+            <template v-else>
+              {{ row.item.delegateValue | longhash }}
+            </template>
+          </span>
         </b-link>
         <span v-else>----</span>
       </template>

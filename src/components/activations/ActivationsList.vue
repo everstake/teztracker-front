@@ -18,7 +18,7 @@
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
         >
-          {{ row.item.operationGroupHash | longhash(35) }}
+          {{ row.item.operationGroupHash | longhash }}
         </b-link>
       </template>
 
@@ -30,7 +30,7 @@
 
       <template slot="to" slot-scope="row">
         <b-link :to="{ name: 'account', params: { account: row.item.pkh } }">
-          {{ row.item.pkh }}
+          {{ row.item.pkh | longhash }}
         </b-link>
       </template>
 

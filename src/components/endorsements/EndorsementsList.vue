@@ -27,7 +27,7 @@
         <b-link
           :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
         >
-          {{ row.item.operationGroupHash | longhash(30) }}
+          {{ row.item.operationGroupHash | longhash }}
         </b-link>
       </template>
 
@@ -42,7 +42,7 @@
           :to="{ name: 'account', params: { account: row.item.delegate } }"
         >
           <span v-if="row.item.delegateName">{{ row.item.delegateName }}</span>
-          <span v-else>{{ row.item.delegate | longhash(16) }}</span>
+          <span v-else>{{ row.item.delegate | longhash }}</span>
         </b-link>
       </template>
 

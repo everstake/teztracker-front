@@ -19,19 +19,40 @@
           v-if="row.item.is_baker"
           :to="{ name: 'baker', params: { baker: row.item.accountId } }"
         >
-          <span>{{ row.item.accountName || row.item.accountId }}</span>
+          <span>
+            <template v-if="row.item.accountName">
+              {{ row.item.accountName }}
+            </template>
+            <template v-else>
+              {{ row.item.accountId | longhash }}
+            </template>
+          </span>
         </b-link>
         <b-link
           v-else-if="row.item.accountId.slice(0, 2) === 'KT'"
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
-          <span>{{ row.item.accountName || row.item.accountId }}</span>
+          <span>
+            <template v-if="row.item.accountName">
+              {{ row.item.accountName }}
+            </template>
+            <template v-else>
+              {{ row.item.accountId | longhash }}
+            </template>
+          </span>
         </b-link>
         <b-link
           v-else
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
-          <span>{{ row.item.accountName || row.item.accountId }}</span>
+          <span>
+            <template v-if="row.item.accountName">
+              {{ row.item.accountName }}
+            </template>
+            <template v-else>
+              {{ row.item.accountId | longhash }}
+            </template>
+          </span>
         </b-link>
       </template>
       <template slot="balance" slot-scope="row">
@@ -54,9 +75,14 @@
           v-if="row.item.delegateValue"
           :to="{ name: 'baker', params: { baker: row.item.accountId } }"
         >
-          <span>{{
-            row.item.delegateName || row.item.delegateValue | longhash(15)
-          }}</span>
+          <span>
+            <template v-if="row.item.delegateName">
+              {{ row.item.delegateName }}
+            </template>
+            <template v-else>
+              {{ row.item.delegateValue | longhash }}
+            </template>
+          </span>
         </b-link>
         <span v-else>----</span>
       </template>

@@ -42,7 +42,12 @@
                             params: { baker: row.item.pkh },
                           }"
                         >
-                          {{ row.item.name || row.item.pkh | longhash(35) }}
+                          <template v-if="row.item.name">
+                            {{ row.item.name }}
+                          </template>
+                          <template v-else>
+                            {{ row.item.pkh | longhash }}
+                          </template>
                         </b-link>
                       </template>
 
@@ -62,7 +67,7 @@
                       </template>
 
                       <template slot="proposal" slot-scope="row">
-                        <span>{{ row.item.proposal | longhash(9) }}</span>
+                        <span>{{ row.item.proposal | longhash }}</span>
                       </template>
 
                       <template slot="operation" slot-scope="row">
@@ -72,7 +77,7 @@
                             params: { voteHash: row.item.operation },
                           }"
                         >
-                          {{ row.item.operation | longhash(35) }}
+                          {{ row.item.operation | longhash }}
                         </b-link>
                       </template>
 
@@ -122,7 +127,7 @@
                           }"
                         >
                           <span>{{
-                            row.item.name || row.item.pkh | longhash(35)
+                            row.item.name || row.item.pkh | longhash
                           }}</span>
                         </b-link>
                       </template>
