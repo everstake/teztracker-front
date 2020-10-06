@@ -7,14 +7,20 @@
       :current-page="currentPage"
       :per-page="0"
       borderless
-      class="transactions-table table-responsive-md"
+      class="transactions-table table-responsive-xl"
     >
       <template slot="priority" slot-scope="row">
         <span>{{ row.item.priority }}</span>
       </template>
 
       <template slot="block_0" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_0.delegate_name && row.item.block_0.delegate"
+            :seed="row.item.block_0.delegate"
+          />
+
           <router-link
             class="baker"
             :to="{
@@ -38,7 +44,13 @@
         </span>
       </template>
       <template slot="block_1" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_1.delegate_name && row.item.block_1.delegate"
+            :seed="row.item.block_1.delegate"
+          />
+
           <router-link
             class="baker"
             :to="{
@@ -62,7 +74,13 @@
         </span>
       </template>
       <template slot="block_2" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_2.delegate_name && row.item.block_2.delegate"
+            :seed="row.item.block_2.delegate"
+          />
+
           <router-link
             class="baker"
             :to="{
@@ -86,7 +104,13 @@
         </span>
       </template>
       <template slot="block_3" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_3.delegate_name && row.item.block_3.delegate"
+            :seed="row.item.block_3.delegate"
+          />
+
           <router-link
             class="baker"
             :to="{
@@ -110,7 +134,13 @@
         </span>
       </template>
       <template slot="block_4" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_4.delegate_name && row.item.block_4.delegate"
+            :seed="row.item.block_4.delegate"
+          />
+
           <router-link
             class="baker"
             :to="{
@@ -134,7 +164,13 @@
         </span>
       </template>
       <template slot="block_5" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_5.delegate_name && row.item.block_5.delegate"
+            :seed="row.item.block_5.delegate"
+          />
+
           <router-link
             class="baker"
             :to="{
@@ -158,7 +194,13 @@
         </span>
       </template>
       <template slot="block_6" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_6.delegate_name && row.item.block_6.delegate"
+            :seed="row.item.block_6.delegate"
+          />
+
           <router-link
             class="baker"
             :to="{
@@ -199,6 +241,7 @@
   import uniq from 'lodash/uniq';
   import Pagination from '../partials/Pagination';
   import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import numeral from 'numeral';
 
@@ -207,6 +250,7 @@
     components: {
       Pagination,
       BtnCopy,
+      IdentIcon,
     },
     mixins: [handleCurrentPageChange],
     props: ['block'],

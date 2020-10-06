@@ -5,10 +5,19 @@
         <b-card-header>
           <div class="break-word">
             <h3 id="card-title" class="card__title" @click="copyToClipboard()">
-              <span ref="textToCopy" class="text">{{ hash }}</span>
-              <span class="icon"
-                ><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"
-              /></span>
+              <span v-if="account.accountName" class="text">
+                {{ account.accountName }}
+              </span>
+              <span v-else>
+                <IdentIcon :seed="hash" />
+
+                <span ref="textToCopy" class="text">{{ hash }}</span>
+                <span class="icon"
+                  ><font-awesome-icon
+                    class="icon-primary"
+                    :icon="['fas', 'copy']"
+                /></span>
+              </span>
             </h3>
             <b-tooltip ref="tooltip" triggers="hover" target="card-title">
               {{ $t('common.copyToClipboard') }}
@@ -56,7 +65,17 @@
               </span>
             </b-col>
             <b-col lg="10">
+              <IdentIcon
+                v-if="account.delegateValue && account.delegateValue !== hash"
+                :seed="account.delegateValue"
+              />
+
               <span class="value">{{ account.delegateValue || false }}</span>
+
+              <BtnCopy
+                v-if="account.delegateValue"
+                :text-to-copy="account.delegateValue"
+              />
             </b-col>
           </b-row>
 
@@ -138,11 +157,16 @@
   import convert from '../../mixins/convert';
   import { GET_APP_INFO } from '@/store/actions.types';
   import { mapState, mapActions } from 'vuex';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
 
   export default {
     name: 'AccountSingle',
+    components: {
+      BtnCopy,
+      IdentIcon,
+    },
     mixins: [convert],
-    // props: ['hash'],
     props: {
       hash: {
         type: String,

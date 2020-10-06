@@ -14,7 +14,7 @@
       class="transactions-table table-responsive-md"
     >
       <template slot="accountId" slot-scope="row">
-        <span v-if="row.item.is_baker">
+        <span v-if="row.item.is_baker" class="d-flex align-items-center">
           <b-link
             v-if="row.item.is_baker"
             :to="{ name: 'baker', params: { baker: row.item.accountId } }"
@@ -24,7 +24,9 @@
 
           <BtnCopy :text-to-copy="row.item.accountId" />
         </span>
-        <span v-else>
+        <span v-else class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.accountId" />
+
           <b-link
             :to="{ name: 'account', params: { account: row.item.accountId } }"
           >
@@ -41,7 +43,9 @@
         <span>{{ row.item.createdAt | timeformat(dateFormat) }}</span>
       </template>
       <template slot="delegateValue" slot-scope="row">
-        <span v-if="row.item.delegateValue">
+        <span v-if="row.item.delegateValue" class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.delegateValue" />
+
           <b-link
             :to="{ name: 'account', params: { account: row.item.accountId } }"
           >
@@ -64,57 +68,59 @@
   </div>
 </template>
 <script>
-import { mapMutations, mapState } from "vuex";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import BtnCopy from '@/components/partials/BtnCopy';
-import setPerPage from "@/mixins/setPerPage";
-import fetchListMixin from "@/mixins/fetchListMixin";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-import { SET_ACCOUNTS } from "@/store/mutations.types";
+  import { mapMutations, mapState } from 'vuex';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import setPerPage from '@/mixins/setPerPage';
+  import fetchListMixin from '@/mixins/fetchListMixin';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import { SET_ACCOUNTS } from '@/store/mutations.types';
 
-export default {
-  name: "AccountsList",
-  components: {
-    PerPageSelect,
-    Pagination,
-    BtnCopy,
-  },
-  mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
-  data() {
-    return {
-      fields: [
-        { key: "accountId", label: this.$tc("common.acc", 1) },
-        {
-          key: "balance",
-          label: this.$t("common.balance"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        { key: "delegateValue", label: this.$t("common.delegate") },
-        { key: "createdAt", label: this.$t("accSingle.created") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState("accounts", {
-      accounts: state => state.accounts,
-      count: state => state.counts
-    }),
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
-  },
-  methods: {
-    ...mapMutations("accounts", [SET_ACCOUNTS]),
-    async reload(page = 1) {
-      const props = {
-        page,
-        limit: this.perPage
+  export default {
+    name: 'AccountsList',
+    components: {
+      PerPageSelect,
+      Pagination,
+      BtnCopy,
+      IdentIcon,
+    },
+    mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
+    data() {
+      return {
+        fields: [
+          { key: 'accountId', label: this.$tc('common.acc', 1) },
+          {
+            key: 'balance',
+            label: this.$t('common.balance'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          { key: 'delegateValue', label: this.$t('common.delegate') },
+          { key: 'createdAt', label: this.$t('accSingle.created') },
+        ],
       };
-      const data = await this.$api.getAccounts(props);
-      this[SET_ACCOUNTS](data);
-    }
-  }
-};
+    },
+    computed: {
+      ...mapState('accounts', {
+        accounts: (state) => state.accounts,
+        count: (state) => state.counts,
+      }),
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+    methods: {
+      ...mapMutations('accounts', [SET_ACCOUNTS]),
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        const data = await this.$api.getAccounts(props);
+        this[SET_ACCOUNTS](data);
+      },
+    },
+  };
 </script>

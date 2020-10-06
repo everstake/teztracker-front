@@ -33,10 +33,15 @@
                       :fields="votersFields"
                       :current-page="currentPage"
                       :per-page="0"
-                      class="transactions-table table table-borderless table-responsive-md"
+                      class="transactions-table table table-borderless table-responsive-lg"
                     >
                       <template slot="pkh" slot-scope="row">
-                        <span>
+                        <span class="d-flex align-items-center">
+                          <IdentIcon
+                            v-if="!row.item.name"
+                            :seed="row.item.pkh"
+                          />
+
                           <b-link
                             :to="{
                               name: 'baker',
@@ -78,7 +83,7 @@
                       </template>
 
                       <template slot="operation" slot-scope="row">
-                        <span>
+                        <span class="d-flex align-items-center">
                           <b-link
                             :to="{
                               name: 'vote',
@@ -132,7 +137,12 @@
                       class="transactions-table table table-borderless table-responsive-md"
                     >
                       <template slot="pkh" slot-scope="row">
-                        <span>
+                        <span class="d-flex align-items-center">
+                          <IdentIcon
+                            v-if="!row.item.name"
+                            :seed="row.item.pkh"
+                          />
+
                           <b-link
                             :to="{
                               name: 'baker',
@@ -183,12 +193,13 @@
 <script>
   import CardSection from '@/components/partials/CardSection';
   import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
   import moment from 'moment';
   import { mapState } from 'vuex';
 
   export default {
     name: 'PeriodTable',
-    components: { CardSection, BtnCopy },
+    components: { CardSection, BtnCopy, IdentIcon },
     props: ['voters', 'nonVoters', 'votersFields', 'nonVotersFields'],
     data() {
       return {

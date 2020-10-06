@@ -9,7 +9,10 @@
                 {{ bakerInfo.name }}
               </template>
               <template v-else>
-                {{ hash }}
+                <span>
+                  <IdentIcon :seed="hash" />
+                  {{ hash }}
+                </span>
               </template>
             </span>
           </h3>
@@ -192,19 +195,23 @@
 </template>
 
 <script>
+  import IdentIcon from '@/components/accounts/IdentIcon';
   import convert from '../../mixins/convert';
   import { GET_APP_INFO } from '@/store/actions.types';
   import { mapState, mapActions } from 'vuex';
 
   export default {
     name: 'BakerSingle',
+    components: {
+      IdentIcon,
+    },
+    mixins: [convert],
     props: {
       hash: {
         type: String,
         required: true,
       },
     },
-    mixins: [convert],
     data() {
       return {
         bakerInfo: {},

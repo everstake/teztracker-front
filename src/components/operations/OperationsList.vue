@@ -20,7 +20,7 @@
       </template>
 
       <template slot="blockHash" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
           <b-link :to="{ name: 'tx', params: { txhash: row.item.blockHash } }">
             {{ row.item.blockHash | longhash }}
           </b-link>

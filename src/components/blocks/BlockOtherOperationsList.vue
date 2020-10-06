@@ -9,7 +9,9 @@
       :tbody-tr-class="$_defineRowClass"
     >
       <template slot="source" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <IdentIcon v-if="!row.item.sourceName" :seed="row.item.source" />
+
           <b-link
             :to="{
               name: 'account',
@@ -31,7 +33,20 @@
         </span>
       </template>
       <template slot="destination" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <!--TODO: Can be empty. Refactor the condition-->
+          <IdentIcon
+            v-if="
+              (!row.item.destinationName &&
+                !row.item.delegateName &&
+                !row.item.pkhName &&
+                row.item.destination) ||
+                row.item.delegate ||
+                row.item.pkh
+            "
+            :seed="row.item.destination || row.item.delegate || row.item.pkh"
+          />
+
           <b-link
             :to="{
               name: 'account',
@@ -64,11 +79,15 @@
             </template>
           </b-link>
 
+          <!--TODO: Can be empty. Refactor the condition-->
           <BtnCopy
             v-if="
-              !row.item.destinationName &&
+              (!row.item.destinationName &&
                 !row.item.delegateName &&
-                !row.item.pkhName
+                !row.item.pkhName &&
+                row.item.destination) ||
+                row.item.delegate ||
+                row.item.pkh
             "
             :text-to-copy="
               row.item.destination || row.item.delegate || row.item.pkh
@@ -88,7 +107,7 @@
         {{ row.item.fee | tezos }}
       </template>
       <template slot="operationGroupHash" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
           <b-link
             :to="{
               name: 'tx',
@@ -114,12 +133,14 @@
 <script>
   import { mapGetters } from 'vuex';
   import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
   import defineRowClass from '@/mixins/defineRowClass';
 
   export default {
     name: 'BlockOtherOperationsList',
     components: {
       BtnCopy,
+      IdentIcon,
     },
     mixins: [defineRowClass],
     props: {
