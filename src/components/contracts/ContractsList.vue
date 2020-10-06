@@ -14,30 +14,46 @@
       class="transactions-table table-responsive-md"
     >
       <template slot="accountId" slot-scope="row">
-        <router-link
-          :to="{ name: 'account', params: { account: row.item.accountId } }"
-        >
-          <span>{{ row.item.accountId | longhash(35) }}</span>
-        </router-link>
+        <span>
+          <router-link
+            :to="{ name: 'account', params: { account: row.item.accountId } }"
+          >
+            <span>{{ row.item.accountId | longhash }}</span>
+          </router-link>
+
+          <BtnCopy :text-to-copy="row.item.accountId" />
+        </span>
       </template>
       <template slot="manager" slot-scope="row">
         <b-link
           v-if="row.item.manager"
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
-          <span>{{ row.item.manager | longhash(35) }}</span>
+          <span>{{ row.item.manager | longhash }}</span>
         </b-link>
         <span v-else>----</span>
       </template>
       <template slot="delegateValue" slot-scope="row">
-        <b-link
-          v-if="row.item.delegateValue"
-          :to="{ name: 'account', params: { account: row.item.delegateValue } }"
-        >
-          <span>{{
-            row.item.delegateName || row.item.delegateValue | longhash(35)
-          }}</span>
-        </b-link>
+        <span v-if="row.item.delegateValue">
+          <b-link
+            :to="{
+              name: 'account',
+              params: { account: row.item.delegateValue },
+            }"
+          >
+            <template v-if="row.item.delegateName">
+              {{ row.item.delegateName }}
+            </template>
+            <template v-else>
+              {{ row.item.delegateValue | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.delegateName"
+            :text-to-copy="row.item.delegateValue"
+          />
+        </span>
         <span v-else>----</span>
       </template>
       <template slot="balance" slot-scope="row">
@@ -60,6 +76,7 @@
 import { mapMutations, mapState } from "vuex";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
+import BtnCopy from '@/components/partials/BtnCopy';
 import setPerPage from "@/mixins/setPerPage";
 import fetchListMixin from "@/mixins/fetchListMixin";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
@@ -69,7 +86,8 @@ export default {
   name: "ContractsList",
   components: {
     PerPageSelect,
-    Pagination
+    Pagination,
+    BtnCopy,
   },
   mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
   props: ["account"],

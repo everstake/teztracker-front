@@ -159,7 +159,7 @@
                 {{ $t('blockSingle.protocolVersion') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.protocol | longhash(9) }}
+                {{ this.block.protocol | longhash }}
               </b-col>
             </b-row>
             <b-row class="item-info">

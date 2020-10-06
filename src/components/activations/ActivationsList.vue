@@ -14,24 +14,35 @@
       borderless
       class="transactions-table table-responsive-md"
     >
-      <template slot="txhash" slot-scope="row">
-        <b-link
-          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
-        >
-          {{ row.item.operationGroupHash | longhash(35) }}
-        </b-link>
-      </template>
-
       <template slot="level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
           {{ row.item.blockLevel | formatInteger }}
         </b-link>
       </template>
 
+      <template slot="txhash" slot-scope="row">
+        <span>
+          <b-link
+            :to="{
+              name: 'tx',
+              params: { txhash: row.item.operationGroupHash },
+            }"
+          >
+            {{ row.item.operationGroupHash | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.operationGroupHash" />
+        </span>
+      </template>
+
       <template slot="to" slot-scope="row">
-        <b-link :to="{ name: 'account', params: { account: row.item.pkh } }">
-          {{ row.item.pkh }}
-        </b-link>
+        <span>
+          <b-link :to="{ name: 'account', params: { account: row.item.pkh } }">
+            {{ row.item.pkh | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.pkh" />
+        </span>
       </template>
 
       <template slot="timestamp" slot-scope="row">
@@ -51,6 +62,7 @@
   import { SET_ACTIVATIONS_COUNT } from '@/store/mutations.types';
   import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
 
@@ -59,6 +71,7 @@
     components: {
       PerPageSelect,
       Pagination,
+      BtnCopy,
     },
     mixins: [handleCurrentPageChange, setPerPage],
     props: ['account'],

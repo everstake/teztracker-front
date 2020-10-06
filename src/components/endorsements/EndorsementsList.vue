@@ -24,11 +24,18 @@
       </template>
 
       <template slot="txhash" slot-scope="row">
-        <b-link
-          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
-        >
-          {{ row.item.operationGroupHash | longhash(30) }}
-        </b-link>
+        <span>
+          <b-link
+            :to="{
+              name: 'tx',
+              params: { txhash: row.item.operationGroupHash },
+            }"
+          >
+            {{ row.item.operationGroupHash | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.operationGroupHash" />
+        </span>
       </template>
 
       <template slot="blockLevel" slot-scope="row">
@@ -38,12 +45,21 @@
       </template>
 
       <template slot="endorser" slot-scope="row">
-        <b-link
-          :to="{ name: 'account', params: { account: row.item.delegate } }"
-        >
-          <span v-if="row.item.delegateName">{{ row.item.delegateName }}</span>
-          <span v-else>{{ row.item.delegate | longhash(16) }}</span>
-        </b-link>
+        <span>
+          <b-link
+            :to="{ name: 'account', params: { account: row.item.delegate } }"
+          >
+            <span v-if="row.item.delegateName">{{
+              row.item.delegateName
+            }}</span>
+            <span v-else>{{ row.item.delegate | longhash }}</span>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.delegateName"
+            :text-to-copy="row.item.delegate"
+          />
+        </span>
       </template>
 
       <template slot="level" slot-scope="row">
@@ -75,6 +91,7 @@
   import { SET_ENDORSEMENTS_COUNT } from '@/store/mutations.types';
   import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
 
@@ -83,6 +100,7 @@
     components: {
       PerPageSelect,
       Pagination,
+      BtnCopy,
     },
     mixins: [handleCurrentPageChange, setPerPage],
     props: ['blockHash', 'account', 'isBaker', 'disablePagination'],

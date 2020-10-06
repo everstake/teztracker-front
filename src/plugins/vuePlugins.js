@@ -18,6 +18,7 @@ import {
   FormInputPlugin,
   BForm,
   ModalPlugin,
+  ToastPlugin,
 } from 'bootstrap-vue';
 import {
   FontAwesomeIcon,
@@ -57,6 +58,7 @@ import router from '../router';
 import VueGtag from 'vue-gtag';
 import FlagIcon from 'vue-flag-icon';
 import VueGtm from 'vue-gtm';
+import VueClipboard from 'vue-clipboard2';
 
 Vue.use(LinkPlugin);
 Vue.use(TablePlugin);
@@ -76,6 +78,7 @@ Vue.use(NavbarPlugin);
 Vue.use(FormInputPlugin);
 Vue.use(ModalPlugin);
 Vue.use(FlagIcon);
+Vue.use(ToastPlugin);
 
 Vue.component('b-form', BForm);
 
@@ -119,3 +122,5 @@ Vue.use(VueGtm, {
   loadScript: true, // Whether or not to load the GTM Script (Helpful if you are including GTM manually, but need the dataLayer functionality in your components) (optional)
   vueRouter: router, // Pass the router instance to automatically sync with router (optional)
 });
+
+Vue.use(VueClipboard);

@@ -24,12 +24,16 @@ Vue.filter('timeformat', function(ts, format) {
   ).format(format);
 });
 
-Vue.filter('longhash', function(hash, length) {
-  const l = length || Vue.prototype.$constants.MAX_HASH_LENGTH;
-  if (!hash || hash.length < l) {
-    return hash;
-  }
-  return hash.slice(0, l) + '...';
+// Vue.filter('longhash', function(hash, length) {
+//   const l = length || Vue.prototype.$constants.MAX_HASH_LENGTH;
+//   if (!hash || hash.length < l) {
+//     return hash;
+//   }
+//   return hash.slice(0, l) + '...';
+// });
+
+Vue.filter('longhash', function(hash, fromStart, fromEnd) {
+  return Vue.prototype.$helpers.truncateHash(hash, fromStart, fromEnd);
 });
 
 Vue.filter('tezos', function(amount) {

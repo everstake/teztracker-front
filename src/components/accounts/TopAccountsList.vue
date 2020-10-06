@@ -15,24 +15,57 @@
       class="transactions-table table-responsive-md"
     >
       <template slot="accountId" slot-scope="row">
-        <b-link
-          v-if="row.item.is_baker"
-          :to="{ name: 'baker', params: { baker: row.item.accountId } }"
-        >
-          <span>{{ row.item.accountName || row.item.accountId }}</span>
-        </b-link>
-        <b-link
-          v-else-if="row.item.accountId.slice(0, 2) === 'KT'"
-          :to="{ name: 'account', params: { account: row.item.accountId } }"
-        >
-          <span>{{ row.item.accountName || row.item.accountId }}</span>
-        </b-link>
-        <b-link
-          v-else
-          :to="{ name: 'account', params: { account: row.item.accountId } }"
-        >
-          <span>{{ row.item.accountName || row.item.accountId }}</span>
-        </b-link>
+        <span v-if="row.item.is_baker">
+          <b-link
+            :to="{ name: 'baker', params: { baker: row.item.accountId } }"
+          >
+            <template v-if="row.item.accountName">
+              {{ row.item.accountName }}
+            </template>
+            <template v-else>
+              {{ row.item.accountId | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.accountName"
+            :text-to-copy="row.item.accountId"
+          />
+        </span>
+        <span v-else-if="row.item.accountId.slice(0, 2) === 'KT'">
+          <b-link
+            :to="{ name: 'account', params: { account: row.item.accountId } }"
+          >
+            <template v-if="row.item.accountName">
+              {{ row.item.accountName }}
+            </template>
+            <template v-else>
+              {{ row.item.accountId | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.accountName"
+            :text-to-copy="row.item.accountId"
+          />
+        </span>
+        <span v-else>
+          <b-link
+            :to="{ name: 'account', params: { account: row.item.accountId } }"
+          >
+            <template v-if="row.item.accountName">
+              {{ row.item.accountName }}
+            </template>
+            <template v-else>
+              {{ row.item.accountId | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.accountName"
+            :text-to-copy="row.item.accountId"
+          />
+        </span>
       </template>
       <template slot="balance" slot-scope="row">
         <span>{{ row.item.balance | tezosToFixed }}</span>
@@ -54,9 +87,14 @@
           v-if="row.item.delegateValue"
           :to="{ name: 'baker', params: { baker: row.item.accountId } }"
         >
-          <span>{{
-            row.item.delegateName || row.item.delegateValue | longhash(15)
-          }}</span>
+          <span>
+            <template v-if="row.item.delegateName">
+              {{ row.item.delegateName }}
+            </template>
+            <template v-else>
+              {{ row.item.delegateValue | longhash }}
+            </template>
+          </span>
         </b-link>
         <span v-else>----</span>
       </template>
@@ -73,6 +111,7 @@
 <script>
   import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
   import { mapState } from 'vuex';
@@ -82,6 +121,7 @@
     components: {
       PerPageSelect,
       Pagination,
+      BtnCopy,
     },
     mixins: [handleCurrentPageChange, setPerPage],
     data() {

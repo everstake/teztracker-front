@@ -14,9 +14,20 @@
       class="transactions-table table-responsive-md"
     >
       <template slot="accountId" slot-scope="row">
-        <b-link :to="{ name: 'baker', params: { baker: row.item.accountId } }">
-          {{ row.item.name || row.item.accountId | longhash(35) }}
-        </b-link>
+        <span>
+          <b-link
+            :to="{ name: 'baker', params: { baker: row.item.accountId } }"
+          >
+            <template v-if="row.item.name">
+              {{ row.item.name }}
+            </template>
+            <template v-else>
+              {{ row.item.accountId | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy v-if="!row.item.name" :text-to-copy="row.item.accountId" />
+        </span>
       </template>
       <template slot="blocks" slot-scope="row">
         {{ row.item.blocks | formatInteger }}
@@ -47,6 +58,7 @@
 import { mapMutations, mapState } from "vuex";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
+import BtnCopy from '@/components/partials/BtnCopy';
 import setPerPage from "@/mixins/setPerPage";
 import fetchListMixin from "@/mixins/fetchListMixin";
 import { SET_BAKERS } from "@/store/mutations.types";
@@ -56,7 +68,8 @@ export default {
   name: "BakersList",
   components: {
     PerPageSelect,
-    Pagination
+    Pagination,
+    BtnCopy,
   },
   mixins: [fetchListMixin, handleCurrentPageChange, setPerPage],
   data() {

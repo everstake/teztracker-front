@@ -97,7 +97,7 @@
                     >
                       <span v-if="head.bakerName"> {{ head.bakerName }}</span>
                       <span v-else>
-                        {{ head.baker | longhash(13) }}
+                        {{ head.baker | longhash }}
                       </span>
                     </router-link>
                   </span>

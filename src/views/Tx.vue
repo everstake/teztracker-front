@@ -82,8 +82,7 @@
                             }"
                           >
                             {{
-                              row.item.sourceName ||
-                                row.item.source | longhash(20)
+                              row.item.sourceName || row.item.source | longhash
                             }}
                           </b-link>
                         </template>
@@ -102,7 +101,7 @@
                               row.item.destinationName ||
                                 row.item.destination ||
                                 row.item.delegateName ||
-                                row.item.delegate | longhash(20)
+                                row.item.delegate | longhash
                             }}
                           </b-link>
                         </template>
@@ -131,7 +130,7 @@
                               params: { account: row.item.originatedContracts },
                             }"
                           >
-                            {{ row.item.originatedContracts | longhash(20) }}
+                            {{ row.item.originatedContracts | longhash }}
                           </b-link>
                         </template>
                       </b-table>

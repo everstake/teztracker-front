@@ -89,7 +89,7 @@
                       </div>
                       <div class="vote-card__recent-proposal font font--mini">
                         <span>{{ $tc('voting.proposal', 1) }}:</span>
-                        {{ voter.proposal | longhash(9) }}
+                        {{ voter.proposal | longhash }}
                       </div>
                     </div>
                     <div class="vote-card__recent-rolls font font--mini">
