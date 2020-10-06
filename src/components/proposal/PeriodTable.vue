@@ -36,19 +36,26 @@
                       class="transactions-table table table-borderless table-responsive-md"
                     >
                       <template slot="pkh" slot-scope="row">
-                        <b-link
-                          :to="{
-                            name: 'baker',
-                            params: { baker: row.item.pkh },
-                          }"
-                        >
-                          <template v-if="row.item.name">
-                            {{ row.item.name }}
-                          </template>
-                          <template v-else>
-                            {{ row.item.pkh | longhash }}
-                          </template>
-                        </b-link>
+                        <span>
+                          <b-link
+                            :to="{
+                              name: 'baker',
+                              params: { baker: row.item.pkh },
+                            }"
+                          >
+                            <template v-if="row.item.name">
+                              {{ row.item.name }}
+                            </template>
+                            <template v-else>
+                              {{ row.item.pkh | longhash }}
+                            </template>
+                          </b-link>
+
+                          <BtnCopy
+                            v-if="!row.item.name"
+                            :text-to-copy="row.item.pkh"
+                          />
+                        </span>
                       </template>
 
                       <template slot="rolls" slot-scope="row">
@@ -71,14 +78,18 @@
                       </template>
 
                       <template slot="operation" slot-scope="row">
-                        <b-link
-                          :to="{
-                            name: 'vote',
-                            params: { voteHash: row.item.operation },
-                          }"
-                        >
-                          {{ row.item.operation | longhash }}
-                        </b-link>
+                        <span>
+                          <b-link
+                            :to="{
+                              name: 'vote',
+                              params: { voteHash: row.item.operation },
+                            }"
+                          >
+                            {{ row.item.operation | longhash }}
+                          </b-link>
+
+                          <BtnCopy :text-to-copy="row.item.operation" />
+                        </span>
                       </template>
 
                       <template slot="timestamp" slot-scope="row">
@@ -99,6 +110,7 @@
                     </div>
                   </b-card-body>
                 </b-tab>
+
                 <b-tab :title="$t('voting.nonVoters')">
                   <b-card-header>
                     <div class="break-word">
@@ -120,16 +132,26 @@
                       class="transactions-table table table-borderless table-responsive-md"
                     >
                       <template slot="pkh" slot-scope="row">
-                        <b-link
-                          :to="{
-                            name: 'baker',
-                            params: { baker: row.item.pkh },
-                          }"
-                        >
-                          <span>{{
-                            row.item.name || row.item.pkh | longhash
-                          }}</span>
-                        </b-link>
+                        <span>
+                          <b-link
+                            :to="{
+                              name: 'baker',
+                              params: { baker: row.item.pkh },
+                            }"
+                          >
+                            <template v-if="row.item.name">
+                              {{ row.item.name }}
+                            </template>
+                            <template v-else>
+                              {{ row.item.pkh | longhash }}
+                            </template>
+                          </b-link>
+
+                          <BtnCopy
+                            v-if="!row.item.name"
+                            :text-to-copy="row.item.pkh"
+                          />
+                        </span>
                       </template>
                       <template slot="rolls" slot-scope="row">
                         {{ row.item.rolls | formatInteger }}
@@ -160,12 +182,13 @@
 
 <script>
   import CardSection from '@/components/partials/CardSection';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import moment from 'moment';
   import { mapState } from 'vuex';
 
   export default {
     name: 'PeriodTable',
-    components: { CardSection },
+    components: { CardSection, BtnCopy },
     props: ['voters', 'nonVoters', 'votersFields', 'nonVotersFields'],
     data() {
       return {

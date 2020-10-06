@@ -16,11 +16,18 @@
       :tbody-tr-class="$_defineRowClass"
     >
       <template slot="txhash" slot-scope="row">
-        <b-link
-          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
-        >
-          {{ row.item.operationGroupHash | longhash }}
-        </b-link>
+        <span>
+          <b-link
+            :to="{
+              name: 'tx',
+              params: { txhash: row.item.operationGroupHash },
+            }"
+          >
+            {{ row.item.operationGroupHash | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.operationGroupHash" />
+        </span>
       </template>
 
       <template slot="level" slot-scope="row">
@@ -34,39 +41,51 @@
       </template>
 
       <template slot="from" slot-scope="row">
-        <b-link
-          :to="{ name: 'account', params: { account: row.item.source } }"
-          :class="row.item.sourceName === account ? 'source' : 'destination'"
-        >
-          <div>
+        <span class="position-relative w-100 d-inline-block">
+          <b-link
+            :to="{ name: 'account', params: { account: row.item.source } }"
+            :class="row.item.sourceName === account ? 'source' : 'destination'"
+          >
             <template v-if="row.item.sourceName">
               {{ row.item.sourceName }}
             </template>
             <template v-else>
               {{ row.item.source | longhash }}
             </template>
+          </b-link>
 
-            <div v-if="account === row.item.source" class="icon">
-              <i class="icon__arrow--green"></i>
-            </div>
-            <div v-else-if="account === row.item.destination" class="icon">
-              <i class="icon__arrow--red"></i>
-            </div>
-          </div>
-        </b-link>
+          <BtnCopy
+            v-if="!row.item.sourceName"
+            :text-to-copy="row.item.source"
+          />
+
+          <span v-if="account === row.item.source" class="icon">
+            <i class="icon__arrow--green"></i>
+          </span>
+          <span v-else-if="account === row.item.destination" class="icon">
+            <i class="icon__arrow--red"></i>
+          </span>
+        </span>
       </template>
 
       <template slot="to" slot-scope="row">
-        <b-link
-          :to="{ name: 'account', params: { account: row.item.destination } }"
-        >
-          <template v-if="row.item.destinationName">
-            {{ row.item.destinationName }}
-          </template>
-          <template v-else>
-            {{ row.item.destination | longhash }}
-          </template>
-        </b-link>
+        <span>
+          <b-link
+            :to="{ name: 'account', params: { account: row.item.destination } }"
+          >
+            <template v-if="row.item.destinationName">
+              {{ row.item.destinationName }}
+            </template>
+            <template v-else>
+              {{ row.item.destination | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.destinationName"
+            :text-to-copy="row.item.destination"
+          />
+        </span>
       </template>
       <template slot="amount" slot-scope="row">
         {{ row.item.amount | tezos }}
@@ -92,12 +111,14 @@
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
   import defineRowClass from '@/mixins/defineRowClass';
+  import BtnCopy from '@/components/partials/BtnCopy';
 
   export default {
     name: 'TxsList',
     components: {
       PerPageSelect,
       Pagination,
+      BtnCopy,
     },
     mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
     props: {
@@ -211,10 +232,13 @@
 </script>
 
 <style lang="scss" scoped>
+  .s {
+    position: relative;
+  }
+
   .source,
   .destination {
     position: relative;
-    padding-left: 12px;
   }
 
   .icon {

@@ -14,11 +14,18 @@
       class="transactions-table table-responsive-md"
     >
       <template slot="txhash" slot-scope="row">
-        <b-link
-          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
-        >
-          {{ row.item.operationGroupHash | longhash }}
-        </b-link>
+        <span>
+          <b-link
+            :to="{
+              name: 'tx',
+              params: { txhash: row.item.operationGroupHash },
+            }"
+          >
+            {{ row.item.operationGroupHash | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.operationGroupHash" />
+        </span>
       </template>
 
       <template slot="level" slot-scope="row">
@@ -31,39 +38,55 @@
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
       <template slot="baker" slot-scope="row">
-        <router-link
-          class="baker"
-          :to="{
-            name: 'baker',
-            params: { baker: row.item.doubleOperationDetails.evidence_baker },
-          }"
-        >
-          <template v-if="row.item.doubleOperationDetails.evidence_baker_name">
-            {{ row.item.doubleOperationDetails.evidence_baker_name }}
-          </template>
-          <template v-else>
-            {{ row.item.doubleOperationDetails.evidence_baker | longhash }}
-          </template>
-        </router-link>
+        <span>
+          <router-link
+            class="baker"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.doubleOperationDetails.evidence_baker },
+            }"
+          >
+            <template
+              v-if="row.item.doubleOperationDetails.evidence_baker_name"
+            >
+              {{ row.item.doubleOperationDetails.evidence_baker_name }}
+            </template>
+            <template v-else>
+              {{ row.item.doubleOperationDetails.evidence_baker | longhash }}
+            </template>
+          </router-link>
+
+          <BtnCopy
+            v-if="!row.item.doubleOperationDetails.evidence_baker_name"
+            :text-to-copy="row.item.doubleOperationDetails.evidence_baker"
+          />
+        </span>
       </template>
       <template slot="baker_rewards" slot-scope="row">
         {{ row.item.doubleOperationDetails.baker_reward | tezos }}
       </template>
       <template slot="offender" slot-scope="row">
-        <router-link
-          class="baker"
-          :to="{
-            name: 'baker',
-            params: { baker: row.item.doubleOperationDetails.offender },
-          }"
-        >
-          <template v-if="row.item.doubleOperationDetails.offender_name">
-            {{ row.item.doubleOperationDetails.offender_name }}
-          </template>
-          <template v-else>
-            {{ row.item.doubleOperationDetails.offender | longhash }}
-          </template>
-        </router-link>
+        <span>
+          <router-link
+            class="baker"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.doubleOperationDetails.offender },
+            }"
+          >
+            <template v-if="row.item.doubleOperationDetails.offender_name">
+              {{ row.item.doubleOperationDetails.offender_name }}
+            </template>
+            <template v-else>
+              {{ row.item.doubleOperationDetails.offender | longhash }}
+            </template>
+          </router-link>
+
+          <BtnCopy
+            v-if="!row.item.doubleOperationDetails.offender_name"
+            :text-to-copy="row.item.doubleOperationDetails.offender"
+          />
+        </span>
       </template>
       <template slot="denounced_level" slot-scope="row">
         <b-link
@@ -96,6 +119,7 @@
   import { SET_DOUBLE_ENDORSEMENT_COUNT } from '@/store/mutations.types';
   import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
 
@@ -104,6 +128,7 @@
     components: {
       PerPageSelect,
       Pagination,
+      BtnCopy,
     },
     mixins: [handleCurrentPageChange, setPerPage],
     props: ['account'],

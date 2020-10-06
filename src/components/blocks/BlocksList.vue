@@ -24,14 +24,18 @@
       </template>
 
       <template slot="baker" slot-scope="row">
-        <b-link :to="{ name: 'baker', params: { baker: row.item.baker } }">
-          <template v-if="row.item.bakerName">
-            {{ row.item.bakerName }}
-          </template>
-          <template v-else>
-            {{ row.item.baker | longhash }}
-          </template>
-        </b-link>
+        <span>
+          <b-link :to="{ name: 'baker', params: { baker: row.item.baker } }">
+            <template v-if="row.item.bakerName">
+              {{ row.item.bakerName }}
+            </template>
+            <template v-else>
+              {{ row.item.baker | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy v-if="!row.item.bakerName" :text-to-copy="row.item.baker" />
+        </span>
       </template>
 
       <template slot="number_of_operations" slot-scope="row">
@@ -62,6 +66,7 @@
 import { mapMutations, mapState } from "vuex";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
+import BtnCopy from '@/components/partials/BtnCopy';
 import setPerPage from "@/mixins/setPerPage";
 import fetchListMixin from "@/mixins/fetchListMixin";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
@@ -71,7 +76,8 @@ export default {
   name: "BlocksList",
   components: {
     PerPageSelect,
-    Pagination
+    Pagination,
+    BtnCopy,
   },
   mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
   props: {

@@ -20,9 +20,13 @@
       </template>
 
       <template slot="blockHash" slot-scope="row">
-        <b-link :to="{ name: 'tx', params: { txhash: row.item.blockHash } }">
-          {{ row.item.blockHash | longhash }}
-        </b-link>
+        <span>
+          <b-link :to="{ name: 'tx', params: { txhash: row.item.blockHash } }">
+            {{ row.item.blockHash | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.blockHash" />
+        </span>
       </template>
 
       <template slot="timestamp" slot-scope="row">
@@ -41,6 +45,7 @@
 <script>
   import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
   import { mapState } from 'vuex';
@@ -50,6 +55,7 @@
     components: {
       PerPageSelect,
       Pagination,
+      BtnCopy,
     },
     mixins: [handleCurrentPageChange, setPerPage],
     props: ['account'],

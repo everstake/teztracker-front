@@ -14,18 +14,25 @@
       class="transactions-table table-responsive-md"
     >
       <template slot="accountId" slot-scope="row">
-        <b-link
-          v-if="row.item.is_baker"
-          :to="{ name: 'baker', params: { baker: row.item.accountId } }"
-        >
-          <span>{{ row.item.accountId | longhash }}</span>
-        </b-link>
-        <b-link
-          v-else
-          :to="{ name: 'account', params: { account: row.item.accountId } }"
-        >
-          <span>{{ row.item.accountId | longhash }}</span>
-        </b-link>
+        <span v-if="row.item.is_baker">
+          <b-link
+            v-if="row.item.is_baker"
+            :to="{ name: 'baker', params: { baker: row.item.accountId } }"
+          >
+            {{ row.item.accountId | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.accountId" />
+        </span>
+        <span v-else>
+          <b-link
+            :to="{ name: 'account', params: { account: row.item.accountId } }"
+          >
+            {{ row.item.accountId | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.accountId" />
+        </span>
       </template>
       <template slot="balance" slot-scope="row">
         <span>{{ row.item.balance | tezos }}</span>
@@ -34,12 +41,15 @@
         <span>{{ row.item.createdAt | timeformat(dateFormat) }}</span>
       </template>
       <template slot="delegateValue" slot-scope="row">
-        <b-link
-          v-if="row.item.delegateValue"
-          :to="{ name: 'account', params: { account: row.item.accountId } }"
-        >
-          <span>{{ row.item.delegateValue | longhash }}</span>
-        </b-link>
+        <span v-if="row.item.delegateValue">
+          <b-link
+            :to="{ name: 'account', params: { account: row.item.accountId } }"
+          >
+            <span>{{ row.item.delegateValue | longhash }}</span>
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.delegateValue" />
+        </span>
         <span v-else>----</span>
       </template>
     </b-table>
@@ -57,6 +67,7 @@
 import { mapMutations, mapState } from "vuex";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
+import BtnCopy from '@/components/partials/BtnCopy';
 import setPerPage from "@/mixins/setPerPage";
 import fetchListMixin from "@/mixins/fetchListMixin";
 import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
@@ -66,7 +77,8 @@ export default {
   name: "AccountsList",
   components: {
     PerPageSelect,
-    Pagination
+    Pagination,
+    BtnCopy,
   },
   mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
   data() {

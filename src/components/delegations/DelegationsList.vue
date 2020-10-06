@@ -16,11 +16,18 @@
       :tbody-tr-class="$_defineRowClass"
     >
       <template slot="txhash" slot-scope="row">
-        <b-link
-          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
-        >
-          {{ row.item.operationGroupHash | longhash }}
-        </b-link>
+        <span>
+          <b-link
+            :to="{
+              name: 'tx',
+              params: { txhash: row.item.operationGroupHash },
+            }"
+          >
+            {{ row.item.operationGroupHash | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.operationGroupHash" />
+        </span>
       </template>
 
       <template slot="delegationAmount" slot-scope="row">
@@ -28,28 +35,43 @@
       </template>
 
       <template slot="from" slot-scope="row">
-        <b-link :to="{ name: 'account', params: { account: row.item.source } }">
-          <template v-if="row.item.sourceName">
-            {{ row.item.sourceName }}
-          </template>
-          <template v-else>
-            {{ row.item.source | longhash }}
-          </template>
-        </b-link>
+        <span>
+          <b-link
+            :to="{ name: 'account', params: { account: row.item.source } }"
+          >
+            <template v-if="row.item.sourceName">
+              {{ row.item.sourceName }}
+            </template>
+            <template v-else>
+              {{ row.item.source | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.sourceName"
+            :text-to-copy="row.item.source"
+          />
+        </span>
       </template>
 
       <template slot="to" slot-scope="row">
-        <b-link
-          v-if="row.item.delegateName || row.item.delegate"
-          :to="{ name: 'account', params: { account: row.item.delegate } }"
-        >
-          <template v-if="row.item.delegateName">
-            {{ row.item.delegateName }}
-          </template>
-          <template v-else>
-            {{ row.item.delegate | longhash }}
-          </template>
-        </b-link>
+        <span v-if="row.item.delegateName || row.item.delegate">
+          <b-link
+            :to="{ name: 'account', params: { account: row.item.delegate } }"
+          >
+            <template v-if="row.item.delegateName">
+              {{ row.item.delegateName }}
+            </template>
+            <template v-else>
+              {{ row.item.delegate | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.delegateName"
+            :text-to-copy="row.item.delegate"
+          />
+        </span>
         <span v-else>unset</span>
       </template>
 
@@ -82,6 +104,7 @@
   import { SET_DELEGATIONS_COUNT } from '@/store/mutations.types';
   import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
   import defineRowClass from '@/mixins/defineRowClass';
@@ -91,6 +114,7 @@
     components: {
       PerPageSelect,
       Pagination,
+      BtnCopy,
     },
     props: ['account'],
     mixins: [handleCurrentPageChange, setPerPage, defineRowClass],

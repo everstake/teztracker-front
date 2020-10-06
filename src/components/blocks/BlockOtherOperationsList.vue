@@ -9,52 +9,72 @@
       :tbody-tr-class="$_defineRowClass"
     >
       <template slot="source" slot-scope="row">
-        <b-link
-          :to="{
-            name: 'account',
-            params: { network: currentNetwork, account: row.item.source },
-          }"
-        >
-          <template v-if="row.item.sourceName">
-            {{ row.item.sourceName }}
-          </template>
-          <template v-else>
-            {{ row.item.source | longhash }}
-          </template>
-        </b-link>
+        <span>
+          <b-link
+            :to="{
+              name: 'account',
+              params: { network: currentNetwork, account: row.item.source },
+            }"
+          >
+            <template v-if="row.item.sourceName">
+              {{ row.item.sourceName }}
+            </template>
+            <template v-else>
+              {{ row.item.source | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.sourceName"
+            :text-to-copy="row.item.source"
+          />
+        </span>
       </template>
       <template slot="destination" slot-scope="row">
-        <b-link
-          :to="{
-            name: 'account',
-            params: {
-              network: currentNetwork,
-              account:
-                row.item.destination || row.item.delegate || row.item.pkh,
-            },
-          }"
-        >
-          <template
-            v-if="
-              row.item.destinationName ||
-                row.item.delegateName ||
-                row.item.pkhName
-            "
+        <span>
+          <b-link
+            :to="{
+              name: 'account',
+              params: {
+                network: currentNetwork,
+                account:
+                  row.item.destination || row.item.delegate || row.item.pkh,
+              },
+            }"
           >
-            {{
-              row.item.destinationName ||
-                row.item.delegateName ||
-                row.item.pkhName
-            }}
-          </template>
-          <template v-else>
-            {{
-              row.item.destination | longhash() ||
-                row.item.delegate | longhash() ||
-                row.item.pkh | longhash()
-            }}
-          </template>
-        </b-link>
+            <template
+              v-if="
+                row.item.destinationName ||
+                  row.item.delegateName ||
+                  row.item.pkhName
+              "
+            >
+              {{
+                row.item.destinationName ||
+                  row.item.delegateName ||
+                  row.item.pkhName
+              }}
+            </template>
+            <template v-else>
+              {{
+                row.item.destination | longhash() ||
+                  row.item.delegate | longhash() ||
+                  row.item.pkh | longhash()
+              }}
+            </template>
+          </b-link>
+
+          <BtnCopy
+            v-if="
+              !row.item.destinationName &&
+                !row.item.delegateName &&
+                !row.item.pkhName
+            "
+            :text-to-copy="
+              row.item.destination || row.item.delegate || row.item.pkh
+            "
+          />
+        </span>
       </template>
       <template slot="amount" slot-scope="row">
         <template v-if="row.item.amount">
@@ -68,17 +88,21 @@
         {{ row.item.fee | tezos }}
       </template>
       <template slot="operationGroupHash" slot-scope="row">
-        <b-link
-          :to="{
-            name: 'tx',
-            params: {
-              network: currentNetwork,
-              txhash: row.item.operationGroupHash,
-            },
-          }"
-        >
-          {{ row.item.operationGroupHash | longhash }}
-        </b-link>
+        <span>
+          <b-link
+            :to="{
+              name: 'tx',
+              params: {
+                network: currentNetwork,
+                txhash: row.item.operationGroupHash,
+              },
+            }"
+          >
+            {{ row.item.operationGroupHash | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.operationGroupHash" />
+        </span>
       </template>
       <template slot="kind" slot-scope="row">
         {{ operationTypesMap[row.item.kind] }}
@@ -89,10 +113,14 @@
 
 <script>
   import { mapGetters } from 'vuex';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import defineRowClass from '@/mixins/defineRowClass';
 
   export default {
     name: 'BlockOtherOperationsList',
+    components: {
+      BtnCopy,
+    },
     mixins: [defineRowClass],
     props: {
       blockHash: {
