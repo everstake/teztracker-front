@@ -333,6 +333,10 @@
           }
         });
 
+        while (result.length < 4) {
+          result.push(null);
+        }
+
         return result;
       },
       getDoughnutLegendPosition() {
