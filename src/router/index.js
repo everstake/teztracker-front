@@ -13,16 +13,13 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const { networkList } = appState;
   const toRouteName = String(to.name);
-  const isRouteNetworkValid = appState.networkList.some(
-    (network) => network === to.params.network,
-  );
+  const networkValid = networkList.some((network) => network === to.params.network);
+  const routesNoChangableNetwork = ['protocol', 'period', 'charts', 'vote'];
+  const networkNotChangable = routesNoChangableNetwork.some((route) => toRouteName.includes(route));
 
-  if (
-    toRouteName.includes('protocol') ||
-    toRouteName.includes('period') ||
-    toRouteName.includes('charts')
-  ) {
+  if (networkNotChangable) {
     if (appState.networkChangable)
       store.commit('app/setAppNetworkChangable', false);
   } else {
@@ -30,7 +27,7 @@ router.beforeEach((to, from, next) => {
       store.commit('app/setAppNetworkChangable', true);
   }
 
-  if (isRouteNetworkValid) {
+  if (networkValid) {
     store.commit('app/setAppNetwork', to.params.network);
     return next();
   } else {
