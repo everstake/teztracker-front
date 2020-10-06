@@ -9,7 +9,7 @@
       :items="accounts"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="perPage"
+      :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
     >
@@ -45,7 +45,8 @@
     </b-table>
 
     <div class="pagination-block">
-      <PaginationWithCustomAction
+      <Pagination
+        @change="$_handleCurrentPageChange"
         :total-rows="count.accounts"
         :per-page="perPage"
       />
@@ -53,49 +54,55 @@
   </div>
 </template>
 <script>
-  import { mapState } from 'vuex';
-  import PerPageSelect from '@/components/partials/PerPageSelect';
-  import Pagination from '../partials/Pagination';
-  import setPerPage from '@/mixins/setPerPage';
+import { mapMutations, mapState } from "vuex";
+import PerPageSelect from "@/components/partials/PerPageSelect";
+import Pagination from "../partials/Pagination";
+import setPerPage from "@/mixins/setPerPage";
+import fetchListMixin from "@/mixins/fetchListMixin";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
+import { SET_ACCOUNTS } from "@/store/mutations.types";
 
-  import withCustomAction from '../partials/withCustomAction';
-  const PaginationWithCustomAction = withCustomAction(
-    Pagination,
-    'accounts',
-    'GET_ACCOUNTS',
-  );
-
-  export default {
-    name: 'AccountsList',
-    components: {
-      PerPageSelect,
-      PaginationWithCustomAction,
-    },
-    mixins: [setPerPage],
-    data() {
-      return {
-        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-        fields: [
-          { key: 'accountId', label: this.$tc('common.acc', 1) },
-          {
-            key: 'balance',
-            label: this.$t('common.balance'),
-            sortable: true,
-            sortDirection: 'desc',
-          },
-          { key: 'delegateValue', label: this.$t('common.delegate') },
-          { key: 'createdAt', label: this.$t('accSingle.created') },
-        ],
+export default {
+  name: "AccountsList",
+  components: {
+    PerPageSelect,
+    Pagination
+  },
+  mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
+  data() {
+    return {
+      fields: [
+        { key: "accountId", label: this.$tc("common.acc", 1) },
+        {
+          key: "balance",
+          label: this.$t("common.balance"),
+          sortable: true,
+          sortDirection: "desc"
+        },
+        { key: "delegateValue", label: this.$t("common.delegate") },
+        { key: "createdAt", label: this.$t("accSingle.created") }
+      ]
+    };
+  },
+  computed: {
+    ...mapState("accounts", {
+      accounts: state => state.accounts,
+      count: state => state.counts
+    }),
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
+    })
+  },
+  methods: {
+    ...mapMutations("accounts", [SET_ACCOUNTS]),
+    async reload(page = 1) {
+      const props = {
+        page,
+        limit: this.perPage
       };
-    },
-    computed: {
-      ...mapState('accounts', {
-        accounts: (state) => state.accounts,
-        count: (state) => state.counts,
-      }),
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
-    },
-  };
+      const data = await this.$api.getAccounts(props);
+      this[SET_ACCOUNTS](data);
+    }
+  }
+};
 </script>

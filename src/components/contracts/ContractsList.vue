@@ -9,7 +9,7 @@
       :items="contracts"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="perPage"
+      :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
     >
@@ -48,8 +48,8 @@
       </template>
     </b-table>
 
-    <PaginationWithCustomAction
-      v-model="currentPage"
+    <Pagination
+      @change="$_handleCurrentPageChange"
       :total-rows="count.contracts"
       :per-page="perPage"
     />
@@ -57,51 +57,57 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  import PerPageSelect from '@/components/partials/PerPageSelect';
-  import Pagination from '../partials/Pagination';
-  import setPerPage from '@/mixins/setPerPage';
+import { mapMutations, mapState } from "vuex";
+import PerPageSelect from "@/components/partials/PerPageSelect";
+import Pagination from "../partials/Pagination";
+import setPerPage from "@/mixins/setPerPage";
+import fetchListMixin from "@/mixins/fetchListMixin";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
+import { SET_CONTRACTS } from "@/store/mutations.types";
 
-  import withCustomAction from '../partials/withCustomAction';
-  const PaginationWithCustomAction = withCustomAction(
-    Pagination,
-    'accounts',
-    'GET_CONTRACTS',
-  );
-
-  export default {
-    name: 'ContractsList',
-    components: {
-      PerPageSelect,
-      PaginationWithCustomAction,
-    },
-    mixins: [setPerPage],
-    props: ['account'],
-    data() {
-      return {
-        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-        fields: [
-          { key: 'accountId', label: this.$tc('common.contract', 1) },
-          { key: 'manager', label: this.$t('common.manager') },
-          { key: 'delegateValue', label: this.$t('common.delegate') },
-          {
-            key: 'balance',
-            label: this.$t('common.balance'),
-            sortable: true,
-            sortDirection: 'desc',
-          },
-          { key: 'createdAt', label: this.$t('accSingle.created') },
-        ],
+export default {
+  name: "ContractsList",
+  components: {
+    PerPageSelect,
+    Pagination
+  },
+  mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
+  props: ["account"],
+  data() {
+    return {
+      fields: [
+        { key: "accountId", label: this.$tc("common.contract", 1) },
+        { key: "manager", label: this.$t("common.manager") },
+        { key: "delegateValue", label: this.$t("common.delegate") },
+        {
+          key: "balance",
+          label: this.$t("common.balance"),
+          sortable: true,
+          sortDirection: "desc"
+        },
+        { key: "createdAt", label: this.$t("accSingle.created") }
+      ]
+    };
+  },
+  computed: {
+    ...mapState("accounts", {
+      contracts: state => state.contracts,
+      count: state => state.counts
+    }),
+    ...mapState("app", {
+      dateFormat: state => state.dateFormat
+    })
+  },
+  methods: {
+    ...mapMutations("accounts", [SET_CONTRACTS]),
+    async reload(page = 1) {
+      const props = {
+        page,
+        limit: this.perPage
       };
-    },
-    computed: {
-      ...mapState('accounts', {
-        contracts: (state) => state.contracts,
-        count: (state) => state.counts,
-      }),
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
-    },
-  };
+      const data = await this.$api.getContracts(props);
+      this[SET_CONTRACTS](data);
+    }
+  }
+};
 </script>

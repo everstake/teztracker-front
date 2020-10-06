@@ -9,7 +9,7 @@
       :items="blocks"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="perPage"
+      :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
     >
@@ -45,7 +45,8 @@
       </template>
     </b-table>
 
-    <PaginationWithCustomAction
+    <Pagination
+      @change="$_handleCurrentPageChange"
       :total-rows="Number(this.count.blocks)"
       :per-page="perPage"
     />
@@ -53,76 +54,82 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  import PerPageSelect from '@/components/partials/PerPageSelect';
-  import Pagination from '../partials/Pagination';
-  import setPerPage from '@/mixins/setPerPage';
+import { mapMutations, mapState } from "vuex";
+import PerPageSelect from "@/components/partials/PerPageSelect";
+import Pagination from "../partials/Pagination";
+import setPerPage from "@/mixins/setPerPage";
+import fetchListMixin from "@/mixins/fetchListMixin";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
+import { SET_BLOCK } from "@/store/mutations.types";
 
-  import withCustomAction from '../partials/withCustomAction';
-  const PaginationWithCustomAction = withCustomAction(
-    Pagination,
-    'blocks',
-    'GET_BLOCKS',
-  );
-
-  export default {
-    name: 'BlocksList',
-    components: {
-      PerPageSelect,
-      PaginationWithCustomAction,
+export default {
+  name: "BlocksList",
+  components: {
+    PerPageSelect,
+    Pagination
+  },
+  mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
+  props: {
+    isTableComplete: {
+      type: Boolean,
+      default: true
     },
-    mixins: [setPerPage],
-    props: {
-      isTableComplete: {
-        type: Boolean,
-        default: true,
-      },
-      showPerPageFilter: {
-        type: Boolean,
-        default: true,
-      },
-    },
-    data() {
-      return {
-        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-        fields: [
-          { key: 'level', label: this.$t('common.blockId') },
-          { key: 'timestamp', label: this.$t('common.timestamp') },
-          { key: 'baker', label: this.$tc('common.baker', 1) },
-          {
-            key: 'priority',
-            label: this.$t('common.priority'),
-            class: !this.isTableComplete ? 'd-none' : '',
-          },
-          {
-            key: 'number_of_operations',
-            label: this.$t('numberOf.#OfOperations'),
-            class: !this.isTableComplete ? 'd-none' : '',
-          },
-          {
-            key: 'volume',
-            label: this.$t('blocksList.volume'),
-            class: !this.isTableComplete ? 'd-none' : '',
-          },
-          {
-            key: 'fees',
-            label: this.$t('common.fee'),
-            class: !this.isTableComplete ? 'd-none' : '',
-          },
-          {
-            key: 'endorsements',
-            label: this.$t('numberOf.#OfEndorsements'),
-            class: !this.isTableComplete ? 'd-none' : '',
-          },
-        ],
+    showPerPageFilter: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data() {
+    return {
+      fields: [
+        { key: "level", label: this.$t("common.blockId") },
+        { key: "timestamp", label: this.$t("common.timestamp") },
+        { key: "baker", label: this.$tc("common.baker", 1) },
+        {
+          key: "priority",
+          label: this.$t("common.priority"),
+          class: !this.isTableComplete ? "d-none" : ""
+        },
+        {
+          key: "number_of_operations",
+          label: this.$t("numberOf.#OfOperations"),
+          class: !this.isTableComplete ? "d-none" : ""
+        },
+        {
+          key: "volume",
+          label: this.$t("blocksList.volume"),
+          class: !this.isTableComplete ? "d-none" : ""
+        },
+        {
+          key: "fees",
+          label: this.$t("common.fee"),
+          class: !this.isTableComplete ? "d-none" : ""
+        },
+        {
+          key: "endorsements",
+          label: this.$t("numberOf.#OfEndorsements"),
+          class: !this.isTableComplete ? "d-none" : ""
+        }
+      ]
+    };
+  },
+  computed: {
+    ...mapState({
+      blocks: state => state.blocks.blocks,
+      count: state => state.blocks.counts,
+      dateFormat: state => state.app.dateFormat
+    })
+  },
+  methods: {
+    ...mapMutations("blocks", [SET_BLOCK]),
+    async reload(page = 1) {
+      const props = {
+        page,
+        limit: this.perPage
       };
-    },
-    computed: {
-      ...mapState({
-        blocks: (state) => state.blocks.blocks,
-        count: (state) => state.blocks.counts,
-        dateFormat: (state) => state.app.dateFormat,
-      }),
-    },
-  };
+      const data = await this.$api.getBlocks(props);
+      this[SET_BLOCK](data);
+    }
+  }
+};
 </script>

@@ -9,7 +9,7 @@
       :items="bakersFormatted"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="perPage"
+      :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
     >
@@ -35,8 +35,8 @@
       </template>
     </b-table>
 
-    <PaginationWithCustomAction
-      v-model="currentPage"
+    <Pagination
+      @change="$_handleCurrentPageChange"
       :total-rows="count.bakers"
       :per-page="perPage"
     />
@@ -44,80 +44,77 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
-  import PerPageSelect from '@/components/partials/PerPageSelect';
-  import Pagination from '../partials/Pagination';
-  import setPerPage from '@/mixins/setPerPage';
+import { mapMutations, mapState } from "vuex";
+import PerPageSelect from "@/components/partials/PerPageSelect";
+import Pagination from "../partials/Pagination";
+import setPerPage from "@/mixins/setPerPage";
+import fetchListMixin from "@/mixins/fetchListMixin";
+import { SET_BAKERS } from "@/store/mutations.types";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
 
-  import withCustomAction from '../partials/withCustomAction';
-  const PaginationWithCustomAction = withCustomAction(
-    Pagination,
-    'accounts',
-    'GET_BAKERS',
-  );
-
-  export default {
-    name: 'BakersList',
-    components: {
-      PerPageSelect,
-      PaginationWithCustomAction,
-    },
-    mixins: [setPerPage],
-    data() {
-      return {
-        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-        // The key property must coincide with the corresponding keys in the data items
-        fields: [
-          {
-            key: 'accountId',
-            label: this.$tc('common.baker', 1),
-            disableClear: true,
-          },
-          {
-            key: 'blocks',
-            label: this.$tc('common.block', 2),
-            sortable: true,
-            sortDirection: 'desc',
-          },
-          {
-            key: 'endorsements',
-            label: this.$tc('opTypes.endorsement', 2),
-            sortable: true,
-            sortDirection: 'desc',
-          },
-          {
-            key: 'stakingBalance',
-            label: this.$t('common.stakingBal'),
-            sortable: true,
-            sortDirection: 'desc',
-          },
-          {
-            key: 'rolls',
-            label: this.$t('common.rolls'),
-            sortable: true,
-            sortDirection: 'desc',
-          },
-          {
-            key: 'bakingSince',
-            label: this.$t('common.bakingSince'),
-            disableClear: true,
-          },
-        ],
+export default {
+  name: "BakersList",
+  components: {
+    PerPageSelect,
+    Pagination
+  },
+  mixins: [fetchListMixin, handleCurrentPageChange, setPerPage],
+  data() {
+    return {
+      // The key property must coincide with the corresponding keys in the data items
+      fields: [
+        { key: "accountId", label: this.$tc("common.baker", 1), disableClear: true },
+        {
+          key: "blocks",
+          label: this.$tc("common.block", 2),
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "endorsements",
+          label: this.$tc("opTypes.endorsement", 2),
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "stakingBalance",
+          label: this.$t("common.stakingBal"),
+          sortable: true,
+          sortDirection: "desc"
+        },
+        {
+          key: "rolls",
+          label: this.$t("common.rolls"),
+          sortable: true,
+          sortDirection: "desc"
+        },
+        { key: "bakingSince", label: this.$t("common.bakingSince"), disableClear: true }
+      ]
+    };
+  },
+  computed: {
+    ...mapState({
+      bakers: state => state.accounts.bakers,
+      count: state => state.accounts.counts,
+      dateFormat: state => state.app.dateFormat
+    }),
+    bakersFormatted() {
+      if (!this.bakers || this.bakers.length === 0) return [];
+      return this.bakers.map(bakerObj => {
+        return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
+      });
+    }
+  },
+  methods: {
+    ...mapMutations("accounts", [SET_BAKERS]),
+    async reload(page = 1) {
+      const props = {
+        page,
+        limit: this.perPage
       };
-    },
-    computed: {
-      ...mapState({
-        bakers: (state) => state.accounts.bakers,
-        count: (state) => state.accounts.counts,
-        dateFormat: (state) => state.app.dateFormat,
-      }),
-      bakersFormatted() {
-        if (!this.bakers || this.bakers.length === 0) return [];
-
-        return this.bakers.map((bakerObj) => {
-          return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
-        });
-      },
-    },
-  };
+      const data = await this.$api.getBakers(props);
+      this[SET_BAKERS](data);
+    }
+  }
+};
 </script>
