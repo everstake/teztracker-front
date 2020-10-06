@@ -74,128 +74,129 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-import { SET_TX_COUNT } from "@/store/mutations.types";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-import setPerPage from "@/mixins/setPerPage";
-import defineRowClass from "@/mixins/defineRowClass";
+  import { mapState, mapMutations } from 'vuex';
+  import { SET_TX_COUNT } from '@/store/mutations.types';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import setPerPage from '@/mixins/setPerPage';
+  import defineRowClass from '@/mixins/defineRowClass';
 
-export default {
-  name: "TxsList",
-  components: {
-    PerPageSelect,
-    Pagination
-  },
-  mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
-  props: {
-    block: {
-      type: Object
+  export default {
+    name: 'TxsList',
+    components: {
+      PerPageSelect,
+      Pagination,
     },
-    account: {
-      type: String
+    mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
+    props: {
+      block: {
+        type: Object,
+      },
+      account: {
+        type: String,
+      },
+      isTableComplete: {
+        type: Boolean,
+        default: true,
+      },
+      showPerPageFilter: {
+        type: Boolean,
+        default: true,
+      },
     },
-    isTableComplete: {
-      type: Boolean,
-      default: true
-    },
-    showPerPageFilter: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data() {
-    return {
-      transactions: [],
-      count: 0,
-      fields: [
-        { key: "level", label: this.$t("common.blockId") },
-        { key: "txhash", label: this.$t("hashTypes.txHash") },
-        {
-          key: "from",
-          label: this.$t("common.from"),
-          class: !this.isTableComplete ? "d-none" : ""
-        },
-        {
-          key: "to",
-          label: this.$t("common.to"),
-          class: !this.isTableComplete ? "d-none" : ""
-        },
-        {
-          key: "amount",
-          label: this.$t("common.amount"),
-          class: !this.isTableComplete ? "d-none" : ""
-        },
-        {
-          key: "fee",
-          label: this.$t("common.fee"),
-          class: !this.isTableComplete ? "d-none" : ""
-        },
-        { key: "timestamp", label: this.$t("common.timestamp") },
-      ]
-    };
-  },
-  computed: {
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.reload(value);
-      }
-    },
-    block: {
-      async handler() {
-        await this.reload();
-      }
-    },
-    account: {
-      async handler() {
-        await this.reload();
-      }
-    },
-    async perPage() {
-      await this.reload();
-    }
-  },
-  async created() {
-    // TODO: refactor API
-    if (!this.block) {
-      await this.reload();
-    }
-  },
-  methods: {
-    ...mapMutations("operations", [SET_TX_COUNT]),
-    async reload(page = 1) {
-      const props = {
-        page,
-        limit: this.perPage
+    data() {
+      return {
+        transactions: [],
+        count: 0,
+        fields: [
+          { key: 'level', label: this.$t('common.blockId') },
+          { key: 'txhash', label: this.$t('hashTypes.txHash') },
+          {
+            key: 'from',
+            label: this.$t('common.from'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+          {
+            key: 'to',
+            label: this.$t('common.to'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+          {
+            key: 'amount',
+            label: this.$t('common.amount'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+          {
+            key: 'fee',
+            label: this.$t('common.fee'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+          { key: 'timestamp', label: this.$t('common.timestamp') },
+        ],
       };
-      if (this.block) {
-        props.block_id = this.block.hash;
-      }
-      if (this.account) {
-        props.account_id = this.account;
-      }
-      const data = await this.$api.getTransactions(props);
-      if (data.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.replace({
-          name: data.status
-        });
-      }
-      this.transactions = data.data;
-      this.$emit('onTransactions', this.account);
-      this.count = data.count;
-      this[SET_TX_COUNT](this.count);
     },
-    getAccountName(row, rowHash) {
-      return `${row.item[`${rowHash}Name`] || row.item[rowHash].slice(0, 15)}...`;
-    }
-  }
-};
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+    watch: {
+      currentPage: {
+        async handler(value) {
+          await this.reload(value);
+        },
+      },
+      block: {
+        async handler() {
+          await this.reload();
+        },
+      },
+      account: {
+        async handler() {
+          await this.reload();
+        },
+      },
+      async perPage() {
+        await this.reload();
+      },
+    },
+    async created() {
+      // TODO: refactor API
+      if (!this.block) {
+        await this.reload();
+      }
+    },
+    methods: {
+      ...mapMutations('operations', [SET_TX_COUNT]),
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        if (this.block) {
+          props.block_id = this.block.hash;
+        }
+        if (this.account) {
+          props.account_id = this.account;
+        }
+        const data = await this.$api.getTransactions(props);
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+        this.transactions = data.data;
+        this.$emit('onTransactions', this.account);
+        this.count = data.count;
+        this[SET_TX_COUNT](this.count);
+      },
+      getAccountName(row, rowHash) {
+        return `${row.item[`${rowHash}Name`] ||
+          row.item[rowHash].slice(0, 15)}...`;
+      },
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
@@ -204,7 +205,7 @@ export default {
     position: relative;
     padding-left: 12px;
   }
-  
+
   .icon {
     &__arrow--red:before {
       position: absolute;
@@ -213,9 +214,9 @@ export default {
       right: 0;
       transform: translateY(-50%);
       color: #309282;
-      border-top: .3em solid transparent;
-      border-bottom: .3em solid transparent;
-      border-left: .3em solid;
+      border-top: 0.3em solid transparent;
+      border-bottom: 0.3em solid transparent;
+      border-left: 0.3em solid;
     }
 
     &__arrow--green:before {
@@ -225,9 +226,9 @@ export default {
       right: 0;
       transform: translateY(-50%);
       color: #e56968;
-      border-top: .3em solid transparent;
-      border-bottom: .3em solid transparent;
-      border-left: .3em solid;
+      border-top: 0.3em solid transparent;
+      border-bottom: 0.3em solid transparent;
+      border-left: 0.3em solid;
     }
   }
 </style>

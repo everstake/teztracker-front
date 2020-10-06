@@ -36,52 +36,52 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
-import { SET_SNAPSHOTS_COUNT } from "@/store/mutations.types";
-import Pagination from "../partials/Pagination";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
+  import { mapMutations } from 'vuex';
+  import { SET_SNAPSHOTS_COUNT } from '@/store/mutations.types';
+  import Pagination from '../partials/Pagination';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
 
-export default {
-  name: "SnapshotsList",
-  components: {
-    Pagination
-  },
-  mixins: [handleCurrentPageChange],
-  data() {
-    return {
-      perPage: this.$constants.PER_PAGE_SNAPSHOTS,
-      snapshots: [],
-      count: 0,
-      fields: [
-        { key: "cycle", label: this.$tc("common.cycle", 2) },
-        { key: "level", label: this.$t("common.blockId") },
-        { key: "rolls", label: this.$t("common.rolls") }
-      ]
-    };
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.reload(value);
-      }
-    }
-  },
-  async created() {
-    await this.reload();
-  },
-  methods: {
-    ...mapMutations('blocks', [SET_SNAPSHOTS_COUNT]),
-    async reload(page = 1) {
-      const props = {
-        page,
-        limit: this.perPage
+  export default {
+    name: 'SnapshotsList',
+    components: {
+      Pagination,
+    },
+    mixins: [handleCurrentPageChange],
+    data() {
+      return {
+        perPage: this.$constants.PER_PAGE_SNAPSHOTS,
+        snapshots: [],
+        count: 0,
+        fields: [
+          { key: 'cycle', label: this.$tc('common.cycle', 2) },
+          { key: 'level', label: this.$t('common.blockId') },
+          { key: 'rolls', label: this.$t('common.rolls') },
+        ],
       };
-      const data = await this.$api.getSnapshots(props);
+    },
+    watch: {
+      currentPage: {
+        async handler(value) {
+          await this.reload(value);
+        },
+      },
+    },
+    async created() {
+      await this.reload();
+    },
+    methods: {
+      ...mapMutations('blocks', [SET_SNAPSHOTS_COUNT]),
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        const data = await this.$api.getSnapshots(props);
 
-      this.snapshots = data.data;
-      this.count = data.count;
-      this[SET_SNAPSHOTS_COUNT](this.count);
-    }
-  }
-};
+        this.snapshots = data.data;
+        this.count = data.count;
+        this[SET_SNAPSHOTS_COUNT](this.count);
+      },
+    },
+  };
 </script>

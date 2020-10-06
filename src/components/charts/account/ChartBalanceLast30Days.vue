@@ -3,7 +3,7 @@
     <CardHeader>
       <template #left-content class="text">
         <h4 class="tz-title--bold">
-          {{ $t('numberOf.#OfOperations') }}
+          {{ $t('accPage.balInThirtyDays') }}
         </h4>
       </template>
     </CardHeader>
@@ -19,31 +19,42 @@
         v-else
         :chart-data="chartData"
         :x-axes-max-ticks-limit="xAxesMaxTicksLimit"
+        :y-ticks-callback="$_yTicksCallback"
+        :tooltips-label-callback="tooltipsLabelCallback"
       />
     </b-card-body>
   </b-card>
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import CardHeader from '../../partials/CardHeader';
   import LineChart from '../../partials/chart-types/LineChart.vue';
   import chartsData from '../../../mixins/charts/chartsData';
+  import xtzChartDataType from '../../../mixins/charts/xtzChartDataType';
+  import numeral from 'numeral';
+  import moment from 'moment';
 
   export default {
-    name: 'ChartNumOfOps',
+    name: 'ChartBalanceLast30Days',
     components: {
       CardHeader,
       LineChart,
     },
-    mixins: [chartsData],
+    mixins: [chartsData, xtzChartDataType],
+    props: {
+      acc: {
+        type: String,
+        required: true,
+      },
+    },
     data() {
       return {
-        columns: 'operations',
-        period: 'D',
         xAxesMaxTicksLimit: 28,
       };
     },
     computed: {
+      ...mapState('app', ['priceInfo', 'dateFormat']),
       chartDataInitialReformatted() {
         if (!this.chartDataInitial || !this.chartDataInitial.length) {
           return [];
@@ -52,10 +63,11 @@
         return this.$_transformInitialDataToChartFormat(
           this.chartDataInitial,
           this.$_dateFormatWithoutTime,
-          this.columns,
+          'balance',
+          this.$helpers.formatXtz,
         );
       },
-      numOfOpsData() {
+      balanceData() {
         if (
           !this.chartDataInitialReformatted ||
           !this.chartDataInitialReformatted.length
@@ -68,14 +80,19 @@
           return (
             this.chartDataInitialReformatted.find((pointObj) => {
               const isFound = pointObj.x === date;
+              const timestampOutOfRange = moment(
+                pointObj.x,
+                this.dateFormat,
+              ).isBefore(moment(date, this.dateFormat));
 
               if (isFound) {
                 lastKnownVal = pointObj.y;
-                return isFound;
+              } else if (timestampOutOfRange && !lastKnownVal) {
+                lastKnownVal = this.chartDataInitialReformatted[0].y;
               }
             }) || {
               x: date,
-              y: lastKnownVal || NaN,
+              y: lastKnownVal || 0,
             }
           );
         });
@@ -85,21 +102,41 @@
           labels: this.$_last30days,
           datasets: [
             {
-              label: this.$t('numberOf.#OfOperations'),
-              data: this.numOfOpsData,
+              label: this.$t('common.balance'),
+              data: this.balanceData,
               spanGaps: true,
             },
           ],
         };
       },
     },
-    created() {
-      this.$_loadChartDataInitial({
-        columns: this.columns,
-        period: this.period,
-        from: this.$_fromTimestamp,
-        to: this.$_toTimestamp,
-      });
+    watch: {
+      acc: {
+        immediate: true,
+        handler(val) {
+          if (val) {
+            this.$_loadChartDataInitial(
+              {
+                account: this.acc,
+                from: this.$_fromTimestamp,
+                to: this.$_toTimestamp,
+              },
+              'getAccountBalance',
+            );
+          }
+        },
+      },
+    },
+    methods: {
+      tooltipsLabelCallback(tooltipItem, data) {
+        return `${data.datasets[0].label}: ${numeral(tooltipItem.value).format(
+          '0,0[.]000000',
+        )} XTZ (${this.$helpers.formatUSD(
+          tooltipItem.value * this.priceInfo.price,
+        )})`;
+      },
     },
   };
 </script>
+
+<style scoped></style>

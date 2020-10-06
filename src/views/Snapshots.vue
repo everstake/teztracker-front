@@ -13,7 +13,7 @@
                 <CardHeader>
                   <template #left-content class="text">
                     <h4 class="tz-title--bold">
-                      {{ $t("listTypes.snapshotsList") }}
+                      {{ $t('listTypes.snapshotsList') }}
                     </h4>
                   </template>
                   <template #right-content class="text">
@@ -34,34 +34,37 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import PageContentContainer from "../layouts/PageContentContainer";
-import Breadcrumbs from "../components/partials/Breadcrumbs";
-import SnapshotsList from "../components/snapshots/SnapshotsList";
-import CardHeader from "../components/partials/CardHeader";
-import Counter from "../components/partials/Counter";
+  import { mapState } from 'vuex';
+  import PageContentContainer from '../layouts/PageContentContainer';
+  import Breadcrumbs from '../components/partials/Breadcrumbs';
+  import SnapshotsList from '../components/snapshots/SnapshotsList';
+  import CardHeader from '../components/partials/CardHeader';
+  import Counter from '../components/partials/Counter';
 
-export default {
-  name: "Snapshots",
-  components: {
-    PageContentContainer,
-    Breadcrumbs,
-    SnapshotsList,
-    CardHeader,
-    Counter
-  },
-  data() {
-    return {
-      crumbs: [
-        { toRouteName: "network", text: this.$t("common.home") },
-        { toRouteName: "snapshots", text: this.$t("pageTypes.snapshotsPage") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState("blocks", {
-      count: state => state.counts
-    })
-  }
-};
+  export default {
+    name: 'Snapshots',
+    components: {
+      PageContentContainer,
+      Breadcrumbs,
+      SnapshotsList,
+      CardHeader,
+      Counter,
+    },
+    data() {
+      return {
+        crumbs: [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          {
+            toRouteName: 'snapshots',
+            text: this.$t('pageTypes.snapshotsPage'),
+          },
+        ],
+      };
+    },
+    computed: {
+      ...mapState('blocks', {
+        count: (state) => state.counts,
+      }),
+    },
+  };
 </script>

@@ -47,70 +47,70 @@
   </div>
 </template>
 <script>
-import { mapState, mapMutations } from "vuex";
-import { SET_ACTIVATIONS_COUNT } from "@/store/mutations.types";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-import setPerPage from "@/mixins/setPerPage";
+  import { mapState, mapMutations } from 'vuex';
+  import { SET_ACTIVATIONS_COUNT } from '@/store/mutations.types';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import setPerPage from '@/mixins/setPerPage';
 
-export default {
-  name: "ActivationsList",
-  components: {
-    PerPageSelect,
-    Pagination
-  },
-  mixins: [handleCurrentPageChange, setPerPage],
-  props: ["account"],
-  data() {
-    return {
-      activations: [],
-      count: 0,
-      fields: [
-        { key: "level", label: this.$t("common.blockId") },
-        { key: "txhash", label: this.$t("hashTypes.opHash") },
-        { key: "to", label: this.$t("common.to") },
-        { key: "timestamp", label: this.$t("common.timestamp") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.reload(value);
-      }
+  export default {
+    name: 'ActivationsList',
+    components: {
+      PerPageSelect,
+      Pagination,
     },
-    async perPage() {
-      await this.reload();
-    }
-  },
-  async created() {
-    await this.reload();
-  },
-  methods: {
-    ...mapMutations("operations", [SET_ACTIVATIONS_COUNT]),
-    async reload(page = 1) {
-      const props = {
-        page,
-        limit: this.perPage
+    mixins: [handleCurrentPageChange, setPerPage],
+    props: ['account'],
+    data() {
+      return {
+        activations: [],
+        count: 0,
+        fields: [
+          { key: 'level', label: this.$t('common.blockId') },
+          { key: 'txhash', label: this.$t('hashTypes.opHash') },
+          { key: 'to', label: this.$t('common.to') },
+          { key: 'timestamp', label: this.$t('common.timestamp') },
+        ],
       };
-      if (this.block) {
-        props.block_id = this.block.hash;
-      }
-      if (this.account) {
-        props.account_id = this.account;
-      }
-      // :C Move to actions, make HOC for pagination item. withAction(b-pagination);
-      const data = await this.$api.getActivations(props);
-      this.activations = data.data;
-      this.count = data.count;
-      this[SET_ACTIVATIONS_COUNT](this.count);
-    }
-  }
-};
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+    watch: {
+      currentPage: {
+        async handler(value) {
+          await this.reload(value);
+        },
+      },
+      async perPage() {
+        await this.reload();
+      },
+    },
+    async created() {
+      await this.reload();
+    },
+    methods: {
+      ...mapMutations('operations', [SET_ACTIVATIONS_COUNT]),
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        if (this.block) {
+          props.block_id = this.block.hash;
+        }
+        if (this.account) {
+          props.account_id = this.account;
+        }
+        // :C Move to actions, make HOC for pagination item. withAction(b-pagination);
+        const data = await this.$api.getActivations(props);
+        this.activations = data.data;
+        this.count = data.count;
+        this[SET_ACTIVATIONS_COUNT](this.count);
+      },
+    },
+  };
 </script>

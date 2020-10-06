@@ -19,7 +19,7 @@
                   <p
                     class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold font font--mini"
                   >
-                    {{ $t("voting.proposalDescription") }}
+                    {{ $t('voting.proposalDescription') }}
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
@@ -44,13 +44,13 @@
 </template>
 
 <script>
-import uuid from "@/mixins/uuid";
-import CardSection from "@/components/partials/CardSection";
+  import uuid from '@/mixins/uuid';
+  import CardSection from '@/components/partials/CardSection';
 
-export default {
-  name: "PeriodTesting",
-  components: { CardSection },
-  props: ["voters", "proposal"],
-  mixins: [uuid]
-};
+  export default {
+    name: 'PeriodTesting',
+    components: { CardSection },
+    props: ['voters', 'proposal'],
+    mixins: [uuid],
+  };
 </script>

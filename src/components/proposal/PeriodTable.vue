@@ -20,7 +20,7 @@
                     <div class="break-word">
                       <h3>
                         <span class="text">
-                          {{ $t("listTypes.votersList") }}
+                          {{ $t('listTypes.votersList') }}
                         </span>
                       </h3>
                     </div>
@@ -39,7 +39,7 @@
                         <b-link
                           :to="{
                             name: 'baker',
-                            params: { baker: row.item.pkh }
+                            params: { baker: row.item.pkh },
                           }"
                         >
                           {{ row.item.name || row.item.pkh | longhash(35) }}
@@ -54,7 +54,7 @@
                         <b-link
                           :to="{
                             name: 'block',
-                            params: { level: row.item.blockLevel }
+                            params: { level: row.item.blockLevel },
                           }"
                         >
                           {{ row.item.blockLevel | formatInteger }}
@@ -69,7 +69,7 @@
                         <b-link
                           :to="{
                             name: 'vote',
-                            params: { voteHash: row.item.operation }
+                            params: { voteHash: row.item.operation },
                           }"
                         >
                           {{ row.item.operation | longhash(35) }}
@@ -85,7 +85,11 @@
                         @click.prevent="handleShowClick('voters')"
                         class="vote-table__button"
                       >
-                        {{ showMoreVoters ? $t("voting.showLess") : $t("voting.showAll") }}
+                        {{
+                          showMoreVoters
+                            ? $t('voting.showLess')
+                            : $t('voting.showAll')
+                        }}
                       </button>
                     </div>
                   </b-card-body>
@@ -95,7 +99,7 @@
                     <div class="break-word">
                       <h3>
                         <span class="text">
-                          {{ $t("listTypes.nonVotersList") }}
+                          {{ $t('listTypes.nonVotersList') }}
                         </span>
                       </h3>
                     </div>
@@ -114,7 +118,7 @@
                         <b-link
                           :to="{
                             name: 'baker',
-                            params: { baker: row.item.pkh }
+                            params: { baker: row.item.pkh },
                           }"
                         >
                           <span>{{
@@ -131,7 +135,11 @@
                         @click.prevent="handleShowClick('nonVoters')"
                         class="vote-table__button"
                       >
-                        {{ showMoreNonVoters ? $t("voting.showLess") : $t("voting.showAll") }}
+                        {{
+                          showMoreNonVoters
+                            ? $t('voting.showLess')
+                            : $t('voting.showAll')
+                        }}
                       </button>
                     </div>
                   </b-card-body>
@@ -146,57 +154,59 @@
 </template>
 
 <script>
-import CardSection from "@/components/partials/CardSection";
-import moment from "moment";
-import { mapState } from "vuex";
+  import CardSection from '@/components/partials/CardSection';
+  import moment from 'moment';
+  import { mapState } from 'vuex';
 
-export default {
-  name: "PeriodTable",
-  components: { CardSection },
-  props: ["voters", "nonVoters", "votersFields", "nonVotersFields"],
-  data() {
-    return {
-      perPage: 20,
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      pageOptions: this.$constants.PER_PAGE,
-      showMoreVoters: false,
-      showMoreNonVoters: false
-    };
-  },
-  computed: {
-    ...mapState("period", {
-      votersCount: state => state.counts.voters,
-      nonVotersCount: state => state.counts.nonVoters
-    }),
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
-  },
-  methods: {
-    formatDate(date) {
-      return moment(date).format(this.dateFormat);
+  export default {
+    name: 'PeriodTable',
+    components: { CardSection },
+    props: ['voters', 'nonVoters', 'votersFields', 'nonVotersFields'],
+    data() {
+      return {
+        perPage: 20,
+        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+        pageOptions: this.$constants.PER_PAGE,
+        showMoreVoters: false,
+        showMoreNonVoters: false,
+      };
     },
-    handleShowClick(type) {
-      if (type === "voters") {
-        this.showMoreVoters = !this.showMoreVoters;
+    computed: {
+      ...mapState('period', {
+        votersCount: (state) => state.counts.voters,
+        nonVotersCount: (state) => state.counts.nonVoters,
+      }),
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+    methods: {
+      formatDate(date) {
+        return moment(date).format(this.dateFormat);
+      },
+      handleShowClick(type) {
+        if (type === 'voters') {
+          this.showMoreVoters = !this.showMoreVoters;
 
-        this.showMoreVoters
-          ? this.$emit("onShowClick", {
-              type,
-              limit: type === "voters" ? this.votersCount : this.nonVotersCount
-            })
-          : this.$emit("onShowClick", { type, limit: 20 });
-      } else {
-        this.showMoreNonVoters = !this.showMoreNonVoters;
+          this.showMoreVoters
+            ? this.$emit('onShowClick', {
+                type,
+                limit:
+                  type === 'voters' ? this.votersCount : this.nonVotersCount,
+              })
+            : this.$emit('onShowClick', { type, limit: 20 });
+        } else {
+          this.showMoreNonVoters = !this.showMoreNonVoters;
 
-        this.showMoreNonVoters
-          ? this.$emit("onShowClick", {
-              type,
-              limit: type === "voters" ? this.votersCount : this.nonVotersCount
-            })
-          : this.$emit("onShowClick", { type, limit: 20 });
-      }
-    }
-  }
-};
+          this.showMoreNonVoters
+            ? this.$emit('onShowClick', {
+                type,
+                limit:
+                  type === 'voters' ? this.votersCount : this.nonVotersCount,
+              })
+            : this.$emit('onShowClick', { type, limit: 20 });
+        }
+      },
+    },
+  };
 </script>

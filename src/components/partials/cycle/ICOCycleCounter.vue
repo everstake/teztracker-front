@@ -20,20 +20,14 @@
 
             <b-row>
               <b-col>
-                <b-progress
-                  :value="percent"
-                  :max="100"
-                  class="mb-2"
-                />
+                <b-progress :value="percent" :max="100" class="mb-2" />
               </b-col>
             </b-row>
 
             <b-row>
               <b-col>
                 <div class="progress-labels">
-                  <div class="percentage">
-                    {{ percent }}%
-                  </div>
+                  <div class="percentage">{{ percent }}%</div>
                 </div>
               </b-col>
             </b-row>
@@ -45,30 +39,30 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import { GET_BLOCK_HEAD } from "@/store/actions.types";
-import network from "../../../mixins/network";
+  import { mapState, mapActions } from 'vuex';
+  import { GET_BLOCK_HEAD } from '@/store/actions.types';
+  import network from '../../../mixins/network';
 
-export default {
-  name: "ICOCycleCounter",
-  mixins: [network],
-  props: ["percent"],
-  computed: {
-    ...mapState('blocks', {
-      head: state => state.headBlock
-    })
-  },
-  methods: {
-    ...mapActions('blocks', [GET_BLOCK_HEAD])
-  },
-  async created() {
-    await this[GET_BLOCK_HEAD]();
-  }
-};
+  export default {
+    name: 'ICOCycleCounter',
+    mixins: [network],
+    props: ['percent'],
+    computed: {
+      ...mapState('blocks', {
+        head: (state) => state.headBlock,
+      }),
+    },
+    methods: {
+      ...mapActions('blocks', [GET_BLOCK_HEAD]),
+    },
+    async created() {
+      await this[GET_BLOCK_HEAD]();
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-.container {
-  position: relative;
-}
+  .container {
+    position: relative;
+  }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div v-if="!hide">
     <label for="perPageSelect" class="mb-1">
-      {{ $t("perPageSelect.itemsPerPage") }}
+      {{ $t('perPageSelect.itemsPerPage') }}
     </label>
     <b-select
       id="perPageSelect"
@@ -14,51 +14,51 @@
 </template>
 
 <script>
-export default {
-  name: "PerPageSelect",
-  data() {
-    return {
-      perPage: this.$constants.PER_PAGE,
-      perPageOptions: this.$constants.PER_PAGE_OPTIONS
-    };
-  },
-  props: {
-    hide: {
-      type: Boolean,
-      default: false
+  export default {
+    name: 'PerPageSelect',
+    data() {
+      return {
+        perPage: this.$constants.PER_PAGE,
+        perPageOptions: this.$constants.PER_PAGE_OPTIONS,
+      };
     },
-    defaultPerPage: {
-      type: Number,
-      default: 0
-    }
-  },
-  watch: {
-    defaultPerPage: {
-      immediate: true,
-      handler(value) {
-        if (value) {
-          this.perPage = value;
-          this.$emit("per-page", value);
-        }
-      }
+    props: {
+      hide: {
+        type: Boolean,
+        default: false,
+      },
+      defaultPerPage: {
+        type: Number,
+        default: 0,
+      },
     },
-    perPage: {
-      immediate: true,
-      handler(value) {
-        this.$emit("per-page", value);
-      }
-    }
-  }
-};
+    watch: {
+      defaultPerPage: {
+        immediate: true,
+        handler(value) {
+          if (value) {
+            this.perPage = value;
+            this.$emit('per-page', value);
+          }
+        },
+      },
+      perPage: {
+        immediate: true,
+        handler(value) {
+          this.$emit('per-page', value);
+        },
+      },
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-.custom-select--themed {
-  display: block;
+  .custom-select--themed {
+    display: block;
 
-  &:focus {
-    border-color: $color-brand;
-    box-shadow: 0 0 0 0.2rem $color-brand--opacity-2;
+    &:focus {
+      border-color: $color-brand;
+      box-shadow: 0 0 0 0.2rem $color-brand--opacity-2;
+    }
   }
-}
 </style>

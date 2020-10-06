@@ -35,12 +35,16 @@
           <DoubleOperationsSingle v-else-if="dataFetched" :props="txInfo" />
         </b-container>
       </section>
-      
-      <section v-if="!operationsWithHiddenTxTable.includes(txInfo.kind)
-                     && transactions.length
-                     && operationsWithDetails.includes(txInfo.kind)
-                     || operationsWithReveals.includes(txInfo.kind)
-                     && transactionsSorted.reveals && transactionsSorted.reveals.length"
+
+      <section
+        v-if="
+          (!operationsWithHiddenTxTable.includes(txInfo.kind) &&
+            transactions.length &&
+            operationsWithDetails.includes(txInfo.kind)) ||
+            (operationsWithReveals.includes(txInfo.kind) &&
+              transactionsSorted.reveals &&
+              transactionsSorted.reveals.length)
+        "
         class="mt-0"
       >
         <b-container fluid>
@@ -74,7 +78,7 @@
                           <b-link
                             :to="{
                               name: 'account',
-                              params: { account: row.item.source }
+                              params: { account: row.item.source },
                             }"
                           >
                             {{
@@ -90,8 +94,8 @@
                               name: 'account',
                               params: {
                                 account:
-                                  row.item.destination || row.item.delegate
-                              }
+                                  row.item.destination || row.item.delegate,
+                              },
                             }"
                           >
                             {{
@@ -124,7 +128,7 @@
                           <b-link
                             :to="{
                               name: 'account',
-                              params: { account: row.item.originatedContracts }
+                              params: { account: row.item.originatedContracts },
                             }"
                           >
                             {{ row.item.originatedContracts | longhash(20) }}
@@ -141,9 +145,11 @@
                   </b-tab>
 
                   <b-tab
-                    v-if="operationsWithReveals.includes(txInfo.kind)
-                          && transactionsSorted.reveals
-                          && transactionsSorted.reveals.length"
+                    v-if="
+                      operationsWithReveals.includes(txInfo.kind) &&
+                        transactionsSorted.reveals &&
+                        transactionsSorted.reveals.length
+                    "
                     :title="$t('revealsList.reveal')"
                   >
                     <b-card-body>
@@ -161,181 +167,180 @@
 </template>
 
 <script>
-import PageContentContainer from "../layouts/PageContentContainer";
-import Breadcrumbs from "../components/partials/Breadcrumbs";
-import TxSingle from "../components/transactions/TxSingle";
-import { mapState } from "vuex";
-import Pagination from "../components/partials/Pagination";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-import defineRowClass from "@/mixins/defineRowClass";
-import DoubleOperationsSingle from "@/components/partials/DoubleOperationsSingle";
-import RevealsList from "@/components/operations/RevealsList";
+  import PageContentContainer from '../layouts/PageContentContainer';
+  import Breadcrumbs from '../components/partials/Breadcrumbs';
+  import TxSingle from '../components/transactions/TxSingle';
+  import { mapState } from 'vuex';
+  import Pagination from '../components/partials/Pagination';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import defineRowClass from '@/mixins/defineRowClass';
+  import DoubleOperationsSingle from '@/components/partials/DoubleOperationsSingle';
+  import RevealsList from '@/components/operations/RevealsList';
 
-export default {
-  name: "Tx",
-  components: {
-    PageContentContainer,
-    Breadcrumbs,
-    TxSingle,
-    Pagination,
-    DoubleOperationsSingle,
-    RevealsList
-  },
-  mixins: [handleCurrentPageChange, defineRowClass],
-  data() {
-    return {
-      perPage: this.$constants.PER_PAGE,
-      transactions: [],
-      txInfo: {},
-      count: 0,
-      operationsWithHiddenTxTable: [
-        "endorsement",
-        "double_baking_evidence",
-        "double_endorsement_evidence"
-      ],
-      operationsWithDetails: [
-        "transaction",
-        "delegation",
-        "origination",
-      ],
-      operationsWithReveals: [
-        "transaction",
-        "delegation",
-        "origination",
-        "activate_account"
-      ],
-      dataFetched: false
-    };
-  },
-  computed: {
-    ...mapState("operations", {
-      counts: state => state.counts
-    }),
-    txhash() {
-      return this.$route.params.txhash;
+  export default {
+    name: 'Tx',
+    components: {
+      PageContentContainer,
+      Breadcrumbs,
+      TxSingle,
+      Pagination,
+      DoubleOperationsSingle,
+      RevealsList,
     },
-    crumbs() {
-      return [
-        { toRouteName: "network", text: this.$t("common.home") },
-        { toRouteName: "txs", text: this.$t("pageTypes.txsPage") },
-        { toRouteName: "tx", text: this.txhash }
-      ];
-    },
-    getOperationKind() {
-      switch (this.txInfo.kind) {
-        case "activate_account":
-          return "activation";
-        case "origination":
-          return "origination";
-        case "delegation":
-          return "delegation";
-        case "endorsement":
-          return "endorsement";
-        case "double_baking_evidence":
-          return "dblBaking";
-        case "double_endorsement_evidence":
-          return "dblEndorsement";
-        default:
-          return "tx";
-      }
-    },
-    fields() {
-      let res = [];
-
-      if (this.getOperationKind === "origination") {
-        res = [
-          { key: "from", label: this.$t("txPage.originator") },
-          {
-            key: "originatedContracts",
-            label: this.$t("txPage.originatedAcc")
-          },
-          { key: "balance", label: this.$t("common.balance") },
-          { key: "to", label: this.$t("common.delegate") },
-          { key: "fee", label: this.$t("common.fee") },
-          { key: "gas", label: this.$t("txPage.gasLimit") },
-          { key: "storage", label: this.$t("txPage.storageLimit") }
-        ];
-      } else if (this.getOperationKind === "delegation") {
-        res = [
-          { key: "from", label: this.$t("common.from") },
-          { key: "to", label: this.$t("common.to") },
-          { key: "delegationAmount", label: this.$t("common.amountDelegated") },
-          { key: "fee", label: this.$t("common.fee") },
-          { key: "gas", label: this.$t("txPage.gasLimit") },
-          { key: "storage", label: this.$t("txPage.storageLimit") }
-        ];
-      } else {
-        res = [
-          { key: "from", label: this.$t("common.from") },
-          { key: "to", label: this.$t("common.to") },
-          { key: "amount", label: this.$t("common.amount") },
-          { key: "fee", label: this.$t("common.fee") },
-          { key: "gas", label: this.$t("txPage.gasLimit") },
-          { key: "storage", label: this.$t("txPage.storageLimit") }
-        ];
-      }
-
-      return res;
-    },
-    transactionsSorted() {
-      if (!this.transactions || !this.transactions.length) return {};
-
-      return this.transactions.reduce(
-        (acc, tx) => {
-          if (tx.kind === "reveal") {
-            acc.reveals.push(tx);
-          } else {
-            acc.operations.push(tx);
-          }
-
-          return acc;
-        },
-        {
-          operations: [],
-          reveals: []
-        }
-      );
-    }
-  },
-  async created() {
-    await this.reload();
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        this.transactions = [];
-        await this.reload(value);
-      }
-    },
-    txhash: {
-      async handler(value) {
-        await this.reload();
-      }
-    }
-  },
-  methods: {
-    async reload(page = 1) {
-      const props = {
-        page,
-        limit: this.perPage,
-        operation_id: this.txhash
+    mixins: [handleCurrentPageChange, defineRowClass],
+    data() {
+      return {
+        perPage: this.$constants.PER_PAGE,
+        transactions: [],
+        txInfo: {},
+        count: 0,
+        operationsWithHiddenTxTable: [
+          'endorsement',
+          'double_baking_evidence',
+          'double_endorsement_evidence',
+        ],
+        operationsWithDetails: ['transaction', 'delegation', 'origination'],
+        operationsWithReveals: [
+          'transaction',
+          'delegation',
+          'origination',
+          'activate_account',
+        ],
+        dataFetched: false,
       };
-      const data = await this.$api.getTransactions(props);
-      if (data.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.replace({
-          name: data.status
-        });
-      }
-      if (data.data.length === 0) {
-        return this.$router.replace({
-          name: "404"
-        });
-      }
-      this.transactions = data.data;
-      this.txInfo = this.transactions[0] || {};
-      this.dataFetched = true;
-      this.count = data.count;
-    }
-  }
-};
+    },
+    computed: {
+      ...mapState('operations', {
+        counts: (state) => state.counts,
+      }),
+      txhash() {
+        return this.$route.params.txhash;
+      },
+      crumbs() {
+        return [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          { toRouteName: 'txs', text: this.$t('pageTypes.txsPage') },
+          { toRouteName: 'tx', text: this.txhash },
+        ];
+      },
+      getOperationKind() {
+        switch (this.txInfo.kind) {
+          case 'activate_account':
+            return 'activation';
+          case 'origination':
+            return 'origination';
+          case 'delegation':
+            return 'delegation';
+          case 'endorsement':
+            return 'endorsement';
+          case 'double_baking_evidence':
+            return 'dblBaking';
+          case 'double_endorsement_evidence':
+            return 'dblEndorsement';
+          default:
+            return 'tx';
+        }
+      },
+      fields() {
+        let res = [];
+
+        if (this.getOperationKind === 'origination') {
+          res = [
+            { key: 'from', label: this.$t('txPage.originator') },
+            {
+              key: 'originatedContracts',
+              label: this.$t('txPage.originatedAcc'),
+            },
+            { key: 'balance', label: this.$t('common.balance') },
+            { key: 'to', label: this.$t('common.delegate') },
+            { key: 'fee', label: this.$t('common.fee') },
+            { key: 'gas', label: this.$t('txPage.gasLimit') },
+            { key: 'storage', label: this.$t('txPage.storageLimit') },
+          ];
+        } else if (this.getOperationKind === 'delegation') {
+          res = [
+            { key: 'from', label: this.$t('common.from') },
+            { key: 'to', label: this.$t('common.to') },
+            {
+              key: 'delegationAmount',
+              label: this.$t('common.amountDelegated'),
+            },
+            { key: 'fee', label: this.$t('common.fee') },
+            { key: 'gas', label: this.$t('txPage.gasLimit') },
+            { key: 'storage', label: this.$t('txPage.storageLimit') },
+          ];
+        } else {
+          res = [
+            { key: 'from', label: this.$t('common.from') },
+            { key: 'to', label: this.$t('common.to') },
+            { key: 'amount', label: this.$t('common.amount') },
+            { key: 'fee', label: this.$t('common.fee') },
+            { key: 'gas', label: this.$t('txPage.gasLimit') },
+            { key: 'storage', label: this.$t('txPage.storageLimit') },
+          ];
+        }
+
+        return res;
+      },
+      transactionsSorted() {
+        if (!this.transactions || !this.transactions.length) return {};
+
+        return this.transactions.reduce(
+          (acc, tx) => {
+            if (tx.kind === 'reveal') {
+              acc.reveals.push(tx);
+            } else {
+              acc.operations.push(tx);
+            }
+
+            return acc;
+          },
+          {
+            operations: [],
+            reveals: [],
+          },
+        );
+      },
+    },
+    async created() {
+      await this.reload();
+    },
+    watch: {
+      currentPage: {
+        async handler(value) {
+          this.transactions = [];
+          await this.reload(value);
+        },
+      },
+      txhash: {
+        async handler() {
+          await this.reload();
+        },
+      },
+    },
+    methods: {
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+          operation_id: this.txhash,
+        };
+        const data = await this.$api.getTransactions(props);
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+        if (data.data.length === 0) {
+          return this.$router.replace({
+            name: '404',
+          });
+        }
+        this.transactions = data.data;
+        this.txInfo = this.transactions[0] || {};
+        this.dataFetched = true;
+        this.count = data.count;
+      },
+    },
+  };
 </script>

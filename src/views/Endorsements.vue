@@ -13,7 +13,7 @@
                 <CardHeader>
                   <template #left-content class="text">
                     <h4 class="tz-title--bold">
-                      {{ $t("listTypes.endorsementsList") }}
+                      {{ $t('listTypes.endorsementsList') }}
                     </h4>
                   </template>
                   <template #right-content class="text">
@@ -34,37 +34,37 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import PageContentContainer from "../layouts/PageContentContainer";
-import Breadcrumbs from "../components/partials/Breadcrumbs";
-import EndorsementsList from "../components/endorsements/EndorsementsList";
-import CardHeader from "../components/partials/CardHeader";
-import Counter from "../components/partials/Counter";
+  import { mapState } from 'vuex';
+  import PageContentContainer from '../layouts/PageContentContainer';
+  import Breadcrumbs from '../components/partials/Breadcrumbs';
+  import EndorsementsList from '../components/endorsements/EndorsementsList';
+  import CardHeader from '../components/partials/CardHeader';
+  import Counter from '../components/partials/Counter';
 
-export default {
-  name: "Endorsements",
-  components: {
-    PageContentContainer,
-    Breadcrumbs,
-    EndorsementsList,
-    CardHeader,
-    Counter
-  },
-  data() {
-    return {
-      crumbs: [
-        { toRouteName: "network", text: this.$t("common.home") },
-        {
-          toRouteName: "endorsements",
-          text: this.$t("pageTypes.endorsementsPage")
-        }
-      ]
-    };
-  },
-  computed: {
-    ...mapState("blocks", {
-      count: state => state.counts
-    })
-  }
-};
+  export default {
+    name: 'Endorsements',
+    components: {
+      PageContentContainer,
+      Breadcrumbs,
+      EndorsementsList,
+      CardHeader,
+      Counter,
+    },
+    data() {
+      return {
+        crumbs: [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          {
+            toRouteName: 'endorsements',
+            text: this.$t('pageTypes.endorsementsPage'),
+          },
+        ],
+      };
+    },
+    computed: {
+      ...mapState('blocks', {
+        count: (state) => state.counts,
+      }),
+    },
+  };
 </script>

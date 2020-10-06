@@ -2,6 +2,7 @@
 	"common": {
 		"copyToClipboard": "Скопировать в буфер обмена",
 		"stakingBal": "Стейкинг-баланс",
+		"delegatedBal": "Делегированный баланс",
 		"balance": "Баланс",
 		"rolls": "Роллы",
 		"bakingSince": "Активен с",
@@ -332,5 +333,10 @@
 		"prioritiesPerCycle": "Приоритеты за цикл",
 		"andHigher": "и выше",
 		"accsWith500k": "Аккаунты с более чем 500,000 XTZ"
+	},
+	"maintenance": {
+		"title": "Maintenance",
+		"p1": "Sorry, we're currently down for maintenance.",
+		"p2": "We'll be back up shortly. Please, return to us a bit later."
 	}
 }

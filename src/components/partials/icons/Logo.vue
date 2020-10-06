@@ -45,13 +45,13 @@
 </template>
 
 <script>
-export default {
-  name: "Logo"
-};
+  export default {
+    name: 'Logo',
+  };
 </script>
 
 <style lang="scss" scoped>
-.svg-logo {
-  text-align: center;
-}
+  .svg-logo {
+    text-align: center;
+  }
 </style>

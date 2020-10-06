@@ -8,7 +8,7 @@
     <b-dropdown-item
       v-for="(lang, index) in langs"
       :key="index"
-      @click="setLang(lang)"
+      @click="setLang(lang, true)"
     >
       <flag :iso="mapLangCode(lang)" />
       {{ lang.toUpperCase() }}
@@ -17,47 +17,49 @@
 </template>
 
 <script>
-export default {
-  name: "LanguageSwitcher",
-  data() {
-    return {
-      langs: this.$i18n.availableLocales,
-      browserLang: navigator.language.split("-")[0].toLowerCase()
-    };
-  },
-  computed: {
-    currLang() {
-      return this.$i18n.locale;
-    }
-  },
-  created() {
-    this.setLang(this.defineInitialLang());
-  },
-  methods: {
-    mapLangCode(langCode) {
-      return langCode === "en" ? "us" : langCode === "zh" ? "cn" : langCode;
+  export default {
+    name: 'LanguageSwitcher',
+    data() {
+      return {
+        langs: this.$i18n.availableLocales,
+        browserLang: navigator.language.split('-')[0].toLowerCase(),
+      };
     },
-    setLang(lang) {
-      if (this.$helpers.isLocalStorageAvailable) {
-        localStorage.setItem("lang", lang);
-      }
-
-      this.$i18n.locale = lang;
-
-      this.$eventBus.$emit("lang-change", this.currLang);
+    computed: {
+      currLang() {
+        return this.$i18n.locale;
+      },
     },
-    defineInitialLang() {
-      if (
-        this.$helpers.isLocalStorageAvailable &&
-        localStorage.getItem("lang") !== null
-      ) {
-        return localStorage.getItem("lang");
-      }
-      if (this.langs.includes(this.browserLang)) {
-        return this.browserLang;
-      }
-      return this.$i18n.locale || "en";
-    }
-  }
-};
+    created() {
+      this.setLang(this.defineInitialLang());
+    },
+    methods: {
+      mapLangCode(langCode) {
+        return langCode === 'en' ? 'us' : langCode === 'zh' ? 'cn' : langCode;
+      },
+      setLang(lang, rerender = false) {
+        if (this.$helpers.isLocalStorageAvailable) {
+          localStorage.setItem('lang', lang);
+        }
+
+        this.$i18n.locale = lang;
+
+        if (rerender) {
+          this.$eventBus.$emit('lang-change', this.currLang);
+        }
+      },
+      defineInitialLang() {
+        if (
+          this.$helpers.isLocalStorageAvailable &&
+          localStorage.getItem('lang') !== null
+        ) {
+          return localStorage.getItem('lang');
+        }
+        if (this.langs.includes(this.browserLang)) {
+          return this.browserLang;
+        }
+        return this.$i18n.locale || 'en';
+      },
+    },
+  };
 </script>

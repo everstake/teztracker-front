@@ -15,7 +15,7 @@
                 <CardHeader>
                   <template #left-content class="text">
                     <h4 class="tz-title--bold">
-                      {{ $t("listTypes.activationsList") }}
+                      {{ $t('listTypes.activationsList') }}
                     </h4>
                   </template>
                   <template #right-content class="text">
@@ -36,42 +36,45 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import PageContentContainer from "../layouts/PageContentContainer";
-import Breadcrumbs from "../components/partials/Breadcrumbs";
-import ActivationsList from "../components/activations/ActivationsList.vue";
-import ICOCycleCounter from "../components/partials/cycle/ICOCycleCounter.vue";
-import CardHeader from "../components/partials/CardHeader";
-import Counter from "../components/partials/Counter";
+  import { mapState } from 'vuex';
+  import PageContentContainer from '../layouts/PageContentContainer';
+  import Breadcrumbs from '../components/partials/Breadcrumbs';
+  import ActivationsList from '../components/activations/ActivationsList.vue';
+  import ICOCycleCounter from '../components/partials/cycle/ICOCycleCounter.vue';
+  import CardHeader from '../components/partials/CardHeader';
+  import Counter from '../components/partials/Counter';
 
-export default {
-  name: "Activations",
-  components: {
-    PageContentContainer,
-    Breadcrumbs,
-    ActivationsList,
-    ICOCycleCounter,
-    CardHeader,
-    Counter
-  },
-  data() {
-    return {
-      crumbs: [
-        { toRouteName: "network", text: this.$t("common.home") },
-        { toRouteName: "activations", text: this.$t("pageTypes.activationsPage") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState('operations', {
-      count: state => state.counts
-    }),
-    getPercentage() {
-      const num = this.count.activations;
-      return parseFloat(
-        ((num * 100) / this.$constants.ALL_ICO_ACTIVE_ADDRESSES).toFixed(2)
-      );
-    }
-  }
-};
+  export default {
+    name: 'Activations',
+    components: {
+      PageContentContainer,
+      Breadcrumbs,
+      ActivationsList,
+      ICOCycleCounter,
+      CardHeader,
+      Counter,
+    },
+    data() {
+      return {
+        crumbs: [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          {
+            toRouteName: 'activations',
+            text: this.$t('pageTypes.activationsPage'),
+          },
+        ],
+      };
+    },
+    computed: {
+      ...mapState('operations', {
+        count: (state) => state.counts,
+      }),
+      getPercentage() {
+        const num = this.count.activations;
+        return parseFloat(
+          ((num * 100) / this.$constants.ALL_ICO_ACTIVE_ADDRESSES).toFixed(2),
+        );
+      },
+    },
+  };
 </script>
