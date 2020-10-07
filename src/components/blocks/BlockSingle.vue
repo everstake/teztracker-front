@@ -76,12 +76,19 @@
                 {{ $tc('common.baker', 1) }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                <router-link
-                  class="baker"
-                  :to="{ name: 'baker', params: { baker: block.baker } }"
-                >
-                  {{ this.block.bakerName || this.block.baker }}
-                </router-link>
+                <span>
+                  <IdentIcon
+                    v-if="!this.block.bakerName"
+                    :seed="this.block.baker"
+                  />
+
+                  <router-link
+                    class="baker"
+                    :to="{ name: 'baker', params: { baker: block.baker } }"
+                  >
+                    {{ this.block.bakerName || this.block.baker }}
+                  </router-link>
+                </span>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -200,11 +207,15 @@
 </template>
 
 <script>
+  import IdentIcon from '@/components/accounts/IdentIcon';
   import { mapState, mapGetters, mapActions } from 'vuex';
   import { GET_BLOCK_HEAD } from '@/store/actions.types';
 
   export default {
     name: 'BlockSingle',
+    components: {
+      IdentIcon,
+    },
     props: {
       block: {
         type: Object,

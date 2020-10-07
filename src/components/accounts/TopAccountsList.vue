@@ -15,7 +15,9 @@
       class="transactions-table table-responsive-md"
     >
       <template slot="accountId" slot-scope="row">
-        <span v-if="row.item.is_baker">
+        <span v-if="row.item.is_baker" class="d-flex align-items-center">
+          <IdentIcon v-if="!row.item.accountName" :seed="row.item.accountId" />
+
           <b-link
             :to="{ name: 'baker', params: { baker: row.item.accountId } }"
           >
@@ -32,7 +34,12 @@
             :text-to-copy="row.item.accountId"
           />
         </span>
-        <span v-else-if="row.item.accountId.slice(0, 2) === 'KT'">
+        <span
+          v-else-if="row.item.accountId.slice(0, 2) === 'KT'"
+          class="d-flex align-items-center"
+        >
+          <IdentIcon v-if="!row.item.accountName" :seed="row.item.accountId" />
+
           <b-link
             :to="{ name: 'account', params: { account: row.item.accountId } }"
           >
@@ -49,7 +56,9 @@
             :text-to-copy="row.item.accountId"
           />
         </span>
-        <span v-else>
+        <span v-else class="d-flex align-items-center">
+          <IdentIcon v-if="!row.item.accountName" :seed="row.item.accountId" />
+
           <b-link
             :to="{ name: 'account', params: { account: row.item.accountId } }"
           >
@@ -83,19 +92,30 @@
         <span>{{ row.item.createdAt | timeformat(dateFormat) }}</span>
       </template>
       <template slot="delegateValue" slot-scope="row">
-        <b-link
-          v-if="row.item.delegateValue"
-          :to="{ name: 'baker', params: { baker: row.item.accountId } }"
-        >
-          <span>
-            <template v-if="row.item.delegateName">
-              {{ row.item.delegateName }}
-            </template>
-            <template v-else>
-              {{ row.item.delegateValue | longhash }}
-            </template>
-          </span>
-        </b-link>
+        <span v-if="row.item.delegateValue" class="d-flex align-items-center">
+          <IdentIcon
+            v-if="!row.item.delegateName"
+            :seed="row.item.delegateValue"
+          />
+
+          <b-link
+            :to="{ name: 'baker', params: { baker: row.item.accountId } }"
+          >
+            <span>
+              <template v-if="row.item.delegateName">
+                {{ row.item.delegateName }}
+              </template>
+              <template v-else>
+                {{ row.item.delegateValue | longhash }}
+              </template>
+            </span>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.delegateName"
+            :text-to-copy="row.item.delegateValue"
+          />
+        </span>
         <span v-else>----</span>
       </template>
     </b-table>
@@ -112,6 +132,7 @@
   import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
   import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
   import { mapState } from 'vuex';
@@ -122,6 +143,7 @@
       PerPageSelect,
       Pagination,
       BtnCopy,
+      IdentIcon,
     },
     mixins: [handleCurrentPageChange, setPerPage],
     data() {

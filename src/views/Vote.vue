@@ -19,15 +19,21 @@
               <template
                 v-else-if="slotProps.field.key === $t('votePage.source')"
               >
-                <router-link
-                  :to="{
-                    name: 'account',
-                    params: { account: slotProps.field.value },
-                  }"
-                  class="baker"
-                >
-                  {{ slotProps.field.value }}
-                </router-link>
+                <span>
+                  <IdentIcon :seed="slotProps.field.value" />
+
+                  <router-link
+                    :to="{
+                      name: 'account',
+                      params: { account: slotProps.field.value },
+                    }"
+                    class="baker"
+                  >
+                    {{ slotProps.field.value }}
+                  </router-link>
+
+                  <BtnCopy text-to-copy="slotProps.field.value" />
+                </span>
               </template>
               <template
                 v-else-if="slotProps.field.key === $t('common.includedInBlock')"
@@ -54,6 +60,8 @@
   import PageContentContainer from '../layouts/PageContentContainer';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import StatisticsCard from '../layouts/StatisticsCard';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
   import { mapState } from 'vuex';
 
   export default {
@@ -62,6 +70,8 @@
       PageContentContainer,
       Breadcrumbs,
       StatisticsCard,
+      BtnCopy,
+      IdentIcon,
     },
     data() {
       return {

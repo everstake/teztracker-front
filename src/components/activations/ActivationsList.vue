@@ -21,7 +21,7 @@
       </template>
 
       <template slot="txhash" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
           <b-link
             :to="{
               name: 'tx',
@@ -36,7 +36,9 @@
       </template>
 
       <template slot="to" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.pkh" />
+
           <b-link :to="{ name: 'account', params: { account: row.item.pkh } }">
             {{ row.item.pkh | longhash }}
           </b-link>
@@ -63,6 +65,7 @@
   import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
   import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
 
@@ -72,6 +75,7 @@
       PerPageSelect,
       Pagination,
       BtnCopy,
+      IdentIcon,
     },
     mixins: [handleCurrentPageChange, setPerPage],
     props: ['account'],

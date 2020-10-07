@@ -11,10 +11,10 @@
       :current-page="currentPage"
       :per-page="0"
       borderless
-      class="transactions-table table-responsive-md"
+      class="transactions-table table-responsive-xl"
     >
       <template slot="txhash" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
           <b-link
             :to="{
               name: 'tx',
@@ -38,7 +38,12 @@
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
       <template slot="baker" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <IdentIcon
+            v-if="!row.item.doubleOperationDetails.evidence_baker_name"
+            :seed="row.item.doubleOperationDetails.evidence_baker"
+          />
+
           <router-link
             class="baker"
             :to="{
@@ -66,7 +71,12 @@
         {{ row.item.doubleOperationDetails.baker_reward | tezos }}
       </template>
       <template slot="offender" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <IdentIcon
+            v-if="!row.item.doubleOperationDetails.offender_name"
+            :seed="row.item.doubleOperationDetails.offender"
+          />
+
           <router-link
             class="baker"
             :to="{
@@ -120,6 +130,7 @@
   import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
   import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
 
@@ -129,6 +140,7 @@
       PerPageSelect,
       Pagination,
       BtnCopy,
+      IdentIcon,
     },
     mixins: [handleCurrentPageChange, setPerPage],
     props: ['account'],

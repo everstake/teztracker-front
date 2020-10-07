@@ -190,12 +190,12 @@
         <section class="dashboard__cards">
           <b-container fluid>
             <b-row>
-              <b-col lg="12" xl="6" class="mb-3 dashboard__card">
-                <BlocksCard :show-per-page-filter="false" />
+              <b-col lg="12" xl="6" class="mb-3 mb-xl-0 dashboard__card">
+                <BlocksCard :show-per-page-filter="false" class="h-100" />
               </b-col>
 
               <b-col lg="12" xl="6 dashboard__card">
-                <TxsCard :show-per-page-filter="false" />
+                <TxsCard :show-per-page-filter="false" class="h-100" />
               </b-col>
             </b-row>
           </b-container>

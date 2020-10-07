@@ -14,7 +14,9 @@
       class="transactions-table table-responsive-md"
     >
       <template slot="accountId" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.accountId" />
+
           <router-link
             :to="{ name: 'account', params: { account: row.item.accountId } }"
           >
@@ -34,7 +36,12 @@
         <span v-else>----</span>
       </template>
       <template slot="delegateValue" slot-scope="row">
-        <span v-if="row.item.delegateValue">
+        <span v-if="row.item.delegateValue" class="d-flex align-items-center">
+          <IdentIcon
+            v-if="!row.item.delegateName"
+            :seed="row.item.delegateValue"
+          />
+
           <b-link
             :to="{
               name: 'account',
@@ -73,59 +80,61 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import BtnCopy from '@/components/partials/BtnCopy';
-import setPerPage from "@/mixins/setPerPage";
-import fetchListMixin from "@/mixins/fetchListMixin";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-import { SET_CONTRACTS } from "@/store/mutations.types";
+  import { mapMutations, mapState } from 'vuex';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import setPerPage from '@/mixins/setPerPage';
+  import fetchListMixin from '@/mixins/fetchListMixin';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import { SET_CONTRACTS } from '@/store/mutations.types';
 
-export default {
-  name: "ContractsList",
-  components: {
-    PerPageSelect,
-    Pagination,
-    BtnCopy,
-  },
-  mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
-  props: ["account"],
-  data() {
-    return {
-      fields: [
-        { key: "accountId", label: this.$tc("common.contract", 1) },
-        { key: "manager", label: this.$t("common.manager") },
-        { key: "delegateValue", label: this.$t("common.delegate") },
-        {
-          key: "balance",
-          label: this.$t("common.balance"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        { key: "createdAt", label: this.$t("accSingle.created") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState("accounts", {
-      contracts: state => state.contracts,
-      count: state => state.counts
-    }),
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
-  },
-  methods: {
-    ...mapMutations("accounts", [SET_CONTRACTS]),
-    async reload(page = 1) {
-      const props = {
-        page,
-        limit: this.perPage
+  export default {
+    name: 'ContractsList',
+    components: {
+      PerPageSelect,
+      Pagination,
+      BtnCopy,
+      IdentIcon,
+    },
+    mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
+    props: ['account'],
+    data() {
+      return {
+        fields: [
+          { key: 'accountId', label: this.$tc('common.contract', 1) },
+          { key: 'manager', label: this.$t('common.manager') },
+          { key: 'delegateValue', label: this.$t('common.delegate') },
+          {
+            key: 'balance',
+            label: this.$t('common.balance'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          { key: 'createdAt', label: this.$t('accSingle.created') },
+        ],
       };
-      const data = await this.$api.getContracts(props);
-      this[SET_CONTRACTS](data);
-    }
-  }
-};
+    },
+    computed: {
+      ...mapState('accounts', {
+        contracts: (state) => state.contracts,
+        count: (state) => state.counts,
+      }),
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+    methods: {
+      ...mapMutations('accounts', [SET_CONTRACTS]),
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        const data = await this.$api.getContracts(props);
+        this[SET_CONTRACTS](data);
+      },
+    },
+  };
 </script>

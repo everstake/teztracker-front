@@ -16,7 +16,7 @@
       :tbody-tr-class="$_defineRowClass"
     >
       <template slot="txhash" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
           <b-link
             :to="{
               name: 'tx',
@@ -41,7 +41,9 @@
       </template>
 
       <template slot="from" slot-scope="row">
-        <span class="position-relative w-100 d-inline-block">
+        <span class="position-relative w-100 d-flex align-items-center">
+          <IdentIcon v-if="!row.item.sourceName" :seed="row.item.source" />
+
           <b-link
             :to="{ name: 'account', params: { account: row.item.source } }"
             :class="row.item.sourceName === account ? 'source' : 'destination'"
@@ -69,7 +71,12 @@
       </template>
 
       <template slot="to" slot-scope="row">
-        <span>
+        <span class="d-flex align-items-center">
+          <IdentIcon
+            v-if="!row.item.destinationName"
+            :seed="row.item.destination"
+          />
+
           <b-link
             :to="{ name: 'account', params: { account: row.item.destination } }"
           >
@@ -108,10 +115,11 @@
   import { SET_TX_COUNT } from '@/store/mutations.types';
   import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
   import defineRowClass from '@/mixins/defineRowClass';
-  import BtnCopy from '@/components/partials/BtnCopy';
 
   export default {
     name: 'TxsList',
@@ -119,6 +127,7 @@
       PerPageSelect,
       Pagination,
       BtnCopy,
+      IdentIcon,
     },
     mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
     props: {
