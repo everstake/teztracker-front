@@ -16,6 +16,7 @@
       selectable
       :select-mode="'single'"
       :tbody-tr-class="getRowClass"
+      :empty-text="$t('common.noData')"
     >
       <template slot="avgPriority" slot-scope="row">
         {{ row.item.avgPriority }}
@@ -42,6 +43,7 @@
           :per-page="0"
           borderless
           class="transactions-table table-responsive-md baker-baking-table"
+          :empty-text="$t('common.noData')"
         >
           <template slot="level" slot-scope="row">
             <b-link :to="{ name: 'block', params: { level: row.item.level } }">

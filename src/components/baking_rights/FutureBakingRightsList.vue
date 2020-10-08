@@ -8,6 +8,7 @@
       :per-page="0"
       borderless
       class="transactions-table table-responsive-xl"
+      :empty-text="$t('common.noData')"
     >
       <template slot="priority" slot-scope="row">
         <span>{{ row.item.priority }}</span>

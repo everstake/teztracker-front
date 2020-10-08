@@ -42,7 +42,8 @@
     "share": "Share",
     "baking": "Baking",
     "txVol": "Transactions volume",
-    "type": "Type"
+    "type": "Type",
+    "noData": "No data"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
