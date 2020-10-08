@@ -36,7 +36,7 @@ export const actions = {
   },
   async [GET_ASSETS]({ commit, rootGetters }, params) {
     commit(SET_ASSETS, await rootGetters.API.getAssets(params));
-  }
+  },
 };
 
 export const mutations = {
@@ -60,7 +60,7 @@ export const mutations = {
     state.assets = data.data.map((assets, index) => ({ ...assets, id: index + 1 }));
 
     state.counts.assets = data.count;
-  }
+  },
 };
 
 export const getters = {};
@@ -70,5 +70,5 @@ export default {
   state,
   actions,
   mutations,
-  getters
+  getters,
 };

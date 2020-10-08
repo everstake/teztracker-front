@@ -9,33 +9,58 @@
       :items="contracts"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="perPage"
+      :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
     >
       <template slot="accountId" slot-scope="row">
-        <router-link
-          :to="{ name: 'account', params: { account: row.item.accountId } }"
-        >
-          <span>{{ row.item.accountId | longhash(35) }}</span>
-        </router-link>
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.accountId" />
+
+          <router-link
+            :to="{ name: 'account', params: { account: row.item.accountId } }"
+          >
+            <span>{{ row.item.accountId | longhash }}</span>
+          </router-link>
+
+          <BtnCopy :text-to-copy="row.item.accountId" />
+        </span>
       </template>
       <template slot="manager" slot-scope="row">
         <b-link
           v-if="row.item.manager"
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
-          <span>{{ row.item.manager | longhash(35) }}</span>
+          <span>{{ row.item.manager | longhash }}</span>
         </b-link>
         <span v-else>----</span>
       </template>
       <template slot="delegateValue" slot-scope="row">
-        <b-link
-          v-if="row.item.delegateValue"
-          :to="{ name: 'account', params: { account: row.item.delegateValue } }"
-        >
-          <span>{{ row.item.delegateName || row.item.delegateValue | longhash(35) }}</span>
-        </b-link>
+        <span v-if="row.item.delegateValue" class="d-flex align-items-center">
+          <IdentIcon
+            v-if="!row.item.delegateName"
+            :seed="row.item.delegateValue"
+          />
+
+          <b-link
+            :to="{
+              name: 'account',
+              params: { account: row.item.delegateValue },
+            }"
+          >
+            <template v-if="row.item.delegateName">
+              {{ row.item.delegateName }}
+            </template>
+            <template v-else>
+              {{ row.item.delegateValue | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.delegateName"
+            :text-to-copy="row.item.delegateValue"
+          />
+        </span>
         <span v-else>----</span>
       </template>
       <template slot="balance" slot-scope="row">
@@ -46,8 +71,8 @@
       </template>
     </b-table>
 
-    <PaginationWithCustomAction
-      v-model="currentPage"
+    <Pagination
+      @change="$_handleCurrentPageChange"
       :total-rows="count.contracts"
       :per-page="perPage"
     />
@@ -55,51 +80,61 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import setPerPage from "@/mixins/setPerPage";
+  import { mapMutations, mapState } from 'vuex';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import setPerPage from '@/mixins/setPerPage';
+  import fetchListMixin from '@/mixins/fetchListMixin';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import { SET_CONTRACTS } from '@/store/mutations.types';
 
-import withCustomAction from "../partials/withCustomAction";
-const PaginationWithCustomAction = withCustomAction(
-  Pagination,
-  "accounts",
-  "GET_CONTRACTS",
-);
-
-export default {
-  name: "ContractsList",
-  components: {
-    PerPageSelect,
-    PaginationWithCustomAction
-  },
-  mixins: [setPerPage],
-  props: ['account'],
-  data() {
-    return {
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      fields: [
-        { key: "accountId", label: this.$tc("common.contract", 1) },
-        { key: "manager", label: this.$t("common.manager") },
-        { key: "delegateValue", label: this.$t("common.delegate") },
-        {
-          key: "balance",
-          label: this.$t("common.balance"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        { key: "createdAt", label: this.$t("accSingle.created") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState("accounts", {
-      contracts: state => state.contracts,
-      count: state => state.counts
-    }),
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
-  }
-};
+  export default {
+    name: 'ContractsList',
+    components: {
+      PerPageSelect,
+      Pagination,
+      BtnCopy,
+      IdentIcon,
+    },
+    mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
+    props: ['account'],
+    data() {
+      return {
+        fields: [
+          { key: 'accountId', label: this.$tc('common.contract', 1) },
+          { key: 'manager', label: this.$t('common.manager') },
+          { key: 'delegateValue', label: this.$t('common.delegate') },
+          {
+            key: 'balance',
+            label: this.$t('common.balance'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          { key: 'createdAt', label: this.$t('accSingle.created') },
+        ],
+      };
+    },
+    computed: {
+      ...mapState('accounts', {
+        contracts: (state) => state.contracts,
+        count: (state) => state.counts,
+      }),
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+    methods: {
+      ...mapMutations('accounts', [SET_CONTRACTS]),
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        const data = await this.$api.getContracts(props);
+        this[SET_CONTRACTS](data);
+      },
+    },
+  };
 </script>

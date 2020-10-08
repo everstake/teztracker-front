@@ -11,14 +11,14 @@
         <b-row class="justify-content-lg-center align-items-center">
           <b-col lg="8" class="text-center">
             <h1 class="error-text text-center">
-              {{ $t("errPages.page") }}
+              {{ $t('errPages.page') }}
               <span class="error-number">404</span>
             </h1>
             <h2 class="error-subtitle">
-              {{ $t("errPages.pageNotFound") }}
+              {{ $t('errPages.pageNotFound') }}
             </h2>
             <router-link :to="{ name: 'network' }" class="go-home">
-              {{ $t("common.home") }}
+              {{ $t('common.home') }}
             </router-link>
           </b-col>
         </b-row>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-export default {
-  name: "NotFound"
-};
+  export default {
+    name: 'NotFound',
+  };
 </script>

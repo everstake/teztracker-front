@@ -13,7 +13,7 @@
                 <CardHeader>
                   <template #left-content class="text">
                     <h4 class="tz-title--bold">
-                      {{ $t("listTypes.futureBakingRightsList") }}
+                      {{ $t('listTypes.futureBakingRightsList') }}
                     </h4>
                   </template>
                   <template #right-content class="text">
@@ -30,7 +30,7 @@
                 <CardHeader>
                   <template #left-content class="text">
                     <h4 class="tz-title--bold">
-                      {{ $t("listTypes.pastBakingRightsList") }}
+                      {{ $t('listTypes.pastBakingRightsList') }}
                     </h4>
                   </template>
                   <template #right-content class="text">
@@ -51,36 +51,39 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import PageContentContainer from "../layouts/PageContentContainer";
-import Breadcrumbs from "../components/partials/Breadcrumbs";
-import BakingRightsList from "../components/baking_rights/BakingRightsList";
-import FutureBakingRightsList from "../components/baking_rights/FutureBakingRightsList";
-import CardHeader from "../components/partials/CardHeader";
-import Counter from "../components/partials/Counter";
+  import { mapState } from 'vuex';
+  import PageContentContainer from '../layouts/PageContentContainer';
+  import Breadcrumbs from '../components/partials/Breadcrumbs';
+  import BakingRightsList from '../components/baking_rights/BakingRightsList';
+  import FutureBakingRightsList from '../components/baking_rights/FutureBakingRightsList';
+  import CardHeader from '../components/partials/CardHeader';
+  import Counter from '../components/partials/Counter';
 
-export default {
-  name: "BakingRights",
-  components: {
-    PageContentContainer,
-    Breadcrumbs,
-    BakingRightsList,
-    FutureBakingRightsList,
-    CardHeader,
-    Counter
-  },
-  data() {
-    return {
-      crumbs: [
-        { toRouteName: "network", text: this.$t("common.home") },
-        { toRouteName: "baking_rights", text: this.$t("common.bakingRights") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState('blocks', {
-      count: state => state.counts
-    })
-  }
-};
+  export default {
+    name: 'BakingRights',
+    components: {
+      PageContentContainer,
+      Breadcrumbs,
+      BakingRightsList,
+      FutureBakingRightsList,
+      CardHeader,
+      Counter,
+    },
+    data() {
+      return {
+        crumbs: [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          {
+            toRouteName: 'baking_rights',
+            text: this.$t('common.bakingRights'),
+          },
+        ],
+      };
+    },
+    computed: {
+      ...mapState('blocks', {
+        count: (state) => state.counts,
+      }),
+    },
+  };
 </script>

@@ -20,7 +20,7 @@
                     <div class="break-word">
                       <h3>
                         <span class="text">
-                          {{ $t("listTypes.votersList") }}
+                          {{ $t('listTypes.votersList') }}
                         </span>
                       </h3>
                     </div>
@@ -33,17 +33,34 @@
                       :fields="votersFields"
                       :current-page="currentPage"
                       :per-page="0"
-                      class="transactions-table table table-borderless table-responsive-md"
+                      class="transactions-table table table-borderless table-responsive-lg"
                     >
                       <template slot="pkh" slot-scope="row">
-                        <b-link
-                          :to="{
-                            name: 'baker',
-                            params: { baker: row.item.pkh }
-                          }"
-                        >
-                          {{ row.item.name || row.item.pkh | longhash(35) }}
-                        </b-link>
+                        <span class="d-flex align-items-center">
+                          <IdentIcon
+                            v-if="!row.item.name"
+                            :seed="row.item.pkh"
+                          />
+
+                          <b-link
+                            :to="{
+                              name: 'baker',
+                              params: { baker: row.item.pkh },
+                            }"
+                          >
+                            <template v-if="row.item.name">
+                              {{ row.item.name }}
+                            </template>
+                            <template v-else>
+                              {{ row.item.pkh | longhash }}
+                            </template>
+                          </b-link>
+
+                          <BtnCopy
+                            v-if="!row.item.name"
+                            :text-to-copy="row.item.pkh"
+                          />
+                        </span>
                       </template>
 
                       <template slot="rolls" slot-scope="row">
@@ -54,7 +71,7 @@
                         <b-link
                           :to="{
                             name: 'block',
-                            params: { level: row.item.blockLevel }
+                            params: { level: row.item.blockLevel },
                           }"
                         >
                           {{ row.item.blockLevel | formatInteger }}
@@ -62,18 +79,22 @@
                       </template>
 
                       <template slot="proposal" slot-scope="row">
-                        <span>{{ row.item.proposal | longhash(9) }}</span>
+                        <span>{{ row.item.proposal | longhash }}</span>
                       </template>
 
                       <template slot="operation" slot-scope="row">
-                        <b-link
-                          :to="{
-                            name: 'vote',
-                            params: { voteHash: row.item.operation }
-                          }"
-                        >
-                          {{ row.item.operation | longhash(35) }}
-                        </b-link>
+                        <span class="d-flex align-items-center">
+                          <b-link
+                            :to="{
+                              name: 'vote',
+                              params: { voteHash: row.item.operation },
+                            }"
+                          >
+                            {{ row.item.operation | longhash }}
+                          </b-link>
+
+                          <BtnCopy :text-to-copy="row.item.operation" />
+                        </span>
                       </template>
 
                       <template slot="timestamp" slot-scope="row">
@@ -85,17 +106,22 @@
                         @click.prevent="handleShowClick('voters')"
                         class="vote-table__button"
                       >
-                        {{ showMoreVoters ? $t("voting.showLess") : $t("voting.showAll") }}
+                        {{
+                          showMoreVoters
+                            ? $t('voting.showLess')
+                            : $t('voting.showAll')
+                        }}
                       </button>
                     </div>
                   </b-card-body>
                 </b-tab>
+
                 <b-tab :title="$t('voting.nonVoters')">
                   <b-card-header>
                     <div class="break-word">
                       <h3>
                         <span class="text">
-                          {{ $t("listTypes.nonVotersList") }}
+                          {{ $t('listTypes.nonVotersList') }}
                         </span>
                       </h3>
                     </div>
@@ -111,16 +137,31 @@
                       class="transactions-table table table-borderless table-responsive-md"
                     >
                       <template slot="pkh" slot-scope="row">
-                        <b-link
-                          :to="{
-                            name: 'baker',
-                            params: { baker: row.item.pkh }
-                          }"
-                        >
-                          <span>{{
-                            row.item.name || row.item.pkh | longhash(35)
-                          }}</span>
-                        </b-link>
+                        <span class="d-flex align-items-center">
+                          <IdentIcon
+                            v-if="!row.item.name"
+                            :seed="row.item.pkh"
+                          />
+
+                          <b-link
+                            :to="{
+                              name: 'baker',
+                              params: { baker: row.item.pkh },
+                            }"
+                          >
+                            <template v-if="row.item.name">
+                              {{ row.item.name }}
+                            </template>
+                            <template v-else>
+                              {{ row.item.pkh | longhash }}
+                            </template>
+                          </b-link>
+
+                          <BtnCopy
+                            v-if="!row.item.name"
+                            :text-to-copy="row.item.pkh"
+                          />
+                        </span>
                       </template>
                       <template slot="rolls" slot-scope="row">
                         {{ row.item.rolls | formatInteger }}
@@ -131,7 +172,11 @@
                         @click.prevent="handleShowClick('nonVoters')"
                         class="vote-table__button"
                       >
-                        {{ showMoreNonVoters ? $t("voting.showLess") : $t("voting.showAll") }}
+                        {{
+                          showMoreNonVoters
+                            ? $t('voting.showLess')
+                            : $t('voting.showAll')
+                        }}
                       </button>
                     </div>
                   </b-card-body>
@@ -146,57 +191,61 @@
 </template>
 
 <script>
-import CardSection from "@/components/partials/CardSection";
-import moment from "moment";
-import { mapState } from "vuex";
+  import CardSection from '@/components/partials/CardSection';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import moment from 'moment';
+  import { mapState } from 'vuex';
 
-export default {
-  name: "PeriodTable",
-  components: { CardSection },
-  props: ["voters", "nonVoters", "votersFields", "nonVotersFields"],
-  data() {
-    return {
-      perPage: 20,
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      pageOptions: this.$constants.PER_PAGE,
-      showMoreVoters: false,
-      showMoreNonVoters: false
-    };
-  },
-  computed: {
-    ...mapState("period", {
-      votersCount: state => state.counts.voters,
-      nonVotersCount: state => state.counts.nonVoters
-    }),
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
-  },
-  methods: {
-    formatDate(date) {
-      return moment(date).format(this.dateFormat);
+  export default {
+    name: 'PeriodTable',
+    components: { CardSection, BtnCopy, IdentIcon },
+    props: ['voters', 'nonVoters', 'votersFields', 'nonVotersFields'],
+    data() {
+      return {
+        perPage: 20,
+        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+        pageOptions: this.$constants.PER_PAGE,
+        showMoreVoters: false,
+        showMoreNonVoters: false,
+      };
     },
-    handleShowClick(type) {
-      if (type === "voters") {
-        this.showMoreVoters = !this.showMoreVoters;
+    computed: {
+      ...mapState('period', {
+        votersCount: (state) => state.counts.voters,
+        nonVotersCount: (state) => state.counts.nonVoters,
+      }),
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+    methods: {
+      formatDate(date) {
+        return moment(date).format(this.dateFormat);
+      },
+      handleShowClick(type) {
+        if (type === 'voters') {
+          this.showMoreVoters = !this.showMoreVoters;
 
-        this.showMoreVoters
-          ? this.$emit("onShowClick", {
-              type,
-              limit: type === "voters" ? this.votersCount : this.nonVotersCount
-            })
-          : this.$emit("onShowClick", { type, limit: 20 });
-      } else {
-        this.showMoreNonVoters = !this.showMoreNonVoters;
+          this.showMoreVoters
+            ? this.$emit('onShowClick', {
+                type,
+                limit:
+                  type === 'voters' ? this.votersCount : this.nonVotersCount,
+              })
+            : this.$emit('onShowClick', { type, limit: 20 });
+        } else {
+          this.showMoreNonVoters = !this.showMoreNonVoters;
 
-        this.showMoreNonVoters
-          ? this.$emit("onShowClick", {
-              type,
-              limit: type === "voters" ? this.votersCount : this.nonVotersCount
-            })
-          : this.$emit("onShowClick", { type, limit: 20 });
-      }
-    }
-  }
-};
+          this.showMoreNonVoters
+            ? this.$emit('onShowClick', {
+                type,
+                limit:
+                  type === 'voters' ? this.votersCount : this.nonVotersCount,
+              })
+            : this.$emit('onShowClick', { type, limit: 20 });
+        }
+      },
+    },
+  };
 </script>

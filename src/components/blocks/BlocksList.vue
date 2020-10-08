@@ -9,9 +9,9 @@
       :items="blocks"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="perPage"
+      :per-page="0"
       borderless
-      class="transactions-table table-responsive-md"
+      class="transactions-table table-responsive-xl"
     >
       <template slot="level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.level } }">
@@ -24,9 +24,20 @@
       </template>
 
       <template slot="baker" slot-scope="row">
-        <b-link :to="{ name: 'baker', params: { baker: row.item.baker } }">
-          {{ row.item.bakerName || row.item.baker | longhash(42) }}
-        </b-link>
+        <span class="d-flex align-items-center">
+          <IdentIcon v-if="!row.item.bakerName" :seed="row.item.baker" />
+
+          <b-link :to="{ name: 'baker', params: { baker: row.item.baker } }">
+            <template v-if="row.item.bakerName">
+              {{ row.item.bakerName }}
+            </template>
+            <template v-else>
+              {{ row.item.baker | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy v-if="!row.item.bakerName" :text-to-copy="row.item.baker" />
+        </span>
       </template>
 
       <template slot="number_of_operations" slot-scope="row">
@@ -45,7 +56,8 @@
       </template>
     </b-table>
 
-    <PaginationWithCustomAction
+    <Pagination
+      @change="$_handleCurrentPageChange"
       :total-rows="Number(this.count.blocks)"
       :per-page="perPage"
     />
@@ -53,76 +65,86 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import setPerPage from "@/mixins/setPerPage";
+  import { mapMutations, mapState } from 'vuex';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import setPerPage from '@/mixins/setPerPage';
+  import fetchListMixin from '@/mixins/fetchListMixin';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import { SET_BLOCK } from '@/store/mutations.types';
 
-import withCustomAction from "../partials/withCustomAction";
-const PaginationWithCustomAction = withCustomAction(
-  Pagination,
-  "blocks",
-  "GET_BLOCKS"
-);
-
-export default {
-  name: "BlocksList",
-  components: {
-    PerPageSelect,
-    PaginationWithCustomAction
-  },
-  mixins: [setPerPage],
-  props: {
-    isTableComplete: {
-      type: Boolean,
-      default: true
+  export default {
+    name: 'BlocksList',
+    components: {
+      PerPageSelect,
+      Pagination,
+      BtnCopy,
+      IdentIcon,
     },
-    showPerPageFilter: {
-      type: Boolean,
-      default: true
-    }
-  },
-  data() {
-    return {
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      fields: [
-        { key: "level", label: this.$t("common.blockId") },
-        { key: "timestamp", label: this.$t("common.timestamp") },
-        { key: "baker", label: this.$tc("common.baker", 1) },
-        {
-          key: "priority",
-          label: this.$t("common.priority"),
-          class: !this.isTableComplete ? "d-none" : ""
-        },
-        {
-          key: "number_of_operations",
-          label: this.$t("numberOf.#OfOperations"),
-          class: !this.isTableComplete ? "d-none" : ""
-        },
-        {
-          key: "volume",
-          label: this.$t("blocksList.volume"),
-          class: !this.isTableComplete ? "d-none" : ""
-        },
-        {
-          key: "fees",
-          label: this.$t("common.fee"),
-          class: !this.isTableComplete ? "d-none" : ""
-        },
-        {
-          key: "endorsements",
-          label: this.$t("numberOf.#OfEndorsements"),
-          class: !this.isTableComplete ? "d-none" : ""
-        }
-      ]
-    };
-  },
-  computed: {
-    ...mapState({
-      blocks: state => state.blocks.blocks,
-      count: state => state.blocks.counts,
-      dateFormat: state => state.app.dateFormat
-    })
-  }
-};
+    mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
+    props: {
+      isTableComplete: {
+        type: Boolean,
+        default: true,
+      },
+      showPerPageFilter: {
+        type: Boolean,
+        default: true,
+      },
+    },
+    data() {
+      return {
+        fields: [
+          { key: 'level', label: this.$t('common.blockId') },
+          { key: 'timestamp', label: this.$t('common.timestamp') },
+          { key: 'baker', label: this.$tc('common.baker', 1) },
+          {
+            key: 'priority',
+            label: this.$t('common.priority'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+          {
+            key: 'number_of_operations',
+            label: this.$t('numberOf.#OfOperations'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+          {
+            key: 'volume',
+            label: this.$t('blocksList.volume'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+          {
+            key: 'fees',
+            label: this.$t('common.fee'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+          {
+            key: 'endorsements',
+            label: this.$t('numberOf.#OfEndorsements'),
+            class: !this.isTableComplete ? 'd-none' : '',
+          },
+        ],
+      };
+    },
+    computed: {
+      ...mapState({
+        blocks: (state) => state.blocks.blocks,
+        count: (state) => state.blocks.counts,
+        dateFormat: (state) => state.app.dateFormat,
+      }),
+    },
+    methods: {
+      ...mapMutations('blocks', [SET_BLOCK]),
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        const data = await this.$api.getBlocks(props);
+        this[SET_BLOCK](data);
+      },
+    },
+  };
 </script>

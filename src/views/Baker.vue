@@ -22,7 +22,7 @@
                       <div class="break-word">
                         <h3>
                           <span class="text">
-                            {{ $t("listTypes.txsList") }}
+                            {{ $t('listTypes.txsList') }}
                           </span>
                         </h3>
                       </div>
@@ -37,7 +37,7 @@
                       <div class="break-word">
                         <h3>
                           <span class="text">
-                            {{ $t("listTypes.delegationsList") }}
+                            {{ $t('listTypes.delegationsList') }}
                           </span>
                         </h3>
                       </div>
@@ -52,7 +52,7 @@
                       <div class="break-word">
                         <h3>
                           <span class="text">
-                            {{ $t("listTypes.originationsList") }}
+                            {{ $t('listTypes.originationsList') }}
                           </span>
                         </h3>
                       </div>
@@ -67,13 +67,18 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">{{ $t('listTypes.endorsementsList') }}</span>
+                          <span class="text">{{
+                            $t('listTypes.endorsementsList')
+                          }}</span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <EndorsementsList :is-baker="true" :account="hash"></EndorsementsList>
+                      <EndorsementsList
+                        :is-baker="true"
+                        :account="hash"
+                      ></EndorsementsList>
                     </b-card-body>
                   </b-tab>
 
@@ -81,42 +86,48 @@
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">{{ $t('listTypes.bakingList') }}</span>
+                          <span class="text">{{
+                            $t('listTypes.bakingList')
+                          }}</span>
                         </h3>
                       </div>
                     </b-card-header>
-    
+
                     <b-card-body>
                       <BakerBakingList :account="hash"></BakerBakingList>
                     </b-card-body>
-    
+
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">{{ $t('listTypes.endorsementsList') }}</span>
+                          <span class="text">{{
+                            $t('listTypes.endorsementsList')
+                          }}</span>
                         </h3>
                       </div>
                     </b-card-header>
-    
+
                     <b-card-body>
                       <BakerEndorsingList :account="hash"></BakerEndorsingList>
                     </b-card-body>
                   </b-tab>
-                  
+
                   <b-tab :title="$tc('common.reward', 2)">
                     <b-card-header>
                       <div class="break-word">
                         <h3>
-                          <span class="text">{{ $t('listTypes.rewardsList') }}</span>
+                          <span class="text">{{
+                            $t('listTypes.rewardsList')
+                          }}</span>
                         </h3>
                       </div>
                     </b-card-header>
-    
+
                     <b-card-body>
                       <BakerRewardsList :account="hash"></BakerRewardsList>
                     </b-card-body>
                   </b-tab>
-                  
+
                   <b-tab title="Bonds">
                     <b-card-header>
                       <div class="break-word">
@@ -141,44 +152,44 @@
 </template>
 
 <script>
-import PageContentContainer from "../layouts/PageContentContainer";
-import Breadcrumbs from "../components/partials/Breadcrumbs";
-import BakerSingle from "../components/bakers/BakerSingle";
-import TxsList from "../components/transactions/TxsList";
-import DelegationsList from "../components/delegations/DelegationsList";
-import OriginationsList from "../components/originations/OriginationsList";
-import EndorsementsList from "../components/endorsements/EndorsementsList";
-import BakerRewardsList from "@/components/bakers/BakerRewardsList";
-import BakerBakingList from "../components/bakers/BakerBakingList";
-import BakerEndorsingList from "../components/bakers/BakerEndorsingList";
-import BakerBondsList from "../components/bakers/BakerBondsList";
+  import PageContentContainer from '../layouts/PageContentContainer';
+  import Breadcrumbs from '../components/partials/Breadcrumbs';
+  import BakerSingle from '../components/bakers/BakerSingle';
+  import TxsList from '../components/transactions/TxsList';
+  import DelegationsList from '../components/delegations/DelegationsList';
+  import OriginationsList from '../components/originations/OriginationsList';
+  import EndorsementsList from '../components/endorsements/EndorsementsList';
+  import BakerRewardsList from '@/components/bakers/BakerRewardsList';
+  import BakerBakingList from '../components/bakers/BakerBakingList';
+  import BakerEndorsingList from '../components/bakers/BakerEndorsingList';
+  import BakerBondsList from '../components/bakers/BakerBondsList';
 
-export default {
-  name: "Baker",
-  components: {
-    PageContentContainer,
-    Breadcrumbs,
-    BakerSingle,
-    TxsList,
-    DelegationsList,
-    OriginationsList,
-    EndorsementsList,
-    BakerRewardsList,
-    BakerBakingList,
-    BakerEndorsingList,
-    BakerBondsList,
-  },
-  computed: {
-    hash() {
-      return this.$route.params.baker;
+  export default {
+    name: 'Baker',
+    components: {
+      PageContentContainer,
+      Breadcrumbs,
+      BakerSingle,
+      TxsList,
+      DelegationsList,
+      OriginationsList,
+      EndorsementsList,
+      BakerRewardsList,
+      BakerBakingList,
+      BakerEndorsingList,
+      BakerBondsList,
     },
-    crumbs() {
-      return [
-        { toRouteName: "network", text: this.$t("common.home") },
-        { toRouteName: "bakers", text: this.$t("pageTypes.bakersPage") },
-        { toRouteName: "baker", text: this.hash }
-      ];
-    }
-  }
-};
+    computed: {
+      hash() {
+        return this.$route.params.baker;
+      },
+      crumbs() {
+        return [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          { toRouteName: 'bakers', text: this.$t('pageTypes.bakersPage') },
+          { toRouteName: 'baker', text: this.hash },
+        ];
+      },
+    },
+  };
 </script>

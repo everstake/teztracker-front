@@ -10,18 +10,24 @@
       :items="bakersFormatted"
       :fields="fields"
       :current-page="currentPage"
-      :per-page="perPage"
+      :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
     >
       <template slot="accountId" slot-scope="row">
         <b-link :to="{ name: 'baker', params: { baker: row.item.accountId } }">
-          {{ row.item.name || row.item.accountId | longhash(35) }}
+          <template v-if="row.item.name">
+            {{ row.item.name }}
+          </template>
+          <template v-else>
+            {{ row.item.accountId | longhash }}
+          </template>
         </b-link>
       </template>
       <template slot="stakingCapacity" slot-scope="row">
         {{
-          ((row.item.stakingCapacity - row.item.stakingBalance) / $constants.XTZ)
+          ((row.item.stakingCapacity - row.item.stakingBalance) /
+            $constants.XTZ)
             | tezosCapacity
         }}
       </template>
@@ -46,8 +52,8 @@
       </template>
     </b-table>
 
-    <PaginationWithCustomAction
-      v-model="currentPage"
+    <Pagination
+      @change="$_handleCurrentPageChange"
       :total-rows="count.publicBakers"
       :per-page="perPage"
     />
@@ -55,28 +61,23 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapMutations, mapState } from "vuex";
 import PerPageSelect from "@/components/partials/PerPageSelect";
 import Pagination from "../partials/Pagination";
 import setPerPage from "@/mixins/setPerPage";
-
-import withCustomAction from "../partials/withCustomAction";
-const PaginationWithCustomAction = withCustomAction(
-  Pagination,
-  "accounts",
-  "GET_PUBLIC_BAKERS"
-);
+import fetchListMixin from "@/mixins/fetchListMixin";
+import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
+import { SET_PUBLIC_BAKERS } from "@/store/mutations.types";
 
 export default {
   name: "BakersListPublic",
   components: {
     PerPageSelect,
-    PaginationWithCustomAction
+    Pagination
   },
-  mixins: [setPerPage],
+  mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
   data() {
     return {
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
       fields: [
         { key: "accountId", label: this.$tc("common.baker", 1) },
         {
@@ -132,6 +133,17 @@ export default {
       return this.publicBakers.map(bakerObj => {
         return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
       });
+    }
+  },
+  methods: {
+    ...mapMutations("accounts", [SET_PUBLIC_BAKERS]),
+    async reload(page = 1) {
+      const props = {
+        page,
+        limit: this.perPage
+      };
+      const data = await this.$api.getPublicBakers(props);
+      this[SET_PUBLIC_BAKERS](data);
     }
   }
 };

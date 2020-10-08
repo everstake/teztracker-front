@@ -13,7 +13,7 @@
                 <CardHeader>
                   <template #left-content class="text">
                     <h4 class="tz-title--bold">
-                      {{ $t("listTypes.topAccountsList") }}
+                      {{ $t('listTypes.topAccountsList') }}
                     </h4>
                   </template>
                   <template #right-content class="text">
@@ -34,34 +34,37 @@
 </template>
 
 <script>
-import PageContentContainer from "../layouts/PageContentContainer";
-import Breadcrumbs from "../components/partials/Breadcrumbs";
-import TopAccountsList from "../components/accounts/TopAccountsList";
-import CardHeader from "../components/partials/CardHeader";
-import Counter from "../components/partials/Counter";
+  import PageContentContainer from '../layouts/PageContentContainer';
+  import Breadcrumbs from '../components/partials/Breadcrumbs';
+  import TopAccountsList from '../components/accounts/TopAccountsList';
+  import CardHeader from '../components/partials/CardHeader';
+  import Counter from '../components/partials/Counter';
 
-export default {
-  name: "TopAccounts",
-  components: {
-    PageContentContainer,
-    Breadcrumbs,
-    TopAccountsList,
-    Counter,
-    CardHeader
-  },
-  data() {
-    return {
-      crumbs: [
-        { toRouteName: "network", text: this.$t("common.home") },
-        { toRouteName: "top_accounts", text: this.$t("pageTypes.topAccountsPage") }
-      ],
-      count: 0
-    };
-  },
-  methods: {
-    setCount(count) {
-      this.count = count;
-    }
-  }
-};
+  export default {
+    name: 'TopAccounts',
+    components: {
+      PageContentContainer,
+      Breadcrumbs,
+      TopAccountsList,
+      Counter,
+      CardHeader,
+    },
+    data() {
+      return {
+        crumbs: [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          {
+            toRouteName: 'top_accounts',
+            text: this.$t('pageTypes.topAccountsPage'),
+          },
+        ],
+        count: 0,
+      };
+    },
+    methods: {
+      setCount(count) {
+        this.count = count;
+      },
+    },
+  };
 </script>

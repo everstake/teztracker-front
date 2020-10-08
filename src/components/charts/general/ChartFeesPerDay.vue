@@ -3,7 +3,7 @@
     <CardHeader>
       <template #left-content class="text">
         <h4 class="tz-title--bold">
-          {{ $t("charts.feesPerDay") }}
+          {{ $t('charts.feesPerDay') }}
         </h4>
       </template>
     </CardHeader>
@@ -12,7 +12,7 @@
 
     <b-card-body>
       <div v-if="isChartDataInitialLoading" class="min-h-400 vote__loading">
-        {{ $t("common.loading") }}
+        {{ $t('common.loading') }}
       </div>
 
       <LineChart
@@ -28,83 +28,83 @@
 </template>
 
 <script>
-import CardHeader from "../../partials/CardHeader";
-import LineChart from "../../partials/chart-types/LineChart.vue";
-import chartsData from "../../../mixins/charts/chartsData";
-import xtzChartDataType from "../../../mixins/charts/xtzChartDataType";
+  import CardHeader from '../../partials/CardHeader';
+  import LineChart from '../../partials/chart-types/LineChart.vue';
+  import chartsData from '../../../mixins/charts/chartsData';
+  import xtzChartDataType from '../../../mixins/charts/xtzChartDataType';
 
-export default {
-  name: "ChartFeesPerDay",
-  components: {
-    CardHeader,
-    LineChart
-  },
-  mixins: [chartsData, xtzChartDataType],
-  data() {
-    return {
-      columns: "fees",
-      period: "D",
-      xAxesMaxTicksLimit: 28
-    };
-  },
-  computed: {
-    chartDataInitialReformatted() {
-      if (!this.chartDataInitial || !this.chartDataInitial.length) {
-        return [];
-      }
-
-      return this.$_transformInitialDataToChartFormat(
-        this.chartDataInitial,
-        this.$_dateFormatWithoutTime,
-        this.columns,
-        this.$helpers.formatXtz
-      );
+  export default {
+    name: 'ChartFeesPerDay',
+    components: {
+      CardHeader,
+      LineChart,
     },
-    feesPerDayData() {
-      if (
-        !this.chartDataInitialReformatted ||
-        !this.chartDataInitialReformatted.length
-      ) {
-        return [];
-      }
+    mixins: [chartsData, xtzChartDataType],
+    data() {
+      return {
+        columns: 'fees',
+        period: 'D',
+        xAxesMaxTicksLimit: 28,
+      };
+    },
+    computed: {
+      chartDataInitialReformatted() {
+        if (!this.chartDataInitial || !this.chartDataInitial.length) {
+          return [];
+        }
 
-      let lastKnownVal;
-      return this.$_last30days.map(date => {
-        return (
-          this.chartDataInitialReformatted.find(pointObj => {
-            const isFound = pointObj.x === date;
-
-            if (isFound) {
-              lastKnownVal = pointObj.y;
-              return isFound;
-            }
-          }) || {
-            x: date,
-            y: lastKnownVal || NaN
-          }
+        return this.$_transformInitialDataToChartFormat(
+          this.chartDataInitial,
+          this.$_dateFormatWithoutTime,
+          this.columns,
+          this.$helpers.formatXtz,
         );
+      },
+      feesPerDayData() {
+        if (
+          !this.chartDataInitialReformatted ||
+          !this.chartDataInitialReformatted.length
+        ) {
+          return [];
+        }
+
+        let lastKnownVal;
+        return this.$_last30days.map((date) => {
+          return (
+            this.chartDataInitialReformatted.find((pointObj) => {
+              const isFound = pointObj.x === date;
+
+              if (isFound) {
+                lastKnownVal = pointObj.y;
+                return isFound;
+              }
+            }) || {
+              x: date,
+              y: lastKnownVal || NaN,
+            }
+          );
+        });
+      },
+      chartData() {
+        return {
+          labels: this.$_last30days,
+          datasets: [
+            {
+              label: this.$t('charts.feesPerDay'),
+              data: this.feesPerDayData,
+              spanGaps: true,
+            },
+          ],
+        };
+      },
+    },
+    created() {
+      this.$_loadChartDataInitial({
+        columns: this.columns,
+        period: this.period,
+        from: this.$_fromTimestamp,
+        to: this.$_toTimestamp,
       });
     },
-    chartData() {
-      return {
-        labels: this.$_last30days,
-        datasets: [
-          {
-            label: this.$t("charts.feesPerDay"),
-            data: this.feesPerDayData,
-            spanGaps: true
-          }
-        ]
-      };
-    }
-  },
-  created() {
-    this.$_loadChartDataInitial({
-      columns: this.columns,
-      period: this.period,
-      from: this.$_fromTimestamp,
-      to: this.$_toTimestamp
-    });
-  }
-};
+  };
 </script>

@@ -1,14 +1,23 @@
 <template>
-  <CardSection
-    :fluid="true"
-  >
+  <CardSection :fluid="true">
     <template>
       <b-row>
-        <b-col cols="12" sm="10" md="12" lg="12" xl="12" offset-cols="0" offset-sm="1" offset-md="0">
+        <b-col
+          cols="12"
+          sm="10"
+          md="12"
+          lg="12"
+          xl="12"
+          offset-cols="0"
+          offset-sm="1"
+          offset-md="0"
+        >
           <div class="vote-card vote-card__empty margin-bottom">
             <div class="vote-card__header">
-              <p class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered font font--regular vote__loading">
-                {{ $t("common.loading") }}
+              <p
+                class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered font font--regular vote__loading"
+              >
+                {{ $t('common.loading') }}
               </p>
             </div>
           </div>
@@ -19,12 +28,12 @@
 </template>
 
 <script>
-import CardSection from "@/components/partials/CardSection";
+  import CardSection from '@/components/partials/CardSection';
 
-export default {
-  name: 'PeriodLoading',
-  components: {
-    CardSection
-  }
-}
+  export default {
+    name: 'PeriodLoading',
+    components: {
+      CardSection,
+    },
+  };
 </script>

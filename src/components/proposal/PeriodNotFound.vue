@@ -17,7 +17,7 @@
               <p
                 class="vote-card--margin-none vote-card__font-size--20 vote-card__font-size--centered font font--regular"
               >
-                {{ $t("voting.periodNotFound", { id: $route.params.id }) }}
+                {{ $t('voting.periodNotFound', { id: $route.params.id }) }}
               </p>
             </div>
           </div>
@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import CardSection from "@/components/partials/CardSection";
+  import CardSection from '@/components/partials/CardSection';
 
-export default {
-  name: "PeriodLoading",
-  components: {
-    CardSection
-  }
-};
+  export default {
+    name: 'PeriodLoading',
+    components: {
+      CardSection,
+    },
+  };
 </script>

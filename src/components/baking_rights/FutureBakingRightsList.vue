@@ -7,88 +7,221 @@
       :current-page="currentPage"
       :per-page="0"
       borderless
-      class="transactions-table table-responsive-md"
+      class="transactions-table table-responsive-xl"
     >
       <template slot="priority" slot-scope="row">
         <span>{{ row.item.priority }}</span>
       </template>
 
       <template slot="block_0" slot-scope="row">
-        <router-link
-          class="baker"
-          :to="{ name: 'baker', params: { baker: row.item.block_0.delegate } }"
-        >
-          {{
-            row.item.block_0.delegate_name ||
-              row.item.block_0.delegate | longhash(19)
-          }}
-        </router-link>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_0.delegate_name && row.item.block_0.delegate"
+            :seed="row.item.block_0.delegate"
+          />
+
+          <router-link
+            class="baker"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_0.delegate },
+            }"
+          >
+            <template v-if="row.item.block_0.delegate_name">
+              {{ row.item.block_0.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_0.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <!--FIXME: There should be no empty data-->
+          <BtnCopy
+            v-if="!row.item.block_0.delegate_name && row.item.block_0.delegate"
+            :text-to-copy="row.item.block_0.delegate"
+          />
+        </span>
       </template>
       <template slot="block_1" slot-scope="row">
-        <router-link
-          class="baker"
-          :to="{ name: 'baker', params: { baker: row.item.block_1.delegate } }"
-        >
-          {{
-            row.item.block_1.delegate_name ||
-              row.item.block_1.delegate | longhash(19)
-          }}
-        </router-link>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_1.delegate_name && row.item.block_1.delegate"
+            :seed="row.item.block_1.delegate"
+          />
+
+          <router-link
+            class="baker"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_1.delegate },
+            }"
+          >
+            <template v-if="row.item.block_1.delegate_name">
+              {{ row.item.block_1.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_1.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <!--FIXME: There should be no empty data-->
+          <BtnCopy
+            v-if="!row.item.block_1.delegate_name && row.item.block_1.delegate"
+            :text-to-copy="row.item.block_1.delegate"
+          />
+        </span>
       </template>
       <template slot="block_2" slot-scope="row">
-        <router-link
-          class="baker"
-          :to="{ name: 'baker', params: { baker: row.item.block_2.delegate } }"
-        >
-          {{
-            row.item.block_2.delegate_name ||
-              row.item.block_2.delegate | longhash(19)
-          }}
-        </router-link>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_2.delegate_name && row.item.block_2.delegate"
+            :seed="row.item.block_2.delegate"
+          />
+
+          <router-link
+            class="baker"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_2.delegate },
+            }"
+          >
+            <template v-if="row.item.block_2.delegate_name">
+              {{ row.item.block_2.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_2.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <!--FIXME: There should be no empty data-->
+          <BtnCopy
+            v-if="!row.item.block_2.delegate_name && row.item.block_2.delegate"
+            :text-to-copy="row.item.block_2.delegate"
+          />
+        </span>
       </template>
       <template slot="block_3" slot-scope="row">
-        <router-link
-          class="baker"
-          :to="{ name: 'baker', params: { baker: row.item.block_3.delegate } }"
-        >
-          {{
-            row.item.block_3.delegate_name ||
-              row.item.block_3.delegate | longhash(19)
-          }}
-        </router-link>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_3.delegate_name && row.item.block_3.delegate"
+            :seed="row.item.block_3.delegate"
+          />
+
+          <router-link
+            class="baker"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_3.delegate },
+            }"
+          >
+            <template v-if="row.item.block_3.delegate_name">
+              {{ row.item.block_3.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_3.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <!--FIXME: There should be no empty data-->
+          <BtnCopy
+            v-if="!row.item.block_3.delegate_name && row.item.block_3.delegate"
+            :text-to-copy="row.item.block_3.delegate"
+          />
+        </span>
       </template>
       <template slot="block_4" slot-scope="row">
-        <router-link
-          class="baker"
-          :to="{ name: 'baker', params: { baker: row.item.block_4.delegate } }"
-        >
-          {{
-            row.item.block_4.delegate_name ||
-              row.item.block_4.delegate | longhash(19)
-          }}
-        </router-link>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_4.delegate_name && row.item.block_4.delegate"
+            :seed="row.item.block_4.delegate"
+          />
+
+          <router-link
+            class="baker"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_4.delegate },
+            }"
+          >
+            <template v-if="row.item.block_4.delegate_name">
+              {{ row.item.block_4.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_4.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <!--FIXME: There should be no empty data-->
+          <BtnCopy
+            v-if="!row.item.block_4.delegate_name && row.item.block_4.delegate"
+            :text-to-copy="row.item.block_4.delegate"
+          />
+        </span>
       </template>
       <template slot="block_5" slot-scope="row">
-        <router-link
-          class="baker"
-          :to="{ name: 'baker', params: { baker: row.item.block_5.delegate } }"
-        >
-          {{
-            row.item.block_5.delegate_name ||
-              row.item.block_5.delegate | longhash(19)
-          }}
-        </router-link>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_5.delegate_name && row.item.block_5.delegate"
+            :seed="row.item.block_5.delegate"
+          />
+
+          <router-link
+            class="baker"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_5.delegate },
+            }"
+          >
+            <template v-if="row.item.block_5.delegate_name">
+              {{ row.item.block_5.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_5.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <!--FIXME: There should be no empty data-->
+          <BtnCopy
+            v-if="!row.item.block_5.delegate_name && row.item.block_5.delegate"
+            :text-to-copy="row.item.block_5.delegate"
+          />
+        </span>
       </template>
       <template slot="block_6" slot-scope="row">
-        <router-link
-          class="baker"
-          :to="{ name: 'baker', params: { baker: row.item.block_6.delegate } }"
-        >
-          {{
-            row.item.block_6.delegate_name ||
-              row.item.block_6.delegate | longhash(19)
-          }}
-        </router-link>
+        <span class="d-flex align-items-center">
+          <!--FIXME: There should be no empty data-->
+          <IdentIcon
+            v-if="!row.item.block_6.delegate_name && row.item.block_6.delegate"
+            :seed="row.item.block_6.delegate"
+          />
+
+          <router-link
+            class="baker"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_6.delegate },
+            }"
+          >
+            <template v-if="row.item.block_6.delegate_name">
+              {{ row.item.block_6.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_6.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <!--FIXME: There should be no empty data-->
+          <BtnCopy
+            v-if="!row.item.block_6.delegate_name && row.item.block_6.delegate"
+            :text-to-copy="row.item.block_6.delegate"
+          />
+        </span>
       </template>
     </b-table>
 
@@ -101,115 +234,120 @@
     />
   </div>
 </template>
-<script>
-import { mapState, mapMutations } from "vuex";
-import { SET_FUTURE_BAKING_RIGHTS_COUNT } from "@/store/mutations.types";
-import uniq from "lodash/uniq";
-import Pagination from "../partials/Pagination";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-import numeral from "numeral";
 
-export default {
-  name: "FutureBakingRightsList",
-  components: {
-    Pagination
-  },
-  mixins: [handleCurrentPageChange],
-  props: ["block"],
-  data() {
-    return {
-      perPage: this.$constants.PER_PAGE,
-      blocks_in_row: this.$constants.BLOCKS_IN_ROW,
-      future_baking_rights: [],
-      fields: [
-        {
-          key: "priority",
-          label: this.$t("common.priority")
+<script>
+  import { mapState, mapMutations } from 'vuex';
+  import { SET_FUTURE_BAKING_RIGHTS_COUNT } from '@/store/mutations.types';
+  import uniq from 'lodash/uniq';
+  import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import numeral from 'numeral';
+
+  export default {
+    name: 'FutureBakingRightsList',
+    components: {
+      Pagination,
+      BtnCopy,
+      IdentIcon,
+    },
+    mixins: [handleCurrentPageChange],
+    props: ['block'],
+    data() {
+      return {
+        perPage: this.$constants.PER_PAGE,
+        blocks_in_row: this.$constants.BLOCKS_IN_ROW,
+        future_baking_rights: [],
+        fields: [
+          {
+            key: 'priority',
+            label: this.$t('common.priority'),
+          },
+        ],
+      };
+    },
+    computed: {
+      ...mapState('blocks', {
+        count: (state) => state.counts,
+      }),
+    },
+    watch: {
+      currentPage: {
+        async handler(value) {
+          await this.reload(value);
+        },
+      },
+    },
+    async created() {
+      await this.reload();
+    },
+    methods: {
+      ...mapMutations('blocks', [SET_FUTURE_BAKING_RIGHTS_COUNT]),
+      parseResponse(data) {
+        const blocks = [];
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < data[i].rights.length; j++) {
+            blocks.push({
+              level: numeral(data[i].level).format('0,0'),
+              baker: data[i].baker,
+              block_hash: data[i].block_hash,
+              priority: data[i].rights[j].priority,
+              delegate: data[i].rights[j].delegate,
+              delegate_name: data[i].rights[j].delegate_name,
+            });
+          }
         }
-      ]
-    };
-  },
-  computed: {
-    ...mapState("blocks", {
-      count: state => state.counts
-    })
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.reload(value);
-      }
-    }
-  },
-  async created() {
-    await this.reload();
-  },
-  methods: {
-    ...mapMutations("blocks", [SET_FUTURE_BAKING_RIGHTS_COUNT]),
-    parseResponse(data) {
-      const blocks = [];
-      for (let i = 0; i < data.length; i++) {
-        for (let j = 0; j < data[i].rights.length; j++) {
-          blocks.push({
-            level: numeral(data[i].level).format("0,0"),
-            baker: data[i].baker,
-            block_hash: data[i].block_hash,
-            priority: data[i].rights[j].priority,
-            delegate: data[i].rights[j].delegate,
-            delegate_name: data[i].rights[j].delegate_name
-          });
-        }
-      }
-      const levels = uniq(blocks.map(el => el.level)).sort();
-      const rowLength = this.blocks_in_row;
-      const fields = [
-        {
-          key: "priority",
-          label: this.$t("common.priority")
-        }
-      ];
-      const result = [];
-      for (let j = 0; j < 11; j++) {
-        const row = {
-          priority: j
-        };
-        for (let i = 0; i < rowLength; i++) {
-          if (!levels[i]) {
+        const levels = uniq(blocks.map((el) => el.level)).sort();
+        const rowLength = this.blocks_in_row;
+        const fields = [
+          {
+            key: 'priority',
+            label: this.$t('common.priority'),
+          },
+        ];
+        const result = [];
+        for (let j = 0; j < 11; j++) {
+          const row = {
+            priority: j,
+          };
+          for (let i = 0; i < rowLength; i++) {
+            if (!levels[i]) {
+              fields.push({
+                key: `block_${i}`,
+                label: '',
+              });
+              row[`block_${i}`] = {};
+              continue;
+            }
             fields.push({
               key: `block_${i}`,
-              label: ""
+              label: `${this.$tc('common.block', 1)} ${levels[i]}`,
             });
+            const blockId = levels[i];
+            const block = blocks.find(
+              (el) => el.level === blockId && el.priority === j,
+            );
             row[`block_${i}`] = {};
-            continue;
+            if (block) {
+              row[`block_${i}`] = { ...block };
+            }
           }
-          fields.push({
-            key: `block_${i}`,
-            label: `${this.$tc("common.block", 1)} ${levels[i]}`
-          });
-          const blockId = levels[i];
-          const block = blocks.find(
-            el => el.level === blockId && el.priority === j
-          );
-          row[`block_${i}`] = {};
-          if (block) {
-            row[`block_${i}`] = { ...block };
-          }
+          result.push(row);
         }
-        result.push(row);
-      }
-      this.fields = fields;
-      this.future_baking_rights = result;
-    },
+        this.fields = fields;
+        this.future_baking_rights = result;
+      },
 
-    async reload(page = 1) {
-      const props = {
-        page,
-        limit: this.blocks_in_row
-      };
-      const data = await this.$api.getFutureBakingRights(props);
-      await this[SET_FUTURE_BAKING_RIGHTS_COUNT](data.count);
-      this.parseResponse(data.data);
-    }
-  }
-};
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.blocks_in_row,
+        };
+        const data = await this.$api.getFutureBakingRights(props);
+        await this[SET_FUTURE_BAKING_RIGHTS_COUNT](data.count);
+        this.parseResponse(data.data);
+      },
+    },
+  };
 </script>

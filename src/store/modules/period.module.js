@@ -1,14 +1,31 @@
-import { GET_PROPOSAL_PERIOD, GET_PERIODS, GET_PROPOSALS, GET_VOTERS, GET_NON_VOTERS, GET_BALLOTS } from "@/store/actions.types";
-import { SET_PROPOSAL_PERIOD, SET_PERIODS, SET_VOTERS_COUNT, SET_NON_VOTERS_COUNT, SET_PROPOSALS, SET_VOTERS, SET_NON_VOTERS, SET_BALLOTS, SET_PROTOCOLS_COUNT } from "@/store/mutations.types";
-import getPercentage from "@/utils/getPercentage";
+import {
+  GET_PROPOSAL_PERIOD,
+  GET_PERIODS,
+  GET_PROPOSALS,
+  GET_VOTERS,
+  GET_NON_VOTERS,
+  GET_BALLOTS,
+} from '@/store/actions.types';
+import {
+  SET_PROPOSAL_PERIOD,
+  SET_PERIODS,
+  SET_VOTERS_COUNT,
+  SET_NON_VOTERS_COUNT,
+  SET_PROPOSALS,
+  SET_VOTERS,
+  SET_NON_VOTERS,
+  SET_BALLOTS,
+  SET_PROTOCOLS_COUNT,
+} from '@/store/mutations.types';
+import getPercentage from '@/utils/getPercentage';
 
 const initialState = {
   period: {
     period: {
-      periodType: ''
+      periodType: '',
     },
     voteStats: {},
-    ballots: {}
+    ballots: {},
   },
   periods: [],
   proposals: [],
@@ -17,8 +34,8 @@ const initialState = {
   counts: {
     voters: 0,
     nonVoters: 0,
-    protocols: 0
-  }
+    protocols: 0,
+  },
 };
 
 export const state = { ...initialState };
@@ -41,14 +58,14 @@ export const actions = {
   },
   async [GET_BALLOTS]({ commit, rootGetters }, payload) {
     commit(SET_BALLOTS, await rootGetters.API.getBallots(payload));
-  }
+  },
 };
 
 export const mutations = {
   [SET_PROPOSAL_PERIOD](state, payload) {
     state.period = {
       ...state.period,
-      ...payload.data
+      ...payload.data,
     };
   },
   [SET_PERIODS](state, payload) {
@@ -63,8 +80,11 @@ export const mutations = {
   [SET_PROPOSALS](state, payload) {
     const { votesAvailable } = state.period.voteStats;
 
-    payload.data.map(proposal => {
-      proposal.upvote = getPercentage(votesAvailable, proposal.votesCasted).toFixed(2);
+    payload.data.map((proposal) => {
+      proposal.upvote = getPercentage(
+        votesAvailable,
+        proposal.votesCasted,
+      ).toFixed(2);
     });
 
     state.proposals = payload.data;
@@ -83,12 +103,12 @@ export const mutations = {
   },
   [SET_PROTOCOLS_COUNT](state, payload) {
     state.counts.protocols = payload;
-  }
+  },
 };
 
 export const getters = {
-  getProposalPeriod: state => state.proposal,
-  getPeriods: state => state.periods
+  getProposalPeriod: (state) => state.proposal,
+  getPeriods: (state) => state.periods,
 };
 
 export default {
@@ -96,5 +116,5 @@ export default {
   state,
   actions,
   mutations,
-  getters
+  getters,
 };

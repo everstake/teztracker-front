@@ -1,4 +1,4 @@
-import Vue from "vue";
+import Vue from 'vue';
 import {
   LinkPlugin,
   TablePlugin,
@@ -17,13 +17,14 @@ import {
   NavbarPlugin,
   FormInputPlugin,
   BForm,
-  ModalPlugin
-} from "bootstrap-vue";
+  ModalPlugin,
+  ToastPlugin,
+} from 'bootstrap-vue';
 import {
   FontAwesomeIcon,
   FontAwesomeLayers,
-  FontAwesomeLayersText
-} from "@fortawesome/vue-fontawesome";
+  FontAwesomeLayersText,
+} from '@fortawesome/vue-fontawesome';
 import {
   faSearch,
   faCaretUp,
@@ -38,8 +39,8 @@ import {
   faAngleDoubleRight,
   faCog,
   faChevronLeft,
-  faChevronRight
-} from "@fortawesome/free-solid-svg-icons";
+  faChevronRight,
+} from '@fortawesome/free-solid-svg-icons';
 import {
   faLightbulb,
   faStar,
@@ -49,14 +50,15 @@ import {
   faBookmark,
   faGem,
   faHourglass,
-  faTimesCircle
-} from "@fortawesome/free-regular-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { dom } from "@fortawesome/fontawesome-svg-core";
-import router from "../router";
-import VueGtag from "vue-gtag";
-import FlagIcon from 'vue-flag-icon'
+  faTimesCircle,
+} from '@fortawesome/free-regular-svg-icons';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { dom } from '@fortawesome/fontawesome-svg-core';
+import router from '../router';
+import VueGtag from 'vue-gtag';
+import FlagIcon from 'vue-flag-icon';
 import VueGtm from 'vue-gtm';
+import VueClipboard from 'vue-clipboard2';
 
 Vue.use(LinkPlugin);
 Vue.use(TablePlugin);
@@ -76,8 +78,9 @@ Vue.use(NavbarPlugin);
 Vue.use(FormInputPlugin);
 Vue.use(ModalPlugin);
 Vue.use(FlagIcon);
+Vue.use(ToastPlugin);
 
-Vue.component('b-form', BForm)
+Vue.component('b-form', BForm);
 
 dom.watch();
 library.add(
@@ -94,7 +97,7 @@ library.add(
   faAngleDoubleRight,
   faCog,
   faChevronLeft,
-  faChevronRight
+  faChevronRight,
 );
 library.add(
   faLightbulb,
@@ -105,17 +108,19 @@ library.add(
   faBookmark,
   faGem,
   faHourglass,
-  faTimesCircle
+  faTimesCircle,
 );
 
-Vue.component("font-awesome-icon", FontAwesomeIcon);
-Vue.component("font-awesome-layers", FontAwesomeLayers);
-Vue.component("font-awesome-layers-text", FontAwesomeLayersText);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.component('font-awesome-layers', FontAwesomeLayers);
+Vue.component('font-awesome-layers-text', FontAwesomeLayersText);
 
-Vue.use(VueGtag, { config: { id: "UA-159555120-1" } }, router);
+Vue.use(VueGtag, { config: { id: 'UA-159555120-1' } }, router);
 Vue.use(VueGtm, {
-  id: "GTM-KX6RPKS",
+  id: 'GTM-KX6RPKS',
   debug: false, // Whether or not display console logs debugs (optional)
   loadScript: true, // Whether or not to load the GTM Script (Helpful if you are including GTM manually, but need the dataLayer functionality in your components) (optional)
   vueRouter: router, // Pass the router instance to automatically sync with router (optional)
 });
+
+Vue.use(VueClipboard);

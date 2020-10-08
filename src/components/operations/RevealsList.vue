@@ -11,10 +11,10 @@
         <b-link
           :to="{
             name: 'account',
-            params: { account: row.item.source }
+            params: { account: row.item.source },
           }"
         >
-          {{ row.item.sourceName || row.item.source | longhash(20) }}
+          {{ row.item.sourceName || row.item.source | longhash }}
         </b-link>
       </template>
       <template slot="fee" slot-scope="row">
@@ -34,34 +34,33 @@
 </template>
 
 <script>
-export default {
-  name: "RevealsList",
-  props: {
-    items: {
-      type: Array,
-      default() {
-        return [];
-      }
-    }
-  },
-  data() {
-    return {
-      fields: [
-        { key: "from", label: this.$t("common.from") },
-        {
-          key: "publicKey",
-          label: this.$t("revealsList.publicKey"),
-          thClass: "wide-col",
-          tdClass: "wide-col"
+  export default {
+    name: 'RevealsList',
+    props: {
+      items: {
+        type: Array,
+        default() {
+          return [];
         },
-        { key: "fee", label: this.$t("common.fee") },
-        { key: "gas", label: this.$t("txPage.gasLimit") },
-        { key: "storage", label: this.$t("txPage.storageLimit") }
-      ]
-    };
-  }
-};
+      },
+    },
+    data() {
+      return {
+        fields: [
+          { key: 'from', label: this.$t('common.from') },
+          {
+            key: 'publicKey',
+            label: this.$t('revealsList.publicKey'),
+            thClass: 'wide-col',
+            tdClass: 'wide-col',
+          },
+          { key: 'fee', label: this.$t('common.fee') },
+          { key: 'gas', label: this.$t('txPage.gasLimit') },
+          { key: 'storage', label: this.$t('txPage.storageLimit') },
+        ],
+      };
+    },
+  };
 </script>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

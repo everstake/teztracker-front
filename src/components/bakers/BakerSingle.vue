@@ -9,12 +9,15 @@
                 {{ bakerInfo.name }}
               </template>
               <template v-else>
-                {{ hash }}
+                <span>
+                  <IdentIcon :seed="hash" />
+                  {{ hash }}
+                </span>
               </template>
             </span>
           </h3>
           <div class="subtitle">
-            {{ $t("infoTypes.bakerInfo") }}
+            {{ $t('infoTypes.bakerInfo') }}
           </div>
         </b-card-header>
 
@@ -25,12 +28,12 @@
             <b-row>
               <b-col class="card__no-padding" lg="6">
                 <span class="text-accent">
-                  {{ $t("infoTypes.generalInfo") }}
+                  {{ $t('infoTypes.generalInfo') }}
                 </span>
 
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.address") }}
+                    {{ $t('bakerSingle.address') }}
                   </b-col>
                   <b-col lg="8" class="text-accent card__pointer">
                     <span class="hash" id="hash" @click="copyToClipboard()">
@@ -45,13 +48,13 @@
                       </span>
                     </span>
                     <b-tooltip ref="tooltip" triggers="hover" target="hash">
-                      {{ $t("common.copyToClipboard") }}
+                      {{ $t('common.copyToClipboard') }}
                     </b-tooltip>
                   </b-col>
                 </b-row>
                 <b-row class="item-info" v-if="bakerInfo.name">
                   <b-col lg="4" class="label">
-                    {{ $t("common.fee") }}
+                    {{ $t('common.fee') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
                     {{ bakerInfo.fee | addPercent }}
@@ -59,7 +62,7 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("common.bakingSince") }}
+                    {{ $t('common.bakingSince') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
                     {{ bakerInfo.bakingSince | timeformat(dateFormat) }}
@@ -67,7 +70,7 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("common.rolls") }}
+                    {{ $t('common.rolls') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
                     {{ bakerInfo.rolls }}
@@ -75,7 +78,7 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.blocksBaked") }}
+                    {{ $t('bakerSingle.blocksBaked') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
                     {{ bakerInfo.blocks }}
@@ -83,7 +86,7 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("numberOf.#OfDelegators") }}
+                    {{ $t('numberOf.#OfDelegators') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
                     {{ bakerInfo.activeDelegators }}
@@ -91,7 +94,7 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("numberOf.#OfEndorsements") }}
+                    {{ $t('numberOf.#OfEndorsements') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
                     {{ bakerInfo.endorsements }}
@@ -99,7 +102,7 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("common.capacityAvailable") }}
+                    {{ $t('common.capacityAvailable') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
                     {{
@@ -113,12 +116,12 @@
 
               <b-col class="p-0 px-lg-3" lg="6">
                 <span class="text-accent">
-                  {{ $t("bakerSingle.balances") }}
+                  {{ $t('bakerSingle.balances') }}
                 </span>
 
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.totalBal") }}
+                    {{ $t('bakerSingle.totalBal') }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
                     {{ bakerInfo.evaluatedBalance | tezos }}
@@ -126,7 +129,7 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.liquidBal") }}
+                    {{ $t('bakerSingle.liquidBal') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">{{
                     account.balance | tezos
@@ -134,7 +137,7 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("common.stakingBal") }}
+                    {{ $t('common.delegatedBal') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">{{
                     bakerInfo.stakingBalance | tezos
@@ -142,12 +145,12 @@
                 </b-row>
 
                 <span class="text-accent">
-                  {{ $t("bakerSingle.currDeposits") }}
+                  {{ $t('bakerSingle.currDeposits') }}
                 </span>
 
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("common.baking") }}
+                    {{ $t('common.baking') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">{{
                     bakerInfo.bakingDeposits | tezos
@@ -155,7 +158,7 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.endorsement") }}
+                    {{ $t('bakerSingle.endorsement') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">{{
                     bakerInfo.endorsementDeposits | tezos
@@ -163,12 +166,12 @@
                 </b-row>
 
                 <span class="text-accent">
-                  {{ $t("bakerSingle.pendingRewards") }}
+                  {{ $t('bakerSingle.pendingRewards') }}
                 </span>
 
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("common.baking") }}
+                    {{ $t('common.baking') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">{{
                     bakerInfo.bakingRewards | tezos
@@ -176,7 +179,7 @@
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
-                    {{ $t("bakerSingle.endorsement") }}
+                    {{ $t('bakerSingle.endorsement') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">{{
                     bakerInfo.endorsementRewards | tezos
@@ -192,115 +195,119 @@
 </template>
 
 <script>
-import convert from "../../mixins/convert";
-import { GET_APP_INFO } from "@/store/actions.types";
-import { mapState, mapActions } from "vuex";
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import convert from '../../mixins/convert';
+  import { GET_APP_INFO } from '@/store/actions.types';
+  import { mapState, mapActions } from 'vuex';
 
-export default {
-  name: "BakerSingle",
-  props: {
-    hash: {
-      type: String,
-      required: true
-    }
-  },
-  mixins: [convert],
-  data() {
-    return {
-      bakerInfo: {},
-      account: {}
-    };
-  },
-  computed: {
-    ...mapState("app", {
-      info: state => state.priceInfo,
-      dateFormat: state => state.dateFormat
-    })
-  },
-  watch: {
-    hash: {
-      async handler(value) {
-        await this.reload(value);
-      }
-    }
-  },
-  async created() {
-    await this[GET_APP_INFO]();
-    await this.reload(this.hash);
-  },
-  methods: {
-    ...mapActions("app", [GET_APP_INFO]),
-    async reload(acc) {
-      const result = await this.$api.getAccount({ account: acc });
-      if (result.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.replace({
-          name: result.status
-        });
-      }
-      this.account = result.data;
-      if (result.data.bakerInfo) {
-        this.bakerInfo = result.data.bakerInfo;
-        this.baker = true;
-      } else {
-        this.baker = false;
-      }
+  export default {
+    name: 'BakerSingle',
+    components: {
+      IdentIcon,
     },
-    copyToClipboard() {
-      const selection = window.getSelection();
-      const range = window.document.createRange();
-      selection.removeAllRanges();
-      range.selectNode(this.$refs.textToCopy);
-      selection.addRange(range);
-
-      try {
-        document.execCommand("copy");
-      } catch (err) {
+    mixins: [convert],
+    props: {
+      hash: {
+        type: String,
+        required: true,
+      },
+    },
+    data() {
+      return {
+        bakerInfo: {},
+        account: {},
+      };
+    },
+    computed: {
+      ...mapState('app', {
+        info: (state) => state.priceInfo,
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+    watch: {
+      hash: {
+        async handler(value) {
+          await this.reload(value);
+        },
+      },
+    },
+    async created() {
+      await this[GET_APP_INFO]();
+      await this.reload(this.hash);
+    },
+    methods: {
+      ...mapActions('app', [GET_APP_INFO]),
+      async reload(acc) {
+        const result = await this.$api.getAccount({ account: acc });
+        if (result.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: result.status,
+          });
+        }
+        this.account = result.data;
+        if (result.data.bakerInfo) {
+          this.bakerInfo = result.data.bakerInfo;
+          this.baker = true;
+        } else {
+          this.baker = false;
+        }
+      },
+      copyToClipboard() {
+        const selection = window.getSelection();
+        const range = window.document.createRange();
         selection.removeAllRanges();
-      }
-    }
-  }
-};
+        range.selectNode(this.$refs.textToCopy);
+        selection.addRange(range);
+
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+          selection.removeAllRanges();
+        }
+      },
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-.card-header .title {
-  word-break: break-word;
-}
+  .card-header .title {
+    word-break: break-word;
+  }
 
-.card__title {
-  display: inline-flex;
-  align-items: center;
-  padding-right: 0 !important; /* outweigh selector cascade from public styles */
-}
+  .card__title {
+    display: inline-flex;
+    align-items: center;
+    padding-right: 0 !important; /* outweigh selector cascade from public styles */
+  }
 
-.icon-primary {
-  color: $color-brand;
-}
+  .icon-primary {
+    color: $color-brand;
+  }
 
-.hash {
-  position: relative;
-}
+  .hash {
+    position: relative;
+  }
 
-.icon {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: -15px;
-  margin-left: 10px;
-  font-size: 12px;
-  color: #309282;
-}
+  .icon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: -15px;
+    margin-left: 10px;
+    font-size: 12px;
+    color: #309282;
+  }
 
-.label {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 16px;
-  color: #9ea0a5;
-}
+  .label {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 16px;
+    color: #9ea0a5;
+  }
 
-.stats-row {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
+  .stats-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
 </style>

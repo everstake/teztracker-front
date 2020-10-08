@@ -24,13 +24,20 @@
       </template>
 
       <template slot="txhash" slot-scope="row">
-        <b-link
-          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
-        >
-          {{ row.item.operationGroupHash | longhash(30) }}
-        </b-link>
+        <span class="d-flex align-items-center">
+          <b-link
+            :to="{
+              name: 'tx',
+              params: { txhash: row.item.operationGroupHash },
+            }"
+          >
+            {{ row.item.operationGroupHash | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.operationGroupHash" />
+        </span>
       </template>
-  
+
       <template slot="blockLevel" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
           {{ row.item.blockLevel | formatInteger }}
@@ -38,22 +45,33 @@
       </template>
 
       <template slot="endorser" slot-scope="row">
-        <b-link
-          :to="{ name: 'account', params: { account: row.item.delegate } }"
-        >
-          <span v-if="row.item.delegateName">{{ row.item.delegateName }}</span>
-          <span v-else>{{ row.item.delegate | longhash(16) }}</span>
-        </b-link>
+        <span class="d-flex align-items-center">
+          <IdentIcon v-if="!row.item.delegateName" :seed="row.item.delegate" />
+
+          <b-link
+            :to="{ name: 'account', params: { account: row.item.delegate } }"
+          >
+            <span v-if="row.item.delegateName">{{
+              row.item.delegateName
+            }}</span>
+            <span v-else>{{ row.item.delegate | longhash }}</span>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.delegateName"
+            :text-to-copy="row.item.delegate"
+          />
+        </span>
       </template>
-  
+
       <template slot="level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.level } }">
           {{ row.item.level | formatInteger }}
         </b-link>
       </template>
-      
+
       <template slot="slots" slot-scope="row">
-          {{ row.item.slots }}
+        {{ row.item.slots }}
       </template>
 
       <template slot="timestamp" slot-scope="row">
@@ -71,117 +89,121 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-import { SET_ENDORSEMENTS_COUNT } from "@/store/mutations.types";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-import setPerPage from "@/mixins/setPerPage";
+  import { mapState, mapMutations } from 'vuex';
+  import { SET_ENDORSEMENTS_COUNT } from '@/store/mutations.types';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import setPerPage from '@/mixins/setPerPage';
 
-export default {
-  name: "EndorsementsList",
-  components: {
-    PerPageSelect,
-    Pagination
-  },
-  mixins: [handleCurrentPageChange, setPerPage],
-  props: ["blockHash", "account", "isBaker", "disablePagination"],
-  data() {
-    return {
-      endorsements: [],
-      count: 0,
-      fields: []
-    };
-  },
-  computed: {
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    }),
-    level() {
-      return this.$route.params.level;
+  export default {
+    name: 'EndorsementsList',
+    components: {
+      PerPageSelect,
+      Pagination,
+      BtnCopy,
+      IdentIcon,
     },
-    isBlockEndorsements() {
-      return this.level > 0;
-    }
-  },
-  watch: {
-    currentPage: {
-      async handler(value) {
-        await this.reload({ page: value, block: this.blockHash });
-      }
-    },
-    blockHash: {
-      async handler(value) {
-        if (this.isBlockEndorsements) {
-          await this.reload({ block: value });
-        }
-      }
-    },
-    perPage: {
-      async handler() {
-        if (!this.isBlockEndorsements) {
-          await this.reload({ block: this.blockHash });
-        }
-      }
-    }
-  },
-  async created() {
-    if (this.isBlockEndorsements) {
-      this.perPage = this.$constants.ENDORSEMENTS_LIMIT;
-    } else {
-      this.perPage = this.$constants.PER_PAGE;
-      await this.reload({ block: this.blockHash });
-    }
-  },
-  methods: {
-    ...mapMutations("blocks", [SET_ENDORSEMENTS_COUNT]),
-    async reload({ page = 1, block = 0 } = {}) {
-      const props = {
-        page,
-        limit: this.perPage
+    mixins: [handleCurrentPageChange, setPerPage],
+    props: ['blockHash', 'account', 'isBaker', 'disablePagination'],
+    data() {
+      return {
+        endorsements: [],
+        count: 0,
+        fields: [],
       };
-      let result;
-      if (this.account) {
-        props.account_id = this.account;
-      }
-      if (this.isBlockEndorsements) {
-        props.block_id = block;
-        // TODO: Refactor API service
-        delete props.page;
-        result = await this.$api.getEndorsements(props);
-      } else {
-        result = await this.$api.getEndorsements(props);
-      }
-      if (result.status !== this.$constants.STATUS_SUCCESS) {
-        return this.$router.replace({
-          name: result.status
-        });
-      }
-      this.count = result.count;
-      this.endorsements = result.data;
-      this[SET_ENDORSEMENTS_COUNT](this.count);
-
-      this.setTableFields();
     },
-    setTableFields() {
-      if (this.isBaker) {
-        this.fields = [
-          { key: "level", label: this.$t("endorsementsList.endorsedBlock") },
-          { key: "txhash", label: this.$t("hashTypes.endorsementHash") },
-          { key: "blockLevel", label: this.$t("common.includedInBlock") },
-          { key: "endorser", label: this.$t("common.endorser") },
-          { key: "slots", label: this.$t("endorsementsList.slots") },
-          { key: "timestamp", label: this.$t("common.timestamp") }
-        ];
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+      level() {
+        return this.$route.params.level;
+      },
+      isBlockEndorsements() {
+        return this.level > 0;
+      },
+    },
+    watch: {
+      currentPage: {
+        async handler(value) {
+          await this.reload({ page: value, block: this.blockHash });
+        },
+      },
+      blockHash: {
+        async handler(value) {
+          if (this.isBlockEndorsements) {
+            await this.reload({ block: value });
+          }
+        },
+      },
+      perPage: {
+        async handler() {
+          if (!this.isBlockEndorsements) {
+            await this.reload({ block: this.blockHash });
+          }
+        },
+      },
+    },
+    async created() {
+      if (this.isBlockEndorsements) {
+        this.perPage = this.$constants.ENDORSEMENTS_LIMIT;
       } else {
-        this.fields = [
-          { key: "level", label: this.$t("endorsementsList.endorsedBlock") },
-          { key: "txhash", label: this.$t("hashTypes.endorsementHash") },
-          { key: "endorser", label: this.$t("common.endorser") },
-          { key: "timestamp", label: this.$t("common.timestamp") },
-        ];
+        this.perPage = this.$constants.PER_PAGE;
+        await this.reload({ block: this.blockHash });
       }
-    }
-  }
-};
+    },
+    methods: {
+      ...mapMutations('blocks', [SET_ENDORSEMENTS_COUNT]),
+      async reload({ page = 1, block = 0 } = {}) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        let result;
+        if (this.account) {
+          props.account_id = this.account;
+        }
+        if (this.isBlockEndorsements) {
+          props.block_id = block;
+          // TODO: Refactor API service
+          delete props.page;
+          result = await this.$api.getEndorsements(props);
+        } else {
+          result = await this.$api.getEndorsements(props);
+        }
+        if (result.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: result.status,
+          });
+        }
+        this.count = result.count;
+        this.endorsements = result.data;
+        this[SET_ENDORSEMENTS_COUNT](this.count);
+
+        this.setTableFields();
+      },
+      setTableFields() {
+        if (this.isBaker) {
+          this.fields = [
+            { key: 'level', label: this.$t('endorsementsList.endorsedBlock') },
+            { key: 'txhash', label: this.$t('hashTypes.endorsementHash') },
+            { key: 'blockLevel', label: this.$t('common.includedInBlock') },
+            { key: 'endorser', label: this.$t('common.endorser') },
+            { key: 'slots', label: this.$t('endorsementsList.slots') },
+            { key: 'timestamp', label: this.$t('common.timestamp') },
+          ];
+        } else {
+          this.fields = [
+            { key: 'level', label: this.$t('endorsementsList.endorsedBlock') },
+            { key: 'txhash', label: this.$t('hashTypes.endorsementHash') },
+            { key: 'endorser', label: this.$t('common.endorser') },
+            { key: 'timestamp', label: this.$t('common.timestamp') },
+          ];
+        }
+      },
+    },
+  };
 </script>

@@ -2,6 +2,7 @@
   "common": {
     "copyToClipboard": "拷贝到剪贴板",
     "stakingBal": "持币生息余额",
+    "delegatedBal": "Delegated balance",
     "balance": "余额",
     "rolls": "卷",
     "bakingSince": "从…创建区块链",
@@ -341,5 +342,10 @@
     "prioritiesPerCycle": "循环优先级",
     "andHigher": "更高",
     "accsWith500k": "超过500,000 XTZ的账户"
+  },
+  "maintenance": {
+    "title": "Maintenance",
+    "p1": "Sorry, we're currently down for maintenance.",
+    "p2": "We'll be back up shortly. Please, return to us a bit later."
   }
 }

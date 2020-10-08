@@ -49,50 +49,50 @@
 </template>
 
 <script>
-import PageContentContainer from "../../layouts/PageContentContainer.vue";
-import Breadcrumbs from "../../components/partials/Breadcrumbs.vue";
-// Charts
-import ChartNumOfBlocks from "../../components/charts/general/ChartNumOfBlocks.vue";
-import ChartTxVolume from "../../components/charts/general/ChartTxVolume.vue";
-import ChartNumOfOps from "../../components/charts/general/ChartNumOfOps.vue";
-import ChartAvgBlockDelay from "../../components/charts/general/ChartAvgBlockDelay.vue";
-import ChartFeesPerDay from "../../components/charts/general/ChartFeesPerDay.vue";
-import ChartActivations from "../../components/charts/general/ChartActivations.vue";
-import ChartDelegationVolume from "../../components/charts/general/ChartDelegationVolume.vue";
-import ChartNumOfWhaleAccs from "../../components/charts/general/ChartNumOfWhaleAccs.vue";
+  import PageContentContainer from '../../layouts/PageContentContainer.vue';
+  import Breadcrumbs from '../../components/partials/Breadcrumbs.vue';
+  // Charts
+  import ChartNumOfBlocks from '../../components/charts/general/ChartNumOfBlocks.vue';
+  import ChartTxVolume from '../../components/charts/general/ChartTxVolume.vue';
+  import ChartNumOfOps from '../../components/charts/general/ChartNumOfOps.vue';
+  import ChartAvgBlockDelay from '../../components/charts/general/ChartAvgBlockDelay.vue';
+  import ChartFeesPerDay from '../../components/charts/general/ChartFeesPerDay.vue';
+  import ChartActivations from '../../components/charts/general/ChartActivations.vue';
+  import ChartDelegationVolume from '../../components/charts/general/ChartDelegationVolume.vue';
+  import ChartNumOfWhaleAccs from '../../components/charts/general/ChartNumOfWhaleAccs.vue';
 
-export default {
-  name: "ChartsGeneral",
-  components: {
-    PageContentContainer,
-    Breadcrumbs,
-    ChartNumOfBlocks,
-    ChartTxVolume,
-    ChartNumOfOps,
-    ChartAvgBlockDelay,
-    ChartFeesPerDay,
-    ChartActivations,
-    ChartDelegationVolume,
-    ChartNumOfWhaleAccs
-  },
-  data() {
-    return {
-      crumbs: [
-        { toRouteName: "network", text: this.$t("common.home") },
-        {
-          toRouteName: "accounts",
-          text: this.$t("pageTypes.generalChartsPage")
-        }
-      ]
-    };
-  }
-};
+  export default {
+    name: 'ChartsGeneral',
+    components: {
+      PageContentContainer,
+      Breadcrumbs,
+      ChartNumOfBlocks,
+      ChartTxVolume,
+      ChartNumOfOps,
+      ChartAvgBlockDelay,
+      ChartFeesPerDay,
+      ChartActivations,
+      ChartDelegationVolume,
+      ChartNumOfWhaleAccs,
+    },
+    data() {
+      return {
+        crumbs: [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          {
+            toRouteName: 'accounts',
+            text: this.$t('pageTypes.generalChartsPage'),
+          },
+        ],
+      };
+    },
+  };
 </script>
 
 <style lang="scss" scoped>
-@media (min-width: 1200px) {
-  .chart-min-height {
-    min-height: 499px;
+  @media (min-width: 1200px) {
+    .chart-min-height {
+      min-height: 499px;
+    }
   }
-}
 </style>

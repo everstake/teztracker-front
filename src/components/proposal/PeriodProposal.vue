@@ -22,7 +22,7 @@
                   <p
                     class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold font font-mini"
                   >
-                    {{ $tc("voting.proposal", 2) }}
+                    {{ $tc('voting.proposal', 2) }}
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
@@ -67,7 +67,7 @@
                   <p
                     class="vote-card--margin-none vote-card__font-size--16 vote-card__weight--bold font font-mini"
                   >
-                    {{ $t("voting.generalVotingStats") }}
+                    {{ $t('voting.generalVotingStats') }}
                   </p>
                 </div>
                 <div class="vote-card__divider"></div>
@@ -75,7 +75,7 @@
                   <p
                     class="vote-card__font-size--14 vote-card__weight--bold font font--mini"
                   >
-                    {{ $t("voting.recentVotes") }}
+                    {{ $t('voting.recentVotes') }}
                   </p>
                   <div
                     class="vote-card__recent"
@@ -84,12 +84,12 @@
                   >
                     <div>
                       <div class="vote-card__recent-proposal font font--mini">
-                        <span>{{ $tc("voting.voter", 1) }}:</span>
+                        <span>{{ $tc('voting.voter', 1) }}:</span>
                         {{ voter.name || voter.pkh }}
                       </div>
                       <div class="vote-card__recent-proposal font font--mini">
-                        <span>{{ $tc("voting.proposal", 1) }}:</span>
-                        {{ voter.proposal | longhash(9) }}
+                        <span>{{ $tc('voting.proposal', 1) }}:</span>
+                        {{ voter.proposal | longhash }}
                       </div>
                     </div>
                     <div class="vote-card__recent-rolls font font--mini">
@@ -120,14 +120,15 @@
                       ></b-progress>
                       <div class="vote-card__container-space-between">
                         <span class="vote-card__percentage">
-                          {{ $t("voting.participation") }}
+                          {{ $t('voting.participation') }}
                         </span>
                         <span class="vote-card__percentage">
-                          {{ $t("voting.votesCast") }}
+                          {{ $t('voting.votesCast') }}
                         </span>
                       </div>
                       <div class="vote-card__p">
-                        {{ $tc("common.baker", 2) }} {{ getBakersParticipationCount }}
+                        {{ $tc('common.baker', 2) }}
+                        {{ getBakersParticipationCount }}
                       </div>
                     </b-col>
                     <b-col
@@ -156,15 +157,14 @@
                       />
                       <div class="vote-card__container-space-between">
                         <span class="vote-card__percentage">
-                          {{ $t("voting.undecided") }}
+                          {{ $t('voting.undecided') }}
                         </span>
                         <span class="vote-card__percentage">
-                          {{ $t("voting.votesAvailable") }}
-                        </span
-                        >
+                          {{ $t('voting.votesAvailable') }}
+                        </span>
                       </div>
                       <div class="vote-card__p">
-                        {{ $t("voting.nonVoters") }}
+                        {{ $t('voting.nonVoters') }}
                         {{ getNonVotersCount }}
                       </div>
                     </b-col>
@@ -219,16 +219,15 @@
                       ref="tooltip"
                       triggers="hover"
                       :target="proposal.hash"
-                      >
-                      {{ $t("common.copyToClipboard") }}
-                    </b-tooltip
                     >
+                      {{ $t('common.copyToClipboard') }}
+                    </b-tooltip>
                   </div>
                   <p
                     class="vote-card__font-size--36 vote-card__upvote-item font font--mini"
                   >
                     <span class="vote-card__weight--lighter">
-                      {{ $t("voting.upVotes") }}:
+                      {{ $t('voting.upVotes') }}:
                     </span>
                     {{ proposal.upvote }}%
                   </p>
@@ -254,128 +253,128 @@
 </template>
 
 <script>
-import CardSection from "@/components/partials/CardSection";
-import DoughnutChart from "@/components/partials/DoughnutChart";
-import uuid from "@/mixins/uuid";
-import getPercentage from "@/utils/getPercentage";
-import numeral from "numeral";
+  import CardSection from '@/components/partials/CardSection';
+  import DoughnutChart from '@/components/partials/DoughnutChart';
+  import uuid from '@/mixins/uuid';
+  import getPercentage from '@/utils/getPercentage';
+  import numeral from 'numeral';
 
-export default {
-  name: "PeriodProposal",
-  components: {
-    DoughnutChart,
-    CardSection
-  },
-  props: [
-    "proposal",
-    "voters",
-    "proposals",
-    "backgroundColors",
-    "getDoughnutLegendPosition"
-  ],
-  mixins: [uuid],
-  methods: {
-    getPercentage: (...args) => getPercentage(...args),
-    copyToClipboard(hash) {
-      const selection = window.getSelection();
-      const range = window.document.createRange();
-      selection.removeAllRanges();
-      range.selectNode(this.$refs[hash][0]);
-      selection.addRange(range);
-
-      try {
-        document.execCommand("copy");
-      } catch (err) {
+  export default {
+    name: 'PeriodProposal',
+    components: {
+      DoughnutChart,
+      CardSection,
+    },
+    props: [
+      'proposal',
+      'voters',
+      'proposals',
+      'backgroundColors',
+      'getDoughnutLegendPosition',
+    ],
+    mixins: [uuid],
+    methods: {
+      getPercentage: (...args) => getPercentage(...args),
+      copyToClipboard(hash) {
+        const selection = window.getSelection();
+        const range = window.document.createRange();
         selection.removeAllRanges();
-      }
-    },
-    handleResize() {
-      this.$emit("setDoughnutLegendPosition", window.innerWidth);
-    }
-  },
-  computed: {
-    getDoughnutOptions() {
-      const proposalsCount = this.proposals.length;
-      const { votesAvailable } = this.proposal.voteStats;
-      const options = {};
+        range.selectNode(this.$refs[hash][0]);
+        selection.addRange(range);
 
-      if (proposalsCount === 1) {
-        options.data = [
-          ...this.proposals.map(({ upvote }) => upvote),
-          ...this.proposals.map(proposal => {
-            return this.getPercentage(
-              votesAvailable,
-              votesAvailable - proposal.votesCasted
-            ).toFixed(2);
-          })
-        ];
+        try {
+          document.execCommand('copy');
+        } catch (err) {
+          selection.removeAllRanges();
+        }
+      },
+      handleResize() {
+        this.$emit('setDoughnutLegendPosition', window.innerWidth);
+      },
+    },
+    computed: {
+      getDoughnutOptions() {
+        const proposalsCount = this.proposals.length;
+        const { votesAvailable } = this.proposal.voteStats;
+        const options = {};
 
-        options.labels = [
-          ...this.proposals.map(
-            proposal =>
-              proposal.title || this.$options.filters.longhash(proposal.hash)
-          ),
-          this.$t("voting.undecided")
-        ];
-      }
+        if (proposalsCount === 1) {
+          options.data = [
+            ...this.proposals.map(({ upvote }) => upvote),
+            ...this.proposals.map((proposal) => {
+              return this.getPercentage(
+                votesAvailable,
+                votesAvailable - proposal.votesCasted,
+              ).toFixed(2);
+            }),
+          ];
 
-      if (proposalsCount > 1) {
-        options.data = this.proposals.map(({ upvote }) => upvote);
-        options.labels = this.proposals.map(
-          proposal =>
-            proposal.title || this.$options.filters.longhash(proposal.hash)
-        );
-      }
+          options.labels = [
+            ...this.proposals.map(
+              (proposal) =>
+                proposal.title || this.$options.filters.longhash(proposal.hash),
+            ),
+            this.$t('voting.undecided'),
+          ];
+        }
 
-      options.percents = true;
-      options.legend = this.getDoughnutLegendPosition;
+        if (proposalsCount > 1) {
+          options.data = this.proposals.map(({ upvote }) => upvote);
+          options.labels = this.proposals.map(
+            (proposal) =>
+              proposal.title || this.$options.filters.longhash(proposal.hash),
+          );
+        }
 
-      return options;
+        options.percents = true;
+        options.legend = this.getDoughnutLegendPosition;
+
+        return options;
+      },
+      getParticipationPercent() {
+        const { votesAvailable, votesCast } = this.proposal.voteStats;
+        return this.getPercentage(votesAvailable, votesCast).toFixed(2);
+      },
+      getParticipationCount() {
+        const { votesAvailable, votesCast } = this.proposal.voteStats;
+        return `${numeral(votesCast).format('0,0')} / ${numeral(
+          votesAvailable,
+        ).format('0,0')}`;
+      },
+      getBakersParticipationCount() {
+        const { numVoters, numVotersTotal } = this.proposal.voteStats;
+        return `${numVoters} / ${numVotersTotal}`;
+      },
+      getUndecidedPercent() {
+        const { votesAvailable, votesCast } = this.proposal.voteStats;
+        return this.getPercentage(
+          votesAvailable,
+          votesAvailable - votesCast,
+        ).toFixed(2);
+      },
+      getUndecidedCount() {
+        const { votesAvailable, votesCast } = this.proposal.voteStats;
+        return `${numeral(votesAvailable - votesCast).format(
+          '0,0',
+        )} / ${numeral(votesAvailable).format('0,0')}`;
+      },
+      getNonVotersCount() {
+        const { numVotersTotal, numVoters } = this.proposal.voteStats;
+        return `${numVotersTotal - numVoters} / ${numVotersTotal}`;
+      },
     },
-    getParticipationPercent() {
-      const { votesAvailable, votesCast } = this.proposal.voteStats;
-      return this.getPercentage(votesAvailable, votesCast).toFixed(2);
+    created() {
+      window.addEventListener('resize', this.handleResize);
+      this.handleResize();
     },
-    getParticipationCount() {
-      const { votesAvailable, votesCast } = this.proposal.voteStats;
-      return `${numeral(votesCast).format("0,0")} / ${numeral(
-        votesAvailable
-      ).format("0,0")}`;
+    destroyed() {
+      window.removeEventListener('resize', this.handleResize);
     },
-    getBakersParticipationCount() {
-      const { numVoters, numVotersTotal } = this.proposal.voteStats;
-      return `${numVoters} / ${numVotersTotal}`;
-    },
-    getUndecidedPercent() {
-      const { votesAvailable, votesCast } = this.proposal.voteStats;
-      return this.getPercentage(
-        votesAvailable,
-        votesAvailable - votesCast
-      ).toFixed(2);
-    },
-    getUndecidedCount() {
-      const { votesAvailable, votesCast } = this.proposal.voteStats;
-      return `${numeral(votesAvailable - votesCast).format("0,0")} / ${numeral(
-        votesAvailable
-      ).format("0,0")}`;
-    },
-    getNonVotersCount() {
-      const { numVotersTotal, numVoters } = this.proposal.voteStats;
-      return `${numVotersTotal - numVoters} / ${numVotersTotal}`;
-    }
-  },
-  created() {
-    window.addEventListener("resize", this.handleResize);
-    this.handleResize();
-  },
-  destroyed() {
-    window.removeEventListener("resize", this.handleResize);
-  }
-};
+  };
 </script>
 
 <style lang="scss" scoper>
-.pt0 {
-  padding-top: 0;
-}
+  .pt0 {
+    padding-top: 0;
+  }
 </style>
