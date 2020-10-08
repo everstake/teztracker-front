@@ -37,10 +37,7 @@
                     >
                       <template slot="pkh" slot-scope="row">
                         <span class="d-flex align-items-center">
-                          <IdentIcon
-                            v-if="!row.item.name"
-                            :seed="row.item.pkh"
-                          />
+                          <IdentIcon :seed="row.item.pkh" />
 
                           <b-link
                             :to="{
@@ -138,10 +135,7 @@
                     >
                       <template slot="pkh" slot-scope="row">
                         <span class="d-flex align-items-center">
-                          <IdentIcon
-                            v-if="!row.item.name"
-                            :seed="row.item.pkh"
-                          />
+                          <IdentIcon :seed="row.item.pkh" />
 
                           <b-link
                             :to="{

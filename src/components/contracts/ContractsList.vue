@@ -37,10 +37,7 @@
       </template>
       <template slot="delegateValue" slot-scope="row">
         <span v-if="row.item.delegateValue" class="d-flex align-items-center">
-          <IdentIcon
-            v-if="!row.item.delegateName"
-            :seed="row.item.delegateValue"
-          />
+          <IdentIcon :seed="row.item.delegateValue" />
 
           <b-link
             :to="{

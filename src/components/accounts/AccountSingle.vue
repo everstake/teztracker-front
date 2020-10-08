@@ -6,6 +6,8 @@
           <div class="break-word">
             <h3 id="card-title" class="card__title" @click="copyToClipboard()">
               <span v-if="account.accountName" class="text">
+                <IdentIcon :seed="hash" />
+
                 {{ account.accountName }}
               </span>
               <span v-else>
@@ -66,7 +68,7 @@
             </b-col>
             <b-col lg="10">
               <IdentIcon
-                v-if="account.delegateValue && account.delegateValue !== hash"
+                v-if="account.delegateValue !== hash"
                 :seed="account.delegateValue"
               />
 

@@ -16,7 +16,7 @@
     >
       <template slot="accountId" slot-scope="row">
         <span v-if="row.item.is_baker" class="d-flex align-items-center">
-          <IdentIcon v-if="!row.item.accountName" :seed="row.item.accountId" />
+          <IdentIcon :seed="row.item.accountId" />
 
           <b-link
             :to="{ name: 'baker', params: { baker: row.item.accountId } }"
@@ -38,7 +38,7 @@
           v-else-if="row.item.accountId.slice(0, 2) === 'KT'"
           class="d-flex align-items-center"
         >
-          <IdentIcon v-if="!row.item.accountName" :seed="row.item.accountId" />
+          <IdentIcon :seed="row.item.accountId" />
 
           <b-link
             :to="{ name: 'account', params: { account: row.item.accountId } }"
@@ -57,7 +57,7 @@
           />
         </span>
         <span v-else class="d-flex align-items-center">
-          <IdentIcon v-if="!row.item.accountName" :seed="row.item.accountId" />
+          <IdentIcon :seed="row.item.accountId" />
 
           <b-link
             :to="{ name: 'account', params: { account: row.item.accountId } }"
@@ -93,10 +93,7 @@
       </template>
       <template slot="delegateValue" slot-scope="row">
         <span v-if="row.item.delegateValue" class="d-flex align-items-center">
-          <IdentIcon
-            v-if="!row.item.delegateName"
-            :seed="row.item.delegateValue"
-          />
+          <IdentIcon :seed="row.item.delegateValue" />
 
           <b-link
             :to="{ name: 'baker', params: { baker: row.item.accountId } }"

@@ -15,10 +15,7 @@
 
       <template slot="block_0" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon
-            v-if="!row.item.block_0.delegate_name"
-            :seed="row.item.block_0.delegate"
-          />
+          <IdentIcon :seed="row.item.block_0.delegate" />
 
           <router-link
             :class="{ winner: row.item.block_0.winner }"
@@ -43,10 +40,7 @@
       </template>
       <template slot="block_1" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon
-            v-if="!row.item.block_1.delegate_name"
-            :seed="row.item.block_1.delegate"
-          />
+          <IdentIcon :seed="row.item.block_1.delegate" />
 
           <router-link
             :class="{ winner: row.item.block_1.winner }"
@@ -71,10 +65,7 @@
       </template>
       <template slot="block_2" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon
-            v-if="!row.item.block_2.delegate_name"
-            :seed="row.item.block_2.delegate"
-          />
+          <IdentIcon :seed="row.item.block_2.delegate" />
 
           <router-link
             :class="{ winner: row.item.block_2.winner }"
@@ -99,10 +90,7 @@
       </template>
       <template slot="block_3" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon
-            v-if="!row.item.block_3.delegate_name"
-            :seed="row.item.block_3.delegate"
-          />
+          <IdentIcon :seed="row.item.block_3.delegate" />
 
           <router-link
             :class="{ winner: row.item.block_3.winner }"
@@ -127,10 +115,7 @@
       </template>
       <template slot="block_4" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon
-            v-if="!row.item.block_4.delegate_name"
-            :seed="row.item.block_4.delegate"
-          />
+          <IdentIcon :seed="row.item.block_4.delegate" />
 
           <router-link
             :class="{ winner: row.item.block_4.winner }"
@@ -155,10 +140,7 @@
       </template>
       <template slot="block_5" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon
-            v-if="!row.item.block_5.delegate_name"
-            :seed="row.item.block_5.delegate"
-          />
+          <IdentIcon :seed="row.item.block_5.delegate" />
 
           <router-link
             :class="{ winner: row.item.block_5.winner }"
@@ -183,10 +165,7 @@
       </template>
       <template slot="block_6" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon
-            v-if="!row.item.block_6.delegate_name"
-            :seed="row.item.block_6.delegate"
-          />
+          <IdentIcon :seed="row.item.block_6.delegate" />
 
           <router-link
             :class="{ winner: row.item.block_6.winner }"
