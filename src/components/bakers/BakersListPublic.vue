@@ -15,14 +15,20 @@
       class="transactions-table table-responsive-md"
     >
       <template slot="accountId" slot-scope="row">
-        <b-link :to="{ name: 'baker', params: { baker: row.item.accountId } }">
-          <template v-if="row.item.name">
-            {{ row.item.name }}
-          </template>
-          <template v-else>
-            {{ row.item.accountId | longhash }}
-          </template>
-        </b-link>
+        <span>
+          <IdentIcon :seed="row.item.accountId" />
+
+          <b-link
+            :to="{ name: 'baker', params: { baker: row.item.accountId } }"
+          >
+            <template v-if="row.item.name">
+              {{ row.item.name }}
+            </template>
+            <template v-else>
+              {{ row.item.accountId | longhash }}
+            </template>
+          </b-link>
+        </span>
       </template>
       <template slot="stakingCapacity" slot-scope="row">
         {{
@@ -61,90 +67,92 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from "vuex";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import setPerPage from "@/mixins/setPerPage";
-import fetchListMixin from "@/mixins/fetchListMixin";
-import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-import { SET_PUBLIC_BAKERS } from "@/store/mutations.types";
+  import { mapMutations, mapState } from 'vuex';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import setPerPage from '@/mixins/setPerPage';
+  import fetchListMixin from '@/mixins/fetchListMixin';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import { SET_PUBLIC_BAKERS } from '@/store/mutations.types';
 
-export default {
-  name: "BakersListPublic",
-  components: {
-    PerPageSelect,
-    Pagination
-  },
-  mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
-  data() {
-    return {
-      fields: [
-        { key: "accountId", label: this.$tc("common.baker", 1) },
-        {
-          key: "stakingCapacity",
-          label: this.$t("common.capacityAvailable"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "fee",
-          label: this.$t("common.fee"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "stakingBalance",
-          label: this.$t("common.stakingBal"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "rolls",
-          label: this.$t("common.rolls"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "blocks",
-          label: this.$tc("common.block", 2),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        {
-          key: "endorsements",
-          label: this.$tc("opTypes.endorsement", 2),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        { key: "activeDelegators", label: this.$t("numberOf.#OfDelegators") },
-        { key: "bakingSince", label: this.$t("common.bakingSince") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState({
-      publicBakers: state => state.accounts.publicBakers,
-      count: state => state.accounts.counts,
-      dateFormat: state => state.app.dateFormat
-    }),
-    bakersFormatted() {
-      if (!this.publicBakers || this.publicBakers.length === 0) return [];
-
-      return this.publicBakers.map(bakerObj => {
-        return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
-      });
-    }
-  },
-  methods: {
-    ...mapMutations("accounts", [SET_PUBLIC_BAKERS]),
-    async reload(page = 1) {
-      const props = {
-        page,
-        limit: this.perPage
+  export default {
+    name: 'BakersListPublic',
+    components: {
+      PerPageSelect,
+      Pagination,
+      IdentIcon,
+    },
+    mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
+    data() {
+      return {
+        fields: [
+          { key: 'accountId', label: this.$tc('common.baker', 1) },
+          {
+            key: 'stakingCapacity',
+            label: this.$t('common.capacityAvailable'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'fee',
+            label: this.$t('common.fee'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'stakingBalance',
+            label: this.$t('common.stakingBal'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'rolls',
+            label: this.$t('common.rolls'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'blocks',
+            label: this.$tc('common.block', 2),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          {
+            key: 'endorsements',
+            label: this.$tc('opTypes.endorsement', 2),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          { key: 'activeDelegators', label: this.$t('numberOf.#OfDelegators') },
+          { key: 'bakingSince', label: this.$t('common.bakingSince') },
+        ],
       };
-      const data = await this.$api.getPublicBakers(props);
-      this[SET_PUBLIC_BAKERS](data);
-    }
-  }
-};
+    },
+    computed: {
+      ...mapState({
+        publicBakers: (state) => state.accounts.publicBakers,
+        count: (state) => state.accounts.counts,
+        dateFormat: (state) => state.app.dateFormat,
+      }),
+      bakersFormatted() {
+        if (!this.publicBakers || this.publicBakers.length === 0) return [];
+
+        return this.publicBakers.map((bakerObj) => {
+          return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
+        });
+      },
+    },
+    methods: {
+      ...mapMutations('accounts', [SET_PUBLIC_BAKERS]),
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        const data = await this.$api.getPublicBakers(props);
+        this[SET_PUBLIC_BAKERS](data);
+      },
+    },
+  };
 </script>

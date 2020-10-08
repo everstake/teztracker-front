@@ -10,7 +10,7 @@
     >
       <template slot="source" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon v-if="!row.item.sourceName" :seed="row.item.source" />
+          <IdentIcon :seed="row.item.source" />
 
           <b-link
             :to="{
@@ -36,14 +36,6 @@
         <span class="d-flex align-items-center">
           <!--TODO: Can be empty. Refactor the condition-->
           <IdentIcon
-            v-if="
-              (!row.item.destinationName &&
-                !row.item.delegateName &&
-                !row.item.pkhName &&
-                row.item.destination) ||
-                row.item.delegate ||
-                row.item.pkh
-            "
             :seed="row.item.destination || row.item.delegate || row.item.pkh"
           />
 

@@ -77,10 +77,7 @@
               </b-col>
               <b-col lg="8" class="text-accent">
                 <span>
-                  <IdentIcon
-                    v-if="!this.block.bakerName"
-                    :seed="this.block.baker"
-                  />
+                  <IdentIcon :seed="this.block.baker" />
 
                   <router-link
                     class="baker"

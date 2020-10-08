@@ -25,7 +25,7 @@
 
       <template slot="baker" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon v-if="!row.item.bakerName" :seed="row.item.baker" />
+          <IdentIcon :seed="row.item.baker" />
 
           <b-link :to="{ name: 'baker', params: { baker: row.item.baker } }">
             <template v-if="row.item.bakerName">
