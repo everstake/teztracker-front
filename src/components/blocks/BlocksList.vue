@@ -12,6 +12,7 @@
       :per-page="0"
       borderless
       class="transactions-table table-responsive-xl"
+      :empty-text="$t('common.noData')"
     >
       <template slot="level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.level } }">

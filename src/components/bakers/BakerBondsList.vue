@@ -13,6 +13,7 @@
       borderless
       class="transactions-table table-responsive-md"
       :tbody-tr-class="getRowClass"
+      :empty-text="$t('common.noData')"
     >
       <template slot="staking_balance" slot-scope="row">
         {{ row.item.staking_balance | tezosToFixed }}

@@ -34,6 +34,7 @@
                       :current-page="currentPage"
                       :per-page="0"
                       class="transactions-table table table-borderless table-responsive-lg"
+                      :empty-text="$t('common.noData')"
                     >
                       <template slot="pkh" slot-scope="row">
                         <span class="d-flex align-items-center">
@@ -132,6 +133,7 @@
                       :current-page="currentPage"
                       :per-page="0"
                       class="transactions-table table table-borderless table-responsive-md"
+                      :empty-text="$t('common.noData')"
                     >
                       <template slot="pkh" slot-scope="row">
                         <span class="d-flex align-items-center">

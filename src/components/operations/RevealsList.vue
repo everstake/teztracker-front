@@ -6,6 +6,7 @@
       :fields="fields"
       borderless
       class="transactions-table table-responsive-md"
+      :empty-text="$t('common.noData')"
     >
       <template slot="from" slot-scope="row">
         <b-link
