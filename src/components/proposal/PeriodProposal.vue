@@ -78,9 +78,9 @@
                     {{ $t('voting.recentVotes') }}
                   </p>
                   <div
-                    class="vote-card__recent"
                     v-for="voter in voters.slice(0, 4)"
                     :key="generateKey()"
+                    class="vote-card__recent"
                   >
                     <div>
                       <div class="vote-card__recent-proposal font font--mini">
@@ -178,9 +178,9 @@
     </CardSection>
 
     <CardSection
-      :fluid="true"
       v-for="proposal in proposals"
       :key="generateKey()"
+      :fluid="true"
     >
       <template>
         <b-row>
@@ -199,21 +199,16 @@
                 <div
                   class="vote-card__container-space-between vote-card__upvote"
                 >
-                  <div
-                    @click="copyToClipboard(proposal.hash)"
-                    :id="proposal.hash"
-                    class="vote-card__title-wrapper vote-card--pointer"
-                  >
+                  <div class="vote-card__title-wrapper vote-card--pointer">
                     <p
                       :ref="proposal.hash"
                       class="vote-card__upvote-title vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold font font--mini"
                     >
-                      {{ proposal.title || proposal.hash
-                      }}<span class="icon vote-card__icon"
-                        ><font-awesome-icon
-                          class="icon-primary"
-                          :icon="['fas', 'copy']"
-                      /></span>
+                      {{ proposal.title || proposal.hash }}
+                      <BtnCopy
+                        :id="proposal.hash"
+                        :text-to-copy="proposal.title || proposal.hash"
+                      />
                     </p>
                     <b-tooltip
                       ref="tooltip"
@@ -255,6 +250,7 @@
 <script>
   import CardSection from '@/components/partials/CardSection';
   import DoughnutChart from '@/components/partials/DoughnutChart';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import uuid from '@/mixins/uuid';
   import getPercentage from '@/utils/getPercentage';
   import numeral from 'numeral';
@@ -264,7 +260,9 @@
     components: {
       DoughnutChart,
       CardSection,
+      BtnCopy,
     },
+    mixins: [uuid],
     props: [
       'proposal',
       'voters',
@@ -272,26 +270,6 @@
       'backgroundColors',
       'getDoughnutLegendPosition',
     ],
-    mixins: [uuid],
-    methods: {
-      getPercentage: (...args) => getPercentage(...args),
-      copyToClipboard(hash) {
-        const selection = window.getSelection();
-        const range = window.document.createRange();
-        selection.removeAllRanges();
-        range.selectNode(this.$refs[hash][0]);
-        selection.addRange(range);
-
-        try {
-          document.execCommand('copy');
-        } catch (err) {
-          selection.removeAllRanges();
-        }
-      },
-      handleResize() {
-        this.$emit('setDoughnutLegendPosition', window.innerWidth);
-      },
-    },
     computed: {
       getDoughnutOptions() {
         const proposalsCount = this.proposals.length;
@@ -369,6 +347,12 @@
     },
     destroyed() {
       window.removeEventListener('resize', this.handleResize);
+    },
+    methods: {
+      getPercentage: (...args) => getPercentage(...args),
+      handleResize() {
+        this.$emit('setDoughnutLegendPosition', window.innerWidth);
+      },
     },
   };
 </script>

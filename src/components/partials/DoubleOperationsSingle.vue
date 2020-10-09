@@ -47,17 +47,11 @@
                     {{ $t('hashTypes.opHash') }}
                   </b-col>
                   <b-col lg="7" class="text-accent card__pointer">
-                    <span id="hash" @click="copyToClipboard()">
-                      <span ref="textToCopy">
-                        {{ props.operationGroupHash }}
-                      </span>
-                      <span class="icon">
-                        <font-awesome-icon
-                          class="icon-primary"
-                          :icon="['fas', 'copy']"
-                        />
-                      </span>
-                    </span>
+                    {{ props.operationGroupHash }}
+                    <BtnCopy
+                      id="hash"
+                      :text-to-copy="props.operationGroupHash"
+                    />
                     <b-tooltip ref="tooltip" triggers="hover" target="hash">
                       {{ $t('common.copyToClipboard') }}
                     </b-tooltip>
@@ -164,29 +158,18 @@
 
 <script>
   import { mapState } from 'vuex';
+  import BtnCopy from '@/components/partials/BtnCopy';
 
   export default {
     name: 'DoubleOperationsSingle',
+    components: {
+      BtnCopy,
+    },
     props: ['props'],
     computed: {
       ...mapState('app', {
         dateFormat: (state) => state.dateFormat,
       }),
-    },
-    methods: {
-      copyToClipboard() {
-        const selection = window.getSelection();
-        const range = window.document.createRange();
-        selection.removeAllRanges();
-        range.selectNode(this.$refs.textToCopy);
-        selection.addRange(range);
-
-        try {
-          document.execCommand('copy');
-        } catch (err) {
-          selection.removeAllRanges();
-        }
-      },
     },
   };
 </script>
