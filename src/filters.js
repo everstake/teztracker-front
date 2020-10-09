@@ -40,10 +40,10 @@ Vue.filter('tezos', function(amount) {
   if (amount > 0) {
     return (
       numeral(amount / Vue.prototype.$constants.XTZ).format('0,0[.]000000') +
-      ' XTZ'
+      ' ꜩ'
     );
   }
-  return '0 XTZ';
+  return '0 ꜩ';
   //return amount + "ꜩ";
 });
 
@@ -52,18 +52,18 @@ Vue.filter('tezosToFixed', function(amount) {
     if (numeral(amount / Vue.prototype.$constants.XTZ).format('0,0') == 0) {
       return `${numeral(amount / Vue.prototype.$constants.XTZ).format(
         '0,0[.]000000',
-      )} XTZ`;
+      )} ꜩ`;
     } else {
       return `${numeral(amount / Vue.prototype.$constants.XTZ).format(
         '0,0',
-      )} XTZ`;
+      )} ꜩ`;
     }
   }
-  return '0 XTZ';
+  return '0 ꜩ';
 });
 
 Vue.filter('tezosCapacity', function(amount) {
-  return `${numeral(amount).format('0,0[.]000000')} XTZ`;
+  return `${numeral(amount).format('0,0[.]000000')} ꜩ`;
 });
 
 Vue.filter('addPercent', function(amount) {
