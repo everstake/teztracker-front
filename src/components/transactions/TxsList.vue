@@ -92,9 +92,7 @@
         </span>
       </template>
       <template slot="amount" slot-scope="row">
-        <span class="transactions-amount">
-          {{ row.item.amount | tezos }}
-        </span>
+        {{ row.item.amount | tezos }}
       </template>
       <template slot="fee" slot-scope="row">
         {{ row.item.fee | tezos }}
@@ -273,11 +271,5 @@
       border-bottom: 0.3em solid transparent;
       border-left: 0.3em solid;
     }
-  }
-</style>
-
-<style lang="scss" scoped>
-  .transactions-amount {
-    font-family: 'Helvetica Neue', sans-serif;
   }
 </style>
