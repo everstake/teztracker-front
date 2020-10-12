@@ -3,14 +3,14 @@
     <b-col cols="12">
       <b-card no-body>
         <template #header>
-          <div class="break-word">
-            <h3 class="card__title">
-              <span ref="textToCopy" class="text">{{ title }}</span>
-              <BtnCopy id="card-title" :text-to-copy="title" />
+          <div>
+            <h3 class="card__title text-accent">
+              <span class="text-break">
+                <span>{{ title }}</span>
+                <BtnCopy :text-to-copy="title" />
+              </span>
             </h3>
-            <b-tooltip ref="tooltip" triggers="hover" target="card-title">
-              {{ $t('common.copyToClipboard') }}
-            </b-tooltip>
+
             <div class="subtitle">{{ subtitle }}</div>
           </div>
 
@@ -77,7 +77,6 @@
   .card__title {
     display: inline-flex;
     align-items: center;
-    cursor: pointer;
   }
 
   .icon-primary {

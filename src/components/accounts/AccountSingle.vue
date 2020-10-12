@@ -11,18 +11,13 @@
                 {{ account.accountName }}
               </template>
               <template v-else>
-                <span>{{ hash }}</span>
-                <BtnCopy id="card-title" :text-to-copy="hash" />
+                <span class="text-break">
+                  <span>{{ hash }}</span>
+                  <BtnCopy :text-to-copy="hash" />
+                </span>
               </template>
             </h3>
-            <b-tooltip
-              v-if="!account.accountName"
-              ref="tooltip"
-              triggers="hover"
-              target="card-title"
-            >
-              {{ $t('common.copyToClipboard') }}
-            </b-tooltip>
+
             <div class="subtitle">
               <span v-if="hash.slice(0, 2) === 'KT'">{{
                 $t('infoTypes.contractInfo')
@@ -227,7 +222,6 @@
     display: inline-flex;
     align-items: center;
     padding-right: 0 !important; /* outweigh selector cascade from public styles */
-    cursor: pointer;
   }
 
   .icon-primary {
