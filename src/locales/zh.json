@@ -43,6 +43,7 @@
     "baking": "创建区块",
     "txVol": "交易量",
     "type": "类型",
+    "noData": "No data",
     "assets": "资产",
     "name": "Name",
     "ordinalNumber": "#",

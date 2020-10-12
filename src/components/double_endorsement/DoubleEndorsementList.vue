@@ -12,6 +12,7 @@
       :per-page="0"
       borderless
       class="transactions-table table-responsive-xl"
+      :empty-text="$t('common.noData')"
     >
       <template slot="txhash" slot-scope="row">
         <span class="d-flex align-items-center">
@@ -39,10 +40,7 @@
       </template>
       <template slot="baker" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon
-            v-if="!row.item.doubleOperationDetails.evidence_baker_name"
-            :seed="row.item.doubleOperationDetails.evidence_baker"
-          />
+          <IdentIcon :seed="row.item.doubleOperationDetails.evidence_baker" />
 
           <router-link
             class="baker"
@@ -72,10 +70,7 @@
       </template>
       <template slot="offender" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon
-            v-if="!row.item.doubleOperationDetails.offender_name"
-            :seed="row.item.doubleOperationDetails.offender"
-          />
+          <IdentIcon :seed="row.item.doubleOperationDetails.offender" />
 
           <router-link
             class="baker"

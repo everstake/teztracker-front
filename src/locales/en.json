@@ -43,6 +43,7 @@
     "baking": "Baking",
     "txVol": "Transactions volume",
     "type": "Type",
+    "noData": "No data",
     "assets": "Assets",
     "name": "Name",
     "ordinalNumber": "#",

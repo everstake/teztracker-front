@@ -14,6 +14,7 @@
       borderless
       class="transactions-table table-responsive-md"
       :tbody-tr-class="$_defineRowClass"
+      :empty-text="$t('common.noData')"
     >
       <template slot="txhash" slot-scope="row">
         <span class="d-flex align-items-center">
@@ -36,7 +37,7 @@
 
       <template slot="from" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon v-if="!row.item.sourceName" :seed="row.item.source" />
+          <IdentIcon :seed="row.item.source" />
 
           <b-link
             :to="{ name: 'account', params: { account: row.item.source } }"
@@ -61,7 +62,7 @@
           v-if="row.item.delegateName || row.item.delegate"
           class="d-flex align-items-center"
         >
-          <IdentIcon v-if="!row.item.delegateName" :seed="row.item.delegate" />
+          <IdentIcon :seed="row.item.delegate" />
 
           <b-link
             :to="{ name: 'account', params: { account: row.item.delegate } }"

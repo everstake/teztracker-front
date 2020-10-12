@@ -8,6 +8,7 @@
       :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
+      :empty-text="$t('common.noData')"
     >
       <template slot="cycle" slot-scope="row">
         {{ row.item.cycle | formatInteger }}

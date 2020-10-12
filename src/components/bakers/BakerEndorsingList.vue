@@ -16,6 +16,7 @@
       selectable
       :select-mode="'single'"
       :tbody-tr-class="getRowClass"
+      :empty-text="$t('common.noData')"
     >
       <template slot="rewards" slot-scope="row">
         {{ row.item.rewards | tezosToFixed }}
@@ -39,6 +40,7 @@
           :per-page="0"
           borderless
           class="transactions-table table-responsive-md baker-endorsing-table"
+          :empty-text="$t('common.noData')"
         >
           <template slot="level" slot-scope="row">
             <b-link :to="{ name: 'block', params: { level: row.item.level } }">

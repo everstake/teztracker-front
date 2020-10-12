@@ -12,6 +12,7 @@
       :per-page="0"
       borderless
       class="transactions-table table-responsive-xl"
+      :empty-text="$t('common.noData')"
     >
       <template slot="level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.level } }">
@@ -25,7 +26,7 @@
 
       <template slot="baker" slot-scope="row">
         <span class="d-flex align-items-center">
-          <IdentIcon v-if="!row.item.bakerName" :seed="row.item.baker" />
+          <IdentIcon :seed="row.item.baker" />
 
           <b-link :to="{ name: 'baker', params: { baker: row.item.baker } }">
             <template v-if="row.item.bakerName">

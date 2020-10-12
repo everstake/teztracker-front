@@ -8,6 +8,7 @@
       :per-page="0"
       borderless
       class="transactions-table table-responsive-xl"
+      :empty-text="$t('common.noData')"
     >
       <template slot="priority" slot-scope="row">
         <span>{{ row.item.priority }}</span>
@@ -17,7 +18,7 @@
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
-            v-if="!row.item.block_0.delegate_name && row.item.block_0.delegate"
+            v-if="row.item.block_0.delegate"
             :seed="row.item.block_0.delegate"
           />
 
@@ -47,7 +48,7 @@
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
-            v-if="!row.item.block_1.delegate_name && row.item.block_1.delegate"
+            v-if="row.item.block_1.delegate"
             :seed="row.item.block_1.delegate"
           />
 
@@ -77,7 +78,7 @@
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
-            v-if="!row.item.block_2.delegate_name && row.item.block_2.delegate"
+            v-if="row.item.block_2.delegate"
             :seed="row.item.block_2.delegate"
           />
 
@@ -107,7 +108,7 @@
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
-            v-if="!row.item.block_3.delegate_name && row.item.block_3.delegate"
+            v-if="row.item.block_3.delegate"
             :seed="row.item.block_3.delegate"
           />
 
@@ -137,7 +138,7 @@
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
-            v-if="!row.item.block_4.delegate_name && row.item.block_4.delegate"
+            v-if="row.item.block_4.delegate"
             :seed="row.item.block_4.delegate"
           />
 
@@ -167,7 +168,7 @@
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
-            v-if="!row.item.block_5.delegate_name && row.item.block_5.delegate"
+            v-if="row.item.block_5.delegate"
             :seed="row.item.block_5.delegate"
           />
 
@@ -197,7 +198,7 @@
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
-            v-if="!row.item.block_6.delegate_name && row.item.block_6.delegate"
+            v-if="row.item.block_6.delegate"
             :seed="row.item.block_6.delegate"
           />
 

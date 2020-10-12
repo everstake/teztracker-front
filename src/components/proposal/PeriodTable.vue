@@ -34,13 +34,11 @@
                       :current-page="currentPage"
                       :per-page="0"
                       class="transactions-table table table-borderless table-responsive-lg"
+                      :empty-text="$t('common.noData')"
                     >
                       <template slot="pkh" slot-scope="row">
                         <span class="d-flex align-items-center">
-                          <IdentIcon
-                            v-if="!row.item.name"
-                            :seed="row.item.pkh"
-                          />
+                          <IdentIcon :seed="row.item.pkh" />
 
                           <b-link
                             :to="{
@@ -135,13 +133,11 @@
                       :current-page="currentPage"
                       :per-page="0"
                       class="transactions-table table table-borderless table-responsive-md"
+                      :empty-text="$t('common.noData')"
                     >
                       <template slot="pkh" slot-scope="row">
                         <span class="d-flex align-items-center">
-                          <IdentIcon
-                            v-if="!row.item.name"
-                            :seed="row.item.pkh"
-                          />
+                          <IdentIcon :seed="row.item.pkh" />
 
                           <b-link
                             :to="{

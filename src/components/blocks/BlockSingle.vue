@@ -46,21 +46,12 @@
               <b-col lg="4" class="label">
                 {{ $t('hashTypes.hash') }}
               </b-col>
-              <b-col
-                id="card-title"
-                lg="8"
-                class="text text-accent"
-                @click="copyToClipboard()"
-              >
-                <span class="hash" ref="textToCopy">{{ this.block.hash }}</span>
-                <span class="icon"
-                  ><font-awesome-icon
-                    class="icon-primary"
-                    :icon="['fas', 'copy']"
-                /></span>
-                <b-tooltip ref="tooltip" triggers="hover" target="card-title"
-                  >Copy to clipboard</b-tooltip
-                >
+              <b-col lg="8" class="text text-accent">
+                <span class="hash">{{ block.hash }}</span>
+                <BtnCopy id="card-title" :text-to-copy="block.hash" />
+                <b-tooltip ref="tooltip" triggers="hover" target="card-title">
+                  {{ $t('common.copyToClipboard') }}
+                </b-tooltip>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -77,10 +68,7 @@
               </b-col>
               <b-col lg="8" class="text-accent">
                 <span>
-                  <IdentIcon
-                    v-if="!this.block.bakerName"
-                    :seed="this.block.baker"
-                  />
+                  <IdentIcon :seed="this.block.baker" />
 
                   <router-link
                     class="baker"
@@ -208,6 +196,7 @@
 
 <script>
   import IdentIcon from '@/components/accounts/IdentIcon';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import { mapState, mapGetters, mapActions } from 'vuex';
   import { GET_BLOCK_HEAD } from '@/store/actions.types';
 
@@ -215,12 +204,27 @@
     name: 'BlockSingle',
     components: {
       IdentIcon,
+      BtnCopy,
     },
     props: {
       block: {
         type: Object,
         required: true,
       },
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+      ...mapState('blocks', {
+        head: (state) => state.headBlock,
+      }),
+      ...mapGetters('app', {
+        currentNetwork: 'getAppNetwork',
+      }),
+    },
+    async created() {
+      await this[GET_BLOCK_HEAD]();
     },
     methods: {
       ...mapActions('blocks', [GET_BLOCK_HEAD]),
@@ -249,33 +253,6 @@
           });
         }
       },
-      copyToClipboard() {
-        const selection = window.getSelection();
-        const range = window.document.createRange();
-        selection.removeAllRanges();
-        range.selectNode(this.$refs.textToCopy);
-        selection.addRange(range);
-
-        try {
-          document.execCommand('copy');
-        } catch (err) {
-          selection.removeAllRanges();
-        }
-      },
-    },
-    computed: {
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
-      ...mapState('blocks', {
-        head: (state) => state.headBlock,
-      }),
-      ...mapGetters('app', {
-        currentNetwork: 'getAppNetwork',
-      }),
-    },
-    async created() {
-      await this[GET_BLOCK_HEAD]();
     },
   };
 </script>
