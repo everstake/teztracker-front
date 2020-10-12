@@ -12,6 +12,7 @@
       :per-page="0"
       borderless
       class="transactions-table table-responsive-lg"
+      :empty-text="$t('common.noData')"
     >
       <template slot="accountId" slot-scope="row">
         <span class="d-flex align-items-center">

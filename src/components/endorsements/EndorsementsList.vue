@@ -16,6 +16,7 @@
       :per-page="0"
       borderless
       class="transactions-table table-responsive-md"
+      :empty-text="$t('common.noData')"
     >
       <template slot="block" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.level } }">
@@ -200,6 +201,7 @@
             { key: 'level', label: this.$t('endorsementsList.endorsedBlock') },
             { key: 'txhash', label: this.$t('hashTypes.endorsementHash') },
             { key: 'endorser', label: this.$t('common.endorser') },
+            { key: 'slots', label: this.$t('endorsementsList.slots') },
             { key: 'timestamp', label: this.$t('common.timestamp') },
           ];
         }

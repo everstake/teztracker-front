@@ -4,15 +4,13 @@
       <b-card no-body>
         <template #header>
           <div class="break-word">
-            <h3 id="card-title" class="card__title" @click="copyToClipboard()">
+            <h3 class="card__title">
               <span ref="textToCopy" class="text">{{ title }}</span>
-              <span class="icon"
-                ><font-awesome-icon class="icon-primary" :icon="['fas', 'copy']"
-              /></span>
+              <BtnCopy id="card-title" :text-to-copy="title" />
             </h3>
-            <b-tooltip ref="tooltip" triggers="hover" target="card-title"
-              >Copy to clipboard</b-tooltip
-            >
+            <b-tooltip ref="tooltip" triggers="hover" target="card-title">
+              {{ $t('common.copyToClipboard') }}
+            </b-tooltip>
             <div class="subtitle">{{ subtitle }}</div>
           </div>
 
@@ -45,8 +43,13 @@
 </template>
 
 <script>
+  import BtnCopy from '@/components/partials/BtnCopy';
+
   export default {
     name: 'StatisticsCard',
+    components: {
+      BtnCopy,
+    },
     props: {
       title: {
         type: String,
@@ -59,21 +62,6 @@
       fields: {
         type: Array,
         default: () => [],
-      },
-    },
-    methods: {
-      copyToClipboard() {
-        const selection = window.getSelection();
-        const range = window.document.createRange();
-        selection.removeAllRanges();
-        range.selectNode(this.$refs.textToCopy);
-        selection.addRange(range);
-
-        try {
-          document.execCommand('copy');
-        } catch (err) {
-          selection.removeAllRanges();
-        }
       },
     },
   };

@@ -16,6 +16,7 @@
       selectable
       :select-mode="'single'"
       :tbody-tr-class="getRowClass"
+      :empty-text="$t('common.noData')"
     >
       <template slot="stakingBalance" slot-scope="row">
         {{ row.item.stakingBalance | tezosToFixed }}
@@ -52,6 +53,7 @@
           :per-page="0"
           borderless
           class="transactions-table table-responsive-md baker-baking-table"
+          :empty-text="$t('common.noData')"
         >
           <template slot="cycle" slot-scope="row">
             {{ row.item.cycle }}

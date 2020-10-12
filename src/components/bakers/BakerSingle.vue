@@ -3,19 +3,25 @@
     <b-col lg="12">
       <b-card no-body>
         <b-card-header>
-          <h3 id="card-title" class="card__title">
-            <span class="text card-title__text">
-              <template v-if="bakerInfo.name">
-                {{ bakerInfo.name }}
-              </template>
-              <template v-else>
-                <span>
-                  <IdentIcon :seed="hash" />
-                  {{ hash }}
-                </span>
-              </template>
-            </span>
+          <h3 class="card__title text-accent">
+            <IdentIcon :seed="hash" />
+
+            <template v-if="bakerInfo.name">
+              {{ bakerInfo.name }}
+            </template>
+            <template v-else>
+              {{ hash }}
+              <BtnCopy id="card-title" :text-to-copy="hash" />
+            </template>
           </h3>
+          <b-tooltip
+            v-if="!bakerInfo.name"
+            ref="tooltip"
+            triggers="hover"
+            target="card-title"
+          >
+            {{ $t('common.copyToClipboard') }}
+          </b-tooltip>
           <div class="subtitle">
             {{ $t('infoTypes.bakerInfo') }}
           </div>
@@ -36,16 +42,9 @@
                     {{ $t('bakerSingle.address') }}
                   </b-col>
                   <b-col lg="8" class="text-accent card__pointer">
-                    <span class="hash" id="hash" @click="copyToClipboard()">
-                      <span ref="textToCopy">
-                        {{ hash }}
-                      </span>
-                      <span class="icon">
-                        <font-awesome-icon
-                          class="icon-primary"
-                          :icon="['fas', 'copy']"
-                        />
-                      </span>
+                    <span class="hash">
+                      {{ hash }}
+                      <BtnCopy id="hash" :text-to-copy="hash" />
                     </span>
                     <b-tooltip ref="tooltip" triggers="hover" target="hash">
                       {{ $t('common.copyToClipboard') }}
@@ -196,6 +195,7 @@
 
 <script>
   import IdentIcon from '@/components/accounts/IdentIcon';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import convert from '../../mixins/convert';
   import { GET_APP_INFO } from '@/store/actions.types';
   import { mapState, mapActions } from 'vuex';
@@ -204,6 +204,7 @@
     name: 'BakerSingle',
     components: {
       IdentIcon,
+      BtnCopy,
     },
     mixins: [convert],
     props: {
@@ -250,19 +251,6 @@
           this.baker = true;
         } else {
           this.baker = false;
-        }
-      },
-      copyToClipboard() {
-        const selection = window.getSelection();
-        const range = window.document.createRange();
-        selection.removeAllRanges();
-        range.selectNode(this.$refs.textToCopy);
-        selection.addRange(range);
-
-        try {
-          document.execCommand('copy');
-        } catch (err) {
-          selection.removeAllRanges();
         }
       },
     },

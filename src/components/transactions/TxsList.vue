@@ -14,6 +14,7 @@
       borderless
       class="transactions-table table-responsive-md"
       :tbody-tr-class="$_defineRowClass"
+      :empty-text="$t('common.noData')"
     >
       <template slot="txhash" slot-scope="row">
         <span class="d-flex align-items-center">

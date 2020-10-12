@@ -4,24 +4,23 @@
       <b-card no-body>
         <b-card-header>
           <div class="break-word">
-            <h3 id="card-title" class="card__title" @click="copyToClipboard()">
-              <span v-if="account.accountName" class="text">
-                <IdentIcon :seed="hash" />
+            <h3 class="card__title text-accent">
+              <IdentIcon :seed="hash" />
 
+              <template v-if="account.accountName">
                 {{ account.accountName }}
-              </span>
-              <span v-else>
-                <IdentIcon :seed="hash" />
-
-                <span ref="textToCopy" class="text">{{ hash }}</span>
-                <span class="icon"
-                  ><font-awesome-icon
-                    class="icon-primary"
-                    :icon="['fas', 'copy']"
-                /></span>
-              </span>
+              </template>
+              <template v-else>
+                <span>{{ hash }}</span>
+                <BtnCopy id="card-title" :text-to-copy="hash" />
+              </template>
             </h3>
-            <b-tooltip ref="tooltip" triggers="hover" target="card-title">
+            <b-tooltip
+              v-if="!account.accountName"
+              ref="tooltip"
+              triggers="hover"
+              target="card-title"
+            >
               {{ $t('common.copyToClipboard') }}
             </b-tooltip>
             <div class="subtitle">
@@ -208,19 +207,6 @@
           });
         }
         this.account = result.data;
-      },
-      copyToClipboard() {
-        const selection = window.getSelection();
-        const range = window.document.createRange();
-        selection.removeAllRanges();
-        range.selectNode(this.$refs.textToCopy);
-        selection.addRange(range);
-
-        try {
-          document.execCommand('copy');
-        } catch (err) {
-          selection.removeAllRanges();
-        }
       },
     },
   };

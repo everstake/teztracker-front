@@ -73,6 +73,7 @@
                         borderless
                         class="transactions-table table-responsive-md"
                         :tbody-tr-class="$_defineRowClass"
+                        :empty-text="$t('common.noData')"
                       >
                         <template slot="from" slot-scope="row">
                           <b-link
