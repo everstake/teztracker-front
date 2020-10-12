@@ -69,7 +69,8 @@
                     {{ $t("common.balance") }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
-                    {{ account.balance | tezos(getAssetCurrency(account.name)) }}
+<!--                    {{ account.balance | tezos(getAssetCurrency(account.name)) }}-->
+                    <span>----</span>
                   </b-col>
                 </b-row>
               </b-col>
