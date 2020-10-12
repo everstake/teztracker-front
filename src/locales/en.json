@@ -56,7 +56,7 @@
     "activation": "Activation | Activations",
     "doubleBaking": "Double-baking",
     "doubleEndorsement": "Double-endorsement | Double-endorsements",
-    "holder": "Holder | Holders"
+    "holders": "Holders"
   },
   "listTypes": {
     "txsList": "Transactions list",

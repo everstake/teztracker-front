@@ -32,7 +32,7 @@
                       <AssetTabTxs :currency="currency" :account="hash" />
                     </b-card-body>
                   </b-tab>
-                  <b-tab :title="$tc('opTypes.holder', 2)">
+                  <b-tab :title="$t('opTypes.holders')">
                     <b-card-header>
                       <div class="break-word">
                         <h3>

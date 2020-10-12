@@ -43,8 +43,8 @@
 		"baking": "Бейкинг",
 		"txVol": "Объем транзакциий",
 		"type": "Тип",
-		"assets": "Assets",
-		"name": "Name",
+		"assets": "Ассеты",
+		"name": "Имя",
 		"ordinalNumber": "#",
 		"contractName": "Название контракта"
 	},
@@ -56,7 +56,7 @@
 		"activation": "Активация | Активации",
 		"doubleBaking": "Двойной бейкинг",
 		"doubleEndorsement": "Двойное заверение | Двойные заверения",
-		"holder": "Holder | Holders"
+		"holders": "Холдеры"
 	},
 	"listTypes": {
 		"txsList": "Список транзакций",
@@ -81,8 +81,8 @@
 		"nonVotersList": "Список неголосующих",
 		"rewardsList": "Список вознаграждений",
 		"topAccountsList": "Список топ аккаунтов",
-		"assetsList": "Assets list",
-		"holdersList": "Holders list"
+		"assetsList": "Список ассетов",
+		"holdersList": "Список холдеров"
 	},
 	"pageTypes": {
 		"txsPage": "Страница транзакций",
@@ -103,7 +103,7 @@
 		"generalChartsPage": "Страница общих графиков",
 		"bakingChartsPage": "Страница графиков бейкинга",
 		"topAccountsPage": "Страница топ аккаунтов",
-		"assetsPage": "Assets page"
+		"assetsPage": "Страница ассетов"
 	},
 	"infoTypes": {
 		"txInfo": "Информация о транзакции",
@@ -119,7 +119,7 @@
 		"generalInfo": "Общая информация",
 		"voteInfo": "Информация о голосе",
 		"contractInfo": "Информация о контракте",
-		"assetInfo": "Asset information"
+		"assetInfo": "Информация о ассете"
 	},
 	"hashTypes": {
 		"hash": "Хеш",
