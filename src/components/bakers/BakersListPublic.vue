@@ -15,6 +15,9 @@
       class="transactions-table table-responsive-md"
       :empty-text="$t('common.noData')"
     >
+      <template slot="id" slot-scope="row">
+        <span>{{ row.index + 1 }}</span>
+      </template>
       <template slot="accountId" slot-scope="row">
         <span>
           <IdentIcon :seed="row.item.accountId" />
@@ -88,6 +91,7 @@
     data() {
       return {
         fields: [
+          { key: 'id', label: '#', tdClass: 'ordinal-number', thClass: 'ordinal-number' },
           { key: 'accountId', label: this.$tc('common.baker', 1) },
           {
             key: 'stakingCapacity',

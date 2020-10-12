@@ -5,6 +5,7 @@
     </div>
 
     <b-table
+      responsive
       show-empty
       :items="bakersFormatted"
       :fields="fields"
@@ -14,6 +15,9 @@
       class="transactions-table table-responsive-lg"
       :empty-text="$t('common.noData')"
     >
+      <template slot="id" slot-scope="row">
+        <span>{{ row.index + 1 }}</span>
+      </template>
       <template slot="accountId" slot-scope="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.accountId" />
@@ -81,6 +85,7 @@
       return {
         // The key property must coincide with the corresponding keys in the data items
         fields: [
+          { key: 'id', label: '#', tdClass: 'ordinal-number', thClass: 'ordinal-number' },
           {
             key: 'accountId',
             label: this.$tc('common.baker', 1),
