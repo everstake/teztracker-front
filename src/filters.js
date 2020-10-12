@@ -36,7 +36,7 @@ Vue.filter('longhash', function(hash, fromStart, fromEnd) {
   return Vue.prototype.$helpers.truncateHash(hash, fromStart, fromEnd);
 });
 
-Vue.filter("tezos", function(amount, currency = 'XTZ') {
+Vue.filter('tezos', function(amount, currency = 'ꜩ') {
   if (amount > 0) {
     const formattedAmount = numeral(amount / Vue.prototype.$constants.XTZ).format("0,0[.]000000");
     return `${formattedAmount} ${currency}`;
