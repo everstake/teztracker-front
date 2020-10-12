@@ -20,7 +20,7 @@
           <span v-if="row.item.name">
             {{ row.item.name }}
           </span>
-          <span v-else>{{row.item.account_id | longhash(15) }}</span>
+          <span v-else>{{ row.item.account_id | longhash(15) }}</span>
         </router-link>
       </template>
       <template slot="manager" slot-scope="row">
@@ -37,14 +37,16 @@
         <span v-else>----</span>
       </template>
       <template slot="balance" slot-scope="row">
-        <span>{{ row.item.balance | tezos(getAssetCurrency(row.item.name)) }}</span>
+        <span>{{
+          row.item.balance | tezos(getAssetCurrency(row.item.name))
+        }}</span>
       </template>
       <template slot="created_at" slot-scope="row">
         <span>{{ row.item.created_at | timeformat(dateFormat) }}</span>
       </template>
     </b-table>
 
-    <PaginationWithCustomAction
+    <Pagination
       v-model="currentPage"
       :total-rows="count.assets"
       :per-page="perPage"
@@ -53,68 +55,73 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
-import PerPageSelect from "@/components/partials/PerPageSelect";
-import Pagination from "../partials/Pagination";
-import setPerPage from "@/mixins/setPerPage";
+  import { mapMutations, mapState } from 'vuex';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import setPerPage from '@/mixins/setPerPage';
+  import { SET_ASSETS } from '@/store/mutations.types';
+  import fetchListMixin from '@/mixins/fetchListMixin';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
 
-import withCustomAction from "../partials/withCustomAction";
-const PaginationWithCustomAction = withCustomAction(
-  Pagination,
-  "accounts",
-  "GET_ASSETS"
-);
+  export default {
+    name: 'AssetsList',
+    components: {
+      PerPageSelect,
+      Pagination,
+    },
+    mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
+    props: ['account'],
+    data() {
+      return {
+        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
+        fields: [
+          { key: 'id', label: this.$t('common.ordinalNumber') },
+          { key: 'account_id', label: this.$t('common.contractName') },
+          { key: 'manager', label: this.$t('common.manager') },
+          {
+            key: 'balance',
+            label: this.$t('common.balance'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          { key: 'created_at', label: this.$t('accSingle.created') },
+        ],
+      };
+    },
+    computed: {
+      ...mapState('accounts', {
+        assets: (state) => state.assets,
+        count: (state) => state.counts,
+      }),
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+    },
+    methods: {
+      getAssetCurrency(asset) {
+        if (!asset) return 'XTZ';
 
-export default {
-  name: "AssetsList",
-  components: {
-    PerPageSelect,
-    PaginationWithCustomAction
-  },
-  mixins: [setPerPage],
-  props: ['account'],
-  data() {
-    return {
-      currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      fields: [
-        { key: "id", label: this.$t("common.ordinalNumber") },
-        { key: "account_id", label: this.$t("common.contractName") },
-        { key: "manager", label: this.$t("common.manager") },
-        {
-          key: "balance",
-          label: this.$t("common.balance"),
-          sortable: true,
-          sortDirection: "desc"
-        },
-        { key: "created_at", label: this.$t("accSingle.created") }
-      ]
-    };
-  },
-  computed: {
-    ...mapState("accounts", {
-      assets: state => state.assets,
-      count: state => state.counts
-    }),
-    ...mapState("app", {
-      dateFormat: state => state.dateFormat
-    })
-  },
-  methods: {
-    getAssetCurrency(asset) {
-      if (!asset) return 'XTZ';
+        const assets = [
+          { name: 'tzBTC', currency: 'tzBTC' },
+          { name: 'Staker DAO', currency: 'STKR' },
+          { name: 'USDtz', currency: 'USDtz' },
+        ];
 
-      const assets = [
-        { name: 'tzBTC', currency: 'tzBTC' },
-        { name: 'Staker DAO', currency: 'STKR' },
-        { name: 'USDtz', currency: 'USDtz' },
-      ];
+        const findedAsset = assets.find(({ name, currency }) => {
+          if (asset === name) return currency;
+        });
 
-      const findedAsset = assets.find(({ name, currency }) => {
-        if (asset === name) return currency;
-      });
-
-      return findedAsset.currency;
-    }
-  }
-};
+        return findedAsset.currency;
+      },
+      ...mapMutations('accounts', [SET_ASSETS]),
+      async reload(page = 1) {
+        const props = {
+          page,
+          limit: this.perPage,
+        };
+        const data = await this.$api.getAssets(props);
+        this[SET_ASSETS](data);
+      },
+    },
+  };
 </script>
