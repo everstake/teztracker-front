@@ -69,8 +69,7 @@
                     {{ $t("common.balance") }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
-<!--                    {{ account.balance | tezos(getAssetCurrency(account.name)) }}-->
-                    <span>----</span>
+                    {{ account.balance | currencyPrecision(getAssetCurrency(account.name), account.precision) }}
                   </b-col>
                 </b-row>
               </b-col>
@@ -150,7 +149,7 @@ export default {
       }
     },
     getAssetCurrency(asset) {
-      if (!asset) return 'XTZ';
+      if (!asset) return 'ꜩ';
 
       const assets = [
         { name: 'tzBTC', currency: 'tzBTC' },
@@ -162,7 +161,9 @@ export default {
         if (asset === name) return currency;
       });
 
-      this.$emit('onCurrencyChange', findedAsset.currency);
+      findedAsset.precision = this.account.precision;
+
+      this.$emit('onCurrencyChange', {currency: findedAsset.currency, precision: findedAsset.precision});
 
       return findedAsset.currency;
     }

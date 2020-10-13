@@ -37,10 +37,9 @@
         <span v-else>----</span>
       </template>
       <template slot="balance" slot-scope="row">
-<!--        <span>{{-->
-<!--          row.item.balance | tezos(getAssetCurrency(row.item.name))-->
-<!--        }}</span>-->
-        <span>----</span>
+        <span>{{
+          row.item.balance | tezos(getAssetCurrency(row.item.name), row.item.precision)
+        }}</span>
       </template>
       <template slot="created_at" slot-scope="row">
         <span>{{ row.item.created_at | timeformat(dateFormat) }}</span>

@@ -29,7 +29,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <AssetTabTxs :currency="currency" :account="hash" />
+                      <AssetTabTxs :currency="currency" :precision="precision" :account="hash" />
                     </b-card-body>
                   </b-tab>
                   <b-tab :title="$t('opTypes.holders')">
@@ -44,7 +44,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <AssetTabHolders :currency="currency" :account="hash" />
+                      <AssetTabHolders :currency="currency" :precision="precision" :account="hash" />
                     </b-card-body>
                   </b-tab>
                   <b-tab :title="$tc('listTypes.otherOpsList', 2)">
@@ -59,7 +59,7 @@
                     </b-card-header>
 
                     <b-card-body>
-                      <AssetTabOther :currency="currency" :account="hash" />
+                      <AssetTabOther :currency="currency" :precision="precision" :account="hash" />
                     </b-card-body>
                   </b-tab>
                 </b-tabs>
@@ -92,7 +92,8 @@ export default {
   },
   data() {
     return {
-      currency: 'XTZ'
+      currency: 'XTZ',
+      precision: null
     };
   },
   computed: {
@@ -108,8 +109,9 @@ export default {
     }
   },
   methods: {
-    handleCurrencyChange(currency) {
+    handleCurrencyChange({currency, precision}) {
       this.currency = currency;
+      this.precision = precision;
     }
   }
 };

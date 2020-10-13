@@ -51,7 +51,7 @@
         </b-link>
       </template>
       <template slot="amount" slot-scope="row">
-        {{ row.item.amount | tezos(currency) }}
+        {{ row.item.amount | currencyPrecision(currency, precision) }}
       </template>
       <template slot="fee" slot-scope="row">
         {{ row.item.fee | tezos }}
@@ -97,6 +97,7 @@
         default: true
       },
       currency: String,
+      precision: [String, Number],
     },
     data() {
       return {
