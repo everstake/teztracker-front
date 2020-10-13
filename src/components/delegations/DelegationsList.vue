@@ -12,7 +12,7 @@
       :current-page="currentPage"
       :per-page="0"
       borderless
-      class="transactions-table table-responsive-md"
+      class="transactions-table"
       :tbody-tr-class="$_defineRowClass"
       :empty-text="$t('common.noData')"
     >

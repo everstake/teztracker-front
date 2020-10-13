@@ -5,13 +5,14 @@
     </div>
 
     <b-table
+      responsive
       show-empty
       :items="bakersFormatted"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
       borderless
-      class="transactions-table table-responsive-lg"
+      class="transactions-table"
       :empty-text="$t('common.noData')"
     >
       <template slot="accountId" slot-scope="row">

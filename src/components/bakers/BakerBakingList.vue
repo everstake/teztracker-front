@@ -5,18 +5,19 @@
     </div>
 
     <b-table
+      responsive
       show-empty
       :items="data"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
       borderless
-      class="transactions-table table-responsive-md"
-      @row-selected="handleRowClick"
       selectable
       :select-mode="'single'"
       :tbody-tr-class="getRowClass"
+      class="transactions-table"
       :empty-text="$t('common.noData')"
+      @row-selected="handleRowClick"
     >
       <template slot="avgPriority" slot-scope="row">
         {{ row.item.avgPriority }}
@@ -36,13 +37,14 @@
     <div>
       <b-modal id="modal-baking" size="lg" centered hide-header hide-footer>
         <b-table
+          responsive
           show-empty
           :items="selectedRow.data"
           :fields="selectedRow.fields"
           :current-page="selectedRow.currentPage"
           :per-page="0"
           borderless
-          class="transactions-table table-responsive-md baker-baking-table"
+          class="transactions-table baker-baking-table"
           :empty-text="$t('common.noData')"
         >
           <template slot="level" slot-scope="row">
