@@ -88,10 +88,6 @@
       account: {
         type: String
       },
-      isTableComplete: {
-        type: Boolean,
-        default: true
-      },
       showPerPageFilter: {
         type: Boolean,
         default: true
@@ -111,32 +107,26 @@
           {
             key: "from",
             label: this.$t("common.from"),
-            class: !this.isTableComplete ? "d-none" : ""
           },
           {
             key: "to",
             label: this.$t("common.to"),
-            class: !this.isTableComplete ? "d-none" : ""
           },
           {
             key: "amount",
             label: this.$t("common.amount"),
-            class: !this.isTableComplete ? "d-none" : ""
           },
           {
             key: "fee",
             label: this.$t("common.fee"),
-            class: !this.isTableComplete ? "d-none" : ""
           },
           {
             key: "gas_limit",
             label: this.$t("txPage.gasLimit"),
-            class: !this.isTableComplete ? "d-none" : ""
           },
           {
             key: "storage_limit",
             label: this.$t("txPage.storageLimit"),
-            class: !this.isTableComplete ? "d-none" : ""
           },
           { key: "timestamp", label: this.$t("common.timestamp") },
         ]

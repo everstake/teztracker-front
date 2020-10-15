@@ -88,10 +88,6 @@
       account: {
         type: String
       },
-      isTableComplete: {
-        type: Boolean,
-        default: true
-      },
       showPerPageFilter: {
         type: Boolean,
         default: true
