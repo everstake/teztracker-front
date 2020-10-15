@@ -38,7 +38,8 @@
       </template>
       <template slot="balance" slot-scope="row">
         <span>{{
-          row.item.balance | tezos(getAssetCurrency(row.item.name), row.item.precision)
+          row.item.balance
+            | tezos(getAssetCurrency(row.item.name), row.item.precision)
         }}</span>
       </template>
       <template slot="created_at" slot-scope="row">

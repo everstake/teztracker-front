@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect @per-page="$_setPerPage" :hide="!showPerPageFilter" />
+      <PerPageSelect :hide="!showPerPageFilter" @per-page="$_setPerPage" />
     </div>
 
     <b-table
@@ -22,31 +22,27 @@
           {{ row.item.operationGroupHash | longhash(35) }}
         </b-link>
       </template>
-      
+
       <template slot="level" slot-scope="row">
         <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
           {{ row.item.blockLevel | formatInteger }}
         </b-link>
       </template>
-      
+
       <template slot="timestamp" slot-scope="row">
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
-      
+
       <template slot="from" slot-scope="row">
-        <b-link
-          :to="{ name: 'account', params: { account: row.item.from } }"
-        >
+        <b-link :to="{ name: 'account', params: { account: row.item.from } }">
           <div>
             {{ row.item.from | longhash(15) }}
           </div>
         </b-link>
       </template>
-      
+
       <template slot="to" slot-scope="row">
-        <b-link
-          :to="{ name: 'account', params: { account: row.item.to } }"
-        >
+        <b-link :to="{ name: 'account', params: { account: row.item.to } }">
           {{ row.item.to | longhash(15) }}
         </b-link>
       </template>
@@ -57,40 +53,40 @@
         {{ row.item.fee | tezos }}
       </template>
     </b-table>
-    
+
     <Pagination
-      @change="$_handleCurrentPageChange"
       :total-rows="count"
       :per-page="perPage"
+      @change="$_handleCurrentPageChange"
     />
   </div>
 </template>
 
 <script>
-  import { mapState } from "vuex";
-  import PerPageSelect from "@/components/partials/PerPageSelect";
-  import Pagination from "../partials/Pagination";
-  import handleCurrentPageChange from "@/mixins/handleCurrentPageChange";
-  import setPerPage from "@/mixins/setPerPage";
-  import defineRowClass from "@/mixins/defineRowClass";
+  import { mapState } from 'vuex';
+  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import Pagination from '../partials/Pagination';
+  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import setPerPage from '@/mixins/setPerPage';
+  import defineRowClass from '@/mixins/defineRowClass';
 
   export default {
-    name: "AssetTabHolders",
+    name: 'AssetTabHolders',
     components: {
       PerPageSelect,
-      Pagination
+      Pagination,
     },
     mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
     props: {
       block: {
-        type: Object
+        type: Object,
       },
       account: {
-        type: String
+        type: String,
       },
       showPerPageFilter: {
         type: Boolean,
-        default: true
+        default: true,
       },
       currency: String,
       precision: [String, Number],
@@ -101,40 +97,40 @@
         count: 0,
         fields: [
           {
-            key: "balance",
-            label: this.$t("common.balance"),
+            key: 'balance',
+            label: this.$t('common.balance'),
           },
           {
-            key: "address",
-            label: this.$t("bakerSingle.address"),
+            key: 'address',
+            label: this.$t('bakerSingle.address'),
           },
-        ]
+        ],
       };
     },
     computed: {
-      ...mapState("app", {
-        dateFormat: state => state.dateFormat
-      })
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
     },
     watch: {
       currentPage: {
         async handler(value) {
           await this.reload(value);
-        }
+        },
       },
       block: {
         async handler() {
           await this.reload();
-        }
+        },
       },
       account: {
         async handler() {
           await this.reload();
-        }
+        },
       },
       async perPage() {
         await this.reload();
-      }
+      },
     },
     async created() {
       // TODO: refactor API
@@ -148,15 +144,16 @@
           page,
           limit: this.perPage,
           type: 'transfer',
-          assets_id: this.$route.params.id
+          assets_id: this.$route.params.id,
         };
         const data = await this.$api.getAssetsHoldersById(props);
         this.transactions = data.data;
         this.count = data.count;
       },
       getAccountName(row, rowHash) {
-        return `${row.item[`${rowHash}Name`] || row.item[rowHash].slice(0, 15)}...`;
-      }
-    }
+        return `${row.item[`${rowHash}Name`] ||
+          row.item[rowHash].slice(0, 15)}...`;
+      },
+    },
   };
 </script>

@@ -7,7 +7,7 @@
     <template #content>
       <section>
         <b-container fluid>
-          <AssetSingle @onCurrencyChange="handleCurrencyChange" :hash="hash" />
+          <AssetSingle :hash="hash" @onCurrencyChange="handleCurrencyChange" />
         </b-container>
       </section>
 
@@ -22,14 +22,18 @@
                       <div class="break-word">
                         <h3>
                           <span class="text">
-                            {{ $t("listTypes.txsList") }}
+                            {{ $t('listTypes.txsList') }}
                           </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <AssetTabTxs :currency="currency" :precision="precision" :account="hash" />
+                      <AssetTabTxs
+                        :currency="currency"
+                        :precision="precision"
+                        :account="hash"
+                      />
                     </b-card-body>
                   </b-tab>
                   <b-tab :title="$t('opTypes.holders')">
@@ -37,14 +41,18 @@
                       <div class="break-word">
                         <h3>
                           <span class="text">
-                            {{ $t("listTypes.holdersList") }}
+                            {{ $t('listTypes.holdersList') }}
                           </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <AssetTabHolders :currency="currency" :precision="precision" :account="hash" />
+                      <AssetTabHolders
+                        :currency="currency"
+                        :precision="precision"
+                        :account="hash"
+                      />
                     </b-card-body>
                   </b-tab>
                   <b-tab :title="$tc('listTypes.otherOpsList', 2)">
@@ -52,14 +60,18 @@
                       <div class="break-word">
                         <h3>
                           <span class="text">
-                            {{ $t("listTypes.otherOpsList") }}
+                            {{ $t('listTypes.otherOpsList') }}
                           </span>
                         </h3>
                       </div>
                     </b-card-header>
 
                     <b-card-body>
-                      <AssetTabOther :currency="currency" :precision="precision" :account="hash" />
+                      <AssetTabOther
+                        :currency="currency"
+                        :precision="precision"
+                        :account="hash"
+                      />
                     </b-card-body>
                   </b-tab>
                 </b-tabs>
@@ -73,46 +85,46 @@
 </template>
 
 <script>
-import PageContentContainer from "../layouts/PageContentContainer";
-import Breadcrumbs from "../components/partials/Breadcrumbs";
-import AssetSingle from "../components/assets/AssetSingle";
-import AssetTabTxs from "../components/assets/AssetTabTxs";
-import AssetTabHolders from "../components/assets/AssetTabHolders";
-import AssetTabOther from "../components/assets/AssetTabOther";
+  import PageContentContainer from '../layouts/PageContentContainer';
+  import Breadcrumbs from '../components/partials/Breadcrumbs';
+  import AssetSingle from '../components/assets/AssetSingle';
+  import AssetTabTxs from '../components/assets/AssetTabTxs';
+  import AssetTabHolders from '../components/assets/AssetTabHolders';
+  import AssetTabOther from '../components/assets/AssetTabOther';
 
-export default {
-  name: "Asset",
-  components: {
-    PageContentContainer,
-    Breadcrumbs,
-    AssetSingle,
-    AssetTabTxs,
-    AssetTabHolders,
-    AssetTabOther,
-  },
-  data() {
-    return {
-      currency: 'XTZ',
-      precision: null
-    };
-  },
-  computed: {
-    hash() {
-      return this.$route.params.id;
+  export default {
+    name: 'Asset',
+    components: {
+      PageContentContainer,
+      Breadcrumbs,
+      AssetSingle,
+      AssetTabTxs,
+      AssetTabHolders,
+      AssetTabOther,
     },
-    crumbs() {
-      return [
-        { toRouteName: "network", text: this.$t("common.home") },
-        { toRouteName: "assets", text: this.$t("pageTypes.assetsPage") },
-        { toRouteName: "asset", text: this.hash }
-      ];
-    }
-  },
-  methods: {
-    handleCurrencyChange({currency, precision}) {
-      this.currency = currency;
-      this.precision = precision;
-    }
-  }
-};
+    data() {
+      return {
+        currency: 'XTZ',
+        precision: null,
+      };
+    },
+    computed: {
+      hash() {
+        return this.$route.params.id;
+      },
+      crumbs() {
+        return [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          { toRouteName: 'assets', text: this.$t('pageTypes.assetsPage') },
+          { toRouteName: 'asset', text: this.hash },
+        ];
+      },
+    },
+    methods: {
+      handleCurrencyChange({ currency, precision }) {
+        this.currency = currency;
+        this.precision = precision;
+      },
+    },
+  };
 </script>
