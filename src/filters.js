@@ -71,7 +71,7 @@ Vue.filter('currencyPrecision', function(amount, currency = 'ꜩ', precision = 6
 
   return `0 ${currency}`;
 });
-// test
+
 Vue.filter('tezosToFixed', function(amount) {
   if (amount > 0) {
     if (numeral(amount / Vue.prototype.$constants.XTZ).format('0,0') == 0) {
