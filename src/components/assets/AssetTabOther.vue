@@ -12,7 +12,7 @@
       :current-page="currentPage"
       :per-page="0"
       borderless
-      class="transactions-table table-responsive-md"
+      class="transactions-table"
       :tbody-tr-class="$_defineRowClass"
     >
       <template slot="txhash" slot-scope="row">
@@ -139,15 +139,6 @@
             class: !this.isTableComplete ? "d-none" : ""
           },
           { key: "timestamp", label: this.$t("common.timestamp") },
-          // amount: 0
-          // fee: 500000
-          // from: "tz1RaGb8tWxUh194btmAiXT9Tkk6pGBMZVL8"
-          // gas_limit: 150000
-          // operation_group_hash: "onmtdGSe3ZPQ1fuQGe136zpz7YrAUDF7YMRJK9h6wyA4vkq1PdD"
-          // storage_limit: 1000
-          // timestamp: 1588622268
-          // to: "KT1LN4LPSqTMS7Sd2CJw4bbDGRkMv2t68Fy9"
-          // type: "setPause"
         ]
       };
     },
@@ -183,7 +174,6 @@
       }
     },
     methods: {
-      // ...mapMutations("operations", [SET_TX_COUNT]),
       async reload(page = 1) {
         const props = {
           page,
@@ -192,16 +182,8 @@
           assets_id: this.$route.params.id
         };
         const data = await this.$api.getAssetsOperationsById(props);
-        // if (data.status !== this.$constants.STATUS_SUCCESS) {
-        //   return this.$router.replace({
-        //     name: data.status
-        //   });
-        // }
-        // console.log('holders', data.data);
         this.transactions = data.data;
-        // this.$emit('onTransactions', this.account);
         this.count = data.count;
-        // this[SET_TX_COUNT](this.count);
       },
       getAccountName(row, rowHash) {
         return `${row.item[`${rowHash}Name`] || row.item[rowHash].slice(0, 15)}...`;

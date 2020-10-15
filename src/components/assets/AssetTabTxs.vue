@@ -12,7 +12,7 @@
       :current-page="currentPage"
       :per-page="0"
       borderless
-      class="transactions-table table-responsive-md"
+      class="transactions-table"
       :tbody-tr-class="$_defineRowClass"
     >
       <template slot="txhash" slot-scope="row">
@@ -170,7 +170,6 @@
       }
     },
     methods: {
-      // ...mapMutations("operations", [SET_TX_COUNT]),
       async reload(page = 1) {
         const props = {
           page,
@@ -179,15 +178,8 @@
           assets_id: this.$route.params.id
         };
         const data = await this.$api.getAssetsOperationsById(props);
-        // if (data.status !== this.$constants.STATUS_SUCCESS) {
-        //   return this.$router.replace({
-        //     name: data.status
-        //   });
-        // }
         this.transactions = data.data;
-        // this.$emit('onTransactions', this.account);
         this.count = data.count;
-        // this[SET_TX_COUNT](this.count);
       },
       getAccountName(row, rowHash) {
         return `${row.item[`${rowHash}Name`] || row.item[rowHash].slice(0, 15)}...`;
