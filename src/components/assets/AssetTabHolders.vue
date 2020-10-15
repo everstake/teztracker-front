@@ -160,37 +160,3 @@
     }
   };
 </script>
-
-<style lang="scss" scoped>
-  .source,
-  .destination {
-    position: relative;
-    padding-left: 12px;
-  }
-  
-  .icon {
-    &__arrow--red:before {
-      position: absolute;
-      content: '';
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      color: #309282;
-      border-top: .3em solid transparent;
-      border-bottom: .3em solid transparent;
-      border-left: .3em solid;
-    }
-    
-    &__arrow--green:before {
-      position: absolute;
-      content: '';
-      top: 50%;
-      right: 0;
-      transform: translateY(-50%);
-      color: #e56968;
-      border-top: .3em solid transparent;
-      border-bottom: .3em solid transparent;
-      border-left: .3em solid;
-    }
-  }
-</style>
