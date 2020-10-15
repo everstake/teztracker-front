@@ -34,7 +34,8 @@
         >
           <span>{{ row.item.manager | longhash }}</span>
         </b-link>
-        <span v-else>----</span>
+
+        <NoDataTableCell v-else />
       </template>
       <template slot="delegateValue" slot-scope="row">
         <span v-if="row.item.delegateValue" class="d-flex align-items-center">
@@ -59,7 +60,8 @@
             :text-to-copy="row.item.delegateValue"
           />
         </span>
-        <span v-else>----</span>
+
+        <NoDataTableCell v-else />
       </template>
       <template slot="balance" slot-scope="row">
         <span>{{ row.item.balance | tezos }}</span>
@@ -83,6 +85,7 @@
   import Pagination from '../partials/Pagination';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
+  import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import setPerPage from '@/mixins/setPerPage';
   import fetchListMixin from '@/mixins/fetchListMixin';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
@@ -95,6 +98,7 @@
       Pagination,
       BtnCopy,
       IdentIcon,
+      NoDataTableCell,
     },
     mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
     props: ['account'],
