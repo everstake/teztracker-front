@@ -12,7 +12,7 @@
       :current-page="currentPage"
       :per-page="0"
       borderless
-      class="transactions-table table-responsive-lg"
+      class="transactions-table"
       :empty-text="$t('common.noData')"
     >
       <template slot="id" slot-scope="row">
