@@ -114,7 +114,8 @@
             :text-to-copy="row.item.delegateValue"
           />
         </span>
-        <span v-else>----</span>
+
+        <NoDataTableCell v-else />
       </template>
     </b-table>
 
@@ -131,6 +132,7 @@
   import Pagination from '../partials/Pagination';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
+  import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
   import { mapState } from 'vuex';
@@ -142,6 +144,7 @@
       Pagination,
       BtnCopy,
       IdentIcon,
+      NoDataTableCell,
     },
     mixins: [handleCurrentPageChange, setPerPage],
     data() {

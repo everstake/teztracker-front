@@ -63,8 +63,11 @@
         </span>
       </template>
 
-      <template v-if="row.item.delegate" slot="to" slot-scope="row">
-        <span class="d-flex align-items-center">
+      <template slot="to" slot-scope="row">
+        <span
+          v-if="row.item.delegateName || row.item.delegate"
+          class="d-flex align-items-center"
+        >
           <IdentIcon :seed="row.item.delegate" />
 
           <b-link
@@ -73,7 +76,7 @@
             <template v-if="row.item.delegateName">
               {{ row.item.delegateName }}
             </template>
-            <template v-else>
+            <template v-else-if="row.item.delegate">
               {{ row.item.delegate | longhash }}
             </template>
           </b-link>
@@ -83,6 +86,8 @@
             :text-to-copy="row.item.delegate"
           />
         </span>
+
+        <NoDataTableCell v-else />
       </template>
       <template slot="amount" slot-scope="row">
         {{ row.item.balance | tezos }}
@@ -90,9 +95,9 @@
     </b-table>
 
     <Pagination
-      @change="$_handleCurrentPageChange"
       :total-rows="count"
       :per-page="perPage"
+      @change="$_handleCurrentPageChange"
     />
   </div>
 </template>
@@ -103,6 +108,7 @@
   import Pagination from '../partials/Pagination';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
+  import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
   import defineRowClass from '@/mixins/defineRowClass';
@@ -114,6 +120,7 @@
       Pagination,
       BtnCopy,
       IdentIcon,
+      NoDataTableCell,
     },
     mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
     props: ['account'],
