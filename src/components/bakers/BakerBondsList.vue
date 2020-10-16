@@ -11,7 +11,7 @@
       :fields="fields"
       :current-page="currentPage"
       borderless
-      class="transactions-table table-responsive-md"
+      class="transactions-table"
       :tbody-tr-class="getRowClass"
       :empty-text="$t('common.noData')"
     >

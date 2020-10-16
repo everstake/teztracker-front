@@ -1,11 +1,12 @@
 <template>
   <div>
     <b-table
+      responsive
       show-empty
       :items="operations"
       :fields="fields"
       borderless
-      class="transactions-table table-responsive-md"
+      class="transactions-table"
       :tbody-tr-class="$_defineRowClass"
       :empty-text="$t('common.noData')"
     >
