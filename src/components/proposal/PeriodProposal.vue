@@ -199,24 +199,16 @@
                 <div
                   class="vote-card__container-space-between vote-card__upvote"
                 >
-                  <div class="vote-card__title-wrapper vote-card--pointer">
+                  <div class="vote-card__title-wrapper">
                     <p
                       :ref="proposal.hash"
                       class="vote-card__upvote-title vote-card__word-wrap vote-card__font-size--36 vote-card__weight--bold font font--mini"
                     >
                       {{ proposal.title || proposal.hash }}
                       <BtnCopy
-                        :id="proposal.hash"
                         :text-to-copy="proposal.title || proposal.hash"
                       />
                     </p>
-                    <b-tooltip
-                      ref="tooltip"
-                      triggers="hover"
-                      :target="proposal.hash"
-                    >
-                      {{ $t('common.copyToClipboard') }}
-                    </b-tooltip>
                   </div>
                   <p
                     class="vote-card__font-size--36 vote-card__upvote-item font font--mini"

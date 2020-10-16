@@ -7,6 +7,8 @@
             <span class="text card-title__text">
               <template>
                 {{ props.blockHash }}
+
+                <BtnCopy :text-to-copy="props.blockHash" />
               </template>
             </span>
           </h3>
@@ -46,15 +48,9 @@
                   <b-col lg="4" class="label">
                     {{ $t('hashTypes.opHash') }}
                   </b-col>
-                  <b-col lg="7" class="text-accent card__pointer">
+                  <b-col lg="7" class="text-accent">
                     {{ props.operationGroupHash }}
-                    <BtnCopy
-                      id="hash"
-                      :text-to-copy="props.operationGroupHash"
-                    />
-                    <b-tooltip ref="tooltip" triggers="hover" target="hash">
-                      {{ $t('common.copyToClipboard') }}
-                    </b-tooltip>
+                    <BtnCopy :text-to-copy="props.operationGroupHash" />
                   </b-col>
                 </b-row>
                 <b-row class="item-info">

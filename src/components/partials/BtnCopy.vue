@@ -1,13 +1,17 @@
 <template>
-  <b-btn
-    variant="icon"
-    class="py-0 btn--copy"
-    v-clipboard:copy="textToCopy"
-    v-clipboard:success="onCopy"
-    v-clipboard:error="onError"
-  >
-    <font-awesome-icon class="icon-primary" :icon="['fas', 'copy']" />
-  </b-btn>
+  <span>
+    <b-btn
+      v-b-tooltip.hover
+      :title="$t('common.copyToClipboard')"
+      variant="icon"
+      class="py-0 btn--copy"
+      v-clipboard:copy="textToCopy"
+      v-clipboard:success="onCopy"
+      v-clipboard:error="onError"
+    >
+      <font-awesome-icon class="icon-primary" :icon="['fas', 'copy']" />
+    </b-btn>
+  </span>
 </template>
 
 <script>

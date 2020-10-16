@@ -10,18 +10,12 @@
               {{ bakerInfo.name }}
             </template>
             <template v-else>
-              {{ hash }}
-              <BtnCopy id="card-title" :text-to-copy="hash" />
+              <span class="text-break">
+                {{ hash }}
+                <BtnCopy :text-to-copy="hash" />
+              </span>
             </template>
           </h3>
-          <b-tooltip
-            v-if="!bakerInfo.name"
-            ref="tooltip"
-            triggers="hover"
-            target="card-title"
-          >
-            {{ $t('common.copyToClipboard') }}
-          </b-tooltip>
           <div class="subtitle">
             {{ $t('infoTypes.bakerInfo') }}
           </div>
@@ -41,17 +35,14 @@
                   <b-col lg="4" class="label">
                     {{ $t('bakerSingle.address') }}
                   </b-col>
-                  <b-col lg="8" class="text-accent card__pointer">
+                  <b-col lg="8" class="text-accent">
                     <span class="hash">
                       {{ hash }}
-                      <BtnCopy id="hash" :text-to-copy="hash" />
+                      <BtnCopy :text-to-copy="hash" />
                     </span>
-                    <b-tooltip ref="tooltip" triggers="hover" target="hash">
-                      {{ $t('common.copyToClipboard') }}
-                    </b-tooltip>
                   </b-col>
                 </b-row>
-                <b-row class="item-info" v-if="bakerInfo.name">
+                <b-row v-if="bakerInfo.name" class="item-info">
                   <b-col lg="4" class="label">
                     {{ $t('common.fee') }}
                   </b-col>

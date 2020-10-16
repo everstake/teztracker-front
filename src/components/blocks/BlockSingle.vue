@@ -46,12 +46,9 @@
               <b-col lg="4" class="label">
                 {{ $t('hashTypes.hash') }}
               </b-col>
-              <b-col lg="8" class="text text-accent">
+              <b-col lg="8" class="text-accent">
                 <span class="hash">{{ block.hash }}</span>
-                <BtnCopy id="card-title" :text-to-copy="block.hash" />
-                <b-tooltip ref="tooltip" triggers="hover" target="card-title">
-                  {{ $t('common.copyToClipboard') }}
-                </b-tooltip>
+                <BtnCopy :text-to-copy="block.hash" />
               </b-col>
             </b-row>
             <b-row class="item-info">
