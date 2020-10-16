@@ -32,13 +32,13 @@
                 class="protocol-amendment__col"
               >
                 <ProtocolAmendmentCard
+                  :id="protocol.period"
                   :name="protocol.title"
                   :period="
                     protocol.period === currentPeriodId
                       ? $t('protocolPeriods.current')
                       : $t('protocolPeriods.past')
                   "
-                  :id="protocol.period"
                   @handleClick="handleProtocolClick(protocol.period)"
                 />
               </b-col>
@@ -70,25 +70,17 @@
         protocols: [],
         currentPeriodId: null,
         loading: true,
-        crumbs: [
+      };
+    },
+    computed: {
+      crumbs() {
+        return [
           { toRouteName: 'network', text: this.$t('common.home') },
           {
             toRouteName: 'protocol_amendment',
             text: this.$t('common.protocolAmendments'),
           },
-        ],
-      };
-    },
-    methods: {
-      async handleProtocolClick(id) {
-        const data = await this.$api.getPeriod({ id });
-        const { status } = data;
-
-        if (status !== this.$constants.STATUS_SUCCESS) {
-          return this.$router.replace({ name: status });
-        }
-
-        this.$router.push({ name: 'period', params: { id } });
+        ];
       },
     },
     async created() {
@@ -120,6 +112,18 @@
       this.protocols = mappedProtocols;
 
       this.loading = false;
+    },
+    methods: {
+      async handleProtocolClick(id) {
+        const data = await this.$api.getPeriod({ id });
+        const { status } = data;
+
+        if (status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({ name: status });
+        }
+
+        this.$router.push({ name: 'period', params: { id } });
+      },
     },
   };
 </script>

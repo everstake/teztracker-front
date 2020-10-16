@@ -50,21 +50,19 @@
       ProtocolsList,
       Counter,
     },
-    data() {
-      return {
-        crumbs: [
+    computed: {
+      ...mapState('period', {
+        protocolsCount: (state) => state.counts.protocols,
+      }),
+      crumbs() {
+        return [
           { toRouteName: 'network', text: this.$t('common.home') },
           {
             toRouteName: 'protocols',
             text: this.$t('pageTypes.protocolsPage'),
           },
-        ],
-      };
-    },
-    computed: {
-      ...mapState('period', {
-        protocolsCount: (state) => state.counts.protocols,
-      }),
+        ];
+      },
     },
   };
 </script>

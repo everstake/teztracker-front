@@ -75,16 +75,16 @@
       ChartDelegationVolume,
       ChartNumOfWhaleAccs,
     },
-    data() {
-      return {
-        crumbs: [
+    computed: {
+      crumbs() {
+        return [
           { toRouteName: 'network', text: this.$t('common.home') },
           {
             toRouteName: 'accounts',
             text: this.$t('pageTypes.generalChartsPage'),
           },
-        ],
-      };
+        ];
+      },
     },
   };
 </script>

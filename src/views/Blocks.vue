@@ -50,18 +50,16 @@
       CardHeader,
       Counter,
     },
-    data() {
-      return {
-        crumbs: [
-          { toRouteName: 'network', text: this.$t('common.home') },
-          { toRouteName: 'blocks', text: this.$t('pageTypes.blocksPage') },
-        ],
-      };
-    },
     computed: {
       ...mapState('blocks', {
         count: (state) => state.counts,
       }),
+      crumbs() {
+        return [
+          { toRouteName: 'network', text: this.$t('common.home') },
+          { toRouteName: 'blocks', text: this.$t('pageTypes.blocksPage') },
+        ];
+      },
     },
   };
 </script>

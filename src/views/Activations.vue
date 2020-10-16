@@ -54,21 +54,19 @@
       CardHeader,
       Counter,
     },
-    data() {
-      return {
-        crumbs: [
+    computed: {
+      ...mapState('operations', {
+        count: (state) => state.counts,
+      }),
+      crumbs() {
+        return [
           { toRouteName: 'network', text: this.$t('common.home') },
           {
             toRouteName: 'activations',
             text: this.$t('pageTypes.activationsPage'),
           },
-        ],
-      };
-    },
-    computed: {
-      ...mapState('operations', {
-        count: (state) => state.counts,
-      }),
+        ];
+      },
       getPercentage() {
         const num = this.count.activations;
         return parseFloat(

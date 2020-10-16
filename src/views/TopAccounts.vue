@@ -51,15 +51,19 @@
     },
     data() {
       return {
-        crumbs: [
+        count: 0,
+      };
+    },
+    computed: {
+      crumbs() {
+        return [
           { toRouteName: 'network', text: this.$t('common.home') },
           {
             toRouteName: 'top_accounts',
             text: this.$t('pageTypes.topAccountsPage'),
           },
-        ],
-        count: 0,
-      };
+        ];
+      },
     },
     methods: {
       setCount(count) {
