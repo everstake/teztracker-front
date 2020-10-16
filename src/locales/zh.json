@@ -2,7 +2,7 @@
   "common": {
     "copyToClipboard": "拷贝到剪贴板",
     "stakingBal": "持币生息余额",
-    "delegatedBal": "Delegated balance",
+    "delegatedBal": "委托数量",
     "balance": "余额",
     "rolls": "卷",
     "bakingSince": "从…创建区块链",
@@ -43,7 +43,11 @@
     "baking": "创建区块",
     "txVol": "交易量",
     "type": "类型",
-    "noData": "No data"
+    "noData": "No data",
+    "assets": "资产",
+    "name": "Name",
+    "ordinalNumber": "#",
+    "contractName": "合同名称"
   },
   "opTypes": {
     "tx": "交易 | 交易",
@@ -52,7 +56,8 @@
     "origination": "源头| 源头",
     "activation": "激活 | 激活",
     "doubleBaking": "双重创建区块",
-    "doubleEndorsement": "双重背书| 双重背书"
+    "doubleEndorsement": "双重背书| 双重背书",
+    "holders": "持有者"
   },
   "listTypes": {
     "txsList": "交易列表",
@@ -76,7 +81,9 @@
     "votersList": "选举人列表",
     "nonVotersList": "投票弃权者列表",
     "rewardsList": "报酬列表",
-    "topAccountsList": "高级账户列表"
+    "topAccountsList": "高级账户列表",
+    "assetsList": "资产清单",
+    "holdersList": "持有者名单"
   },
   "pageTypes": {
     "txsPage": "交易页面",
@@ -96,7 +103,8 @@
     "protocolsPage": "草案页面",
     "generalChartsPage": "总图页面",
     "bakingChartsPage": "区块创建图页面",
-    "topAccountsPage": "高级账户页面"
+    "topAccountsPage": "高级账户页面",
+    "assetsPage": "资产页"
   },
   "infoTypes": {
     "txInfo": "交易信息",
@@ -111,7 +119,8 @@
     "accInfo": "账户信息",
     "generalInfo": "总信息",
     "voteInfo": "选举信息",
-    "contractInfo": "合同信息"
+    "contractInfo": "合同信息",
+    "assetInfo": "资产信息"
   },
   "hashTypes": {
     "hash": "哈希函数",

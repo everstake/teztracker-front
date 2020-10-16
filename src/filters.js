@@ -36,15 +36,40 @@ Vue.filter('longhash', function(hash, fromStart, fromEnd) {
   return Vue.prototype.$helpers.truncateHash(hash, fromStart, fromEnd);
 });
 
-Vue.filter('tezos', function(amount) {
+Vue.filter('tezos', function(amount, currency = 'ꜩ') {
   if (amount > 0) {
-    return (
-      numeral(amount / Vue.prototype.$constants.XTZ).format('0,0[.]000000') +
-      ' ꜩ'
-    );
+    const formattedAmount = numeral(amount / Vue.prototype.$constants.XTZ).format("0,0[.]000000");
+    return `${formattedAmount} ${currency}`;
   }
-  return '0 ꜩ';
-  //return amount + "ꜩ";
+
+  return `0 ${currency}`;
+});
+
+Vue.filter('currencyPrecision', function(amount, currency = 'ꜩ', precision = 6) {
+  const noAmount = !amount || amount === 0;
+  const noPrecision = !precision || precision === 0 || precision < 0;
+
+  if (noAmount) {
+    return `0 ${currency}`;
+  }
+
+  if (noPrecision) {
+    return `${amount} ${currency}`;
+  }
+
+  let format = '0,0[.]';
+  // format.padEnd(format.length + precision, '0');
+
+  for (let i = 0; i < precision; i++) {
+    format += 0;
+  }
+
+  if (amount > 0) {
+    const formattedAmount = numeral(Number(amount) / Vue.prototype.$constants.XTZ).format(format);
+    return `${formattedAmount} ${currency}`;
+  }
+
+  return `0 ${currency}`;
 });
 
 Vue.filter('tezosToFixed', function(amount) {
