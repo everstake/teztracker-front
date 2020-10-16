@@ -70,7 +70,7 @@
             <template v-if="row.item.delegateName">
               {{ row.item.delegateName }}
             </template>
-            <template v-else>
+            <template v-else-if="row.item.delegate">
               {{ row.item.delegate | longhash }}
             </template>
           </b-link>
@@ -80,7 +80,8 @@
             :text-to-copy="row.item.delegate"
           />
         </span>
-        <span v-else>unset</span>
+
+        <NoDataTableCell v-else />
       </template>
 
       <template slot="level" slot-scope="row">
@@ -114,6 +115,7 @@
   import Pagination from '../partials/Pagination';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
+  import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
   import defineRowClass from '@/mixins/defineRowClass';
@@ -125,6 +127,7 @@
       Pagination,
       BtnCopy,
       IdentIcon,
+      NoDataTableCell,
     },
     props: ['account'],
     mixins: [handleCurrentPageChange, setPerPage, defineRowClass],

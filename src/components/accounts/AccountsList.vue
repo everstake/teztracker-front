@@ -56,7 +56,8 @@
 
           <BtnCopy :text-to-copy="row.item.delegateValue" />
         </span>
-        <span v-else>----</span>
+
+        <NoDataTableCell v-else />
       </template>
     </b-table>
 
@@ -75,6 +76,7 @@
   import Pagination from '../partials/Pagination';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
+  import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import setPerPage from '@/mixins/setPerPage';
   import fetchListMixin from '@/mixins/fetchListMixin';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
@@ -87,6 +89,7 @@
       Pagination,
       BtnCopy,
       IdentIcon,
+      NoDataTableCell,
     },
     mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
     data() {
