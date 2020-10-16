@@ -21,10 +21,18 @@
             v-if="row.item.is_baker"
             :to="{ name: 'baker', params: { baker: row.item.accountId } }"
           >
-            {{ row.item.accountId | longhash }}
+            <template v-if="row.item.accountName">
+              {{ row.item.accountName }}
+            </template>
+            <template v-else>
+              {{ row.item.accountId | longhash }}
+            </template>
           </b-link>
 
-          <BtnCopy :text-to-copy="row.item.accountId" />
+          <BtnCopy
+            v-if="!row.item.accountName"
+            :text-to-copy="row.item.accountId"
+          />
         </span>
         <span v-else class="d-flex align-items-center">
           <IdentIcon :seed="row.item.accountId" />
@@ -32,10 +40,18 @@
           <b-link
             :to="{ name: 'account', params: { account: row.item.accountId } }"
           >
-            {{ row.item.accountId | longhash }}
+            <template v-if="row.item.accountName">
+              {{ row.item.accountName }}
+            </template>
+            <template v-else>
+              {{ row.item.accountId | longhash }}
+            </template>
           </b-link>
 
-          <BtnCopy :text-to-copy="row.item.accountId" />
+          <BtnCopy
+            v-if="!row.item.accountName"
+            :text-to-copy="row.item.accountId"
+          />
         </span>
       </template>
       <template slot="balance" slot-scope="row">
@@ -49,12 +65,25 @@
           <IdentIcon :seed="row.item.delegateValue" />
 
           <b-link
-            :to="{ name: 'account', params: { account: row.item.accountId } }"
+            :to="{
+              name: 'account',
+              params: { account: row.item.delegateValue },
+            }"
           >
-            <span>{{ row.item.delegateValue | longhash }}</span>
+            <span>
+              <template v-if="row.item.delegateName">
+                {{ row.item.delegateName }}
+              </template>
+              <template v-else>
+                {{ row.item.delegateValue | longhash }}
+              </template>
+            </span>
           </b-link>
 
-          <BtnCopy :text-to-copy="row.item.delegateValue" />
+          <BtnCopy
+            v-if="!row.item.delegateName"
+            :text-to-copy="row.item.delegateValue"
+          />
         </span>
 
         <NoDataTableCell v-else />

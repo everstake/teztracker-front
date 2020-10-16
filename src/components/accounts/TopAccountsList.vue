@@ -97,7 +97,7 @@
           <IdentIcon :seed="row.item.delegateValue" />
 
           <b-link
-            :to="{ name: 'baker', params: { baker: row.item.accountId } }"
+            :to="{ name: 'baker', params: { baker: row.item.delegateValue } }"
           >
             <span>
               <template v-if="row.item.delegateName">
