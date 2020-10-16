@@ -43,7 +43,11 @@
     "baking": "Baking",
     "txVol": "Transactions volume",
     "type": "Type",
-    "noData": "No data"
+    "noData": "No data",
+    "assets": "Assets",
+    "name": "Name",
+    "ordinalNumber": "#",
+    "contractName": "Contract name"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -52,7 +56,8 @@
     "origination": "Origination | Originations",
     "activation": "Activation | Activations",
     "doubleBaking": "Double-baking",
-    "doubleEndorsement": "Double-endorsement | Double-endorsements"
+    "doubleEndorsement": "Double-endorsement | Double-endorsements",
+    "holders": "Holders"
   },
   "listTypes": {
     "txsList": "Transactions list",
@@ -76,7 +81,9 @@
     "votersList": "Voters list",
     "nonVotersList": "Non-voters list",
     "rewardsList": "Rewards list",
-    "topAccountsList": "Top accounts list"
+    "topAccountsList": "Top accounts list",
+    "assetsList": "Assets list",
+    "holdersList": "Holders list"
   },
   "pageTypes": {
     "txsPage": "Transactions page",
@@ -96,7 +103,8 @@
     "protocolsPage": "Protocols page",
     "generalChartsPage": "General charts page",
     "bakingChartsPage": "Baking charts page",
-    "topAccountsPage": "Top accounts page"
+    "topAccountsPage": "Top accounts page",
+    "assetsPage": "Assets page"
   },
   "infoTypes": {
     "txInfo": "Transaction information",
@@ -111,7 +119,8 @@
     "accInfo": "Account information",
     "generalInfo": "General information",
     "voteInfo": "Vote information",
-    "contractInfo": "Contact information"
+    "contractInfo": "Contact information",
+    "assetInfo": "Asset information"
   },
   "hashTypes": {
     "hash": "Hash",

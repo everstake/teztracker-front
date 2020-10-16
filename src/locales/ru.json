@@ -43,7 +43,11 @@
 		"baking": "Бейкинг",
 		"txVol": "Объем транзакциий",
 		"type": "Тип",
-		"noData": "Нет данных"
+		"noData": "Нет данных",
+		"assets": "Ассеты",
+		"name": "Имя",
+		"ordinalNumber": "#",
+		"contractName": "Название контракта"
 	},
 	"opTypes": {
 		"tx": "Транзакция | Транзакции",
@@ -52,7 +56,8 @@
 		"origination": "Создание | Создания",
 		"activation": "Активация | Активации",
 		"doubleBaking": "Двойной бейкинг",
-		"doubleEndorsement": "Двойное заверение | Двойные заверения"
+		"doubleEndorsement": "Двойное заверение | Двойные заверения",
+		"holders": "Холдеры"
 	},
 	"listTypes": {
 		"txsList": "Список транзакций",
@@ -76,7 +81,9 @@
 		"votersList": "Список голосующих",
 		"nonVotersList": "Список неголосующих",
 		"rewardsList": "Список вознаграждений",
-		"topAccountsList": "Список топ аккаунтов"
+		"topAccountsList": "Список топ аккаунтов",
+		"assetsList": "Список ассетов",
+		"holdersList": "Список холдеров"
 	},
 	"pageTypes": {
 		"txsPage": "Страница транзакций",
@@ -96,7 +103,8 @@
 		"protocolsPage": "Страница протоколов",
 		"generalChartsPage": "Страница общих графиков",
 		"bakingChartsPage": "Страница графиков бейкинга",
-		"topAccountsPage": "Страница топ аккаунтов"
+		"topAccountsPage": "Страница топ аккаунтов",
+		"assetsPage": "Страница ассетов"
 	},
 	"infoTypes": {
 		"txInfo": "Информация о транзакции",
@@ -111,7 +119,8 @@
 		"accInfo": "Информация об аккаунте",
 		"generalInfo": "Общая информация",
 		"voteInfo": "Информация о голосе",
-		"contractInfo": "Информация о контракте"
+		"contractInfo": "Информация о контракте",
+		"assetInfo": "Информация о ассете"
 	},
 	"hashTypes": {
 		"hash": "Хеш",

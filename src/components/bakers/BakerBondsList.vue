@@ -1,7 +1,7 @@
 <template>
   <div class="baking-list">
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect @per-page="$_setPerPage" :default-per-page="perPage" />
+      <PerPageSelect :default-per-page="perPage" @per-page="$_setPerPage" />
     </div>
 
     <b-table
@@ -90,12 +90,12 @@
     components: {
       PerPageSelect,
     },
-    mixins: [setPerPage, handleCurrentPageChange],
     filters: {
       toFixedNoRounding(amount) {
         return amount.toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0];
       },
     },
+    mixins: [setPerPage, handleCurrentPageChange],
     props: ['account'],
     data() {
       return {
@@ -158,13 +158,16 @@
         },
       },
     },
+    async created() {
+      this.reload();
+    },
     methods: {
       getRowClass(item) {
         if (item === null || !item.status) {
           return 'rewards-list-row';
         }
 
-        let classes = ['rewards-list-row'];
+        let classes = ['rewards-list-row', 'bonds-list-row'];
 
         if (typeof item === 'object') {
           const { status } = item;
@@ -197,9 +200,6 @@
         this.data = data.data;
         this.count = data.count;
       },
-    },
-    async created() {
-      this.reload();
     },
   };
 </script>
@@ -266,5 +266,9 @@
     &.pending {
       background-color: rgba(48, 146, 130, 0.4);
     }
+  }
+
+  .bonds-list-row {
+    cursor: text;
   }
 </style>
