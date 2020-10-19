@@ -287,7 +287,7 @@ const TzAPI = {
     );
   },
   checkHealth(opts = {}) {
-    return get(this.API_URL(), '/health', opts, false);
+    return get(this.API_URL(), 'health', opts, false);
   },
 };
 
