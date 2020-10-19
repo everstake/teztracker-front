@@ -1,7 +1,7 @@
-import Vue from "vue";
-import http from "./http.service";
-import querystring from "querystring";
-import { state } from "@/store/modules/app.module";
+import Vue from 'vue';
+import http from './http.service';
+import querystring from 'querystring';
+import { state } from '@/store/modules/app.module';
 
 function formatURL(api, path, query) {
   return `${api}${path}?${querystring.stringify(query)}`;
@@ -226,10 +226,10 @@ const TzAPI = {
     return get(this.API_URL(), 'future_baking_rights', opts);
   },
   getPeriod(opts = {}) {
-    return get(this.API_URL_WITHOUT_PLATFORM(), "period", opts);
+    return get(this.API_URL_WITHOUT_PLATFORM(), 'period', opts);
   },
   getPeriods(opts = {}) {
-    return get(this.API_URL_WITHOUT_PLATFORM(), "periods", opts);
+    return get(this.API_URL_WITHOUT_PLATFORM(), 'periods', opts);
   },
   getProposals(opts = {}) {
     return get(this.API_URL_WITHOUT_PLATFORM(), `proposals`, opts);
@@ -261,10 +261,10 @@ const TzAPI = {
     return get(this.API_URL(), 'charts/bakers', opts, false);
   },
   getBlocksPriorityChart(opts = {}) {
-    return get(this.API_URL(), "charts/blocks_priority", opts, false);
+    return get(this.API_URL(), 'charts/blocks_priority', opts, false);
   },
   getAssets(opts = {}) {
-    return get(this.API_URL_WITHOUT_PLATFORM(), "assets", opts);
+    return get(this.API_URL_WITHOUT_PLATFORM(), 'assets', opts);
   },
   getAssetsById(opts = {}) {
     const { asset_id } = opts;
@@ -272,11 +272,22 @@ const TzAPI = {
   },
   getAssetsOperationsById(opts = {}) {
     const { assets_id } = opts;
-    return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${assets_id}/operations`, opts);
+    return get(
+      this.API_URL_WITHOUT_PLATFORM(),
+      `assets/${assets_id}/operations`,
+      opts,
+    );
   },
   getAssetsHoldersById(opts = {}) {
     const { assets_id } = opts;
-    return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${assets_id}/holders`, opts);
+    return get(
+      this.API_URL_WITHOUT_PLATFORM(),
+      `assets/${assets_id}/holders`,
+      opts,
+    );
+  },
+  checkHealth(opts = {}) {
+    return get(this.API_URL(), '/health', opts, false);
   },
 };
 
