@@ -1,0 +1,38 @@
+.err-page {
+  height: 100vh;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  &__content {
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  &__title {
+    font-size: 75px;
+    font-weight: 700;
+    color: $color-brand;
+
+    @include for-phone-only {
+      font-size: 55px;
+    }
+  }
+
+  &__subtitle {
+    font-size: 35px;
+    font-weight: 500;
+    color: $color-black;
+
+    @include for-phone-only {
+      font-size: 25px;
+    }
+  }
+
+  &__btn {
+    font-size: 20px;
+    padding: 0.6rem 6rem;
+  }
+}

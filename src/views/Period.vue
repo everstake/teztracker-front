@@ -1,119 +1,114 @@
 <template>
-  <PageContentContainer>
-    <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs" />
-    </template>
+  <div>
+    <Breadcrumbs :crumbs="crumbs" />
 
-    <template #content>
-      <!-- Period Steps start -->
-      <PeriodStep
-        :shownCondition="
-          currentPeriodType === 'proposal' && proposals.length === 0
-        "
-        :periodTypes="periodTypes"
-        :currentPeriodType="proposal.period.periodType"
-        :currentPeriodId="proposal.period.id"
-        :periodStepUrls="getPeriodStepsLinks"
-        :loading="loading"
+    <!-- Period Steps start -->
+    <PeriodStep
+      :shownCondition="
+        currentPeriodType === 'proposal' && proposals.length === 0
+      "
+      :periodTypes="periodTypes"
+      :currentPeriodType="proposal.period.periodType"
+      :currentPeriodId="proposal.period.id"
+      :periodStepUrls="getPeriodStepsLinks"
+      :loading="loading"
+    />
+    <!-- Period Steps end -->
+
+    <PeriodLoading v-if="loading" />
+    <EmptyProposal
+      v-else-if="
+        !loading && currentPeriodType === 'proposal' && proposals.length === 0
+      "
+    />
+    <PeriodNotFound
+      v-else-if="
+        !loading &&
+          (proposal.period.periodType === '' ||
+            isNaN(Number($route.params.id)) ||
+            typeof Number($route.params.id) !== 'number')
+      "
+    />
+    <div v-else>
+      <!-- Proposal period start -->
+      <PeriodProposal
+        :condition="currentPeriodType === 'proposal' && proposals.length > 0"
+        v-if="currentPeriodType === 'proposal' && proposals.length > 0"
+        :proposal="proposal"
+        :voters="voters"
+        :proposals="proposals"
+        :backgroundColors="backgroundColors.proposal"
+        @setDoughnutLegendPosition="setPeriodWidth"
+        :getDoughnutLegendPosition="getDoughnutLegendPosition"
+        class="vote__proposal"
       />
-      <!-- Period Steps end -->
 
-      <PeriodLoading v-if="loading" />
-      <EmptyProposal
-        v-else-if="
-          !loading && currentPeriodType === 'proposal' && proposals.length === 0
-        "
+      <!-- Proposal period end -->
+
+      <!-- Exploration period start -->
+      <PeriodExploration
+        v-if="currentPeriodType === 'exploration'"
+        :proposal="proposal"
+        :voters="voters"
+        :backgroundColors="backgroundColors.exploration"
+        :sortBy="filterTable"
+        @sortTableBy="enableTableSort"
+        @setDoughnutLegendPosition="setPeriodWidth"
+        :getDoughnutLegendPosition="getDoughnutLegendPosition"
+        class="vote__exploration"
       />
-      <PeriodNotFound
-        v-else-if="
-          !loading &&
-            (proposal.period.periodType === '' ||
-              isNaN(Number($route.params.id)) ||
-              typeof Number($route.params.id) !== 'number')
-        "
+      <!-- Exploration period end -->
+
+      <!-- Testing period start -->
+      <PeriodTesting
+        v-if="currentPeriodType === 'testing'"
+        :voters="voters"
+        :proposal="proposal"
+        class="vote__testing"
       />
-      <div v-else>
-        <!-- Proposal period start -->
-        <PeriodProposal
-          :condition="currentPeriodType === 'proposal' && proposals.length > 0"
-          v-if="currentPeriodType === 'proposal' && proposals.length > 0"
-          :proposal="proposal"
-          :voters="voters"
-          :proposals="proposals"
-          :backgroundColors="backgroundColors.proposal"
-          @setDoughnutLegendPosition="setPeriodWidth"
-          :getDoughnutLegendPosition="getDoughnutLegendPosition"
-          class="vote__proposal"
-        />
+      <!-- Testing period end -->
 
-        <!-- Proposal period end -->
+      <!-- Testing period start -->
+      <PeriodExploration
+        v-if="currentPeriodType === 'promotion'"
+        :proposal="proposal"
+        :voters="voters"
+        :backgroundColors="backgroundColors.exploration"
+        class="vote__promotion"
+        :sortBy="filterTable"
+        @sortTableBy="enableTableSort"
+        @setDoughnutLegendPosition="setPeriodWidth"
+        :getDoughnutLegendPosition="getDoughnutLegendPosition"
+      />
+      <!-- Testing period end -->
 
-        <!-- Exploration period start -->
-        <PeriodExploration
-          v-if="currentPeriodType === 'exploration'"
-          :proposal="proposal"
-          :voters="voters"
-          :backgroundColors="backgroundColors.exploration"
-          :sortBy="filterTable"
-          @sortTableBy="enableTableSort"
-          @setDoughnutLegendPosition="setPeriodWidth"
-          :getDoughnutLegendPosition="getDoughnutLegendPosition"
-          class="vote__exploration"
-        />
-        <!-- Exploration period end -->
+      <!-- Vote tables start -->
+      <PeriodTable
+        v-if="currentPeriodType === 'proposal' && proposals.length > 0"
+        :voters="voters"
+        :nonVoters="nonVoters"
+        :votersFields="votersFields"
+        :nonVotersFields="nonVotersFields"
+        @onShowClick="handleShowClick"
+      />
 
-        <!-- Testing period start -->
-        <PeriodTesting
-          v-if="currentPeriodType === 'testing'"
-          :voters="voters"
-          :proposal="proposal"
-          class="vote__testing"
-        />
-        <!-- Testing period end -->
-
-        <!-- Testing period start -->
-        <PeriodExploration
-          v-if="currentPeriodType === 'promotion'"
-          :proposal="proposal"
-          :voters="voters"
-          :backgroundColors="backgroundColors.exploration"
-          class="vote__promotion"
-          :sortBy="filterTable"
-          @sortTableBy="enableTableSort"
-          @setDoughnutLegendPosition="setPeriodWidth"
-          :getDoughnutLegendPosition="getDoughnutLegendPosition"
-        />
-        <!-- Testing period end -->
-
-        <!-- Vote tables start -->
-        <PeriodTable
-          v-if="currentPeriodType === 'proposal' && proposals.length > 0"
-          :voters="voters"
-          :nonVoters="nonVoters"
-          :votersFields="votersFields"
-          :nonVotersFields="nonVotersFields"
-          @onShowClick="handleShowClick"
-        />
-
-        <PeriodTable
-          v-if="
-            currentPeriodType === 'exploration' ||
-              currentPeriodType === 'promotion'
-          "
-          :voters="filteredVoters"
-          :nonVoters="nonVoters"
-          :votersFields="ballotFields"
-          :nonVotersFields="nonVotersFields"
-          @onShowClick="handleShowClick"
-        />
-        <!-- Vote tables end -->
-      </div>
-    </template>
-  </PageContentContainer>
+      <PeriodTable
+        v-if="
+          currentPeriodType === 'exploration' ||
+            currentPeriodType === 'promotion'
+        "
+        :voters="filteredVoters"
+        :nonVoters="nonVoters"
+        :votersFields="ballotFields"
+        :nonVotersFields="nonVotersFields"
+        @onShowClick="handleShowClick"
+      />
+      <!-- Vote tables end -->
+    </div>
+  </div>
 </template>
 
 <script>
-  import PageContentContainer from '@/layouts/PageContentContainer';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import PeriodStep from '@/components/proposal/PeriodStep';
   import uuid from '@/mixins/uuid';
@@ -137,7 +132,6 @@
   export default {
     name: 'Period',
     components: {
-      PageContentContainer,
       PeriodStep,
       PeriodProposal,
       PeriodExploration,
