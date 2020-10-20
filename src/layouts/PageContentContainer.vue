@@ -1,20 +1,17 @@
 <template>
   <div class="main-wrap">
-    <TopMenu />
-    <div class="main-content">
-      <section class="breadcrumbs m-0">
-        <b-container fluid>
-          <b-row>
-            <b-col lg="12">
-              <slot name="breadcrumbs" />
-            </b-col>
-          </b-row>
-        </b-container>
-      </section>
+    <TopMenu v-if="!isBasicPage" />
 
-      <slot name="content" />
-    </div>
-    <Footer showLogo />
+    <main
+      :class="{
+        'main-content': true,
+        'main-content--white': isBasicPage,
+      }"
+    >
+      <router-view />
+    </main>
+
+    <Footer v-if="!isBasicPage" show-logo />
   </div>
 </template>
 
@@ -28,10 +25,15 @@
       TopMenu,
       Footer,
     },
-    props: {
-      pageName: {
-        type: String,
-        default: '',
+    data() {
+      return {
+        routesWithNoMenus: ['404', '500', 'maintenance'],
+        routeName: String(this.$route.name),
+      };
+    },
+    computed: {
+      isBasicPage() {
+        return this.routesWithNoMenus.includes(this.routeName);
       },
     },
   };
@@ -43,5 +45,14 @@
     position: relative;
     display: flex;
     flex-direction: column;
+  }
+
+  .main-content {
+    background-color: $color-teal--light;
+    flex: 1 0 auto;
+
+    &--white {
+      background-color: $color-white;
+    }
   }
 </style>

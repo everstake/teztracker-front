@@ -4,7 +4,7 @@
   background-color: #fff;
   border: 1px solid #f0f0f1;
   border-radius: 4px;
-  box-shadow: 0 0 15px 7px rgba(0,0,0,0.02);
+  box-shadow: 0 0 15px 7px rgba(0, 0, 0, 0.02);
 
   &__header {
     display: flex;
@@ -50,7 +50,11 @@
   }
 
   &__tbody {
-    background-image: linear-gradient(to right, #4a4a4a 6%, rgba(255,255,255,0) 2%);
+    background-image: linear-gradient(
+      to right,
+      #4a4a4a 6%,
+      rgba(255, 255, 255, 0) 2%
+    );
     background-position: top;
     background-size: 10px 1px;
     background-repeat: repeat-x;
@@ -69,8 +73,18 @@
     display: block;
     height: 1px;
     margin: 15px 0;
-    background-image: -webkit-gradient(linear, left top, right top, color-stop(6%, #4a4a4a), color-stop(2%, rgba(255,255,255,0)));
-    background-image: linear-gradient(to right, #4a4a4a 6%, rgba(255,255,255,0) 2%);
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      color-stop(6%, #4a4a4a),
+      color-stop(2%, rgba(255, 255, 255, 0))
+    );
+    background-image: linear-gradient(
+      to right,
+      #4a4a4a 6%,
+      rgba(255, 255, 255, 0) 2%
+    );
     background-position: top;
     background-size: 10px 1px;
     background-repeat: repeat-x;
@@ -271,7 +285,6 @@
   }
 }
 
-
 .vote {
   &-content {
     & section {
@@ -287,7 +300,11 @@
     color: #212529;
 
     &__tbody {
-      background-image: linear-gradient(to right, #4a4a4a 6%, rgba(255,255,255,0) 2%);
+      background-image: linear-gradient(
+        to right,
+        #4a4a4a 6%,
+        rgba(255, 255, 255, 0) 2%
+      );
       background-position: top;
       background-size: 10px 1px;
       background-repeat: repeat-x;
@@ -330,8 +347,18 @@
     display: block;
     height: 1px;
     margin: 15px 0;
-    background-image: -webkit-gradient(linear, left top, right top, color-stop(6%, #4a4a4a), color-stop(2%, rgba(255,255,255,0)));
-    background-image: linear-gradient(to right, #4a4a4a 6%, rgba(255,255,255,0) 2%);
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      color-stop(6%, #4a4a4a),
+      color-stop(2%, rgba(255, 255, 255, 0))
+    );
+    background-image: linear-gradient(
+      to right,
+      #4a4a4a 6%,
+      rgba(255, 255, 255, 0) 2%
+    );
     background-position: top;
     background-size: 10px 1px;
     background-repeat: repeat-x;
@@ -407,7 +434,7 @@
     background-color: #fff;
     border: 1px solid #f0f0f1;
     border-radius: 4px;
-    box-shadow: 0 0 15px 7px rgba(0,0,0,0.02);
+    box-shadow: 0 0 15px 7px rgba(0, 0, 0, 0.02);
 
     &__container {
       margin: 1.6rem 0;
@@ -472,7 +499,6 @@
 
     &__chart {
       @include max-width-regular-laptop {
-
       }
     }
 
@@ -519,35 +545,6 @@
     }
   }
 
-  &-breadcrumbs {
-
-  }
-
-  // proposal page
-  &-proposal {
-    &__chart {}
-    &__info {}
-  }
-
-  // exploration page
-  &-exploration {
-    &__chart {}
-    &__info {}
-    &__vote-stats {}
-  }
-
-  // testing page
-  &-testing {
-    &__info {}
-    &__description {}
-  }
-
-  // promotion page
-  &-promotion {
-    &__chart {}
-    &__info {}
-  }
-
   &__ballot {
     display: flex;
     justify-content: center;
@@ -556,7 +553,6 @@
     font-weight: 300;
     color: #9ea0a5;
     cursor: pointer;
-
 
     @include max-width-desktop {
       font-size: 21px;
@@ -593,7 +589,7 @@
 
     &--active {
       font-weight: 400;
-      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
     }
   }
 
@@ -615,8 +611,8 @@
       overflow: hidden;
       display: inline-block;
       vertical-align: bottom;
-      animation: ellipsis steps(4,end) 900ms infinite;
-      content: "\2026";
+      animation: ellipsis steps(4, end) 900ms infinite;
+      content: '\2026';
       width: 0;
     }
   }
@@ -668,9 +664,9 @@
     color: #6c757d;
     word-break: break-all;
 
-    &+.breadcrumbs__item:before {
+    & + .breadcrumbs__item:before {
       display: inline-block;
-      padding-right: .5rem;
+      padding-right: 0.5rem;
     }
 
     &:before {
@@ -701,7 +697,7 @@
     }
 
     @include from-smartphone-portrait-to-tablet {
-      min-height: auto !important;;
+      min-height: auto !important;
     }
   }
 
@@ -748,7 +744,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
 
     & > div {
       position: relative;
@@ -876,7 +871,7 @@
   }
 
   &__proposal {
-    &  section:not(:last-child):not(:first-child) {
+    & section:not(:last-child):not(:first-child) {
       margin-bottom: 30px;
     }
   }

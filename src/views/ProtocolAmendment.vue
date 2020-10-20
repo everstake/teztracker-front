@@ -1,57 +1,52 @@
 <template>
-  <PageContentContainer>
-    <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs" />
-    </template>
+  <div>
+    <Breadcrumbs :crumbs="crumbs" />
 
-    <template #content>
-      <section>
-        <div v-if="loading">
-          <b-container fluid>
-            <b-row>
-              <b-col sm="12" md="6" lg="4" class="mb-4">
-                <div class="protocol-amendment__card">
-                  <div class="protocol-amendment__loading font font--regular">
-                    {{ $t('common.loading') }}
-                  </div>
+    <section>
+      <div v-if="loading">
+        <b-container fluid>
+          <b-row>
+            <b-col sm="12" md="6" lg="4" class="mb-4">
+              <div class="protocol-amendment__card">
+                <div class="protocol-amendment__loading font font--regular">
+                  {{ $t('common.loading') }}
                 </div>
-              </b-col>
-            </b-row>
-          </b-container>
-        </div>
+              </div>
+            </b-col>
+          </b-row>
+        </b-container>
+      </div>
 
-        <div v-else>
-          <b-container fluid>
-            <b-row>
-              <b-col
-                v-for="protocol in protocols"
-                :key="generateKey()"
-                sm="12"
-                md="6"
-                lg="4"
-                class="protocol-amendment__col"
-              >
-                <ProtocolAmendmentCard
-                  :id="protocol.period"
-                  :name="protocol.title"
-                  :period="
-                    protocol.period === currentPeriodId
-                      ? $t('protocolPeriods.current')
-                      : $t('protocolPeriods.past')
-                  "
-                  @handleClick="handleProtocolClick(protocol.period)"
-                />
-              </b-col>
-            </b-row>
-          </b-container>
-        </div>
-      </section>
-    </template>
-  </PageContentContainer>
+      <div v-else>
+        <b-container fluid>
+          <b-row>
+            <b-col
+              v-for="protocol in protocols"
+              :key="generateKey()"
+              sm="12"
+              md="6"
+              lg="4"
+              class="protocol-amendment__col"
+            >
+              <ProtocolAmendmentCard
+                :id="protocol.period"
+                :name="protocol.title"
+                :period="
+                  protocol.period === currentPeriodId
+                    ? $t('protocolPeriods.current')
+                    : $t('protocolPeriods.past')
+                "
+                @handleClick="handleProtocolClick(protocol.period)"
+              />
+            </b-col>
+          </b-row>
+        </b-container>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
-  import PageContentContainer from '@/layouts/PageContentContainer';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import ProtocolAmendmentCard from '@/components/protocol/ProtocolAmendmentCard';
   import uuid from '@/mixins/uuid';
@@ -61,7 +56,6 @@
     name: 'ProtocolAmendment',
     components: {
       Breadcrumbs,
-      PageContentContainer,
       ProtocolAmendmentCard,
     },
     mixins: [uuid],
@@ -132,20 +126,6 @@
   .protocol-amendment {
     &__col {
       margin-bottom: 30px;
-    }
-  }
-
-  .breadcrumbs {
-    padding: 2rem 0 1rem;
-    margin: 1.6rem 0;
-    background-color: #e0efec;
-
-    &__title {
-      font-size: 30px;
-      font-weight: 400;
-      line-height: 37px;
-      letter-spacing: 0.4285713px;
-      color: #309282;
     }
   }
 </style>

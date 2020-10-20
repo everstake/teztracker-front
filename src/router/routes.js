@@ -1,4 +1,6 @@
+const PageContentContainer = () => import('@/layouts/PageContentContainer');
 const Index = () => import('../views/Index');
+
 /* Blocks group */
 // Blocks
 const Blocks = () => import('../views/Blocks.vue');
@@ -35,7 +37,6 @@ const Baker = () => import('../views/Baker.vue');
 /* Accounts group */
 // Accounts
 const Accounts = () => import('../views/Accounts.vue');
-// import Account from "./components/pages/account.vue";
 const Account = () => import('../views/Account.vue');
 const TopAccounts = () => import('../views/TopAccounts.vue');
 // Contracts
@@ -60,7 +61,6 @@ const ChartsGeneral = () => import('../views/chart-views/ChartsGeneral.vue');
 /* Charts group end */
 
 // Errors
-// TODO: Implement the logic of redirect
 const Maintenance = () => import('../views/Maintenance.vue');
 const NotFound = () => import('../views/errors/NotFound.vue');
 const ServerError = () => import('../views/errors/ServerError.vue');
@@ -72,136 +72,165 @@ export default [
     redirect: { name: 'network', params: { network: 'mainnet' } },
   },
   {
-    name: 'network',
     path: '/:network',
-    component: Index,
-  },
-  {
-    name: 'blocks',
-    path: '/:network/blocks',
-    component: Blocks,
-  },
-  {
-    name: 'block',
-    path: '/:network/block/:level',
-    component: Block,
-  },
-  {
-    name: 'snapshots',
-    path: '/:network/snapshots',
-    component: Snapshots,
-  },
-  {
-    name: 'baking_rights',
-    path: '/:network/baking_rights',
-    component: BakingRights,
-  },
-  /* Operations group */
-  // Txs
-  { path: '/:network/txs', name: 'txs', component: Txs },
-  { path: '/:network/tx/:txhash', name: 'tx', component: Tx },
-  // Endorsements
-  {
-    path: '/:network/endorsements',
-    name: 'endorsements',
-    component: Endorsements,
-  },
-  // Delegations
-  {
-    path: '/:network/delegations',
-    name: 'delegations',
-    component: Delegations,
-  },
-  // Originations
-  {
-    path: '/:network/originations',
-    name: 'originations',
-    component: Originations,
-  },
-  // Activations
-  {
-    path: '/:network/activations',
-    name: 'activations',
-    component: Activations,
-  },
-  // Double baking
-  {
-    path: '/:network/double_baking',
-    name: 'double_baking',
-    component: DoubleBaking,
-  },
-  // Double endorsement
-  {
-    path: '/:network/double_endorsement',
-    name: 'double_endorsement',
-    component: DoubleEndorsement,
-  },
-  /* Operations group end */
+    component: PageContentContainer,
+    children: [
+      {
+        path: '',
+        name: 'network',
+        component: Index,
+      },
 
-  // Bakers
-  { path: '/:network/bakers', name: 'bakers', component: Bakers },
-  {
-    path: '/:network/public_bakers',
-    name: 'public_bakers',
-    component: BakersPublic,
-  },
-  { path: '/:network/baker/:baker', name: 'baker', component: Baker },
+      /* Blocks group */
+      {
+        name: 'blocks',
+        path: 'blocks',
+        component: Blocks,
+      },
+      {
+        name: 'block',
+        path: 'block/:level',
+        component: Block,
+      },
+      {
+        name: 'snapshots',
+        path: 'snapshots',
+        component: Snapshots,
+      },
+      {
+        name: 'baking_rights',
+        path: 'baking_rights',
+        component: BakingRights,
+      },
+      /* Blocks group end */
 
-  /* Accounts group */
-  // Accounts
-  { path: '/:network/accounts', name: 'accounts', component: Accounts },
-  { path: '/:network/account/:account', name: 'account', component: Account },
-  {
-    path: '/:network/top_accounts',
-    name: 'top_accounts',
-    component: TopAccounts,
-  },
-  // Contracts
-  { path: '/:network/contracts', name: 'contracts', component: Contracts },
-  { path: '/:network/assets', name: 'assets', component: Assets },
-  { path: '/:network/asset/:id', name: 'asset', component: Asset },
-  /* Accounts group end */
+      /* Operations group */
+      // Txs
+      { path: 'txs', name: 'txs', component: Txs },
+      { path: 'tx/:txhash', name: 'tx', component: Tx },
+      // Endorsements
+      {
+        path: 'endorsements',
+        name: 'endorsements',
+        component: Endorsements,
+      },
+      // Delegations
+      {
+        path: 'delegations',
+        name: 'delegations',
+        component: Delegations,
+      },
+      // Originations
+      {
+        path: 'originations',
+        name: 'originations',
+        component: Originations,
+      },
+      // Activations
+      {
+        path: 'activations',
+        name: 'activations',
+        component: Activations,
+      },
+      // Double baking
+      {
+        path: 'double_baking',
+        name: 'double_baking',
+        component: DoubleBaking,
+      },
+      // Double endorsement
+      {
+        path: 'double_endorsement',
+        name: 'double_endorsement',
+        component: DoubleEndorsement,
+      },
+      /* Operations group end */
 
-  /* Governance group */
-  // Votes
-  {
-    path: '/:network/protocol_amendment',
-    redirect: { name: 'protocol_amendment' },
-  },
-  {
-    path: '/mainnet/protocol_amendment',
-    name: 'protocol_amendment',
-    component: ProtocolAmendment,
-  },
-  { path: '/:network/protocols', redirect: { name: 'protocols' } },
-  { path: '/mainnet/protocols', name: 'protocols', component: Protocols },
-  { path: '/:network/period/:id', redirect: { name: 'period' } },
-  { path: '/mainnet/period/:id', name: 'period', component: Period },
-  { path: '/:network/vote/:voteHash', name: 'vote', component: Vote },
-  /* Governance group end */
+      // Bakers
+      { path: 'bakers', name: 'bakers', component: Bakers },
+      {
+        path: 'public_bakers',
+        name: 'public_bakers',
+        component: BakersPublic,
+      },
+      { path: 'baker/:baker', name: 'baker', component: Baker },
 
-  /* Charts group */
-  {
-    path: '/mainnet/charts/baking',
-    name: 'baking_charts',
-    component: ChartsBaking,
-  },
-  { path: '/:network/charts/baking', redirect: { name: 'baking_charts' } },
-  {
-    path: '/mainnet/charts/general',
-    name: 'general_charts',
-    component: ChartsGeneral,
-  },
-  { path: '/:network/charts/general', redirect: { name: 'general_charts' } },
-  /* Charts group end */
+      /* Accounts group */
+      // Accounts
+      { path: 'accounts', name: 'accounts', component: Accounts },
+      {
+        path: 'account/:account',
+        name: 'account',
+        component: Account,
+      },
+      // Top accounts
+      {
+        path: 'top_accounts',
+        name: 'top_accounts',
+        component: TopAccounts,
+      },
+      // Contracts
+      { path: 'contracts', name: 'contracts', component: Contracts },
+      // Assets
+      { path: 'assets', name: 'assets', component: Assets },
+      { path: 'asset/:id', name: 'asset', component: Asset },
+      /* Accounts group end */
 
-  // Errors
-  {
-    path: '/:network/maintenance',
-    name: 'maintenance',
-    component: Maintenance,
+      /* Governance group */
+      {
+        path: 'protocol_amendment',
+        redirect: { name: 'protocol_amendment' },
+      },
+      { path: 'protocols', redirect: { name: 'protocols' } },
+      { path: 'period/:id', redirect: { name: 'period' } },
+      { path: 'vote/:voteHash', redirect: { name: 'vote' } },
+      /* Governance group end */
+
+      /* Charts group */
+      { path: 'charts/baking', redirect: { name: 'baking_charts' } },
+      { path: 'charts/general', redirect: { name: 'general_charts' } },
+      /* Charts group end */
+
+      /* Errors group */
+      {
+        path: 'maintenance',
+        name: 'maintenance',
+        component: Maintenance,
+      },
+      { path: '404', name: '404', component: NotFound },
+      { path: '500', name: '500', component: ServerError },
+      { path: '*', redirect: { name: '404' } },
+      /* Errors group end */
+    ],
   },
-  { path: '/:network/404', name: '404', component: NotFound },
-  { path: '/:network/*', redirect: { name: '404' } },
-  { path: '/:network/500', name: '500', component: ServerError },
+  {
+    name: 'mainnet',
+    path: '/mainnet',
+    component: PageContentContainer,
+    children: [
+      /* Governance group */
+      {
+        path: 'protocol_amendment',
+        name: 'protocol_amendment',
+        component: ProtocolAmendment,
+      },
+      { path: 'protocols', name: 'protocols', component: Protocols },
+      { path: 'period/:id', name: 'period', component: Period },
+      { path: 'vote/:voteHash', name: 'vote', component: Vote },
+      /* Governance group end */
+
+      /* Charts group */
+      {
+        path: 'charts/baking',
+        name: 'baking_charts',
+        component: ChartsBaking,
+      },
+      {
+        path: 'charts/general',
+        name: 'general_charts',
+        component: ChartsGeneral,
+      },
+      /* Charts group end */
+    ],
+  },
 ];

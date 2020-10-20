@@ -44,6 +44,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
 
     &__content {
       text-align: center;
