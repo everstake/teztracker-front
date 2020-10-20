@@ -1,41 +1,36 @@
 <template>
-  <PageContentContainer page-name="Bakers page">
-    <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs" />
-    </template>
+  <div>
+    <Breadcrumbs :crumbs="crumbs" />
 
-    <template #content>
-      <section>
-        <b-container fluid>
-          <b-row>
-            <b-col lg="12">
-              <b-card no-body>
-                <CardHeader>
-                  <template #left-content class="text">
-                    <h4 class="tz-title--bold">
-                      {{ $t('listTypes.bakersList') }}
-                    </h4>
-                  </template>
-                  <template #right-content class="text">
-                    <Counter show-line :count="count.bakers" />
-                  </template>
-                </CardHeader>
+    <section>
+      <b-container fluid>
+        <b-row>
+          <b-col lg="12">
+            <b-card no-body>
+              <CardHeader>
+                <template #left-content class="text">
+                  <h4 class="tz-title--bold">
+                    {{ $t('listTypes.bakersList') }}
+                  </h4>
+                </template>
+                <template #right-content class="text">
+                  <Counter show-line :count="count.bakers" />
+                </template>
+              </CardHeader>
 
-                <b-card-body>
-                  <BakersList />
-                </b-card-body>
-              </b-card>
-            </b-col>
-          </b-row>
-        </b-container>
-      </section>
-    </template>
-  </PageContentContainer>
+              <b-card-body>
+                <BakersList />
+              </b-card-body>
+            </b-card>
+          </b-col>
+        </b-row>
+      </b-container>
+    </section>
+  </div>
 </template>
 
 <script>
   import { mapState } from 'vuex';
-  import PageContentContainer from '../layouts/PageContentContainer';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import BakersList from '../components/bakers/BakersList';
   import CardHeader from '../components/partials/CardHeader';
@@ -44,7 +39,6 @@
   export default {
     name: 'Bakers',
     components: {
-      PageContentContainer,
       Breadcrumbs,
       BakersList,
       Counter,

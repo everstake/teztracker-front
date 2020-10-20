@@ -1,30 +1,28 @@
 <template>
-  <div class="main-content error-page">
-    <section class="error-section">
-      <b-container fluid>
-        <b-row class="justify-content-lg-center align-items-center">
-          <b-col lg="3">
-            <img src="../../assets/img/404.svg" width="100%" alt />
-          </b-col>
-        </b-row>
+  <b-container class="err-page">
+    <div class="err-page__content">
+      <div>
+        <img src="@/assets/img/404.svg" width="100%" alt="404 robot image" />
+      </div>
 
-        <b-row class="justify-content-lg-center align-items-center">
-          <b-col lg="8" class="text-center">
-            <h1 class="error-text text-center">
-              {{ $t('errPages.page') }}
-              <span class="error-number">404</span>
-            </h1>
-            <h2 class="error-subtitle">
-              {{ $t('errPages.pageNotFound') }}
-            </h2>
-            <router-link :to="{ name: 'network' }" class="go-home">
-              {{ $t('common.home') }}
-            </router-link>
-          </b-col>
-        </b-row>
-      </b-container>
-    </section>
-  </div>
+      <div class="mb-4">
+        <h1 class="err-page__title">{{ $t('errPages.page') }} 404</h1>
+
+        <h2 class="err-page__subtitle">
+          {{ $t('errPages.pageNotFound') }}
+        </h2>
+      </div>
+
+      <b-btn
+        :to="{ name: 'network' }"
+        class="err-page__btn"
+        variant="success"
+        size="lg"
+      >
+        {{ $t('common.home') }}
+      </b-btn>
+    </div>
+  </b-container>
 </template>
 
 <script>
@@ -32,3 +30,7 @@
     name: 'NotFound',
   };
 </script>
+
+<style lang="scss" scoped>
+  @import '~@/assets/scss/custom/err-page';
+</style>

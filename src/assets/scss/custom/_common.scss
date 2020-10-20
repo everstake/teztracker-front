@@ -10,8 +10,6 @@ body {
   z-index: 100;
   // FIXME: Debug position: sticky
   position: sticky;
-  //position: fixed;
-  //width: 100%;
   top: 0;
 }
 
@@ -265,58 +263,11 @@ span a.baker,
   color: $color-white;
 }
 
-.main-content {
-  background-color: $color-teal--light;
-  //margin-top: 57px;
-  flex: 1 0 auto;
-}
-
-.main-content.error-page {
-  background-color: $color-white;
-}
-
-.main-content.error-page .error-text {
-  margin-top: 1rem;
-  font-size: 75px;
-  font-weight: 700;
-  line-height: 110px;
-  letter-spacing: 1.285714px;
-  color: $color-brand;
-}
-
-.main-content.error-page .error-subtitle {
-  font-size: 36px;
-  font-weight: 500;
-  line-height: 56px;
-  text-align: center;
-  color: $color-black;
-}
-
-.main-content.error-page .go-home {
-  display: inline-block;
-  font-size: 32px;
-  font-weight: 400;
-  line-height: 39px;
-  text-align: center;
-  color: $color-white;
-  background-color: $color-brand;
-  border: none;
-  border-radius: 4px;
-  padding: 1rem 8rem;
-  margin: 2rem 0;
-  cursor: pointer;
-  text-decoration: none;
-}
-
 .main-content .promo-section {
   position: relative;
   width: 100%;
   margin: 0;
   background-color: $color-teal--light;
-}
-
-.main-content .promo-section .promo-top {
-  //overflow: hidden;
 }
 
 .main-content .promo-section .promo-top .promo-search {
@@ -557,50 +508,6 @@ span a.baker,
   padding-top: 14px;
 }
 
-.main-content .breadcrumbs {
-  padding: 0;
-  margin-bottom: 0;
-}
-
-.main-content .breadcrumbs h2 {
-  font-size: 30px;
-  font-weight: 400;
-  line-height: 37px;
-  letter-spacing: 0.4285713px;
-  color: $color-brand;
-}
-
-.main-content .breadcrumbs .breadcrumb {
-  margin: 0;
-  padding: 0;
-  background: transparent;
-}
-
-.main-content .breadcrumbs .breadcrumb .breadcrumb-item {
-  padding-left: 0;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 22px;
-  letter-spacing: 0.3857144px;
-  color: $color-brand;
-  word-break: break-all;
-}
-
-.main-content .breadcrumbs .breadcrumb .breadcrumb-item:first-child:before {
-  display: none;
-}
-
-.main-content .breadcrumbs .breadcrumb .breadcrumb-item:before {
-  padding-left: 0.6rem;
-  padding-right: 0.2rem;
-  content: ' - ';
-  color: $color-black;
-}
-
-.main-content .breadcrumbs .breadcrumb .breadcrumb-item a {
-  color: $color-black;
-}
-
 .main-content section {
   margin: 1.6rem 0;
 }
@@ -619,7 +526,6 @@ span a.baker,
   background: $color-white;
   border: none;
   padding: 10px 15px 10px;
-  //padding: 10px 35px 10px;
 }
 
 .main-content section .card .card-header h3 {
@@ -894,9 +800,6 @@ span a.baker,
 
 .main-content section .card .card-body .table tbody tr td a {
   position: relative;
-  //display: block;
-  //float: left;
-  //width: 100%;
   color: $color-brand;
   white-space: nowrap;
   text-overflow: ellipsis;

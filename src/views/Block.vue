@@ -1,83 +1,78 @@
 <template>
-  <PageContentContainer page-name="Block page">
-    <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs" />
-    </template>
+  <div>
+    <Breadcrumbs :crumbs="crumbs" />
 
-    <template #content>
-      <section>
-        <b-container fluid>
-          <BlockSingle :block="block" />
-        </b-container>
-      </section>
+    <section>
+      <b-container fluid>
+        <BlockSingle :block="block" />
+      </b-container>
+    </section>
 
-      <EndorsementsSlots />
+    <EndorsementsSlots />
 
-      <section class="mt-0">
-        <b-container fluid>
-          <b-row>
-            <b-col lg="12">
-              <b-card no-body>
-                <b-tabs>
-                  <b-tab :title="$tc('opTypes.tx', 2)" active>
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">
-                            {{ $t('listTypes.txsList') }}
-                          </span>
-                        </h3>
-                      </div>
-                    </b-card-header>
+    <section class="mt-0">
+      <b-container fluid>
+        <b-row>
+          <b-col lg="12">
+            <b-card no-body>
+              <b-tabs>
+                <b-tab :title="$tc('opTypes.tx', 2)" active>
+                  <b-card-header>
+                    <div class="break-word">
+                      <h3>
+                        <span class="text">
+                          {{ $t('listTypes.txsList') }}
+                        </span>
+                      </h3>
+                    </div>
+                  </b-card-header>
 
-                    <b-card-body>
-                      <TxsList :block="block" />
-                    </b-card-body>
-                  </b-tab>
-                  <b-tab :title="$tc('opTypes.endorsement', 2)">
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">
-                            {{ $t('listTypes.endorsementsList') }}
-                          </span>
-                        </h3>
-                      </div>
-                    </b-card-header>
+                  <b-card-body>
+                    <TxsList :block="block" />
+                  </b-card-body>
+                </b-tab>
+                <b-tab :title="$tc('opTypes.endorsement', 2)">
+                  <b-card-header>
+                    <div class="break-word">
+                      <h3>
+                        <span class="text">
+                          {{ $t('listTypes.endorsementsList') }}
+                        </span>
+                      </h3>
+                    </div>
+                  </b-card-header>
 
-                    <b-card-body>
-                      <EndorsementsList
-                        :disable-pagination="true"
-                        :block-hash="block.hash"
-                      />
-                    </b-card-body>
-                  </b-tab>
-                  <b-tab :title="$t('common.other')">
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">
-                            {{ $t('listTypes.otherOpsList') }}
-                          </span>
-                        </h3>
-                      </div>
-                    </b-card-header>
-                    <b-card-body>
-                      <BlockOtherOperationsList :block-hash="block.hash" />
-                    </b-card-body>
-                  </b-tab>
-                </b-tabs>
-              </b-card>
-            </b-col>
-          </b-row>
-        </b-container>
-      </section>
-    </template>
-  </PageContentContainer>
+                  <b-card-body>
+                    <EndorsementsList
+                      :disable-pagination="true"
+                      :block-hash="block.hash"
+                    />
+                  </b-card-body>
+                </b-tab>
+                <b-tab :title="$t('common.other')">
+                  <b-card-header>
+                    <div class="break-word">
+                      <h3>
+                        <span class="text">
+                          {{ $t('listTypes.otherOpsList') }}
+                        </span>
+                      </h3>
+                    </div>
+                  </b-card-header>
+                  <b-card-body>
+                    <BlockOtherOperationsList :block-hash="block.hash" />
+                  </b-card-body>
+                </b-tab>
+              </b-tabs>
+            </b-card>
+          </b-col>
+        </b-row>
+      </b-container>
+    </section>
+  </div>
 </template>
 
 <script>
-  import PageContentContainer from '../layouts/PageContentContainer';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import BlockSingle from '../components/blocks/BlockSingle';
   import EndorsementsSlots from '../components/endorsements/EndorsementsSlots';
@@ -88,7 +83,6 @@
   export default {
     name: 'Block',
     components: {
-      PageContentContainer,
       Breadcrumbs,
       BlockSingle,
       EndorsementsSlots,
