@@ -39,9 +39,9 @@ const Accounts = () => import('../views/Accounts.vue');
 const Account = () => import('../views/Account.vue');
 const TopAccounts = () => import('../views/TopAccounts.vue');
 // Contracts
-const Contracts = () => import("../views/Contracts.vue");
-const Assets = () => import("../views/Assets.vue");
-const Asset = () => import("../views/Asset.vue");
+const Contracts = () => import('../views/Contracts.vue');
+const Assets = () => import('../views/Assets.vue');
+const Asset = () => import('../views/Asset.vue');
 /* Accounts group end */
 
 // Protocol amendment
@@ -61,7 +61,7 @@ const ChartsGeneral = () => import('../views/chart-views/ChartsGeneral.vue');
 
 // Errors
 // TODO: Implement the logic of redirect
-// const Maintenance = () => import('../views/Maintenance.vue');
+const Maintenance = () => import('../views/Maintenance.vue');
 const NotFound = () => import('../views/errors/NotFound.vue');
 const ServerError = () => import('../views/errors/ServerError.vue');
 
@@ -157,9 +157,9 @@ export default [
     component: TopAccounts,
   },
   // Contracts
-  { path: "/:network/contracts", name: "contracts", component: Contracts },
-  { path: "/:network/assets", name: "assets", component: Assets },
-  { path: "/:network/asset/:id", name: "asset", component: Asset },
+  { path: '/:network/contracts', name: 'contracts', component: Contracts },
+  { path: '/:network/assets', name: 'assets', component: Assets },
+  { path: '/:network/asset/:id', name: 'asset', component: Asset },
   /* Accounts group end */
 
   /* Governance group */
@@ -196,12 +196,11 @@ export default [
   /* Charts group end */
 
   // Errors
-  // TODO: Implement the logic of redirect
-  // {
-  //   path: '/:network/maintenance',
-  //   name: 'Maintenance',
-  //   component: Maintenance,
-  // },
+  {
+    path: '/:network/maintenance',
+    name: 'maintenance',
+    component: Maintenance,
+  },
   { path: '/:network/404', name: '404', component: NotFound },
   { path: '/:network/*', redirect: { name: '404' } },
   { path: '/:network/500', name: '500', component: ServerError },
