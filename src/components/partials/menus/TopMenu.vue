@@ -239,12 +239,11 @@
         return args.includes(this.$route.name);
       },
       changeRouteNetwork(network) {
-        this[SET_APP_NETWORK](network);
+        const { currentNetwork } = this;
 
-        if (this.$route.name === '404' || this.$route.name === '500') {
+        if (currentNetwork !== network) {
+          this[SET_APP_NETWORK](network);
           this.$router.push({ name: 'network', params: { network } });
-        } else {
-          this.$router.push({ name: this.$route.name, params: { network } });
         }
       },
     },
