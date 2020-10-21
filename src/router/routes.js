@@ -1,3 +1,6 @@
+import { translation } from '@/plugins/translation';
+import { state as applicationState } from '@/store/modules/app.module';
+
 const PageContentContainer = () => import('@/layouts/PageContentContainer');
 const Index = () => import('../views/Index');
 
@@ -69,10 +72,20 @@ export default [
   {
     path: '/',
     name: 'index',
-    redirect: { name: 'network', params: { network: 'mainnet' } },
+    redirect() {
+      const userLanguage = translation.getUserLang().langNoISO;
+      return `${userLanguage}/${applicationState.network}`;
+    },
   },
   {
-    path: '/:network',
+    path: '/:language',
+    redirect() {
+      const userLanguage = translation.getUserLang().langNoISO;
+      return `${userLanguage}/${applicationState.network}`;
+    },
+  },
+  {
+    path: '/:language/:network',
     component: PageContentContainer,
     children: [
       {
@@ -80,7 +93,6 @@ export default [
         name: 'network',
         component: Index,
       },
-
       /* Blocks group */
       {
         name: 'blocks',
@@ -106,8 +118,8 @@ export default [
 
       /* Operations group */
       // Txs
-      { path: 'txs', name: 'txs', component: Txs },
-      { path: 'tx/:txhash', name: 'tx', component: Tx },
+      {path: 'txs', name: 'txs', component: Txs},
+      {path: 'tx/:txhash', name: 'tx', component: Tx},
       // Endorsements
       {
         path: 'endorsements',
@@ -147,17 +159,17 @@ export default [
       /* Operations group end */
 
       // Bakers
-      { path: 'bakers', name: 'bakers', component: Bakers },
+      {path: 'bakers', name: 'bakers', component: Bakers},
       {
         path: 'public_bakers',
         name: 'public_bakers',
         component: BakersPublic,
       },
-      { path: 'baker/:baker', name: 'baker', component: Baker },
+      {path: 'baker/:baker', name: 'baker', component: Baker},
 
       /* Accounts group */
       // Accounts
-      { path: 'accounts', name: 'accounts', component: Accounts },
+      {path: 'accounts', name: 'accounts', component: Accounts},
       {
         path: 'account/:account',
         name: 'account',
@@ -170,25 +182,25 @@ export default [
         component: TopAccounts,
       },
       // Contracts
-      { path: 'contracts', name: 'contracts', component: Contracts },
+      {path: 'contracts', name: 'contracts', component: Contracts},
       // Assets
-      { path: 'assets', name: 'assets', component: Assets },
-      { path: 'asset/:id', name: 'asset', component: Asset },
+      {path: 'assets', name: 'assets', component: Assets},
+      {path: 'asset/:id', name: 'asset', component: Asset},
       /* Accounts group end */
 
       /* Governance group */
       {
         path: 'protocol_amendment',
-        redirect: { name: 'protocol_amendment' },
+        redirect: {name: 'protocol_amendment'},
       },
-      { path: 'protocols', redirect: { name: 'protocols' } },
-      { path: 'period/:id', redirect: { name: 'period' } },
-      { path: 'vote/:voteHash', redirect: { name: 'vote' } },
+      {path: 'protocols', redirect: {name: 'protocols'}},
+      {path: 'period/:id', redirect: {name: 'period'}},
+      {path: 'vote/:voteHash', redirect: {name: 'vote'}},
       /* Governance group end */
 
       /* Charts group */
-      { path: 'charts/baking', redirect: { name: 'baking_charts' } },
-      { path: 'charts/general', redirect: { name: 'general_charts' } },
+      {path: 'charts/baking', redirect: {name: 'baking_charts'}},
+      {path: 'charts/general', redirect: {name: 'general_charts'}},
       /* Charts group end */
 
       /* Errors group */
@@ -197,15 +209,15 @@ export default [
         name: 'maintenance',
         component: Maintenance,
       },
-      { path: '404', name: '404', component: NotFound },
-      { path: '500', name: '500', component: ServerError },
-      { path: '*', redirect: { name: '404' } },
+      {path: '404', name: '404', component: NotFound},
+      {path: '500', name: '500', component: ServerError},
+      {path: '*', redirect: {name: '404'}},
       /* Errors group end */
     ],
   },
   {
     name: 'mainnet',
-    path: '/mainnet',
+    path: '/:language/mainnet',
     component: PageContentContainer,
     children: [
       /* Governance group */

@@ -34,6 +34,9 @@ const constants = {
     operation: ['o'],
     block: ['B'],
   },
+  DEFAULT_LANGUAGE: 'en',
+  FALLBACK_LANGUAGE: 'en',
+  SUPPORTED_LANGUAGES: ['en', 'ru', 'zh'],
 };
 
 Vue.use({
@@ -41,3 +44,5 @@ Vue.use({
     Vue.prototype.$constants = constants;
   },
 });
+
+export { constants };

@@ -1,6 +1,6 @@
 <template>
-  <div id="app" :key="$route.path || getAppNetwork">
-    <router-view :key="langChangeKey"></router-view>
+  <div id="app" :key="getAppNetwork">
+    <router-view></router-view>
   </div>
 </template>
 
@@ -12,19 +12,8 @@
     computed: {
       ...mapGetters('app', ['getAppNetwork']),
     },
-    data() {
-      return {
-        langChangeKey: null,
-      };
-    },
     created() {
       this.checkHealth();
-
-      this.$eventBus.$on('lang-change', (val) => {
-        if (this.langChangeKey !== val) {
-          this.langChangeKey = val;
-        }
-      });
     },
     methods: {
       async checkHealth() {

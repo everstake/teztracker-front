@@ -1,22 +1,24 @@
 <template>
   <b-nav-item-dropdown variant="link" class="custom-dropdown" right>
     <template #button-content>
-      <flag :iso="mapLangCode(currLang)" />
-      {{ currLang.toUpperCase() }}
+      <flag :iso="getLanguageFlag(currentLanguage)" />
+      {{ currentLanguage.toUpperCase() }}
     </template>
 
     <b-dropdown-item
       v-for="(lang, index) in langs"
       :key="index"
-      @click="setLang(lang, true)"
+      @click="setLanguage(lang)"
     >
-      <flag :iso="mapLangCode(lang)" />
+      <flag :iso="getLanguageFlag(lang)" />
       {{ lang.toUpperCase() }}
     </b-dropdown-item>
   </b-nav-item-dropdown>
 </template>
 
 <script>
+  import { translation } from '@/plugins/translation';
+
   export default {
     name: 'LanguageSwitcher',
     data() {
@@ -26,39 +28,39 @@
       };
     },
     computed: {
-      currLang() {
-        return this.$i18n.locale;
+      currentLanguage() {
+        return translation.currentLanguage;
       },
     },
     created() {
-      this.setLang(this.defineInitialLang());
+      const routerLanguage = this.$route.params.language;
+      const routerLanguageSupported = translation.isLangSupported(routerLanguage);
+      const applicationLanguage = translation.getUserLang().langNoISO;
+
+      if (routerLanguageSupported) {
+        translation.currentLanguage = routerLanguage;
+      } else {
+        translation.currentLanguage = applicationLanguage;
+      }
     },
     methods: {
-      mapLangCode(langCode) {
-        return langCode === 'en' ? 'us' : langCode === 'zh' ? 'cn' : langCode;
+      setLanguage(language) {
+        translation.currentLanguage = language;
+        const { name, params } = this.$route;
+        this.$router.replace({ name, params: { ...params, language: language } });
       },
-      setLang(lang, rerender = false) {
-        if (this.$helpers.isLocalStorageAvailable) {
-          localStorage.setItem('lang', lang);
+      getLanguageFlag(language) {
+        if (language === 'en') {
+          return 'us';
         }
 
-        this.$i18n.locale = lang;
+        if (language === 'ru') {
+          return 'ru';
+        }
 
-        if (rerender) {
-          this.$eventBus.$emit('lang-change', this.currLang);
+        if (language === 'zh') {
+          return 'cn';
         }
-      },
-      defineInitialLang() {
-        if (
-          this.$helpers.isLocalStorageAvailable &&
-          localStorage.getItem('lang') !== null
-        ) {
-          return localStorage.getItem('lang');
-        }
-        if (this.langs.includes(this.browserLang)) {
-          return this.browserLang;
-        }
-        return this.$i18n.locale || 'en';
       },
     },
   };
