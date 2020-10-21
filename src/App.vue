@@ -1,5 +1,5 @@
 <template>
-  <div id="app" :key="getAppNetwork">
+  <div id="app" :key="$route.path || getAppNetwork">
     <router-view></router-view>
   </div>
 </template>
