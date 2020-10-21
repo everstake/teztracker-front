@@ -26,6 +26,7 @@ router.beforeEach((to, from, next) => {
     return next({
       name: to.name,
       params: {
+        ...to.params,
         language: applicationLanguage,
         network: network,
       },
@@ -36,6 +37,7 @@ router.beforeEach((to, from, next) => {
     return next({
       name: to.name,
       params: {
+        ...to.params,
         language: applicationLanguage,
         network: network,
       },

@@ -116,7 +116,7 @@
           return this.$router.replace({ name: status });
         }
 
-        this.$router.push({ name: 'period', params: { id } });
+        this.$router.push({ name: 'period', params: { id, network: 'mainnet' } });
       },
     },
   };
