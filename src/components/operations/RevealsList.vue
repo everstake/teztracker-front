@@ -1,11 +1,12 @@
 <template>
   <div>
     <b-table
+      responsive
       show-empty
       :items="items"
       :fields="fields"
       borderless
-      class="transactions-table table-responsive-md"
+      class="transactions-table"
       :empty-text="$t('common.noData')"
     >
       <template slot="from" slot-scope="row">
@@ -28,15 +29,21 @@
         <span v-if="row.item.storageLimit">
           {{ row.item.storageLimit }}
         </span>
-        <span v-else>----</span>
+
+        <NoDataTableCell v-else />
       </template>
     </b-table>
   </div>
 </template>
 
 <script>
+  import NoDataTableCell from '@/components/partials/NoDataTableCell';
+
   export default {
     name: 'RevealsList',
+    components: {
+      NoDataTableCell,
+    },
     props: {
       items: {
         type: Array,

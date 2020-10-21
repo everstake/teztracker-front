@@ -31,11 +31,20 @@
 </script>
 
 <style lang="scss" scoped>
+  $window-max-height: 460px;
+
+  main {
+    min-height: $window-max-height;
+  }
+
   .maintenance {
     height: 100vh;
+    min-height: $window-max-height;
+    overflow-y: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0;
 
     &__content {
       text-align: center;

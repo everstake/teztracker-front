@@ -28,12 +28,13 @@
 
                   <b-card-body>
                     <b-table
+                      responsive
                       show-empty
                       :items="voters"
                       :fields="votersFields"
                       :current-page="currentPage"
                       :per-page="0"
-                      class="transactions-table table table-borderless table-responsive-lg"
+                      class="transactions-table table table-borderless"
                       :empty-text="$t('common.noData')"
                     >
                       <template slot="pkh" slot-scope="row">
@@ -127,12 +128,13 @@
 
                   <b-card-body>
                     <b-table
+                      responsive
                       show-empty
                       :items="nonVoters"
                       :fields="nonVotersFields"
                       :current-page="currentPage"
                       :per-page="0"
-                      class="transactions-table table table-borderless table-responsive-md"
+                      class="transactions-table table table-borderless"
                       :empty-text="$t('common.noData')"
                     >
                       <template slot="pkh" slot-scope="row">

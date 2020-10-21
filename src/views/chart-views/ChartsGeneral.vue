@@ -1,55 +1,50 @@
 <template>
-  <PageContentContainer>
-    <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs" />
-    </template>
+  <div>
+    <Breadcrumbs :crumbs="crumbs" />
 
-    <template #content>
-      <section>
-        <b-container fluid>
-          <b-row>
-            <b-col xl="6" class="mb-30">
-              <ChartNumOfBlocks />
-            </b-col>
-            <b-col xl="6" class="mb-30">
-              <ChartTxVolume />
-            </b-col>
-          </b-row>
+    <section>
+      <b-container fluid>
+        <b-row>
+          <b-col xl="6" class="mb-30">
+            <ChartNumOfBlocks />
+          </b-col>
+          <b-col xl="6" class="mb-30">
+            <ChartTxVolume />
+          </b-col>
+        </b-row>
 
-          <b-row>
-            <b-col xl="6" class="mb-30">
-              <ChartNumOfOps />
-            </b-col>
-            <b-col xl="6" class="mb-30">
-              <ChartAvgBlockDelay />
-            </b-col>
-          </b-row>
+        <b-row>
+          <b-col xl="6" class="mb-30">
+            <ChartNumOfOps />
+          </b-col>
+          <b-col xl="6" class="mb-30">
+            <ChartAvgBlockDelay />
+          </b-col>
+        </b-row>
 
-          <b-row>
-            <b-col xl="6" class="mb-30">
-              <ChartFeesPerDay />
-            </b-col>
-            <b-col xl="6" class="mb-30">
-              <ChartActivations />
-            </b-col>
-          </b-row>
+        <b-row>
+          <b-col xl="6" class="mb-30">
+            <ChartFeesPerDay />
+          </b-col>
+          <b-col xl="6" class="mb-30">
+            <ChartActivations />
+          </b-col>
+        </b-row>
 
-          <b-row>
-            <b-col xl="6" class="mb-30">
-              <ChartDelegationVolume class="chart-min-height" />
-            </b-col>
-            <b-col xl="6">
-              <ChartNumOfWhaleAccs />
-            </b-col>
-          </b-row>
-        </b-container>
-      </section>
-    </template>
-  </PageContentContainer>
+        <b-row>
+          <b-col xl="6" class="mb-30">
+            <ChartDelegationVolume class="chart-min-height" />
+          </b-col>
+          <b-col xl="6">
+            <ChartNumOfWhaleAccs />
+          </b-col>
+        </b-row>
+      </b-container>
+    </section>
+  </div>
 </template>
 
 <script>
-  import PageContentContainer from '../../layouts/PageContentContainer.vue';
   import Breadcrumbs from '../../components/partials/Breadcrumbs.vue';
   // Charts
   import ChartNumOfBlocks from '../../components/charts/general/ChartNumOfBlocks.vue';
@@ -64,7 +59,6 @@
   export default {
     name: 'ChartsGeneral',
     components: {
-      PageContentContainer,
       Breadcrumbs,
       ChartNumOfBlocks,
       ChartTxVolume,
@@ -75,16 +69,16 @@
       ChartDelegationVolume,
       ChartNumOfWhaleAccs,
     },
-    data() {
-      return {
-        crumbs: [
+    computed: {
+      crumbs() {
+        return [
           { toRouteName: 'network', text: this.$t('common.home') },
           {
             toRouteName: 'accounts',
             text: this.$t('pageTypes.generalChartsPage'),
           },
-        ],
-      };
+        ];
+      },
     },
   };
 </script>

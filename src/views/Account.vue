@@ -1,98 +1,93 @@
 <template>
-  <PageContentContainer page-name="Account page">
-    <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs" />
-    </template>
+  <div>
+    <Breadcrumbs :crumbs="crumbs" />
 
-    <template #content>
-      <section>
-        <b-container fluid>
-          <AccountSingle :hash="hash">
-            <template #chart="props">
-              <ChartBalanceLast30Days :acc="acc" />
-            </template>
-          </AccountSingle>
-        </b-container>
-      </section>
+    <section>
+      <b-container fluid>
+        <AccountSingle :hash="hash">
+          <template #chart="props">
+            <ChartBalanceLast30Days :acc="acc" />
+          </template>
+        </AccountSingle>
+      </b-container>
+    </section>
 
-      <section class="mt-0">
-        <b-container fluid>
-          <b-row>
-            <b-col lg="12">
-              <b-card no-body>
-                <b-tabs>
-                  <b-tab :title="$tc('opTypes.tx', 2)" active>
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">
-                            {{ $t('listTypes.txsList') }}
-                          </span>
-                        </h3>
-                      </div>
-                    </b-card-header>
+    <section class="mt-0">
+      <b-container fluid>
+        <b-row>
+          <b-col lg="12">
+            <b-card no-body>
+              <b-tabs>
+                <b-tab :title="$tc('opTypes.tx', 2)" active>
+                  <b-card-header>
+                    <div class="break-word">
+                      <h3>
+                        <span class="text">
+                          {{ $t('listTypes.txsList') }}
+                        </span>
+                      </h3>
+                    </div>
+                  </b-card-header>
 
-                    <b-card-body>
-                      <TxsList :account="hash" @onTransactions="setChartData" />
-                    </b-card-body>
-                  </b-tab>
-                  <b-tab :title="$tc('opTypes.delegation', 2)">
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">
-                            {{ $t('listTypes.delegationsList') }}
-                          </span>
-                        </h3>
-                      </div>
-                    </b-card-header>
+                  <b-card-body>
+                    <TxsList :account="hash" @onTransactions="setChartData" />
+                  </b-card-body>
+                </b-tab>
+                <b-tab :title="$tc('opTypes.delegation', 2)">
+                  <b-card-header>
+                    <div class="break-word">
+                      <h3>
+                        <span class="text">
+                          {{ $t('listTypes.delegationsList') }}
+                        </span>
+                      </h3>
+                    </div>
+                  </b-card-header>
 
-                    <b-card-body>
-                      <DelegationsList :account="hash" />
-                    </b-card-body>
-                  </b-tab>
-                  <b-tab :title="$tc('opTypes.origination', 2)">
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">
-                            {{ $t('listTypes.originationsList') }}
-                          </span>
-                        </h3>
-                      </div>
-                    </b-card-header>
+                  <b-card-body>
+                    <DelegationsList :account="hash" />
+                  </b-card-body>
+                </b-tab>
+                <b-tab :title="$tc('opTypes.origination', 2)">
+                  <b-card-header>
+                    <div class="break-word">
+                      <h3>
+                        <span class="text">
+                          {{ $t('listTypes.originationsList') }}
+                        </span>
+                      </h3>
+                    </div>
+                  </b-card-header>
 
-                    <b-card-body>
-                      <OriginationsList :account="hash" />
-                    </b-card-body>
-                  </b-tab>
-                  <b-tab :title="$t('common.other')">
-                    <b-card-header>
-                      <div class="break-word">
-                        <h3>
-                          <span class="text">
-                            {{ $t('listTypes.otherOpsList') }}
-                          </span>
-                        </h3>
-                      </div>
-                    </b-card-header>
+                  <b-card-body>
+                    <OriginationsList :account="hash" />
+                  </b-card-body>
+                </b-tab>
+                <b-tab :title="$t('common.other')">
+                  <b-card-header>
+                    <div class="break-word">
+                      <h3>
+                        <span class="text">
+                          {{ $t('listTypes.otherOpsList') }}
+                        </span>
+                      </h3>
+                    </div>
+                  </b-card-header>
 
-                    <b-card-body>
-                      <OperationsList :account="hash" />
-                    </b-card-body>
-                  </b-tab>
-                </b-tabs>
-              </b-card>
-            </b-col>
-          </b-row>
-        </b-container>
-      </section>
-    </template>
-  </PageContentContainer>
+                  <b-card-body>
+                    <OperationsList :account="hash" />
+                  </b-card-body>
+                </b-tab>
+              </b-tabs>
+            </b-card>
+          </b-col>
+        </b-row>
+      </b-container>
+    </section>
+  </div>
 </template>
 
 <script>
-  import PageContentContainer from '../layouts/PageContentContainer';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import AccountSingle from '../components/accounts/AccountSingle';
   import ChartBalanceLast30Days from '@/components/charts/account/ChartBalanceLast30Days';
@@ -104,7 +99,6 @@
   export default {
     name: 'Account',
     components: {
-      PageContentContainer,
       Breadcrumbs,
       AccountSingle,
       TxsList,

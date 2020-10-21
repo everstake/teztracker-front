@@ -1,41 +1,36 @@
 <template>
-  <PageContentContainer page-name="Endorsements page">
-    <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs" />
-    </template>
+  <div>
+    <Breadcrumbs :crumbs="crumbs" />
 
-    <template #content>
-      <section>
-        <b-container fluid>
-          <b-row>
-            <b-col lg="12">
-              <b-card no-body>
-                <CardHeader>
-                  <template #left-content class="text">
-                    <h4 class="tz-title--bold">
-                      {{ $t('listTypes.endorsementsList') }}
-                    </h4>
-                  </template>
-                  <template #right-content class="text">
-                    <Counter show-line :count="count.endorsements" />
-                  </template>
-                </CardHeader>
+    <section>
+      <b-container fluid>
+        <b-row>
+          <b-col lg="12">
+            <b-card no-body>
+              <CardHeader>
+                <template #left-content class="text">
+                  <h4 class="tz-title--bold">
+                    {{ $t('listTypes.endorsementsList') }}
+                  </h4>
+                </template>
+                <template #right-content class="text">
+                  <Counter show-line :count="count.endorsements" />
+                </template>
+              </CardHeader>
 
-                <b-card-body>
-                  <EndorsementsList />
-                </b-card-body>
-              </b-card>
-            </b-col>
-          </b-row>
-        </b-container>
-      </section>
-    </template>
-  </PageContentContainer>
+              <b-card-body>
+                <EndorsementsList />
+              </b-card-body>
+            </b-card>
+          </b-col>
+        </b-row>
+      </b-container>
+    </section>
+  </div>
 </template>
 
 <script>
   import { mapState } from 'vuex';
-  import PageContentContainer from '../layouts/PageContentContainer';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import EndorsementsList from '../components/endorsements/EndorsementsList';
   import CardHeader from '../components/partials/CardHeader';
@@ -44,27 +39,24 @@
   export default {
     name: 'Endorsements',
     components: {
-      PageContentContainer,
       Breadcrumbs,
       EndorsementsList,
       CardHeader,
       Counter,
     },
-    data() {
-      return {
-        crumbs: [
+    computed: {
+      ...mapState('blocks', {
+        count: (state) => state.counts,
+      }),
+      crumbs() {
+        return [
           { toRouteName: 'network', text: this.$t('common.home') },
           {
             toRouteName: 'endorsements',
             text: this.$t('pageTypes.endorsementsPage'),
           },
-        ],
-      };
-    },
-    computed: {
-      ...mapState('blocks', {
-        count: (state) => state.counts,
-      }),
+        ];
+      },
     },
   };
 </script>

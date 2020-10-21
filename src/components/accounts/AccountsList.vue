@@ -5,13 +5,14 @@
     </div>
 
     <b-table
+      responsive
       show-empty
       :items="accounts"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
       borderless
-      class="transactions-table table-responsive-md"
+      class="transactions-table"
       :empty-text="$t('common.noData')"
     >
       <template slot="accountId" slot-scope="row">
@@ -20,10 +21,18 @@
             v-if="row.item.is_baker"
             :to="{ name: 'baker', params: { baker: row.item.accountId } }"
           >
-            {{ row.item.accountId | longhash }}
+            <template v-if="row.item.accountName">
+              {{ row.item.accountName }}
+            </template>
+            <template v-else>
+              {{ row.item.accountId | longhash }}
+            </template>
           </b-link>
 
-          <BtnCopy :text-to-copy="row.item.accountId" />
+          <BtnCopy
+            v-if="!row.item.accountName"
+            :text-to-copy="row.item.accountId"
+          />
         </span>
         <span v-else class="d-flex align-items-center">
           <IdentIcon :seed="row.item.accountId" />
@@ -31,10 +40,18 @@
           <b-link
             :to="{ name: 'account', params: { account: row.item.accountId } }"
           >
-            {{ row.item.accountId | longhash }}
+            <template v-if="row.item.accountName">
+              {{ row.item.accountName }}
+            </template>
+            <template v-else>
+              {{ row.item.accountId | longhash }}
+            </template>
           </b-link>
 
-          <BtnCopy :text-to-copy="row.item.accountId" />
+          <BtnCopy
+            v-if="!row.item.accountName"
+            :text-to-copy="row.item.accountId"
+          />
         </span>
       </template>
       <template slot="balance" slot-scope="row">
@@ -48,14 +65,28 @@
           <IdentIcon :seed="row.item.delegateValue" />
 
           <b-link
-            :to="{ name: 'account', params: { account: row.item.accountId } }"
+            :to="{
+              name: 'account',
+              params: { account: row.item.delegateValue },
+            }"
           >
-            <span>{{ row.item.delegateValue | longhash }}</span>
+            <span>
+              <template v-if="row.item.delegateName">
+                {{ row.item.delegateName }}
+              </template>
+              <template v-else>
+                {{ row.item.delegateValue | longhash }}
+              </template>
+            </span>
           </b-link>
 
-          <BtnCopy :text-to-copy="row.item.delegateValue" />
+          <BtnCopy
+            v-if="!row.item.delegateName"
+            :text-to-copy="row.item.delegateValue"
+          />
         </span>
-        <span v-else>----</span>
+
+        <NoDataTableCell v-else />
       </template>
     </b-table>
 
@@ -74,6 +105,7 @@
   import Pagination from '../partials/Pagination';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
+  import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import setPerPage from '@/mixins/setPerPage';
   import fetchListMixin from '@/mixins/fetchListMixin';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
@@ -86,6 +118,7 @@
       Pagination,
       BtnCopy,
       IdentIcon,
+      NoDataTableCell,
     },
     mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
     data() {

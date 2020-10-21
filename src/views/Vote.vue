@@ -1,63 +1,56 @@
 <template>
-  <PageContentContainer>
-    <template #breadcrumbs>
-      <Breadcrumbs :crumbs="crumbs" />
-    </template>
+  <div>
+    <Breadcrumbs :crumbs="crumbs" />
 
-    <template #content>
-      <section>
-        <b-container fluid>
-          <StatisticsCard
-            :title="voteHash"
-            :subtitle="$t('infoTypes.voteInfo')"
-            :fields="voteInfoRestructured"
-          >
-            <template #value="slotProps">
-              <template v-if="slotProps.field.key === $t('common.timestamp')">
-                {{ slotProps.field.value | timeformat(dateFormat) }}
-              </template>
-              <template
-                v-else-if="slotProps.field.key === $t('votePage.source')"
-              >
-                <span>
-                  <IdentIcon :seed="slotProps.field.value" />
+    <section>
+      <b-container fluid>
+        <StatisticsCard
+          :title="voteHash"
+          :subtitle="$t('infoTypes.voteInfo')"
+          :fields="voteInfoRestructured"
+        >
+          <template #value="slotProps">
+            <template v-if="slotProps.field.key === $t('common.timestamp')">
+              {{ slotProps.field.value | timeformat(dateFormat) }}
+            </template>
+            <template v-else-if="slotProps.field.key === $t('votePage.source')">
+              <span>
+                <IdentIcon :seed="slotProps.field.value" />
 
-                  <router-link
-                    :to="{
-                      name: 'account',
-                      params: { account: slotProps.field.value },
-                    }"
-                    class="baker"
-                  >
-                    {{ slotProps.field.value }}
-                  </router-link>
-
-                  <BtnCopy text-to-copy="slotProps.field.value" />
-                </span>
-              </template>
-              <template
-                v-else-if="slotProps.field.key === $t('common.includedInBlock')"
-              >
                 <router-link
                   :to="{
-                    name: 'block',
-                    params: { level: slotProps.field.value },
+                    name: 'account',
+                    params: { account: slotProps.field.value },
                   }"
                   class="baker"
                 >
                   {{ slotProps.field.value }}
                 </router-link>
-              </template>
+
+                <BtnCopy text-to-copy="slotProps.field.value" />
+              </span>
             </template>
-          </StatisticsCard>
-        </b-container>
-      </section>
-    </template>
-  </PageContentContainer>
+            <template
+              v-else-if="slotProps.field.key === $t('common.includedInBlock')"
+            >
+              <router-link
+                :to="{
+                  name: 'block',
+                  params: { level: slotProps.field.value },
+                }"
+                class="baker"
+              >
+                {{ slotProps.field.value }}
+              </router-link>
+            </template>
+          </template>
+        </StatisticsCard>
+      </b-container>
+    </section>
+  </div>
 </template>
 
 <script>
-  import PageContentContainer from '../layouts/PageContentContainer';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import StatisticsCard from '../layouts/StatisticsCard';
   import BtnCopy from '@/components/partials/BtnCopy';
@@ -67,7 +60,6 @@
   export default {
     name: 'Vote',
     components: {
-      PageContentContainer,
       Breadcrumbs,
       StatisticsCard,
       BtnCopy,

@@ -1,13 +1,14 @@
 <template>
   <div>
     <b-table
+      responsive
       show-empty
       :items="baking_rights"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
       borderless
-      class="transactions-table table-responsive-xl"
+      class="transactions-table"
       :empty-text="$t('common.noData')"
     >
       <template slot="priority" slot-scope="row">
