@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import { constants } from '@/plugins/constants';
 const { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } = constants;
 import i18n from '@/plugins/i18n';
@@ -35,5 +36,11 @@ const translation = {
     return this.supportedLanguages.includes(language);
   },
 };
+
+Vue.use({
+  install() {
+    Vue.prototype.$translation = translation;
+  },
+});
 
 export { translation };
