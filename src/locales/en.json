@@ -47,7 +47,8 @@
     "assets": "Assets",
     "name": "Name",
     "ordinalNumber": "#",
-    "contractName": "Contract name"
+    "contractName": "Contract name",
+    "bonds": "Bonds"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -83,7 +84,8 @@
     "rewardsList": "Rewards list",
     "topAccountsList": "Top accounts list",
     "assetsList": "Assets list",
-    "holdersList": "Holders list"
+    "holdersList": "Holders list",
+    "bondsList": "Bonds list"
   },
   "pageTypes": {
     "txsPage": "Transactions page",
@@ -158,7 +160,12 @@
     "endorsingHistory": "Endorsing History",
     "missed": "Missed",
     "stolen": "Stolen",
-    "avgPriority": "Average priority"
+    "avgPriority": "Average priority",
+    "bakingDeposit": "Baking deposit",
+    "endorsingDeposit": "Endorsing deposit",
+    "expectedTotalDeposit": "Expected total deposit",
+    "actualTotalDeposit": "Actual total deposit",
+    "availableBond": "Available bond"
   },
   "blockSingle": {
     "bakerFee": "Baker's fee",

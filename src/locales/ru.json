@@ -47,7 +47,8 @@
 		"assets": "Ассеты",
 		"name": "Имя",
 		"ordinalNumber": "#",
-		"contractName": "Название контракта"
+		"contractName": "Название контракта",
+		"bonds": "Залог"
 	},
 	"opTypes": {
 		"tx": "Транзакция | Транзакции",
@@ -83,7 +84,8 @@
 		"rewardsList": "Список вознаграждений",
 		"topAccountsList": "Список топ аккаунтов",
 		"assetsList": "Список ассетов",
-		"holdersList": "Список холдеров"
+		"holdersList": "Список холдеров",
+		"bondsList": "Список залоговых стредств"
 	},
 	"pageTypes": {
 		"txsPage": "Страница транзакций",
@@ -158,7 +160,12 @@
 		"endorsingHistory": "История заверения",
 		"missed": "Пропущенные",
 		"stolen": "Украденные",
-		"avgPriority": "Средний приоритет"
+		"avgPriority": "Средний приоритет",
+		"bakingDeposit": "Baking deposit",
+		"endorsingDeposit": "Endorsing deposit",
+		"expectedTotalDeposit": "Expected total deposit",
+		"actualTotalDeposit": "Actual total deposit",
+		"availableBond": "Available bond"
 	},
 	"blockSingle": {
 		"bakerFee": "Комиссия бейкера",
