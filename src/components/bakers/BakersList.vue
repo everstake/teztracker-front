@@ -81,10 +81,21 @@
       IdentIcon,
     },
     mixins: [fetchListMixin, handleCurrentPageChange, setPerPage],
-    data() {
-      return {
-        // The key property must coincide with the corresponding keys in the data items
-        fields: [
+    computed: {
+      ...mapState({
+        bakers: (state) => state.accounts.bakers,
+        count: (state) => state.accounts.counts,
+        dateFormat: (state) => state.app.dateFormat,
+      }),
+      bakersFormatted() {
+        if (!this.bakers || this.bakers.length === 0) return [];
+        return this.bakers.map((bakerObj) => {
+          return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
+        });
+      },
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
           { key: 'id', label: '#', tdClass: 'ordinal-number', thClass: 'ordinal-number' },
           {
             key: 'accountId',
@@ -120,20 +131,7 @@
             label: this.$t('common.bakingSince'),
             disableClear: true,
           },
-        ],
-      };
-    },
-    computed: {
-      ...mapState({
-        bakers: (state) => state.accounts.bakers,
-        count: (state) => state.accounts.counts,
-        dateFormat: (state) => state.app.dateFormat,
-      }),
-      bakersFormatted() {
-        if (!this.bakers || this.bakers.length === 0) return [];
-        return this.bakers.map((bakerObj) => {
-          return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
-        });
+        ];
       },
     },
     methods: {

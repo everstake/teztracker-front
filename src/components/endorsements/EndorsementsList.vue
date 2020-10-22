@@ -11,7 +11,7 @@
       responsive
       show-empty
       :items="endorsements"
-      :fields="fields"
+      :fields="getTableFields"
       :current-page="currentPage"
       :per-page="0"
       borderless
@@ -114,6 +114,7 @@
         endorsements: [],
         count: 0,
         fields: [],
+        bakerFields: [],
       };
     },
     computed: {
@@ -125,6 +126,27 @@
       },
       isBlockEndorsements() {
         return this.level > 0;
+      },
+      getTableFields() {
+        if (!this.$i18n.locale) return [];
+        if (this.isBaker) {
+          return [
+            { key: 'level', label: this.$t('endorsementsList.endorsedBlock') },
+            { key: 'txhash', label: this.$t('hashTypes.endorsementHash') },
+            { key: 'blockLevel', label: this.$t('common.includedInBlock') },
+            { key: 'endorser', label: this.$t('common.endorser') },
+            { key: 'slots', label: this.$t('endorsementsList.slots') },
+            { key: 'timestamp', label: this.$t('common.timestamp') },
+          ];
+        } else {
+          return [
+            { key: 'level', label: this.$t('endorsementsList.endorsedBlock') },
+            { key: 'txhash', label: this.$t('hashTypes.endorsementHash') },
+            { key: 'endorser', label: this.$t('common.endorser') },
+            { key: 'slots', label: this.$t('endorsementsList.slots') },
+            { key: 'timestamp', label: this.$t('common.timestamp') },
+          ];
+        }
       },
     },
     watch: {
@@ -183,28 +205,6 @@
         this.count = result.count;
         this.endorsements = result.data;
         this[SET_ENDORSEMENTS_COUNT](this.count);
-
-        this.setTableFields();
-      },
-      setTableFields() {
-        if (this.isBaker) {
-          this.fields = [
-            { key: 'level', label: this.$t('endorsementsList.endorsedBlock') },
-            { key: 'txhash', label: this.$t('hashTypes.endorsementHash') },
-            { key: 'blockLevel', label: this.$t('common.includedInBlock') },
-            { key: 'endorser', label: this.$t('common.endorser') },
-            { key: 'slots', label: this.$t('endorsementsList.slots') },
-            { key: 'timestamp', label: this.$t('common.timestamp') },
-          ];
-        } else {
-          this.fields = [
-            { key: 'level', label: this.$t('endorsementsList.endorsedBlock') },
-            { key: 'txhash', label: this.$t('hashTypes.endorsementHash') },
-            { key: 'endorser', label: this.$t('common.endorser') },
-            { key: 'slots', label: this.$t('endorsementsList.slots') },
-            { key: 'timestamp', label: this.$t('common.timestamp') },
-          ];
-        }
       },
     },
   };

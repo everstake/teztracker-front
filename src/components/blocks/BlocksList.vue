@@ -96,9 +96,15 @@
         default: true,
       },
     },
-    data() {
-      return {
-        fields: [
+    computed: {
+      ...mapState({
+        blocks: (state) => state.blocks.blocks,
+        count: (state) => state.blocks.counts,
+        dateFormat: (state) => state.app.dateFormat,
+      }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
           { key: 'level', label: this.$t('common.blockId') },
           { key: 'timestamp', label: this.$t('common.timestamp') },
           { key: 'baker', label: this.$tc('common.baker', 1) },
@@ -127,15 +133,8 @@
             label: this.$t('numberOf.#OfEndorsements'),
             class: !this.isTableComplete ? 'd-none' : '',
           },
-        ],
-      };
-    },
-    computed: {
-      ...mapState({
-        blocks: (state) => state.blocks.blocks,
-        count: (state) => state.blocks.counts,
-        dateFormat: (state) => state.app.dateFormat,
-      }),
+        ];
+      },
     },
     methods: {
       ...mapMutations('blocks', [SET_BLOCK]),

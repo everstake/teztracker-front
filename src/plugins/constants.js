@@ -34,9 +34,9 @@ const constants = {
     operation: ['o'],
     block: ['B'],
   },
-  DEFAULT_LANGUAGE: 'en',
-  FALLBACK_LANGUAGE: 'en',
-  SUPPORTED_LANGUAGES: ['en', 'ru', 'zh'],
+  DEFAULT_LANGUAGE: process.env.VUE_APP_I18N_LOCALE,
+  FALLBACK_LANGUAGE: process.env.VUE_APP_I18N_FALLBACK_LOCALE,
+  SUPPORTED_LANGUAGES: process.env.VUE_APP_I18N_SUPPORTED_LOCALES.split(','),
 };
 
 Vue.use({

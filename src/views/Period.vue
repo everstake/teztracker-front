@@ -145,26 +145,6 @@
     data() {
       return {
         periodTypes: ['proposal', 'exploration', 'testing', 'promotion'],
-        votersFields: [
-          { key: 'pkh', label: this.$tc('common.baker', 1) },
-          { key: 'rolls', label: this.$t('numberOf.#OfVotes') },
-          { key: 'proposal', label: this.$t('common.vote') },
-          { key: 'blockLevel', label: this.$tc('common.block', 1) },
-          { key: 'timestamp', label: this.$t('common.timestamp') },
-          { key: 'operation', label: this.$t('hashTypes.voteHash') },
-        ],
-        nonVotersFields: [
-          { key: 'pkh', label: this.$tc('common.baker', 1) },
-          { key: 'rolls', label: this.$t('numberOf.#OfVotes') },
-        ],
-        ballotFields: [
-          { key: 'pkh', label: this.$tc('common.baker', 1) },
-          { key: 'rolls', label: this.$t('numberOf.#OfVotes') },
-          { key: 'decision', label: this.$t('common.vote') },
-          { key: 'blockLevel', label: this.$tc('common.block', 1) },
-          { key: 'timestamp', label: this.$t('common.timestamp') },
-          { key: 'operation', label: this.$t('hashTypes.voteHash') },
-        ],
         backgroundColors: {
           proposal: ['#309282', '#9ea0a5'],
           exploration: ['#309282', '#e56968', '#9ea0a5'],
@@ -242,6 +222,35 @@
         proposals: (state) => state.proposals,
         voters: (state) => state.voters,
         nonVoters: (state) => state.nonVoters,
+        votersFields() {
+          if (!this.$i18n.locale) return [];
+          return [
+            { key: 'pkh', label: this.$tc('common.baker', 1) },
+            { key: 'rolls', label: this.$t('numberOf.#OfVotes') },
+            { key: 'proposal', label: this.$t('common.vote') },
+            { key: 'blockLevel', label: this.$tc('common.block', 1) },
+            { key: 'timestamp', label: this.$t('common.timestamp') },
+            { key: 'operation', label: this.$t('hashTypes.voteHash') },
+          ];
+        },
+        nonVotersFields() {
+          if (!this.$i18n.locale) return [];
+          return [
+            { key: 'pkh', label: this.$tc('common.baker', 1) },
+            { key: 'rolls', label: this.$t('numberOf.#OfVotes') },
+          ];
+        },
+        ballotFields() {
+          if (!this.$i18n.locale) return [];
+          return [
+            { key: 'pkh', label: this.$tc('common.baker', 1) },
+            { key: 'rolls', label: this.$t('numberOf.#OfVotes') },
+            { key: 'decision', label: this.$t('common.vote') },
+            { key: 'blockLevel', label: this.$tc('common.block', 1) },
+            { key: 'timestamp', label: this.$t('common.timestamp') },
+            { key: 'operation', label: this.$t('hashTypes.voteHash') },
+          ];
+        },
       }),
       crumbs() {
         return [

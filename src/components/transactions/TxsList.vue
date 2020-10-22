@@ -148,7 +148,15 @@
       return {
         transactions: [],
         count: 0,
-        fields: [
+      };
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
           { key: 'level', label: this.$t('common.blockId') },
           { key: 'txhash', label: this.$t('hashTypes.txHash') },
           {
@@ -172,13 +180,8 @@
             class: !this.isTableComplete ? 'd-none' : '',
           },
           { key: 'timestamp', label: this.$t('common.timestamp') },
-        ],
-      };
-    },
-    computed: {
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
+        ];
+      },
     },
     watch: {
       currentPage: {

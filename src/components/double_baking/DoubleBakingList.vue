@@ -144,7 +144,15 @@
       return {
         double_baking: [],
         count: 0,
-        fields: [
+      };
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
           { key: 'level', label: this.$t('common.blockId') },
           { key: 'txhash', label: this.$t('hashTypes.opHash') },
           { key: 'baker', label: this.$t('dblBakingList.accuser') },
@@ -160,13 +168,8 @@
           },
           { key: 'lost_rewards', label: this.$t('dblBakingList.lostRewards') },
           { key: 'timestamp', label: this.$t('common.timestamp') },
-        ],
-      };
-    },
-    computed: {
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
+        ];
+      },
     },
     watch: {
       currentPage: {

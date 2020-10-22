@@ -88,9 +88,22 @@
       IdentIcon,
     },
     mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
-    data() {
-      return {
-        fields: [
+    computed: {
+      ...mapState({
+        publicBakers: (state) => state.accounts.publicBakers,
+        count: (state) => state.accounts.counts,
+        dateFormat: (state) => state.app.dateFormat,
+      }),
+      bakersFormatted() {
+        if (!this.publicBakers || this.publicBakers.length === 0) return [];
+
+        return this.publicBakers.map((bakerObj) => {
+          return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
+        });
+      },
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
           { key: 'id', label: '#', tdClass: 'ordinal-number', thClass: 'ordinal-number' },
           { key: 'accountId', label: this.$tc('common.baker', 1) },
           {
@@ -131,21 +144,7 @@
           },
           { key: 'activeDelegators', label: this.$t('numberOf.#OfDelegators') },
           { key: 'bakingSince', label: this.$t('common.bakingSince') },
-        ],
-      };
-    },
-    computed: {
-      ...mapState({
-        publicBakers: (state) => state.accounts.publicBakers,
-        count: (state) => state.accounts.counts,
-        dateFormat: (state) => state.app.dateFormat,
-      }),
-      bakersFormatted() {
-        if (!this.publicBakers || this.publicBakers.length === 0) return [];
-
-        return this.publicBakers.map((bakerObj) => {
-          return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
-        });
+        ];
       },
     },
     methods: {

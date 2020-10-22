@@ -1,6 +1,5 @@
 import Vue from 'vue';
-import { constants } from '@/plugins/constants';
-const { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } = constants;
+const { DEFAULT_LANGUAGE, SUPPORTED_LANGUAGES } = Vue.prototype.$constants;
 import i18n from '@/plugins/i18n';
 
 const translation = {

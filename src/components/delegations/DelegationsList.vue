@@ -135,7 +135,15 @@
       return {
         delegations: [],
         count: 0,
-        fields: [
+      };
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
           { key: 'level', label: this.$t('common.blockId') },
           { key: 'txhash', label: this.$t('hashTypes.delegationHash') },
           { key: 'delegationAmount', label: this.$t('common.amountDelegated') },
@@ -143,13 +151,8 @@
           { key: 'to', label: this.$t('common.to') },
           { key: 'fee', label: this.$t('common.fee') },
           { key: 'timestamp', label: this.$t('common.timestamp') },
-        ],
-      };
-    },
-    computed: {
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
+        ];
+      }
     },
     watch: {
       currentPage: {

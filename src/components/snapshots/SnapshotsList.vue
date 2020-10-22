@@ -54,12 +54,17 @@
         perPage: this.$constants.PER_PAGE_SNAPSHOTS,
         snapshots: [],
         count: 0,
-        fields: [
+      };
+    },
+    computed: {
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
           { key: 'cycle', label: this.$tc('common.cycle', 2) },
           { key: 'level', label: this.$t('common.blockId') },
           { key: 'rolls', label: this.$t('common.rolls') },
-        ],
-      };
+        ];
+      },
     },
     watch: {
       currentPage: {
