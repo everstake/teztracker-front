@@ -104,11 +104,11 @@
         fields: [
           { key: 'cycle', label: this.$tc('common.cycle', 1) },
           { key: 'staking_balance', label: this.$t('common.stakingBal') },
-          { key: 'actual_blocks_deposit', label: 'Baking deposit' },
-          { key: 'actual_endorsement_deposit', label: 'Endorsing deposit' },
-          { key: 'expected_total_deposit', label: 'Expected total deposit' },
-          { key: 'actual_total_deposit', label: 'Actual total deposit' },
-          { key: 'available_bond', label: 'Available bond' },
+          { key: 'actual_blocks_deposit', label: this.$t('bakerSingle.bakingDeposit') },
+          { key: 'actual_endorsement_deposit', label: this.$t('bakerSingle.endorsingDeposit') },
+          { key: 'expected_total_deposit', label: this.$t('bakerSingle.expectedTotalDeposit') },
+          { key: 'actual_total_deposit', label: this.$t('bakerSingle.actualTotalDeposit') },
+          { key: 'available_bond', label: this.$t('bakerSingle.availableBond') },
           { key: 'status', label: this.$t('statusTypes.status') },
         ],
         selectedRow: {

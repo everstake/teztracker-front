@@ -125,11 +125,11 @@
                   </b-card-body>
                 </b-tab>
 
-                <b-tab title="Bonds">
+                <b-tab :title="$t('common.bonds')">
                   <b-card-header>
                     <div class="break-word">
                       <h3>
-                        <span class="text">Bonds list</span>
+                        <span class="text">{{ $t('listTypes.bondsList') }}</span>
                       </h3>
                     </div>
                   </b-card-header>

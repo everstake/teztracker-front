@@ -47,7 +47,8 @@
     "assets": "资产",
     "name": "Name",
     "ordinalNumber": "#",
-    "contractName": "合同名称"
+    "contractName": "合同名称",
+    "bonds": "债券"
   },
   "opTypes": {
     "tx": "交易 | 交易",
@@ -83,7 +84,8 @@
     "rewardsList": "报酬列表",
     "topAccountsList": "高级账户列表",
     "assetsList": "资产清单",
-    "holdersList": "持有者名单"
+    "holdersList": "持有者名单",
+    "bondsList": "债券清单"
   },
   "pageTypes": {
     "txsPage": "交易页面",
@@ -158,7 +160,12 @@
     "endorsingHistory": "背书历史",
     "missed": "错过",
     "stolen": "遗失",
-    "avgPriority": "平均优先级"
+    "avgPriority": "平均优先级",
+    "bakingDeposit": "烘焙存款",
+    "endorsingDeposit": "认可存款",
+    "expectedTotalDeposit": "预期的存款总额",
+    "actualTotalDeposit": "实际存款总额",
+    "availableBond": "可用的债券"
   },
   "blockSingle": {
     "bakerFee": "区块链创建者费用",
