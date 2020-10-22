@@ -161,11 +161,11 @@
 		"missed": "Пропущенные",
 		"stolen": "Украденные",
 		"avgPriority": "Средний приоритет",
-		"bakingDeposit": "Baking deposit",
-		"endorsingDeposit": "Endorsing deposit",
-		"expectedTotalDeposit": "Expected total deposit",
-		"actualTotalDeposit": "Actual total deposit",
-		"availableBond": "Available bond"
+		"bakingDeposit": "Депозит бейкинга",
+		"endorsingDeposit": "Депозит заверения",
+		"expectedTotalDeposit": "Общий ожидаемый депозит",
+		"actualTotalDeposit": "Общий фактический депозит",
+		"availableBond": "Неиспользованный залог"
 	},
 	"blockSingle": {
 		"bakerFee": "Комиссия бейкера",
