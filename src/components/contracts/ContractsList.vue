@@ -103,9 +103,17 @@
     },
     mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
     props: ['account'],
-    data() {
-      return {
-        fields: [
+    computed: {
+      ...mapState('accounts', {
+        contracts: (state) => state.contracts,
+        count: (state) => state.counts,
+      }),
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
           { key: 'accountId', label: this.$tc('common.contract', 1) },
           { key: 'manager', label: this.$t('common.manager') },
           { key: 'delegateValue', label: this.$t('common.delegate') },
@@ -116,17 +124,8 @@
             sortDirection: 'desc',
           },
           { key: 'createdAt', label: this.$t('accSingle.created') },
-        ],
-      };
-    },
-    computed: {
-      ...mapState('accounts', {
-        contracts: (state) => state.contracts,
-        count: (state) => state.counts,
-      }),
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
+        ];
+      },
     },
     methods: {
       ...mapMutations('accounts', [SET_CONTRACTS]),

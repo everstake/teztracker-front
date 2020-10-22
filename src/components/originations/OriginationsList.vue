@@ -128,20 +128,23 @@
       return {
         originations: [],
         count: 0,
-        fields: [
-          { key: 'level', label: this.$t('common.blockId') },
-          { key: 'txhash', label: this.$t('hashTypes.originationHash') },
-          { key: 'from', label: this.$t('common.from') },
-          { key: 'to', label: this.$t('common.to') },
-          { key: 'amount', label: this.$t('common.amount') },
-          { key: 'timestamp', label: this.$t('common.timestamp') },
-        ],
       };
     },
     computed: {
       ...mapState('app', {
         dateFormat: (state) => state.dateFormat,
       }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
+          { key: 'level', label: this.$t('common.blockId') },
+          { key: 'txhash', label: this.$t('hashTypes.originationHash') },
+          { key: 'from', label: this.$t('common.from') },
+          { key: 'to', label: this.$t('common.to') },
+          { key: 'amount', label: this.$t('common.amount') },
+          { key: 'timestamp', label: this.$t('common.timestamp') },
+        ];
+      },
     },
     watch: {
       currentPage: {

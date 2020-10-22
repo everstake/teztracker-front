@@ -121,9 +121,17 @@
       NoDataTableCell,
     },
     mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
-    data() {
-      return {
-        fields: [
+    computed: {
+      ...mapState('accounts', {
+        accounts: (state) => state.accounts,
+        count: (state) => state.counts,
+      }),
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
           { key: 'accountId', label: this.$tc('common.acc', 1) },
           {
             key: 'balance',
@@ -133,17 +141,8 @@
           },
           { key: 'delegateValue', label: this.$t('common.delegate') },
           { key: 'createdAt', label: this.$t('accSingle.created') },
-        ],
-      };
-    },
-    computed: {
-      ...mapState('accounts', {
-        accounts: (state) => state.accounts,
-        count: (state) => state.counts,
-      }),
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
+        ];
+      }
     },
     methods: {
       ...mapMutations('accounts', [SET_ACCOUNTS]),
