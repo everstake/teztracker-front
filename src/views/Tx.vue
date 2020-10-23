@@ -74,16 +74,28 @@
                       :empty-text="$t('common.noData')"
                     >
                       <template slot="from" slot-scope="row">
-                        <b-link
-                          :to="{
-                            name: 'account',
-                            params: { account: row.item.source },
-                          }"
-                        >
-                          {{
-                            row.item.sourceName || row.item.source | longhash
-                          }}
-                        </b-link>
+                        <span class=" d-flex align-items-center">
+                          <IdentIcon :seed="row.item.source" />
+
+                          <b-link
+                            :to="{
+                              name: 'account',
+                              params: { account: row.item.source },
+                            }"
+                          >
+                            <template v-if="row.item.sourceName">
+                              {{ row.item.sourceName }}
+                            </template>
+                            <template v-else>
+                              {{ row.item.source | longhash }}
+                            </template>
+                          </b-link>
+
+                          <BtnCopy
+                            v-if="!row.item.sourceName"
+                            :text-to-copy="row.item.source"
+                          />
+                        </span>
                       </template>
 
                       <template slot="to" slot-scope="row">
@@ -96,12 +108,25 @@
                             },
                           }"
                         >
-                          {{
-                            row.item.destinationName ||
+                          <template
+                            v-if="
+                              row.item.destinationName || row.item.delegateName
+                            "
+                          >
+                            {{
+                              row.item.destinationName || row.item.delegateName
+                            }}
+                          </template>
+                          <template
+                            v-else-if="
+                              row.item.destination || row.item.delegate
+                            "
+                          >
+                            {{
                               row.item.destination ||
-                              row.item.delegateName ||
-                              row.item.delegate | longhash
-                          }}
+                                row.item.delegate | longhash
+                            }}
+                          </template>
                         </b-link>
                       </template>
                       <template slot="amount" slot-scope="row">
@@ -135,9 +160,9 @@
                     </b-table>
 
                     <Pagination
-                      @change="$_handleCurrentPageChange"
                       :total-rows="count"
                       :per-page="perPage"
+                      @change="$_handleCurrentPageChange"
                     />
                   </b-card-body>
                 </b-tab>
@@ -165,6 +190,8 @@
 
 <script>
   import Breadcrumbs from '../components/partials/Breadcrumbs';
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import TxSingle from '../components/transactions/TxSingle';
   import { mapState } from 'vuex';
   import Pagination from '../components/partials/Pagination';
@@ -177,6 +204,8 @@
     name: 'Tx',
     components: {
       Breadcrumbs,
+      IdentIcon,
+      BtnCopy,
       TxSingle,
       Pagination,
       DoubleOperationsSingle,
@@ -297,9 +326,6 @@
         );
       },
     },
-    async created() {
-      await this.reload();
-    },
     watch: {
       currentPage: {
         async handler(value) {
@@ -312,6 +338,9 @@
           await this.reload();
         },
       },
+    },
+    async created() {
+      await this.reload();
     },
     methods: {
       async reload(page = 1) {

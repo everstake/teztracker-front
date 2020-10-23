@@ -2,6 +2,7 @@ import Vue from 'vue';
 import http from './http.service';
 import querystring from 'querystring';
 import { state } from '@/store/modules/app.module';
+import handleError from '@/utils/errorsHandler';
 
 function formatURL(api, path, query) {
   return `${api}${path}?${querystring.stringify(query)}`;
@@ -19,6 +20,7 @@ async function get(api, path, query, isStandard = true) {
     );
   } catch (e) {
     data = e.response;
+    handleError(e);
   }
   const result = { data: data.data, status: data.status };
   if (data.headers[Vue.prototype.$constants.COUNT_HEADER]) {

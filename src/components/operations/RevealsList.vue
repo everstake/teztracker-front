@@ -52,9 +52,9 @@
         },
       },
     },
-    data() {
-      return {
-        fields: [
+    computed: {
+      fields() {
+        return [
           { key: 'from', label: this.$t('common.from') },
           {
             key: 'publicKey',
@@ -65,8 +65,8 @@
           { key: 'fee', label: this.$t('common.fee') },
           { key: 'gas', label: this.$t('txPage.gasLimit') },
           { key: 'storage', label: this.$t('txPage.storageLimit') },
-        ],
-      };
+        ];
+      },
     },
   };
 </script>

@@ -246,7 +246,9 @@
   },
   "footer": {
     "allRights": "版权所有",
-    "contactUs": "联系我们"
+    "contactUs": "联系我们",
+    "backendRepo": "Backend repo",
+    "frontendRepo": "Frontend repo"
   },
   "dateSwitcher": {
     "usFormat": "我们",
@@ -355,5 +357,12 @@
     "title": "Maintenance",
     "p1": "Sorry, we're currently down for maintenance.",
     "p2": "We'll be back up shortly. Please, return to us a bit later."
+  },
+  "errorsNotifications": {
+    "error": "Error",
+    "404": "Not found",
+    "400": "Bad request",
+    "500": "Internal error",
+    "ERR_SERVICE": "Service error"
   }
 }

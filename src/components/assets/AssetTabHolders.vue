@@ -95,7 +95,14 @@
       return {
         transactions: [],
         count: 0,
-        fields: [
+      };
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+      fields() {
+        return [
           {
             key: 'balance',
             label: this.$t('common.balance'),
@@ -104,13 +111,8 @@
             key: 'address',
             label: this.$t('bakerSingle.address'),
           },
-        ],
-      };
-    },
-    computed: {
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
+        ];
+      },
     },
     watch: {
       currentPage: {

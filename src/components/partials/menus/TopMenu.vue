@@ -125,7 +125,7 @@
             <b-dropdown-item
               :to="{ name: 'assets', params: { network: currentNetwork } }"
             >
-              {{ $t("common.assets") }}
+              {{ $t('common.assets') }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown
@@ -217,9 +217,7 @@
         deep: true,
         immediate: true,
         handler(to) {
-          if (to.name === 'network') {
-            this.isSearchVisible = false;
-          }
+          this.isSearchVisible = to.name !== 'network';
         },
       },
     },
