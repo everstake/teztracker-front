@@ -1,3 +1,12 @@
+body {
+  ::selection {
+    background: #b2e6dd; /* WebKit/Blink Browsers */
+  }
+  ::-moz-selection {
+    background: #b2e6dd; /* Gecko Browsers */
+  }
+}
+
 .tz_link a {
   color: $color-brand;
   text-transform: capitalize;
@@ -15,7 +24,6 @@
   text-transform: uppercase;
   color: $color-grey;
 }
-
 
 .font {
   &--mini {
