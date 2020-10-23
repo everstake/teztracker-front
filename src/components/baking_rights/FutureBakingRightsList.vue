@@ -261,18 +261,37 @@
         perPage: this.$constants.PER_PAGE,
         blocks_in_row: this.$constants.BLOCKS_IN_ROW,
         future_baking_rights: [],
-        fields: [
-          {
-            key: 'priority',
-            label: this.$t('common.priority'),
-          },
-        ],
+        newFields: [],
       };
     },
     computed: {
       ...mapState('blocks', {
         count: (state) => state.counts,
       }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        const fieldsUpdated = this.newFields.length > 0;
+        if (fieldsUpdated) {
+          return this.newFields.map((field, index) => {
+            let label;
+
+            if (index === 0) {
+              label = `${this.$t('common.priority')}`;
+            } else {
+              label = `${this.$tc('common.block', 1)} ${field.label}`;
+            }
+
+            return { ...field, label };
+          });
+        } else {
+          return [
+            {
+              key: 'priority',
+              label: this.$t('common.priority'),
+            },
+          ];
+        }
+      },
     },
     watch: {
       currentPage: {
@@ -324,7 +343,7 @@
             }
             fields.push({
               key: `block_${i}`,
-              label: `${this.$tc('common.block', 1)} ${levels[i]}`,
+              label: levels[i],
             });
             const blockId = levels[i];
             const block = blocks.find(
@@ -337,7 +356,7 @@
           }
           result.push(row);
         }
-        this.fields = fields;
+        this.newFields = fields;
         this.future_baking_rights = result;
       },
 

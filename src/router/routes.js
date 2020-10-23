@@ -1,3 +1,6 @@
+import { translation } from '@/plugins/translation';
+import { state as applicationState } from '@/store/modules/app.module';
+
 const PageContentContainer = () => import('@/layouts/PageContentContainer');
 const Index = () => import('../views/Index');
 
@@ -69,10 +72,20 @@ export default [
   {
     path: '/',
     name: 'index',
-    redirect: { name: 'network', params: { network: 'mainnet' } },
+    redirect() {
+      const userLanguage = translation.getUserLang().langNoISO;
+      return `${userLanguage}/${applicationState.network}`;
+    },
   },
   {
-    path: '/:network',
+    path: '/:language',
+    redirect() {
+      const userLanguage = translation.getUserLang().langNoISO;
+      return `${userLanguage}/${applicationState.network}`;
+    },
+  },
+  {
+    path: '/:language/:network',
     component: PageContentContainer,
     children: [
       {
@@ -80,7 +93,6 @@ export default [
         name: 'network',
         component: Index,
       },
-
       /* Blocks group */
       {
         name: 'blocks',
@@ -205,7 +217,7 @@ export default [
   },
   {
     name: 'mainnet',
-    path: '/mainnet',
+    path: '/:language/mainnet',
     component: PageContentContainer,
     children: [
       /* Governance group */

@@ -75,18 +75,6 @@
     data() {
       return {
         currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-        fields: [
-          { key: 'id', label: this.$t('common.ordinalNumber') },
-          { key: 'account_id', label: this.$t('common.contractName') },
-          { key: 'manager', label: this.$t('common.manager') },
-          {
-            key: 'balance',
-            label: this.$t('common.balance'),
-            sortable: true,
-            sortDirection: 'desc',
-          },
-          { key: 'created_at', label: this.$t('accSingle.created') },
-        ],
       };
     },
     computed: {
@@ -97,6 +85,21 @@
       ...mapState('app', {
         dateFormat: (state) => state.dateFormat,
       }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
+          { key: 'id', label: this.$t('common.ordinalNumber') },
+          { key: 'account_id', label: this.$t('common.contractName') },
+          { key: 'manager', label: this.$t('common.manager') },
+          {
+            key: 'balance',
+            label: this.$t('common.balance'),
+            sortable: true,
+            sortDirection: 'desc',
+          },
+          { key: 'created_at', label: this.$t('accSingle.created') },
+        ];
+      }
     },
     methods: {
       getAssetCurrency(asset) {

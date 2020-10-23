@@ -25,15 +25,18 @@ const constants = {
   BLOCKS_IN_CYCLE_TESTNET: 2048, // twice lesser than in mainnet
   CYCLES_IN_VOTING_PERIOD: 8,
   API_BASE_URLS: {
-    mainnet: process.env.VUE_APP_ROOT_API + "/v2/data/tezos/mainnet/",
-    carthagenet: process.env.VUE_APP_ROOT_API + "/v2/data/tezos/carthagenet/",
-    mainnetWithoutPlatform: process.env.VUE_APP_ROOT_API + "/v2/data/mainnet/"
+    mainnet: process.env.VUE_APP_ROOT_API + '/v2/data/tezos/mainnet/',
+    carthagenet: process.env.VUE_APP_ROOT_API + '/v2/data/tezos/carthagenet/',
+    mainnetWithoutPlatform: process.env.VUE_APP_ROOT_API + '/v2/data/mainnet/',
   },
   SEARCH_PREFIXES: {
     account: ['KT', 'tz'],
     operation: ['o'],
     block: ['B'],
   },
+  DEFAULT_LANGUAGE: process.env.VUE_APP_I18N_LOCALE,
+  FALLBACK_LANGUAGE: process.env.VUE_APP_I18N_FALLBACK_LOCALE,
+  SUPPORTED_LANGUAGES: process.env.VUE_APP_I18N_SUPPORTED_LOCALES.split(','),
 };
 
 Vue.use({
@@ -41,3 +44,5 @@ Vue.use({
     Vue.prototype.$constants = constants;
   },
 });
+
+export { constants };

@@ -152,7 +152,15 @@
         topAccounts: [],
         count: 0,
         perPage: 200,
-        fields: [
+      };
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
           { key: 'accountId', label: this.$tc('common.acc', 1) },
           {
             key: 'balance',
@@ -163,13 +171,8 @@
           { key: 'is_baker', label: this.$t('common.type') },
           { key: 'delegateValue', label: this.$t('common.delegate') },
           { key: 'createdAt', label: this.$t('accSingle.created') },
-        ],
-      };
-    },
-    computed: {
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
+        ];
+      }
     },
     watch: {
       currentPage: {
