@@ -145,14 +145,6 @@
     },
     data() {
       return {
-        fields: [
-          { key: 'source', label: this.$t('common.from') },
-          { key: 'destination', label: this.$t('common.to') },
-          { key: 'amount', label: this.$t('common.amount') },
-          { key: 'fee', label: this.$t('common.fee') },
-          { key: 'operationGroupHash', label: this.$t('hashTypes.opHash') },
-          { key: 'kind', label: this.$t('common.opType') },
-        ],
         operations: [],
         count: 0,
         operationTypes: [
@@ -175,6 +167,16 @@
       ...mapGetters('app', {
         currentNetwork: 'getAppNetwork',
       }),
+      fields() {
+        return [
+          { key: 'source', label: this.$t('common.from') },
+          { key: 'destination', label: this.$t('common.to') },
+          { key: 'amount', label: this.$t('common.amount') },
+          { key: 'fee', label: this.$t('common.fee') },
+          { key: 'operationGroupHash', label: this.$t('hashTypes.opHash') },
+          { key: 'kind', label: this.$t('common.opType') },
+        ];
+      },
     },
     watch: {
       blockHash(value) {

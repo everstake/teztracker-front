@@ -101,16 +101,6 @@
       return {
         currentPage: this.$constants.INITIAL_CURRENT_PAGE,
         perPage: 20,
-        fields: [
-          { key: 'cycle', label: this.$tc('common.cycle', 1) },
-          { key: 'staking_balance', label: this.$t('common.stakingBal') },
-          { key: 'actual_blocks_deposit', label: this.$t('bakerSingle.bakingDeposit') },
-          { key: 'actual_endorsement_deposit', label: this.$t('bakerSingle.endorsingDeposit') },
-          { key: 'expected_total_deposit', label: this.$t('bakerSingle.expectedTotalDeposit') },
-          { key: 'actual_total_deposit', label: this.$t('bakerSingle.actualTotalDeposit') },
-          { key: 'available_bond', label: this.$t('bakerSingle.availableBond') },
-          { key: 'status', label: this.$t('statusTypes.status') },
-        ],
         selectedRow: {
           data: null,
           count: 0,
@@ -126,6 +116,33 @@
       ...mapState('app', {
         dateFormat: (state) => state.dateFormat,
       }),
+      fields() {
+        return [
+          { key: 'cycle', label: this.$tc('common.cycle', 1) },
+          { key: 'staking_balance', label: this.$t('common.stakingBal') },
+          {
+            key: 'actual_blocks_deposit',
+            label: this.$t('bakerSingle.bakingDeposit'),
+          },
+          {
+            key: 'actual_endorsement_deposit',
+            label: this.$t('bakerSingle.endorsingDeposit'),
+          },
+          {
+            key: 'expected_total_deposit',
+            label: this.$t('bakerSingle.expectedTotalDeposit'),
+          },
+          {
+            key: 'actual_total_deposit',
+            label: this.$t('bakerSingle.actualTotalDeposit'),
+          },
+          {
+            key: 'available_bond',
+            label: this.$t('bakerSingle.availableBond'),
+          },
+          { key: 'status', label: this.$t('statusTypes.status') },
+        ];
+      },
     },
     watch: {
       currentPage: {

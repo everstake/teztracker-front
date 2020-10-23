@@ -56,13 +56,23 @@
     data() {
       return {
         protocols: [],
-        fields: [
+      };
+    },
+    computed: {
+      ...mapState('period', {
+        protocolsCount: (state) => state.counts.protocols,
+      }),
+      isPaginationNeeded() {
+        return this.protocolsCount > 10;
+      },
+      fields() {
+        return [
           { key: 'id', label: this.$tc('protocolsList.protocol', 1) },
           { key: 'hash', label: this.$t('hashTypes.hash') },
           { key: 'startBlock', label: this.$t('protocolsList.startingBlock') },
           { key: 'endBlock', label: this.$t('protocolsList.endingBlock') },
-        ],
-      };
+        ];
+      },
     },
     watch: {
       currentPage: {
@@ -91,14 +101,6 @@
           .reverse();
         this[SET_PROTOCOLS_COUNT](data.data.length);
         this.protocols = result;
-      },
-    },
-    computed: {
-      ...mapState('period', {
-        protocolsCount: (state) => state.counts.protocols,
-      }),
-      isPaginationNeeded() {
-        return this.protocolsCount > 10;
       },
     },
   };

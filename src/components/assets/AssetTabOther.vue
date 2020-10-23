@@ -95,7 +95,14 @@
       return {
         transactions: [],
         count: 0,
-        fields: [
+      };
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+      fields() {
+        return [
           {
             key: 'type',
             label: this.$t('common.type'),
@@ -125,13 +132,8 @@
             label: this.$t('txPage.storageLimit'),
           },
           { key: 'timestamp', label: this.$t('common.timestamp') },
-        ],
-      };
-    },
-    computed: {
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
+        ];
+      },
     },
     watch: {
       currentPage: {

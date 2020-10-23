@@ -65,18 +65,20 @@
       return {
         operations: [],
         count: 0,
-        fields: [
-          { key: 'blockLevel', label: this.$t('common.blockId') },
-          { key: 'blockHash', label: this.$t('hashTypes.hash') },
-          { key: 'kind', label: this.$t('common.opType') },
-          { key: 'timestamp', label: this.$t('common.timestamp') },
-        ],
       };
     },
     computed: {
       ...mapState('app', {
         dateFormat: (state) => state.dateFormat,
       }),
+      fields() {
+        return [
+          { key: 'blockLevel', label: this.$t('common.blockId') },
+          { key: 'blockHash', label: this.$t('hashTypes.hash') },
+          { key: 'kind', label: this.$t('common.opType') },
+          { key: 'timestamp', label: this.$t('common.timestamp') },
+        ];
+      },
     },
     watch: {
       currentPage: {
