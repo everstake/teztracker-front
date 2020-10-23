@@ -246,7 +246,9 @@
 	},
 	"footer": {
 		"allRights": "Все права защищены",
-		"contactUs": "Свяжитесь с нами"
+		"contactUs": "Свяжитесь с нами",
+		"backendRepo": "Репозиторий бэкенда",
+		"frontendRepo": "Репозиторий фронтенда"
 	},
 	"dateSwitcher": {
 		"usFormat": "США",
@@ -355,5 +357,12 @@
 		"title": "Maintenance",
 		"p1": "Sorry, we're currently down for maintenance.",
 		"p2": "We'll be back up shortly. Please, return to us a bit later."
+	},
+	"errorsNotifications": {
+		"error": "Error",
+		"404": "Not found",
+		"400": "Bad request",
+		"500": "Internal error",
+		"ERR_SERVICE": "Service error"
 	}
 }

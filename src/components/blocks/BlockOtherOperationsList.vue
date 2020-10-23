@@ -66,9 +66,9 @@
             </template>
             <template v-else>
               {{
-                row.item.destination | longhash() ||
-                  row.item.delegate | longhash() ||
-                  row.item.pkh | longhash()
+                row.item.destination ||
+                  row.item.delegate ||
+                  row.item.pkh | longhash
               }}
             </template>
           </b-link>
