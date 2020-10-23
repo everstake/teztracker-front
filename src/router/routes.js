@@ -63,6 +63,8 @@ const ChartsBaking = () => import('../views/chart-views/ChartsBaking.vue');
 const ChartsGeneral = () => import('../views/chart-views/ChartsGeneral.vue');
 /* Charts group end */
 
+const Glossary = () => import('../views/Glossary.vue');
+
 // Errors
 const Maintenance = () => import('../views/Maintenance.vue');
 const NotFound = () => import('../views/errors/NotFound.vue');
@@ -202,6 +204,8 @@ export default [
       { path: 'charts/baking', redirect: { name: 'baking_charts' } },
       { path: 'charts/general', redirect: { name: 'general_charts' } },
       /* Charts group end */
+
+      { path: 'glossary', name: 'glossary', component: Glossary },
 
       /* Errors group */
       {

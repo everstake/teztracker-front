@@ -237,7 +237,8 @@
     "operations": "Operations",
     "governance": "Governance",
     "charts": "Charts",
-    "general": "General"
+    "general": "General",
+    "resources": "Resources"
   },
   "nets": {
     "mainnet": "Mainnet",
@@ -306,7 +307,7 @@
   },
   "errPages": {
     "page": "Page",
-    "pageNotFound":"Page is not found",
+    "pageNotFound": "Page is not found",
     "smthWrong": "Something went wrong"
   },
   "accPage": {
@@ -357,6 +358,127 @@
     "title": "Maintenance",
     "p1": "Sorry, we're currently down for maintenance.",
     "p2": "We'll be back up shortly. Please, return to us a bit later."
+  },
+  "glossary": {
+    "title": "Glossary",
+    "items": {
+      "account": {
+        "term": "Account",
+        "definition": "an account is a unique identifier within protocol. Accounts can be originated or implicit. Each account is associated with a balance (an amount of tez available)."
+      },
+      "accuser": {
+        "term": "Accuser",
+        "definition": "if two endorsements are made for the same slot or two blocks at the same height by a delegate, the evidence can be collected by an accuser and included in a block for a period of PRESERVED_CYCLES, including the current cycle."
+      },
+      "baker": {
+        "term": "Baker",
+        "definition": "Tezos term for a validator or block producer."
+      },
+      "context": {
+        "term": "Context",
+        "definition": "the state of the blockchain. The context is defined by the Economic Protocol and typically includes information such as “this account is credited with this many tez” and “this is the code for that smart contract.” The Context is modified by Operations."
+      },
+      "cycle": {
+        "term": "Cycle",
+        "definition": "cycles are used as a unit of ‘time’ in Tezos. A cycle is a set of consecutive 4096 blocks. E.g., cycle 12 started at block height 49152 and ended at block height 53248."
+      },
+      "delegate": {
+        "term": "Delegate",
+        "definition": "another term for a public baker. Delegate receives delegations from users and pays out a share of rewards to them."
+      },
+      "delegator": {
+        "term": "Delegator",
+        "definition": "a user who delegates the rights to their tokens to a delegate/baker and in return receives a portion of the reward."
+      },
+      "delegation": {
+        "term": "Delegation",
+        "definition": "a process of providing the rights to one’s tokens to the public baker. Note that this is different from a transaction and the funds never leave one’s wallet when delegating."
+      },
+      "doubleBakingEndorsement": {
+        "term": "Double baking/endorsement",
+        "definition": "a process of producing/endorsing(validating) a block of the same block level twice. This is considered a malicious behaviour and is punishable by slashing the baker deposits."
+      },
+      "endorsement": {
+        "term": "Endorsement",
+        "definition": "the process of validating the produced block. Each block contains 32 endorsement slots, some bakers can have more than one endorsement within the same block."
+      },
+      "fitness": {
+        "term": "Fitness (other names Score, Weight)",
+        "definition": "the fitness is a metric used to compare contexts. For example, when several blocks claim to be heads of the chain, their context’s fitness are compared. The block with the highest fitness is selected as the head of the chain."
+      },
+      "gas": {
+        "term": "Gas",
+        "definition": "a measure of the number of elementary operations performed during the execution of a smart contract. Gas is used to measure how much computing power is used to execute a smart contract."
+      },
+      "hash": {
+        "term": "Hash",
+        "definition": "a hash is a function that converts one value to another and is used as a unique identifier."
+      },
+      "head": {
+        "term": "Head",
+        "definition": "current block level of the main chain."
+      },
+      "implicitAcc": {
+        "term": "Implicit account",
+        "definition": "an account that is linked to a public key. Unlike a smart contract, an Implicit account cannot include a script and it cannot reject incoming transactions."
+      },
+      "level": {
+        "term": "Level (block level)",
+        "definition": "aka block height, is the total amount of blocks included into the chain."
+      },
+      "michelson": {
+        "term": "Michelson",
+        "definition": "Tezos built-in language used by a smart contract."
+      },
+      "node": {
+        "term": "Node",
+        "definition": "a peer in the P2P network. It maintains a local state and propagates blocks and operations."
+      },
+      "nonceRevelation": {
+        "term": "Nonce revelation",
+        "definition": "is an operation performed by a baker to reveal the committed hashed number added to a block in a blockchain. This is done as a security and a spam prevention measure."
+      },
+      "priority": {
+        "term": "Priority",
+        "definition": "a rank of different baking rights. Each rank corresponds to a time span. A baker with baking rights at a given priority is only allowed to bake during the priority’s corresponding time span. Baking outside of one’s designated priority, results in an invalid block."
+      },
+      "operation": {
+        "term": "Operation",
+        "definition": "transactions, accusations, activations, delegations, endorsements and originations."
+      },
+      "origination": {
+        "term": "Origination",
+        "definition": "an operation to create a smart contract."
+      },
+      "randomSeed": {
+        "term": "Random seed",
+        "definition": "a number computed from information already found on the blockchain and used to determine baking and endorsement rights."
+      },
+      "roll": {
+        "term": "Roll",
+        "definition": "an amount of tez (e.g., 8000ꜩ) serving as a unit to determine delegates’ baking rights in a cycle. A delegate with twice as many rolls as another will be given twice as many rights to bake."
+      },
+      "shell": {
+        "term": "Shell",
+        "definition": "a part of the blockchain protocol which acts as an interface between a gossip network and the protocol. The network shell works by maintaining the best chain known to the client."
+      },
+      "snapshot": {
+        "term": "Snapshot",
+        "definition": "a representation of the state of the network at a particular point in time with all the necessary data. Snapshots allow bootstrapping a node within a few minutes. Snapshots are also used for assigning baking and endorsement rights to the bakers."
+      },
+      "smartContract": {
+        "term": "Smart contract",
+        "definition": "an account which is associated with a Michelson script. They are created with an explicit origination operation and are therefore sometimes called originated accounts. The address of a smart contract always starts with the letters KT1."
+      },
+      "tez": {
+        "term": "Tez",
+        "definition": "aka XTZ aka ꜩ are the native Tezos tokens."
+      },
+      "transaction": {
+        "term": "Transaction",
+        "definition": "a transfer between two accounts or an operation to run the code of a smart contract."
+      }
+    }
   },
   "errorsNotifications": {
     "error": "Error",
