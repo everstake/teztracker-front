@@ -20,21 +20,26 @@
           <span v-if="row.item.name">
             {{ row.item.name }}
           </span>
-          <span v-else>{{ row.item.account_id | longhash(15) }}</span>
+          <span v-else>{{ row.item.account_id | longhash }}</span>
         </router-link>
       </template>
       <template slot="manager" slot-scope="row">
-        <b-link
-          v-if="row.item.manager"
-          :to="{ name: 'account', params: { account: row.item.manager } }"
-        >
-          <span>{{ row.item.manager | longhash(15) }}</span>
-        </b-link>
-        <span v-else>----</span>
+        <span v-if="row.item.manager" class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.manager" />
+
+          <b-link
+            :to="{ name: 'account', params: { account: row.item.manager } }"
+          >
+            <span>{{ row.item.manager | longhash }}</span>
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.manager" />
+        </span>
+        <NoDataTableCell v-else />
       </template>
       <template slot="name" slot-scope="row">
         <span v-if="row.item.name">{{ row.item.name }}</span>
-        <span v-else>----</span>
+        <NoDataTableCell v-else />
       </template>
       <template slot="balance" slot-scope="row">
         <span>{{
@@ -59,6 +64,9 @@
   import { mapMutations, mapState } from 'vuex';
   import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import setPerPage from '@/mixins/setPerPage';
   import { SET_ASSETS } from '@/store/mutations.types';
   import fetchListMixin from '@/mixins/fetchListMixin';
@@ -69,6 +77,9 @@
     components: {
       PerPageSelect,
       Pagination,
+      BtnCopy,
+      IdentIcon,
+      NoDataTableCell,
     },
     mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
     props: ['account'],
@@ -99,7 +110,7 @@
           },
           { key: 'created_at', label: this.$t('accSingle.created') },
         ];
-      }
+      },
     },
     methods: {
       getAssetCurrency(asset) {

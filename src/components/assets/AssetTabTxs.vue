@@ -15,42 +15,40 @@
       class="transactions-table"
       :tbody-tr-class="$_defineRowClass"
     >
-      <template slot="txhash" slot-scope="row">
-        <b-link
-          :to="{ name: 'tx', params: { txhash: row.item.operationGroupHash } }"
-        >
-          {{ row.item.operationGroupHash | longhash(35) }}
-        </b-link>
+      <template slot="from" slot-scope="row">
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.from" />
+
+          <b-link :to="{ name: 'account', params: { account: row.item.from } }">
+            {{ row.item.from | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.from" />
+        </span>
       </template>
 
-      <template slot="level" slot-scope="row">
-        <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
-          {{ row.item.blockLevel | formatInteger }}
-        </b-link>
+      <template slot="to" slot-scope="row">
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.to" />
+
+          <b-link :to="{ name: 'account', params: { account: row.item.to } }">
+            {{ row.item.to | longhash }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.to" />
+        </span>
+      </template>
+
+      <template slot="amount" slot-scope="row">
+        {{ row.item.amount | currencyPrecision(currency, precision) }}
+      </template>
+
+      <template slot="fee" slot-scope="row">
+        {{ row.item.fee | tezos }}
       </template>
 
       <template slot="timestamp" slot-scope="row">
         {{ row.item.timestamp | timeformat(dateFormat) }}
-      </template>
-
-      <template slot="from" slot-scope="row">
-        <b-link :to="{ name: 'account', params: { account: row.item.from } }">
-          <div>
-            {{ row.item.from | longhash(15) }}
-          </div>
-        </b-link>
-      </template>
-
-      <template slot="to" slot-scope="row">
-        <b-link :to="{ name: 'account', params: { account: row.item.to } }">
-          {{ row.item.to | longhash(15) }}
-        </b-link>
-      </template>
-      <template slot="amount" slot-scope="row">
-        {{ row.item.amount | currencyPrecision(currency, precision) }}
-      </template>
-      <template slot="fee" slot-scope="row">
-        {{ row.item.fee | tezos }}
       </template>
     </b-table>
 
@@ -66,6 +64,8 @@
   import { mapState } from 'vuex';
   import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
   import defineRowClass from '@/mixins/defineRowClass';
@@ -75,6 +75,8 @@
     components: {
       PerPageSelect,
       Pagination,
+      BtnCopy,
+      IdentIcon,
     },
     mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
     props: {
