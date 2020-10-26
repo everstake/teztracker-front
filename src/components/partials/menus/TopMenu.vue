@@ -151,6 +151,11 @@
               {{ $t('common.baking') }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
+          <b-nav-item-dropdown :text="$t('header.resources')">
+            <b-dropdown-item :to="{ name: 'glossary' }">
+              {{ $t('glossary.title') }}
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -162,9 +167,9 @@
           >
             <b-dropdown-item
               v-for="network in networkList"
-              @click="changeRouteNetwork(network)"
               class="pointer"
               :key="generateKey()"
+              @click="changeRouteNetwork(network)"
             >
               {{ $t(`nets.${network}`) }}
             </b-dropdown-item>
@@ -175,7 +180,7 @@
             </template>
             <b-dropdown-text>
               {{ $t('header.dateFormat') }}
-              <DateFormatSwitcher class="pointer" :isSwitchOnly="true" />
+              <DateFormatSwitcher class="pointer" :is-switch-only="true" />
             </b-dropdown-text>
           </b-nav-item-dropdown>
           <LanguageSwitcher />
@@ -212,15 +217,6 @@
         isSearchVisible: true,
       };
     },
-    watch: {
-      $route: {
-        deep: true,
-        immediate: true,
-        handler(to) {
-          this.isSearchVisible = to.name !== 'network';
-        },
-      },
-    },
     computed: {
       ...mapState('app', {
         network: (state) => state.network,
@@ -230,6 +226,15 @@
         networkList: 'getAppNetworkList',
         networkChangable: 'getAppNetworkChangable',
       }),
+    },
+    watch: {
+      $route: {
+        deep: true,
+        immediate: true,
+        handler(to) {
+          this.isSearchVisible = to.name !== 'network';
+        },
+      },
     },
     methods: {
       ...mapMutations('app', [SET_APP_NETWORK]),
