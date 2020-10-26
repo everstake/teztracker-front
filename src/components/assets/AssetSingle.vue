@@ -3,13 +3,17 @@
     <b-col lg="12">
       <b-card no-body>
         <b-card-header>
-          <h3 id="card-title" class="card__title">
-            <span class="text card-title__text">
+          <h3>
+            <span class="text">
               <template v-if="account.name">
                 {{ account.name }}
               </template>
               <template v-else>
-                {{ hash }}
+                <span class="d-flex align-items-center">
+                  <IdentIcon :seed="hash" />
+                  {{ hash }}
+                  <BtnCopy :text-to-copy="hash" />
+                </span>
               </template>
             </span>
           </h3>
@@ -32,23 +36,15 @@
                   <b-col lg="4" class="label">
                     {{ $t('bakerSingle.address') }}
                   </b-col>
-                  <b-col lg="8" class="text-accent card__pointer">
-                    <span id="hash" class="hash" @click="copyToClipboard()">
-                      <span ref="textToCopy">
-                        {{ hash }}
-                      </span>
-                      <span class="icon">
-                        <font-awesome-icon
-                          class="icon-primary"
-                          :icon="['fas', 'copy']"
-                        />
-                      </span>
+                  <b-col lg="8" class="text-accent">
+                    <span class="d-flex align-items-center text-break">
+                      <IdentIcon :seed="hash" />
+                      {{ hash }}
+                      <BtnCopy :text-to-copy="hash" />
                     </span>
-                    <b-tooltip ref="tooltip" triggers="hover" target="hash">
-                      {{ $t('common.copyToClipboard') }}
-                    </b-tooltip>
                   </b-col>
                 </b-row>
+
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
                     {{ $t('accSingle.created') }}
@@ -68,6 +64,7 @@
                   <b-col lg="4" class="label">
                     {{ $t('common.balance') }}
                   </b-col>
+
                   <b-col lg="6" class="text-accent">
                     {{
                       account.balance
@@ -88,12 +85,18 @@
 </template>
 
 <script>
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import convert from '../../mixins/convert';
   import { GET_APP_INFO } from '@/store/actions.types';
   import { mapState, mapActions } from 'vuex';
 
   export default {
     name: 'AssetSingle',
+    components: {
+      IdentIcon,
+      BtnCopy,
+    },
     mixins: [convert],
     props: {
       hash: {
@@ -141,19 +144,6 @@
           this.baker = false;
         }
       },
-      copyToClipboard() {
-        const selection = window.getSelection();
-        const range = window.document.createRange();
-        selection.removeAllRanges();
-        range.selectNode(this.$refs.textToCopy);
-        selection.addRange(range);
-
-        try {
-          document.execCommand('copy');
-        } catch (err) {
-          selection.removeAllRanges();
-        }
-      },
       getAssetCurrency(asset) {
         if (!asset) return 'ꜩ';
 
@@ -179,46 +169,3 @@
     },
   };
 </script>
-
-<style lang="scss" scoped>
-  .card-header .title {
-    word-break: break-word;
-  }
-
-  .card__title {
-    display: inline-flex;
-    align-items: center;
-    padding-right: 0 !important; /* outweigh selector cascade from public styles */
-  }
-
-  .icon-primary {
-    color: $color-brand;
-  }
-
-  .hash {
-    position: relative;
-  }
-
-  .icon {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: -15px;
-    margin-left: 10px;
-    font-size: 12px;
-    color: #309282;
-  }
-
-  .label {
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 16px;
-    color: #9ea0a5;
-  }
-
-  .stats-row {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-</style>
