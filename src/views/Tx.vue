@@ -329,7 +329,6 @@
     watch: {
       currentPage: {
         async handler(value) {
-          this.transactions = [];
           await this.reload(value);
         },
       },
