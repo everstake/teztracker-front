@@ -157,6 +157,32 @@
       };
     },
     mixins: [uuid],
+    watch: {
+      '$route.params': {
+        deep: true,
+        immediate: true,
+        async handler({ id }) {
+          this.loading = true;
+          await this.fetchPeriod(id);
+          await this.fetchPeriods(id);
+
+          switch (this.currentPeriodType) {
+            case 'proposal':
+              await this.fetchProposals(id);
+              await this.fetchVoters(id);
+              await this.fetchNonVoters(id);
+              break;
+            case 'exploration':
+            case 'promotion':
+              await this.fetchNonVoters(id);
+              await this.fetchBallots(id);
+              break;
+          }
+
+          this.loading = false;
+        },
+      },
+    },
     methods: {
       ...mapActions('period', [
         GET_PROPOSAL_PERIOD,
@@ -361,27 +387,6 @@
 
         return { position: 'bottom', align: 'center' };
       },
-    },
-    async created() {
-      const { id } = this.$route.params;
-
-      await this.fetchPeriod(id);
-      await this.fetchPeriods(id);
-
-      switch (this.currentPeriodType) {
-        case 'proposal':
-          await this.fetchProposals(id);
-          await this.fetchVoters(id);
-          await this.fetchNonVoters(id);
-          break;
-        case 'exploration':
-        case 'promotion':
-          await this.fetchNonVoters(id);
-          await this.fetchBallots(id);
-          break;
-      }
-
-      this.loading = false;
     },
   };
 </script>
