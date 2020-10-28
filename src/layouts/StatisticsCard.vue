@@ -18,22 +18,24 @@
         </template>
 
         <b-card-body>
-          <b-row
-            v-for="(field, index) in fields"
-            :key="index"
-            class="item-info mr-1"
-          >
-            <b-col :lg="3">
-              <span class="label">{{ field.key }}</span>
-            </b-col>
-            <b-col :lg="9">
-              <span class="value">
-                <slot name="value" :field="field">
-                  {{ field.value }}
-                </slot>
-              </span>
-            </b-col>
-          </b-row>
+          <slot name="body">
+            <b-row
+              v-for="(field, index) in fields"
+              :key="index"
+              class="item-info mr-1"
+            >
+              <b-col :lg="3">
+                <span class="label">{{ field.key }}</span>
+              </b-col>
+              <b-col :lg="9">
+                <span class="value">
+                  <slot name="value" :field="field">
+                    {{ field.value }}
+                  </slot>
+                </span>
+              </b-col>
+            </b-row>
+          </slot>
 
           <slot name="extra" />
         </b-card-body>
