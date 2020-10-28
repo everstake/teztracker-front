@@ -7,6 +7,7 @@ import {
   SET_APP_NETWORK,
   SET_APP_NETWORK_CHANGABLE,
   SET_DATE_FORMAT,
+  SET_CURRENT_CURRENCY,
 } from '@/store/mutations.types';
 
 const initialState = {
@@ -17,6 +18,7 @@ const initialState = {
   priceInfo: {},
   dateFormat: Vue.prototype.$constants.DATE_FORMAT,
   cancelTokens: [],
+  currentCurrency: '',
 };
 
 export const state = { ...initialState };
@@ -57,6 +59,9 @@ export const mutations = {
   },
   [CLEAR_CANCEL_TOKENS](state) {
     state.cancelTokens = [];
+  },
+  [SET_CURRENT_CURRENCY](state, currency) {
+    state.currentCurrency = currency;
   },
 };
 
