@@ -371,7 +371,7 @@
         const props = {
           page,
           limit,
-          account_id: this.hash,
+          account: this.hash,
         };
 
         if (page === 1) {
@@ -395,13 +395,13 @@
             ...data.data,
           ];
 
-          this.counts.baking = data.count + future.data.length + 1;
+          this.counts.baking = data.count;
         } else {
           const data = await this.$api.getAccountBaking(props);
           this.baking.data = data.data;
         }
       },
-      async reloadRewards({ limit, page = 1 }) {
+      async reloadRewards({ limit, page }) {
         const props = {
           page,
           limit,
@@ -412,7 +412,7 @@
         this.rewards = data.data;
         this.counts.rewards = data.count;
       },
-      async reloadBonds({ limit, page = 1 }) {
+      async reloadBonds({ limit, page }) {
         const props = {
           page,
           limit,
@@ -423,7 +423,7 @@
         this.bonds = data.data;
         this.counts.bonds = data.count;
       },
-      async reloadEndorsing({ limit, page = 1 }) {
+      async reloadEndorsing({ limit, page }) {
         const props = {
           page,
           limit,

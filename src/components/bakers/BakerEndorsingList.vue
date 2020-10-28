@@ -86,6 +86,7 @@
 
 <script>
   import LimitSelect from '@/components/partials/LimitSelect';
+  import Pagination from '../partials/Pagination';
   import PaginationSelect from '../partials/PaginationSelect';
   import { mapState } from 'vuex';
 
@@ -93,6 +94,7 @@
     name: 'BakerEndorsingList',
     components: {
       LimitSelect,
+      Pagination,
       PaginationSelect,
     },
     props: {
