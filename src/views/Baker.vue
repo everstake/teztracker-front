@@ -13,7 +13,7 @@
         <b-row>
           <b-col lg="12">
             <b-card no-body>
-              <b-tabs>
+              <b-tabs lazy>
                 <b-tab :title="$tc('opTypes.tx', 2)" active>
                   <b-card-header>
                     <div class="break-word">
@@ -26,7 +26,16 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <TxsList :account="hash" />
+                    <BakerTxsList
+                      @onReload="reload"
+                      :txs="txs"
+                      :count="counts.txs"
+                      :account="hash"
+                      :currentPage="page.txs"
+                      :perPage="limit.txs"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
                 <b-tab :title="$tc('opTypes.delegation', 2)">
@@ -41,7 +50,16 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <DelegationsList :account="hash" />
+                    <BakerDelegationsList
+                      @onReload="reload"
+                      :delegations="delegations"
+                      :count="counts.delegations"
+                      :account="hash"
+                      :currentPage="page.delegations"
+                      :perPage="limit.delegations"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
                 <b-tab :title="$tc('opTypes.origination', 2)">
@@ -56,7 +74,16 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <OriginationsList :account="hash" />
+                    <BakerOriginationsList
+                      @onReload="reload"
+                      :originations="originations"
+                      :count="counts.originations"
+                      :account="hash"
+                      :currentPage="page.originations"
+                      :perPage="limit.originations"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
 
@@ -72,10 +99,17 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <EndorsementsList
-                      :is-baker="true"
+                    <BakerEndorsementsList
+                      @onReload="reload"
+                      :endorsements="endorsements"
+                      :count="counts.endorsements"
                       :account="hash"
-                    ></EndorsementsList>
+                      :currentPage="page.endorsements"
+                      :perPage="limit.endorsements"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                      :is-baker="true"
+                    />
                   </b-card-body>
                 </b-tab>
 
@@ -91,7 +125,18 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <BakerBakingList :account="hash"></BakerBakingList>
+                    <BakerBakingList
+                      @onReload="reload"
+                      :data="baking.data"
+                      :future="baking.future"
+                      :total="baking.total"
+                      :count="counts.baking"
+                      :account="hash"
+                      :currentPage="page.baking"
+                      :perPage="limit.baking"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
 
                   <b-card-header>
@@ -121,7 +166,16 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <BakerRewardsList :account="hash"></BakerRewardsList>
+                    <BakerRewardsList
+                      @onReload="reload"
+                      :data="rewards"
+                      :count="counts.rewards"
+                      :account="hash"
+                      :currentPage="page.rewards"
+                      :perPage="limit.rewards"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
 
@@ -135,7 +189,16 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <BakerBondsList :account="hash"></BakerBondsList>
+                    <BakerBondsList
+                      @onReload="reload"
+                      :data="bonds"
+                      :count="counts.bonds"
+                      :account="hash"
+                      :currentPage="page.bonds"
+                      :perPage="limit.bonds"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
               </b-tabs>
@@ -148,30 +211,72 @@
 </template>
 
 <script>
-  import Breadcrumbs from '../components/partials/Breadcrumbs';
-  import BakerSingle from '../components/bakers/BakerSingle';
-  import TxsList from '../components/transactions/TxsList';
-  import DelegationsList from '../components/delegations/DelegationsList';
-  import OriginationsList from '../components/originations/OriginationsList';
-  import EndorsementsList from '../components/endorsements/EndorsementsList';
+  import Breadcrumbs from '@/components/partials/Breadcrumbs';
+  import BakerSingle from '@/components/bakers/BakerSingle';
+  import BakerTxsList from '@/components/bakers/BakerTxsList';
+  import BakerDelegationsList from '@/components/bakers/BakerDelegationsList';
+  import BakerOriginationsList from '@/components/bakers/BakerOriginationsList';
+  import BakerEndorsementsList from '@/components/bakers/BakerEndorsementsList';
   import BakerRewardsList from '@/components/bakers/BakerRewardsList';
-  import BakerBakingList from '../components/bakers/BakerBakingList';
-  import BakerEndorsingList from '../components/bakers/BakerEndorsingList';
-  import BakerBondsList from '../components/bakers/BakerBondsList';
+  import BakerBakingList from '@/components/bakers/BakerBakingList';
+  import BakerEndorsingList from '@/components/bakers/BakerEndorsingList';
+  import BakerBondsList from '@/components/bakers/BakerBondsList';
 
   export default {
     name: 'Baker',
     components: {
       Breadcrumbs,
       BakerSingle,
-      TxsList,
-      DelegationsList,
-      OriginationsList,
-      EndorsementsList,
+      BakerTxsList,
+      BakerDelegationsList,
+      BakerOriginationsList,
+      BakerEndorsementsList,
       BakerRewardsList,
       BakerBakingList,
       BakerEndorsingList,
       BakerBondsList,
+    },
+    data() {
+      return {
+        txs: [],
+        delegations: [],
+        originations: [],
+        endorsements: [],
+        baking: {
+          total: null,
+          future: null,
+          data: [],
+        },
+        rewards: [],
+        bonds: [],
+        counts: {
+          txs: 0,
+          delegations: 0,
+          originations: 0,
+          endorsements: 0,
+          baking: 0,
+          rewards: 0,
+          bonds: 0,
+        },
+        page: {
+          txs: 1,
+          delegations: 1,
+          originations: 1,
+          endorsements: 1,
+          baking: 1,
+          rewards: 1,
+          bonds: 1,
+        },
+        limit: {
+          txs: this.$constants.PER_PAGE,
+          delegations: this.$constants.PER_PAGE,
+          originations: this.$constants.PER_PAGE,
+          endorsements: this.$constants.PER_PAGE,
+          baking: this.$constants.PER_PAGE,
+          rewards: 20,
+          bonds: 20,
+        },
+      };
     },
     computed: {
       hash() {
@@ -183,6 +288,159 @@
           { toRouteName: 'bakers', text: this.$t('pageTypes.bakersPage') },
           { toRouteName: 'baker', text: this.hash },
         ];
+      },
+    },
+    methods: {
+      async reloadTxs({ limit, page }) {
+        const props = {
+          page,
+          limit,
+          account_id: this.hash,
+        };
+        const data = await this.$api.getTransactions(props);
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+        this.txs = data.data;
+        this.counts.txs = data.count;
+      },
+      async reloadDelegations({ limit, page }) {
+        const props = {
+          page,
+          limit,
+          account_id: this.hash,
+        };
+        const data = await this.$api.getDelegations(props);
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+        this.delegations = data.data;
+        this.counts.delegations = data.count;
+      },
+      async reloadOriginations({ limit, page }) {
+        const props = {
+          page,
+          limit,
+          account_id: this.hash,
+        };
+        const data = await this.$api.getOriginations(props);
+        this.originations = data.data;
+        this.counts.originations = data.count;
+      },
+      async reloadEndorsements({ limit, page }) {
+        const props = {
+          page,
+          limit,
+          account_id: this.hash,
+        };
+        const data = await this.$api.getEndorsements(props);
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+        this.counts.endorsements = data.count;
+        this.endorsements = data.data;
+      },
+      async reloadBaking({ limit, page }) {
+        const props = {
+          page,
+          limit,
+          account_id: this.hash,
+        };
+
+        if (page === 1) {
+          const total = await this.$api.getAccountBakingTotal({
+            account: this.hash,
+          });
+          const future = await this.$api.getAccountBakingFuture({
+            account: this.hash,
+          });
+          const data = await this.$api.getAccountBaking(props);
+
+          this.baking.total = { ...total.data, status: 'Total' };
+          this.baking.future = future.data.map((item) => ({
+            ...item,
+            class: 'future',
+          }));
+
+          this.baking.data = [
+            ...this.baking.future,
+            { ...total.data, cycle: 'Total', class: 'total', status: 'Total' },
+            ...data.data,
+          ];
+
+          this.counts.baking = data.count + future.data.length + 1;
+        } else {
+          const data = await this.$api.getAccountBaking(props);
+          this.baking.data = data.data;
+        }
+      },
+      async reloadRewards({ limit, page = 1 }) {
+        const props = {
+          page,
+          limit,
+          account: this.hash,
+        };
+
+        const data = await this.$api.getAccountRewards(props);
+        this.rewards = data.data;
+        this.counts.rewards = data.count;
+      },
+      async reloadBonds({ limit, page = 1 }) {
+        const props = {
+          page,
+          limit,
+          account: this.hash,
+        };
+
+        const data = await this.$api.getAccountBonds(props);
+        this.bonds = data.data;
+        this.counts.bonds = data.count;
+      },
+      async reload({ type, limit, page = 1 }) {
+        if (type === 'txs') {
+          await this.reloadTxs({ limit, page });
+        }
+
+        if (type === 'delegations') {
+          await this.reloadDelegations({ limit, page });
+        }
+
+        if (type === 'originations') {
+          await this.reloadOriginations({ limit, page });
+        }
+
+        if (type === 'endorsements') {
+          await this.reloadEndorsements({ limit, page });
+        }
+
+        if (type === 'baking') {
+          await this.reloadBaking({ limit, page });
+        }
+
+        if (type === 'rewards') {
+          await this.reloadRewards({ limit, page });
+        }
+
+        if (type === 'bonds') {
+          await this.reloadBonds({ limit, page });
+        }
+      },
+      handlePageChange({ type, page }) {
+        const limit = this.limit[type];
+        this.page[type] = page;
+        this.reload({ type, limit, page });
+      },
+      handleLimitChange({ type, limit }) {
+        this.page[type] = 1;
+        const page = this.page[type];
+        this.limit[type] = limit;
+        this.reload({ type, limit, page });
       },
     },
   };

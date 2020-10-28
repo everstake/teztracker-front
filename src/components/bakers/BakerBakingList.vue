@@ -1,7 +1,7 @@
 <template>
   <div class="baking-list">
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect @per-page="$_setPerPage" />
+      <LimitSelect :per-page="perPage" @per-page="$_setPerPage" />
     </div>
 
     <b-table
@@ -27,11 +27,11 @@
       </template>
     </b-table>
 
-    <Pagination
-      v-model="currentPage"
+    <PaginationSelect
       @change="$_handleCurrentPageChange"
       :total-rows="count"
       :per-page="perPage"
+      :current-page="currentPage"
     />
 
     <div>
@@ -78,33 +78,38 @@
 </template>
 
 <script>
-  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import LimitSelect from '@/components/partials/LimitSelect';
   import Pagination from '../partials/Pagination';
-  import setPerPage from '@/mixins/setPerPage';
-  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import PaginationSelect from '@/components/partials/PaginationSelect';
   import { mapState } from 'vuex';
   import moment from 'moment';
 
   export default {
     name: 'BakerBakingList',
     components: {
-      PerPageSelect,
+      LimitSelect,
       Pagination,
+      PaginationSelect,
     },
-    mixins: [setPerPage, handleCurrentPageChange],
-    props: ['account'],
+    props: {
+      data: {
+        type: Array,
+        default() {
+          return [];
+        },
+      },
+      future: Array,
+      total: Object,
+      count: {
+        type: Number,
+        default: 0,
+      },
+      account: String,
+      currentPage: Number,
+      perPage: Number,
+    },
     data() {
       return {
-        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-        fields: [
-          { key: 'cycle', label: this.$tc('common.cycle', 1) },
-          { key: 'blocks', label: this.$tc('common.block', 2) },
-          { key: 'avgPriority', label: this.$t('bakerSingle.avgPriority') },
-          { key: 'missed', label: this.$t('bakerSingle.missed') },
-          { key: 'stolen', label: this.$t('bakerSingle.stolen') },
-          { key: 'rewards', label: this.$tc('common.reward', 2) },
-          { key: 'status', label: this.$tc('statusTypes.status') },
-        ],
         selectedRow: {
           type: null,
           data: null,
@@ -112,10 +117,6 @@
           fields: [],
           currentPage: 1,
         },
-        count: 0,
-        total: null,
-        future: [],
-        data: [],
         loading: false,
       };
     },
@@ -123,6 +124,21 @@
       ...mapState('app', {
         dateFormat: (state) => state.dateFormat,
       }),
+      fields() {
+        if (!this.$i18n.locale) {
+          return [];
+        }
+
+        return [
+          { key: 'cycle', label: this.$tc('common.cycle', 1) },
+          { key: 'blocks', label: this.$tc('common.block', 2) },
+          { key: 'avgPriority', label: this.$t('bakerSingle.avgPriority') },
+          { key: 'missed', label: this.$t('bakerSingle.missed') },
+          { key: 'stolen', label: this.$t('bakerSingle.stolen') },
+          { key: 'rewards', label: this.$tc('common.reward', 2) },
+          { key: 'status', label: this.$tc('statusTypes.status') },
+        ];
+      },
     },
     watch: {
       currentPage: {
@@ -226,39 +242,6 @@
         this.$bvModal.show('modal-baking');
         this.loading = false;
       },
-      async reload(page = 1) {
-        const props = {
-          page,
-          limit: this.perPage,
-          account: this.account,
-        };
-
-        if (page === 1) {
-          const total = await this.$api.getAccountBakingTotal({
-            account: this.account,
-          });
-          const future = await this.$api.getAccountBakingFuture({
-            account: this.account,
-          });
-          const data = await this.$api.getAccountBaking(props);
-
-          this.total = { ...total.data, status: 'Total' };
-          this.future = future.data.map((item) => ({
-            ...item,
-            class: 'future',
-          }));
-          this.data = [
-            ...this.future,
-            { ...total.data, cycle: 'Total', class: 'total', status: 'Total' },
-            ...data.data,
-          ];
-
-          this.count = data.count + future.data.length + 1;
-        } else {
-          const data = await this.$api.getAccountBaking(props);
-          this.data = data.data;
-        }
-      },
       async reloadAccountBakingItem(page = 1) {
         const props = {
           page,
@@ -281,9 +264,18 @@
       handleModalPagination(page) {
         this.selectedRow.currentPage = page;
       },
+      $_setPerPage(value) {
+        this.$emit('onLimitChange', { type: 'baking', limit: value });
+      },
+      $_handleCurrentPageChange(page) {
+        this.$emit('onPageChange', { type: 'baking', limit: this.perPage, page });
+      },
     },
     async created() {
-      this.reload();
+      const itemsEmpty = this.data.length === 0;
+      if (itemsEmpty) {
+        this.$emit('onReload', { type: 'baking', limit: this.perPage });
+      }
     },
   };
 </script>

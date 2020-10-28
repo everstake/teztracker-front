@@ -1,7 +1,7 @@
 <template>
   <div class="baking-list">
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect @per-page="$_setPerPage" :default-per-page="perPage" />
+      <LimitSelect :per-page="perPage" @per-page="$_setPerPage" />
     </div>
 
     <b-table
@@ -36,11 +36,11 @@
       </template>
     </b-table>
 
-    <Pagination
-      v-model="currentPage"
+    <PaginationSelect
       @change="$_handleCurrentPageChange"
       :total-rows="count"
       :per-page="perPage"
+      :current-page="currentPage"
     />
 
     <div>
@@ -89,30 +89,60 @@
 </template>
 
 <script>
-  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import LimitSelect from '@/components/partials/LimitSelect';
   import Pagination from '../partials/Pagination';
-  import setPerPage from '@/mixins/setPerPage';
-  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import PaginationSelect from '../partials/PaginationSelect';
   import { mapState } from 'vuex';
 
   export default {
     name: 'BakerRewardsList',
     components: {
-      PerPageSelect,
+      LimitSelect,
       Pagination,
+      PaginationSelect,
     },
-    mixins: [setPerPage, handleCurrentPageChange],
     filters: {
       toFixedNoRounding(amount) {
         return amount.toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0];
       },
     },
-    props: ['account'],
+
+    props: {
+      data: {
+        type: Array,
+        default() {
+          return [];
+        },
+      },
+      count: {
+        type: Number,
+        default: 0,
+      },
+      account: String,
+      currentPage: Number,
+      perPage: Number,
+    },
     data() {
       return {
-        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-        perPage: 20,
-        fields: [
+        selectedRow: {
+          data: null,
+          count: 0,
+          fields: [],
+          currentPage: 1,
+        },
+        loading: false,
+      };
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+      fields() {
+        if (!this.$i18n.locale) {
+          return [];
+        }
+
+        return [
           { key: 'cycle', label: this.$tc('common.cycle', 1) },
           { key: 'stakingBalance', label: this.$t('common.delegatedBal') },
           { key: 'baking', label: this.$t('common.baking') },
@@ -121,41 +151,10 @@
           { key: 'losses', label: this.$t('common.losses') },
           { key: 'fees', label: this.$t('common.fee') },
           { key: 'status', label: this.$t('statusTypes.status') },
-        ],
-        selectedRow: {
-          data: null,
-          count: 0,
-          fields: [],
-          currentPage: 1,
-        },
-        count: 0,
-        data: [],
-        loading: false,
-      };
-    },
-    computed: {
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
+        ];
+      },
     },
     watch: {
-      currentPage: {
-        async handler(value) {
-          let result;
-
-          if (typeof value === 'object') {
-            const { page } = value;
-            result = page;
-          } else {
-            result = value;
-          }
-
-          await this.reload(result);
-        },
-      },
-      async perPage(value) {
-        await this.reload({ page: value });
-      },
       'selectedRow.currentPage': {
         deep: true,
         async handler(value) {
@@ -194,19 +193,6 @@
         }
 
         return classes.join(' ');
-      },
-      async reload(page = 1) {
-        const props = {
-          page,
-          limit: this.perPage,
-          account: this.account,
-        };
-
-        this.$_setPerPage(this.perPage);
-
-        const data = await this.$api.getAccountRewards(props);
-        this.data = data.data;
-        this.count = data.count;
       },
       async handleRowClick(row) {
         if (this.loading || row.length === 0) return;
@@ -249,9 +235,18 @@
       handleModalPagination(page) {
         this.selectedRow.currentPage = page;
       },
+      $_setPerPage(value) {
+        this.$emit('onLimitChange', { type: 'rewards', limit: value });
+      },
+      $_handleCurrentPageChange(page) {
+        this.$emit('onPageChange', { type: 'rewards', limit: this.perPage, page });
+      },
     },
     async created() {
-      this.reload();
+      const itemsEmpty = this.data.length === 0;
+      if (itemsEmpty) {
+        this.$emit('onReload', { type: 'rewards', limit: this.perPage });
+      }
     },
   };
 </script>
