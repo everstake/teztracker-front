@@ -28,10 +28,12 @@
     data() {
       return {
         routesWithNoMenus: ['404', '500', 'maintenance'],
-        routeName: String(this.$route.name),
       };
     },
     computed: {
+      routeName() {
+        return String(this.$route.name);
+      },
       isBasicPage() {
         return this.routesWithNoMenus.includes(this.routeName);
       },
