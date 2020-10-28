@@ -134,6 +134,7 @@
                       :account="hash"
                       :currentPage="page.baking"
                       :perPage="limit.baking"
+                      :loading="baking.loading"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
@@ -150,7 +151,17 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <BakerEndorsingList :account="hash"></BakerEndorsingList>
+                    <BakerEndorsingList
+                      @onReload="reload"
+                      :data="endorsing.data"
+                      :count="counts.endorsing"
+                      :account="hash"
+                      :currentPage="page.endorsing"
+                      :perPage="limit.endorsing"
+                      :loading="endorsing.loading"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
 
@@ -246,6 +257,13 @@
           total: null,
           future: null,
           data: [],
+          loading: false,
+        },
+        endorsing: {
+          total: null,
+          future: null,
+          data: [],
+          loading: false,
         },
         rewards: [],
         bonds: [],
@@ -256,6 +274,7 @@
           endorsements: 0,
           baking: 0,
           rewards: 0,
+          endorsing: 0,
           bonds: 0,
         },
         page: {
@@ -265,6 +284,7 @@
           endorsements: 1,
           baking: 1,
           rewards: 1,
+          endorsing: 1,
           bonds: 1,
         },
         limit: {
@@ -273,6 +293,7 @@
           originations: this.$constants.PER_PAGE,
           endorsements: this.$constants.PER_PAGE,
           baking: this.$constants.PER_PAGE,
+          endorsing: this.$constants.PER_PAGE,
           rewards: 20,
           bonds: 20,
         },
@@ -402,6 +423,39 @@
         this.bonds = data.data;
         this.counts.bonds = data.count;
       },
+      async reloadEndorsing({ limit, page = 1 }) {
+        const props = {
+          page,
+          limit,
+          account: this.hash,
+        };
+
+        if (page === 1) {
+          const total = await this.$api.getAccountEndorsingTotal({
+            account: this.hash,
+          });
+          const future = await this.$api.getAccountEndorsingFuture({
+            account: this.hash,
+          });
+          const data = await this.$api.getAccountEndorsing(props);
+
+          this.endorsing.total = { ...total.data, status: 'Total' };
+          this.endorsing.future = future.data.map((item) => ({
+            ...item,
+            class: 'future',
+          }));
+          this.endorsing.data = [
+            ...this.endorsing.future,
+            { ...total.data, cycle: 'Total', class: 'total', status: 'Total' },
+            ...data.data,
+          ];
+
+          this.counts.endorsing = data.count;
+        } else {
+          const data = await this.$api.getAccountEndorsing(props);
+          this.endorsing.data = data.data;
+        }
+      },
       async reload({ type, limit, page = 1 }) {
         if (type === 'txs') {
           await this.reloadTxs({ limit, page });
@@ -429,6 +483,10 @@
 
         if (type === 'bonds') {
           await this.reloadBonds({ limit, page });
+        }
+
+        if (type === 'endorsing') {
+          await this.reloadEndorsing({ limit, page });
         }
       },
       handlePageChange({ type, page }) {
