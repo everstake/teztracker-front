@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from '@/router/routes';
-import { state as applicationState } from '@/store/modules/app.module';
-import { translation } from '@/plugins/translation'
-import {lang} from 'moment'
-import { constants } from '@/plugins/constants'
-import i18n from '@/plugins/i18n'
+import { state as applicationState, mutations as applicationMutations } from '@/store/modules/app.module';
+import { SET_APP_NETWORK } from '@/store/mutations.types';
+import { translation } from '@/plugins/translation';
+import { constants } from '@/plugins/constants';
+import i18n from '@/plugins/i18n';
 
 Vue.use(VueRouter);
 
@@ -45,6 +45,10 @@ router.beforeEach((to, from, next) => {
   } else {
     if (i18n.locale !== to.params.language) {
       translation.currentLanguage = to.params.language;
+    }
+
+    if (applicationState.network !== to.params.network) {
+      applicationMutations[SET_APP_NETWORK](applicationState, to.params.network);
     }
 
     next();
