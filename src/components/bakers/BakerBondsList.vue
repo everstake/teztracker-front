@@ -153,23 +153,6 @@
       },
     },
     watch: {
-      currentPage: {
-        async handler(value) {
-          let result;
-
-          if (typeof value === 'object') {
-            const { page } = value;
-            result = page;
-          } else {
-            result = value;
-          }
-
-          await this.reload(result);
-        },
-      },
-      async perPage(value) {
-        await this.reload({ page: value });
-      },
       'selectedRow.currentPage': {
         deep: true,
         async handler(value) {

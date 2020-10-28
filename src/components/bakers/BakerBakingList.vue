@@ -141,14 +141,6 @@
       },
     },
     watch: {
-      currentPage: {
-        async handler(value) {
-          await this.reload(value);
-        },
-      },
-      async perPage(value) {
-        await this.reload({ page: value });
-      },
       'selectedRow.currentPage': {
         deep: true,
         async handler(value) {
