@@ -11,16 +11,26 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
   mode: 'history',
-  scrollBehavior: () => ({ y: 0 }),
   routes,
 });
 
 router.beforeEach((to, from, next) => {
+  const routerNameFalsy = !to.name;
   const routerLanguage = to.params.language;
   const routerNetwork = to.params.network;
   const applicationLanguage = translation.getUserLang().langNoISO;
   const { SUPPORTED_LANGUAGES } = constants;
   const { networkList, network } = applicationState;
+
+  if (routerNameFalsy) {
+    next({
+      name: 'index',
+      params: {
+        language: applicationLanguage,
+        network: network,
+      },
+    });
+  }
 
   if (!routerLanguage || !routerNetwork) {
     return next({
