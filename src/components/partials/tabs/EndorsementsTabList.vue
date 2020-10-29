@@ -72,6 +72,7 @@
     </b-table>
 
     <PaginationSelect
+      v-if="disablePagination"
       @change="$_handleCurrentPageChange"
       :total-rows="count"
       :per-page="perPage"
@@ -88,7 +89,7 @@
   import IdentIcon from '@/components/accounts/IdentIcon';
 
   export default {
-    name: 'BakerEndorsementsList',
+    name: 'EndorsementsTabList',
     components: {
       LimitSelect,
       PaginationSelect,
@@ -110,6 +111,11 @@
       account: String,
       currentPage: Number,
       perPage: Number,
+      loaded: Boolean,
+      disablePagination: {
+        type: Boolean,
+        default: false,
+      },
     },
     computed: {
       ...mapState('app', {
@@ -128,8 +134,8 @@
       },
     },
     async created() {
-      const itemsEmpty = this.endorsements.length === 0;
-      if (itemsEmpty) {
+      const itemsNotFetched = !this.loaded;
+      if (itemsNotFetched) {
         this.$emit('onReload', { type: 'endorsements', limit: this.perPage });
       }
     },

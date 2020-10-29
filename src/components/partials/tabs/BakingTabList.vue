@@ -79,13 +79,13 @@
 
 <script>
   import LimitSelect from '@/components/partials/LimitSelect';
-  import Pagination from '../partials/Pagination';
+  import Pagination from '../Pagination';
   import PaginationSelect from '@/components/partials/PaginationSelect';
   import { mapState } from 'vuex';
   import moment from 'moment';
 
   export default {
-    name: 'BakerBakingList',
+    name: 'BakingTabList',
     components: {
       LimitSelect,
       Pagination,
@@ -107,6 +107,7 @@
       account: String,
       currentPage: Number,
       perPage: Number,
+      loaded: Boolean,
     },
     data() {
       return {
@@ -264,8 +265,8 @@
       },
     },
     async created() {
-      const itemsEmpty = this.data.length === 0;
-      if (itemsEmpty) {
+      const itemsNotFetched = !this.loaded;
+      if (itemsNotFetched) {
         this.$emit('onReload', { type: 'baking', limit: this.perPage });
       }
     },
