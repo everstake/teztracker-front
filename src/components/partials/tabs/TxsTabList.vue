@@ -7,13 +7,14 @@
     <b-table
       responsive
       show-empty
-      :items="originations"
+      :items="txs"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
       borderless
       class="transactions-table"
       :empty-text="$t('common.noData')"
+      :tbody-tr-class="$_defineRowClass"
     >
       <template slot="txhash" slot-scope="row">
         <span class="d-flex align-items-center">
@@ -38,11 +39,12 @@
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
       <template slot="from" slot-scope="row">
-        <span class="d-flex align-items-center">
+        <span class="position-relative w-100 d-flex align-items-center">
           <IdentIcon :seed="row.item.source" />
 
           <b-link
             :to="{ name: 'account', params: { account: row.item.source } }"
+            :class="row.item.sourceName === account ? 'source' : 'destination'"
           >
             <template v-if="row.item.sourceName">
               {{ row.item.sourceName }}
@@ -56,66 +58,72 @@
             v-if="!row.item.sourceName"
             :text-to-copy="row.item.source"
           />
+
+          <span v-if="account === row.item.source" class="icon">
+            <i class="icon__arrow--green"></i>
+          </span>
+          <span v-else-if="account === row.item.destination" class="icon">
+            <i class="icon__arrow--red"></i>
+          </span>
         </span>
       </template>
       <template slot="to" slot-scope="row">
-        <span
-          v-if="row.item.delegateName || row.item.delegate"
-          class="d-flex align-items-center"
-        >
-          <IdentIcon :seed="row.item.delegate" />
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.destination" />
 
           <b-link
-            :to="{ name: 'account', params: { account: row.item.delegate } }"
+            :to="{ name: 'account', params: { account: row.item.destination } }"
           >
-            <template v-if="row.item.delegateName">
-              {{ row.item.delegateName }}
+            <template v-if="row.item.destinationName">
+              {{ row.item.destinationName }}
             </template>
-            <template v-else-if="row.item.delegate">
-              {{ row.item.delegate | longhash }}
+            <template v-else>
+              {{ row.item.destination | longhash }}
             </template>
           </b-link>
 
           <BtnCopy
-            v-if="!row.item.delegateName"
-            :text-to-copy="row.item.delegate"
+            v-if="!row.item.destinationName"
+            :text-to-copy="row.item.destination"
           />
         </span>
-        
-        <NoDataTableCell v-else />
       </template>
       <template slot="amount" slot-scope="row">
-        {{ row.item.balance | tezos }}
+        {{ row.item.amount | tezos }}
+      </template>
+      <template slot="fee" slot-scope="row">
+        {{ row.item.fee | tezos }}
       </template>
     </b-table>
 
     <PaginationSelect
-      @change="$_handleCurrentPageChange"
       :total-rows="count"
       :per-page="perPage"
       :current-page="currentPage"
+      @change="$_handleCurrentPageChange"
     />
   </div>
 </template>
+
 <script>
   import { mapState } from 'vuex';
   import LimitSelect from '@/components/partials/LimitSelect';
   import PaginationSelect from '@/components/partials/PaginationSelect';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
-  import NoDataTableCell from '@/components/partials/NoDataTableCell';
+  import defineRowClass from '@/mixins/defineRowClass';
 
   export default {
-    name: 'BakerOriginationsList',
+    name: 'TxsTabList',
     components: {
       LimitSelect,
       PaginationSelect,
       BtnCopy,
       IdentIcon,
-      NoDataTableCell,
     },
+    mixins: [defineRowClass],
     props: {
-      originations: {
+      txs: {
         type: Array,
         default() {
           return [];
@@ -128,6 +136,7 @@
       account: String,
       currentPage: Number,
       perPage: Number,
+      loaded: Boolean,
     },
     computed: {
       ...mapState('app', {
@@ -137,27 +146,81 @@
         if (!this.$i18n.locale) return [];
         return [
           { key: 'level', label: this.$t('common.blockId') },
-          { key: 'txhash', label: this.$t('hashTypes.originationHash') },
-          { key: 'from', label: this.$t('common.from') },
-          { key: 'to', label: this.$t('common.to') },
-          { key: 'amount', label: this.$t('common.amount') },
+          { key: 'txhash', label: this.$t('hashTypes.txHash') },
+          {
+            key: 'from',
+            label: this.$t('common.from'),
+          },
+          {
+            key: 'to',
+            label: this.$t('common.to'),
+          },
+          {
+            key: 'amount',
+            label: this.$t('common.amount'),
+          },
+          {
+            key: 'fee',
+            label: this.$t('common.fee'),
+          },
           { key: 'timestamp', label: this.$t('common.timestamp') },
         ];
       },
     },
     async created() {
-      const itemsEmpty = this.originations.length === 0;
-      if (itemsEmpty) {
-        this.$emit('onReload', { type: 'originations', limit: this.perPage });
+      const itemsNotFetched = !this.loaded;
+      if (itemsNotFetched) {
+        this.$emit('onReload', { type: 'txs', limit: this.perPage });
       }
     },
     methods: {
+      getAccountName(row, rowHash) {
+        return `${row.item[`${rowHash}Name`] ||
+          row.item[rowHash].slice(0, 15)}...`;
+      },
       $_setPerPage(value) {
-        this.$emit('onLimitChange', { type: 'originations', limit: value });
+        this.$emit('onLimitChange', { type: 'txs', limit: value });
       },
       $_handleCurrentPageChange(page) {
-        this.$emit('onPageChange', { type: 'originations', limit: this.perPage, page });
+        this.$emit('onPageChange', { type: 'txs', limit: this.perPage, page });
       },
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  .s {
+    position: relative;
+  }
+
+  .source,
+  .destination {
+    position: relative;
+  }
+
+  .icon {
+    &__arrow--red:before {
+      position: absolute;
+      content: '';
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      color: #309282;
+      border-top: 0.3em solid transparent;
+      border-bottom: 0.3em solid transparent;
+      border-left: 0.3em solid;
+    }
+
+    &__arrow--green:before {
+      position: absolute;
+      content: '';
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      color: #e56968;
+      border-top: 0.3em solid transparent;
+      border-bottom: 0.3em solid transparent;
+      border-left: 0.3em solid;
+    }
+  }
+</style>

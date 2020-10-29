@@ -84,7 +84,7 @@
   import { mapState } from 'vuex';
 
   export default {
-    name: 'BakerBondsList',
+    name: 'BondsTabList',
     components: {
       LimitSelect,
     },
@@ -107,6 +107,7 @@
       account: String,
       currentPage: Number,
       perPage: Number,
+      loaded: Boolean,
     },
     data() {
       return {
@@ -200,8 +201,8 @@
       },
     },
     async created() {
-      const itemsEmpty = this.data.length === 0;
-      if (itemsEmpty) {
+      const itemsNotFetched = !this.loaded;
+      if (itemsNotFetched) {
         this.$emit('onReload', { type: 'bonds', limit: this.perPage });
       }
     },

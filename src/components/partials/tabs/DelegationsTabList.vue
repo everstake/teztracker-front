@@ -14,6 +14,7 @@
       borderless
       class="transactions-table"
       :empty-text="$t('common.noData')"
+      :tbody-tr-class="$_defineRowClass"
     >
       <template slot="txhash" slot-scope="row">
         <span class="d-flex align-items-center">
@@ -108,9 +109,10 @@
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
   import NoDataTableCell from '@/components/partials/NoDataTableCell';
+  import defineRowClass from '@/mixins/defineRowClass';
 
   export default {
-    name: 'BakerDelegationsList',
+    name: 'DelegationsTabList',
     components: {
       LimitSelect,
       PaginationSelect,
@@ -118,6 +120,7 @@
       IdentIcon,
       NoDataTableCell,
     },
+    mixins: [defineRowClass],
     props: {
       delegations: {
         type: Array,
@@ -132,6 +135,7 @@
       account: String,
       currentPage: Number,
       perPage: Number,
+      loaded: Boolean,
     },
     computed: {
       ...mapState('app', {
@@ -151,8 +155,8 @@
       },
     },
     async created() {
-      const itemsEmpty = this.delegations.length === 0;
-      if (itemsEmpty) {
+      const itemsNotFetched = !this.loaded;
+      if (itemsNotFetched) {
         this.$emit('onReload', { type: 'delegations', limit: this.perPage });
       }
     },
