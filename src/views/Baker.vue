@@ -240,7 +240,7 @@
   import BondsTabList from '@/components/partials/tabs/BondsTabList';
   import BakerEndorsingList from '@/components/bakers/BakerEndorsingList';
   import BakerRewardsList from '@/components/bakers/BakerRewardsList';
-  import reloadPartialTables from '@/mixins/reloadPartialTables';
+  import reloadTabTables from '@/mixins/reloadTabTables';
 
   export default {
     name: 'Baker',
@@ -256,7 +256,7 @@
       BakerEndorsingList,
       BondsTabList,
     },
-    mixins: [reloadPartialTables],
+    mixins: [reloadTabTables],
     computed: {
       hash() {
         return this.$route.params.baker;

@@ -138,22 +138,24 @@
     },
     mixins: [defineRowClass],
     props: {
-      blockHash: {
-        type: String,
-        default: '',
+      operations: {
+        type: Array,
+        default() {
+          return [];
+        },
       },
+      count: {
+        type: Number,
+        default: 0,
+      },
+      account: String,
+      currentPage: Number,
+      perPage: Number,
+      loaded: Boolean,
+      blockHash: String,
     },
     data() {
       return {
-        operations: [],
-        count: 0,
-        operationTypes: [
-          'delegation',
-          'origination',
-          'activate_account',
-          'double_baking_evidence',
-          'double_endorsement_evidence',
-        ],
         operationTypesMap: {
           delegation: this.$tc('opTypes.delegation', 1),
           origination: this.$tc('opTypes.origination', 1),
@@ -179,26 +181,13 @@
       },
     },
     watch: {
-      blockHash(value) {
-        this.load(value, this.operationTypes);
-      },
-    },
-    methods: {
-      async load(blockHash, operationTypes) {
-        const res = await this.$api.getOperations({
-          block_id: blockHash,
-          operation_kind: operationTypes,
-          limit: 100,
-        });
-
-        if (res.status !== this.$constants.STATUS_SUCCESS) {
-          return this.$router.replace({
-            name: res.status,
-          });
-        }
-
-        this.operations = res.data;
-        this.count = res.count;
+      blockHash: {
+        immediate: true,
+        handler(value) {
+          if (value) {
+            this.$emit('onReload', { type: 'blockOtherOperations', limit: this.perPage });
+          }
+        },
       },
     },
   };

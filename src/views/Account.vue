@@ -133,7 +133,7 @@
   import AccountSingle from '../components/accounts/AccountSingle';
   import ChartBalanceLast30Days from '@/components/charts/account/ChartBalanceLast30Days';
   import TxsTabList from '@/components/partials/tabs/TxsTabList';
-  import reloadPartialTables from '@/mixins/reloadPartialTables';
+  import reloadTabTables from '@/mixins/reloadTabTables';
   import DelegationsTabList from '@/components/partials/tabs/DelegationsTabList';
   import OriginationsTabList from '@/components/partials/tabs/OriginationsTabList';
   import OperationsTabList from '@/components/partials/tabs/OperationsTabList';
@@ -149,7 +149,7 @@
       AccountSingle,
       ChartBalanceLast30Days,
     },
-    mixins: [reloadPartialTables],
+    mixins: [reloadTabTables],
     props: {
       accountType: {
         type: String,

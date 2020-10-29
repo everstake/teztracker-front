@@ -137,6 +137,7 @@
       currentPage: Number,
       perPage: Number,
       loaded: Boolean,
+      blockHash: String,
     },
     computed: {
       ...mapState('app', {
@@ -167,9 +168,20 @@
         ];
       },
     },
+    watch: {
+      blockHash: {
+        immediate: true,
+        handler(value) {
+          if (value) {
+            this.$emit('onReload', { type: 'txs', limit: this.perPage });
+          }
+        },
+      },
+    },
     async created() {
+      const { blockHash } = this;
       const itemsNotFetched = !this.loaded;
-      if (itemsNotFetched) {
+      if (itemsNotFetched && !blockHash) {
         this.$emit('onReload', { type: 'txs', limit: this.perPage });
       }
     },

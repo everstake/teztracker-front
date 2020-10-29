@@ -15,7 +15,7 @@
         <b-row>
           <b-col lg="12">
             <b-card no-body>
-              <b-tabs>
+              <b-tabs lazy>
                 <b-tab :title="$tc('opTypes.tx', 2)" active>
                   <b-card-header>
                     <div class="break-word">
@@ -32,12 +32,12 @@
                       @onReload="reload"
                       :txs="txs"
                       :count="counts.txs"
-                      :account="hash"
                       :currentPage="page.txs"
                       :perPage="limit.txs"
                       :loaded="loaded.txs"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
+                      :blockHash="block.hash"
                     />
                   </b-card-body>
                 </b-tab>
@@ -57,7 +57,6 @@
                       @onReload="reload"
                       :endorsements="endorsements"
                       :count="counts.endorsements"
-                      :account="hash"
                       :currentPage="page.endorsements"
                       :perPage="limit.endorsements"
                       :loaded="loaded.endorsements"
@@ -78,7 +77,17 @@
                     </div>
                   </b-card-header>
                   <b-card-body>
-                    <BlockOtherOperationsList :block-hash="block.hash" />
+                    <BlockOtherOperationsList
+                      @onReload="reload"
+                      :operations="blockOtherOperations"
+                      :count="counts.blockOtherOperations"
+                      :currentPage="page.blockOtherOperations"
+                      :perPage="limit.blockOtherOperations"
+                      :loaded="loaded.blockOtherOperations"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                      :block-hash="block.hash"
+                    />
                   </b-card-body>
                 </b-tab>
               </b-tabs>
@@ -97,7 +106,7 @@
   import BlockOtherOperationsList from '../components/blocks/BlockOtherOperationsList';
   import EndorsementsTabList from '@/components/partials/tabs/EndorsementsTabList';
   import TxsTabList from '@/components/partials/tabs/TxsTabList';
-  import reloadPartialTables from '@/mixins/reloadPartialTables';
+  import reloadTabTables from '@/mixins/reloadTabTables';
 
   export default {
     name: 'Block',
@@ -109,7 +118,7 @@
       EndorsementsSlots,
       BlockOtherOperationsList,
     },
-    mixins: [reloadPartialTables],
+    mixins: [reloadTabTables],
     data() {
       return {
         block: {},
@@ -147,6 +156,7 @@
         this.block = result.data.block;
       },
       async reloadEndorsements({ limit, page }) {
+        if (!this.block.hash) return;
         const props = {
           page,
           limit,
@@ -163,6 +173,7 @@
         this.loaded.endorsements = true;
       },
       async reloadTxs({ limit, page }) {
+        if (!this.block.hash) return;
         const props = {
           page,
           limit,
