@@ -25,20 +25,20 @@
       @row-selected="handleRowClick"
     >
       <template slot="stakingBalance" slot-scope="row">
-        {{ row.item.stakingBalance | tezosToFixed }}
+        {{ row.item.stakingBalance | denominate }}
       </template>
       <template slot="baking" slot-scope="row">
-        {{ row.item.baking | tezosToFixed }}
+        {{ row.item.baking | denominate }}
       </template>
       <template slot="endorsements" slot-scope="row">
-        {{ row.item.endorsements | tezosToFixed }}
+        {{ row.item.endorsements | denominate }}
       </template>
       <template slot="losses" slot-scope="row">
-        {{ row.item.losses | tezosToFixed }}
+        {{ row.item.losses | denominate }}
       </template>
 
       <template slot="fees" slot-scope="row">
-        {{ row.item.fees | tezosToFixed }}
+        {{ row.item.fees | denominate }}
       </template>
     </b-table>
 
@@ -76,7 +76,7 @@
           </template>
 
           <template slot="balance" slot-scope="row">
-            {{ row.item.balance | tezosToFixed }}
+            {{ row.item.balance | denominate }}
           </template>
 
           <template slot="share" slot-scope="row">
@@ -86,7 +86,6 @@
 
         <Pagination
           v-model="selectedRow.currentPage"
-          @change="handleModalPagination"
           :total-rows="selectedRow.count"
           :per-page="selectedRow.perPage"
           :loading="selectedRow.loading"

@@ -1,5 +1,5 @@
 <template>
-  <b-form-group label="Currency">
+  <b-form-group :label="$t('currencySwitcher.title')">
     <b-form-radio-group
       v-model="currentCurrencyLocal"
       :options="currencyOptions"
@@ -8,44 +8,45 @@
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex';
+  import { mapState, mapMutations, mapActions } from 'vuex';
   import { SET_CURRENT_CURRENCY } from '@/store/mutations.types';
+  import { GET_APP_INFO } from '@/store/actions.types';
 
   export default {
     name: 'CurrencySwitcher',
     data() {
       return {
-        defaultCurrency: 'xtz',
+        currencyOptions: [
+          { text: 'XTZ', value: 'xtz' },
+          { text: 'USD', value: 'usd' },
+          { text: 'EUR', value: 'eur' },
+          { text: 'GBP', value: 'gbp' },
+          { text: 'CNY', value: 'cny' },
+        ],
+        getInfoRouteNames: [
+          'network',
+          'blocks',
+          'block',
+          'tx',
+          'txs',
+          'delegations',
+          'originations',
+          'bakers',
+          'baker',
+          'public_bakers',
+          'double_endorsement',
+          'double_baking',
+          'accounts',
+          'top_accounts',
+          'account',
+          'contracts',
+          'asset',
+        ],
       };
     },
     computed: {
       ...mapState('app', ['currentCurrency', 'priceInfo']),
-      currencyOptions() {
-        if (
-          !this.priceInfo ||
-          !Object.keys(this.priceInfo).length ||
-          !this.priceInfo.price ||
-          !Object.keys(this.priceInfo.price).length
-        ) {
-          return [];
-        }
-
-        const res = Object.keys(this.priceInfo.price)
-          .map((currencyCode) => {
-            return {
-              text: currencyCode.toUpperCase(),
-              value: currencyCode,
-            };
-          })
-          .reverse();
-
-        res.unshift({
-          text: 'XTZ',
-          value: 'xtz',
-        });
-
-        return res;
-      },
+      // for v-model
       currentCurrencyLocal: {
         get() {
           return this.currentCurrency;
@@ -56,24 +57,37 @@
       },
     },
     watch: {
-      currentCurrency(val) {
-        localStorage.setItem('currency', val);
+      currentCurrency: {
+        immediate: true,
+        handler(val) {
+          if (val) {
+            localStorage.setItem('currency', val);
+            this[GET_APP_INFO](val);
+          }
+        },
+      },
+      '$route.name'(val) {
+        if (this.getInfoRouteNames.includes(val)) {
+          this[GET_APP_INFO](this.currentCurrency);
+        }
       },
     },
     created() {
-      this.getCurrentCurrency();
+      this.setInitialCurrentCurrency();
     },
     methods: {
       ...mapMutations('app', [SET_CURRENT_CURRENCY]),
-      getCurrentCurrency() {
-        if (this.$helpers.isLocalStorageAvailable() && localStorage.currency) {
-          this[SET_CURRENT_CURRENCY](localStorage.currency);
+      ...mapActions('app', [GET_APP_INFO]),
+      setInitialCurrentCurrency() {
+        if (
+          this.$helpers.isLocalStorageAvailable() &&
+          localStorage.getItem('currency')
+        ) {
+          this[SET_CURRENT_CURRENCY](localStorage.getItem('currency'));
         } else {
-          this[SET_CURRENT_CURRENCY](this.defaultCurrency);
+          this[SET_CURRENT_CURRENCY](this.currencyOptions[0].value);
         }
       },
     },
   };
 </script>
-
-<style scoped></style>

@@ -24,8 +24,12 @@ const initialState = {
 export const state = { ...initialState };
 
 export const actions = {
-  async [GET_APP_INFO]({ commit, rootGetters }) {
-    commit(SET_APP_INFO, await rootGetters.API.getInfo());
+  async [GET_APP_INFO]({ commit, rootGetters }, currency) {
+    const currencyParam = currency === 'xtz' ? 'usd' : currency;
+    commit(
+      SET_APP_INFO,
+      await rootGetters.API.getInfo({ currency: currencyParam }),
+    );
   },
   [CANCEL_PENDING_REQUESTS]({ commit, state }) {
     state.cancelTokens.forEach((request) => {

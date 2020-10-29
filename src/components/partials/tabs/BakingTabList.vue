@@ -27,7 +27,7 @@
         {{ row.item.avgPriority }}
       </template>
       <template slot="rewards" slot-scope="row">
-        {{ row.item.rewards | tezosToFixed }}
+        {{ row.item.rewards | denominate }}
       </template>
     </b-table>
 
@@ -58,10 +58,10 @@
             </b-link>
           </template>
           <template slot="reward" slot-scope="row">
-            {{ row.item.reward | tezosToFixed }}
+            {{ row.item.reward | denominate }}
           </template>
           <template slot="deposit" slot-scope="row">
-            {{ row.item.deposit | tezosToFixed }}
+            {{ row.item.deposit | denominate }}
           </template>
           <template slot="timestamp" slot-scope="row">
             {{ row.item.timestamp | timeformat(dateFormat) }}

@@ -16,8 +16,7 @@
         {{ slotProps.field.value | timeformat(dateFormat) }}
       </template>
       <template v-else-if="slotProps.field.key === $t('common.fee')">
-        {{ slotProps.field.value | tezos }}
-        ({{ $_convert(slotProps.field.value) }})
+        {{ slotProps.field.value | denominate }}
       </template>
       <template
         v-else-if="slotProps.field.key === $t('txSingle.confirmations')"
@@ -43,10 +42,10 @@
         </router-link>
       </template>
       <template v-else-if="slotProps.field.key === $t('txSingle.deposit')">
-        {{ slotProps.field.value | tezos }}
+        {{ slotProps.field.value | denominate }}
       </template>
       <template v-else-if="slotProps.field.key === $t('txSingle.reward')">
-        {{ slotProps.field.value | tezos }}
+        {{ slotProps.field.value | denominate }}
       </template>
       <template v-else-if="slotProps.field.key === $tc('common.acc', 1)">
         <router-link
@@ -59,15 +58,14 @@
       <template
         v-else-if="slotProps.field.key === $t('txSingle.amountClaimed')"
       >
-        {{ slotProps.field.value | tezos }}
+        {{ slotProps.field.value | denominate }}
       </template>
     </template>
   </StatisticsCard>
 </template>
 
 <script>
-  import { mapState, mapActions } from 'vuex';
-  import { GET_APP_INFO } from '@/store/actions.types';
+  import { mapState } from 'vuex';
   import StatisticsCard from '@/layouts/StatisticsCard';
   import convert from '../../mixins/convert';
 
@@ -98,7 +96,6 @@
     },
     computed: {
       ...mapState('app', {
-        info: (state) => state.priceInfo,
         dateFormat: (state) => state.dateFormat,
       }),
       txInfoRestructured() {
@@ -166,11 +163,7 @@
         return res;
       },
     },
-    async created() {
-      await this[GET_APP_INFO]();
-    },
     methods: {
-      ...mapActions('app', [GET_APP_INFO]),
       mapOperationStatus(status) {
         return status === 'applied'
           ? this.$t('statusTypes.success')
