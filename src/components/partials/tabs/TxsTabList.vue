@@ -172,7 +172,8 @@
       blockHash: {
         immediate: true,
         handler(value) {
-          if (value) {
+          const itemsNotFetched = !this.loaded;
+          if (itemsNotFetched && value) {
             this.$emit('onReload', { type: 'txs', limit: this.perPage });
           }
         },

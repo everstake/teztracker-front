@@ -37,7 +37,7 @@
                       :loaded="loaded.txs"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
-                      :blockHash="block.hash"
+                      :block-hash="block.hash"
                     />
                   </b-card-body>
                 </b-tab>

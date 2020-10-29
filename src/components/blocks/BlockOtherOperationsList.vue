@@ -184,7 +184,8 @@
       blockHash: {
         immediate: true,
         handler(value) {
-          if (value) {
+          const itemsNotFetched = !this.loaded;
+          if (itemsNotFetched && value) {
             this.$emit('onReload', { type: 'blockOtherOperations', limit: this.perPage });
           }
         },
