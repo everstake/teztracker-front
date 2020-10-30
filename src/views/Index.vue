@@ -136,9 +136,7 @@
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'bookmark']" />
               </div>
-              <span class="counter"
-                >{{ info.volume_24h | bignum(',') }} XTZ</span
-              >
+              <span class="counter">${{ info.volume_24h | bignum(',') }}</span>
               <span class="percentage"></span>
               <span class="tile-name">
                 {{ $t('index.tradingVol') }}
