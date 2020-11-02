@@ -360,7 +360,11 @@
           });
         }
         this.transactions = data.data;
-        this.txInfo = this.transactions[0] || {};
+        // this.txInfo = this.transactions[0] || {};
+        this.txInfo =
+          this.transactions.length && this.transactions.length > 1
+            ? this.transactions.find((txObj) => txObj.kind !== 'reveal')
+            : this.transactions[0] || {};
         this.dataFetched = true;
         this.count = data.count;
       },
