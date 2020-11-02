@@ -1,7 +1,11 @@
 <template>
   <div class="baking-list">
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :per-page="perPage" @per-page="$_setPerPage" />
+      <LimitSelect
+        :limit="perPage"
+        :loading="loading"
+        @onLimitChange="$_setPerPage"
+      />
     </div>
 
     <b-table
@@ -28,10 +32,11 @@
     </b-table>
 
     <PaginationSelect
-      @change="$_handleCurrentPageChange"
       :total-rows="count"
       :per-page="perPage"
       :current-page="currentPage"
+      :loading="loading"
+      @change="$_handleCurrentPageChange"
     />
 
     <div>
@@ -68,9 +73,12 @@
 
         <Pagination
           v-model="selectedRow.currentPage"
-          @change="handleModalPagination"
           :total-rows="selectedRow.count"
           :per-page="selectedRow.perPage"
+          :class="{
+            'page--loading': selectedRow.loading,
+          }"
+          @change="handleModalPagination"
         />
       </b-modal>
     </div>
@@ -108,6 +116,7 @@
       currentPage: Number,
       perPage: Number,
       loaded: Boolean,
+      loading: Boolean,
     },
     data() {
       return {
@@ -117,8 +126,8 @@
           count: 0,
           fields: [],
           currentPage: 1,
+          loading: false,
         },
-        loading: false,
       };
     },
     computed: {
@@ -155,6 +164,12 @@
         },
       },
     },
+    async created() {
+      const itemsNotFetched = !this.loaded;
+      if (itemsNotFetched) {
+        this.$emit('onReload', { type: 'baking', limit: this.perPage });
+      }
+    },
     methods: {
       formatDate(date) {
         return moment(date).format(this.dateFormat);
@@ -188,7 +203,6 @@
       },
       async handleRowClick(row) {
         if (this.loading || row.length === 0) return;
-        this.loading = true;
 
         const isRowFuture = row[0].class === 'future';
         const isRowTotal = row[0].cycle === 'Total';
@@ -233,7 +247,6 @@
         this.selectedRow.data = modalData.data;
         this.selectedRow.count = modalData.count;
         this.$bvModal.show('modal-baking');
-        this.loading = false;
       },
       async reloadAccountBakingItem(page = 1) {
         const props = {
@@ -255,20 +268,20 @@
         this.selectedRow.count = data.count;
       },
       handleModalPagination(page) {
+        this.selectedRow.loading = true;
         this.selectedRow.currentPage = page;
+        this.selectedRow.loading = false;
       },
       $_setPerPage(value) {
         this.$emit('onLimitChange', { type: 'baking', limit: value });
       },
       $_handleCurrentPageChange(page) {
-        this.$emit('onPageChange', { type: 'baking', limit: this.perPage, page });
+        this.$emit('onPageChange', {
+          type: 'baking',
+          limit: this.perPage,
+          page,
+        });
       },
-    },
-    async created() {
-      const itemsNotFetched = !this.loaded;
-      if (itemsNotFetched) {
-        this.$emit('onReload', { type: 'baking', limit: this.perPage });
-      }
     },
   };
 </script>

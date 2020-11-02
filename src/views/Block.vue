@@ -106,7 +106,7 @@
   import BlockOtherOperationsList from '../components/blocks/BlockOtherOperationsList';
   import EndorsementsTabList from '@/components/partials/tabs/EndorsementsTabList';
   import TxsTabList from '@/components/partials/tabs/TxsTabList';
-  import reloadTabTables from '@/mixins/reloadTabTables';
+  import reloadTabTables from '@/mixins/reloadTabulationList';
 
   export default {
     name: 'Block',

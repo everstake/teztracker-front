@@ -1,0 +1,237 @@
+<template>
+  <b-table
+    responsive
+    show-empty
+    :items="items"
+    :fields="fields"
+    :current-page="page"
+    :per-page="0"
+    borderless
+    class="transactions-table"
+    :empty-text="$t('common.noData')"
+  >
+    <template slot="priority" slot-scope="row">
+      <span>{{ row.item.priority }}</span>
+    </template>
+    <template slot="block_0" slot-scope="row">
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.block_0.delegate" />
+
+          <router-link
+            :class="{ winner: row.item.block_0.winner }"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_0.delegate },
+            }"
+          >
+            <template v-if="row.item.block_0.delegate_name">
+              {{ row.item.block_0.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_0.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <BtnCopy
+            v-if="!row.item.block_0.delegate_name"
+            :text-to-copy="row.item.block_0.delegate"
+          />
+        </span>
+    </template>
+    <template slot="block_1" slot-scope="row">
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.block_1.delegate" />
+
+          <router-link
+            :class="{ winner: row.item.block_1.winner }"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_1.delegate },
+            }"
+          >
+            <template v-if="row.item.block_1.delegate_name">
+              {{ row.item.block_1.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_1.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <BtnCopy
+            v-if="!row.item.block_1.delegate_name"
+            :text-to-copy="row.item.block_1.delegate"
+          />
+        </span>
+    </template>
+    <template slot="block_2" slot-scope="row">
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.block_2.delegate" />
+
+          <router-link
+            :class="{ winner: row.item.block_2.winner }"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_2.delegate },
+            }"
+          >
+            <template v-if="row.item.block_2.delegate_name">
+              {{ row.item.block_2.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_2.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <BtnCopy
+            v-if="!row.item.block_2.delegate_name"
+            :text-to-copy="row.item.block_2.delegate"
+          />
+        </span>
+    </template>
+    <template slot="block_3" slot-scope="row">
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.block_3.delegate" />
+
+          <router-link
+            :class="{ winner: row.item.block_3.winner }"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_3.delegate },
+            }"
+          >
+            <template v-if="row.item.block_3.delegate_name">
+              {{ row.item.block_3.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_3.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <BtnCopy
+            v-if="!row.item.block_3.delegate_name"
+            :text-to-copy="row.item.block_3.delegate"
+          />
+        </span>
+    </template>
+    <template slot="block_4" slot-scope="row">
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.block_4.delegate" />
+
+          <router-link
+            :class="{ winner: row.item.block_4.winner }"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_4.delegate },
+            }"
+          >
+            <template v-if="row.item.block_4.delegate_name">
+              {{ row.item.block_4.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_4.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <BtnCopy
+            v-if="!row.item.block_4.delegate_name"
+            :text-to-copy="row.item.block_4.delegate"
+          />
+        </span>
+    </template>
+    <template slot="block_5" slot-scope="row">
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.block_5.delegate" />
+
+          <router-link
+            :class="{ winner: row.item.block_5.winner }"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_5.delegate },
+            }"
+          >
+            <template v-if="row.item.block_5.delegate_name">
+              {{ row.item.block_5.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_5.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <BtnCopy
+            v-if="!row.item.block_5.delegate_name"
+            :text-to-copy="row.item.block_5.delegate"
+          />
+        </span>
+    </template>
+    <template slot="block_6" slot-scope="row">
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.block_6.delegate" />
+
+          <router-link
+            :class="{ winner: row.item.block_6.winner }"
+            :to="{
+              name: 'baker',
+              params: { baker: row.item.block_6.delegate },
+            }"
+          >
+            <template v-if="row.item.block_6.delegate_name">
+              {{ row.item.block_6.delegate_name }}
+            </template>
+            <template v-else>
+              {{ row.item.block_6.delegate | longhash }}
+            </template>
+          </router-link>
+
+          <BtnCopy
+            v-if="!row.item.block_6.delegate_name"
+            :text-to-copy="row.item.block_6.delegate"
+          />
+        </span>
+    </template>
+  </b-table>
+</template>
+
+<script>
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import IdentIcon from '@/components/accounts/IdentIcon';
+
+  export default {
+    name: 'BakingRightsTable',
+    props: {
+      items: Array,
+      page: Number,
+      limit: Number,
+      fields: Array,
+    },
+    components: {
+      BtnCopy,
+      IdentIcon,
+    },
+    computed: {
+      fields() {
+        if (!this.$i18n.locale) return [];
+        const fieldsUpdated = this.newFields.length > 0;
+        if (fieldsUpdated) {
+          return this.newFields.map((field, index) => {
+            let label;
+
+            if (index === 0) {
+              label = `${this.$t('common.priority')}`;
+            } else {
+              label = `${this.$tc('common.block', 1)} ${field.label}`;
+            }
+
+            return { ...field, label };
+          });
+        } else {
+          return [
+            {
+              key: 'priority',
+              label: this.$t('common.priority'),
+            },
+          ];
+        }
+      },
+    },
+  };
+</script>

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import NProgress from 'nprogress';
+import store from '@/store';
+import { ADD_CANCEL_TOKEN } from '@/store/mutations.types';
 
 NProgress.configure({
   showSpinner: false,
@@ -31,6 +33,9 @@ const http = axios.create();
 http.interceptors.request.use(
   (config) => {
     startLoader();
+    let source = axios.CancelToken.source();
+    config.cancelToken = source.token;
+    store.commit(`app/${ADD_CANCEL_TOKEN}`, source);
     return config;
   },
   (error) => {

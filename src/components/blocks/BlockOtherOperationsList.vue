@@ -152,6 +152,7 @@
       currentPage: Number,
       perPage: Number,
       loaded: Boolean,
+      loading: Boolean,
       blockHash: String,
     },
     data() {

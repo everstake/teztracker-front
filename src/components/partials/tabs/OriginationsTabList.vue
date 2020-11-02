@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :per-page="perPage" @per-page="$_setPerPage" />
+      <LimitSelect
+        :limit="perPage"
+        :loading="loading"
+        @onLimitChange="$_setPerPage"
+      />
     </div>
 
     <b-table
@@ -82,7 +86,7 @@
             :text-to-copy="row.item.delegate"
           />
         </span>
-        
+
         <NoDataTableCell v-else />
       </template>
       <template slot="amount" slot-scope="row">
@@ -91,10 +95,11 @@
     </b-table>
 
     <PaginationSelect
-      @change="$_handleCurrentPageChange"
       :total-rows="count"
       :per-page="perPage"
       :current-page="currentPage"
+      :loading="loading"
+      @change="$_handleCurrentPageChange"
     />
   </div>
 </template>
@@ -105,7 +110,7 @@
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
   import NoDataTableCell from '@/components/partials/NoDataTableCell';
-  import defineRowClass from '@/mixins/defineRowClass'
+  import defineRowClass from '@/mixins/defineRowClass';
 
   export default {
     name: 'OriginationsTabList',
@@ -132,6 +137,7 @@
       currentPage: Number,
       perPage: Number,
       loaded: Boolean,
+      loading: Boolean,
     },
     computed: {
       ...mapState('app', {
@@ -160,7 +166,11 @@
         this.$emit('onLimitChange', { type: 'originations', limit: value });
       },
       $_handleCurrentPageChange(page) {
-        this.$emit('onPageChange', { type: 'originations', limit: this.perPage, page });
+        this.$emit('onPageChange', {
+          type: 'originations',
+          limit: this.perPage,
+          page,
+        });
       },
     },
   };

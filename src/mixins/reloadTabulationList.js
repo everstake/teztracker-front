@@ -57,6 +57,18 @@ export default {
         operations: this.$constants.PER_PAGE,
         blockOtherOperations: 100,
       },
+      loading: {
+        txs: false,
+        delegations: false,
+        originations: false,
+        endorsements: false,
+        baking: false,
+        rewards: false,
+        endorsing: false,
+        bonds: false,
+        operations: false,
+        blockOtherOperations: false,
+      },
       loaded: {
         txs: false,
         delegations: false,
@@ -73,6 +85,7 @@ export default {
   },
   methods: {
     async reloadTxs({ limit, page }) {
+      this.loading.txs = true;
       const props = {
         page,
         limit,
@@ -87,9 +100,11 @@ export default {
       this.$emit('onTransaction', 'setChartData');
       this.txs = data.data;
       this.counts.txs = data.count;
+      this.loading.txs = false;
       this.loaded.txs = true;
     },
     async reloadDelegations({ limit, page }) {
+      this.loading.delegations = true;
       const props = {
         page,
         limit,
@@ -103,9 +118,11 @@ export default {
       }
       this.delegations = data.data;
       this.counts.delegations = data.count;
+      this.loading.delegations = false;
       this.loaded.delegations = true;
     },
     async reloadOriginations({ limit, page }) {
+      this.loading.originations = true;
       const props = {
         page,
         limit,
@@ -114,9 +131,11 @@ export default {
       const data = await this.$api.getOriginations(props);
       this.originations = data.data;
       this.counts.originations = data.count;
+      this.loading.originations = false;
       this.loaded.originations = true;
     },
     async reloadEndorsements({ limit, page }) {
+      this.loading.endorsements = true;
       const props = {
         page,
         limit,
@@ -130,9 +149,11 @@ export default {
       }
       this.counts.endorsements = data.count;
       this.endorsements = data.data;
+      this.loading.endorsements = false;
       this.loaded.endorsements = true;
     },
     async reloadBaking({ limit, page }) {
+      this.loading.baking = true;
       const props = {
         page,
         limit,
@@ -164,10 +185,13 @@ export default {
       } else {
         const data = await this.$api.getAccountBaking(props);
         this.baking.data = data.data;
-        this.loaded.baking = true;
       }
+
+      this.loading.baking = false;
+      this.loaded.baking = true;
     },
     async reloadRewards({ limit, page }) {
+      this.loading.rewards = true;
       const props = {
         page,
         limit,
@@ -177,9 +201,11 @@ export default {
       const data = await this.$api.getAccountRewards(props);
       this.rewards = data.data;
       this.counts.rewards = data.count;
+      this.loading.rewards = false;
       this.loaded.rewards = true;
     },
     async reloadBonds({ limit, page }) {
+      this.loading.bonds = true;
       const props = {
         page,
         limit,
@@ -189,9 +215,11 @@ export default {
       const data = await this.$api.getAccountBonds(props);
       this.bonds = data.data;
       this.counts.bonds = data.count;
+      this.loading.bonds = false;
       this.loaded.bonds = true;
     },
     async reloadEndorsing({ limit, page }) {
+      this.loading.endorsing = true;
       const props = {
         page,
         limit,
@@ -223,9 +251,12 @@ export default {
         const data = await this.$api.getAccountEndorsing(props);
         this.endorsing.data = data.data;
       }
+
+      this.loading.endorsing = false;
       this.loaded.endorsing = true;
     },
     async reloadOperations({ limit, page }) {
+      this.loading.operations = true;
       let result = [];
       let counter = 0;
       const types = ['endorsement', 'activate_account', 'double_endorsement_evidence'];
@@ -240,9 +271,11 @@ export default {
 
       this.operations = result;
       this.counts.operations = counter;
+      this.loading.operations = false;
       this.loaded.operations = true;
     },
     async reloadBlockOtherOperations() {
+      this.loading.otherOperations = true;
       const operationTypes = [
         'delegation',
         'origination',
@@ -267,6 +300,7 @@ export default {
 
       this.blockOtherOperations = res.data;
       this.counts.blockOtherOperations = res.count;
+      this.loading.otherOperations = false;
       this.loaded.blockOtherOperations = true;
     },
     async reload({ type, limit, page = 1 }) {

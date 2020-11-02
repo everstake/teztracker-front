@@ -14,12 +14,20 @@
                   </h4>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count.assets" />
+                  <Counter show-line :count="count" />
                 </template>
               </CardHeader>
 
               <b-card-body>
-                <AssetsList />
+                <AssetsList
+                  :loading="loading"
+                  :limit="limit"
+                  :items="items"
+                  :count="count"
+                  :page="page"
+                  @onLimitChange="handleLimitChange"
+                  @onPageChange="handlePageChange"
+                />
               </b-card-body>
             </b-card>
           </b-col>
@@ -30,11 +38,13 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapMutations } from 'vuex';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import AssetsList from '../components/assets/AssetsList';
   import CardHeader from '../components/partials/CardHeader';
   import Counter from '../components/partials/Counter';
+  import { SET_ASSETS } from '@/store/mutations.types';
+  import reloadNavigationList from '@/mixins/reloadNavigationList';
 
   export default {
     name: 'Assets',
@@ -44,6 +54,7 @@
       Counter,
       CardHeader,
     },
+    mixins: [reloadNavigationList],
     data() {
       return {
         crumbs: [
@@ -52,10 +63,15 @@
         ],
       };
     },
-    computed: {
-      ...mapState('accounts', {
-        count: (state) => state.counts,
-      }),
+    methods: {
+      ...mapMutations('accounts', [SET_ASSETS]),
+      async reload() {
+        const { page, limit } = this;
+        const data = await this.$api.getAssets({ page, limit });
+        this.items = data.data.map((assets, index) => ({ ...assets, id: index + 1 }));;
+        this.count = data.count;
+        this[SET_ASSETS](data);
+      },
     },
   };
 </script>

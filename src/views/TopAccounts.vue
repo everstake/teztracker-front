@@ -19,7 +19,15 @@
               </CardHeader>
 
               <b-card-body>
-                <TopAccountsList @onDataReceived="setCount" />
+                <TopAccountsList
+                  :loading="loading"
+                  :limit="limit"
+                  :items="items"
+                  :count="count"
+                  :page="page"
+                  @onLimitChange="handleLimitChange"
+                  @onPageChange="handlePageChange"
+                />
               </b-card-body>
             </b-card>
           </b-col>
@@ -34,6 +42,7 @@
   import TopAccountsList from '../components/accounts/TopAccountsList';
   import CardHeader from '../components/partials/CardHeader';
   import Counter from '../components/partials/Counter';
+  import reloadNavigationList from '@/mixins/reloadNavigationList';
 
   export default {
     name: 'TopAccounts',
@@ -43,11 +52,7 @@
       Counter,
       CardHeader,
     },
-    data() {
-      return {
-        count: 0,
-      };
-    },
+    mixins: [reloadNavigationList],
     computed: {
       crumbs() {
         return [
@@ -60,8 +65,11 @@
       },
     },
     methods: {
-      setCount(count) {
-        this.count = count;
+      async reload() {
+        const { page, limit } = this;
+        const data = await this.$api.getTopAccounts({ page, limit });
+        this.items = data.data;
+        this.count = data.count;
       },
     },
   };

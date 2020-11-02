@@ -185,11 +185,11 @@
       <b-container fluid>
         <b-row>
           <b-col lg="12" xl="6" class="mb-3 mb-xl-0 dashboard__card">
-            <BlocksCard :show-per-page-filter="false" class="h-100" />
+            <BlocksCard :show-limit-filter="false" class="h-100" />
           </b-col>
 
           <b-col lg="12" xl="6 dashboard__card">
-            <TxsCard :show-per-page-filter="false" class="h-100" />
+            <TxsCard :show-limit-filter="false" class="h-100" />
           </b-col>
         </b-row>
       </b-container>

@@ -36,6 +36,7 @@
                       :account="hash"
                       :current-page="page.txs"
                       :per-page="limit.txs"
+                      :loading="loading.txs"
                       :loaded="loaded.txs"
                       @onReload="reload"
                       @onLimitChange="handleLimitChange"
@@ -62,6 +63,7 @@
                       :account="hash"
                       :current-page="page.delegations"
                       :per-page="limit.delegations"
+                      :loading="loading.delegations"
                       :loaded="loaded.delegations"
                       @onReload="reload"
                       @onLimitChange="handleLimitChange"
@@ -87,6 +89,7 @@
                       :account="hash"
                       :current-page="page.originations"
                       :per-page="limit.originations"
+                      :loading="loading.originations"
                       :loaded="loaded.originations"
                       @onReload="reload"
                       @onLimitChange="handleLimitChange"
@@ -112,6 +115,7 @@
                       :account="hash"
                       :current-page="page.operations"
                       :per-page="limit.operations"
+                      :loading="loading.operations"
                       :loaded="loaded.operations"
                       @onReload="reload"
                       @onLimitChange="handleLimitChange"
@@ -133,7 +137,7 @@
   import AccountSingle from '../components/accounts/AccountSingle';
   import ChartBalanceLast30Days from '@/components/charts/account/ChartBalanceLast30Days';
   import TxsTabList from '@/components/partials/tabs/TxsTabList';
-  import reloadTabTables from '@/mixins/reloadTabTables';
+  import reloadTabTables from '@/mixins/reloadTabulationList';
   import DelegationsTabList from '@/components/partials/tabs/DelegationsTabList';
   import OriginationsTabList from '@/components/partials/tabs/OriginationsTabList';
   import OperationsTabList from '@/components/partials/tabs/OperationsTabList';

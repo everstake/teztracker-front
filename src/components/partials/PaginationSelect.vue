@@ -1,12 +1,15 @@
 <template>
-  <div class="pagination-block">
+  <div class="pagination-select">
     <b-pagination
-      @change="handlePageChange"
+      :limit="3"
       :value="currentPage"
       :total-rows="totalRows"
       :per-page="perPage"
       :align="align"
-      :limit="3"
+      :class="{
+        'page--loading': loading,
+      }"
+      @change="handlePageChange"
     />
   </div>
 </template>
@@ -25,6 +28,7 @@
       },
       perPage: Number,
       currentPage: Number,
+      loading: Boolean,
     },
     methods: {
       handlePageChange(page) {
@@ -35,13 +39,14 @@
 </script>
 
 <style lang="scss" scoped>
-  .pagination-block {
+  .pagination-select {
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     overflow: auto;
     width: 100%;
+
     @include for-tablet-portrait-up {
       justify-content: flex-end;
       align-items: center;

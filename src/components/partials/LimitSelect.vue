@@ -1,15 +1,19 @@
 <template>
-  <div>
+  <div class="limit">
     <label for="perPageSelect" class="mb-1">
       {{ $t('perPageSelect.itemsPerPage') }}
     </label>
     <b-select
       id="perPageSelect"
-      :value="perPage"
-      @input="handleLimitChange"
-      :options="perPageOptions"
+      :value="limit"
       size="sm"
-      class="custom-select--themed"
+      :options="perPageOptions"
+      class="limit"
+      :class="{
+        'page--loading': loading,
+        'limit--loading': loading,
+      }"
+      @input="handleLimitChange"
     />
   </div>
 </template>
@@ -17,29 +21,34 @@
 <script>
   export default {
     name: 'LimitSelect',
+    props: {
+      limit: Number,
+      loading: Boolean,
+    },
     data() {
       return {
         perPageOptions: this.$constants.PER_PAGE_OPTIONS,
       };
     },
-    props: {
-      perPage: Number,
-    },
     methods: {
       handleLimitChange(value) {
-        this.$emit('per-page', value);
+        this.$emit('onLimitChange', value);
       },
     },
   };
 </script>
 
 <style lang="scss" scoped>
-  .custom-select--themed {
+  .limit {
     display: block;
+  }
 
-    &:focus {
-      border-color: $color-brand;
-      box-shadow: 0 0 0 0.2rem $color-brand--opacity-2;
-    }
+  .limit:focus {
+    border-color: $color-brand;
+    box-shadow: 0 0 0 0.2rem $color-brand--opacity-2;
+  }
+
+  .limit--loading {
+    background-color: #e0efec;
   }
 </style>

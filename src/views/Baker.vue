@@ -240,7 +240,7 @@
   import BondsTabList from '@/components/partials/tabs/BondsTabList';
   import BakerEndorsingList from '@/components/bakers/BakerEndorsingList';
   import BakerRewardsList from '@/components/bakers/BakerRewardsList';
-  import reloadTabTables from '@/mixins/reloadTabTables';
+  import reloadTabTables from '@/mixins/reloadTabulationList';
 
   export default {
     name: 'Baker',
