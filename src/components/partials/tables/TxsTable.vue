@@ -153,6 +153,9 @@
           ];
         }
       },
+      account() {
+        return this.$route.account;
+      },
     },
   };
 </script>

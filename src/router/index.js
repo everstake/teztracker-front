@@ -23,7 +23,6 @@ router.beforeEach((to, from, next) => {
   const applicationLanguage = translation.getUserLang().langNoISO;
   const { SUPPORTED_LANGUAGES } = constants;
   const { networkList, network } = applicationState;
-  store.dispatch(`app/${CANCEL_PENDING_REQUESTS}`);
 
   if (routerNameFalsy) {
     next({
@@ -56,6 +55,8 @@ router.beforeEach((to, from, next) => {
       },
     });
   } else {
+    store.dispatch(`app/${CANCEL_PENDING_REQUESTS}`);
+
     if (i18n.locale !== to.params.language) {
       translation.currentLanguage = to.params.language;
     }

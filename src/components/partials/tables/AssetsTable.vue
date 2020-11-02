@@ -4,7 +4,7 @@
     :items="items"
     :fields="fields"
     :current-page="page"
-    :per-page="limit"
+    :per-page="0"
     borderless
     class="transactions-table table-responsive-md"
   >

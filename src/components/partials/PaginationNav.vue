@@ -7,11 +7,10 @@
   >
     <b-pagination-nav
       :limit="3"
-      :value="page"
+      :v-model="currentPage"
       :number-of-pages="numberOfPages"
       :link-gen="generateLinks"
       use-router
-      @change="onChange"
     />
   </div>
 </template>
@@ -28,17 +27,17 @@
     computed: {
       numberOfPages() {
         if (this.propsReady) {
-          return Math.ceil(this.count / this.limit);
+          return this.count / this.limit;
         }
       },
       propsReady() {
         return this.count > 0 && this.limit && this.page;
       },
+      currentPage() {
+        return this.page;
+      },
     },
     methods: {
-      onChange(page) {
-        this.$emit('onPageChange', page);
-      },
       generateLinks(page) {
         const { limit } = this;
         const { name } = this.$route;
