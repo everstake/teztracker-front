@@ -1,206 +1,54 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect @per-page="$_setPerPage" />
+      <LimitSelect :loading="loading" :limit="limit" @onLimitChange="(limit) => $emit('onLimitChange', limit)" />
     </div>
 
-    <b-table
-      responsive
-      show-empty
-      :items="double_endorsement"
-      :fields="fields"
-      :current-page="currentPage"
-      :per-page="0"
-      borderless
-      class="transactions-table"
-      :empty-text="$t('common.noData')"
-    >
-      <template slot="txhash" slot-scope="row">
-        <span class="d-flex align-items-center">
-          <b-link
-            :to="{
-              name: 'tx',
-              params: { txhash: row.item.operationGroupHash },
-            }"
-          >
-            {{ row.item.operationGroupHash | longhash }}
-          </b-link>
+    <DoubleEndorsementsTable
+      :propsFields="propsFields"
+      :loading="loading"
+      :items="items"
+      :page="page"
+      :limit="limit"
+    />
 
-          <BtnCopy :text-to-copy="row.item.operationGroupHash" />
-        </span>
-      </template>
-
-      <template slot="level" slot-scope="row">
-        <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
-          {{ row.item.blockLevel | formatInteger }}
-        </b-link>
-      </template>
-
-      <template slot="timestamp" slot-scope="row">
-        {{ row.item.timestamp | timeformat(dateFormat) }}
-      </template>
-      <template slot="baker" slot-scope="row">
-        <span class="d-flex align-items-center">
-          <IdentIcon :seed="row.item.doubleOperationDetails.evidence_baker" />
-
-          <router-link
-            class="baker"
-            :to="{
-              name: 'baker',
-              params: { baker: row.item.doubleOperationDetails.evidence_baker },
-            }"
-          >
-            <template
-              v-if="row.item.doubleOperationDetails.evidence_baker_name"
-            >
-              {{ row.item.doubleOperationDetails.evidence_baker_name }}
-            </template>
-            <template v-else>
-              {{ row.item.doubleOperationDetails.evidence_baker | longhash }}
-            </template>
-          </router-link>
-
-          <BtnCopy
-            v-if="!row.item.doubleOperationDetails.evidence_baker_name"
-            :text-to-copy="row.item.doubleOperationDetails.evidence_baker"
-          />
-        </span>
-      </template>
-      <template slot="baker_rewards" slot-scope="row">
-        {{ row.item.doubleOperationDetails.baker_reward | tezos }}
-      </template>
-      <template slot="offender" slot-scope="row">
-        <span class="d-flex align-items-center">
-          <IdentIcon :seed="row.item.doubleOperationDetails.offender" />
-
-          <router-link
-            class="baker"
-            :to="{
-              name: 'baker',
-              params: { baker: row.item.doubleOperationDetails.offender },
-            }"
-          >
-            <template v-if="row.item.doubleOperationDetails.offender_name">
-              {{ row.item.doubleOperationDetails.offender_name }}
-            </template>
-            <template v-else>
-              {{ row.item.doubleOperationDetails.offender | longhash }}
-            </template>
-          </router-link>
-
-          <BtnCopy
-            v-if="!row.item.doubleOperationDetails.offender_name"
-            :text-to-copy="row.item.doubleOperationDetails.offender"
-          />
-        </span>
-      </template>
-      <template slot="denounced_level" slot-scope="row">
-        <b-link
-          :to="{
-            name: 'block',
-            params: { level: row.item.doubleOperationDetails.denounced_level },
-          }"
-        >
-          {{ row.item.doubleOperationDetails.denounced_level | formatInteger }}
-        </b-link>
-      </template>
-      <template slot="lost_deposits" slot-scope="row">
-        {{ row.item.doubleOperationDetails.lost_deposits | tezos }}
-      </template>
-      <template slot="lost_rewards" slot-scope="row">
-        {{ row.item.doubleOperationDetails.lost_rewards | tezos }}
-      </template>
-    </b-table>
-
-    <Pagination
-      @change="$_handleCurrentPageChange"
-      :total-rows="count"
-      :per-page="perPage"
+    <PaginationNav
+      :limit="limit"
+      :page="page"
+      :count="count"
+      :loading="loading"
+      @onPageChange="(page) => $emit('onPageChange', page)"
     />
   </div>
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex';
-  import { SET_DOUBLE_ENDORSEMENT_COUNT } from '@/store/mutations.types';
-  import PerPageSelect from '@/components/partials/PerPageSelect';
-  import Pagination from '../partials/Pagination';
-  import BtnCopy from '@/components/partials/BtnCopy';
-  import IdentIcon from '@/components/accounts/IdentIcon';
-  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
-  import setPerPage from '@/mixins/setPerPage';
+  import PaginationNav from '@/components/partials/PaginationNav';
+  import DoubleEndorsementsTable from '@/components/partials/tables/DoubleEndorsementsTable';
+  import LimitSelect from '@/components/partials/LimitSelect';
 
   export default {
     name: 'DoubleEndorsementList',
     components: {
-      PerPageSelect,
-      Pagination,
-      BtnCopy,
-      IdentIcon,
+      DoubleEndorsementsTable,
+      PaginationNav,
+      LimitSelect,
     },
-    mixins: [handleCurrentPageChange, setPerPage],
-    props: ['account'],
-    data() {
-      return {
-        double_endorsement: [],
-        count: 0,
-      };
-    },
-    computed: {
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
-      fields() {
-        if (!this.$i18n.locale) return [];
-        return [
-          { key: 'level', label: this.$t('common.blockId') },
-          { key: 'txhash', label: this.$t('hashTypes.opHash') },
-          { key: 'baker', label: this.$t('dblBakingList.accuser') },
-          {
-            key: 'baker_rewards',
-            label: this.$t('dblBakingList.bakerRewards'),
-          },
-          { key: 'offender', label: this.$t('dblBakingList.offender') },
-          { key: 'denounced_level', label: this.$t('common.denouncedLvl') },
-          {
-            key: 'lost_deposits',
-            label: this.$t('dblBakingList.lostDeposits'),
-          },
-          { key: 'lost_rewards', label: this.$t('dblBakingList.lostRewards') },
-          { key: 'timestamp', label: this.$t('common.timestamp') },
-        ];
-      }
-    },
-    watch: {
-      currentPage: {
-        async handler(value) {
-          await this.reload(value);
+    props: {
+      items: Array,
+      count: Number,
+      limit: Number,
+      page: Number,
+      loading: Boolean,
+      showLimitFilter: {
+        type: Boolean,
+        default: true,
+      },
+      propsFields: {
+        type: Array,
+        default() {
+          return [];
         },
-      },
-      async perPage() {
-        await this.reload();
-      },
-    },
-    async created() {
-      await this.reload();
-    },
-    methods: {
-      ...mapMutations('operations', [SET_DOUBLE_ENDORSEMENT_COUNT]),
-      async reload(page = 1) {
-        const props = {
-          page,
-          limit: this.perPage,
-        };
-        if (this.block) {
-          props.block_id = this.block.hash;
-        }
-        if (this.account) {
-          props.account_id = this.account;
-        }
-        const data = await this.$api.getDoubleEndorsement(props);
-        this.double_endorsement = data.data;
-        this.count = data.count;
-        this[SET_DOUBLE_ENDORSEMENT_COUNT](this.count);
       },
     },
   };

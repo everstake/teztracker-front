@@ -1,7 +1,7 @@
 <template>
   <div class="baking-list">
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :per-page="perPage" @per-page="$_setPerPage" />
+      <LimitSelect :limit="perPage" @onLimitChange="$_setPerPage" />
     </div>
 
     <b-table
@@ -122,6 +122,7 @@
       currentPage: Number,
       perPage: Number,
       loaded: Boolean,
+      loading: Boolean,
     },
     data() {
       return {

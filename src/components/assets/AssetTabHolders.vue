@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect :hide="!showPerPageFilter" @per-page="$_setPerPage" />
+      <PerPageSelect :hide="!showLimitFilter" @onLimitChange="$_setPerPage" />
     </div>
 
     <b-table
@@ -46,7 +46,7 @@
       account: {
         type: String,
       },
-      showPerPageFilter: {
+      showLimitFilter: {
         type: Boolean,
         default: true,
       },

@@ -1,141 +1,54 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect @per-page="$_setPerPage" />
+      <LimitSelect :loading="loading" :limit="limit" @onLimitChange="(limit) => $emit('onLimitChange', limit)" />
     </div>
 
-    <b-table
-      show-empty
-      :items="assets"
-      :fields="fields"
-      :current-page="currentPage"
-      :per-page="perPage"
-      borderless
-      class="transactions-table table-responsive-md"
-    >
-      <template slot="account_id" slot-scope="row">
-        <router-link
-          :to="{ name: 'asset', params: { id: row.item.account_id } }"
-        >
-          <span v-if="row.item.name">
-            {{ row.item.name }}
-          </span>
-          <span v-else>{{ row.item.account_id | longhash }}</span>
-        </router-link>
-      </template>
-      <template slot="manager" slot-scope="row">
-        <span v-if="row.item.manager" class="d-flex align-items-center">
-          <IdentIcon :seed="row.item.manager" />
+    <AssetsTable
+      :propsFields="propsFields"
+      :loading="loading"
+      :items="items"
+      :page="page"
+      :limit="limit"
+    />
 
-          <b-link
-            :to="{ name: 'account', params: { account: row.item.manager } }"
-          >
-            <span>{{ row.item.manager | longhash }}</span>
-          </b-link>
-
-          <BtnCopy :text-to-copy="row.item.manager" />
-        </span>
-        <NoDataTableCell v-else />
-      </template>
-      <template slot="name" slot-scope="row">
-        <span v-if="row.item.name">{{ row.item.name }}</span>
-        <NoDataTableCell v-else />
-      </template>
-      <template slot="balance" slot-scope="row">
-        <span>{{
-          row.item.balance
-            | tezos(getAssetCurrency(row.item.name), row.item.precision)
-        }}</span>
-      </template>
-      <template slot="created_at" slot-scope="row">
-        <span>{{ row.item.created_at | timeformat(dateFormat) }}</span>
-      </template>
-    </b-table>
-
-    <Pagination
-      v-model="currentPage"
-      :total-rows="count.assets"
-      :per-page="perPage"
+    <PaginationNav
+      :limit="limit"
+      :page="page"
+      :count="count"
+      :loading="loading"
+      @onPageChange="(page) => $emit('onPageChange', page)"
     />
   </div>
 </template>
 
 <script>
-  import { mapMutations, mapState } from 'vuex';
-  import PerPageSelect from '@/components/partials/PerPageSelect';
-  import Pagination from '../partials/Pagination';
-  import BtnCopy from '@/components/partials/BtnCopy';
-  import IdentIcon from '@/components/accounts/IdentIcon';
-  import NoDataTableCell from '@/components/partials/NoDataTableCell';
-  import setPerPage from '@/mixins/setPerPage';
-  import { SET_ASSETS } from '@/store/mutations.types';
-  import fetchListMixin from '@/mixins/fetchListMixin';
-  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import AssetsTable from '@/components/partials/tables/AssetsTable';
+  import LimitSelect from '@/components/partials/LimitSelect';
+  import PaginationNav from '@/components/partials/PaginationNav';
 
   export default {
     name: 'AssetsList',
     components: {
-      PerPageSelect,
-      Pagination,
-      BtnCopy,
-      IdentIcon,
-      NoDataTableCell,
+      PaginationNav,
+      LimitSelect,
+      AssetsTable,
     },
-    mixins: [setPerPage, fetchListMixin, handleCurrentPageChange],
-    props: ['account'],
-    data() {
-      return {
-        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-      };
-    },
-    computed: {
-      ...mapState('accounts', {
-        assets: (state) => state.assets,
-        count: (state) => state.counts,
-      }),
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
-      fields() {
-        if (!this.$i18n.locale) return [];
-        return [
-          { key: 'id', label: this.$t('common.ordinalNumber') },
-          { key: 'account_id', label: this.$t('common.contractName') },
-          { key: 'manager', label: this.$t('common.manager') },
-          {
-            key: 'balance',
-            label: this.$t('common.balance'),
-            sortable: true,
-            sortDirection: 'desc',
-          },
-          { key: 'created_at', label: this.$t('accSingle.created') },
-        ];
+    props: {
+      items: Array,
+      count: Number,
+      limit: Number,
+      page: Number,
+      loading: Boolean,
+      showLimitFilter: {
+        type: Boolean,
+        default: true,
       },
-    },
-    methods: {
-      getAssetCurrency(asset) {
-        if (!asset) return 'XTZ';
-
-        const assets = [
-          { name: 'tzBTC', currency: 'tzBTC' },
-          { name: 'Staker DAO', currency: 'STKR' },
-          { name: 'USDtz', currency: 'USDtz' },
-        ];
-
-        const findedAsset = assets.find(({ name, currency }) => {
-          if (asset === name) return currency;
-        });
-
-        return findedAsset.currency;
-      },
-      ...mapMutations('accounts', [SET_ASSETS]),
-      async reload(page = 1) {
-        const props = {
-          page,
-          limit: this.perPage,
-        };
-        const data = await this.$api.getAssets(props);
-        this[SET_ASSETS](data);
+      propsFields: {
+        type: Array,
+        default() {
+          return [];
+        },
       },
     },
   };

@@ -11,6 +11,7 @@ function formatURL(api, path, query) {
 async function get(api, path, query, isStandard = true) {
   const { page = 1, limit = 10 } = query;
   const offset = limit * (page - 1);
+  delete query.page;
   let data;
   try {
     data = await http.get(

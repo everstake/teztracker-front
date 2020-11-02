@@ -5,7 +5,6 @@
         <h4 class="tz-title--bold">
           {{ $t('listTypes.txsList') }}
         </h4>
-        <!--        <Dropdown dropdownTitle="This year" />-->
       </template>
       <template v-slot:right-content class="text">
         <Counter show-line :count="count" />
@@ -17,32 +16,56 @@
 
     <b-card-body>
       <TxsList
-        :show-per-page-filter="showPerPageFilter"
-        :is-table-complete="false"
+        :show-limit-filter="showLimitFilter"
+        :loading="loading"
+        :limit="limit"
+        :items="items"
+        :count="count"
+        :page="page"
+        :props-fields="fields"
+        @onPageChange="handlePageChange"
       />
     </b-card-body>
   </b-card>
 </template>
+
 <script>
-  import { mapState } from 'vuex';
   import CardHeader from '../partials/CardHeader';
-  // import Dropdown from "../partials/Dropdown";
   import Counter from '../partials/Counter';
   import TxsList from '@/components/transactions/TxsList';
+  import reloadNavigationTable from '@/mixins/reloadNavigationList';
 
   export default {
     name: 'TxsCard',
     components: {
       CardHeader,
-      // Dropdown,
       Counter,
       TxsList,
     },
-    props: ['showPerPageFilter'],
+    mixins: [reloadNavigationTable],
+    props: {
+      showLimitFilter: {
+        type: Boolean,
+        default: true,
+      },
+    },
     computed: {
-      ...mapState('operations', {
-        count: (state) => state.counts.txs,
-      }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
+          { key: 'level', label: this.$t('common.blockId') },
+          { key: 'txhash', label: this.$t('hashTypes.txHash') },
+          { key: 'timestamp', label: this.$t('common.timestamp') },
+        ];
+      },
+    },
+    methods: {
+      async reload() {
+        const { page, limit } = this;
+        const data = await this.$api.getTransactions({ page, limit });
+        this.items = data.data;
+        this.count = data.count;
+      },
     },
   };
 </script>

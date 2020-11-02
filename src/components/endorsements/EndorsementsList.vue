@@ -1,210 +1,54 @@
 <template>
   <div>
-    <div
-      class="d-flex justify-content-between mb-2"
-      v-if="!isBlockEndorsements"
-    >
-      <PerPageSelect @per-page="$_setPerPage" />
+    <div v-if="showLimitFilter" class="d-flex justify-content-between mb-2">
+      <LimitSelect :loading="loading" :limit="limit" @onLimitChange="(limit) => $emit('onLimitChange', limit)" />
     </div>
 
-    <b-table
-      responsive
-      show-empty
-      :items="endorsements"
-      :fields="getTableFields"
-      :current-page="currentPage"
-      :per-page="0"
-      borderless
-      class="transactions-table"
-      :empty-text="$t('common.noData')"
-    >
-      <template slot="block" slot-scope="row">
-        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
-          {{ row.item.level | formatInteger }}
-        </b-link>
-      </template>
+    <EndorsementsTable
+      :propsFields="propsFields"
+      :loading="loading"
+      :items="items"
+      :page="page"
+      :limit="limit"
+    />
 
-      <template slot="txhash" slot-scope="row">
-        <span class="d-flex align-items-center">
-          <b-link
-            :to="{
-              name: 'tx',
-              params: { txhash: row.item.operationGroupHash },
-            }"
-          >
-            {{ row.item.operationGroupHash | longhash }}
-          </b-link>
-
-          <BtnCopy :text-to-copy="row.item.operationGroupHash" />
-        </span>
-      </template>
-
-      <template slot="blockLevel" slot-scope="row">
-        <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
-          {{ row.item.blockLevel | formatInteger }}
-        </b-link>
-      </template>
-
-      <template slot="endorser" slot-scope="row">
-        <span class="d-flex align-items-center">
-          <IdentIcon :seed="row.item.delegate" />
-
-          <b-link
-            :to="{ name: 'account', params: { account: row.item.delegate } }"
-          >
-            <span v-if="row.item.delegateName">{{
-              row.item.delegateName
-            }}</span>
-            <span v-else>{{ row.item.delegate | longhash }}</span>
-          </b-link>
-
-          <BtnCopy
-            v-if="!row.item.delegateName"
-            :text-to-copy="row.item.delegate"
-          />
-        </span>
-      </template>
-
-      <template slot="level" slot-scope="row">
-        <b-link :to="{ name: 'block', params: { level: row.item.level } }">
-          {{ row.item.level | formatInteger }}
-        </b-link>
-      </template>
-
-      <template slot="slots" slot-scope="row">
-        {{ row.item.slots }}
-      </template>
-
-      <template slot="timestamp" slot-scope="row">
-        {{ row.item.timestamp | timeformat(dateFormat) }}
-      </template>
-    </b-table>
-
-    <Pagination
-      v-if="!disablePagination"
-      @change="$_handleCurrentPageChange"
-      :total-rows="count"
-      :per-page="perPage"
+    <PaginationNav
+      :limit="limit"
+      :page="page"
+      :count="count"
+      :loading="loading"
+      @onPageChange="(page) => $emit('onPageChange', page)"
     />
   </div>
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex';
-  import { SET_ENDORSEMENTS_COUNT } from '@/store/mutations.types';
-  import PerPageSelect from '@/components/partials/PerPageSelect';
-  import Pagination from '../partials/Pagination';
-  import BtnCopy from '@/components/partials/BtnCopy';
-  import IdentIcon from '@/components/accounts/IdentIcon';
-  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
-  import setPerPage from '@/mixins/setPerPage';
+  import EndorsementsTable from '@/components/partials/tables/EndorsementsTable';
+  import PaginationNav from '@/components/partials/PaginationNav';
+  import LimitSelect from '@/components/partials/LimitSelect';
 
   export default {
     name: 'EndorsementsList',
     components: {
-      PerPageSelect,
-      Pagination,
-      BtnCopy,
-      IdentIcon,
+      LimitSelect,
+      PaginationNav,
+      EndorsementsTable,
     },
-    mixins: [handleCurrentPageChange, setPerPage],
-    props: ['blockHash', 'account', 'isBaker', 'disablePagination'],
-    data() {
-      return {
-        endorsements: [],
-        count: 0,
-        fields: [],
-        bakerFields: [],
-      };
-    },
-    computed: {
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
-      level() {
-        return this.$route.params.level;
+    props: {
+      items: Array,
+      count: Number,
+      limit: Number,
+      page: Number,
+      loading: Boolean,
+      showLimitFilter: {
+        type: Boolean,
+        default: true,
       },
-      isBlockEndorsements() {
-        return this.level > 0;
-      },
-      getTableFields() {
-        if (!this.$i18n.locale) return [];
-        if (this.isBaker) {
-          return [
-            { key: 'level', label: this.$t('endorsementsList.endorsedBlock') },
-            { key: 'txhash', label: this.$t('hashTypes.endorsementHash') },
-            { key: 'blockLevel', label: this.$t('common.includedInBlock') },
-            { key: 'endorser', label: this.$t('common.endorser') },
-            { key: 'slots', label: this.$t('endorsementsList.slots') },
-            { key: 'timestamp', label: this.$t('common.timestamp') },
-          ];
-        } else {
-          return [
-            { key: 'level', label: this.$t('endorsementsList.endorsedBlock') },
-            { key: 'txhash', label: this.$t('hashTypes.endorsementHash') },
-            { key: 'endorser', label: this.$t('common.endorser') },
-            { key: 'slots', label: this.$t('endorsementsList.slots') },
-            { key: 'timestamp', label: this.$t('common.timestamp') },
-          ];
-        }
-      },
-    },
-    watch: {
-      currentPage: {
-        async handler(value) {
-          await this.reload({ page: value, block: this.blockHash });
+      propsFields: {
+        type: Array,
+        default() {
+          return [];
         },
-      },
-      blockHash: {
-        async handler(value) {
-          if (this.isBlockEndorsements) {
-            await this.reload({ block: value });
-          }
-        },
-      },
-      perPage: {
-        async handler() {
-          if (!this.isBlockEndorsements) {
-            await this.reload({ block: this.blockHash });
-          }
-        },
-      },
-    },
-    async created() {
-      if (this.isBlockEndorsements) {
-        this.perPage = this.$constants.ENDORSEMENTS_LIMIT;
-      } else {
-        this.perPage = this.$constants.PER_PAGE;
-        await this.reload({ block: this.blockHash });
-      }
-    },
-    methods: {
-      ...mapMutations('blocks', [SET_ENDORSEMENTS_COUNT]),
-      async reload({ page = 1, block = 0 } = {}) {
-        const props = {
-          page,
-          limit: this.perPage,
-        };
-        let result;
-        if (this.account) {
-          props.account_id = this.account;
-        }
-        if (this.isBlockEndorsements) {
-          props.block_id = block;
-          // TODO: Refactor API service
-          delete props.page;
-          result = await this.$api.getEndorsements(props);
-        } else {
-          result = await this.$api.getEndorsements(props);
-        }
-        if (result.status !== this.$constants.STATUS_SUCCESS) {
-          return this.$router.replace({
-            name: result.status,
-          });
-        }
-        this.count = result.count;
-        this.endorsements = result.data;
-        this[SET_ENDORSEMENTS_COUNT](this.count);
       },
     },
   };

@@ -1115,3 +1115,9 @@ span a.baker,
   display: inline-block;
   max-width: 100px;
 }
+
+.page--loading {
+  pointer-events: none;
+  user-select: none;
+  background-color: #e0efec;
+}

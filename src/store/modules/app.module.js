@@ -1,6 +1,8 @@
 import Vue from 'vue';
-import { GET_APP_INFO } from '@/store/actions.types';
+import { CANCEL_PENDING_REQUESTS, GET_APP_INFO } from '@/store/actions.types';
 import {
+  ADD_CANCEL_TOKEN,
+  CLEAR_CANCEL_TOKENS,
   SET_APP_INFO,
   SET_APP_NETWORK,
   SET_APP_NETWORK_CHANGABLE,
@@ -14,6 +16,7 @@ const initialState = {
   networkChangable: true,
   priceInfo: {},
   dateFormat: Vue.prototype.$constants.DATE_FORMAT,
+  cancelTokens: [],
 };
 
 export const state = { ...initialState };
@@ -21,6 +24,15 @@ export const state = { ...initialState };
 export const actions = {
   async [GET_APP_INFO]({ commit, rootGetters }) {
     commit(SET_APP_INFO, await rootGetters.API.getInfo());
+  },
+  [CANCEL_PENDING_REQUESTS]({ commit, state }) {
+    state.cancelTokens.forEach((request) => {
+      if (request.cancel) {
+        request.cancel('Request cancelled');
+      }
+    });
+
+    commit(CLEAR_CANCEL_TOKENS);
   },
 };
 
@@ -39,6 +51,12 @@ export const mutations = {
       localStorage.setItem('defaultDateFormat', info);
     }
     state.dateFormat = info;
+  },
+  [ADD_CANCEL_TOKEN](state, token) {
+    state.cancelTokens.push(token);
+  },
+  [CLEAR_CANCEL_TOKENS](state) {
+    state.cancelTokens = [];
   },
 };
 

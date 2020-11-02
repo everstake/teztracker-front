@@ -1,8 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import routes from '@/router/routes';
+import store from '@/store';
 import { state as applicationState, mutations as applicationMutations } from '@/store/modules/app.module';
 import { SET_APP_NETWORK } from '@/store/mutations.types';
+import { CANCEL_PENDING_REQUESTS } from '@/store/actions.types';
 import { translation } from '@/plugins/translation';
 import { constants } from '@/plugins/constants';
 import i18n from '@/plugins/i18n';
@@ -21,6 +23,7 @@ router.beforeEach((to, from, next) => {
   const applicationLanguage = translation.getUserLang().langNoISO;
   const { SUPPORTED_LANGUAGES } = constants;
   const { networkList, network } = applicationState;
+  store.dispatch(`app/${CANCEL_PENDING_REQUESTS}`);
 
   if (routerNameFalsy) {
     next({

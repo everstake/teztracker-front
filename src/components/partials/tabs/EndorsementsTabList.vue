@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :per-page="perPage" @per-page="$_setPerPage" />
+      <LimitSelect
+        :limit="perPage"
+        :loading="loading"
+        @onLimitChange="$_setPerPage"
+      />
     </div>
 
     <b-table
@@ -73,10 +77,11 @@
 
     <PaginationSelect
       v-if="disablePagination"
-      @change="$_handleCurrentPageChange"
       :total-rows="count"
       :per-page="perPage"
       :current-page="currentPage"
+      :loading="loading"
+      @change="$_handleCurrentPageChange"
     />
   </div>
 </template>
@@ -112,6 +117,7 @@
       currentPage: Number,
       perPage: Number,
       loaded: Boolean,
+      loading: Boolean,
       disablePagination: {
         type: Boolean,
         default: false,
@@ -144,7 +150,11 @@
         this.$emit('onLimitChange', { type: 'endorsements', limit: value });
       },
       $_handleCurrentPageChange(page) {
-        this.$emit('onPageChange', { type: 'endorsements', limit: this.perPage, page });
+        this.$emit('onPageChange', {
+          type: 'endorsements',
+          limit: this.perPage,
+          page,
+        });
       },
     },
   };

@@ -35,6 +35,7 @@
                       :currentPage="page.txs"
                       :perPage="limit.txs"
                       :loaded="loaded.txs"
+                      :loading="loading.txs"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                       :block-hash="block.hash"
@@ -60,6 +61,7 @@
                       :currentPage="page.endorsements"
                       :perPage="limit.endorsements"
                       :loaded="loaded.endorsements"
+                      :loading="loading.endorsements"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                       :disable-pagination="true"
@@ -84,6 +86,7 @@
                       :currentPage="page.blockOtherOperations"
                       :perPage="limit.blockOtherOperations"
                       :loaded="loaded.blockOtherOperations"
+                      :loading="loading.blockOtherOperations"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                       :block-hash="block.hash"
@@ -106,7 +109,7 @@
   import BlockOtherOperationsList from '../components/blocks/BlockOtherOperationsList';
   import EndorsementsTabList from '@/components/partials/tabs/EndorsementsTabList';
   import TxsTabList from '@/components/partials/tabs/TxsTabList';
-  import reloadTabTables from '@/mixins/reloadTabTables';
+  import reloadTabTables from '@/mixins/reloadTabulationList';
 
   export default {
     name: 'Block',

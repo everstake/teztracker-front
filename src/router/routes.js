@@ -98,7 +98,7 @@ export default [
       /* Blocks group */
       {
         name: 'blocks',
-        path: 'blocks',
+        path: 'blocks/:page?',
         component: Blocks,
       },
       {
@@ -108,7 +108,7 @@ export default [
       },
       {
         name: 'snapshots',
-        path: 'snapshots',
+        path: 'snapshots/:page?',
         component: Snapshots,
       },
       {
@@ -120,50 +120,50 @@ export default [
 
       /* Operations group */
       // Txs
-      { path: 'txs', name: 'txs', component: Txs },
+      { path: 'txs/:page?', name: 'txs', component: Txs },
       { path: 'tx/:txhash', name: 'tx', component: Tx },
       // Endorsements
       {
-        path: 'endorsements',
+        path: 'endorsements/:page?',
         name: 'endorsements',
         component: Endorsements,
       },
       // Delegations
       {
-        path: 'delegations',
+        path: 'delegations/:page?',
         name: 'delegations',
         component: Delegations,
       },
       // Originations
       {
-        path: 'originations',
+        path: 'originations/:page?',
         name: 'originations',
         component: Originations,
       },
       // Activations
       {
-        path: 'activations',
+        path: 'activations/:page?',
         name: 'activations',
         component: Activations,
       },
       // Double baking
       {
-        path: 'double_baking',
+        path: 'double_baking/:page?',
         name: 'double_baking',
         component: DoubleBaking,
       },
       // Double endorsement
       {
-        path: 'double_endorsement',
+        path: 'double_endorsement/:page?',
         name: 'double_endorsement',
         component: DoubleEndorsement,
       },
       /* Operations group end */
 
       // Bakers
-      { path: 'bakers', name: 'bakers', component: Bakers },
+      { path: 'bakers/:page?', name: 'bakers', component: Bakers },
       {
-        path: 'public_bakers',
+        path: 'public_bakers/:page?',
         name: 'public_bakers',
         component: BakersPublic,
       },
@@ -171,7 +171,7 @@ export default [
 
       /* Accounts group */
       // Accounts
-      { path: 'accounts', name: 'accounts', component: Accounts },
+      { path: 'accounts/:page?', name: 'accounts', component: Accounts },
       {
         path: 'account/:account',
         name: 'account',
@@ -179,14 +179,14 @@ export default [
       },
       // Top accounts
       {
-        path: 'top_accounts',
+        path: 'top_accounts/:page?',
         name: 'top_accounts',
         component: TopAccounts,
       },
       // Contracts
-      { path: 'contracts', name: 'contracts', component: Contracts },
+      { path: 'contracts/:page?', name: 'contracts', component: Contracts },
       // Assets
-      { path: 'assets', name: 'assets', component: Assets },
+      { path: 'assets/:page?', name: 'assets', component: Assets },
       { path: 'asset/:id', name: 'asset', component: Asset },
       /* Accounts group end */
 

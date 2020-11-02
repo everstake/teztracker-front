@@ -5,7 +5,6 @@
         <h4 class="tz-title--bold">
           {{ $t('listTypes.blocksList') }}
         </h4>
-        <!--        <Dropdown dropdownTitle="This year" />-->
       </template>
       <template v-slot:right-content class="text">
         <Counter show-line :count="count" />
@@ -16,34 +15,81 @@
     </CardHeader>
 
     <b-card-body>
-      <BlocksList
-        :show-per-page-filter="showPerPageFilter"
-        :is-table-complete="false"
+      <BlocksTable
+        :show-limit-filter="showLimitFilter"
+        :loading="loading"
+        :limit="limit"
+        :items="items"
+        :count="count"
+        :page="page"
+        :props-fields="fields"
+      />
+
+      <PaginationSelect
+        :per-page="limit"
+        :total-rows="count"
+        :current-page="page"
+        @change="handlePageChange"
       />
     </b-card-body>
   </b-card>
 </template>
 
 <script>
-  import { mapState } from 'vuex';
   import CardHeader from '../partials/CardHeader';
-  // import Dropdown from "../partials/Dropdown";
   import Counter from '../partials/Counter';
-  import BlocksList from '@/components/blocks/BlocksList';
+  import PaginationSelect from '@/components/partials/PaginationSelect';
+  import BlocksTable from '@/components/partials/tables/BlocksTable';
 
   export default {
     name: 'BlocksCard',
     components: {
+      BlocksTable,
       CardHeader,
-      // Dropdown,
       Counter,
-      BlocksList,
+      PaginationSelect,
     },
-    props: ['showPerPageFilter'],
+    data() {
+      return {
+        items: [],
+        count: 0,
+        page: this.$constants.INITIAL_CURRENT_PAGE,
+        limit: this.$constants.PER_PAGE,
+        loading: false,
+      };
+    },
+    props: {
+      showLimitFilter: {
+        type: Boolean,
+        default: true,
+      },
+    },
     computed: {
-      ...mapState('blocks', {
-        count: (state) => state.counts.blocks,
-      }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
+          { key: 'level', label: this.$t('common.blockId') },
+          { key: 'timestamp', label: this.$t('common.timestamp') },
+          { key: 'baker', label: this.$tc('common.baker', 1) },
+        ];
+      },
+    },
+    async created() {
+      await this.reload();
+    },
+    methods: {
+      async reload() {
+        const { page, limit } = this;
+        this.loading = true;
+        const data = await this.$api.getBlocks({ page, limit });
+        this.loading = false;
+        this.items = data.data;
+        this.count = data.count;
+      },
+      handlePageChange(page) {
+        this.page = page;
+        this.reload();
+      },
     },
   };
 </script>
