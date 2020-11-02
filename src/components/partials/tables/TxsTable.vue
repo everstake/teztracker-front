@@ -4,7 +4,7 @@
     show-empty
     :items="items"
     :fields="fields"
-    :current-page="currentPage"
+    :current-page="page"
     :per-page="0"
     borderless
     class="transactions-table"

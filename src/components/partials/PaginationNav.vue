@@ -1,14 +1,16 @@
 <template>
-  <div class="pagination-nav">
+  <div
+    class="pagination-nav"
+    :class="{
+      'pagination-nav--loading': loading,
+    }"
+  >
     <b-pagination-nav
       :limit="3"
       :value="page"
       :number-of-pages="numberOfPages"
       :link-gen="generateLinks"
       use-router
-      :class="{
-        'page--loading': loading,
-      }"
       @change="onChange"
     />
   </div>
@@ -40,8 +42,13 @@
       generateLinks(page) {
         const { limit } = this;
         const { name } = this.$route;
-        const pageNotDefault = this.$constants.INITIAL_CURRENT_PAGE !== page ? page : undefined;
-        const limitNotDefault = this.$constants.PER_PAGE !== limit && this.$constants.PER_PAGE_SNAPSHOTS !== limit ? limit : undefined;
+        const pageNotDefault =
+          this.$constants.INITIAL_CURRENT_PAGE !== page ? page : undefined;
+        const limitNotDefault =
+          this.$constants.PER_PAGE !== limit &&
+          this.$constants.PER_PAGE_SNAPSHOTS !== limit
+            ? limit
+            : undefined;
 
         return {
           name,
@@ -69,5 +76,13 @@
       overflow: hidden;
       width: 100%;
     }
+  }
+</style>
+
+<style>
+  .pagination-nav--loading .page-item.active {
+    pointer-events: none;
+    user-select: none;
+    background-color: #e0efec;
   }
 </style>

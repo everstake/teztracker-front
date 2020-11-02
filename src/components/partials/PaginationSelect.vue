@@ -1,14 +1,16 @@
 <template>
-  <div class="pagination-select">
+  <div
+    class="pagination-select"
+    :class="{
+      'pagination-select--loading': loading,
+    }"
+  >
     <b-pagination
       :limit="3"
       :value="currentPage"
       :total-rows="totalRows"
       :per-page="perPage"
       :align="align"
-      :class="{
-        'page--loading': loading,
-      }"
       @change="handlePageChange"
     />
   </div>
@@ -40,7 +42,7 @@
 
 <style lang="scss" scoped>
   .pagination-select {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
     position: relative;
@@ -54,5 +56,13 @@
       overflow: hidden;
       width: 100%;
     }
+  }
+</style>
+
+<style>
+  .pagination-select--loading .page-item.active {
+    pointer-events: none;
+    user-select: none;
+    background-color: #e0efec;
   }
 </style>

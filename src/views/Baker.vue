@@ -34,6 +34,7 @@
                       :currentPage="page.txs"
                       :perPage="limit.txs"
                       :loaded="loaded.txs"
+                      :loading="loading.txs"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
@@ -59,6 +60,7 @@
                       :currentPage="page.delegations"
                       :perPage="limit.delegations"
                       :loaded="loaded.delegations"
+                      :loading="loading.delegations"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
@@ -84,6 +86,7 @@
                       :currentPage="page.originations"
                       :perPage="limit.originations"
                       :loaded="loaded.originations"
+                      :loading="loading.originations"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
@@ -110,6 +113,7 @@
                       :currentPage="page.endorsements"
                       :perPage="limit.endorsements"
                       :loaded="loaded.endorsements"
+                      :loading="loading.endorsements"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                       :is-baker="true"
@@ -191,6 +195,7 @@
                       :currentPage="page.rewards"
                       :perPage="limit.rewards"
                       :loaded="loaded.rewards"
+                      :loading="loading.rewards"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
@@ -215,6 +220,7 @@
                       :currentPage="page.bonds"
                       :perPage="limit.bonds"
                       :loaded="loaded.bonds"
+                      :loading="loading.bonds"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
