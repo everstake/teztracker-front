@@ -216,7 +216,6 @@
       return {
         perPage: this.$constants.PER_PAGE,
         transactions: [],
-        txInfo: {},
         count: 0,
         operationsWithHiddenTxTable: [
           'endorsement',
@@ -325,6 +324,26 @@
           },
         );
       },
+      txInfo() {
+        if (!this.transactions || !this.transactions.length) return {};
+
+        if (this.transactions.length > 1) {
+          return this.transactions.reduce((acc, txObj) => {
+            if (!Object.keys(acc).length && txObj.kind !== 'reveal') {
+              acc = { ...txObj };
+              return acc;
+            }
+
+            if (txObj.kind === 'transaction') {
+              acc.fee += txObj.fee;
+            }
+
+            return acc;
+          }, {});
+        }
+
+        return this.transactions[0];
+      },
     },
     watch: {
       currentPage: {
@@ -360,11 +379,6 @@
           });
         }
         this.transactions = data.data;
-        // this.txInfo = this.transactions[0] || {};
-        this.txInfo =
-          this.transactions.length && this.transactions.length > 1
-            ? this.transactions.find((txObj) => txObj.kind !== 'reveal')
-            : this.transactions[0] || {};
         this.dataFetched = true;
         this.count = data.count;
       },
