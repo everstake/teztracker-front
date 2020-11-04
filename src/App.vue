@@ -19,8 +19,11 @@
       async checkHealth() {
         try {
           const resp = await this.$api.checkHealth();
+          if (resp.status === 500) {
+            this.$router.replace({ name: 'maintenance' });
+          }
 
-          if (this.$route.name === 'maintenance' && resp.data.status) {
+          if (this.$route.name === 'maintenance' && resp.status === 200) {
             this.$router.replace({ name: 'network' });
           }
         } catch (e) {
