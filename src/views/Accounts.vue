@@ -67,10 +67,14 @@
       ...mapMutations('accounts', [SET_ACCOUNTS]),
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getAccounts({ page, limit });
-        this.items = data.data;
-        this.count = data.count;
-        this[SET_ACCOUNTS](data);
+        await this.$api
+          .getAccounts({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_ACCOUNTS](data);
+          })
+          .catch(() => {});
       },
     },
   };

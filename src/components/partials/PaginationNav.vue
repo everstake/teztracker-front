@@ -39,7 +39,7 @@
         const propsNotReady = !this.propsReady;
 
         if (propsNotReady) {
-          return 1;
+          return this.page;
         }
 
         return this.count / this.limit;

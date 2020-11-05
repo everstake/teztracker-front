@@ -67,9 +67,13 @@
     methods: {
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getTopAccounts({ page, limit });
-        this.items = data.data;
-        this.count = data.count;
+        await this.$api
+          .getTopAccounts({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+          })
+          .catch(() => {});
       },
     },
   };

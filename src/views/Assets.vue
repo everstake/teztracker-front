@@ -67,10 +67,17 @@
       ...mapMutations('accounts', [SET_ASSETS]),
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getAssets({ page, limit });
-        this.items = data.data.map((assets, index) => ({ ...assets, id: index + 1 }));;
-        this.count = data.count;
-        this[SET_ASSETS](data);
+        await this.$api
+          .getAssets({ page, limit })
+          .then((data) => {
+            this.items = data.data.map((assets, index) => ({
+              ...assets,
+              id: index + 1,
+            }));
+            this.count = data.count;
+            this[SET_ASSETS](data);
+          })
+          .catch(() => {});
       },
     },
   };

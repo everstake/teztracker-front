@@ -70,10 +70,14 @@
       ...mapMutations('accounts', [SET_CONTRACTS]),
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getContracts({ page, limit });
-        this.items = data.data;
-        this.count = data.count;
-        this[SET_CONTRACTS](data);
+        await this.$api
+          .getContracts({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_CONTRACTS](data);
+          })
+          .catch(() => {});
       },
     },
   };
