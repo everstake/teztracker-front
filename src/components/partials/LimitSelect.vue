@@ -10,7 +10,7 @@
       :options="perPageOptions"
       class="limit"
       :class="{
-        'page--loading': loading,
+        'page__el--loading': loading,
         'limit--loading': loading,
       }"
       @input="handleLimitChange"
