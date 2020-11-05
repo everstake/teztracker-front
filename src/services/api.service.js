@@ -20,6 +20,16 @@ async function get(api, path, query, isStandard = true) {
         : formatURL(api, path, Object.assign({}, query)),
     );
   } catch (e) {
+    const responseNotDefined = !e.response;
+    const requestHasBeenCancelled = e.message === 'Request cancelled';
+
+    if (responseNotDefined && requestHasBeenCancelled) {
+      e.response = {
+        headers: {},
+        data: null,
+        status: 499,
+      };
+    }
     data = e.response;
     handleError(e);
   }
@@ -295,3 +305,4 @@ const TzAPI = {
 };
 
 export default TzAPI;
+
