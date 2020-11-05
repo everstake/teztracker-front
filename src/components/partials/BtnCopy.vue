@@ -25,15 +25,15 @@
     },
     methods: {
       onCopy() {
-        this.$bvToast.toast('Copied', {
-          title: 'Success',
+        this.$bvToast.toast(this.$t('btnCopy.copied'), {
+          title: this.$t('errorsNotifications.success'),
           variant: 'success',
           autoHideDelay: 1500,
         });
       },
       onError() {
-        this.$bvToast.toast('Failed to copy', {
-          title: 'Error',
+        this.$bvToast.toast(this.$t('btnCopy.failed'), {
+          title: this.$t('errorsNotifications.error'),
           variant: 'danger',
           autoHideDelay: 1500,
         });
