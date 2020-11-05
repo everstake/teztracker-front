@@ -19,7 +19,7 @@
       async checkHealth() {
         try {
           const resp = await this.$api.checkHealth();
-          if (resp.status === 500) {
+          if (resp && resp.status === 500) {
             this.$router.replace({ name: 'maintenance' });
           }
 
