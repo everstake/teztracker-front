@@ -70,10 +70,14 @@
       ...mapMutations('operations', [SET_ORIGINATIONS_COUNT]),
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getOriginations({ page, limit });
-        this.items = data.data;
-        this.count = data.count;
-        this[SET_ORIGINATIONS_COUNT](data.count);
+        await this.$api
+          .getOriginations({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_ORIGINATIONS_COUNT](data.count);
+          })
+          .catch(() => {});
       },
     },
   };

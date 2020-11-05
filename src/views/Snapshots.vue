@@ -69,10 +69,11 @@
       ...mapMutations('blocks', [SET_SNAPSHOTS_COUNT]),
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getSnapshots({ page, limit });
-        this.items = data.data;
-        this.count = data.count;
-        this[SET_SNAPSHOTS_COUNT](data.count);
+        await this.$api.getSnapshots({ page, limit }).then((data) => {
+          this.items = data.data;
+          this.count = data.count;
+          this[SET_SNAPSHOTS_COUNT](data.count);
+        });
       },
     },
   };

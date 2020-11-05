@@ -70,10 +70,14 @@
       ...mapMutations('blocks', [SET_ENDORSEMENTS_COUNT]),
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getEndorsements({ page, limit });
-        this.items = data.data;
-        this.count = data.count;
-        this[SET_ENDORSEMENTS_COUNT](data.count);
+        await this.$api
+          .getEndorsements({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_ENDORSEMENTS_COUNT](data.count);
+          })
+          .catch(() => {});
       },
     },
   };

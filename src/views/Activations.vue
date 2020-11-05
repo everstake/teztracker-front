@@ -80,10 +80,14 @@
       ...mapMutations('operations', [SET_ACTIVATIONS_COUNT]),
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getActivations({ page, limit });
-        this.items = data.data;
-        this.count = data.count;
-        this[SET_ACTIVATIONS_COUNT](data.count);
+        await this.$api
+          .getActivations({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_ACTIVATIONS_COUNT](data.count);
+          })
+          .catch(() => {});
       },
     },
   };

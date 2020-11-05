@@ -70,10 +70,14 @@
       ...mapMutations('accounts', [SET_PUBLIC_BAKERS]),
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getPublicBakers({ page, limit });
-        this.items = data.data;
-        this.count = data.count;
-        this[SET_PUBLIC_BAKERS](data);
+        await this.$api
+          .getPublicBakers({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_PUBLIC_BAKERS](data);
+          })
+          .catch(() => {});
       },
     },
   };

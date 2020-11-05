@@ -70,10 +70,14 @@
       ...mapMutations('operations', [SET_DOUBLE_BAKING_COUNT]),
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getDoubleBaking({ page, limit });
-        this.items = data.data;
-        this.count = data.count;
-        this[SET_DOUBLE_BAKING_COUNT](data.count);
+        await this.$api
+          .getDoubleBaking({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_DOUBLE_BAKING_COUNT](data.count);
+          })
+          .catch(() => {});
       },
     },
   };

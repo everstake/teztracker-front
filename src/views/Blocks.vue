@@ -67,10 +67,14 @@
       ...mapMutations('blocks', [SET_BLOCK]),
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getBlocks({ page, limit });
-        this.items = data.data;
-        this.count = data.count;
-        this[SET_BLOCK](data);
+        await this.$api
+          .getBlocks({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_BLOCK](data);
+          })
+          .catch(() => {});
       },
     },
   };

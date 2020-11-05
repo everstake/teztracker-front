@@ -70,10 +70,14 @@
       ...mapMutations('operations', [SET_DELEGATIONS_COUNT]),
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getDelegations({ page, limit });
-        this.items = data.data;
-        this.count = data.count;
-        this[SET_DELEGATIONS_COUNT](data.count);
+        await this.$api
+          .getDelegations({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_DELEGATIONS_COUNT](data.count);
+          })
+          .catch(() => {});
       },
     },
   };
