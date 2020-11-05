@@ -6,12 +6,12 @@
     }"
   >
     <b-pagination-nav
+      v-model="pageModel"
       :limit="3"
-      :value="page"
       :number-of-pages="numberOfPages"
       :link-gen="generateLinks"
       use-router
-      @change="onChange"
+      no-page-detect
     />
   </div>
 </template>
@@ -26,19 +26,28 @@
       loading: Boolean,
     },
     computed: {
+      pageModel: {
+        get() {
+          return this.page;
+        },
+        set(page) {
+          this.$emit('onPageChange', page);
+        },
+      },
       numberOfPages() {
-        if (this.propsReady) {
-          return Math.ceil(this.count / this.limit);
+        const propsNotReady = !this.propsReady;
+
+        if (propsNotReady) {
+          return 1;
         }
+
+        return this.count / this.limit;
       },
       propsReady() {
         return this.count > 0 && this.limit && this.page;
       },
     },
     methods: {
-      onChange(page) {
-        this.$emit('onPageChange', page);
-      },
       generateLinks(page) {
         const { limit } = this;
         const { name } = this.$route;
@@ -52,8 +61,12 @@
 
         return {
           name,
-          params: { page: pageNotDefault },
-          query: { limit: limitNotDefault },
+          params: {
+            page: pageNotDefault,
+          },
+          query: {
+            limit: limitNotDefault,
+          },
         };
       },
     },

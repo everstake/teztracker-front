@@ -1,5 +1,5 @@
 <template>
-  <b-card no-body>
+  <b-card no-body class="blocks-card">
     <CardHeader>
       <template v-slot:left-content class="text">
         <h4 class="tz-title--bold">
@@ -8,15 +8,11 @@
       </template>
       <template v-slot:right-content class="text">
         <Counter show-line :count="count" />
-        <router-link class="link fs-14" :to="{ name: 'blocks' }">
-          {{ $t('common.viewAll') }}
-        </router-link>
       </template>
     </CardHeader>
 
     <b-card-body>
       <BlocksTable
-        :show-limit-filter="showLimitFilter"
         :loading="loading"
         :limit="limit"
         :items="items"
@@ -25,12 +21,11 @@
         :props-fields="fields"
       />
 
-      <PaginationSelect
-        :per-page="limit"
-        :total-rows="count"
-        :current-page="page"
-        @change="handlePageChange"
-      />
+      <div class="blocks-card__actions">
+        <router-link class="blocks-card__link link fs-14" :to="{ name: 'blocks' }">
+          {{ $t('common.viewAll') }}
+        </router-link>
+      </div>
     </b-card-body>
   </b-card>
 </template>
@@ -38,8 +33,8 @@
 <script>
   import CardHeader from '../partials/CardHeader';
   import Counter from '../partials/Counter';
-  import PaginationSelect from '@/components/partials/PaginationSelect';
   import BlocksTable from '@/components/partials/tables/BlocksTable';
+  import reloadNavigationList from '@/mixins/reloadNavigationList';
 
   export default {
     name: 'BlocksCard',
@@ -47,23 +42,8 @@
       BlocksTable,
       CardHeader,
       Counter,
-      PaginationSelect,
     },
-    data() {
-      return {
-        items: [],
-        count: 0,
-        page: this.$constants.INITIAL_CURRENT_PAGE,
-        limit: this.$constants.PER_PAGE,
-        loading: false,
-      };
-    },
-    props: {
-      showLimitFilter: {
-        type: Boolean,
-        default: true,
-      },
-    },
+    mixins: [reloadNavigationList],
     computed: {
       fields() {
         if (!this.$i18n.locale) return [];
@@ -74,9 +54,6 @@
         ];
       },
     },
-    async created() {
-      await this.reload();
-    },
     methods: {
       async reload() {
         const { page, limit } = this;
@@ -86,10 +63,17 @@
         this.items = data.data;
         this.count = data.count;
       },
-      handlePageChange(page) {
-        this.page = page;
-        this.reload();
-      },
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  .blocks-card__actions {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .blocks-card__link {
+    font-weight: bold;
+  }
+</style>

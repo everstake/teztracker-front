@@ -67,14 +67,10 @@
       ...mapMutations('operations', [SET_TX_COUNT]),
       async reload() {
         const { page, limit } = this;
-        const props = {
-          page,
-          limit,
-        };
-        const data = await this.$api.getTransactions(props);
+        const data = await this.$api.getTransactions({ page, limit });
         this.items = data.data;
         this.count = data.count;
-        this[SET_TX_COUNT](this.count);
+        this[SET_TX_COUNT](data.count);
       },
     },
   };
