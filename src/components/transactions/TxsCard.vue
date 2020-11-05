@@ -13,7 +13,6 @@
 
     <b-card-body>
       <TxsTable
-        :show-limit-filter="showLimitFilter"
         :loading="loading"
         :limit="limit"
         :items="items"
@@ -37,23 +36,15 @@
   import Counter from '../partials/Counter';
   import reloadNavigationTable from '@/mixins/reloadNavigationList';
   import TxsTable from '@/components/partials/tables/TxsTable';
-  import PaginationSelect from '@/components/partials/PaginationSelect';
 
   export default {
     name: 'TxsCard',
     components: {
-      PaginationSelect,
       TxsTable,
       CardHeader,
       Counter,
     },
     mixins: [reloadNavigationTable],
-    props: {
-      showLimitFilter: {
-        type: Boolean,
-        default: true,
-      },
-    },
     computed: {
       fields() {
         if (!this.$i18n.locale) return [];
@@ -106,6 +97,6 @@
 
 <style>
   .txs-card--hash-height span {
-    min-height: 27px;
+    height: 28px;
   }
 </style>

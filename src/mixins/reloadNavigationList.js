@@ -9,59 +9,66 @@ export default {
       loading: false,
     };
   },
-  watch: {
-    $route: {
-      immediate: true,
-      deep: true,
-      async handler($route) {
-        const {
-          params: { page },
-          query: { limit },
-        } = $route;
-        this.updateNavigationParams(page, limit);
-        await this.executeReload();
-      },
-    },
+  async created() {
+    const { INITIAL_CURRENT_PAGE, PER_PAGE, PER_PAGE_SNAPSHOTS } = this.$constants;
+    const { name: routeName, params, query, params: { page: routePage }, query: { limit: routeLimit } } = this.$route;
+    const page =
+      INITIAL_CURRENT_PAGE !== routePage ? routePage : undefined;
+    const limit =
+      PER_PAGE !== routeLimit &&
+      PER_PAGE_SNAPSHOTS !== routeLimit
+        ? routeLimit
+        : undefined;
+
+    if (!page || !limit) {
+      const route = {
+        name: routeName,
+        params: { ...params, page },
+        query: { ...query, limit },
+      };
+      this.$router.replace(route);
+    }
+    this.updatePage(page);
+    this.updateLimit(limit);
+    await this.executeReload();
   },
   methods: {
-    updateNavigationParams(page, limit) {
-      const { name: routeName } = this.$route;
+    isLimitValid(limit) {
+      const number = Number(limit);
+      return typeof number === 'number' && number > 0;
+    },
+    isPageValid(page) {
+      const number = Number(page);
+      return typeof number === 'number' && number > 0;
+    },
+    updatePage(page) {
+      const pageFalsy = !page;
+      const pageNotValid = !this.isPageValid(page);
 
-      if (page) {
-        const pageValid = this.isPageNumberValid(page);
-
-        if (pageValid) {
-          this.page = Number(page);
-        } else {
-          this.page = this.$constants.INITIAL_CURRENT_PAGE;
-        }
-      } else {
+      if (pageFalsy || pageNotValid) {
         this.page = this.$constants.INITIAL_CURRENT_PAGE;
-      }
-
-      if (limit) {
-        const limitNumber = Number(limit);
-        const limitSnapshot = limitNumber === this.$constants.PER_PAGE_SNAPSHOTS;
-        const limitMatched = this.$constants.PER_PAGE_OPTIONS.includes(limitNumber);
-        const limitAllowed = limitSnapshot || limitMatched;
-
-        if (limitAllowed) {
-          this.limit = Number(limit);
-        } else {
-          this.limit = this.getDefaultLimit(routeName);
-        }
       } else {
+        this.page = Number(page);
+      }
+    },
+    updateLimit(limit) {
+      const { name: routeName } = this.$route;
+      const limitFalsy = !limit;
+      const limitNotValid = !this.isLimitValid(limit);
+      const limitNotAllowed =
+        Number(limit) !== this.$constants.PER_PAGE_SNAPSHOTS &&
+        !this.$constants.PER_PAGE_OPTIONS.includes(Number(limit));
+
+      if (limitFalsy || limitNotValid || limitNotAllowed) {
         this.limit = this.getDefaultLimit(routeName);
+      } else {
+        this.limit = Number(limit);
       }
     },
     async executeReload() {
       this.loading = true;
       await this.reload();
       this.loading = false;
-    },
-    isPageNumberValid(value) {
-      const number = Number(value);
-      return typeof number === 'number' && number > 0;
     },
     getDefaultLimit(routeName) {
       if (routeName === 'snapshots') {
@@ -70,30 +77,29 @@ export default {
 
       return this.$constants.PER_PAGE;
     },
-    async handlePageChange(page) {
-      const { name: routeName, params, query } = this.$route;
-      this.page = page;
-      this.updateNavigationParams(this.page, this.limit);
-      const pageNotInitial = this.$constants.INITIAL_CURRENT_PAGE === this.page ? undefined : this.page;
-      const limitNotInitial = this.getDefaultLimit(routeName) === this.limit ? undefined : this.limit;
-      const route = {
-        name: routeName,
-        params: { ...params, page: pageNotInitial },
-        query: { ...query, limit: limitNotInitial },
-      };
-      this.$router.replace(route);
-    },
     async handleLimitChange(limit) {
+      const { INITIAL_CURRENT_PAGE } = this.$constants;
       const { name: routeName, params, query } = this.$route;
-      this.limit = limit;
-      this.updateNavigationParams(this.page, this.limit);
-      const limitNotInitial = this.getDefaultLimit(routeName) === this.limit ? undefined : this.limit;
+      const limitNotDefault =
+        this.$constants.PER_PAGE !== limit &&
+        this.$constants.PER_PAGE_SNAPSHOTS !== limit
+          ? limit
+          : undefined;
       const route = {
         name: routeName,
         params: { ...params, page: undefined },
-        query: { ...query, limit: limitNotInitial },
+        query: { ...query, limit: limitNotDefault },
       };
       this.$router.replace(route);
+      this.updateLimit(limitNotDefault);
+      this.updatePage(INITIAL_CURRENT_PAGE);
+      await this.executeReload();
+    },
+    async handlePageChange(page) {
+      if (page !== this.page) {
+        this.updatePage(page);
+        await this.executeReload();
+      }
     },
   },
 };

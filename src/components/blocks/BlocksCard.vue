@@ -13,7 +13,6 @@
 
     <b-card-body>
       <BlocksTable
-        :show-limit-filter="showLimitFilter"
         :loading="loading"
         :limit="limit"
         :items="items"
@@ -34,8 +33,8 @@
 <script>
   import CardHeader from '../partials/CardHeader';
   import Counter from '../partials/Counter';
-  import PaginationSelect from '@/components/partials/PaginationSelect';
   import BlocksTable from '@/components/partials/tables/BlocksTable';
+  import reloadNavigationList from '@/mixins/reloadNavigationList';
 
   export default {
     name: 'BlocksCard',
@@ -43,23 +42,8 @@
       BlocksTable,
       CardHeader,
       Counter,
-      PaginationSelect,
     },
-    data() {
-      return {
-        items: [],
-        count: 0,
-        page: this.$constants.INITIAL_CURRENT_PAGE,
-        limit: this.$constants.PER_PAGE,
-        loading: false,
-      };
-    },
-    props: {
-      showLimitFilter: {
-        type: Boolean,
-        default: true,
-      },
-    },
+    mixins: [reloadNavigationList],
     computed: {
       fields() {
         if (!this.$i18n.locale) return [];
@@ -70,9 +54,6 @@
         ];
       },
     },
-    async created() {
-      await this.reload();
-    },
     methods: {
       async reload() {
         const { page, limit } = this;
@@ -81,10 +62,6 @@
         this.loading = false;
         this.items = data.data;
         this.count = data.count;
-      },
-      handlePageChange(page) {
-        this.page = page;
-        this.reload();
       },
     },
   };
