@@ -76,7 +76,7 @@
           :total-rows="selectedRow.count"
           :per-page="selectedRow.perPage"
           :class="{
-            'page--loading': selectedRow.loading,
+            'page__el--loading': selectedRow.loading,
           }"
           @change="handleModalPagination"
         />
