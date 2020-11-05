@@ -6,7 +6,7 @@
       <b-container fluid>
         <AccountSingle :hash="hash">
           <template #chart="props">
-            <ChartBalanceLast30Days :acc="acc" />
+            <ChartBalanceLast30Days :acc="hash" />
           </template>
         </AccountSingle>
       </b-container>
@@ -41,7 +41,6 @@
                       @onReload="reload"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
-                      @onTransaction="setChartData"
                     />
                   </b-card-body>
                 </b-tab>

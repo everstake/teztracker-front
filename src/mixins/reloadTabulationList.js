@@ -97,7 +97,6 @@ export default {
           name: data.status,
         });
       }
-      this.$emit('onTransaction', 'setChartData');
       this.txs = data.data;
       this.counts.txs = data.count;
       this.loading.txs = false;
