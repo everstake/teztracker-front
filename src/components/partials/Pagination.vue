@@ -7,6 +7,7 @@
       :per-page="perPage"
       :align="align"
       :limit="3"
+      hide-goto-end-buttons
     />
   </div>
 </template>
