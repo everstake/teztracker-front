@@ -12,6 +12,7 @@
       :link-gen="generateLinks"
       use-router
       no-page-detect
+      hide-goto-end-buttons
     />
   </div>
 </template>
