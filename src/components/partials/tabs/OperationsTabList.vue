@@ -4,7 +4,7 @@
       <LimitSelect
         :limit="perPage"
         :loading="loading"
-        @onLimitChange="$_setPerPage"
+        @onLimitChange="(limit) => $emit('onLimitChange', { type: 'operations', limit })"
       />
     </div>
 
@@ -45,7 +45,7 @@
       :total-rows="count"
       :per-page="perPage"
       :loading="loading"
-      @change="$_handleCurrentPageChange"
+      @onPageChange="(page) => $emit('onPageChange', { type: 'operations', page })"
     />
   </div>
 </template>
@@ -100,18 +100,6 @@
       if (itemsNotFetched) {
         this.$emit('onReload', { type: 'operations', limit: this.perPage });
       }
-    },
-    methods: {
-      $_setPerPage(value) {
-        this.$emit('onLimitChange', { type: 'operations', limit: value });
-      },
-      $_handleCurrentPageChange(page) {
-        this.$emit('onPageChange', {
-          type: 'operations',
-          limit: this.perPage,
-          page,
-        });
-      },
     },
   };
 </script>

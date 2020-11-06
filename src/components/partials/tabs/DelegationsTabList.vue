@@ -4,7 +4,7 @@
       <LimitSelect
         :limit="perPage"
         :loading="loading"
-        @onLimitChange="$_setPerPage"
+        @onLimitChange="(limit) => $emit('onLimitChange', { type: 'delegations', limit })"
       />
     </div>
 
@@ -102,7 +102,7 @@
       :per-page="perPage"
       :current-page="currentPage"
       :loading="loading"
-      @change="$_handleCurrentPageChange"
+      @onPageChange="(page) => $emit('onPageChange', { type: 'delegations', page })"
     />
   </div>
 </template>
@@ -165,18 +165,6 @@
       if (itemsNotFetched) {
         this.$emit('onReload', { type: 'delegations', limit: this.perPage });
       }
-    },
-    methods: {
-      $_setPerPage(value) {
-        this.$emit('onLimitChange', { type: 'delegations', limit: value });
-      },
-      $_handleCurrentPageChange(page) {
-        this.$emit('onPageChange', {
-          type: 'delegations',
-          limit: this.perPage,
-          page,
-        });
-      },
     },
   };
 </script>
