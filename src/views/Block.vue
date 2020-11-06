@@ -159,6 +159,7 @@
         this.block = result.data.block;
       },
       async reloadEndorsements({ limit, page }) {
+        this.loading.endorsements = true;
         if (!this.block.hash) return;
         const props = {
           page,
@@ -174,8 +175,10 @@
         this.counts.endorsements = data.count;
         this.endorsements = data.data;
         this.loaded.endorsements = true;
+        this.loading.endorsements = true;
       },
       async reloadTxs({ limit, page }) {
+        this.loading.txs = true;
         if (!this.block.hash) return;
         const props = {
           page,
@@ -191,6 +194,7 @@
         this.txs = data.data;
         this.counts.txs = data.count;
         this.loaded.txs = true;
+        this.loading.txs = false;
       },
     },
   };
