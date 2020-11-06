@@ -4,7 +4,7 @@
       <LimitSelect
         :limit="perPage"
         :loading="loading"
-        @onLimitChange="$_setPerPage"
+        @onLimitChange="(limit) => $emit('onLimitChange', { type: 'baking', limit })"
       />
     </div>
 
@@ -36,7 +36,7 @@
       :per-page="perPage"
       :current-page="currentPage"
       :loading="loading"
-      @change="$_handleCurrentPageChange"
+      @onPageChange="(page) => $emit('onPageChange', { type: 'baking', page })"
     />
 
     <div>
@@ -271,16 +271,6 @@
         this.selectedRow.loading = true;
         this.selectedRow.currentPage = page;
         this.selectedRow.loading = false;
-      },
-      $_setPerPage(value) {
-        this.$emit('onLimitChange', { type: 'baking', limit: value });
-      },
-      $_handleCurrentPageChange(page) {
-        this.$emit('onPageChange', {
-          type: 'baking',
-          limit: this.perPage,
-          page,
-        });
       },
     },
   };

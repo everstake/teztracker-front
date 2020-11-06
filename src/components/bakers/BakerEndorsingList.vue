@@ -1,7 +1,7 @@
 <template>
   <div class="endorsing-list">
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :limit="perPage" @onLimitChange="$_setPerPage" :loading="loading" />
+      <LimitSelect :limit="perPage" @onLimitChange="(limit) => $emit('onLimitChange', { type: 'endorsing', limit })" :loading="loading" />
     </div>
 
     <b-table
@@ -25,7 +25,7 @@
     </b-table>
 
     <PaginationSelect
-      @change="$_handleCurrentPageChange"
+      @onPageChange="(page) => $emit('onPageChange', { type: 'endorsing', page })"
       :total-rows="count"
       :per-page="perPage"
       :current-page="currentPage"
@@ -261,12 +261,6 @@
       },
       handleModalPagination(page) {
         this.selectedRow.currentPage = page;
-      },
-      $_setPerPage(value) {
-        this.$emit('onLimitChange', { type: 'endorsing', limit: value });
-      },
-      $_handleCurrentPageChange(page) {
-        this.$emit('onPageChange', { type: 'endorsing', limit: this.perPage, page });
       },
     },
     async created() {

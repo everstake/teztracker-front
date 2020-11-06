@@ -1,7 +1,13 @@
 <template>
   <div class="baking-list">
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :limit="perPage" @onLimitChange="$_setPerPage" :loading="loading" />
+      <LimitSelect
+        :limit="perPage"
+        :loading="loading"
+        @onLimitChange="
+          (limit) => $emit('onLimitChange', { type: 'rewards', limit })
+        "
+      />
     </div>
 
     <b-table
@@ -37,11 +43,11 @@
     </b-table>
 
     <PaginationSelect
-      @change="$_handleCurrentPageChange"
       :total-rows="count"
-      :per-page="perPage"
       :current-page="currentPage"
       :loading="loading"
+      :per-page="perPage"
+      @onPageChange="(page) => $emit('onPageChange', { type: 'rewards', page })"
     />
 
     <div>
@@ -238,12 +244,6 @@
       },
       handleModalPagination(page) {
         this.selectedRow.currentPage = page;
-      },
-      $_setPerPage(value) {
-        this.$emit('onLimitChange', { type: 'rewards', limit: value });
-      },
-      $_handleCurrentPageChange(page) {
-        this.$emit('onPageChange', { type: 'rewards', limit: this.perPage, page });
       },
     },
     async created() {

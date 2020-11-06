@@ -35,7 +35,7 @@
     },
     methods: {
       handlePageChange(page) {
-        this.$emit('change', page);
+        this.$emit('onPageChange', page);
       },
     },
   };

@@ -1,11 +1,15 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :loading="loading" :limit="limit" @onLimitChange="(limit) => $emit('onLimitChange', limit)" />
+      <LimitSelect
+        :loading="loading"
+        :limit="limit"
+        @onLimitChange="(limit) => $emit('onLimitChange', limit)"
+      />
     </div>
 
     <BakersTable
-      :propsFields="propsFields"
+      :props-fields="propsFields"
       :loading="loading"
       :items="items"
       :page="page"

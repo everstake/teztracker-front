@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :limit="perPage" @onLimitChange="$_setPerPage" :loading="loading"  />
+      <LimitSelect :limit="perPage" @onLimitChange="(limit) => $emit('onLimitChange', { type: 'txs', limit })" :loading="loading"  />
     </div>
 
     <b-table
@@ -101,7 +101,7 @@
       :per-page="perPage"
       :current-page="currentPage"
       :loading="loading"
-      @change="$_handleCurrentPageChange"
+      @onPageChange="(page) => $emit('onPageChange', { type: 'txs', page })"
     />
   </div>
 </template>
@@ -192,12 +192,6 @@
       getAccountName(row, rowHash) {
         return `${row.item[`${rowHash}Name`] ||
           row.item[rowHash].slice(0, 15)}...`;
-      },
-      $_setPerPage(value) {
-        this.$emit('onLimitChange', { type: 'txs', limit: value });
-      },
-      $_handleCurrentPageChange(page) {
-        this.$emit('onPageChange', { type: 'txs', limit: this.perPage, page });
       },
     },
   };

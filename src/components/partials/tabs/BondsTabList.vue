@@ -1,7 +1,7 @@
 <template>
   <div class="baking-list">
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :limit="perPage" :loading="loading" @onLimitChange="$_setPerPage" />
+      <LimitSelect :limit="perPage" :loading="loading" @onLimitChange="(limit) => $emit('onLimitChange', { type: 'bonds', limit })" />
     </div>
 
     <b-table
@@ -192,12 +192,6 @@
         }
 
         return classes.join(' ');
-      },
-      $_setPerPage(value) {
-        this.$emit('onLimitChange', { type: 'bonds', limit: value });
-      },
-      $_handleCurrentPageChange(page) {
-        this.$emit('onPageChange', { type: 'bonds', limit: this.perPage, page });
       },
     },
     async created() {

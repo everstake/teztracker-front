@@ -27,14 +27,14 @@
 
                   <b-card-body>
                     <TxsTabList
-                      @onReload="reload"
                       :txs="txs"
                       :count="counts.txs"
                       :account="hash"
-                      :currentPage="page.txs"
-                      :perPage="limit.txs"
+                      :current-page="page.txs"
+                      :per-page="limit.txs"
                       :loaded="loaded.txs"
                       :loading="loading.txs"
+                      @onReload="reload"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
@@ -53,14 +53,14 @@
 
                   <b-card-body>
                     <DelegationsTabList
-                      @onReload="reload"
                       :delegations="delegations"
                       :count="counts.delegations"
                       :account="hash"
-                      :currentPage="page.delegations"
-                      :perPage="limit.delegations"
+                      :current-page="page.delegations"
+                      :per-page="limit.delegations"
                       :loaded="loaded.delegations"
                       :loading="loading.delegations"
+                      @onReload="reload"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
@@ -79,14 +79,14 @@
 
                   <b-card-body>
                     <OriginationsTabList
-                      @onReload="reload"
                       :originations="originations"
                       :count="counts.originations"
                       :account="hash"
-                      :currentPage="page.originations"
-                      :perPage="limit.originations"
+                      :current-page="page.originations"
+                      :per-page="limit.originations"
                       :loaded="loaded.originations"
                       :loading="loading.originations"
+                      @onReload="reload"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
@@ -106,14 +106,14 @@
 
                   <b-card-body>
                     <EndorsementsTabList
-                      @onReload="reload"
                       :endorsements="endorsements"
                       :count="counts.endorsements"
                       :account="hash"
-                      :currentPage="page.endorsements"
-                      :perPage="limit.endorsements"
+                      :current-page="page.endorsements"
+                      :per-page="limit.endorsements"
                       :loaded="loaded.endorsements"
                       :loading="loading.endorsements"
+                      @onReload="reload"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
@@ -133,16 +133,16 @@
 
                   <b-card-body>
                     <BakingTabList
-                      @onReload="reload"
-                      :data="baking.data"
                       :future="baking.future"
+                      :loading="baking.loading"
+                      :data="baking.data"
                       :total="baking.total"
                       :count="counts.baking"
                       :account="hash"
-                      :currentPage="page.baking"
-                      :perPage="limit.baking"
-                      :loading="baking.loading"
+                      :current-page="page.baking"
+                      :per-page="limit.baking"
                       :loaded="loaded.baking"
+                      @onReload="reload"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
@@ -160,14 +160,14 @@
 
                   <b-card-body>
                     <BakerEndorsingList
-                      @onReload="reload"
                       :data="endorsing.data"
                       :count="counts.endorsing"
                       :account="hash"
-                      :currentPage="page.endorsing"
-                      :perPage="limit.endorsing"
+                      :current-page="page.endorsing"
+                      :per-page="limit.endorsing"
                       :loading="endorsing.loading"
                       :loaded="loaded.endorsing"
+                      @onReload="reload"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
@@ -187,14 +187,14 @@
 
                   <b-card-body>
                     <BakerRewardsList
-                      @onReload="reload"
                       :data="rewards"
                       :count="counts.rewards"
                       :account="hash"
-                      :currentPage="page.rewards"
-                      :perPage="limit.rewards"
+                      :current-page="page.rewards"
+                      :per-page="limit.rewards"
                       :loaded="loaded.rewards"
                       :loading="loading.rewards"
+                      @onReload="reload"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />
@@ -205,21 +205,23 @@
                   <b-card-header>
                     <div class="break-word">
                       <h3>
-                        <span class="text">{{ $t('listTypes.bondsList') }}</span>
+                        <span class="text">{{
+                          $t('listTypes.bondsList')
+                        }}</span>
                       </h3>
                     </div>
                   </b-card-header>
 
                   <b-card-body>
                     <BondsTabList
-                      @onReload="reload"
                       :data="bonds"
                       :count="counts.bonds"
                       :account="hash"
-                      :currentPage="page.bonds"
-                      :perPage="limit.bonds"
+                      :current-page="page.bonds"
+                      :per-page="limit.bonds"
                       :loaded="loaded.bonds"
                       :loading="loading.bonds"
+                      @onReload="reload"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
                     />

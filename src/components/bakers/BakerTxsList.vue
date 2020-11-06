@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :limit="perPage" @onLimitChange="$_setPerPage" :loading="loading" />
+      <LimitSelect
+        :limit="perPage"
+        :loading="loading"
+        @onLimitChange="(limit) => $emit('onLimitChange', { type: 'txs', limit })"
+      />
     </div>
 
     <b-table
@@ -96,11 +100,11 @@
     </b-table>
 
     <PaginationSelect
-      @change="$_handleCurrentPageChange"
       :total-rows="count"
       :per-page="perPage"
       :current-page="currentPage"
       :loading="loading"
+      @onPageChange="(page) => $emit('onPageChange', { type: 'txs', page })"
     />
   </div>
 </template>
@@ -175,13 +179,7 @@
     methods: {
       getAccountName(row, rowHash) {
         return `${row.item[`${rowHash}Name`] ||
-        row.item[rowHash].slice(0, 15)}...`;
-      },
-      $_setPerPage(value) {
-        this.$emit('onLimitChange', { type: 'txs', limit: value });
-      },
-      $_handleCurrentPageChange(page) {
-        this.$emit('onPageChange', { type: 'txs', limit: this.perPage, page });
+          row.item[rowHash].slice(0, 15)}...`;
       },
     },
   };
@@ -191,12 +189,12 @@
   .s {
     position: relative;
   }
-  
+
   .source,
   .destination {
     position: relative;
   }
-  
+
   .icon {
     &__arrow--red:before {
       position: absolute;
@@ -209,7 +207,7 @@
       border-bottom: 0.3em solid transparent;
       border-left: 0.3em solid;
     }
-    
+
     &__arrow--green:before {
       position: absolute;
       content: '';
