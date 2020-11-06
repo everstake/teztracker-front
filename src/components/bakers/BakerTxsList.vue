@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :limit="perPage" @onLimitChange="$_setPerPage" />
+      <LimitSelect :limit="perPage" @onLimitChange="$_setPerPage" :loading="loading" />
     </div>
 
     <b-table
@@ -100,6 +100,7 @@
       :total-rows="count"
       :per-page="perPage"
       :current-page="currentPage"
+      :loading="loading"
     />
   </div>
 </template>

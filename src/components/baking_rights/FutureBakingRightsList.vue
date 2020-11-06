@@ -233,6 +233,7 @@
       :total-rows="count.future_baking_rights"
       :per-page="perPage"
       limit="10"
+      :loading="loading"
     />
   </div>
 </template>
@@ -262,6 +263,7 @@
         blocks_in_row: this.$constants.BLOCKS_IN_ROW,
         future_baking_rights: [],
         newFields: [],
+        loading: false,
       };
     },
     computed: {
@@ -361,6 +363,7 @@
       },
 
       async reload(page = 1) {
+        this.loading = true;
         const props = {
           page,
           limit: this.blocks_in_row,
@@ -368,6 +371,7 @@
         const data = await this.$api.getFutureBakingRights(props);
         await this[SET_FUTURE_BAKING_RIGHTS_COUNT](data.count);
         this.parseResponse(data.data);
+        this.loading = false;
       },
     },
   };

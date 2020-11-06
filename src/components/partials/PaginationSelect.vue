@@ -12,6 +12,7 @@
       :per-page="perPage"
       :align="align"
       @change="handlePageChange"
+      hide-goto-end-buttons
     />
   </div>
 </template>

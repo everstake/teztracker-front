@@ -76,7 +76,6 @@
     </b-table>
 
     <PaginationSelect
-      v-if="disablePagination"
       :total-rows="count"
       :per-page="perPage"
       :current-page="currentPage"
@@ -118,10 +117,6 @@
       perPage: Number,
       loaded: Boolean,
       loading: Boolean,
-      disablePagination: {
-        type: Boolean,
-        default: false,
-      },
     },
     computed: {
       ...mapState('app', {

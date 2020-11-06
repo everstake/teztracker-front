@@ -116,7 +116,6 @@
                       :loading="loading.endorsements"
                       @onLimitChange="handleLimitChange"
                       @onPageChange="handlePageChange"
-                      :is-baker="true"
                     />
                   </b-card-body>
                 </b-tab>

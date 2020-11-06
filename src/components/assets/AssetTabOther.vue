@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect :hide="!showLimitFilter" @onLimitChange="$_setPerPage" />
+      <PerPageSelect :hide="!showLimitFilter" @onLimitChange="$_setPerPage" :loading="loading" />
     </div>
 
     <b-table
@@ -56,6 +56,7 @@
       :total-rows="count"
       :per-page="perPage"
       @change="$_handleCurrentPageChange"
+      :loading="loading"
     />
   </div>
 </template>
@@ -97,6 +98,7 @@
       return {
         transactions: [],
         count: 0,
+        loading: false,
       };
     },
     computed: {
@@ -165,6 +167,7 @@
     },
     methods: {
       async reload(page = 1) {
+        this.loading = true;
         const props = {
           page,
           limit: this.perPage,
@@ -174,6 +177,7 @@
         const data = await this.$api.getAssetsOperationsById(props);
         this.transactions = data.data;
         this.count = data.count;
+        this.loading = false;
       },
       getAccountName(row, rowHash) {
         return `${row.item[`${rowHash}Name`] ||

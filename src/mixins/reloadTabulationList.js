@@ -160,6 +160,7 @@ export default {
       };
 
       if (page === 1) {
+        this.baking.loading = true;
         const total = await this.$api.getAccountBakingTotal({
           account: this.hash,
         });
@@ -181,9 +182,12 @@ export default {
         ];
 
         this.counts.baking = data.count;
+        this.baking.loading = false;
       } else {
+        this.baking.loading = true;
         const data = await this.$api.getAccountBaking(props);
         this.baking.data = data.data;
+        this.baking.loading = false;
       }
 
       this.loading.baking = false;
@@ -226,6 +230,7 @@ export default {
       };
 
       if (page === 1) {
+        this.endorsing.loading = true;
         const total = await this.$api.getAccountEndorsingTotal({
           account: this.hash,
         });
@@ -246,9 +251,12 @@ export default {
         ];
 
         this.counts.endorsing = data.count;
+        this.endorsing.loading = false;
       } else {
+        this.endorsing.loading = true;
         const data = await this.$api.getAccountEndorsing(props);
         this.endorsing.data = data.data;
+        this.endorsing.loading = false;
       }
 
       this.loading.endorsing = false;
