@@ -13,7 +13,7 @@
         <b-row>
           <b-col lg="12">
             <b-card no-body>
-              <b-tabs>
+              <b-tabs lazy>
                 <b-tab :title="$tc('opTypes.tx', 2)" active>
                   <b-card-header>
                     <div class="break-word">
@@ -26,7 +26,18 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <TxsList :account="hash" />
+                    <TxsTabList
+                      :txs="txs"
+                      :count="counts.txs"
+                      :account="hash"
+                      :current-page="page.txs"
+                      :per-page="limit.txs"
+                      :loaded="loaded.txs"
+                      :loading="loading.txs"
+                      @onReload="reload"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
                 <b-tab :title="$tc('opTypes.delegation', 2)">
@@ -41,7 +52,18 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <DelegationsList :account="hash" />
+                    <DelegationsTabList
+                      :delegations="delegations"
+                      :count="counts.delegations"
+                      :account="hash"
+                      :current-page="page.delegations"
+                      :per-page="limit.delegations"
+                      :loaded="loaded.delegations"
+                      :loading="loading.delegations"
+                      @onReload="reload"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
                 <b-tab :title="$tc('opTypes.origination', 2)">
@@ -56,7 +78,18 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <OriginationsList :account="hash" />
+                    <OriginationsTabList
+                      :originations="originations"
+                      :count="counts.originations"
+                      :account="hash"
+                      :current-page="page.originations"
+                      :per-page="limit.originations"
+                      :loaded="loaded.originations"
+                      :loading="loading.originations"
+                      @onReload="reload"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
 
@@ -72,10 +105,18 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <EndorsementsList
-                      :is-baker="true"
+                    <EndorsementsTabList
+                      :endorsements="endorsements"
+                      :count="counts.endorsements"
                       :account="hash"
-                    ></EndorsementsList>
+                      :current-page="page.endorsements"
+                      :per-page="limit.endorsements"
+                      :loaded="loaded.endorsements"
+                      :loading="loading.endorsements"
+                      @onReload="reload"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
 
@@ -91,7 +132,20 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <BakerBakingList :account="hash"></BakerBakingList>
+                    <BakingTabList
+                      :future="baking.future"
+                      :loading="baking.loading"
+                      :data="baking.data"
+                      :total="baking.total"
+                      :count="counts.baking"
+                      :account="hash"
+                      :current-page="page.baking"
+                      :per-page="limit.baking"
+                      :loaded="loaded.baking"
+                      @onReload="reload"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
 
                   <b-card-header>
@@ -105,7 +159,18 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <BakerEndorsingList :account="hash"></BakerEndorsingList>
+                    <BakerEndorsingList
+                      :data="endorsing.data"
+                      :count="counts.endorsing"
+                      :account="hash"
+                      :current-page="page.endorsing"
+                      :per-page="limit.endorsing"
+                      :loading="endorsing.loading"
+                      :loaded="loaded.endorsing"
+                      @onReload="reload"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
 
@@ -121,7 +186,18 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <BakerRewardsList :account="hash"></BakerRewardsList>
+                    <BakerRewardsList
+                      :data="rewards"
+                      :count="counts.rewards"
+                      :account="hash"
+                      :current-page="page.rewards"
+                      :per-page="limit.rewards"
+                      :loaded="loaded.rewards"
+                      :loading="loading.rewards"
+                      @onReload="reload"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
 
@@ -129,13 +205,26 @@
                   <b-card-header>
                     <div class="break-word">
                       <h3>
-                        <span class="text">{{ $t('listTypes.bondsList') }}</span>
+                        <span class="text">{{
+                          $t('listTypes.bondsList')
+                        }}</span>
                       </h3>
                     </div>
                   </b-card-header>
 
                   <b-card-body>
-                    <BakerBondsList :account="hash"></BakerBondsList>
+                    <BondsTabList
+                      :data="bonds"
+                      :count="counts.bonds"
+                      :account="hash"
+                      :current-page="page.bonds"
+                      :per-page="limit.bonds"
+                      :loaded="loaded.bonds"
+                      :loading="loading.bonds"
+                      @onReload="reload"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
               </b-tabs>
@@ -148,31 +237,33 @@
 </template>
 
 <script>
-  import Breadcrumbs from '../components/partials/Breadcrumbs';
-  import BakerSingle from '../components/bakers/BakerSingle';
-  import TxsList from '../components/transactions/TxsList';
-  import DelegationsList from '../components/delegations/DelegationsList';
-  import OriginationsList from '../components/originations/OriginationsList';
-  import EndorsementsList from '../components/endorsements/EndorsementsList';
+  import Breadcrumbs from '@/components/partials/Breadcrumbs';
+  import BakerSingle from '@/components/bakers/BakerSingle';
+  import TxsTabList from '@/components/partials/tabs/TxsTabList';
+  import DelegationsTabList from '@/components/partials/tabs/DelegationsTabList';
+  import OriginationsTabList from '@/components/partials/tabs/OriginationsTabList';
+  import EndorsementsTabList from '@/components/partials/tabs/EndorsementsTabList';
+  import BakingTabList from '@/components/partials/tabs/BakingTabList';
+  import BondsTabList from '@/components/partials/tabs/BondsTabList';
+  import BakerEndorsingList from '@/components/bakers/BakerEndorsingList';
   import BakerRewardsList from '@/components/bakers/BakerRewardsList';
-  import BakerBakingList from '../components/bakers/BakerBakingList';
-  import BakerEndorsingList from '../components/bakers/BakerEndorsingList';
-  import BakerBondsList from '../components/bakers/BakerBondsList';
+  import reloadTabTables from '@/mixins/reloadTabulationList';
 
   export default {
     name: 'Baker',
     components: {
       Breadcrumbs,
       BakerSingle,
-      TxsList,
-      DelegationsList,
-      OriginationsList,
-      EndorsementsList,
+      TxsTabList,
+      DelegationsTabList,
+      OriginationsTabList,
+      EndorsementsTabList,
       BakerRewardsList,
-      BakerBakingList,
+      BakingTabList,
       BakerEndorsingList,
-      BakerBondsList,
+      BondsTabList,
     },
+    mixins: [reloadTabTables],
     computed: {
       hash() {
         return this.$route.params.baker;

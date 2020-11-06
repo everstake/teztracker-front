@@ -14,12 +14,19 @@
                   </h4>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count.snapshots" />
+                  <Counter show-line :count="count" />
                 </template>
               </CardHeader>
 
               <b-card-body>
-                <SnapshotsList />
+                <SnapshotsList
+                  :loading="loading"
+                  :limit="limit"
+                  :items="items"
+                  :count="count"
+                  :page="page"
+                  @onPageChange="handlePageChange"
+                />
               </b-card-body>
             </b-card>
           </b-col>
@@ -30,11 +37,13 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapMutations } from 'vuex';
+  import { SET_SNAPSHOTS_COUNT } from '@/store/mutations.types';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import SnapshotsList from '../components/snapshots/SnapshotsList';
   import CardHeader from '../components/partials/CardHeader';
   import Counter from '../components/partials/Counter';
+  import reloadNavigationList from '@/mixins/reloadNavigationList';
 
   export default {
     name: 'Snapshots',
@@ -44,10 +53,8 @@
       CardHeader,
       Counter,
     },
+    mixins: [reloadNavigationList],
     computed: {
-      ...mapState('blocks', {
-        count: (state) => state.counts,
-      }),
       crumbs() {
         return [
           { toRouteName: 'network', text: this.$t('common.home') },
@@ -56,6 +63,17 @@
             text: this.$t('pageTypes.snapshotsPage'),
           },
         ];
+      },
+    },
+    methods: {
+      ...mapMutations('blocks', [SET_SNAPSHOTS_COUNT]),
+      async reload() {
+        const { page, limit } = this;
+        await this.$api.getSnapshots({ page, limit }).then((data) => {
+          this.items = data.data;
+          this.count = data.count;
+          this[SET_SNAPSHOTS_COUNT](data.count);
+        });
       },
     },
   };

@@ -1,48 +1,67 @@
 <template>
-  <b-card no-body>
+  <b-card no-body class="txs-card">
     <CardHeader>
       <template v-slot:left-content class="text">
         <h4 class="tz-title--bold">
           {{ $t('listTypes.txsList') }}
         </h4>
-        <!--        <Dropdown dropdownTitle="This year" />-->
       </template>
       <template v-slot:right-content class="text">
         <Counter show-line :count="count" />
-        <router-link class="link fs-14" :to="{ name: 'txs' }">
-          {{ $t('common.viewAll') }}
-        </router-link>
       </template>
     </CardHeader>
 
     <b-card-body>
-      <TxsList
-        :show-per-page-filter="showPerPageFilter"
-        :is-table-complete="false"
+      <TxsTable
+        :loading="loading"
+        :limit="limit"
+        :items="items"
+        :count="count"
+        :page="page"
+        :props-fields="fields"
+        @onPageChange="handlePageChange"
       />
+
+      <div class="txs-card__actions">
+        <router-link class="txs-card__link link fs-14" :to="{ name: 'txs' }">
+          {{ $t('common.viewAll') }}
+        </router-link>
+      </div>
     </b-card-body>
   </b-card>
 </template>
+
 <script>
-  import { mapState } from 'vuex';
   import CardHeader from '../partials/CardHeader';
-  // import Dropdown from "../partials/Dropdown";
   import Counter from '../partials/Counter';
-  import TxsList from '@/components/transactions/TxsList';
+  import reloadNavigationTable from '@/mixins/reloadNavigationList';
+  import TxsTable from '@/components/partials/tables/TxsTable';
 
   export default {
     name: 'TxsCard',
     components: {
+      TxsTable,
       CardHeader,
-      // Dropdown,
       Counter,
-      TxsList,
     },
-    props: ['showPerPageFilter'],
+    mixins: [reloadNavigationTable],
     computed: {
-      ...mapState('operations', {
-        count: (state) => state.counts.txs,
-      }),
+      fields() {
+        if (!this.$i18n.locale) return [];
+        return [
+          { key: 'level', label: this.$t('common.blockId') },
+          { key: 'txhash', label: this.$t('hashTypes.txHash'), tdClass: 'txs-card--hash-height' },
+          { key: 'timestamp', label: this.$t('common.timestamp') },
+        ];
+      },
+    },
+    methods: {
+      async reload() {
+        const { page, limit } = this;
+        const data = await this.$api.getTransactions({ page, limit });
+        this.items = data.data;
+        this.count = data.count;
+      },
     },
   };
 </script>
@@ -64,5 +83,20 @@
     h3 {
       line-height: 1;
     }
+  }
+
+  .txs-card__actions {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .txs-card__link {
+    font-weight: bold;
+  }
+</style>
+
+<style>
+  .txs-card--hash-height span {
+    height: 28px;
   }
 </style>

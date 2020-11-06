@@ -6,7 +6,7 @@
       <b-container fluid>
         <AccountSingle :hash="hash">
           <template #chart="props">
-            <ChartBalanceLast30Days :acc="acc" />
+            <ChartBalanceLast30Days :acc="hash" />
           </template>
         </AccountSingle>
       </b-container>
@@ -17,7 +17,7 @@
         <b-row>
           <b-col lg="12">
             <b-card no-body>
-              <b-tabs>
+              <b-tabs lazy>
                 <b-tab :title="$tc('opTypes.tx', 2)" active>
                   <b-card-header>
                     <div class="break-word">
@@ -30,7 +30,18 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <TxsList :account="hash" @onTransactions="setChartData" />
+                    <TxsTabList
+                      :txs="txs"
+                      :count="counts.txs"
+                      :account="hash"
+                      :current-page="page.txs"
+                      :per-page="limit.txs"
+                      :loading="loading.txs"
+                      :loaded="loaded.txs"
+                      @onReload="reload"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
                 <b-tab :title="$tc('opTypes.delegation', 2)">
@@ -45,7 +56,18 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <DelegationsList :account="hash" />
+                    <DelegationsTabList
+                      :delegations="delegations"
+                      :count="counts.delegations"
+                      :account="hash"
+                      :current-page="page.delegations"
+                      :per-page="limit.delegations"
+                      :loading="loading.delegations"
+                      :loaded="loaded.delegations"
+                      @onReload="reload"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
                 <b-tab :title="$tc('opTypes.origination', 2)">
@@ -60,7 +82,18 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <OriginationsList :account="hash" />
+                    <OriginationsTabList
+                      :originations="originations"
+                      :count="counts.originations"
+                      :account="hash"
+                      :current-page="page.originations"
+                      :per-page="limit.originations"
+                      :loading="loading.originations"
+                      :loaded="loaded.originations"
+                      @onReload="reload"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
                 <b-tab :title="$t('common.other')">
@@ -75,7 +108,18 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <OperationsList :account="hash" />
+                    <OperationsTabList
+                      :operations="operations"
+                      :count="counts.operations"
+                      :account="hash"
+                      :current-page="page.operations"
+                      :per-page="limit.operations"
+                      :loading="loading.operations"
+                      :loaded="loaded.operations"
+                      @onReload="reload"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
                   </b-card-body>
                 </b-tab>
               </b-tabs>
@@ -91,22 +135,24 @@
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import AccountSingle from '../components/accounts/AccountSingle';
   import ChartBalanceLast30Days from '@/components/charts/account/ChartBalanceLast30Days';
-  import TxsList from '../components/transactions/TxsList';
-  import DelegationsList from '../components/delegations/DelegationsList';
-  import OriginationsList from '../components/originations/OriginationsList';
-  import OperationsList from '@/components/operations/OperationsList';
+  import TxsTabList from '@/components/partials/tabs/TxsTabList';
+  import reloadTabTables from '@/mixins/reloadTabulationList';
+  import DelegationsTabList from '@/components/partials/tabs/DelegationsTabList';
+  import OriginationsTabList from '@/components/partials/tabs/OriginationsTabList';
+  import OperationsTabList from '@/components/partials/tabs/OperationsTabList';
 
   export default {
     name: 'Account',
     components: {
+      OperationsTabList,
+      OriginationsTabList,
+      DelegationsTabList,
+      TxsTabList,
       Breadcrumbs,
       AccountSingle,
-      TxsList,
-      DelegationsList,
-      OriginationsList,
-      OperationsList,
       ChartBalanceLast30Days,
     },
+    mixins: [reloadTabTables],
     props: {
       accountType: {
         type: String,

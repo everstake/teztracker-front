@@ -15,7 +15,7 @@
         <b-row>
           <b-col lg="12">
             <b-card no-body>
-              <b-tabs>
+              <b-tabs lazy>
                 <b-tab :title="$tc('opTypes.tx', 2)" active>
                   <b-card-header>
                     <div class="break-word">
@@ -28,7 +28,18 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <TxsList :block="block" />
+                    <TxsTabList
+                      @onReload="reload"
+                      :txs="txs"
+                      :count="counts.txs"
+                      :currentPage="page.txs"
+                      :perPage="limit.txs"
+                      :loaded="loaded.txs"
+                      :loading="loading.txs"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                      :block-hash="block.hash"
+                    />
                   </b-card-body>
                 </b-tab>
                 <b-tab :title="$tc('opTypes.endorsement', 2)">
@@ -43,9 +54,17 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <EndorsementsList
+                    <EndorsementsTabList
+                      @onReload="reload"
+                      :endorsements="endorsements"
+                      :count="counts.endorsements"
+                      :currentPage="page.endorsements"
+                      :perPage="limit.endorsements"
+                      :loaded="loaded.endorsements"
+                      :loading="loading.endorsements"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
                       :disable-pagination="true"
-                      :block-hash="block.hash"
                     />
                   </b-card-body>
                 </b-tab>
@@ -60,7 +79,18 @@
                     </div>
                   </b-card-header>
                   <b-card-body>
-                    <BlockOtherOperationsList :block-hash="block.hash" />
+                    <BlockOtherOperationsList
+                      @onReload="reload"
+                      :operations="blockOtherOperations"
+                      :count="counts.blockOtherOperations"
+                      :currentPage="page.blockOtherOperations"
+                      :perPage="limit.blockOtherOperations"
+                      :loaded="loaded.blockOtherOperations"
+                      :loading="loading.blockOtherOperations"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                      :block-hash="block.hash"
+                    />
                   </b-card-body>
                 </b-tab>
               </b-tabs>
@@ -76,23 +106,26 @@
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import BlockSingle from '../components/blocks/BlockSingle';
   import EndorsementsSlots from '../components/endorsements/EndorsementsSlots';
-  import EndorsementsList from '../components/endorsements/EndorsementsList';
-  import TxsList from '../components/transactions/TxsList';
   import BlockOtherOperationsList from '../components/blocks/BlockOtherOperationsList';
+  import EndorsementsTabList from '@/components/partials/tabs/EndorsementsTabList';
+  import TxsTabList from '@/components/partials/tabs/TxsTabList';
+  import reloadTabTables from '@/mixins/reloadTabulationList';
 
   export default {
     name: 'Block',
     components: {
+      TxsTabList,
+      EndorsementsTabList,
       Breadcrumbs,
       BlockSingle,
       EndorsementsSlots,
-      EndorsementsList,
-      TxsList,
       BlockOtherOperationsList,
     },
+    mixins: [reloadTabTables],
     data() {
       return {
         block: {},
+        otherOperations: [],
       };
     },
     computed: {
@@ -124,6 +157,44 @@
           });
         }
         this.block = result.data.block;
+      },
+      async reloadEndorsements({ limit, page }) {
+        this.loading.endorsements = true;
+        if (!this.block.hash) return;
+        const props = {
+          page,
+          limit,
+          block_id: this.block.hash,
+        };
+        const data = await this.$api.getEndorsements(props);
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+        this.counts.endorsements = data.count;
+        this.endorsements = data.data;
+        this.loaded.endorsements = true;
+        this.loading.endorsements = false;
+      },
+      async reloadTxs({ limit, page }) {
+        this.loading.txs = true;
+        if (!this.block.hash) return;
+        const props = {
+          page,
+          limit,
+          block_id: this.block.hash,
+        };
+        const data = await this.$api.getTransactions(props);
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+        this.txs = data.data;
+        this.counts.txs = data.count;
+        this.loaded.txs = true;
+        this.loading.txs = false;
       },
     },
   };

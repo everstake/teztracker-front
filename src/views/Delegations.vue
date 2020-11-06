@@ -14,12 +14,20 @@
                   </h4>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count.delegations" />
+                  <Counter show-line :count="count" />
                 </template>
               </CardHeader>
 
               <b-card-body>
-                <DelegationList />
+                <DelegationList
+                  :loading="loading"
+                  :limit="limit"
+                  :items="items"
+                  :count="count"
+                  :page="page"
+                  @onLimitChange="handleLimitChange"
+                  @onPageChange="handlePageChange"
+                />
               </b-card-body>
             </b-card>
           </b-col>
@@ -30,11 +38,13 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapMutations } from 'vuex';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import DelegationList from '../components/delegations/DelegationsList';
   import CardHeader from '../components/partials/CardHeader';
   import Counter from '../components/partials/Counter';
+  import { SET_DELEGATIONS_COUNT } from '@/store/mutations.types';
+  import reloadNavigationList from '@/mixins/reloadNavigationList';
 
   export default {
     name: 'Delegations',
@@ -44,10 +54,8 @@
       CardHeader,
       Counter,
     },
+    mixins: [reloadNavigationList],
     computed: {
-      ...mapState('operations', {
-        count: (state) => state.counts,
-      }),
       crumbs() {
         return [
           { toRouteName: 'network', text: this.$t('common.home') },
@@ -56,6 +64,20 @@
             text: this.$t('pageTypes.delegationsPage'),
           },
         ];
+      },
+    },
+    methods: {
+      ...mapMutations('operations', [SET_DELEGATIONS_COUNT]),
+      async reload() {
+        const { page, limit } = this;
+        await this.$api
+          .getDelegations({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_DELEGATIONS_COUNT](data.count);
+          })
+          .catch(() => {});
       },
     },
   };

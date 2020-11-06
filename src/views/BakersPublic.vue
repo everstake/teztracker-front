@@ -14,12 +14,20 @@
                   </h4>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count.publicBakers" />
+                  <Counter show-line :count="count" />
                 </template>
               </CardHeader>
 
               <b-card-body>
-                <BakersListPublic />
+                <BakersListPublic
+                  :loading="loading"
+                  :limit="limit"
+                  :items="items"
+                  :count="count"
+                  :page="page"
+                  @onLimitChange="handleLimitChange"
+                  @onPageChange="handlePageChange"
+                />
               </b-card-body>
             </b-card>
           </b-col>
@@ -30,11 +38,13 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapMutations } from 'vuex';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import BakersListPublic from '../components/bakers/BakersListPublic';
   import CardHeader from '../components/partials/CardHeader';
   import Counter from '../components/partials/Counter';
+  import { SET_PUBLIC_BAKERS } from '@/store/mutations.types';
+  import reloadNavigationList from '@/mixins/reloadNavigationList';
 
   export default {
     name: 'BakersPublic',
@@ -44,10 +54,8 @@
       Counter,
       CardHeader,
     },
+    mixins: [reloadNavigationList],
     computed: {
-      ...mapState('accounts', {
-        count: (state) => state.counts,
-      }),
       crumbs() {
         return [
           { toRouteName: 'network', text: this.$t('common.home') },
@@ -56,6 +64,20 @@
             text: this.$t('pageTypes.publicBakersPage'),
           },
         ];
+      },
+    },
+    methods: {
+      ...mapMutations('accounts', [SET_PUBLIC_BAKERS]),
+      async reload() {
+        const { page, limit } = this;
+        await this.$api
+          .getPublicBakers({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_PUBLIC_BAKERS](data);
+          })
+          .catch(() => {});
       },
     },
   };

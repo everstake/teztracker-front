@@ -11,24 +11,47 @@ function formatURL(api, path, query) {
 async function get(api, path, query, isStandard = true) {
   const { page = 1, limit = 10 } = query;
   const offset = limit * (page - 1);
-  let data;
+  delete query.page;
+  let data = {};
+  let result = {};
   try {
     data = await http.get(
       isStandard
         ? formatURL(api, path, Object.assign({}, query, { limit, offset }))
         : formatURL(api, path, Object.assign({}, query)),
     );
+
+    result.data = data.data;
+    result.status = data.status;
+
+    if (data.headers && data.headers[Vue.prototype.$constants.COUNT_HEADER]) {
+      result.count = parseInt(
+        data.headers[Vue.prototype.$constants.COUNT_HEADER],
+      );
+    }
+
+    result = { ...result, data: data.data, status: data.status };
+    return result;
   } catch (e) {
-    data = e.response;
+    const responseNotDefined = !e.response;
+    const requestHasBeenCancelled = e.message === 'Request cancelled';
+
+    if (responseNotDefined && requestHasBeenCancelled) {
+      return;
+    }
     handleError(e);
+
+    data = e.response;
+
+    if (data.headers && data.headers[Vue.prototype.$constants.COUNT_HEADER]) {
+      result.count = parseInt(
+        data.headers[Vue.prototype.$constants.COUNT_HEADER],
+      );
+    }
+
+    result = { ...result, data: data.data, status: data.status };
+    return result;
   }
-  const result = { data: data.data, status: data.status };
-  if (data.headers[Vue.prototype.$constants.COUNT_HEADER]) {
-    result.count = parseInt(
-      data.headers[Vue.prototype.$constants.COUNT_HEADER],
-    );
-  }
-  return result;
 }
 
 const TzAPI = {
@@ -294,3 +317,4 @@ const TzAPI = {
 };
 
 export default TzAPI;
+

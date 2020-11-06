@@ -1,7 +1,13 @@
 <template>
   <div class="baking-list">
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect @per-page="$_setPerPage" :default-per-page="perPage" />
+      <LimitSelect
+        :limit="perPage"
+        :loading="loading"
+        @onLimitChange="
+          (limit) => $emit('onLimitChange', { type: 'rewards', limit })
+        "
+      />
     </div>
 
     <b-table
@@ -36,11 +42,12 @@
       </template>
     </b-table>
 
-    <Pagination
-      v-model="currentPage"
-      @change="$_handleCurrentPageChange"
+    <PaginationSelect
       :total-rows="count"
+      :current-page="currentPage"
+      :loading="loading"
       :per-page="perPage"
+      @onPageChange="(page) => $emit('onPageChange', { type: 'rewards', page })"
     />
 
     <div>
@@ -82,6 +89,7 @@
           @change="handleModalPagination"
           :total-rows="selectedRow.count"
           :per-page="selectedRow.perPage"
+          :loading="selectedRow.loading"
         />
       </b-modal>
     </div>
@@ -89,30 +97,62 @@
 </template>
 
 <script>
-  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import LimitSelect from '@/components/partials/LimitSelect';
   import Pagination from '../partials/Pagination';
-  import setPerPage from '@/mixins/setPerPage';
-  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import PaginationSelect from '../partials/PaginationSelect';
   import { mapState } from 'vuex';
 
   export default {
     name: 'BakerRewardsList',
     components: {
-      PerPageSelect,
+      LimitSelect,
       Pagination,
+      PaginationSelect,
     },
-    mixins: [setPerPage, handleCurrentPageChange],
     filters: {
       toFixedNoRounding(amount) {
         return amount.toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0];
       },
     },
-    props: ['account'],
+
+    props: {
+      data: {
+        type: Array,
+        default() {
+          return [];
+        },
+      },
+      count: {
+        type: Number,
+        default: 0,
+      },
+      account: String,
+      currentPage: Number,
+      perPage: Number,
+      loaded: Boolean,
+      loading: Boolean,
+    },
     data() {
       return {
-        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-        perPage: 20,
-        fields: [
+        selectedRow: {
+          data: null,
+          count: 0,
+          fields: [],
+          currentPage: 1,
+          loading: false,
+        },
+      };
+    },
+    computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
+      fields() {
+        if (!this.$i18n.locale) {
+          return [];
+        }
+
+        return [
           { key: 'cycle', label: this.$tc('common.cycle', 1) },
           { key: 'stakingBalance', label: this.$t('common.delegatedBal') },
           { key: 'baking', label: this.$t('common.baking') },
@@ -121,41 +161,10 @@
           { key: 'losses', label: this.$t('common.losses') },
           { key: 'fees', label: this.$t('common.fee') },
           { key: 'status', label: this.$t('statusTypes.status') },
-        ],
-        selectedRow: {
-          data: null,
-          count: 0,
-          fields: [],
-          currentPage: 1,
-        },
-        count: 0,
-        data: [],
-        loading: false,
-      };
-    },
-    computed: {
-      ...mapState('app', {
-        dateFormat: (state) => state.dateFormat,
-      }),
+        ];
+      },
     },
     watch: {
-      currentPage: {
-        async handler(value) {
-          let result;
-
-          if (typeof value === 'object') {
-            const { page } = value;
-            result = page;
-          } else {
-            result = value;
-          }
-
-          await this.reload(result);
-        },
-      },
-      async perPage(value) {
-        await this.reload({ page: value });
-      },
       'selectedRow.currentPage': {
         deep: true,
         async handler(value) {
@@ -195,22 +204,8 @@
 
         return classes.join(' ');
       },
-      async reload(page = 1) {
-        const props = {
-          page,
-          limit: this.perPage,
-          account: this.account,
-        };
-
-        this.$_setPerPage(this.perPage);
-
-        const data = await this.$api.getAccountRewards(props);
-        this.data = data.data;
-        this.count = data.count;
-      },
       async handleRowClick(row) {
         if (this.loading || row.length === 0) return;
-        this.loading = true;
 
         let modalData;
         let modalFields;
@@ -232,9 +227,9 @@
         this.selectedRow.data = modalData.data;
         this.selectedRow.count = modalData.count;
         this.$bvModal.show('modal-rewards');
-        this.loading = false;
       },
       async reloadAccountRewardsDelegators(page = 1) {
+        this.selectedRow.loading = true;
         const props = {
           page,
           account: this.account,
@@ -245,13 +240,17 @@
 
         this.selectedRow.data = data.data;
         this.selectedRow.count = data.count;
+        this.selectedRow.loading = false;
       },
       handleModalPagination(page) {
         this.selectedRow.currentPage = page;
       },
     },
     async created() {
-      this.reload();
+      const itemsNotFetched = !this.loaded;
+      if (itemsNotFetched) {
+        this.$emit('onReload', { type: 'rewards', limit: this.perPage });
+      }
     },
   };
 </script>

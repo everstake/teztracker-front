@@ -19,6 +19,7 @@ import {
   BForm,
   ModalPlugin,
   ToastPlugin,
+  PaginationNavPlugin,
 } from 'bootstrap-vue';
 import {
   FontAwesomeIcon,
@@ -79,6 +80,7 @@ Vue.use(FormInputPlugin);
 Vue.use(ModalPlugin);
 Vue.use(FlagIcon);
 Vue.use(ToastPlugin);
+Vue.use(PaginationNavPlugin);
 
 Vue.component('b-form', BForm);
 

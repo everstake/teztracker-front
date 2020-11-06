@@ -16,12 +16,20 @@
                   </h4>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count.activations" />
+                  <Counter show-line :count="count" />
                 </template>
               </CardHeader>
 
               <b-card-body>
-                <ActivationsList />
+                <ActivationsList
+                  :loading="loading"
+                  :limit="limit"
+                  :items="items"
+                  :count="count"
+                  :page="page"
+                  @onLimitChange="handleLimitChange"
+                  @onPageChange="handlePageChange"
+                />
               </b-card-body>
             </b-card>
           </b-col>
@@ -32,12 +40,14 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapMutations } from 'vuex';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import ActivationsList from '../components/activations/ActivationsList.vue';
   import ICOCycleCounter from '../components/partials/cycle/ICOCycleCounter.vue';
   import CardHeader from '../components/partials/CardHeader';
   import Counter from '../components/partials/Counter';
+  import { SET_ACTIVATIONS_COUNT } from '@/store/mutations.types';
+  import reloadNavigationList from '@/mixins/reloadNavigationList';
 
   export default {
     name: 'Activations',
@@ -48,10 +58,8 @@
       CardHeader,
       Counter,
     },
+    mixins: [reloadNavigationList],
     computed: {
-      ...mapState('operations', {
-        count: (state) => state.counts,
-      }),
       crumbs() {
         return [
           { toRouteName: 'network', text: this.$t('common.home') },
@@ -62,10 +70,24 @@
         ];
       },
       getPercentage() {
-        const num = this.count.activations;
+        const num = this.count;
         return parseFloat(
           ((num * 100) / this.$constants.ALL_ICO_ACTIVE_ADDRESSES).toFixed(2),
         );
+      },
+    },
+    methods: {
+      ...mapMutations('operations', [SET_ACTIVATIONS_COUNT]),
+      async reload() {
+        const { page, limit } = this;
+        await this.$api
+          .getActivations({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_ACTIVATIONS_COUNT](data.count);
+          })
+          .catch(() => {});
       },
     },
   };

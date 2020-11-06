@@ -198,6 +198,7 @@
         :total-rows="count.baking_rights"
         :per-page="perPage"
         limit="10"
+        :loading="loading"
       />
     </div>
   </div>
@@ -229,6 +230,7 @@
         // block_levels: [],
         blocks_in_row: this.$constants.BLOCKS_IN_ROW,
         newFields: [],
+        loading: false,
       };
     },
     computed: {
@@ -334,6 +336,7 @@
         this.baking_rights = result;
       },
       async reload(page = 1) {
+        this.loading = true;
         const props = {
           page,
           limit: this.blocks_in_row,
@@ -341,6 +344,7 @@
         const data = await this.$api.getBakingRights(props);
         await this[SET_BAKING_RIGHTS_COUNT](data.count);
         this.parseResponse(data.data);
+        this.loading = false;
       },
     },
   };

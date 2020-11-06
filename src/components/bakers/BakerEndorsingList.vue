@@ -1,7 +1,7 @@
 <template>
   <div class="endorsing-list">
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect @per-page="$_setPerPage" />
+      <LimitSelect :limit="perPage" @onLimitChange="(limit) => $emit('onLimitChange', { type: 'endorsing', limit })" :loading="loading" />
     </div>
 
     <b-table
@@ -24,11 +24,12 @@
       </template>
     </b-table>
 
-    <Pagination
-      v-model="currentPage"
-      @change="$_handleCurrentPageChange"
+    <PaginationSelect
+      @onPageChange="(page) => $emit('onPageChange', { type: 'endorsing', page })"
       :total-rows="count"
       :per-page="perPage"
+      :current-page="currentPage"
+      :loading="loading"
     />
 
     <div>
@@ -78,6 +79,7 @@
           @change="handleModalPagination"
           :total-rows="selectedRow.count"
           :per-page="selectedRow.perPage"
+          :loading="selectedRow.loading"
         />
       </b-modal>
     </div>
@@ -85,30 +87,39 @@
 </template>
 
 <script>
-  import PerPageSelect from '@/components/partials/PerPageSelect';
+  import LimitSelect from '@/components/partials/LimitSelect';
   import Pagination from '../partials/Pagination';
-  import setPerPage from '@/mixins/setPerPage';
-  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import PaginationSelect from '../partials/PaginationSelect';
   import { mapState } from 'vuex';
 
   export default {
     name: 'BakerEndorsingList',
     components: {
-      PerPageSelect,
+      LimitSelect,
       Pagination,
+      PaginationSelect,
     },
-    mixins: [setPerPage, handleCurrentPageChange],
-    props: ['account'],
+    props: {
+      data: {
+        type: Array,
+        default() {
+          return [];
+        },
+      },
+      future: Array,
+      total: Object,
+      count: {
+        type: Number,
+        default: 0,
+      },
+      account: String,
+      currentPage: Number,
+      perPage: Number,
+      loaded: Boolean,
+      loading: Boolean,
+    },
     data() {
       return {
-        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-        fields: [
-          { key: 'cycle', label: this.$tc('common.cycle', 1) },
-          { key: 'slots', label: this.$t('endorsementsList.slots') },
-          { key: 'missed', label: this.$t('bakerSingle.missed') },
-          { key: 'rewards', label: this.$tc('common.reward', 2) },
-          { key: 'status', label: this.$tc('statusTypes.status') },
-        ],
         selectedRow: {
           type: null,
           cycleId: null,
@@ -116,28 +127,29 @@
           count: 0,
           fields: [],
           currentPage: 1,
+          loading: false,
         },
-        count: 0,
-        total: null,
-        future: [],
-        data: [],
-        loading: false,
       };
     },
     computed: {
       ...mapState('app', {
         dateFormat: (state) => state.dateFormat,
       }),
+      fields() {
+        if (!this.$i18n.locale) {
+          return [];
+        }
+
+        return [
+          { key: 'cycle', label: this.$tc('common.cycle', 1) },
+          { key: 'slots', label: this.$t('endorsementsList.slots') },
+          { key: 'missed', label: this.$t('bakerSingle.missed') },
+          { key: 'rewards', label: this.$tc('common.reward', 2) },
+          { key: 'status', label: this.$tc('statusTypes.status') },
+        ];
+      },
     },
     watch: {
-      currentPage: {
-        async handler(value) {
-          await this.reload(value);
-        },
-      },
-      async perPage() {
-        await this.reload();
-      },
       'selectedRow.currentPage': {
         deep: true,
         async handler(value) {
@@ -181,7 +193,6 @@
       },
       async handleRowClick(row) {
         if (this.loading || row.length === 0) return;
-        this.loading = true;
 
         const isRowFuture = row[0].class === 'future';
         const isRowTotal = row[0].cycle === 'Total';
@@ -226,42 +237,9 @@
         this.selectedRow.data = modalData.data;
         this.selectedRow.count = modalData.count;
         this.$bvModal.show('modal-endorsing');
-        this.loading = false;
-      },
-      async reload(page = 1) {
-        const props = {
-          page,
-          limit: this.perPage,
-          account: this.account,
-        };
-
-        if (page === 1) {
-          const total = await this.$api.getAccountEndorsingTotal({
-            account: this.account,
-          });
-          const future = await this.$api.getAccountEndorsingFuture({
-            account: this.account,
-          });
-          const data = await this.$api.getAccountEndorsing(props);
-
-          this.total = { ...total.data, status: 'Total' };
-          this.future = future.data.map((item) => ({
-            ...item,
-            class: 'future',
-          }));
-          this.data = [
-            ...this.future,
-            { ...total.data, cycle: 'Total', class: 'total', status: 'Total' },
-            ...data.data,
-          ];
-
-          this.count = data.count;
-        } else {
-          const data = await this.$api.getAccountEndorsing(props);
-          this.data = data.data;
-        }
       },
       async reloadAccountEndorsingItem(page = 1) {
+        this.selectedRow.loading = true;
         const props = {
           page,
           account: this.account,
@@ -279,13 +257,17 @@
 
         this.selectedRow.data = data.data;
         this.selectedRow.count = data.count;
+        this.selectedRow.loading = false;
       },
       handleModalPagination(page) {
         this.selectedRow.currentPage = page;
       },
     },
     async created() {
-      this.reload();
+      const itemsNotFetched = !this.loaded;
+      if (itemsNotFetched) {
+        this.$emit('onReload', { type: 'endorsing', limit: this.perPage });
+      }
     },
   };
 </script>

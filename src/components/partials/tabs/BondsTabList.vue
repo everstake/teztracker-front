@@ -1,7 +1,7 @@
 <template>
   <div class="baking-list">
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect :default-per-page="perPage" @per-page="$_setPerPage" />
+      <LimitSelect :limit="perPage" :loading="loading" @onLimitChange="(limit) => $emit('onLimitChange', { type: 'bonds', limit })" />
     </div>
 
     <b-table
@@ -80,36 +80,44 @@
 </template>
 
 <script>
-  import PerPageSelect from '@/components/partials/PerPageSelect';
-  import setPerPage from '@/mixins/setPerPage';
-  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import LimitSelect from '@/components/partials/LimitSelect';
   import { mapState } from 'vuex';
 
   export default {
-    name: 'BakerBondsList',
+    name: 'BondsTabList',
     components: {
-      PerPageSelect,
+      LimitSelect,
     },
     filters: {
       toFixedNoRounding(amount) {
         return amount.toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0];
       },
     },
-    mixins: [setPerPage, handleCurrentPageChange],
-    props: ['account'],
+    props: {
+      data: {
+        type: Array,
+        default() {
+          return [];
+        },
+      },
+      count: {
+        type: Number,
+        default: 0,
+      },
+      account: String,
+      currentPage: Number,
+      perPage: Number,
+      loaded: Boolean,
+      loading: Boolean,
+    },
     data() {
       return {
-        currentPage: this.$constants.INITIAL_CURRENT_PAGE,
-        perPage: 20,
         selectedRow: {
           data: null,
           count: 0,
           fields: [],
           currentPage: 1,
         },
-        count: 0,
-        data: [],
-        loading: false,
       };
     },
     computed: {
@@ -117,6 +125,7 @@
         dateFormat: (state) => state.dateFormat,
       }),
       fields() {
+        if (!this.$i18n.locale) return [];
         return [
           { key: 'cycle', label: this.$tc('common.cycle', 1) },
           { key: 'staking_balance', label: this.$t('common.stakingBal') },
@@ -145,23 +154,6 @@
       },
     },
     watch: {
-      currentPage: {
-        async handler(value) {
-          let result;
-
-          if (typeof value === 'object') {
-            const { page } = value;
-            result = page;
-          } else {
-            result = value;
-          }
-
-          await this.reload(result);
-        },
-      },
-      async perPage(value) {
-        await this.reload({ page: value });
-      },
       'selectedRow.currentPage': {
         deep: true,
         async handler(value) {
@@ -174,9 +166,6 @@
           await this.reloadAccountRewardsDelegators();
         },
       },
-    },
-    async created() {
-      this.reload();
     },
     methods: {
       getRowClass(item) {
@@ -204,19 +193,12 @@
 
         return classes.join(' ');
       },
-      async reload(page = 1) {
-        const props = {
-          page,
-          limit: this.perPage,
-          account: this.account,
-        };
-
-        this.$_setPerPage(this.perPage);
-
-        const data = await this.$api.getAccountBonds(props);
-        this.data = data.data;
-        this.count = data.count;
-      },
+    },
+    async created() {
+      const itemsNotFetched = !this.loaded;
+      if (itemsNotFetched) {
+        this.$emit('onReload', { type: 'bonds', limit: this.perPage });
+      }
     },
   };
 </script>

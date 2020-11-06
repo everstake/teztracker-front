@@ -1,60 +1,33 @@
 <template>
   <div>
-    <b-table
-      responsive
-      show-empty
-      :items="snapshots"
-      :fields="fields"
-      :current-page="currentPage"
-      :per-page="0"
-      borderless
-      class="transactions-table"
-      :empty-text="$t('common.noData')"
-    >
-      <template slot="cycle" slot-scope="row">
-        {{ row.item.cycle | formatInteger }}
-      </template>
+    <SnapshotsTable :loading="loading" :items="items" :page="page" :limit="limit"  />
 
-      <template slot="level" slot-scope="row">
-        <b-link
-          :to="{ name: 'block', params: { level: row.item.snapshot_block } }"
-        >
-          {{ row.item.snapshot_block | formatInteger }}
-        </b-link>
-      </template>
-
-      <template slot="rolls" slot-scope="row">
-        {{ row.item.rolls | formatInteger }}
-      </template>
-    </b-table>
-
-    <Pagination
-      @change="$_handleCurrentPageChange"
-      v-model="currentPage"
-      :total-rows="count"
-      :per-page="perPage"
+    <PaginationNav
+      :limit="limit"
+      :page="page"
+      :count="count"
+      :loading="loading"
+      @onPageChange="(page) => $emit('onPageChange', page)"
     />
   </div>
 </template>
 
 <script>
-  import { mapMutations } from 'vuex';
-  import { SET_SNAPSHOTS_COUNT } from '@/store/mutations.types';
-  import Pagination from '../partials/Pagination';
-  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
+  import PaginationNav from '@/components/partials/PaginationNav';
+  import SnapshotsTable from '@/components/partials/tables/SnapshotsTable';
 
   export default {
     name: 'SnapshotsList',
     components: {
-      Pagination,
+      SnapshotsTable,
+      PaginationNav,
     },
-    mixins: [handleCurrentPageChange],
-    data() {
-      return {
-        perPage: this.$constants.PER_PAGE_SNAPSHOTS,
-        snapshots: [],
-        count: 0,
-      };
+    props: {
+      items: Array,
+      count: Number,
+      limit: Number,
+      page: Number,
+      loading: Boolean,
     },
     computed: {
       fields() {
@@ -64,30 +37,6 @@
           { key: 'level', label: this.$t('common.blockId') },
           { key: 'rolls', label: this.$t('common.rolls') },
         ];
-      },
-    },
-    watch: {
-      currentPage: {
-        async handler(value) {
-          await this.reload(value);
-        },
-      },
-    },
-    async created() {
-      await this.reload();
-    },
-    methods: {
-      ...mapMutations('blocks', [SET_SNAPSHOTS_COUNT]),
-      async reload(page = 1) {
-        const props = {
-          page,
-          limit: this.perPage,
-        };
-        const data = await this.$api.getSnapshots(props);
-
-        this.snapshots = data.data;
-        this.count = data.count;
-        this[SET_SNAPSHOTS_COUNT](this.count);
       },
     },
   };

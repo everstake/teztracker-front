@@ -14,12 +14,20 @@
                   </h4>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count.bakers" />
+                  <Counter show-line :count="count" />
                 </template>
               </CardHeader>
 
               <b-card-body>
-                <BakersList />
+                <BakersList
+                  :loading="loading"
+                  :limit="limit"
+                  :items="items"
+                  :count="count"
+                  :page="page"
+                  @onLimitChange="handleLimitChange"
+                  @onPageChange="handlePageChange"
+                />
               </b-card-body>
             </b-card>
           </b-col>
@@ -30,11 +38,13 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapMutations } from 'vuex';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import BakersList from '../components/bakers/BakersList';
   import CardHeader from '../components/partials/CardHeader';
   import Counter from '../components/partials/Counter';
+  import { SET_BAKERS } from '@/store/mutations.types';
+  import reloadNavigationList from '@/mixins/reloadNavigationList';
 
   export default {
     name: 'Bakers',
@@ -44,15 +54,27 @@
       Counter,
       CardHeader,
     },
+    mixins: [reloadNavigationList],
     computed: {
-      ...mapState('accounts', {
-        count: (state) => state.counts,
-      }),
       crumbs() {
         return [
           { toRouteName: 'network', text: this.$t('common.home') },
           { toRouteName: 'bakers', text: this.$t('pageTypes.allBakersPage') },
         ];
+      },
+    },
+    methods: {
+      ...mapMutations('accounts', [SET_BAKERS]),
+      async reload() {
+        const { page, limit } = this;
+        await this.$api
+          .getBakers({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+            this[SET_BAKERS](data);
+          })
+          .catch(() => {});
       },
     },
   };
