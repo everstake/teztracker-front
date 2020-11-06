@@ -175,7 +175,7 @@
         this.counts.endorsements = data.count;
         this.endorsements = data.data;
         this.loaded.endorsements = true;
-        this.loading.endorsements = true;
+        this.loading.endorsements = false;
       },
       async reloadTxs({ limit, page }) {
         this.loading.txs = true;
