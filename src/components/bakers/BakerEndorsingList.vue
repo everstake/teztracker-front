@@ -1,7 +1,7 @@
 <template>
   <div class="endorsing-list">
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :limit="perPage" @onLimitChange="$_setPerPage" />
+      <LimitSelect :limit="perPage" @onLimitChange="$_setPerPage" :loading="loading" />
     </div>
 
     <b-table
@@ -29,6 +29,7 @@
       :total-rows="count"
       :per-page="perPage"
       :current-page="currentPage"
+      :loading="loading"
     />
 
     <div>
@@ -78,6 +79,7 @@
           @change="handleModalPagination"
           :total-rows="selectedRow.count"
           :per-page="selectedRow.perPage"
+          :loading="selectedRow.loading"
         />
       </b-modal>
     </div>
@@ -125,8 +127,8 @@
           count: 0,
           fields: [],
           currentPage: 1,
+          loading: false,
         },
-        loading: false,
       };
     },
     computed: {
@@ -191,7 +193,6 @@
       },
       async handleRowClick(row) {
         if (this.loading || row.length === 0) return;
-        this.loading = true;
 
         const isRowFuture = row[0].class === 'future';
         const isRowTotal = row[0].cycle === 'Total';
@@ -236,9 +237,9 @@
         this.selectedRow.data = modalData.data;
         this.selectedRow.count = modalData.count;
         this.$bvModal.show('modal-endorsing');
-        this.loading = false;
       },
       async reloadAccountEndorsingItem(page = 1) {
+        this.selectedRow.loading = true;
         const props = {
           page,
           account: this.account,
@@ -256,6 +257,7 @@
 
         this.selectedRow.data = data.data;
         this.selectedRow.count = data.count;
+        this.selectedRow.loading = false;
       },
       handleModalPagination(page) {
         this.selectedRow.currentPage = page;
