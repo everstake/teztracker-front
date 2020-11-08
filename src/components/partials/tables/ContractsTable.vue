@@ -11,17 +11,17 @@
     :empty-text="$t('common.noData')"
   >
     <template slot="accountId" slot-scope="row">
-        <span class="d-flex align-items-center">
-          <IdentIcon :seed="row.item.accountId" />
+      <span class="d-flex align-items-center">
+        <IdentIcon :seed="row.item.accountId" />
 
-          <router-link
-            :to="{ name: 'account', params: { account: row.item.accountId } }"
-          >
-            <span>{{ row.item.accountId | longhash }}</span>
-          </router-link>
+        <router-link
+          :to="{ name: 'account', params: { account: row.item.accountId } }"
+        >
+          <span>{{ row.item.accountId | longhash }}</span>
+        </router-link>
 
-          <BtnCopy :text-to-copy="row.item.accountId" />
-        </span>
+        <BtnCopy :text-to-copy="row.item.accountId" />
+      </span>
     </template>
     <template slot="manager" slot-scope="row">
       <b-link
@@ -30,37 +30,37 @@
       >
         <span>{{ row.item.manager | longhash }}</span>
       </b-link>
-      
+
       <NoDataTableCell v-else />
     </template>
     <template slot="delegateValue" slot-scope="row">
-        <span v-if="row.item.delegateValue" class="d-flex align-items-center">
-          <IdentIcon :seed="row.item.delegateValue" />
+      <span v-if="row.item.delegateValue" class="d-flex align-items-center">
+        <IdentIcon :seed="row.item.delegateValue" />
 
-          <b-link
-            :to="{
-              name: 'account',
-              params: { account: row.item.delegateValue },
-            }"
-          >
-            <template v-if="row.item.delegateName">
-              {{ row.item.delegateName }}
-            </template>
-            <template v-else>
-              {{ row.item.delegateValue | longhash }}
-            </template>
-          </b-link>
+        <b-link
+          :to="{
+            name: 'account',
+            params: { account: row.item.delegateValue },
+          }"
+        >
+          <template v-if="row.item.delegateName">
+            {{ row.item.delegateName }}
+          </template>
+          <template v-else>
+            {{ row.item.delegateValue | longhash }}
+          </template>
+        </b-link>
 
-          <BtnCopy
-            v-if="!row.item.delegateName"
-            :text-to-copy="row.item.delegateValue"
-          />
-        </span>
-      
+        <BtnCopy
+          v-if="!row.item.delegateName"
+          :text-to-copy="row.item.delegateValue"
+        />
+      </span>
+
       <NoDataTableCell v-else />
     </template>
     <template slot="balance" slot-scope="row">
-      <span>{{ row.item.balance | tezos }}</span>
+      <span>{{ row.item.balance | denominate }}</span>
     </template>
     <template slot="createdAt" slot-scope="row">
       <span>{{ row.item.createdAt | timeformat(dateFormat) }}</span>
@@ -72,7 +72,7 @@
   import { mapState } from 'vuex';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
-  import NoDataTableCell from '@/components/partials/NoDataTableCell'
+  import NoDataTableCell from '@/components/partials/NoDataTableCell';
 
   export default {
     name: 'ContractsTable',

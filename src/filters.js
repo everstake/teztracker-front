@@ -117,6 +117,6 @@ Vue.filter('formatCurrency', (amount, calcXTZ = true) =>
   Vue.prototype.$helpers.formatCurrency(amount, calcXTZ),
 );
 
-Vue.filter('denominate', (amount, calcXTZ = true, convert = true) =>
-  Vue.prototype.$helpers.denominate(amount, calcXTZ, convert),
+Vue.filter('denominate', (amount, calcXTZ = true) =>
+  Vue.prototype.$helpers.denominate(amount, calcXTZ),
 );
