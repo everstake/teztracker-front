@@ -16,62 +16,60 @@
       :empty-text="$t('common.noData')"
     >
       <template slot="staking_balance" slot-scope="row">
-        {{ row.item.staking_balance | tezosToFixed }}
+        {{ row.item.staking_balance | denominate }}
       </template>
 
       <template slot="actual_blocks_deposit" slot-scope="row">
         <span v-if="row.item.status === 'pending'">
           <span v-if="row.item.expected_blocks_deposit">
-            {{ row.item.expected_blocks_deposit | tezosToFixed }}
+            {{ row.item.expected_blocks_deposit | denominate }}
           </span>
           <span v-else>-</span>
         </span>
         <span v-else-if="row.item.status === 'active'">
           <span v-if="row.item.actual_blocks_deposit">
-            {{ row.item.actual_blocks_deposit | tezosToFixed }}
-            ({{ row.item.expected_blocks_deposit | tezosToFixed }})
+            {{ row.item.actual_blocks_deposit | denominate }}
+            ({{ row.item.expected_blocks_deposit | denominate }})
           </span>
-          <span v-else
-            >- ({{ row.item.expected_blocks_deposit | tezosToFixed }})</span
-          >
+          <span v-else>
+            - ({{ row.item.expected_blocks_deposit | denominate }})
+          </span>
         </span>
       </template>
 
       <template slot="actual_endorsement_deposit" slot-scope="row">
         <span v-if="row.item.status === 'pending'">
           <span v-if="row.item.expected_endorsement_deposit">
-            {{ row.item.expected_endorsement_deposit | tezosToFixed }}
+            {{ row.item.expected_endorsement_deposit | denominate }}
           </span>
           <span v-else>-</span>
         </span>
         <span v-else-if="row.item.status === 'active'">
           <span v-if="row.item.actual_endorsement_deposit">
-            {{ row.item.actual_endorsement_deposit | tezosToFixed }}
-            ({{ row.item.expected_endorsement_deposit | tezosToFixed }})
+            {{ row.item.actual_endorsement_deposit | denominate }}
+            ({{ row.item.expected_endorsement_deposit | denominate }})
           </span>
-          <span v-else
-            >- ({{
-              row.item.expected_endorsement_deposit | tezosToFixed
-            }})</span
-          >
+          <span v-else>
+            - ({{ row.item.expected_endorsement_deposit | denominate }})
+          </span>
         </span>
       </template>
 
       <template slot="actual_total_deposit" slot-scope="row">
         <span v-if="row.item.actual_total_deposit">
-          {{ row.item.actual_total_deposit | tezosToFixed }}
+          {{ row.item.actual_total_deposit | denominate }}
         </span>
         <span v-else>-</span>
       </template>
       <template slot="expected_total_deposit" slot-scope="row">
         <span v-if="row.item.expected_total_deposit">
-          {{ row.item.expected_total_deposit | tezosToFixed }}
+          {{ row.item.expected_total_deposit | denominate }}
         </span>
         <span v-else>-</span>
       </template>
       <template slot="available_bond" slot-scope="row">
         <span v-if="row.item.available_bond">
-          {{ row.item.available_bond | tezosToFixed }}
+          {{ row.item.available_bond | denominate }}
         </span>
         <span v-else>-</span>
       </template>

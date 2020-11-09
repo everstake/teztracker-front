@@ -4,7 +4,9 @@
       <LimitSelect
         :limit="perPage"
         :loading="loading"
-        @onLimitChange="(limit) => $emit('onLimitChange', { type: 'delegations', limit })"
+        @onLimitChange="
+          (limit) => $emit('onLimitChange', { type: 'delegations', limit })
+        "
       />
     </div>
 
@@ -35,7 +37,7 @@
         </span>
       </template>
       <template slot="delegationAmount" slot-scope="row">
-        {{ row.item.delegationAmount | tezos }}
+        {{ row.item.delegationAmount | denominate }}
       </template>
       <template slot="from" slot-scope="row">
         <span class="d-flex align-items-center">
@@ -93,7 +95,7 @@
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
       <template slot="fee" slot-scope="row">
-        {{ row.item.fee | tezos }}
+        {{ row.item.fee | denominate }}
       </template>
     </b-table>
 
@@ -102,7 +104,9 @@
       :per-page="perPage"
       :current-page="currentPage"
       :loading="loading"
-      @onPageChange="(page) => $emit('onPageChange', { type: 'delegations', page })"
+      @onPageChange="
+        (page) => $emit('onPageChange', { type: 'delegations', page })
+      "
     />
   </div>
 </template>

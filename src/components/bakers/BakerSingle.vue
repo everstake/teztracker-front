@@ -96,9 +96,8 @@
                   </b-col>
                   <b-col lg="8" class="text-accent">
                     {{
-                      ((bakerInfo.stakingCapacity - bakerInfo.stakingBalance) /
-                        $constants.XTZ)
-                        | tezosCapacity
+                      (bakerInfo.stakingCapacity - bakerInfo.stakingBalance)
+                        | denominate
                     }}
                   </b-col>
                 </b-row>
@@ -114,24 +113,24 @@
                     {{ $t('bakerSingle.totalBal') }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
-                    {{ bakerInfo.evaluatedBalance | tezos }}
+                    {{ bakerInfo.evaluatedBalance | denominate }}
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
                     {{ $t('bakerSingle.liquidBal') }}
                   </b-col>
-                  <b-col lg="8" class="text-accent">{{
-                    account.balance | tezos
-                  }}</b-col>
+                  <b-col lg="8" class="text-accent">
+                    {{ account.balance | denominate }}
+                  </b-col>
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
                     {{ $t('common.delegatedBal') }}
                   </b-col>
-                  <b-col lg="8" class="text-accent">{{
-                    bakerInfo.stakingBalance | tezos
-                  }}</b-col>
+                  <b-col lg="8" class="text-accent">
+                    {{ bakerInfo.stakingBalance | denominate }}
+                  </b-col>
                 </b-row>
 
                 <span class="text-accent">
@@ -142,17 +141,17 @@
                   <b-col lg="4" class="label">
                     {{ $t('common.baking') }}
                   </b-col>
-                  <b-col lg="8" class="text-accent">{{
-                    bakerInfo.bakingDeposits | tezos
-                  }}</b-col>
+                  <b-col lg="8" class="text-accent">
+                    {{ bakerInfo.bakingDeposits | denominate }}
+                  </b-col>
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
                     {{ $t('bakerSingle.endorsement') }}
                   </b-col>
-                  <b-col lg="8" class="text-accent">{{
-                    bakerInfo.endorsementDeposits | tezos
-                  }}</b-col>
+                  <b-col lg="8" class="text-accent">
+                    {{ bakerInfo.endorsementDeposits | denominate }}
+                  </b-col>
                 </b-row>
 
                 <span class="text-accent">
@@ -163,17 +162,17 @@
                   <b-col lg="4" class="label">
                     {{ $t('common.baking') }}
                   </b-col>
-                  <b-col lg="8" class="text-accent">{{
-                    bakerInfo.bakingRewards | tezos
-                  }}</b-col>
+                  <b-col lg="8" class="text-accent">
+                    {{ bakerInfo.bakingRewards | denominate }}
+                  </b-col>
                 </b-row>
                 <b-row class="item-info">
                   <b-col lg="4" class="label">
                     {{ $t('bakerSingle.endorsement') }}
                   </b-col>
-                  <b-col lg="8" class="text-accent">{{
-                    bakerInfo.endorsementRewards | tezos
-                  }}</b-col>
+                  <b-col lg="8" class="text-accent">
+                    {{ bakerInfo.endorsementRewards | denominate }}
+                  </b-col>
                 </b-row>
               </b-col>
             </b-row>
@@ -185,11 +184,10 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import IdentIcon from '@/components/accounts/IdentIcon';
   import BtnCopy from '@/components/partials/BtnCopy';
   import convert from '../../mixins/convert';
-  import { GET_APP_INFO } from '@/store/actions.types';
-  import { mapState, mapActions } from 'vuex';
 
   export default {
     name: 'BakerSingle',
@@ -224,11 +222,9 @@
       },
     },
     async created() {
-      await this[GET_APP_INFO]();
       await this.reload(this.hash);
     },
     methods: {
-      ...mapActions('app', [GET_APP_INFO]),
       async reload(acc) {
         const result = await this.$api.getAccount({ account: acc });
         if (result.status !== this.$constants.STATUS_SUCCESS) {

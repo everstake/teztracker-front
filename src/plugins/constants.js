@@ -37,6 +37,12 @@ const constants = {
   DEFAULT_LANGUAGE: process.env.VUE_APP_I18N_LOCALE,
   FALLBACK_LANGUAGE: process.env.VUE_APP_I18N_FALLBACK_LOCALE,
   SUPPORTED_LANGUAGES: process.env.VUE_APP_I18N_SUPPORTED_LOCALES.split(','),
+  CURRENCY_CODE_SIGN_MAP: {
+    usd: '$',
+    eur: '€',
+    gbp: '£',
+    cny: '¥',
+  },
 };
 
 Vue.use({

@@ -10,17 +10,31 @@
       :empty-text="$t('common.noData')"
     >
       <template slot="from" slot-scope="row">
-        <b-link
-          :to="{
-            name: 'account',
-            params: { account: row.item.source },
-          }"
-        >
-          {{ row.item.sourceName || row.item.source | longhash }}
-        </b-link>
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.source" />
+
+          <b-link
+            :to="{
+              name: 'account',
+              params: { account: row.item.source },
+            }"
+          >
+            <template v-if="row.item.sourceName">
+              {{ row.item.sourceName }}
+            </template>
+            <template v-else>
+              {{ row.item.source | longhash }}
+            </template>
+          </b-link>
+
+          <BtnCopy
+            v-if="!row.item.sourceName"
+            :text-to-copy="row.item.source"
+          />
+        </span>
       </template>
       <template slot="fee" slot-scope="row">
-        {{ row.item.fee | tezos }}
+        {{ row.item.fee | denominate }}
       </template>
       <template slot="gas" slot-scope="row">
         {{ row.item.gasLimit | formatInteger }}
@@ -37,11 +51,15 @@
 </template>
 
 <script>
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import BtnCopy from '@/components/partials/BtnCopy';
   import NoDataTableCell from '@/components/partials/NoDataTableCell';
 
   export default {
     name: 'RevealsList',
     components: {
+      IdentIcon,
+      BtnCopy,
       NoDataTableCell,
     },
     props: {

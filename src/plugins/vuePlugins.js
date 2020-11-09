@@ -17,6 +17,7 @@ import {
   NavbarPlugin,
   FormInputPlugin,
   BForm,
+  FormRadioPlugin,
   ModalPlugin,
   ToastPlugin,
   PaginationNavPlugin,
@@ -77,6 +78,7 @@ Vue.use(FormGroupPlugin);
 Vue.use(FormCheckboxPlugin);
 Vue.use(NavbarPlugin);
 Vue.use(FormInputPlugin);
+Vue.use(FormRadioPlugin);
 Vue.use(ModalPlugin);
 Vue.use(FlagIcon);
 Vue.use(ToastPlugin);

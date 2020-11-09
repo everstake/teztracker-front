@@ -14,31 +14,29 @@
       <span>{{ row.index + 1 }}</span>
     </template>
     <template slot="accountId" slot-scope="row">
-        <span>
-          <IdentIcon :seed="row.item.accountId" />
+      <span>
+        <IdentIcon :seed="row.item.accountId" />
 
-          <b-link
-            :to="{ name: 'baker', params: { baker: row.item.accountId } }"
-          >
-            <template v-if="row.item.name">
-              {{ row.item.name }}
-            </template>
-            <template v-else>
-              {{ row.item.accountId | longhash }}
-            </template>
-          </b-link>
-        </span>
+        <b-link :to="{ name: 'baker', params: { baker: row.item.accountId } }"
+          >2
+          <template v-if="row.item.name">
+            {{ row.item.name }}
+          </template>
+          <template v-else>
+            {{ row.item.accountId | longhash }}
+          </template>
+        </b-link>
+      </span>
     </template>
     <template slot="stakingCapacity" slot-scope="row">
       {{
-      ((row.item.stakingCapacity - row.item.stakingBalance) /
-      $constants.XTZ)
-      | tezosCapacity
+        ((row.item.stakingCapacity - row.item.stakingBalance) / $constants.XTZ)
+          | denominate
       }}
     </template>
     <template slot="fee" slot-scope="row"> {{ row.item.fee }} % </template>
     <template slot="stakingBalance" slot-scope="row">
-      {{ row.item.stakingBalance | tezos }}
+      {{ row.item.stakingBalance | denominate }}
     </template>
     <template slot="rolls" slot-scope="row">
       {{ row.item.rolls | formatInteger }}
@@ -89,7 +87,12 @@
           return this.propsFields;
         } else {
           return [
-            { key: 'id', label: '#', tdClass: 'ordinal-number', thClass: 'ordinal-number' },
+            {
+              key: 'id',
+              label: '#',
+              tdClass: 'ordinal-number',
+              thClass: 'ordinal-number',
+            },
             { key: 'accountId', label: this.$tc('common.baker', 1) },
             {
               key: 'stakingCapacity',
@@ -127,7 +130,10 @@
               sortable: true,
               sortDirection: 'desc',
             },
-            { key: 'activeDelegators', label: this.$t('numberOf.#OfDelegators') },
+            {
+              key: 'activeDelegators',
+              label: this.$t('numberOf.#OfDelegators'),
+            },
             { key: 'bakingSince', label: this.$t('common.bakingSince') },
           ];
         }

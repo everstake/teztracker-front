@@ -44,7 +44,7 @@
       </template>
 
       <template slot="fee" slot-scope="row">
-        {{ row.item.fee | tezos }}
+        {{ row.item.fee | denominate }}
       </template>
 
       <template slot="timestamp" slot-scope="row">

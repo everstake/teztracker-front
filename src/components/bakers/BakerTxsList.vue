@@ -4,7 +4,9 @@
       <LimitSelect
         :limit="perPage"
         :loading="loading"
-        @onLimitChange="(limit) => $emit('onLimitChange', { type: 'txs', limit })"
+        @onLimitChange="
+          (limit) => $emit('onLimitChange', { type: 'txs', limit })
+        "
       />
     </div>
 
@@ -92,10 +94,10 @@
         </span>
       </template>
       <template slot="amount" slot-scope="row">
-        {{ row.item.amount | tezos }}
+        {{ row.item.amount | denominate }}
       </template>
       <template slot="fee" slot-scope="row">
-        {{ row.item.fee | tezos }}
+        {{ row.item.fee | denominate }}
       </template>
     </b-table>
 

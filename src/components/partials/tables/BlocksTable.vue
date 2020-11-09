@@ -38,10 +38,10 @@
       {{ row.item.number_of_operations | formatInteger }}
     </template>
     <template slot="volume" slot-scope="row">
-      {{ row.item.volume | tezos }}
+      {{ row.item.volume | denominate }}
     </template>
     <template slot="fees" slot-scope="row">
-      {{ row.item.fees | tezos }}
+      {{ row.item.fees | denominate }}
     </template>
     <template slot="endorsements" slot-scope="row">
       {{ row.item.endorsements | formatInteger }}

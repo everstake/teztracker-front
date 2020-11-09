@@ -90,8 +90,7 @@
             </b-col>
             <b-col lg="10">
               <span class="value">
-                {{ account.balance | tezos }}
-                ({{ $_convert(account.balance) }})
+                {{ account.balance | denominate }}
               </span>
             </b-col>
           </b-row>
@@ -157,9 +156,8 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import convert from '../../mixins/convert';
-  import { GET_APP_INFO } from '@/store/actions.types';
-  import { mapState, mapActions } from 'vuex';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
 
@@ -196,11 +194,9 @@
       },
     },
     async created() {
-      await this[GET_APP_INFO]();
       await this.reload(this.hash);
     },
     methods: {
-      ...mapActions('app', [GET_APP_INFO]),
       async reload(acc) {
         const result = await this.$api.getAccount({ account: acc });
         if (result.status !== this.$constants.STATUS_SUCCESS) {

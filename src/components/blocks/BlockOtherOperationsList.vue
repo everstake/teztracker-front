@@ -91,14 +91,14 @@
       </template>
       <template slot="amount" slot-scope="row">
         <template v-if="row.item.amount">
-          {{ row.item.amount | tezos }}
+          {{ row.item.amount | denominate }}
         </template>
         <template v-else>
-          {{ row.item.balance | tezos }}
+          {{ row.item.balance | denominate }}
         </template>
       </template>
       <template slot="fee" slot-scope="row">
-        {{ row.item.fee | tezos }}
+        {{ row.item.fee | denominate }}
       </template>
       <template slot="operationGroupHash" slot-scope="row">
         <span class="d-flex align-items-center">

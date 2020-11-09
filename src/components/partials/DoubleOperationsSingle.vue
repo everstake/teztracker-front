@@ -113,7 +113,9 @@
                     {{ $t('dblBakingList.lostDeposits') }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
-                    {{ props.doubleOperationDetails.lost_deposits | tezos }}
+                    {{
+                      props.doubleOperationDetails.lost_deposits | denominate
+                    }}
                   </b-col>
                 </b-row>
 
@@ -122,7 +124,7 @@
                     {{ $t('dblBakingList.lostRewards') }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
-                    {{ props.doubleOperationDetails.lost_rewards | tezos }}
+                    {{ props.doubleOperationDetails.lost_rewards | denominate }}
                   </b-col>
                 </b-row>
 
@@ -131,7 +133,7 @@
                     $t('dblBakingList.accuserRewards')
                   }}</b-col>
                   <b-col lg="7" class="text-accent">
-                    {{ props.doubleOperationDetails.baker_reward | tezos }}
+                    {{ props.doubleOperationDetails.baker_reward | denominate }}
                   </b-col>
                 </b-row>
 

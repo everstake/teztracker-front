@@ -41,3 +41,4 @@ export const SET_PROTOCOLS_COUNT = "setProtocolsCount";
 export const SET_DATE_FORMAT = "setDateFormat";
 export const CLEAR_CANCEL_TOKENS = "clearCancelTokens";
 export const ADD_CANCEL_TOKEN = "addCancelToken";
+export const SET_CURRENT_CURRENCY = 'setCurrentCurrency';

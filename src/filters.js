@@ -24,28 +24,19 @@ Vue.filter('timeformat', function(ts, format) {
   ).format(format);
 });
 
-// Vue.filter('longhash', function(hash, length) {
-//   const l = length || Vue.prototype.$constants.MAX_HASH_LENGTH;
-//   if (!hash || hash.length < l) {
-//     return hash;
-//   }
-//   return hash.slice(0, l) + '...';
-// });
-
 Vue.filter('longhash', function(hash, fromStart, fromEnd) {
   return Vue.prototype.$helpers.truncateHash(hash, fromStart, fromEnd);
 });
 
-Vue.filter('tezos', function(amount, currency = 'ꜩ') {
-  if (amount > 0) {
-    const formattedAmount = numeral(amount / Vue.prototype.$constants.XTZ).format("0,0[.]000000");
-    return `${formattedAmount} ${currency}`;
-  }
+Vue.filter('tezos', (amount, currency = 'ꜩ') =>
+  Vue.prototype.$helpers.tezos(amount, currency, true),
+);
 
-  return `0 ${currency}`;
-});
-
-Vue.filter('currencyPrecision', function(amount, currency = 'ꜩ', precision = 6) {
+Vue.filter('currencyPrecision', function(
+  amount,
+  currency = 'ꜩ',
+  precision = 6,
+) {
   const noAmount = !amount || amount === 0;
   const noPrecision = !precision || precision === 0 || precision < 0;
 
@@ -65,7 +56,9 @@ Vue.filter('currencyPrecision', function(amount, currency = 'ꜩ', precision = 6
   }
 
   if (amount > 0) {
-    const formattedAmount = numeral(Number(amount) / Vue.prototype.$constants.XTZ).format(format);
+    const formattedAmount = numeral(
+      Number(amount) / Vue.prototype.$constants.XTZ,
+    ).format(format);
     return `${formattedAmount} ${currency}`;
   }
 
@@ -119,3 +112,11 @@ Vue.filter('getPercentageICOActiveAddresses', function(num) {
 Vue.filter('formatInteger', (num) => {
   return numeral(num).format('0,0');
 });
+
+Vue.filter('formatCurrency', (amount, calcXTZ = true) =>
+  Vue.prototype.$helpers.formatCurrency(amount, calcXTZ),
+);
+
+Vue.filter('denominate', (amount, calcXTZ = true) =>
+  Vue.prototype.$helpers.denominate(amount, calcXTZ),
+);
