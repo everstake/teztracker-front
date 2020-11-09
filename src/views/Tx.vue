@@ -130,10 +130,10 @@
                         </b-link>
                       </template>
                       <template slot="amount" slot-scope="row">
-                        {{ row.item.amount | tezos }}
+                        {{ row.item.amount | denominate }}
                       </template>
                       <template slot="fee" slot-scope="row">
-                        {{ row.item.fee | tezos }}
+                        {{ row.item.fee | denominate }}
                       </template>
                       <template slot="gas" slot-scope="row">
                         {{ row.item.gasLimit | formatInteger }}
@@ -142,10 +142,10 @@
                         {{ row.item.storageLimit }}
                       </template>
                       <template slot="delegationAmount" slot-scope="row">
-                        {{ row.item.delegationAmount | tezos }}
+                        {{ row.item.delegationAmount | denominate }}
                       </template>
                       <template slot="balance" slot-scope="row">
-                        {{ row.item.balance | tezos }}
+                        {{ row.item.balance | denominate }}
                       </template>
                       <template slot="originatedContracts" slot-scope="row">
                         <b-link
@@ -189,11 +189,11 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import IdentIcon from '@/components/accounts/IdentIcon';
   import BtnCopy from '@/components/partials/BtnCopy';
   import TxSingle from '../components/transactions/TxSingle';
-  import { mapState } from 'vuex';
   import Pagination from '../components/partials/Pagination';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import defineRowClass from '@/mixins/defineRowClass';

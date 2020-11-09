@@ -81,7 +81,7 @@
                 {{ $t('blockSingle.bakerFee') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.fees | tezos }}
+                {{ this.block.fees | denominate }}
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -97,7 +97,7 @@
                 {{ $t('common.txVol') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.volume | tezos }}
+                {{ this.block.volume | denominate }}
               </b-col>
             </b-row>
             <b-row class="item-info" v-if="this.block.double_baking_evidence">

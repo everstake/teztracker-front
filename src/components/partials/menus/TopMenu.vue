@@ -182,6 +182,9 @@
               {{ $t('header.dateFormat') }}
               <DateFormatSwitcher class="pointer" :is-switch-only="true" />
             </b-dropdown-text>
+            <b-dropdown-text>
+              <CurrencySwitcher />
+            </b-dropdown-text>
           </b-nav-item-dropdown>
           <LanguageSwitcher />
           <b-nav-form v-if="isSearchVisible" class="search">
@@ -200,6 +203,7 @@
   import Search from '../Search';
   import uuid from '@/mixins/uuid';
   import DateFormatSwitcher from '@/components/partials/DateFormatSwitcher';
+  import CurrencySwitcher from '@/components/partials/CurrencySwitcher';
   import LanguageSwitcher from '@/components/partials/LanguageSwitcher';
   import Logo from '../icons/Logo';
 
@@ -208,6 +212,7 @@
     components: {
       Search,
       DateFormatSwitcher,
+      CurrencySwitcher,
       LanguageSwitcher,
       Logo,
     },

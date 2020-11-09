@@ -4,7 +4,9 @@
       <LimitSelect
         :limit="perPage"
         :loading="loading"
-        @onLimitChange="(limit) => $emit('onLimitChange', { type: 'originations', limit })"
+        @onLimitChange="
+          (limit) => $emit('onLimitChange', { type: 'originations', limit })
+        "
       />
     </div>
 
@@ -90,7 +92,7 @@
         <NoDataTableCell v-else />
       </template>
       <template slot="amount" slot-scope="row">
-        {{ row.item.balance | tezos }}
+        {{ row.item.balance | denominate }}
       </template>
     </b-table>
 
@@ -99,7 +101,9 @@
       :per-page="perPage"
       :current-page="currentPage"
       :loading="loading"
-      @onPageChange="(page) => $emit('onPageChange', { type: 'originations', page })"
+      @onPageChange="
+        (page) => $emit('onPageChange', { type: 'originations', page })
+      "
     />
   </div>
 </template>

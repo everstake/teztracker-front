@@ -1,7 +1,13 @@
 <template>
   <div>
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :limit="perPage" @onLimitChange="(limit) => $emit('onLimitChange', { type: 'txs', limit })" :loading="loading"  />
+      <LimitSelect
+        :limit="perPage"
+        @onLimitChange="
+          (limit) => $emit('onLimitChange', { type: 'txs', limit })
+        "
+        :loading="loading"
+      />
     </div>
 
     <b-table
@@ -89,10 +95,10 @@
         </span>
       </template>
       <template slot="amount" slot-scope="row">
-        {{ row.item.amount | tezos }}
+        {{ row.item.amount | denominate }}
       </template>
       <template slot="fee" slot-scope="row">
-        {{ row.item.fee | tezos }}
+        {{ row.item.fee | denominate }}
       </template>
     </b-table>
 

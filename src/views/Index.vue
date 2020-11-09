@@ -111,7 +111,9 @@
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'chart-bar']" />
               </div>
-              <span class="counter">${{ info.price }}</span>
+              <span class="counter">
+                {{ price }}
+              </span>
               <div v-if="info.price_24h_change > 0">
                 <span class="percentage green">
                   <font-awesome-icon icon="caret-up" />
@@ -136,7 +138,9 @@
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'bookmark']" />
               </div>
-              <span class="counter">${{ info.volume_24h | bignum(',') }}</span>
+              <span class="counter">
+                {{ tradingVol }}
+              </span>
               <span class="percentage"></span>
               <span class="tile-name">
                 {{ $t('index.tradingVol') }}
@@ -149,7 +153,9 @@
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'gem']" />
               </div>
-              <span class="counter">${{ info.market_cap | bignum(',') }}</span>
+              <span class="counter">
+                {{ marketCap }}
+              </span>
               <span class="percentage"></span>
               <span class="tile-name">
                 {{ $t('index.marketCap') }}
@@ -168,6 +174,7 @@
                     ? info.circulating_supply.toFixed()
                     : 0) | bignum(',')
                 }}
+                ꜩ
               </span>
               <span class="percentage"></span>
               <span class="tile-name">
@@ -308,6 +315,7 @@
     computed: {
       ...mapState('app', {
         info: (state) => state.priceInfo,
+        currentCurrency: (state) => state.currentCurrency,
       }),
       ...mapState('blocks', {
         head: (state) => state.headBlock,
@@ -344,24 +352,35 @@
           )
           .fromNow(true);
       },
+      price() {
+        return this.currentCurrency === 'xtz'
+          ? this.$helpers.formatUSD(this.info.price)
+          : this.$helpers.formatCurrency(this.info.price, false);
+      },
+      tradingVol() {
+        return this.currentCurrency === 'xtz'
+          ? this.$helpers.formatUSD(this.info.volume_24h)
+          : this.$helpers.formatCurrency(this.info.volume_24h, false);
+      },
+      marketCap() {
+        return this.currentCurrency === 'xtz'
+          ? this.$helpers.formatUSD(this.info.market_cap)
+          : this.$helpers.formatCurrency(this.info.market_cap, false);
+      },
+    },
+    async created() {
+      this.interval = setInterval(async () => {
+        await this[GET_APP_INFO](this.currentCurrency);
+      }, 10000);
+
+      await Promise.all([await this[GET_BLOCK_HEAD]()]);
+    },
+    beforeDestroy() {
+      clearInterval(this.interval);
     },
     methods: {
       ...mapActions('app', [GET_APP_INFO]),
       ...mapActions('blocks', [GET_BLOCK_HEAD]),
-    },
-    async created() {
-      this.interval = setInterval(async () => {
-        await this[GET_APP_INFO]();
-      }, 10000);
-
-      await Promise.all([
-        await this[GET_APP_INFO](),
-        await this[GET_BLOCK_HEAD](),
-      ]);
-    },
-    beforeRouteUpdate(to, from, next) {
-      clearInterval(this.interval);
-      next();
     },
   };
 </script>

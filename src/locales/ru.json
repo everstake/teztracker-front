@@ -480,6 +480,9 @@
       }
     }
   },
+  "currencySwitcher": {
+    "title": "Валюта"
+  },
   "errorsNotifications": {
     "error": "Error",
     "404": "Not found",
