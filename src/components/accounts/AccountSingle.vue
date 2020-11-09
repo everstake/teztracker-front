@@ -61,17 +61,24 @@
               </span>
             </b-col>
             <b-col lg="10">
-              <IdentIcon
-                v-if="account.delegateValue !== hash"
-                :seed="account.delegateValue"
-              />
-
-              <span class="value">{{ account.delegateValue || false }}</span>
-
-              <BtnCopy
+              <span
                 v-if="account.delegateValue"
-                :text-to-copy="account.delegateValue"
-              />
+                class="d-flex align-items-center"
+              >
+                <IdentIcon :seed="account.delegateValue" />
+
+                <span class="value">
+                  {{ account.delegateName || account.delegateValue }}
+                </span>
+
+                <BtnCopy
+                  v-if="!account.delegateName"
+                  :text-to-copy="account.delegateValue"
+                />
+              </span>
+              <span v-else>
+                <span class="value">~~~~~</span>
+              </span>
             </b-col>
           </b-row>
 
