@@ -42,6 +42,8 @@ import {
   faCog,
   faChevronLeft,
   faChevronRight,
+  faGlobe,
+  faEnvelope,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faLightbulb,
@@ -54,6 +56,7 @@ import {
   faHourglass,
   faTimesCircle,
 } from '@fortawesome/free-regular-svg-icons';
+import { faTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { dom } from '@fortawesome/fontawesome-svg-core';
 import router from '../router';
@@ -102,6 +105,8 @@ library.add(
   faCog,
   faChevronLeft,
   faChevronRight,
+  faGlobe,
+  faEnvelope,
 );
 library.add(
   faLightbulb,
@@ -114,6 +119,7 @@ library.add(
   faHourglass,
   faTimesCircle,
 );
+library.add(faTwitter, faTelegram);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('font-awesome-layers', FontAwesomeLayers);

@@ -16,8 +16,11 @@
               </span>
             </template>
           </h3>
-          <div class="subtitle">
+          <div class="subtitle mb-2">
             {{ $t('infoTypes.bakerInfo') }}
+          </div>
+          <div>
+            <BakerSocials :baker-address="hash" />
           </div>
         </b-card-header>
 
@@ -187,6 +190,7 @@
   import { mapState } from 'vuex';
   import IdentIcon from '@/components/accounts/IdentIcon';
   import BtnCopy from '@/components/partials/BtnCopy';
+  import BakerSocials from '@/components/bakers/BakerSocials';
   import convert from '../../mixins/convert';
 
   export default {
@@ -194,6 +198,7 @@
     components: {
       IdentIcon,
       BtnCopy,
+      BakerSocials,
     },
     mixins: [convert],
     props: {
