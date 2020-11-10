@@ -17,8 +17,7 @@
       <span>
         <IdentIcon :seed="row.item.accountId" />
 
-        <b-link :to="{ name: 'baker', params: { baker: row.item.accountId } }"
-          >2
+        <b-link :to="{ name: 'baker', params: { baker: row.item.accountId } }">
           <template v-if="row.item.name">
             {{ row.item.name }}
           </template>
