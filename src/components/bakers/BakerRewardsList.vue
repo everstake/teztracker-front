@@ -27,6 +27,12 @@
       <template slot="stakingBalance" slot-scope="row">
         {{ row.item.stakingBalance | denominate }}
       </template>
+      <template slot="cycleStart" slot-scope="row">
+        {{ row.item.cycleStart | timeformat(dateFormat) }}
+      </template>
+      <template slot="cycleEnd" slot-scope="row">
+        {{ row.item.cycleEnd | timeformat(dateFormat) }}
+      </template>
       <template slot="baking" slot-scope="row">
         {{ row.item.baking | denominate }}
       </template>
@@ -153,6 +159,8 @@
 
         return [
           { key: 'cycle', label: this.$tc('common.cycle', 1) },
+          { key: 'cycleStart', label: this.$t('common.cycleStart') },
+          { key: 'cycleEnd', label: this.$t('common.cycleEnd') },
           { key: 'stakingBalance', label: this.$t('common.delegatedBal') },
           { key: 'baking', label: this.$t('common.baking') },
           { key: 'delegators', label: this.$tc('common.delegator', 2) },

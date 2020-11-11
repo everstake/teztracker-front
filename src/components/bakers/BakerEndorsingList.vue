@@ -19,6 +19,12 @@
       :empty-text="$t('common.noData')"
       @row-selected="handleRowClick"
     >
+      <template slot="cycleStart" slot-scope="row">
+        {{ row.item.cycleStart | timeformat(dateFormat) }}
+      </template>
+      <template slot="cycleEnd" slot-scope="row">
+        {{ row.item.cycleEnd | timeformat(dateFormat) }}
+      </template>
       <template slot="rewards" slot-scope="row">
         {{ row.item.rewards | denominate }}
       </template>
@@ -142,6 +148,8 @@
 
         return [
           { key: 'cycle', label: this.$tc('common.cycle', 1) },
+          { key: 'cycleStart', label: this.$t('common.cycleStart') },
+          { key: 'cycleEnd', label: this.$t('common.cycleEnd') },
           { key: 'slots', label: this.$t('endorsementsList.slots') },
           { key: 'missed', label: this.$t('bakerSingle.missed') },
           { key: 'rewards', label: this.$tc('common.reward', 2) },

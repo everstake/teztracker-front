@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import numeral from 'numeral';
 import { state } from '@/store/modules/app.module';
+import moment from 'moment';
 
 const helpers = {
   isLocalStorageAvailable() {
@@ -54,6 +55,11 @@ const helpers = {
     return isTezos
       ? this.tezos(amount, 'ꜩ', calcXTZ)
       : this.formatCurrency(amount * rate, calcXTZ);
+  },
+  timeformat(ts, format) {
+    return moment(
+      Number(ts) * Vue.prototype.$constants.THOUSAND_MILLISECONDS,
+    ).format(format);
   },
 };
 

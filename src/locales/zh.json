@@ -48,7 +48,9 @@
     "name": "Name",
     "ordinalNumber": "#",
     "contractName": "合同名称",
-    "bonds": "债券"
+    "bonds": "债券",
+    "cycleStart": "Cycle start",
+    "cycleEnd": "Cycle end"
   },
   "opTypes": {
     "tx": "交易 | 交易",
