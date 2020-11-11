@@ -16,8 +16,9 @@ import {
   FormCheckboxPlugin,
   NavbarPlugin,
   FormInputPlugin,
-  BForm,
+  FormPlugin,
   FormRadioPlugin,
+  FormTextareaPlugin,
   ModalPlugin,
   ToastPlugin,
   PaginationNavPlugin,
@@ -82,12 +83,12 @@ Vue.use(FormCheckboxPlugin);
 Vue.use(NavbarPlugin);
 Vue.use(FormInputPlugin);
 Vue.use(FormRadioPlugin);
+Vue.use(FormTextareaPlugin);
+Vue.use(FormPlugin);
 Vue.use(ModalPlugin);
 Vue.use(FlagIcon);
 Vue.use(ToastPlugin);
 Vue.use(PaginationNavPlugin);
-
-Vue.component('b-form', BForm);
 
 dom.watch();
 library.add(
