@@ -24,10 +24,20 @@
       @row-selected="handleRowClick"
     >
       <template slot="cycleStart" slot-scope="row">
-        {{ row.item.cycleStart | timeformat(dateFormat) }}
+        <div v-if="isRowTotal(row)">
+          <NoDataTableCell />
+        </div>
+        <div v-else>
+          {{ row.item.cycleStart | timeformat(dateFormat) }}
+        </div>
       </template>
       <template slot="cycleEnd" slot-scope="row">
-        {{ row.item.cycleEnd | timeformat(dateFormat) }}
+        <div v-if="isRowTotal(row)">
+          <NoDataTableCell />
+        </div>
+        <div v-else>
+          {{ row.item.cycleEnd | timeformat(dateFormat) }}
+        </div>
       </template>
       <template slot="avgPriority" slot-scope="row">
         {{ row.item.avgPriority }}
@@ -95,6 +105,7 @@
   import LimitSelect from '@/components/partials/LimitSelect';
   import Pagination from '../Pagination';
   import PaginationSelect from '@/components/partials/PaginationSelect';
+  import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import { mapState } from 'vuex';
   import moment from 'moment';
 
@@ -104,6 +115,7 @@
       LimitSelect,
       Pagination,
       PaginationSelect,
+      NoDataTableCell,
     },
     props: {
       data: {
@@ -279,6 +291,9 @@
         this.selectedRow.loading = true;
         this.selectedRow.currentPage = page;
         this.selectedRow.loading = false;
+      },
+      isRowTotal(row) {
+        return row.item.cycle === 'Total';
       },
     },
   };
