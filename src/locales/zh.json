@@ -87,7 +87,8 @@
     "topAccountsList": "高级账户列表",
     "assetsList": "资产清单",
     "holdersList": "持有者名单",
-    "bondsList": "债券清单"
+    "bondsList": "债券清单",
+    "mempoolList": "Mempool list"
   },
   "pageTypes": {
     "txsPage": "交易页面",
@@ -108,7 +109,8 @@
     "generalChartsPage": "总图页面",
     "bakingChartsPage": "区块创建图页面",
     "topAccountsPage": "高级账户页面",
-    "assetsPage": "资产页"
+    "assetsPage": "资产页",
+    "mempoolPage": "Mempool page"
   },
   "infoTypes": {
     "txInfo": "交易信息",
@@ -221,6 +223,14 @@
     "reveal": "显示",
     "publicKey": "公钥"
   },
+  "mempoolList": {
+    "signature": "Signature",
+    "branch": "Branch",
+    "protocol": "Protocol",
+    "details": "Details",
+    "showDetails": "Show details",
+    "hideDetails": "Hide details"
+  },
   "endorsementsSlots": {
     "blockEndorsements": "区块背书"
   },
@@ -240,7 +250,8 @@
     "governance": "管控",
     "charts": "图表",
     "general": "指挥",
-    "resources": "Resources"
+    "resources": "Resources",
+    "mempool": "Mempool"
   },
   "nets": {
     "mainnet": "主网",

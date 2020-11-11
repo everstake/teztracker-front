@@ -87,7 +87,8 @@
     "topAccountsList": "Список топ аккаунтов",
     "assetsList": "Список ассетов",
     "holdersList": "Список холдеров",
-    "bondsList": "Список залоговых стредств"
+    "bondsList": "Список залоговых стредств",
+    "mempoolList": "Mempool list"
   },
   "pageTypes": {
     "txsPage": "Страница транзакций",
@@ -108,7 +109,8 @@
     "generalChartsPage": "Страница общих графиков",
     "bakingChartsPage": "Страница графиков бейкинга",
     "topAccountsPage": "Страница топ аккаунтов",
-    "assetsPage": "Страница ассетов"
+    "assetsPage": "Страница ассетов",
+    "mempoolPage": "Mempool page"
   },
   "infoTypes": {
     "txInfo": "Информация о транзакции",
@@ -221,6 +223,14 @@
     "reveal": "Открытие",
     "publicKey": "Публичный ключ"
   },
+  "mempoolList": {
+    "signature": "Сигнатура",
+    "branch": "Ветка",
+    "protocol": "Протокол",
+    "details": "Детали",
+    "showDetails": "Показать детали",
+    "hideDetails": "Скрыть детали"
+  },
   "endorsementsSlots": {
     "blockEndorsements": "Заверения блока"
   },
@@ -240,7 +250,8 @@
     "governance": "Управление",
     "charts": "Графики",
     "general": "Общее",
-    "resources": "Ресурсы"
+    "resources": "Ресурсы",
+    "mempool": "Mempool"
   },
   "nets": {
     "mainnet": "Основная сеть",
