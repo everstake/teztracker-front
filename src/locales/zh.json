@@ -485,7 +485,41 @@
   "currencySwitcher": {
     "title": "Currency"
   },
+  "feedback": {
+    "title": "Feedback",
+    "overallOpinion": "What is your overall opinion of TezTracker (1-☹️, 10-😀)",
+    "selectFeedbackType": "Select the type of feedback you’d like to leave",
+    "selectFeedbackScope": "Select the scope of feedback and short summary",
+    "scopeDesc": "If general, concerns the whole website. If specific, please specify in the feedback section the page or element you are referring to.",
+    "summary": "Summary",
+    "summaryDesc": "Summary field provides up to 100 characters gist of the feedback.",
+    "leaveFeedback": "Please leave your feedback here",
+    "selectOpt": "Please select an option",
+    "types": {
+      "suggestion":  "Suggestion",
+      "issue": "Issue",
+      "question":  "Question",
+      "compliment": "Compliment"
+    },
+    "scopes": {
+      "general": "General",
+      "specific": "Specific"
+    },
+    "submit": "Submit",
+    "submitted": "Submitted"
+  },
+  "btnCopy": {
+    "copied": "Copied",
+    "failed": "Failed to copy"
+  },
+  "validationErrs": {
+    "required": "The field is required",
+    "maxLength": "The field must be at most {num} characters",
+    "latin": "Only English characters are allowed",
+    "noRule": "No validation error"
+  },
   "errorsNotifications": {
+    "success": "Success",
     "error": "Error",
     "404": "Not found",
     "400": "Bad request",

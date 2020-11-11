@@ -64,6 +64,7 @@ const ChartsGeneral = () => import('../views/chart-views/ChartsGeneral.vue');
 /* Charts group end */
 
 const Glossary = () => import('../views/Glossary.vue');
+const Feedback = () => import('../views/Feedback.vue');
 
 // Errors
 const Maintenance = () => import('../views/Maintenance.vue');
@@ -206,6 +207,7 @@ export default [
       /* Charts group end */
 
       { path: 'glossary', name: 'glossary', component: Glossary },
+      { path: 'feedback', name: 'feedback', component: Feedback },
 
       /* Errors group */
       {

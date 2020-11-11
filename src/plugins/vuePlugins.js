@@ -16,8 +16,9 @@ import {
   FormCheckboxPlugin,
   NavbarPlugin,
   FormInputPlugin,
-  BForm,
+  FormPlugin,
   FormRadioPlugin,
+  FormTextareaPlugin,
   ModalPlugin,
   ToastPlugin,
   PaginationNavPlugin,
@@ -42,6 +43,8 @@ import {
   faCog,
   faChevronLeft,
   faChevronRight,
+  faGlobe,
+  faEnvelope,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faLightbulb,
@@ -54,6 +57,7 @@ import {
   faHourglass,
   faTimesCircle,
 } from '@fortawesome/free-regular-svg-icons';
+import { faTwitter, faTelegram } from '@fortawesome/free-brands-svg-icons';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { dom } from '@fortawesome/fontawesome-svg-core';
 import router from '../router';
@@ -79,12 +83,12 @@ Vue.use(FormCheckboxPlugin);
 Vue.use(NavbarPlugin);
 Vue.use(FormInputPlugin);
 Vue.use(FormRadioPlugin);
+Vue.use(FormTextareaPlugin);
+Vue.use(FormPlugin);
 Vue.use(ModalPlugin);
 Vue.use(FlagIcon);
 Vue.use(ToastPlugin);
 Vue.use(PaginationNavPlugin);
-
-Vue.component('b-form', BForm);
 
 dom.watch();
 library.add(
@@ -102,6 +106,8 @@ library.add(
   faCog,
   faChevronLeft,
   faChevronRight,
+  faGlobe,
+  faEnvelope,
 );
 library.add(
   faLightbulb,
@@ -114,6 +120,7 @@ library.add(
   faHourglass,
   faTimesCircle,
 );
+library.add(faTwitter, faTelegram);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('font-awesome-layers', FontAwesomeLayers);

@@ -35,7 +35,7 @@ const helpers = {
       Vue.prototype.$constants.CURRENCY_CODE_SIGN_MAP[currentCurrency] || '';
     const res = calcXTZ ? amount / Vue.prototype.$constants.XTZ : amount;
 
-    return `${currentCurrencySign} ${numeral(res).format('0,0[.][0000]')}`;
+    return `${currentCurrencySign} ${numeral(res).format('0,0[.][000000]')}`;
   },
   tezos(amount, currency = 'ꜩ', calcXTZ = true) {
     if (amount > 0) {
