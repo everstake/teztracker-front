@@ -23,6 +23,12 @@
       :empty-text="$t('common.noData')"
       @row-selected="handleRowClick"
     >
+      <template slot="cycleStart" slot-scope="row">
+        {{ row.item.cycleStart | timeformat(dateFormat) }}
+      </template>
+      <template slot="cycleEnd" slot-scope="row">
+        {{ row.item.cycleEnd | timeformat(dateFormat) }}
+      </template>
       <template slot="avgPriority" slot-scope="row">
         {{ row.item.avgPriority }}
       </template>
@@ -141,6 +147,8 @@
 
         return [
           { key: 'cycle', label: this.$tc('common.cycle', 1) },
+          { key: 'cycleStart', label: this.$t('common.cycleStart') },
+          { key: 'cycleEnd', label: this.$t('common.cycleEnd') },
           { key: 'blocks', label: this.$tc('common.block', 2) },
           { key: 'avgPriority', label: this.$t('bakerSingle.avgPriority') },
           { key: 'missed', label: this.$t('bakerSingle.missed') },

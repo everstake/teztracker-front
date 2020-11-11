@@ -30,6 +30,7 @@
 <script>
   import CardHeader from '../../partials/CardHeader';
   import BarChart from '../../partials/chart-types/BarChart.vue';
+  import { mapState } from 'vuex'
 
   export default {
     name: 'ChartPrioritiesPerCycle',
@@ -46,6 +47,9 @@
       };
     },
     computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
       cycles() {
         if (!this.chartDataInitial || !this.chartDataInitial.length) {
           return [];
@@ -132,9 +136,21 @@
         return `${label}%`;
       },
       tooltipsLabelCallback(tooltipItem, data) {
-        return `${data.datasets[tooltipItem.datasetIndex].label}: ${
-          tooltipItem.value
-        }%`;
+        const { chartDataInitial, $helpers, dateFormat } = this;
+        const currentCycle = Number(tooltipItem.label.split(' ')[1]);
+        const cycleIndex = chartDataInitial.findIndex(({ cycle }) => cycle === currentCycle);
+        const {
+          cycleStart: cycleStartTimestamp,
+          cycleEnd: cycleEndTimestamp,
+        } = chartDataInitial[cycleIndex];
+        const cycleStartDate = $helpers.timeformat(cycleStartTimestamp, dateFormat);
+        const cycleEndDate = $helpers.timeformat(cycleEndTimestamp, dateFormat);
+
+        return [
+          `${data.datasets[tooltipItem.datasetIndex].label}: ${tooltipItem.value}%`,
+          `${this.$t('common.cycleStart')}: ${cycleStartDate}`,
+          `${this.$t('common.cycleEnd')}: ${cycleEndDate}`,
+        ];
       },
       async loadChartDataInitial(opts) {
         try {

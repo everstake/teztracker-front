@@ -13,6 +13,12 @@
     <template slot="cycle" slot-scope="row">
       {{ row.item.cycle | formatInteger }}
     </template>
+    <template slot="cycleStart" slot-scope="row">
+      {{ row.item.cycleStart | timeformat(dateFormat) }}
+    </template>
+    <template slot="cycleEnd" slot-scope="row">
+      {{ row.item.cycleEnd | timeformat(dateFormat) }}
+    </template>
     <template slot="level" slot-scope="row">
       <b-link
         :to="{ name: 'block', params: { level: row.item.snapshot_block } }"
@@ -39,6 +45,8 @@
         if (!this.$i18n.locale) return [];
         return [
           { key: 'cycle', label: this.$tc('common.cycle', 2) },
+          { key: 'cycleStart', label: this.$t('common.cycleStart') },
+          { key: 'cycleEnd', label: this.$t('common.cycleEnd') },
           { key: 'level', label: this.$t('common.blockId') },
           { key: 'rolls', label: this.$t('common.rolls') },
         ];

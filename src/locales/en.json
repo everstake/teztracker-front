@@ -48,7 +48,9 @@
     "name": "Name",
     "ordinalNumber": "#",
     "contractName": "Contract name",
-    "bonds": "Bonds"
+    "bonds": "Bonds",
+    "cycleStart": "Cycle start",
+    "cycleEnd": "Cycle end"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
