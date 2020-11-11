@@ -33,6 +33,8 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
+
   export default {
     name: 'SnapshotsTable',
     props: {
@@ -41,6 +43,9 @@
       limit: Number,
     },
     computed: {
+      ...mapState('app', {
+        dateFormat: (state) => state.dateFormat,
+      }),
       fields() {
         if (!this.$i18n.locale) return [];
         return [
