@@ -155,6 +155,9 @@
             <b-dropdown-item :to="{ name: 'glossary' }">
               {{ $t('glossary.title') }}
             </b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'feedback' }">
+              {{ $t('feedback.title') }}
+            </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
 
