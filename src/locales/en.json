@@ -85,7 +85,8 @@
     "topAccountsList": "Top accounts list",
     "assetsList": "Assets list",
     "holdersList": "Holders list",
-    "bondsList": "Bonds list"
+    "bondsList": "Bonds list",
+    "mempoolList": "Mempool list"
   },
   "pageTypes": {
     "txsPage": "Transactions page",
@@ -106,7 +107,8 @@
     "generalChartsPage": "General charts page",
     "bakingChartsPage": "Baking charts page",
     "topAccountsPage": "Top accounts page",
-    "assetsPage": "Assets page"
+    "assetsPage": "Assets page",
+    "mempoolPage": "Mempool page"
   },
   "infoTypes": {
     "txInfo": "Transaction information",
@@ -219,6 +221,14 @@
     "reveal": "Reveal",
     "publicKey": "Public key"
   },
+  "mempoolList": {
+    "signature": "Signature",
+    "branch": "Branch",
+    "protocol": "Protocol",
+    "details": "Details",
+    "showDetails": "Show details",
+    "hideDetails": "Hide details"
+  },
   "endorsementsSlots": {
     "blockEndorsements": "Block endorsements"
   },
@@ -238,7 +248,8 @@
     "governance": "Governance",
     "charts": "Charts",
     "general": "General",
-    "resources": "Resources"
+    "resources": "Resources",
+    "mempool": "Mempool"
   },
   "nets": {
     "mainnet": "Mainnet",
