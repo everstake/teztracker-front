@@ -314,7 +314,9 @@ const TzAPI = {
   checkHealth(opts = {}) {
     return get(this.API_URL(), 'health', opts, false);
   },
+  getMempool(opts = {}) {
+    return get(this.API_URL(), 'mempool', opts, false);
+  },
 };
 
 export default TzAPI;
-

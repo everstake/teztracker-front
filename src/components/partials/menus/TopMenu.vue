@@ -73,6 +73,14 @@
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
+                name: 'mempool',
+                params: { network: currentNetwork },
+              }"
+            >
+              {{ $t('header.mempool') }}
+            </b-dropdown-item>
+            <b-dropdown-item
+              :to="{
                 name: 'double_baking',
                 params: { network: currentNetwork },
               }"

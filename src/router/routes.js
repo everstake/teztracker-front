@@ -65,6 +65,7 @@ const ChartsGeneral = () => import('../views/chart-views/ChartsGeneral.vue');
 
 const Glossary = () => import('../views/Glossary.vue');
 const Feedback = () => import('../views/Feedback.vue');
+const Mempool = () => import('../views/Mempool.vue');
 
 // Errors
 const Maintenance = () => import('../views/Maintenance.vue');
@@ -208,6 +209,7 @@ export default [
 
       { path: 'glossary', name: 'glossary', component: Glossary },
       { path: 'feedback', name: 'feedback', component: Feedback },
+      { path: 'mempool', name: 'mempool', component: Mempool },
 
       /* Errors group */
       {
