@@ -20,10 +20,20 @@
       @row-selected="handleRowClick"
     >
       <template slot="cycleStart" slot-scope="row">
-        {{ row.item.cycleStart | timeformat(dateFormat) }}
+        <div v-if="isRowTotal(row)">
+          <NoDataTableCell />
+        </div>
+        <div v-else>
+          {{ row.item.cycleStart | timeformat(dateFormat) }}
+        </div>
       </template>
       <template slot="cycleEnd" slot-scope="row">
-        {{ row.item.cycleEnd | timeformat(dateFormat) }}
+        <div v-if="isRowTotal(row)">
+          <NoDataTableCell />
+        </div>
+        <div v-else>
+          {{ row.item.cycleEnd | timeformat(dateFormat) }}
+        </div>
       </template>
       <template slot="rewards" slot-scope="row">
         {{ row.item.rewards | denominate }}
@@ -96,6 +106,7 @@
   import LimitSelect from '@/components/partials/LimitSelect';
   import Pagination from '../partials/Pagination';
   import PaginationSelect from '../partials/PaginationSelect';
+  import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import { mapState } from 'vuex';
 
   export default {
@@ -104,6 +115,7 @@
       LimitSelect,
       Pagination,
       PaginationSelect,
+      NoDataTableCell,
     },
     props: {
       data: {
@@ -269,6 +281,9 @@
       },
       handleModalPagination(page) {
         this.selectedRow.currentPage = page;
+      },
+      isRowTotal(row) {
+        return row.item.cycle === 'Total';
       },
     },
     async created() {
