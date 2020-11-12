@@ -148,8 +148,8 @@
 
         return [
           `${data.datasets[tooltipItem.datasetIndex].label}: ${tooltipItem.value}%`,
-          `${this.$t('common.cycleStart')}: ${cycleStartDate}`,
-          `${this.$t('common.cycleEnd')}: ${cycleEndDate}`,
+          `${this.$t('common.startDate')}: ${cycleStartDate}`,
+          `${this.$t('common.endDate')}: ${cycleEndDate}`,
         ];
       },
       async loadChartDataInitial(opts) {
