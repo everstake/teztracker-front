@@ -12,7 +12,7 @@
         :placeholder="placeholder"
         class="search-query"
         @input="handleInputChange"
-        :readonly="loading && !publicBakersFetching"
+        :readonly="loading && !publicBakersSearchFetching"
         autocomplete="off"
         autofocus
       />
@@ -26,12 +26,12 @@
       </b-button>
     </div>
     <div
-      v-if="filterPublicBakersBySearchQuery.length > 0 && searchQuery !== ''"
+      v-if="filterpublicBakersSearchBySearchQuery.length > 0 && searchQuery !== ''"
       class="search-form__dropdown"
     >
       <ul class="search-form__list">
         <li
-          v-for="baker in filterPublicBakersBySearchQuery"
+          v-for="baker in filterpublicBakersSearchBySearchQuery"
           :key="generateKey()"
           @click="handleDropdownClick(baker.accountId)"
           :class="{
@@ -40,7 +40,7 @@
           }"
           class="search-form__item"
         >
-          {{ baker.bakerInfo.name }}
+          {{ baker.name }}
         </li>
       </ul>
     </div>
@@ -63,8 +63,9 @@
         searchQuery: '',
         error: '',
         loading: false,
-        publicBakersFetching: false,
-        publicBakersDefaultLimit: 30,
+        publicBakersSearchFetching: false,
+        publicBakersSearchFetched: false,
+        publicBakersSearchDefaultLimit: 200,
       };
     },
     props: {
@@ -89,10 +90,11 @@
         const requestStatus = status;
         this.resolveSearch(routerSettings, requestStatus);
       },
-      async fetchPublicBakers(limit) {
-        this.publicBakersFetching = true;
+      async fetchpublicBakersSearch(limit) {
+        this.publicBakersSearchFetching = true;
         await this[GET_PUBLIC_BAKERS_SEARCH]({ limit });
-        this.publicBakersFetching = false;
+        this.publicBakersSearchFetching = false;
+        this.publicBakersSearchFetched = true;
       },
       async handleDropdownClick(accountId) {
         if (this.loading) {
@@ -101,26 +103,26 @@
 
         this.loading = true;
 
-        const findedIndex = this.publicBakers.findIndex(
+        const findedIndex = this.publicBakersSearch.findIndex(
           (baker) => baker.accountId === accountId,
         );
-        const findedEntry = this.publicBakers[findedIndex];
-        this.$set(this.publicBakers, findedIndex, {
+        const findedEntry = this.publicBakersSearch[findedIndex];
+        this.$set(this.publicBakersSearch, findedIndex, {
           ...findedEntry,
           class: 'active',
         });
         await this.searchByPublicBaker(accountId);
         delete findedEntry.class;
-        this.$set(this.publicBakers, findedIndex, findedEntry);
+        this.$set(this.publicBakersSearch, findedIndex, findedEntry);
 
         this.loading = false;
       },
       async handleInputChange() {
-        const { publicBakersDefaultLimit } = this;
+        const { publicBakersSearchDefaultLimit } = this;
         this.error = '';
 
-        if (!this.isPublicBakersFetched && !this.loading) {
-          await this.fetchPublicBakers(publicBakersDefaultLimit);
+        if (!this.publicBakersSearchFetching && !this.publicBakersSearchFetched && !this.loading) {
+          await this.fetchpublicBakersSearch(publicBakersSearchDefaultLimit);
         }
       },
       resolveSearch(props, status) {
@@ -227,20 +229,20 @@
         }
 
         if (routerSettings === null && requestStatus === null) {
-          if (this.filterPublicBakersBySearchQuery.length > 0) {
-            this.$set(this.filterPublicBakersBySearchQuery, 0, {
-              ...this.filterPublicBakersBySearchQuery[0],
+          if (this.filterpublicBakersSearchBySearchQuery.length > 0) {
+            this.$set(this.filterpublicBakersSearchBySearchQuery, 0, {
+              ...this.filterpublicBakersSearchBySearchQuery[0],
               class: 'active',
             });
             const data = await this.$api.getAccount({
-              account: this.filterPublicBakersBySearchQuery[0].accountId,
+              account: this.filterpublicBakersSearchBySearchQuery[0].accountId,
             });
             const status = data.status;
             if (data.data.is_baker) {
               routerSettings = {
                 name: 'baker',
                 params: {
-                  baker: this.filterPublicBakersBySearchQuery[0].accountId,
+                  baker: this.filterpublicBakersSearchBySearchQuery[0].accountId,
                 },
               };
               requestStatus = status;
@@ -248,17 +250,17 @@
               routerSettings = {
                 name: 'account',
                 params: {
-                  baker: this.filterPublicBakersBySearchQuery[0].accountId,
+                  baker: this.filterpublicBakersSearchBySearchQuery[0].accountId,
                 },
               };
               requestStatus = status;
             }
           } else {
-            const { publicBakersDefaultLimit } = this;
-            const fetchedBakersSize = this.publicBakers.length;
+            const { publicBakersSearchDefaultLimit } = this;
+            const fetchedBakersSize = this.publicBakersSearch.length;
 
-            if (fetchedBakersSize === publicBakersDefaultLimit) {
-              await this.fetchPublicBakers(this.publicBakersCount);
+            if (fetchedBakersSize === publicBakersSearchDefaultLimit) {
+              await this.fetchpublicBakersSearch(this.publicBakersSearchCount);
             } else {
               this.error = 'Public baker not found.';
               this.$refs.searchInput.$el.focus();
@@ -282,20 +284,21 @@
       },
     },
     computed: {
-      isPublicBakersFetched() {
-        return this.publicBakers.length > 0;
-      },
-      filterPublicBakersBySearchQuery() {
-        const { publicBakers } = this;
+      filterpublicBakersSearchBySearchQuery() {
+        const { publicBakersSearch } = this;
         const { searchQuery } = this;
 
-        return publicBakers.filter(({ bakerInfo }) =>
-          bakerInfo.name.toLowerCase().includes(searchQuery.toLowerCase()),
-        );
+        if (publicBakersSearch && publicBakersSearch.length > 0) {
+          return publicBakersSearch.filter(({ name }) => {
+            return name.toLowerCase().includes(searchQuery.toLowerCase());
+          });
+        } else {
+          return [];
+        }
       },
       ...mapState('accounts', {
-        publicBakers: (state) => state.publicBakers,
-        publicBakersCount: (state) => state.counts.publicBakers,
+        publicBakersSearch: (state) => state.publicBakersSearch,
+        publicBakersSearchCount: (state) => state.counts.publicBakersSearch,
       }),
     },
   };

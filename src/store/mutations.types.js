@@ -26,6 +26,7 @@ export const SET_FUTURE_BAKING_RIGHTS_COUNT = "setFutureBakingRightsCount";
 export const SET_TRANSACTIONS = "setTransactions";
 export const SET_BAKERS = "setBakers";
 export const SET_PUBLIC_BAKERS = "setPublicBakers";
+export const SET_PUBLIC_BAKERS_SEARCH = "setPublicBakersSearch";
 export const SET_ACCOUNTS = "setAccounts";
 export const SET_CONTRACTS = "setContracts";
 export const SET_ASSETS = "setAssets";
