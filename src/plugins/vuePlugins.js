@@ -45,6 +45,7 @@ import {
   faChevronRight,
   faGlobe,
   faEnvelope,
+  faQuestionCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faLightbulb,
@@ -108,6 +109,7 @@ library.add(
   faChevronRight,
   faGlobe,
   faEnvelope,
+  faQuestionCircle,
 );
 library.add(
   faLightbulb,

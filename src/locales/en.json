@@ -49,8 +49,8 @@
     "ordinalNumber": "#",
     "contractName": "Contract name",
     "bonds": "Bonds",
-    "cycleStart": "Cycle start",
-    "cycleEnd": "Cycle end"
+    "startDate": "Start date",
+    "endDate": "End date"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",

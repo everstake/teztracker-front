@@ -1,7 +1,13 @@
 <template>
   <div class="endorsing-list">
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :limit="perPage" @onLimitChange="(limit) => $emit('onLimitChange', { type: 'endorsing', limit })" :loading="loading" />
+      <LimitSelect
+        :limit="perPage"
+        @onLimitChange="
+          (limit) => $emit('onLimitChange', { type: 'endorsing', limit })
+        "
+        :loading="loading"
+      />
     </div>
 
     <b-table
@@ -19,20 +25,36 @@
       :empty-text="$t('common.noData')"
       @row-selected="handleRowClick"
     >
-      <template slot="cycleStart" slot-scope="row">
+      <template slot="cycle" slot-scope="row">
         <div v-if="isRowTotal(row)">
-          <NoDataTableCell />
+          Total
         </div>
         <div v-else>
-          {{ row.item.cycleStart | timeformat(dateFormat) }}
-        </div>
-      </template>
-      <template slot="cycleEnd" slot-scope="row">
-        <div v-if="isRowTotal(row)">
-          <NoDataTableCell />
-        </div>
-        <div v-else>
-          {{ row.item.cycleEnd | timeformat(dateFormat) }}
+          {{ row.item.cycle | formatInteger }}
+
+          <font-awesome-icon
+            icon="question-circle"
+            class="icon icon-circle"
+            @click.stop="toggleCycleToast(row)"
+          />
+          <div class="cycle-toast">
+            <b-toast
+              :id="`endorsing-${row.index}-${row.item.cycle}`"
+              :title="`Cycle ${row.item.cycle}`"
+              no-auto-hide
+              static
+              solid
+            >
+              <p class="cycle-toast__paragraph">
+                {{ $t('common.startDate') }}:
+                {{ row.item.cycleStart | timeformat(dateFormat) }}
+              </p>
+              <p class="cycle-toast__paragraph">
+                {{ $t('common.endDate') }}:
+                {{ row.item.cycleEnd | timeformat(dateFormat) }}
+              </p>
+            </b-toast>
+          </div>
         </div>
       </template>
       <template slot="rewards" slot-scope="row">
@@ -41,7 +63,9 @@
     </b-table>
 
     <PaginationSelect
-      @onPageChange="(page) => $emit('onPageChange', { type: 'endorsing', page })"
+      @onPageChange="
+        (page) => $emit('onPageChange', { type: 'endorsing', page })
+      "
       :total-rows="count"
       :per-page="perPage"
       :current-page="currentPage"
@@ -106,7 +130,6 @@
   import LimitSelect from '@/components/partials/LimitSelect';
   import Pagination from '../partials/Pagination';
   import PaginationSelect from '../partials/PaginationSelect';
-  import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import { mapState } from 'vuex';
 
   export default {
@@ -115,7 +138,6 @@
       LimitSelect,
       Pagination,
       PaginationSelect,
-      NoDataTableCell,
     },
     props: {
       data: {
@@ -147,6 +169,7 @@
           currentPage: 1,
           loading: false,
         },
+        toast: undefined,
       };
     },
     computed: {
@@ -160,8 +183,6 @@
 
         return [
           { key: 'cycle', label: this.$tc('common.cycle', 1) },
-          { key: 'cycleStart', label: this.$t('common.cycleStart') },
-          { key: 'cycleEnd', label: this.$t('common.cycleEnd') },
           { key: 'slots', label: this.$t('endorsementsList.slots') },
           { key: 'missed', label: this.$t('bakerSingle.missed') },
           { key: 'rewards', label: this.$tc('common.reward', 2) },
@@ -285,6 +306,26 @@
       isRowTotal(row) {
         return row.item.cycle === 'Total';
       },
+      toggleCycleToast(row) {
+        this.hideCycleToast();
+        this.showCycleToast(row);
+      },
+      showCycleToast(row) {
+        const index = row.index;
+        const cycle = row.item.cycle;
+        const id = `endorsing-${index}-${cycle}`;
+        this.toast = id;
+        this.$bvToast.show(id);
+      },
+      hideCycleToast() {
+        if (this.toast) {
+          this.$bvToast.hide(this.toast);
+          this.toast = undefined;
+        }
+      },
+    },
+    updated() {
+      this.hideCycleToast();
     },
     async created() {
       const itemsNotFetched = !this.loaded;
@@ -349,5 +390,24 @@
     background-color: transparent;
     color: #309282;
     border: none;
+  }
+
+  .icon-circle {
+    cursor: pointer;
+    font-size: 14px;
+    color: #309282;
+  }
+
+  .cycle-toast {
+    position: absolute;
+    width: 100%;
+  }
+
+  .cycle-toast__paragraph {
+    margin-bottom: 5px;
+  }
+
+  .cycle-toast__paragraph:last-child {
+    margin-bottom: 0;
   }
 </style>
