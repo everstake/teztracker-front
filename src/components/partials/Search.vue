@@ -338,7 +338,7 @@
       position: absolute;
       left: 0;
       right: 0;
-      max-height: 200px;
+      max-height: 230px;
       overflow: auto;
       background-color: #fff;
       border: 1px solid #d8d8d8;
