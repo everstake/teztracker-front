@@ -24,14 +24,35 @@
       :empty-text="$t('common.noData')"
       @row-selected="handleRowClick"
     >
+      <template slot="cycle" slot-scope="row">
+        {{ row.item.cycle | formatInteger }}
+
+        <font-awesome-icon
+          icon="question-circle"
+          class="icon icon-circle"
+          @click.stop="toggleCycleToast(row)"
+        />
+        <div class="cycle-toast">
+          <b-toast
+            :id="`rewards-${row.index}-${row.item.cycle}`"
+            :title="`Cycle ${row.item.cycle}`"
+            no-auto-hide
+            static
+            solid
+          >
+            <p class="cycle-toast__paragraph">
+              {{ $t('common.startDate') }}:
+              {{ row.item.cycleStart | timeformat(dateFormat) }}
+            </p>
+            <p class="cycle-toast__paragraph">
+              {{ $t('common.endDate') }}:
+              {{ row.item.cycleEnd | timeformat(dateFormat) }}
+            </p>
+          </b-toast>
+        </div>
+      </template>
       <template slot="stakingBalance" slot-scope="row">
         {{ row.item.stakingBalance | denominate }}
-      </template>
-      <template slot="cycleStart" slot-scope="row">
-        {{ row.item.cycleStart | timeformat(dateFormat) }}
-      </template>
-      <template slot="cycleEnd" slot-scope="row">
-        {{ row.item.cycleEnd | timeformat(dateFormat) }}
       </template>
       <template slot="baking" slot-scope="row">
         {{ row.item.baking | denominate }}
@@ -146,6 +167,7 @@
           currentPage: 1,
           loading: false,
         },
+        toast: undefined,
       };
     },
     computed: {
@@ -159,8 +181,6 @@
 
         return [
           { key: 'cycle', label: this.$tc('common.cycle', 1) },
-          { key: 'cycleStart', label: this.$t('common.cycleStart') },
-          { key: 'cycleEnd', label: this.$t('common.cycleEnd') },
           { key: 'stakingBalance', label: this.$t('common.delegatedBal') },
           { key: 'baking', label: this.$t('common.baking') },
           { key: 'delegators', label: this.$tc('common.delegator', 2) },
@@ -252,6 +272,26 @@
       handleModalPagination(page) {
         this.selectedRow.currentPage = page;
       },
+      toggleCycleToast(row) {
+        this.hideCycleToast();
+        this.showCycleToast(row);
+      },
+      showCycleToast(row) {
+        const index = row.index;
+        const cycle = row.item.cycle;
+        const id = `rewards-${index}-${cycle}`;
+        this.toast = id;
+        this.$bvToast.show(id);
+      },
+      hideCycleToast() {
+        if (this.toast) {
+          this.$bvToast.hide(this.toast);
+          this.toast = undefined;
+        }
+      },
+    },
+    updated() {
+      this.hideCycleToast();
     },
     async created() {
       const itemsNotFetched = !this.loaded;
@@ -324,5 +364,24 @@
     &.pending {
       background-color: rgba(48, 146, 130, 0.4);
     }
+  }
+
+  .icon-circle {
+    cursor: pointer;
+    font-size: 14px;
+    color: #309282;
+  }
+
+  .cycle-toast {
+    position: absolute;
+    width: 100%;
+  }
+
+  .cycle-toast__paragraph {
+    margin-bottom: 5px;
+  }
+
+  .cycle-toast__paragraph:last-child {
+    margin-bottom: 0;
   }
 </style>

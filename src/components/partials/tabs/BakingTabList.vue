@@ -4,7 +4,9 @@
       <LimitSelect
         :limit="perPage"
         :loading="loading"
-        @onLimitChange="(limit) => $emit('onLimitChange', { type: 'baking', limit })"
+        @onLimitChange="
+          (limit) => $emit('onLimitChange', { type: 'baking', limit })
+        "
       />
     </div>
 
@@ -23,20 +25,36 @@
       :empty-text="$t('common.noData')"
       @row-selected="handleRowClick"
     >
-      <template slot="cycleStart" slot-scope="row">
+      <template slot="cycle" slot-scope="row">
         <div v-if="isRowTotal(row)">
-          <NoDataTableCell />
+          Total
         </div>
         <div v-else>
-          {{ row.item.cycleStart | timeformat(dateFormat) }}
-        </div>
-      </template>
-      <template slot="cycleEnd" slot-scope="row">
-        <div v-if="isRowTotal(row)">
-          <NoDataTableCell />
-        </div>
-        <div v-else>
-          {{ row.item.cycleEnd | timeformat(dateFormat) }}
+          {{ row.item.cycle | formatInteger }}
+
+          <font-awesome-icon
+            icon="question-circle"
+            class="icon icon-circle"
+            @click.stop="toggleCycleToast(row)"
+          />
+          <div class="cycle-toast">
+            <b-toast
+              :id="`baking-${row.index}-${row.item.cycle}`"
+              :title="`Cycle ${row.item.cycle}`"
+              no-auto-hide
+              static
+              solid
+            >
+              <p class="cycle-toast__paragraph">
+                {{ $t('common.startDate') }}:
+                {{ row.item.cycleStart | timeformat(dateFormat) }}
+              </p>
+              <p class="cycle-toast__paragraph">
+                {{ $t('common.endDate') }}:
+                {{ row.item.cycleEnd | timeformat(dateFormat) }}
+              </p>
+            </b-toast>
+          </div>
         </div>
       </template>
       <template slot="avgPriority" slot-scope="row">
@@ -105,7 +123,6 @@
   import LimitSelect from '@/components/partials/LimitSelect';
   import Pagination from '../Pagination';
   import PaginationSelect from '@/components/partials/PaginationSelect';
-  import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import { mapState } from 'vuex';
   import moment from 'moment';
 
@@ -115,7 +132,6 @@
       LimitSelect,
       Pagination,
       PaginationSelect,
-      NoDataTableCell,
     },
     props: {
       data: {
@@ -146,6 +162,7 @@
           currentPage: 1,
           loading: false,
         },
+        toast: undefined,
       };
     },
     computed: {
@@ -159,8 +176,6 @@
 
         return [
           { key: 'cycle', label: this.$tc('common.cycle', 1) },
-          { key: 'cycleStart', label: this.$t('common.cycleStart') },
-          { key: 'cycleEnd', label: this.$t('common.cycleEnd') },
           { key: 'blocks', label: this.$tc('common.block', 2) },
           { key: 'avgPriority', label: this.$t('bakerSingle.avgPriority') },
           { key: 'missed', label: this.$t('bakerSingle.missed') },
@@ -295,6 +310,26 @@
       isRowTotal(row) {
         return row.item.cycle === 'Total';
       },
+      toggleCycleToast(row) {
+        this.hideCycleToast();
+        this.showCycleToast(row);
+      },
+      showCycleToast(row) {
+        const index = row.index;
+        const cycle = row.item.cycle;
+        const id = `baking-${index}-${cycle}`;
+        this.toast = id;
+        this.$bvToast.show(id);
+      },
+      hideCycleToast() {
+        if (this.toast) {
+          this.$bvToast.hide(this.toast);
+          this.toast = undefined;
+        }
+      },
+    },
+    updated() {
+      this.hideCycleToast();
     },
   };
 </script>
@@ -392,5 +427,24 @@
 
   .page-link:hover {
     color: #309282;
+  }
+
+  .icon-circle {
+    cursor: pointer;
+    font-size: 14px;
+    color: #309282;
+  }
+
+  .cycle-toast {
+    position: absolute;
+    width: 100%;
+  }
+
+  .cycle-toast__paragraph {
+    margin-bottom: 5px;
+  }
+
+  .cycle-toast__paragraph:last-child {
+    margin-bottom: 0;
   }
 </style>
