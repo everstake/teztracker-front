@@ -9,7 +9,7 @@
       class="transactions-table"
       :empty-text="$t('common.noData')"
     >
-      <template slot="from" slot-scope="row">
+      <template #cell(from)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.source" />
 
@@ -33,13 +33,13 @@
           />
         </span>
       </template>
-      <template slot="fee" slot-scope="row">
+      <template #cell(fee)="row">
         {{ row.item.fee | denominate }}
       </template>
-      <template slot="gas" slot-scope="row">
+      <template #cell(gas)="row">
         {{ row.item.gasLimit | formatInteger }}
       </template>
-      <template slot="storage" slot-scope="row">
+      <template #cell(storage)="row">
         <span v-if="row.item.storageLimit">
           {{ row.item.storageLimit }}
         </span>

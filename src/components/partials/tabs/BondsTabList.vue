@@ -15,11 +15,10 @@
       :tbody-tr-class="getRowClass"
       :empty-text="$t('common.noData')"
     >
-      <template slot="staking_balance" slot-scope="row">
+      <template #cell(staking_balance)="row">
         {{ row.item.staking_balance | denominate }}
       </template>
-
-      <template slot="actual_blocks_deposit" slot-scope="row">
+      <template #cell(actual_blocks_deposit)="row">
         <span v-if="row.item.status === 'pending'">
           <span v-if="row.item.expected_blocks_deposit">
             {{ row.item.expected_blocks_deposit | denominate }}
@@ -36,8 +35,7 @@
           </span>
         </span>
       </template>
-
-      <template slot="actual_endorsement_deposit" slot-scope="row">
+      <template #cell(actual_endorsement_deposit)="row">
         <span v-if="row.item.status === 'pending'">
           <span v-if="row.item.expected_endorsement_deposit">
             {{ row.item.expected_endorsement_deposit | denominate }}
@@ -54,20 +52,19 @@
           </span>
         </span>
       </template>
-
-      <template slot="actual_total_deposit" slot-scope="row">
+      <template #cell(actual_total_deposit)="row">
         <span v-if="row.item.actual_total_deposit">
           {{ row.item.actual_total_deposit | denominate }}
         </span>
         <span v-else>-</span>
       </template>
-      <template slot="expected_total_deposit" slot-scope="row">
+      <template #cell(expected_total_deposit)="row">
         <span v-if="row.item.expected_total_deposit">
           {{ row.item.expected_total_deposit | denominate }}
         </span>
         <span v-else>-</span>
       </template>
-      <template slot="available_bond" slot-scope="row">
+      <template #cell(available_bond)="row">
         <span v-if="row.item.available_bond">
           {{ row.item.available_bond | denominate }}
         </span>

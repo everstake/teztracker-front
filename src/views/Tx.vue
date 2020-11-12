@@ -73,7 +73,7 @@
                       :tbody-tr-class="$_defineRowClass"
                       :empty-text="$t('common.noData')"
                     >
-                      <template slot="from" slot-scope="row">
+                      <template #cell(from)="row">
                         <span class=" d-flex align-items-center">
                           <IdentIcon :seed="row.item.source" />
 
@@ -98,7 +98,7 @@
                         </span>
                       </template>
 
-                      <template slot="to" slot-scope="row">
+                      <template #cell(to)="row">
                         <b-link
                           :to="{
                             name: 'account',
@@ -129,25 +129,25 @@
                           </template>
                         </b-link>
                       </template>
-                      <template slot="amount" slot-scope="row">
+                      <template #cell(amount)="row">
                         {{ row.item.amount | denominate }}
                       </template>
-                      <template slot="fee" slot-scope="row">
+                      <template #cell(fee)="row">
                         {{ row.item.fee | denominate }}
                       </template>
-                      <template slot="gas" slot-scope="row">
+                      <template #cell(gas)="row">
                         {{ row.item.gasLimit | formatInteger }}
                       </template>
-                      <template slot="storage" slot-scope="row">
+                      <template #cell(storage)="row">
                         {{ row.item.storageLimit }}
                       </template>
-                      <template slot="delegationAmount" slot-scope="row">
+                      <template #cell(delegationAmount)="row">
                         {{ row.item.delegationAmount | denominate }}
                       </template>
-                      <template slot="balance" slot-scope="row">
+                      <template #cell(balance)="row">
                         {{ row.item.balance | denominate }}
                       </template>
-                      <template slot="originatedContracts" slot-scope="row">
+                      <template #cell(originatedContracts)="row">
                         <b-link
                           :to="{
                             name: 'account',

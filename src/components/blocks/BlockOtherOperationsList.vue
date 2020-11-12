@@ -10,7 +10,7 @@
       :tbody-tr-class="$_defineRowClass"
       :empty-text="$t('common.noData')"
     >
-      <template slot="source" slot-scope="row">
+      <template #cell(source)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.source" />
 
@@ -34,7 +34,7 @@
           />
         </span>
       </template>
-      <template slot="destination" slot-scope="row">
+      <template #cell(destination)="row">
         <span class="d-flex align-items-center">
           <!--TODO: Can be empty. Refactor the condition-->
           <IdentIcon
@@ -89,7 +89,7 @@
           />
         </span>
       </template>
-      <template slot="amount" slot-scope="row">
+      <template #cell(amount)="row">
         <template v-if="row.item.amount">
           {{ row.item.amount | denominate }}
         </template>
@@ -97,10 +97,10 @@
           {{ row.item.balance | denominate }}
         </template>
       </template>
-      <template slot="fee" slot-scope="row">
+      <template #cell(fee)="row">
         {{ row.item.fee | denominate }}
       </template>
-      <template slot="operationGroupHash" slot-scope="row">
+      <template #cell(operationGroupHash)="row">
         <span class="d-flex align-items-center">
           <b-link
             :to="{
@@ -117,7 +117,7 @@
           <BtnCopy :text-to-copy="row.item.operationGroupHash" />
         </span>
       </template>
-      <template slot="kind" slot-scope="row">
+      <template #cell(kind)="row">
         {{ operationTypesMap[row.item.kind] }}
       </template>
     </b-table>

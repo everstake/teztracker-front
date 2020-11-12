@@ -11,11 +11,10 @@
       class="transactions-table"
       :empty-text="$t('common.noData')"
     >
-      <template slot="priority" slot-scope="row">
+      <template #cell(priority)="row">
         <span>{{ row.item.priority }}</span>
       </template>
-
-      <template slot="block_0" slot-scope="row">
+      <template #cell(block_0)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -45,7 +44,7 @@
           />
         </span>
       </template>
-      <template slot="block_1" slot-scope="row">
+      <template #cell(block_1)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -75,7 +74,7 @@
           />
         </span>
       </template>
-      <template slot="block_2" slot-scope="row">
+      <template #cell(block_2)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -105,7 +104,7 @@
           />
         </span>
       </template>
-      <template slot="block_3" slot-scope="row">
+      <template #cell(block_3)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -135,7 +134,7 @@
           />
         </span>
       </template>
-      <template slot="block_4" slot-scope="row">
+      <template #cell(block_4)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -165,7 +164,7 @@
           />
         </span>
       </template>
-      <template slot="block_5" slot-scope="row">
+      <template #cell(block_5)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -195,7 +194,7 @@
           />
         </span>
       </template>
-      <template slot="block_6" slot-scope="row">
+      <template #cell(block_6)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon

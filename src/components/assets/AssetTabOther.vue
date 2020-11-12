@@ -15,7 +15,7 @@
       class="transactions-table"
       :tbody-tr-class="$_defineRowClass"
     >
-      <template slot="from" slot-scope="row">
+      <template #cell(from)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.from" />
 
@@ -26,8 +26,7 @@
           <BtnCopy :text-to-copy="row.item.from" />
         </span>
       </template>
-
-      <template slot="to" slot-scope="row">
+      <template #cell(to)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.to" />
 
@@ -38,16 +37,13 @@
           <BtnCopy :text-to-copy="row.item.to" />
         </span>
       </template>
-
-      <template slot="amount" slot-scope="row">
+      <template #cell(amount)="row">
         {{ row.item.amount | currencyPrecision(currency, precision) }}
       </template>
-
-      <template slot="fee" slot-scope="row">
+      <template #cell(fee)="row">
         {{ row.item.fee | denominate }}
       </template>
-
-      <template slot="timestamp" slot-scope="row">
+      <template #cell(timestamp)="row">
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
     </b-table>

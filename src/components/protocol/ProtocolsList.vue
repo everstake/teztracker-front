@@ -15,13 +15,12 @@
       class="transactions-table"
       :empty-text="$t('common.noData')"
     >
-      <template slot="startBlock" slot-scope="row">
+      <template #cell(startBlock)="row">
         <b-link :to="{ name: 'block', params: { level: row.item.startBlock } }">
           {{ row.item.startBlock | formatInteger }}
         </b-link>
       </template>
-
-      <template slot="endBlock" slot-scope="row">
+      <template #cell(endBlock)="row">
         <b-link :to="{ name: 'block', params: { level: row.item.endBlock } }">
           {{ row.item.endBlock | formatInteger }}
         </b-link>

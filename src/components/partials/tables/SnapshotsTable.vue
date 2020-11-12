@@ -10,17 +10,17 @@
     class="transactions-table"
     :empty-text="$t('common.noData')"
   >
-    <template slot="cycle" slot-scope="row">
+    <template #cell(cycle)="row">
       {{ row.item.cycle | formatInteger }}
     </template>
-    <template slot="level" slot-scope="row">
+    <template #cell(level)="row">
       <b-link
         :to="{ name: 'block', params: { level: row.item.snapshot_block } }"
       >
         {{ row.item.snapshot_block | formatInteger }}
       </b-link>
     </template>
-    <template slot="rolls" slot-scope="row">
+    <template #cell(rolls)="row">
       {{ row.item.rolls | formatInteger }}
     </template>
   </b-table>

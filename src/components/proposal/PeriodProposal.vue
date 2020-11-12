@@ -38,7 +38,7 @@
                   >
                     <div
                       v-for="(upvote, index) in getDoughnutOptions.data"
-                      :key="generateKey()"
+                      :key="index + generateKey()"
                       class="vote-chart__label"
                       :style="{ color: backgroundColors[index] }"
                     >
@@ -78,8 +78,8 @@
                     {{ $t('voting.recentVotes') }}
                   </p>
                   <div
-                    v-for="voter in voters.slice(0, 4)"
-                    :key="generateKey()"
+                    v-for="(voter, index) in voters.slice(0, 4)"
+                    :key="index + generateKey()"
                     class="vote-card__recent"
                   >
                     <div>
@@ -178,8 +178,8 @@
     </CardSection>
 
     <CardSection
-      v-for="proposal in proposals"
-      :key="generateKey()"
+      v-for="(proposal, index) in proposals"
+      :key="index + generateKey()"
       :fluid="true"
     >
       <template>

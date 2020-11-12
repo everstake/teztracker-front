@@ -22,7 +22,7 @@
       :empty-text="$t('common.noData')"
       :tbody-tr-class="$_defineRowClass"
     >
-      <template slot="txhash" slot-scope="row">
+      <template #cell(txhash)="row">
         <span class="d-flex align-items-center">
           <b-link
             :to="{
@@ -36,15 +36,15 @@
           <BtnCopy :text-to-copy="row.item.operationGroupHash" />
         </span>
       </template>
-      <template slot="level" slot-scope="row">
+      <template #cell(level)="row">
         <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
           {{ row.item.blockLevel | formatInteger }}
         </b-link>
       </template>
-      <template slot="timestamp" slot-scope="row">
+      <template #cell(timestamp)="row">
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
-      <template slot="from" slot-scope="row">
+      <template #cell(from)="row">
         <span class="position-relative w-100 d-flex align-items-center">
           <IdentIcon :seed="row.item.source" />
 
@@ -73,7 +73,7 @@
           </span>
         </span>
       </template>
-      <template slot="to" slot-scope="row">
+      <template #cell(to)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.destination" />
 
@@ -94,10 +94,10 @@
           />
         </span>
       </template>
-      <template slot="amount" slot-scope="row">
+      <template #cell(amount)="row">
         {{ row.item.amount | denominate }}
       </template>
-      <template slot="fee" slot-scope="row">
+      <template #cell(fee)="row">
         {{ row.item.fee | denominate }}
       </template>
     </b-table>

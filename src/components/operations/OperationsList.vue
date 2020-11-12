@@ -15,13 +15,12 @@
       class="transactions-table"
       :empty-text="$t('common.noData')"
     >
-      <template slot="blockLevel" slot-scope="row">
+      <template #cell(blockLevel)="row">
         <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
           {{ row.item.blockLevel | formatInteger }}
         </b-link>
       </template>
-
-      <template slot="blockHash" slot-scope="row">
+      <template #cell(blockHash)="row">
         <span class="d-flex align-items-center">
           <b-link :to="{ name: 'tx', params: { txhash: row.item.blockHash } }">
             {{ row.item.blockHash | longhash }}
@@ -30,8 +29,7 @@
           <BtnCopy :text-to-copy="row.item.blockHash" />
         </span>
       </template>
-
-      <template slot="timestamp" slot-scope="row">
+      <template #cell(timestamp)="row">
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
     </b-table>
