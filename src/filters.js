@@ -18,10 +18,8 @@ Vue.filter('bignum', function(num, delimiter) {
   return result.reverse().join('');
 });
 
-Vue.filter('timeformat', function(ts, format) {
-  return moment(
-    Number(ts) * Vue.prototype.$constants.THOUSAND_MILLISECONDS,
-  ).format(format);
+Vue.filter('timeformat', (ts, format) => {
+  return Vue.prototype.$helpers.timeformat(ts, format);
 });
 
 Vue.filter('longhash', function(hash, fromStart, fromEnd) {
