@@ -64,7 +64,6 @@
         error: '',
         loading: false,
         publicBakersSearchFetching: false,
-        publicBakersSearchFetched: false,
         publicBakersSearchDefaultLimit: 200,
       };
     },
@@ -94,7 +93,6 @@
         this.publicBakersSearchFetching = true;
         await this[GET_PUBLIC_BAKERS_SEARCH]({ limit });
         this.publicBakersSearchFetching = false;
-        this.publicBakersSearchFetched = true;
       },
       async handleDropdownClick(accountId) {
         if (this.loading) {
@@ -284,6 +282,9 @@
       },
     },
     computed: {
+      publicBakersSearchFetched() {
+        return this.publicBakersSearch.length > 0;
+      },
       filterpublicBakersSearchBySearchQuery() {
         const { publicBakersSearch } = this;
         const { searchQuery } = this;
