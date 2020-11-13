@@ -48,7 +48,9 @@
     "name": "Имя",
     "ordinalNumber": "#",
     "contractName": "Название контракта",
-    "bonds": "Залог"
+    "bonds": "Залог",
+    "startDate": "Start date",
+    "endDate": "End date"
   },
   "opTypes": {
     "tx": "Транзакция | Транзакции",

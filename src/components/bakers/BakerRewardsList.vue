@@ -24,19 +24,48 @@
       :empty-text="$t('common.noData')"
       @row-selected="handleRowClick"
     >
-      <template #cell(stakingBalance)="row">
+      <template slot="cycle" slot-scope="row">
+        {{ row.item.cycle | formatInteger }}
+
+        <font-awesome-icon
+          icon="question-circle"
+          class="icon icon-circle"
+          @click.stop="toggleCycleToast(row)"
+          @focusout="hideCycleToast()"
+        />
+        <div class="cycle-toast">
+          <b-toast
+            :id="`rewards-${row.index}-${row.item.cycle}`"
+            :title="`Cycle ${row.item.cycle}`"
+            no-auto-hide
+            static
+            solid
+          >
+            <p class="cycle-toast__paragraph">
+              {{ $t('common.startDate') }}:
+              {{ row.item.cycleStart | timeformat(dateFormat) }}
+            </p>
+            <p class="cycle-toast__paragraph">
+              {{ $t('common.endDate') }}:
+              {{ row.item.cycleEnd | timeformat(dateFormat) }}
+            </p>
+          </b-toast>
+        </div>
+      </template>
+      <template slot="stakingBalance" slot-scope="row">
         {{ row.item.stakingBalance | denominate }}
       </template>
-      <template #cell(baking)="row">
+      <template slot="baking" slot-scope="row">
         {{ row.item.baking | denominate }}
       </template>
-      <template #cell(endorsements)="row">
+      <template slot="endorsements" slot-scope="row">
         {{ row.item.endorsements | denominate }}
       </template>
-      <template #cell(losses)="row">
+      <template slot="losses" slot-scope="row">
         {{ row.item.losses | denominate }}
       </template>
-      <template #cell(fees)="row">
+
+      <template slot="fees" slot-scope="row">
         {{ row.item.fees | denominate }}
       </template>
     </b-table>
@@ -62,20 +91,23 @@
           class="transactions-table baker-baking-table"
           :empty-text="$t('common.noData')"
         >
-          <template #cell(cycle)="row">
+          <template slot="cycle" slot-scope="row">
             {{ row.item.cycle }}
           </template>
-          <template #cell(delegator)="row">
+
+          <template slot="delegator" slot-scope="row">
             <router-link
               :to="{ name: 'account', params: { account: row.item.delegator } }"
             >
               {{ row.item.delegator }}
             </router-link>
           </template>
-          <template #cell(balance)="row">
+
+          <template slot="balance" slot-scope="row">
             {{ row.item.balance | denominate }}
           </template>
-          <template #cell(share)="row">
+
+          <template slot="share" slot-scope="row">
             {{ (row.item.share * 100) | toFixedNoRounding }}%
           </template>
         </b-table>
@@ -136,6 +168,7 @@
           currentPage: 1,
           loading: false,
         },
+        toast: undefined,
       };
     },
     computed: {
@@ -240,6 +273,26 @@
       handleModalPagination(page) {
         this.selectedRow.currentPage = page;
       },
+      toggleCycleToast(row) {
+        this.hideCycleToast();
+        this.showCycleToast(row);
+      },
+      showCycleToast(row) {
+        const index = row.index;
+        const cycle = row.item.cycle;
+        const id = `rewards-${index}-${cycle}`;
+        this.toast = id;
+        this.$bvToast.show(id);
+      },
+      hideCycleToast() {
+        if (this.toast) {
+          this.$bvToast.hide(this.toast);
+          this.toast = undefined;
+        }
+      },
+    },
+    updated() {
+      this.hideCycleToast();
     },
     async created() {
       const itemsNotFetched = !this.loaded;
@@ -312,5 +365,25 @@
     &.pending {
       background-color: rgba(48, 146, 130, 0.4);
     }
+  }
+
+  .icon-circle {
+    cursor: pointer;
+    font-size: 14px;
+    color: #309282;
+  }
+
+  .cycle-toast {
+    position: absolute;
+    width: auto;
+    font-weight: 400;
+  }
+
+  .cycle-toast__paragraph {
+    margin-bottom: 5px;
+  }
+
+  .cycle-toast__paragraph:last-child {
+    margin-bottom: 0;
   }
 </style>
