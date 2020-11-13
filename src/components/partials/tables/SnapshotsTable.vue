@@ -17,6 +17,7 @@
         icon="question-circle"
         class="icon icon-circle"
         @click.stop="toggleCycleToast(row)"
+        @focusout="hideCycleToast()"
       />
       <div class="cycle-toast">
         <b-toast
@@ -112,7 +113,8 @@
 
   .cycle-toast {
     position: absolute;
-    width: 100%;
+    width: auto;
+    font-weight: 400;
   }
 
   .cycle-toast__paragraph {
