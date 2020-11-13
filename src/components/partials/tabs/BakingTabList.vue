@@ -25,7 +25,7 @@
       :empty-text="$t('common.noData')"
       @row-selected="handleRowClick"
     >
-      <template slot="cycle" slot-scope="row">
+      <template #cell(cycle)="row">
         <div v-if="isRowTotal(row)">
           Total
         </div>
@@ -58,10 +58,10 @@
           </div>
         </div>
       </template>
-      <template slot="avgPriority" slot-scope="row">
+      <template #cell(avgPriority)="row">
         {{ row.item.avgPriority }}
       </template>
-      <template slot="rewards" slot-scope="row">
+      <template #cell(rewards)="row">
         {{ row.item.rewards | denominate }}
       </template>
     </b-table>
@@ -87,21 +87,21 @@
           class="transactions-table baker-baking-table"
           :empty-text="$t('common.noData')"
         >
-          <template slot="level" slot-scope="row">
+          <template #cell(level)="row">
             <b-link :to="{ name: 'block', params: { level: row.item.level } }">
               {{ row.item.level | formatInteger }}
             </b-link>
           </template>
-          <template slot="reward" slot-scope="row">
+          <template #cell(reward)="row">
             {{ row.item.reward | denominate }}
           </template>
-          <template slot="deposit" slot-scope="row">
+          <template #cell(deposit)="row">
             {{ row.item.deposit | denominate }}
           </template>
-          <template slot="timestamp" slot-scope="row">
+          <template #cell(timestamp)="row">
             {{ row.item.timestamp | timeformat(dateFormat) }}
           </template>
-          <template slot="estimated_time" slot-scope="row">
+          <template #cell(estimated_time)="row">
             {{ formatDate(row.item.estimated_time) }}
           </template>
         </b-table>
