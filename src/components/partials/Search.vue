@@ -64,7 +64,6 @@
         error: '',
         loading: false,
         publicBakersSearchFetching: false,
-        publicBakersSearchDefaultLimit: 200,
       };
     },
     props: {
@@ -116,11 +115,10 @@
         this.loading = false;
       },
       async handleInputChange() {
-        const { publicBakersSearchDefaultLimit } = this;
         this.error = '';
 
         if (!this.publicBakersSearchFetching && !this.publicBakersSearchFetched && !this.loading) {
-          await this.fetchpublicBakersSearch(publicBakersSearchDefaultLimit);
+          await this.fetchpublicBakersSearch();
         }
       },
       resolveSearch(props, status) {
@@ -254,15 +252,8 @@
               requestStatus = status;
             }
           } else {
-            const { publicBakersSearchDefaultLimit } = this;
-            const fetchedBakersSize = this.publicBakersSearch.length;
-
-            if (fetchedBakersSize === publicBakersSearchDefaultLimit) {
-              await this.fetchpublicBakersSearch(this.publicBakersSearchCount);
-            } else {
-              this.error = 'Public baker not found.';
-              this.$refs.searchInput.$el.focus();
-            }
+            this.error = 'Public baker not found.';
+            this.$refs.searchInput.$el.focus();
           }
         }
 
