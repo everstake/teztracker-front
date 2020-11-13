@@ -8,7 +8,7 @@
   import { mapGetters } from 'vuex';
 
   export default {
-    name: 'app',
+    name: 'App',
     computed: {
       ...mapGetters('app', ['getAppNetwork']),
     },
@@ -27,6 +27,7 @@
             this.$router.replace({ name: 'network' });
           }
         } catch (e) {
+          // eslint-disable-next-line
           console.error(e);
           this.$router.replace({ name: 'maintenance' });
         }
