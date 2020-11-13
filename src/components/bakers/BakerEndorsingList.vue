@@ -3,10 +3,10 @@
     <div class="d-flex justify-content-between mb-2">
       <LimitSelect
         :limit="perPage"
+        :loading="loading"
         @onLimitChange="
           (limit) => $emit('onLimitChange', { type: 'endorsing', limit })
         "
-        :loading="loading"
       />
     </div>
 
@@ -36,6 +36,7 @@
             icon="question-circle"
             class="icon icon-circle"
             @click.stop="toggleCycleToast(row)"
+            @focusout="hideCycleToast()"
           />
           <div class="cycle-toast">
             <b-toast
@@ -63,13 +64,13 @@
     </b-table>
 
     <PaginationSelect
-      @onPageChange="
-        (page) => $emit('onPageChange', { type: 'endorsing', page })
-      "
       :total-rows="count"
       :per-page="perPage"
       :current-page="currentPage"
       :loading="loading"
+      @onPageChange="
+        (page) => $emit('onPageChange', { type: 'endorsing', page })
+      "
     />
 
     <div>
@@ -116,10 +117,10 @@
 
         <Pagination
           v-model="selectedRow.currentPage"
-          @change="handleModalPagination"
           :total-rows="selectedRow.count"
           :per-page="selectedRow.perPage"
           :loading="selectedRow.loading"
+          @change="handleModalPagination"
         />
       </b-modal>
     </div>
@@ -203,6 +204,15 @@
           await this.reloadAccountEndorsingItem();
         },
       },
+    },
+    updated() {
+      this.hideCycleToast();
+    },
+    async created() {
+      const itemsNotFetched = !this.loaded;
+      if (itemsNotFetched) {
+        this.$emit('onReload', { type: 'endorsing', limit: this.perPage });
+      }
     },
     methods: {
       getRowClass(item) {
@@ -324,15 +334,6 @@
         }
       },
     },
-    updated() {
-      this.hideCycleToast();
-    },
-    async created() {
-      const itemsNotFetched = !this.loaded;
-      if (itemsNotFetched) {
-        this.$emit('onReload', { type: 'endorsing', limit: this.perPage });
-      }
-    },
   };
 </script>
 
@@ -400,7 +401,8 @@
 
   .cycle-toast {
     position: absolute;
-    width: 100%;
+    width: auto;
+    font-weight: 400;
   }
 
   .cycle-toast__paragraph {
