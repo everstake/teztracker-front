@@ -4,7 +4,9 @@
       <LimitSelect
         :limit="perPage"
         :loading="loading"
-        @onLimitChange="(limit) => $emit('onLimitChange', { type: 'baking', limit })"
+        @onLimitChange="
+          (limit) => $emit('onLimitChange', { type: 'baking', limit })
+        "
       />
     </div>
 
@@ -23,6 +25,39 @@
       :empty-text="$t('common.noData')"
       @row-selected="handleRowClick"
     >
+      <template slot="cycle" slot-scope="row">
+        <div v-if="isRowTotal(row)">
+          Total
+        </div>
+        <div v-else>
+          {{ row.item.cycle | formatInteger }}
+
+          <font-awesome-icon
+            icon="question-circle"
+            class="icon icon-circle"
+            @click.stop="toggleCycleToast(row)"
+            @focusout="hideCycleToast()"
+          />
+          <div class="cycle-toast">
+            <b-toast
+              :id="`baking-${row.index}-${row.item.cycle}`"
+              :title="`Cycle ${row.item.cycle}`"
+              no-auto-hide
+              static
+              solid
+            >
+              <p class="cycle-toast__paragraph">
+                {{ $t('common.startDate') }}:
+                {{ row.item.cycleStart | timeformat(dateFormat) }}
+              </p>
+              <p class="cycle-toast__paragraph">
+                {{ $t('common.endDate') }}:
+                {{ row.item.cycleEnd | timeformat(dateFormat) }}
+              </p>
+            </b-toast>
+          </div>
+        </div>
+      </template>
       <template slot="avgPriority" slot-scope="row">
         {{ row.item.avgPriority }}
       </template>
@@ -128,6 +163,7 @@
           currentPage: 1,
           loading: false,
         },
+        toast: undefined,
       };
     },
     computed: {
@@ -272,6 +308,29 @@
         this.selectedRow.currentPage = page;
         this.selectedRow.loading = false;
       },
+      isRowTotal(row) {
+        return row.item.cycle === 'Total';
+      },
+      toggleCycleToast(row) {
+        this.hideCycleToast();
+        this.showCycleToast(row);
+      },
+      showCycleToast(row) {
+        const index = row.index;
+        const cycle = row.item.cycle;
+        const id = `baking-${index}-${cycle}`;
+        this.toast = id;
+        this.$bvToast.show(id);
+      },
+      hideCycleToast() {
+        if (this.toast) {
+          this.$bvToast.hide(this.toast);
+          this.toast = undefined;
+        }
+      },
+    },
+    updated() {
+      this.hideCycleToast();
     },
   };
 </script>
@@ -369,5 +428,25 @@
 
   .page-link:hover {
     color: #309282;
+  }
+
+  .icon-circle {
+    cursor: pointer;
+    font-size: 14px;
+    color: #309282;
+  }
+
+  .cycle-toast {
+    position: absolute;
+    width: auto;
+    font-weight: 400;
+  }
+
+  .cycle-toast__paragraph {
+    margin-bottom: 5px;
+  }
+
+  .cycle-toast__paragraph:last-child {
+    margin-bottom: 0;
   }
 </style>

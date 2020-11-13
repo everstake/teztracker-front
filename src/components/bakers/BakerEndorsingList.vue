@@ -1,7 +1,13 @@
 <template>
   <div class="endorsing-list">
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :limit="perPage" @onLimitChange="(limit) => $emit('onLimitChange', { type: 'endorsing', limit })" :loading="loading" />
+      <LimitSelect
+        :limit="perPage"
+        :loading="loading"
+        @onLimitChange="
+          (limit) => $emit('onLimitChange', { type: 'endorsing', limit })
+        "
+      />
     </div>
 
     <b-table
@@ -19,17 +25,52 @@
       :empty-text="$t('common.noData')"
       @row-selected="handleRowClick"
     >
+      <template slot="cycle" slot-scope="row">
+        <div v-if="isRowTotal(row)">
+          Total
+        </div>
+        <div v-else>
+          {{ row.item.cycle | formatInteger }}
+
+          <font-awesome-icon
+            icon="question-circle"
+            class="icon icon-circle"
+            @click.stop="toggleCycleToast(row)"
+            @focusout="hideCycleToast()"
+          />
+          <div class="cycle-toast">
+            <b-toast
+              :id="`endorsing-${row.index}-${row.item.cycle}`"
+              :title="`Cycle ${row.item.cycle}`"
+              no-auto-hide
+              static
+              solid
+            >
+              <p class="cycle-toast__paragraph">
+                {{ $t('common.startDate') }}:
+                {{ row.item.cycleStart | timeformat(dateFormat) }}
+              </p>
+              <p class="cycle-toast__paragraph">
+                {{ $t('common.endDate') }}:
+                {{ row.item.cycleEnd | timeformat(dateFormat) }}
+              </p>
+            </b-toast>
+          </div>
+        </div>
+      </template>
       <template slot="rewards" slot-scope="row">
         {{ row.item.rewards | denominate }}
       </template>
     </b-table>
 
     <PaginationSelect
-      @onPageChange="(page) => $emit('onPageChange', { type: 'endorsing', page })"
       :total-rows="count"
       :per-page="perPage"
       :current-page="currentPage"
       :loading="loading"
+      @onPageChange="
+        (page) => $emit('onPageChange', { type: 'endorsing', page })
+      "
     />
 
     <div>
@@ -76,10 +117,10 @@
 
         <Pagination
           v-model="selectedRow.currentPage"
-          @change="handleModalPagination"
           :total-rows="selectedRow.count"
           :per-page="selectedRow.perPage"
           :loading="selectedRow.loading"
+          @change="handleModalPagination"
         />
       </b-modal>
     </div>
@@ -129,6 +170,7 @@
           currentPage: 1,
           loading: false,
         },
+        toast: undefined,
       };
     },
     computed: {
@@ -162,6 +204,15 @@
           await this.reloadAccountEndorsingItem();
         },
       },
+    },
+    updated() {
+      this.hideCycleToast();
+    },
+    async created() {
+      const itemsNotFetched = !this.loaded;
+      if (itemsNotFetched) {
+        this.$emit('onReload', { type: 'endorsing', limit: this.perPage });
+      }
     },
     methods: {
       getRowClass(item) {
@@ -262,12 +313,26 @@
       handleModalPagination(page) {
         this.selectedRow.currentPage = page;
       },
-    },
-    async created() {
-      const itemsNotFetched = !this.loaded;
-      if (itemsNotFetched) {
-        this.$emit('onReload', { type: 'endorsing', limit: this.perPage });
-      }
+      isRowTotal(row) {
+        return row.item.cycle === 'Total';
+      },
+      toggleCycleToast(row) {
+        this.hideCycleToast();
+        this.showCycleToast(row);
+      },
+      showCycleToast(row) {
+        const index = row.index;
+        const cycle = row.item.cycle;
+        const id = `endorsing-${index}-${cycle}`;
+        this.toast = id;
+        this.$bvToast.show(id);
+      },
+      hideCycleToast() {
+        if (this.toast) {
+          this.$bvToast.hide(this.toast);
+          this.toast = undefined;
+        }
+      },
     },
   };
 </script>
@@ -326,5 +391,25 @@
     background-color: transparent;
     color: #309282;
     border: none;
+  }
+
+  .icon-circle {
+    cursor: pointer;
+    font-size: 14px;
+    color: #309282;
+  }
+
+  .cycle-toast {
+    position: absolute;
+    width: auto;
+    font-weight: 400;
+  }
+
+  .cycle-toast__paragraph {
+    margin-bottom: 5px;
+  }
+
+  .cycle-toast__paragraph:last-child {
+    margin-bottom: 0;
   }
 </style>
