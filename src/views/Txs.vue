@@ -14,7 +14,7 @@
                   </h4>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count" />
+                  <Counter show-line :count="count" :loading="loading" />
                 </template>
               </CardHeader>
 
@@ -67,7 +67,7 @@
       ...mapMutations('operations', [SET_TX_COUNT]),
       async reload() {
         const { page, limit } = this;
-        this.$api
+        await this.$api
           .getTransactions({ page, limit })
           .then((data) => {
             this.items = data.data;

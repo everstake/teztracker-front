@@ -14,7 +14,7 @@
                   </h4>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count" />
+                  <Counter show-line :count="count" :loading="loading" />
                 </template>
               </CardHeader>
 

@@ -1,10 +1,21 @@
 <template>
-  <div>
+  <div class="list operations-list">
     <div class="d-flex justify-content-between mb-2">
       <PerPageSelect @per-page="$_setPerPage" />
     </div>
-
+  
+    <div v-if="loading && operations.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="10"
+        :columns="10"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="operations"

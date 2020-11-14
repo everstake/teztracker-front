@@ -1,6 +1,22 @@
 <template>
-  <div>
-    <SnapshotsTable :loading="loading" :items="items" :page="page" :limit="limit"  />
+  <div class="list snapshots-list">
+    <div v-if="loading && items.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="6"
+        :columns="3"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
+    <SnapshotsTable
+      v-else
+      :loading="loading"
+      :items="items"
+      :page="page"
+      :limit="limit"
+    />
 
     <PaginationNav
       :limit="limit"

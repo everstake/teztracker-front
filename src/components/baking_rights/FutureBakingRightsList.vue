@@ -1,6 +1,17 @@
 <template>
-  <div>
+  <div class="list future-baking-rights-list">
+    <div v-if="loading && future_baking_rights.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="11"
+        :columns="7"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="future_baking_rights"

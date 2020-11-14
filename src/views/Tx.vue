@@ -61,7 +61,18 @@
                   active
                 >
                   <b-card-body>
+                    <div v-if="loading && Object.keys(transactionsSorted.operations).length === 0" class="table-skeleton">
+                      <b-skeleton-table
+                        responsive
+                        :rows="3"
+                        :columns="9"
+                        :table-props="{ borderless: true, responsive: true }"
+                        animation="none"
+                        class="table-skeleton"
+                      />
+                    </div>
                     <b-table
+                      v-else
                       responsive
                       show-empty
                       :items="transactionsSorted.operations"
@@ -160,6 +171,7 @@
                     </b-table>
 
                     <Pagination
+                      :loading="loading"
                       :total-rows="count"
                       :per-page="perPage"
                       @change="$_handleCurrentPageChange"
@@ -176,7 +188,7 @@
                   :title="$t('revealsList.reveal')"
                 >
                   <b-card-body>
-                    <RevealsList :items="transactionsSorted.reveals" />
+                    <RevealsList :items="transactionsSorted.reveals" :loading="loading" />
                   </b-card-body>
                 </b-tab>
               </b-tabs>
@@ -230,6 +242,7 @@
           'activate_account',
         ],
         dataFetched: false,
+        loading: false,
       };
     },
     computed: {
@@ -362,6 +375,7 @@
     },
     methods: {
       async reload(page = 1) {
+        this.loading = true;
         const props = {
           page,
           limit: this.perPage,
@@ -381,6 +395,7 @@
         this.transactions = data.data;
         this.dataFetched = true;
         this.count = data.count;
+        this.loading = false;
       },
     },
   };

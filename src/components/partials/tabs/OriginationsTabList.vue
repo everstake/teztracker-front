@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="list originations-list">
     <div class="d-flex justify-content-between mb-2">
       <LimitSelect
         :limit="perPage"
@@ -9,8 +9,19 @@
         "
       />
     </div>
-
+  
+    <div v-if="loading && originations.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="2"
+        :columns="7"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="originations"

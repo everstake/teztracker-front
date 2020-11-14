@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="list operations-list">
     <div class="d-flex justify-content-between mb-2">
       <LimitSelect
         :limit="perPage"
@@ -7,8 +7,19 @@
         @onLimitChange="(limit) => $emit('onLimitChange', { type: 'operations', limit })"
       />
     </div>
-
+  
+    <div v-if="loading && operations.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="2"
+        :columns="3"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="operations"

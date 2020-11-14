@@ -1,6 +1,17 @@
 <template>
-  <div>
+  <div class="list block-other-operations-list">
+    <div v-if="loading && operations.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="5"
+        :columns="6"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="operations"

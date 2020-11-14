@@ -1,6 +1,17 @@
 <template>
-  <div>
+  <div class="list reveals-list">
+    <div v-if="loading && items.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="3"
+        :columns="4"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="items"

@@ -1,10 +1,21 @@
 <template>
-  <div>
+  <div class="list txs-list">
     <div class="d-flex justify-content-between mb-2">
       <PerPageSelect @per-page="$_setPerPage" />
     </div>
 
+    <div v-if="loading && protocols.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="9"
+        :columns="4"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="protocols"
@@ -55,6 +66,7 @@
     data() {
       return {
         protocols: [],
+        loading: false,
       };
     },
     computed: {
@@ -89,6 +101,7 @@
     methods: {
       ...mapMutations('period', [SET_PROTOCOLS_COUNT]),
       async reload(page = 1) {
+        this.loading = true;
         const props = {
           page,
           limit: this.perPage,
@@ -100,6 +113,7 @@
           .reverse();
         this[SET_PROTOCOLS_COUNT](data.data.length);
         this.protocols = result;
+        this.loading = false;
       },
     },
   };
