@@ -1,6 +1,6 @@
 <template>
   <div class="counter">
-    <b-skeleton width="60px" height="30px" v-if="loading" />
+    <b-skeleton width="60px" height="30px" v-if="loading && !count" />
     <div v-else class="counter__text">
       <div v-if="showLine" class="counter__line"></div>
       <h3>{{ count | bignum }}</h3>
