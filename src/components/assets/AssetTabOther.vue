@@ -81,10 +81,12 @@
   import IdentIcon from '@/components/accounts/IdentIcon';
   import defineRowClass from '@/mixins/defineRowClass';
   import PaginationSelect from '@/components/partials/PaginationSelect';
+  import LimitSelect from '@/components/partials/LimitSelect';
 
   export default {
     name: 'AssetTabOther',
     components: {
+      LimitSelect,
       PaginationSelect,
       BtnCopy,
       IdentIcon,
