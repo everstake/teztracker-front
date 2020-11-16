@@ -17,7 +17,7 @@
         }}
       </b-button>
     </template>
-    <template #cell(row-details)="row">
+    <template #row-details="row">
       <b-card>
         <div v-for="(operation, index) in row.item.contents" :key="index">
           <pre><code class="code">{{ beautifyJSON(operation) }}</code></pre>

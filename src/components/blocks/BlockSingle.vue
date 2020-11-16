@@ -49,8 +49,10 @@
               <b-col lg="8" class="text-accent">
                 <b-skeleton v-if="loading" />
                 <div v-else>
-                  <span class="hash">{{ block.hash }}</span>
-                  <BtnCopy :text-to-copy="block.hash" />
+                  <span class="hash">
+                    {{ block.hash }}
+                    <BtnCopy :text-to-copy="block.hash" />
+                  </span>
                 </div>
               </b-col>
             </b-row>
@@ -60,7 +62,9 @@
               </b-col>
               <b-col lg="8" class="text-accent">
                 <b-skeleton v-if="loading" />
-                <span v-else>{{ this.block.timestamp | timeformat(dateFormat) }}</span>
+                <span v-else>{{
+                  this.block.timestamp | timeformat(dateFormat)
+                }}</span>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -138,7 +142,9 @@
               </b-col>
               <b-col lg="8" class="text-accent">
                 <b-skeleton v-if="loading" />
-                <span v-else>{{ this.block.blockTime | formatInteger }} secs</span>
+                <span v-else
+                  >{{ this.block.blockTime | formatInteger }} sec</span
+                >
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -184,7 +190,8 @@
               <b-col lg="8" class="text-accent">
                 <b-skeleton v-if="loading" />
                 <span v-else>
-                  {{ this.block.metaCyclePosition }} {{ $t('blockSingle.outOf') }}
+                  {{ this.block.metaCyclePosition }}
+                  {{ $t('blockSingle.outOf') }}
                   <template v-if="currentNetwork === 'mainnet'">
                     {{ $constants.BLOCKS_IN_CYCLE_MAINNET }}
                   </template>
