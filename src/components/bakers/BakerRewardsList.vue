@@ -115,7 +115,7 @@
           <template #cell(balance)="row">
             {{ row.item.balance | denominate }}
           </template>
-          <template s#cell(share)="row">
+          <template #cell(share)="row">
             {{ (row.item.share * 100) | toFixedNoRounding }}%
           </template>
         </b-table>
