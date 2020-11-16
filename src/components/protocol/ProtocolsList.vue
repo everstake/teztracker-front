@@ -62,11 +62,10 @@
       Pagination,
     },
     mixins: [handleCurrentPageChange, setPerPage],
-    props: ['account'],
+    props: ['account', 'loading'],
     data() {
       return {
         protocols: [],
-        loading: false,
       };
     },
     computed: {
@@ -101,7 +100,7 @@
     methods: {
       ...mapMutations('period', [SET_PROTOCOLS_COUNT]),
       async reload(page = 1) {
-        this.loading = true;
+        this.$emit('onLoading', true);
         const props = {
           page,
           limit: this.perPage,
@@ -113,7 +112,7 @@
           .reverse();
         this[SET_PROTOCOLS_COUNT](data.data.length);
         this.protocols = result;
-        this.loading = false;
+        this.$emit('onLoading', false);
       },
     },
   };
