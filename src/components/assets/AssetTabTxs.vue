@@ -1,10 +1,16 @@
 <template>
   <div class="list asset-txs">
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect :hide="!showLimitFilter" @onLimitChange="$_setPerPage" :loading="loading" />
+      <LimitSelect
+        :limit="limit"
+        @onLimitChange="
+          (limit) => $emit('onLimitChange', { name: 'txs', limit })
+        "
+        :loading="loading"
+      />
     </div>
 
-    <div v-if="loading && transactions.length === 0" class="table-skeleton">
+    <div v-if="loading && !loaded" class="table-skeleton">
       <b-skeleton-table
         responsive
         :rows="5"
@@ -18,9 +24,9 @@
       v-else
       responsive
       show-empty
-      :items="transactions"
+      :items="items"
       :fields="fields"
-      :current-page="currentPage"
+      :current-page="page"
       :per-page="0"
       borderless
       class="transactions-table"
@@ -59,34 +65,33 @@
       </template>
     </b-table>
 
-    <Pagination
+    <PaginationSelect
       :total-rows="count"
-      :per-page="perPage"
-      @change="$_handleCurrentPageChange"
+      :per-page="limit"
+      :current-page="page"
       :loading="loading"
+      @onPageChange="(page) => $emit('onPageChange', { name: 'txs', page })"
     />
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex';
-  import PerPageSelect from '@/components/partials/PerPageSelect';
-  import Pagination from '../partials/Pagination';
+  import LimitSelect from '@/components/partials/LimitSelect';
+  import PaginationSelect from '@/components/partials/PaginationSelect';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
-  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
-  import setPerPage from '@/mixins/setPerPage';
   import defineRowClass from '@/mixins/defineRowClass';
 
   export default {
     name: 'AssetTabTxs',
     components: {
-      PerPageSelect,
-      Pagination,
+      LimitSelect,
+      PaginationSelect,
       BtnCopy,
       IdentIcon,
     },
-    mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
+    mixins: [defineRowClass],
     props: {
       block: {
         type: Object,
@@ -94,19 +99,14 @@
       account: {
         type: String,
       },
-      showLimitFilter: {
-        type: Boolean,
-        default: true,
-      },
       currency: String,
       precision: [String, Number],
-    },
-    data() {
-      return {
-        transactions: [],
-        count: 0,
-        loading: false,
-      };
+      count: Number,
+      items: Array,
+      loading: Boolean,
+      loaded: Boolean,
+      limit: Number,
+      page: Number,
     },
     computed: {
       ...mapState('app', {
@@ -142,50 +142,18 @@
         ];
       },
     },
-    watch: {
-      currentPage: {
-        async handler(value) {
-          await this.reload(value);
-        },
-      },
-      block: {
-        async handler() {
-          await this.reload();
-        },
-      },
-      account: {
-        async handler() {
-          await this.reload();
-        },
-      },
-      async perPage() {
-        await this.reload();
-      },
-    },
-    async created() {
-      // TODO: refactor API
-      if (!this.block) {
-        await this.reload();
-      }
-    },
     methods: {
-      async reload(page = 1) {
-        this.loading = true;
-        const props = {
-          page,
-          limit: this.perPage,
-          type: 'transfer',
-          assets_id: this.$route.params.id,
-        };
-        const data = await this.$api.getAssetsOperationsById(props);
-        this.transactions = data.data;
-        this.count = data.count;
-        this.loading = false;
-      },
       getAccountName(row, rowHash) {
         return `${row.item[`${rowHash}Name`] ||
           row.item[rowHash].slice(0, 15)}...`;
       },
+    },
+    created() {
+      const itemsNotFetched = !this.loaded;
+      const { page, limit } = this;
+      if (itemsNotFetched) {
+        this.$emit('onReload', { name: 'txs', page, limit });
+      }
     },
   };
 </script>
