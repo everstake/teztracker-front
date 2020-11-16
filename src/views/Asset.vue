@@ -13,7 +13,7 @@
         <b-row>
           <b-col lg="12">
             <b-card no-body>
-              <b-tabs>
+              <b-tabs lazy>
                 <b-tab :title="$tc('opTypes.tx', 2)" active>
                   <b-card-header>
                     <div class="break-word">
