@@ -122,9 +122,7 @@
   .txs-card__link {
     font-weight: bold;
   }
-</style>
 
-<style>
   .txs-card--hash-height span {
     height: 28px;
   }
