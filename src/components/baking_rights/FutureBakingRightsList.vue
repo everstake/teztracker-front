@@ -266,14 +266,13 @@
       IdentIcon,
     },
     mixins: [handleCurrentPageChange],
-    props: ['block'],
+    props: ['block', 'loading'],
     data() {
       return {
         perPage: this.$constants.PER_PAGE,
         blocks_in_row: this.$constants.BLOCKS_IN_ROW,
         future_baking_rights: [],
         newFields: [],
-        loading: false,
       };
     },
     computed: {
@@ -373,7 +372,7 @@
       },
 
       async reload(page = 1) {
-        this.loading = true;
+        this.$emit('onLoading', { type: 'futureBakingRights', value: true });
         const props = {
           page,
           limit: this.blocks_in_row,
@@ -381,7 +380,7 @@
         const data = await this.$api.getFutureBakingRights(props);
         await this[SET_FUTURE_BAKING_RIGHTS_COUNT](data.count);
         this.parseResponse(data.data);
-        this.loading = false;
+        this.$emit('onLoading', { type: 'futureBakingRights', value: false });
       },
     },
   };

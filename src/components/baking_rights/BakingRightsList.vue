@@ -231,6 +231,7 @@
       BtnCopy,
       IdentIcon,
     },
+    props: ['loading'],
     mixins: [handleCurrentPageChange],
     data() {
       return {
@@ -240,7 +241,6 @@
         // block_levels: [],
         blocks_in_row: this.$constants.BLOCKS_IN_ROW,
         newFields: [],
-        loading: false,
       };
     },
     computed: {
@@ -346,7 +346,7 @@
         this.baking_rights = result;
       },
       async reload(page = 1) {
-        this.loading = true;
+        this.$emit('onLoading', { type: 'bakingRights', value: true });
         const props = {
           page,
           limit: this.blocks_in_row,
@@ -354,7 +354,7 @@
         const data = await this.$api.getBakingRights(props);
         await this[SET_BAKING_RIGHTS_COUNT](data.count);
         this.parseResponse(data.data);
-        this.loading = false;
+        this.$emit('onLoading', { type: 'bakingRights', value: false });
       },
     },
   };
