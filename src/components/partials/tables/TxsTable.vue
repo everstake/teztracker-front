@@ -12,7 +12,7 @@
     :empty-text="$t('common.noData')"
   >
     <template #cell(txhash)="row">
-      <span class="d-flex align-items-center">
+      <span class="d-flex align-items-center txs-hash">
         <b-link
           :to="{
             name: 'tx',

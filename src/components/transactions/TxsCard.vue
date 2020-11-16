@@ -123,11 +123,11 @@
     font-weight: bold;
   }
 
-  .txs-card--hash-height span {
+  ::v-deep .txs-hash {
     height: 28px;
   }
 
-  .txs-card >>> .table-skeleton tr {
+  ::v-deep .table-skeleton tr {
     height: 52px;
   }
 </style>
