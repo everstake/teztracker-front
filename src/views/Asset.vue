@@ -30,6 +30,15 @@
                       :currency="currency"
                       :precision="precision"
                       :account="hash"
+                      @onReload="onReload"
+                      @onPageChange="onPageChange"
+                      @onLimitChange="onLimitChange"
+                      :loading="loading.txs"
+                      :loaded="loaded.txs"
+                      :limit="limit.txs"
+                      :page="page.txs"
+                      :items="txs"
+                      :count="count.txs"
                     />
                   </b-card-body>
                 </b-tab>
@@ -49,6 +58,15 @@
                       :currency="currency"
                       :precision="precision"
                       :account="hash"
+                      @onReload="onReload"
+                      @onPageChange="onPageChange"
+                      @onLimitChange="onLimitChange"
+                      :loading="loading.holders"
+                      :loaded="loaded.holders"
+                      :limit="limit.holders"
+                      :page="page.holders"
+                      :items="holders"
+                      :count="count.holders"
                     />
                   </b-card-body>
                 </b-tab>
@@ -68,6 +86,15 @@
                       :currency="currency"
                       :precision="precision"
                       :account="hash"
+                      @onReload="onReload"
+                      @onPageChange="onPageChange"
+                      @onLimitChange="onLimitChange"
+                      :loading="loading.otherOperations"
+                      :loaded="loaded.otherOperations"
+                      :limit="limit.otherOperations"
+                      :page="page.otherOperations"
+                      :items="otherOperations"
+                      :count="count.otherOperations"
                     />
                   </b-card-body>
                 </b-tab>
@@ -100,6 +127,34 @@
       return {
         currency: 'XTZ',
         precision: null,
+        txs: [],
+        holders: [],
+        otherOperations: [],
+        loading: {
+          txs: false,
+          holders: false,
+          otherOperations: false,
+        },
+        loaded: {
+          txs: false,
+          holders: false,
+          otherOperations: false,
+        },
+        count: {
+          txs: 0,
+          holders: 0,
+          otherOperations: 0,
+        },
+        limit: {
+          txs: 10,
+          holders: 10,
+          otherOperations: 10,
+        },
+        page: {
+          txs: 1,
+          holders: 1,
+          otherOperations: 1,
+        },
       };
     },
     computed: {
@@ -118,6 +173,56 @@
       handleCurrencyChange({ currency, precision }) {
         this.currency = currency;
         this.precision = precision;
+      },
+      async onReload({ name, limit, page }) {
+        this.loading[name] = true;
+        const { id: assets_id } = this.$route.params;
+        const props = { page, limit, type: 'transfers', assets_id };
+
+        if (name === 'txs') {
+          await this.$api
+            .getAssetsOperationsById(props)
+            .then((data) => {
+              this.txs = data.data;
+              this.count.txs = data.count;
+            })
+            .catch(() => {});
+          this.loaded.txs = true;
+        }
+
+        if (name === 'otherOperations') {
+          await this.$api
+            .getAssetsOperationsById({ ...props, type: ['burn'] })
+            .then((data) => {
+              this.otherOperations = data.data;
+              this.count.otherOperations = data.count;
+            })
+            .catch(() => {});
+          this.loaded.otherOperations = true;
+        }
+
+        if (name === 'holders') {
+          await this.$api
+            .getAssetsHoldersById(props)
+            .then((data) => {
+              this.holders = data.data;
+              this.count.holders = data.count;
+            })
+            .catch(() => {});
+          this.loaded.holders = true;
+        }
+        this.loading[name] = false;
+      },
+      async onPageChange({ name, page }) {
+        const limit = this.limit[name];
+        this.page[name] = page;
+        await this.onReload({ name, limit, page });
+      },
+      async onLimitChange({ name, limit }) {
+        this.page[name] = 1;
+        const page = this.page[name];
+        this.limit[name] = limit;
+        await this.onReload({ name, limit, page });
       },
     },
   };
