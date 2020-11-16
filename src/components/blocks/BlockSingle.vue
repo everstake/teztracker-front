@@ -14,7 +14,7 @@
         </div>
         <div class="break-word">
           <h3>
-            <span class="text">{{ block.level }}</span>
+            <span class="text">{{ $route.params.level }}</span>
           </h3>
           <span class="subtitle">{{ $t('infoTypes.blockInfo') }}</span>
         </div>
@@ -47,8 +47,11 @@
                 {{ $t('hashTypes.hash') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                <span class="hash">{{ block.hash }}</span>
-                <BtnCopy :text-to-copy="block.hash" />
+                <b-skeleton v-if="loading" />
+                <div v-else>
+                  <span class="hash">{{ block.hash }}</span>
+                  <BtnCopy :text-to-copy="block.hash" />
+                </div>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -56,7 +59,8 @@
                 {{ $t('common.timestamp') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.timestamp | timeformat(dateFormat) }}
+                <b-skeleton v-if="loading" />
+                <span v-else>{{ this.block.timestamp | timeformat(dateFormat) }}</span>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -64,7 +68,8 @@
                 {{ $tc('common.baker', 1) }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                <span>
+                <b-skeleton v-if="loading" />
+                <span v-else>
                   <IdentIcon :seed="this.block.baker" />
 
                   <router-link
@@ -81,7 +86,8 @@
                 {{ $t('blockSingle.bakerFee') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.fees | denominate }}
+                <b-skeleton v-if="loading" />
+                <span v-else>{{ this.block.fees | denominate }}</span>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -89,7 +95,8 @@
                 {{ $t('blockSingle.bakerPriority') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.priority }}
+                <b-skeleton v-if="loading" />
+                <span v-else>{{ this.block.priority }}</span>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -97,7 +104,8 @@
                 {{ $t('common.txVol') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.volume | denominate }}
+                <b-skeleton v-if="loading" />
+                <span v-else>{{ this.block.volume | denominate }}</span>
               </b-col>
             </b-row>
             <b-row class="item-info" v-if="this.block.double_baking_evidence">
@@ -105,7 +113,8 @@
                 {{ $t('blockSingle.dblBakingEvidence') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.double_baking_evidence }}
+                <b-skeleton v-if="loading" />
+                <span v-else>{{ this.block.double_baking_evidence }}</span>
               </b-col>
             </b-row>
             <b-row
@@ -116,7 +125,8 @@
                 {{ $t('blockSingle.dblEndorsementEvidence') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.double_endorsement_evidence }}
+                <b-skeleton v-if="loading" />
+                <span v-else>{{ this.block.double_endorsement_evidence }}</span>
               </b-col>
             </b-row>
           </b-col>
@@ -127,7 +137,8 @@
                 {{ $t('blockSingle.blockTime') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.blockTime | formatInteger }} sec
+                <b-skeleton v-if="loading" />
+                <span v-else>{{ this.block.blockTime | formatInteger }} secs</span>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -135,7 +146,8 @@
                 {{ $t('blockSingle.blockFitness') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.fitness }}
+                <b-skeleton v-if="loading" />
+                <span v-else>{{ this.block.fitness }}</span>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -143,7 +155,8 @@
                 {{ $t('blockSingle.gasUsed') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.consumedGas | formatInteger }}
+                <b-skeleton v-if="loading" />
+                <span v-else>{{ this.block.consumedGas | formatInteger }}</span>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -151,7 +164,8 @@
                 {{ $t('blockSingle.protocolVersion') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.protocol | longhash }}
+                <b-skeleton v-if="loading" />
+                <span v-else>{{ this.block.protocol | longhash }}</span>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -159,7 +173,8 @@
                 {{ $tc('common.cycle', 1) }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.metaCycle }}
+                <b-skeleton v-if="loading" />
+                <span v-else>{{ this.block.metaCycle }}</span>
               </b-col>
             </b-row>
             <b-row class="item-info">
@@ -167,13 +182,16 @@
                 {{ $t('blockSingle.cyclePosition') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.metaCyclePosition }} {{ $t('blockSingle.outOf') }}
-                <template v-if="currentNetwork === 'mainnet'">
-                  {{ $constants.BLOCKS_IN_CYCLE_MAINNET }}
-                </template>
-                <template v-else>
-                  {{ $constants.BLOCKS_IN_CYCLE_TESTNET }}
-                </template>
+                <b-skeleton v-if="loading" />
+                <span v-else>
+                  {{ this.block.metaCyclePosition }} {{ $t('blockSingle.outOf') }}
+                  <template v-if="currentNetwork === 'mainnet'">
+                    {{ $constants.BLOCKS_IN_CYCLE_MAINNET }}
+                  </template>
+                  <template v-else>
+                    {{ $constants.BLOCKS_IN_CYCLE_TESTNET }}
+                  </template>
+                </span>
               </b-col>
             </b-row>
             <b-row v-if="this.block.originations" class="item-info">
@@ -181,7 +199,8 @@
                 {{ $t('blockSingle.originatedAccs') }}
               </b-col>
               <b-col lg="8" class="text-accent">
-                {{ this.block.originations }}
+                <b-skeleton v-if="loading" />
+                <span v-else>{{ this.block.originations }}</span>
               </b-col>
             </b-row>
           </b-col>
@@ -208,6 +227,7 @@
         type: Object,
         required: true,
       },
+      loading: Boolean,
     },
     computed: {
       ...mapState('app', {

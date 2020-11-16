@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="list bakers-list-public">
     <div class="d-flex justify-content-between mb-2">
       <LimitSelect
         :loading="loading"
@@ -8,7 +8,18 @@
       />
     </div>
 
+    <div v-if="loading && items.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="10"
+        :columns="10"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <PublicBakersTable
+      v-else
       :props-fields="propsFields"
       :loading="loading"
       :items="items"

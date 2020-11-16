@@ -1,6 +1,17 @@
 <template>
-  <div>
+  <div class="list reveals-list">
+    <div v-if="loading && items.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="3"
+        :columns="4"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="items"
@@ -9,7 +20,7 @@
       class="transactions-table"
       :empty-text="$t('common.noData')"
     >
-      <template slot="from" slot-scope="row">
+      <template #cell(from)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.source" />
 
@@ -33,13 +44,13 @@
           />
         </span>
       </template>
-      <template slot="fee" slot-scope="row">
+      <template #cell(fee)="row">
         {{ row.item.fee | denominate }}
       </template>
-      <template slot="gas" slot-scope="row">
+      <template #cell(gas)="row">
         {{ row.item.gasLimit | formatInteger }}
       </template>
-      <template slot="storage" slot-scope="row">
+      <template #cell(storage)="row">
         <span v-if="row.item.storageLimit">
           {{ row.item.storageLimit }}
         </span>

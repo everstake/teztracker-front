@@ -22,6 +22,7 @@ import {
   ModalPlugin,
   ToastPlugin,
   PaginationNavPlugin,
+  SkeletonPlugin,
 } from 'bootstrap-vue';
 import {
   FontAwesomeIcon,
@@ -90,6 +91,7 @@ Vue.use(ModalPlugin);
 Vue.use(FlagIcon);
 Vue.use(ToastPlugin);
 Vue.use(PaginationNavPlugin);
+Vue.use(SkeletonPlugin);
 
 dom.watch();
 library.add(

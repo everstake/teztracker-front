@@ -14,12 +14,12 @@
                   </h4>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count.future_baking_rights" />
+                  <Counter show-line :count="count.future_baking_rights" :loading="loading.futureBakingRights" />
                 </template>
               </CardHeader>
 
               <b-card-body>
-                <FutureBakingRightsList />
+                <FutureBakingRightsList :loading="loading.futureBakingRights" @onLoading="handleLoading" />
               </b-card-body>
             </b-card>
 
@@ -31,12 +31,12 @@
                   </h4>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count.baking_rights" />
+                  <Counter show-line :count="count.baking_rights" :loading="loading.bakingRights"  />
                 </template>
               </CardHeader>
 
               <b-card-body>
-                <BakingRightsList />
+                <BakingRightsList :loading="loading.bakingRights" @onLoading="handleLoading" />
               </b-card-body>
             </b-card>
           </b-col>
@@ -63,6 +63,14 @@
       CardHeader,
       Counter,
     },
+    data() {
+      return {
+        loading: {
+          bakingRights: false,
+          futureBakingRights: false,
+        },
+      };
+    },
     computed: {
       ...mapState('blocks', {
         count: (state) => state.counts,
@@ -75,6 +83,11 @@
             text: this.$t('common.bakingRights'),
           },
         ];
+      },
+    },
+    methods: {
+      handleLoading({ type, value }) {
+        this.loading[type] = value;
       },
     },
   };

@@ -21,8 +21,8 @@
         <b-container fluid>
           <b-row>
             <b-col
-              v-for="protocol in protocols"
-              :key="generateKey()"
+              v-for="(protocol, index) in protocols"
+              :key="index + generateKey()"
               sm="12"
               md="6"
               lg="4"

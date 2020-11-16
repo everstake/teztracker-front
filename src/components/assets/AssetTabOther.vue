@@ -1,10 +1,21 @@
 <template>
-  <div>
+  <div class="list asset-other">
     <div class="d-flex justify-content-between mb-2">
       <PerPageSelect :hide="!showLimitFilter" @onLimitChange="$_setPerPage" :loading="loading" />
     </div>
-
+  
+    <div v-if="loading && transactions.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="5"
+        :columns="5"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="transactions"
@@ -15,7 +26,7 @@
       class="transactions-table"
       :tbody-tr-class="$_defineRowClass"
     >
-      <template slot="from" slot-scope="row">
+      <template #cell(from)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.from" />
 
@@ -26,8 +37,7 @@
           <BtnCopy :text-to-copy="row.item.from" />
         </span>
       </template>
-
-      <template slot="to" slot-scope="row">
+      <template #cell(to)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.to" />
 
@@ -38,16 +48,13 @@
           <BtnCopy :text-to-copy="row.item.to" />
         </span>
       </template>
-
-      <template slot="amount" slot-scope="row">
+      <template #cell(amount)="row">
         {{ row.item.amount | currencyPrecision(currency, precision) }}
       </template>
-
-      <template slot="fee" slot-scope="row">
+      <template #cell(fee)="row">
         {{ row.item.fee | denominate }}
       </template>
-
-      <template slot="timestamp" slot-scope="row">
+      <template #cell(timestamp)="row">
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
     </b-table>

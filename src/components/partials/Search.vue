@@ -31,8 +31,8 @@
     >
       <ul class="search-form__list">
         <li
-          v-for="baker in filterpublicBakersSearchBySearchQuery"
-          :key="generateKey()"
+          v-for="(baker, index) in filterpublicBakersSearchBySearchQuery"
+          :key="index + generateKey()"
           @click="handleDropdownClick(baker.accountId)"
           :class="{
             'search-form__item--selectable': true,

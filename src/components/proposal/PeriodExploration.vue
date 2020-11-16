@@ -51,7 +51,7 @@
                   >
                     <div
                       v-for="(percentage, index) in getVotesPercentage"
-                      :key="generateKey()"
+                      :key="index + generateKey()"
                       class="vote-chart__label"
                       :style="{
                         color: backgroundColors[index],

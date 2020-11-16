@@ -4,7 +4,7 @@
 
     <section>
       <b-container fluid>
-        <BlockSingle :block="block" />
+        <BlockSingle :loading="block.loading" :block="block" />
       </b-container>
     </section>
 
@@ -124,7 +124,9 @@
     mixins: [reloadTabTables],
     data() {
       return {
-        block: {},
+        block: {
+          loading: false,
+        },
         otherOperations: [],
       };
     },
@@ -150,13 +152,20 @@
     },
     methods: {
       async load(level) {
-        const result = await this.$api.getBlock({ block: level });
-        if (result.status !== this.$constants.STATUS_SUCCESS) {
-          return this.$router.replace({
-            name: result.status,
+        this.block.loading = true;
+        await this.$api
+          .getBlock({ block: level })
+          .then((data) => {
+            this.block = data.data.block;
+          })
+          .catch((error) => {
+            if (error.response) {
+              this.$router.replace({
+                name: error.response.status,
+              });
+            }
           });
-        }
-        this.block = result.data.block;
+        this.block.loading = false;
       },
       async reloadEndorsements({ limit, page }) {
         this.loading.endorsements = true;
@@ -166,14 +175,13 @@
           limit,
           block_id: this.block.hash,
         };
-        const data = await this.$api.getEndorsements(props);
-        if (data.status !== this.$constants.STATUS_SUCCESS) {
-          return this.$router.replace({
-            name: data.status,
-          });
-        }
-        this.counts.endorsements = data.count;
-        this.endorsements = data.data;
+        await this.$api
+          .getEndorsements(props)
+          .then((data) => {
+            this.counts.endorsements = data.count;
+            this.endorsements = data.data;
+          })
+          .catch(() => {});
         this.loaded.endorsements = true;
         this.loading.endorsements = false;
       },
@@ -185,14 +193,13 @@
           limit,
           block_id: this.block.hash,
         };
-        const data = await this.$api.getTransactions(props);
-        if (data.status !== this.$constants.STATUS_SUCCESS) {
-          return this.$router.replace({
-            name: data.status,
-          });
-        }
-        this.txs = data.data;
-        this.counts.txs = data.count;
+        await this.$api
+          .getTransactions(props)
+          .then((data) => {
+            this.txs = data.data;
+            this.counts.txs = data.count;
+          })
+          .catch(() => {});
         this.loaded.txs = true;
         this.loading.txs = false;
       },

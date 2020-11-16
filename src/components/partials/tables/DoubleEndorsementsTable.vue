@@ -10,7 +10,7 @@
     class="transactions-table"
     :empty-text="$t('common.noData')"
   >
-    <template slot="txhash" slot-scope="row">
+    <template #cell(txhash)="row">
       <span class="d-flex align-items-center">
         <b-link
           :to="{
@@ -24,17 +24,15 @@
         <BtnCopy :text-to-copy="row.item.operationGroupHash" />
       </span>
     </template>
-
-    <template slot="level" slot-scope="row">
+    <template #cell(level)="row">
       <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
         {{ row.item.blockLevel | formatInteger }}
       </b-link>
     </template>
-
-    <template slot="timestamp" slot-scope="row">
+    <template #cell(timestamp)="row">
       {{ row.item.timestamp | timeformat(dateFormat) }}
     </template>
-    <template slot="baker" slot-scope="row">
+    <template #cell(baker)="row">
       <span class="d-flex align-items-center">
         <IdentIcon :seed="row.item.doubleOperationDetails.evidence_baker" />
 
@@ -59,10 +57,10 @@
         />
       </span>
     </template>
-    <template slot="baker_rewards" slot-scope="row">
+    <template #cell(baker_rewards)="row">
       {{ row.item.doubleOperationDetails.baker_reward | denominate }}
     </template>
-    <template slot="offender" slot-scope="row">
+    <template #cell(offender)="row">
       <span class="d-flex align-items-center">
         <IdentIcon :seed="row.item.doubleOperationDetails.offender" />
 
@@ -87,7 +85,7 @@
         />
       </span>
     </template>
-    <template slot="denounced_level" slot-scope="row">
+    <template #cell(denounced_level)="row">
       <b-link
         :to="{
           name: 'block',
@@ -97,10 +95,10 @@
         {{ row.item.doubleOperationDetails.denounced_level | formatInteger }}
       </b-link>
     </template>
-    <template slot="lost_deposits" slot-scope="row">
+    <template #cell(lost_deposits)="row">
       {{ row.item.doubleOperationDetails.lost_deposits | denominate }}
     </template>
-    <template slot="lost_rewards" slot-scope="row">
+    <template #cell(lost_rewards)="row">
       {{ row.item.doubleOperationDetails.lost_rewards | denominate }}
     </template>
   </b-table>

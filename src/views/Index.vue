@@ -18,7 +18,7 @@
           </b-col>
         </b-row>
 
-        <CycleCounter />
+        <CycleCounter :loading="loading" />
 
         <div class="tz-row promo-tiles">
           <div class="tz-row__item text-center">
@@ -26,16 +26,19 @@
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'lightbulb']" />
               </div>
-              <span class="counter">{{ stakingRatio }}%</span>
-              <div v-if="info.staking_ratio > 0">
-                <span class="percentage green">
-                  <font-awesome-icon icon="caret-up" />
-                </span>
-              </div>
+              <b-skeleton v-if="loading"></b-skeleton>
               <div v-else>
-                <span class="percentage red">
-                  <font-awesome-icon icon="caret-down" />
-                </span>
+                <span class="counter">{{ stakingRatio }}%</span>
+                <div v-if="info.staking_ratio > 0">
+                  <span class="percentage green">
+                    <font-awesome-icon icon="caret-up" />
+                  </span>
+                </div>
+                <div v-else>
+                  <span class="percentage red">
+                    <font-awesome-icon icon="caret-down" />
+                  </span>
+                </div>
               </div>
               <span class="tile-name">
                 {{ $t('index.stakingRatio') }}
@@ -48,7 +51,8 @@
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'star']" />
               </div>
-              <div class="voting-progress">
+              <b-skeleton v-if="loading"></b-skeleton>
+              <div v-else class="voting-progress">
                 <b-progress
                   :value="votingProgressPercent"
                   :max="100"
@@ -57,11 +61,13 @@
                   <div class="voting-percentage percentage green">
                     {{ votingProgressPercent }}%
                   </div>
-                  <div class="tile-name">
-                    {{ timeLeftTillVotingPeriodEnd }} -
-                    {{ $t('index.untilVotingEnd') }}
-                  </div>
                 </div>
+              </div>
+              <div class="tile-name">
+                <span v-if="!loading">
+                  {{ timeLeftTillVotingPeriodEnd }} -
+                </span>
+                {{ $t('index.untilVotingEnd') }}
               </div>
             </div>
           </div>
@@ -71,7 +77,8 @@
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'folder']" />
               </div>
-              <span class="counter">{{ head.level | bignum }}</span>
+              <b-skeleton v-if="loading"></b-skeleton>
+              <span v-else class="counter">{{ head.level | bignum }}</span>
               <span class="percentage"></span>
               <span class="tile-name">
                 {{ $t('index.blockHeight') }}
@@ -84,8 +91,8 @@
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'user']" />
               </div>
-
-              <span class="counter">
+              <b-skeleton v-if="loading"></b-skeleton>
+              <span v-else class="counter">
                 <router-link
                   v-if="head.bakerName || head.baker"
                   class="baker"
@@ -111,20 +118,23 @@
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'chart-bar']" />
               </div>
-              <span class="counter">
-                {{ price }}
-              </span>
-              <div v-if="info.price_24h_change > 0">
-                <span class="percentage green">
-                  <font-awesome-icon icon="caret-up" />
-                  {{ priceChange }}%
-                </span>
-              </div>
+              <b-skeleton v-if="loading"></b-skeleton>
               <div v-else>
-                <span class="percentage red">
-                  <font-awesome-icon icon="caret-down" />
-                  {{ priceChange }}%
+                <span class="counter">
+                  {{ price }}
                 </span>
+                <div v-if="info.price_24h_change > 0">
+                  <span class="percentage green">
+                    <font-awesome-icon icon="caret-up" />
+                    {{ priceChange }}%
+                  </span>
+                </div>
+                <div v-else>
+                  <span class="percentage red">
+                    <font-awesome-icon icon="caret-down" />
+                    {{ priceChange }}%
+                  </span>
+                </div>
               </div>
 
               <span class="tile-name">
@@ -138,7 +148,8 @@
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'bookmark']" />
               </div>
-              <span class="counter">
+              <b-skeleton v-if="loading"></b-skeleton>
+              <span v-else class="counter">
                 {{ tradingVol }}
               </span>
               <span class="percentage"></span>
@@ -153,7 +164,8 @@
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'gem']" />
               </div>
-              <span class="counter">
+              <b-skeleton v-if="loading"></b-skeleton>
+              <span v-else class="counter">
                 {{ marketCap }}
               </span>
               <span class="percentage"></span>
@@ -168,7 +180,8 @@
               <div class="tile-icon text-center">
                 <font-awesome-icon :icon="['far', 'hourglass']" />
               </div>
-              <span class="counter">
+              <b-skeleton v-if="loading"></b-skeleton>
+              <span v-else class="counter">
                 {{
                   (info.circulating_supply > 0
                     ? info.circulating_supply.toFixed()
@@ -366,6 +379,10 @@
         return this.currentCurrency === 'xtz'
           ? this.$helpers.formatUSD(this.info.market_cap)
           : this.$helpers.formatCurrency(this.info.market_cap, false);
+      },
+      loading() {
+        const { head, info } = this;
+        return Object.keys(head).length === 0 && Object.keys(info).length === 0;
       },
     },
     async created() {

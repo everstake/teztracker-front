@@ -10,29 +10,59 @@
           </b-card-header>
 
           <b-card-body>
-            <div class="progress-labels">
-              <div class="cycle-label mr-2">
-                {{ $tc('common.cycle', 1) }} - {{ head.metaCycle }}
-              </div>
-              <div class="tezos-label">Tezos {{ $_network }}</div>
-            </div>
-
-            <b-row>
-              <b-col>
-                <b-progress :value="cyclePercent" :max="100" class="mb-2" />
-              </b-col>
-            </b-row>
-
-            <b-row>
-              <b-col>
+            <b-skeleton-wrapper :loading="loading">
+              <template #loading>
                 <div class="progress-labels">
-                  <div class="percentage mr-2">{{ cyclePercent }}%</div>
-                  <div class="timer">
-                    {{ timeLeft }} - {{ $t('counters.untilEnd') }}
+                  <div class="cycle-label mr-2">
+                    <b-skeleton width="100px"></b-skeleton>
                   </div>
+                  <b-skeleton width="150px"></b-skeleton>
                 </div>
-              </b-col>
-            </b-row>
+      
+                <b-row>
+                  <b-col>
+                    <b-skeleton width="100%"></b-skeleton>
+                  </b-col>
+                </b-row>
+
+                <b-row>
+                  <b-col>
+                    <div class="progress-labels">
+                      <div class="percentage mr-2">
+                        <b-skeleton width="40px"></b-skeleton>
+                      </div>
+                      <div class="timer">
+                        <b-skeleton width="220px"></b-skeleton>
+                      </div>
+                    </div>
+                  </b-col>
+                </b-row>
+              </template>
+
+              <div class="progress-labels">
+                <div class="cycle-label mr-2">
+                  {{ $tc('common.cycle', 1) }} - {{ head.metaCycle }}
+                </div>
+                <div class="tezos-label">Tezos {{ $_network }}</div>
+              </div>
+
+              <b-row>
+                <b-col>
+                  <b-progress :value="cyclePercent" :max="100" class="mb-2" />
+                </b-col>
+              </b-row>
+
+              <b-row>
+                <b-col>
+                  <div class="progress-labels">
+                    <div class="percentage mr-2">{{ cyclePercent }}%</div>
+                    <div class="timer">
+                      {{ timeLeft }} - {{ $t('counters.untilEnd') }}
+                    </div>
+                  </div>
+                </b-col>
+              </b-row>
+            </b-skeleton-wrapper>
           </b-card-body>
         </b-card>
       </b-col>
@@ -48,6 +78,9 @@
   export default {
     name: 'CycleCounter',
     mixins: [network],
+    props: {
+      loading: Boolean,
+    },
     computed: {
       ...mapState('app', {
         info: (state) => state.priceInfo,

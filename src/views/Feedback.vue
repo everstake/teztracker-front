@@ -275,6 +275,7 @@
             this.feedback = { ...initialFeedbackVals };
           }
         } catch (e) {
+          // eslint-disable-next-line
           console.error(e);
         } finally {
           this.isSubmissionLoading = false;

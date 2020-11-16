@@ -37,7 +37,7 @@
                       class="transactions-table table table-borderless"
                       :empty-text="$t('common.noData')"
                     >
-                      <template slot="pkh" slot-scope="row">
+                      <template #cell(pkh)="row">
                         <span class="d-flex align-items-center">
                           <IdentIcon :seed="row.item.pkh" />
 
@@ -61,12 +61,10 @@
                           />
                         </span>
                       </template>
-
-                      <template slot="rolls" slot-scope="row">
+                      <template #cell(rolls)="row">
                         {{ row.item.rolls | formatInteger }}
                       </template>
-
-                      <template slot="blockLevel" slot-scope="row">
+                      <template #cell(blockLevel)="row">
                         <b-link
                           :to="{
                             name: 'block',
@@ -76,12 +74,10 @@
                           {{ row.item.blockLevel | formatInteger }}
                         </b-link>
                       </template>
-
-                      <template slot="proposal" slot-scope="row">
+                      <template #cell(proposal)="row">
                         <span>{{ row.item.proposal | longhash }}</span>
                       </template>
-
-                      <template slot="operation" slot-scope="row">
+                      <template #cell(operation)="row">
                         <span class="d-flex align-items-center">
                           <b-link
                             :to="{
@@ -95,8 +91,7 @@
                           <BtnCopy :text-to-copy="row.item.operation" />
                         </span>
                       </template>
-
-                      <template slot="timestamp" slot-scope="row">
+                      <template #cell(timestamp)="row">
                         {{ formatDate(row.item.timestamp) }}
                       </template>
                     </b-table>
@@ -137,7 +132,7 @@
                       class="transactions-table table table-borderless"
                       :empty-text="$t('common.noData')"
                     >
-                      <template slot="pkh" slot-scope="row">
+                      <template #cell(pkh)="row">
                         <span class="d-flex align-items-center">
                           <IdentIcon :seed="row.item.pkh" />
 
@@ -161,7 +156,7 @@
                           />
                         </span>
                       </template>
-                      <template slot="rolls" slot-scope="row">
+                      <template #cell(rolls)="row">
                         {{ row.item.rolls | formatInteger }}
                       </template>
                     </b-table>

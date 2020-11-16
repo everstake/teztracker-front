@@ -14,12 +14,12 @@
                   </h4>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="protocolsCount" />
+                  <Counter show-line :count="protocolsCount" :loading="loading" />
                 </template>
               </CardHeader>
 
               <b-card-body>
-                <ProtocolsList />
+                <ProtocolsList :loading="loading" @onLoading="handleLoading" />
               </b-card-body>
             </b-card>
           </b-col>
@@ -44,6 +44,11 @@
       ProtocolsList,
       Counter,
     },
+    data() {
+      return {
+        loading: false,
+      };
+    },
     computed: {
       ...mapState('period', {
         protocolsCount: (state) => state.counts.protocols,
@@ -56,6 +61,11 @@
             text: this.$t('pageTypes.protocolsPage'),
           },
         ];
+      },
+    },
+    methods: {
+      handleLoading(payload) {
+        this.loading = payload;
       },
     },
   };

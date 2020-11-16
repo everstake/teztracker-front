@@ -7,12 +7,22 @@
         </h4>
       </template>
       <template v-slot:right-content class="text">
-        <Counter show-line :count="count" />
+        <Counter show-line :count="count" :loading="loading" />
       </template>
     </CardHeader>
 
     <b-card-body>
+      <div v-if="loading" class="table-skeleton">
+        <b-skeleton-table
+          responsive
+          :rows="10"
+          :columns="3"
+          :table-props="{ borderless: true, responsive: true }"
+          animation="none"
+        />
+      </div>
       <BlocksTable
+        v-else
         :loading="loading"
         :limit="limit"
         :items="items"
@@ -22,7 +32,10 @@
       />
 
       <div class="blocks-card__actions">
-        <router-link class="blocks-card__link link fs-14" :to="{ name: 'blocks' }">
+        <router-link
+          class="blocks-card__link link fs-14"
+          :to="{ name: 'blocks' }"
+        >
           {{ $t('common.viewAll') }}
         </router-link>
       </div>
@@ -34,7 +47,6 @@
   import CardHeader from '../partials/CardHeader';
   import Counter from '../partials/Counter';
   import BlocksTable from '@/components/partials/tables/BlocksTable';
-  import reloadNavigationList from '@/mixins/reloadNavigationList';
 
   export default {
     name: 'BlocksCard',
@@ -43,7 +55,15 @@
       CardHeader,
       Counter,
     },
-    mixins: [reloadNavigationList],
+    data() {
+      return {
+        limit: 10,
+        items: [],
+        count: 0,
+        page: 1,
+        loading: true,
+      };
+    },
     computed: {
       fields() {
         if (!this.$i18n.locale) return [];
@@ -54,14 +74,18 @@
         ];
       },
     },
+    async created() {
+      await this.reload();
+    },
     methods: {
       async reload() {
         const { page, limit } = this;
         this.loading = true;
-        const data = await this.$api.getBlocks({ page, limit });
+        await this.$api.getBlocks({ page, limit }).then((data) => {
+          this.items = data.data;
+          this.count = data.count;
+        });
         this.loading = false;
-        this.items = data.data;
-        this.count = data.count;
       },
     },
   };
@@ -75,5 +99,9 @@
 
   .blocks-card__link {
     font-weight: bold;
+  }
+
+  .blocks-card >>> .table-skeleton tr {
+    height: 52px;
   }
 </style>

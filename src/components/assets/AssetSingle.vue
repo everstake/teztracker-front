@@ -1,87 +1,96 @@
 <template>
-  <b-row>
-    <b-col lg="12">
-      <b-card no-body>
-        <b-card-header>
-          <h3>
-            <span class="text">
-              <template v-if="account.name">
-                {{ account.name }}
-              </template>
-              <template v-else>
-                <span class="d-flex align-items-center">
-                  <IdentIcon :seed="hash" />
-                  {{ hash }}
-                  <BtnCopy :text-to-copy="hash" />
-                </span>
-              </template>
-            </span>
-          </h3>
-          <div class="subtitle">
-            {{ $t('infoTypes.assetInfo') }}
-          </div>
-        </b-card-header>
+  <div class="asset-single">
+    <b-row>
+      <b-col lg="12">
+        <b-card no-body>
+          <b-card-header>
+            <h3>
+              <span class="text">
+                <IdentIcon :seed="hash" />
 
-        <div class="card-divider"></div>
+                <template v-if="account.name">
+                  {{ account.name }}
+                </template>
+                <template v-else>
+                  <span class="text-break">
+                    {{ hash }}
+                    <BtnCopy :text-to-copy="hash" />
+                  </span>
+                </template>
+              </span>
+            </h3>
+            <div class="subtitle">
+              {{ $t('infoTypes.assetInfo') }}
+            </div>
+          </b-card-header>
 
-        <b-card-body>
-          <b-container fluid>
-            <b-row>
-              <b-col class="card__no-padding" lg="6">
-                <span class="text-accent">
-                  {{ $t('infoTypes.generalInfo') }}
-                </span>
+          <div class="card-divider"></div>
 
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t('bakerSingle.address') }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">
-                    <span class="d-flex align-items-center text-break">
-                      <IdentIcon :seed="hash" />
-                      {{ hash }}
-                      <BtnCopy :text-to-copy="hash" />
-                    </span>
-                  </b-col>
-                </b-row>
+          <b-card-body>
+            <b-container fluid>
+              <b-row>
+                <b-col class="card__no-padding" lg="6">
+                  <span class="text-accent">
+                    {{ $t('infoTypes.generalInfo') }}
+                  </span>
 
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t('accSingle.created') }}
-                  </b-col>
-                  <b-col lg="8" class="text-accent">
-                    {{ account.created_at | timeformat(dateFormat) }}
-                  </b-col>
-                </b-row>
-              </b-col>
+                  <b-row class="item-info">
+                    <b-col lg="4" class="label">
+                      {{ $t('bakerSingle.address') }}
+                    </b-col>
+                    <b-col lg="8" class="text-accent">
+                      <b-skeleton v-if="loading"></b-skeleton>
+                      <span v-else class="d-flex align-items-center text-break">
+                        {{ hash }}
+                        <BtnCopy :text-to-copy="hash" />
+                      </span>
+                    </b-col>
+                  </b-row>
 
-              <b-col class="p-0 px-lg-3" lg="6">
-                <span class="text-accent">
-                  {{ $t('bakerSingle.balances') }}
-                </span>
+                  <b-row class="item-info">
+                    <b-col lg="4" class="label">
+                      {{ $t('accSingle.created') }}
+                    </b-col>
+                    <b-col lg="8" class="text-accent">
+                      <b-skeleton v-if="loading"></b-skeleton>
+                      <span v-else>{{
+                        account.created_at | timeformat(dateFormat)
+                      }}</span>
+                    </b-col>
+                  </b-row>
+                </b-col>
 
-                <b-row class="item-info">
-                  <b-col lg="4" class="label">
-                    {{ $t('common.balance') }}
-                  </b-col>
+                <b-col class="p-0 px-lg-3" lg="6">
+                  <span class="text-accent">
+                    {{ $t('bakerSingle.balances') }}
+                  </span>
 
-                  <b-col lg="6" class="text-accent">
-                    {{
-                      account.balance
-                        | currencyPrecision(
-                          getAssetCurrency(account.name),
-                          account.precision,
-                        )
-                    }}
-                  </b-col>
-                </b-row>
-              </b-col>
-            </b-row>
-          </b-container>
-        </b-card-body>
-      </b-card>
-    </b-col>
-  </b-row>
+                  <b-row class="item-info">
+                    <b-col lg="4" class="label">
+                      {{ $t('common.balance') }}
+                    </b-col>
+
+                    <b-col lg="6" class="text-accent">
+                      <b-skeleton v-if="loading"></b-skeleton>
+                      <span v-else>
+                        {{
+                          account.balance
+                            | currencyPrecision(
+                              getAssetCurrency(account.name),
+                              account.precision,
+                            )
+                        }}
+                      </span>
+                    </b-col>
+                  </b-row>
+                </b-col>
+              </b-row>
+            </b-container>
+          </b-card-body>
+        </b-card>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
@@ -107,6 +116,7 @@
       return {
         bakerInfo: {},
         account: {},
+        loading: true,
       };
     },
     computed: {
@@ -127,19 +137,20 @@
     },
     methods: {
       async reload(acc) {
-        const result = await this.$api.getAssetsById({ asset_id: acc });
-        if (result.status !== this.$constants.STATUS_SUCCESS) {
-          return this.$router.replace({
-            name: result.status,
-          });
-        }
-        this.account = result.data;
-        if (result.data.bakerInfo) {
-          this.bakerInfo = result.data.bakerInfo;
-          this.baker = true;
-        } else {
-          this.baker = false;
-        }
+        this.loading = true;
+        await this.$api
+          .getAssetsById({ asset_id: acc })
+          .then((data) => {
+            this.account = data.data;
+            if (data.data.bakerInfo) {
+              this.bakerInfo = data.data.bakerInfo;
+              this.baker = true;
+            } else {
+              this.baker = false;
+            }
+          })
+          .catch(() => {});
+        this.loading = false;
       },
       getAssetCurrency(asset) {
         if (!asset) return 'ꜩ';
@@ -166,3 +177,9 @@
     },
   };
 </script>
+
+<style scoped lang="scss">
+  .asset-single__skeleton {
+    width: 200px;
+  }
+</style>

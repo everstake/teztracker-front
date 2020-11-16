@@ -1,5 +1,6 @@
 <template>
-  <b-row>
+  <div class="baker-single">
+    <b-row>
     <b-col lg="12">
       <b-card no-body>
         <b-card-header>
@@ -39,7 +40,8 @@
                     {{ $t('bakerSingle.address') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    <span class="hash">
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else class="hash">
                       {{ hash }}
                       <BtnCopy :text-to-copy="hash" />
                     </span>
@@ -50,7 +52,8 @@
                     {{ $t('common.fee') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.fee | addPercent }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ bakerInfo.fee | addPercent }}</span>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -58,7 +61,8 @@
                     {{ $t('common.bakingSince') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.bakingSince | timeformat(dateFormat) }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ bakerInfo.bakingSince | timeformat(dateFormat) }}</span>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -66,7 +70,8 @@
                     {{ $t('common.rolls') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.rolls }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ bakerInfo.rolls }}</span>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -74,7 +79,8 @@
                     {{ $t('bakerSingle.blocksBaked') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.blocks }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ bakerInfo.blocks }}</span>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -82,7 +88,8 @@
                     {{ $t('numberOf.#OfDelegators') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.activeDelegators }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ bakerInfo.activeDelegators }}</span>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -90,7 +97,8 @@
                     {{ $t('numberOf.#OfEndorsements') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.endorsements }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ bakerInfo.endorsements }}</span>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -98,10 +106,13 @@
                     {{ $t('common.capacityAvailable') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>
+                      {{
                       (bakerInfo.stakingCapacity - bakerInfo.stakingBalance)
                         | denominate
                     }}
+                    </span>
                   </b-col>
                 </b-row>
               </b-col>
@@ -116,7 +127,8 @@
                     {{ $t('bakerSingle.totalBal') }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
-                    {{ bakerInfo.evaluatedBalance | denominate }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ bakerInfo.evaluatedBalance | denominate }}</span>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -124,7 +136,8 @@
                     {{ $t('bakerSingle.liquidBal') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ account.balance | denominate }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ account.balance | denominate }}</span>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -132,7 +145,8 @@
                     {{ $t('common.delegatedBal') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.stakingBalance | denominate }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ bakerInfo.stakingBalance | denominate }}</span>
                   </b-col>
                 </b-row>
 
@@ -145,7 +159,8 @@
                     {{ $t('common.baking') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.bakingDeposits | denominate }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ bakerInfo.bakingDeposits | denominate }}</span>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -153,7 +168,8 @@
                     {{ $t('bakerSingle.endorsement') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.endorsementDeposits | denominate }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ bakerInfo.endorsementDeposits | denominate }}</span>
                   </b-col>
                 </b-row>
 
@@ -166,7 +182,8 @@
                     {{ $t('common.baking') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.bakingRewards | denominate }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ bakerInfo.bakingRewards | denominate }}</span>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -174,7 +191,8 @@
                     {{ $t('bakerSingle.endorsement') }}
                   </b-col>
                   <b-col lg="8" class="text-accent">
-                    {{ bakerInfo.endorsementRewards | denominate }}
+                    <b-skeleton v-if="loading"></b-skeleton>
+                    <span v-else>{{ bakerInfo.endorsementRewards | denominate }}</span>
                   </b-col>
                 </b-row>
               </b-col>
@@ -184,6 +202,7 @@
       </b-card>
     </b-col>
   </b-row>
+  </div>
 </template>
 
 <script>
@@ -211,6 +230,7 @@
       return {
         bakerInfo: {},
         account: {},
+        loading: false,
       };
     },
     computed: {
@@ -231,6 +251,7 @@
     },
     methods: {
       async reload(acc) {
+        this.loading = true;
         const result = await this.$api.getAccount({ account: acc });
         if (result.status !== this.$constants.STATUS_SUCCESS) {
           return this.$router.replace({
@@ -244,6 +265,7 @@
         } else {
           this.baker = false;
         }
+        this.loading = false;
       },
     },
   };

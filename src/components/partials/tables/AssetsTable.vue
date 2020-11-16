@@ -8,7 +8,7 @@
     borderless
     class="transactions-table table-responsive-md"
   >
-    <template slot="account_id" slot-scope="row">
+    <template #cell(account_id)="row">
       <router-link
         :to="{ name: 'asset', params: { id: row.item.account_id } }"
       >
@@ -18,7 +18,7 @@
         <span v-else>{{ row.item.account_id | longhash }}</span>
       </router-link>
     </template>
-    <template slot="manager" slot-scope="row">
+    <template #cell(manager)="row">
         <span v-if="row.item.manager" class="d-flex align-items-center">
           <IdentIcon :seed="row.item.manager" />
 
@@ -32,17 +32,17 @@
         </span>
       <NoDataTableCell v-else />
     </template>
-    <template slot="name" slot-scope="row">
+    <template #cell(name)="row">
       <span v-if="row.item.name">{{ row.item.name }}</span>
       <NoDataTableCell v-else />
     </template>
-    <template slot="balance" slot-scope="row">
+    <template #cell(balance)="row">
         <span>{{
           row.item.balance
             | tezos(getAssetCurrency(row.item.name), row.item.precision)
         }}</span>
     </template>
-    <template slot="created_at" slot-scope="row">
+    <template #cell(created_at)="row">
       <span>{{ row.item.created_at | timeformat(dateFormat) }}</span>
     </template>
   </b-table>

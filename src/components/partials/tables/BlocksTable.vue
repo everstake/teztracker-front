@@ -10,15 +10,15 @@
     class="transactions-table"
     :empty-text="$t('common.noData')"
   >
-    <template slot="level" slot-scope="row">
+    <template #cell(level)="row">
       <b-link :to="{ name: 'block', params: { level: row.item.level } }">
         {{ row.item.level | formatInteger }}
       </b-link>
     </template>
-    <template slot="timestamp" slot-scope="row">
+    <template #cell(timestamp)="row">
       {{ row.item.timestamp | timeformat(dateFormat) }}
     </template>
-    <template slot="baker" slot-scope="row">
+    <template #cell(baker)="row">
       <span class="d-flex align-items-center">
         <IdentIcon :seed="row.item.baker" />
 
@@ -34,16 +34,16 @@
         <BtnCopy v-if="!row.item.bakerName" :text-to-copy="row.item.baker" />
       </span>
     </template>
-    <template slot="number_of_operations" slot-scope="row">
+    <template #cell(number_of_operations)="row">
       {{ row.item.number_of_operations | formatInteger }}
     </template>
-    <template slot="volume" slot-scope="row">
+    <template #cell(volume)="row">
       {{ row.item.volume | denominate }}
     </template>
-    <template slot="fees" slot-scope="row">
+    <template #cell(fees)="row">
       {{ row.item.fees | denominate }}
     </template>
-    <template slot="endorsements" slot-scope="row">
+    <template #cell(endorsements)="row">
       {{ row.item.endorsements | formatInteger }}
     </template>
   </b-table>

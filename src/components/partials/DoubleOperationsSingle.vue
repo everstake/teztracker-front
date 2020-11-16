@@ -33,7 +33,9 @@
                     $t('common.includedInBlock')
                   }}</b-col>
                   <b-col lg="7" class="text-accent value">
+                    <b-skeleton v-if="!loaded" />
                     <router-link
+                      v-else
                       class="color-accent"
                       :to="{
                         name: 'block',
@@ -49,8 +51,11 @@
                     {{ $t('hashTypes.opHash') }}
                   </b-col>
                   <b-col lg="7" class="text-accent">
-                    {{ props.operationGroupHash }}
-                    <BtnCopy :text-to-copy="props.operationGroupHash" />
+                    <b-skeleton v-if="!loaded" />
+                    <div v-else>
+                      {{ props.operationGroupHash }}
+                      <BtnCopy :text-to-copy="props.operationGroupHash" />
+                    </div>
                   </b-col>
                 </b-row>
                 <b-row class="item-info">
@@ -58,11 +63,9 @@
                     {{ $t('dblBakingList.accuser') }}
                   </b-col>
                   <b-col lg="7" class="text-accent">
-                    <span>
-                      {{
-                        props.doubleOperationDetails.evidence_baker_name ||
-                          props.doubleOperationDetails.evidence_baker
-                      }}
+                    <b-skeleton v-if="!loaded" />
+                    <span v-else>
+                      {{ props.doubleOperationDetails.evidence_baker_name || props.doubleOperationDetails.evidence_baker}}
                     </span>
                   </b-col>
                 </b-row>
@@ -71,7 +74,8 @@
                     {{ $tc('common.cycle', 1) }}
                   </b-col>
                   <b-col lg="7" class="text-accent">
-                    <span>
+                    <b-skeleton v-if="!loaded" />
+                    <span v-else>
                       {{ props.cycle }}
                     </span>
                   </b-col>
@@ -81,7 +85,8 @@
                     {{ $t('common.timestamp') }}
                   </b-col>
                   <b-col lg="7" class="value">
-                    {{ props.timestamp | timeformat(dateFormat) }}
+                    <b-skeleton v-if="!loaded" />
+                    <span v-else>{{ props.timestamp | timeformat(dateFormat) }}</span>
                   </b-col>
                 </b-row>
               </b-col>
@@ -92,10 +97,8 @@
                     {{ $t('dblBakingList.offender') }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
-                    {{
-                      props.doubleOperationDetails.offender_name ||
-                        props.doubleOperationDetails.offender
-                    }}
+                    <b-skeleton v-if="!loaded" />
+                    <span v-else>{{ props.doubleOperationDetails.offender_name || props.doubleOperationDetails.offender }}</span>
                   </b-col>
                 </b-row>
 
@@ -104,7 +107,8 @@
                     {{ $t('common.denouncedLvl') }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
-                    {{ props.doubleOperationDetails.denounced_level }}
+                    <b-skeleton v-if="!loaded" />
+                    <span v-else>{{ props.doubleOperationDetails.denounced_level }}</span>
                   </b-col>
                 </b-row>
 
@@ -113,9 +117,8 @@
                     {{ $t('dblBakingList.lostDeposits') }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
-                    {{
-                      props.doubleOperationDetails.lost_deposits | denominate
-                    }}
+                    <b-skeleton v-if="!loaded" />
+                    <span v-else>{{ props.doubleOperationDetails.lost_deposits | denominate }}</span>
                   </b-col>
                 </b-row>
 
@@ -124,7 +127,8 @@
                     {{ $t('dblBakingList.lostRewards') }}
                   </b-col>
                   <b-col lg="6" class="text-accent">
-                    {{ props.doubleOperationDetails.lost_rewards | denominate }}
+                    <b-skeleton v-if="!loaded" />
+                    <span v-else>{{ props.doubleOperationDetails.lost_rewards | denominate }}</span>
                   </b-col>
                 </b-row>
 
@@ -133,7 +137,8 @@
                     $t('dblBakingList.accuserRewards')
                   }}</b-col>
                   <b-col lg="7" class="text-accent">
-                    {{ props.doubleOperationDetails.baker_reward | denominate }}
+                    <b-skeleton v-if="!loaded" />
+                    <span v-else>{{ props.doubleOperationDetails.baker_reward | denominate }}</span>
                   </b-col>
                 </b-row>
 
@@ -142,7 +147,8 @@
                     {{ $t('txSingle.confirmations') }}
                   </b-col>
                   <b-col lg="7" class="value">
-                    {{ props.confirmations | formatInteger }}
+                    <b-skeleton v-if="!loaded" />
+                    <span v-else>{{ props.confirmations | formatInteger }}</span>
                   </b-col>
                 </b-row>
               </b-col>
@@ -163,7 +169,7 @@
     components: {
       BtnCopy,
     },
-    props: ['props'],
+    props: ['props', 'loaded'],
     computed: {
       ...mapState('app', {
         dateFormat: (state) => state.dateFormat,

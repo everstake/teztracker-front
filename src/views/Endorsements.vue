@@ -14,7 +14,7 @@
                   </h4>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count" />
+                  <Counter show-line :count="count" :loading="loading" />
                 </template>
               </CardHeader>
 
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import { mapMutations, mapState } from 'vuex';
+  import { mapMutations } from 'vuex';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import EndorsementsList from '../components/endorsements/EndorsementsList';
   import CardHeader from '../components/partials/CardHeader';

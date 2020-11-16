@@ -68,6 +68,7 @@
 
           this.bakerMeta = res.data;
         } catch (e) {
+          // eslint-disable-next-line
           console.error(e);
         }
       },

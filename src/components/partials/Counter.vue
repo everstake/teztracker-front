@@ -1,7 +1,8 @@
 <template>
   <div class="counter">
-    <div v-if="showLine" class="counter__line"></div>
-    <div class="counter__text">
+    <b-skeleton width="60px" height="30px" v-if="loading" />
+    <div v-else class="counter__text">
+      <div v-if="showLine" class="counter__line"></div>
       <h3>{{ count | bignum }}</h3>
     </div>
   </div>
@@ -19,6 +20,7 @@
         type: Boolean,
         default: false,
       },
+      loading: Boolean,
     },
   };
 </script>

@@ -10,13 +10,12 @@
     class="transactions-table"
     :empty-text="$t('common.noData')"
   >
-    <template slot="block" slot-scope="row">
+    <template #cell(block)="row">
       <b-link :to="{ name: 'block', params: { level: row.item.level } }">
         {{ row.item.level | formatInteger }}
       </b-link>
     </template>
-    
-    <template slot="txhash" slot-scope="row">
+    <template #cell(txhash)="row">
         <span class="d-flex align-items-center">
           <b-link
             :to="{
@@ -30,14 +29,12 @@
           <BtnCopy :text-to-copy="row.item.operationGroupHash" />
         </span>
     </template>
-    
-    <template slot="blockLevel" slot-scope="row">
+    <template #cell(blockLevel)="row">
       <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
         {{ row.item.blockLevel | formatInteger }}
       </b-link>
     </template>
-    
-    <template slot="endorser" slot-scope="row">
+    <template #cell(endorser)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.delegate" />
 
@@ -56,18 +53,15 @@
           />
         </span>
     </template>
-    
-    <template slot="level" slot-scope="row">
+    <template #cell(level)="row">
       <b-link :to="{ name: 'block', params: { level: row.item.level } }">
         {{ row.item.level | formatInteger }}
       </b-link>
     </template>
-    
-    <template slot="slots" slot-scope="row">
+    <template #cell(slots)="row">
       {{ row.item.slots }}
     </template>
-    
-    <template slot="timestamp" slot-scope="row">
+    <template #cell(timestamp)="row">
       {{ row.item.timestamp | timeformat(dateFormat) }}
     </template>
   </b-table>

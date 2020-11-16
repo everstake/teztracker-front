@@ -11,7 +11,7 @@
     :tbody-tr-class="$_defineRowClass"
     :empty-text="$t('common.noData')"
   >
-    <template slot="txhash" slot-scope="row">
+    <template #cell(txhash)="row">
       <span class="d-flex align-items-center">
         <b-link
           :to="{
@@ -26,17 +26,17 @@
       </span>
     </template>
 
-    <template slot="level" slot-scope="row">
+    <template #cell(level)="row">
       <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
         {{ row.item.blockLevel | formatInteger }}
       </b-link>
     </template>
 
-    <template slot="timestamp" slot-scope="row">
+    <template #cell(timestamp)="row">
       {{ row.item.timestamp | timeformat(dateFormat) }}
     </template>
 
-    <template slot="from" slot-scope="row">
+    <template #cell(from)="row">
       <span class="d-flex align-items-center">
         <IdentIcon :seed="row.item.source" />
 
@@ -53,7 +53,7 @@
       </span>
     </template>
 
-    <template slot="to" slot-scope="row">
+    <template #cell(to)="row">
       <span
         v-if="row.item.delegateName || row.item.delegate"
         class="d-flex align-items-center"
@@ -79,7 +79,7 @@
 
       <NoDataTableCell v-else />
     </template>
-    <template slot="amount" slot-scope="row">
+    <template #cell(amount)="row">
       {{ row.item.balance | denominate }}
     </template>
   </b-table>

@@ -1121,3 +1121,7 @@ span a.baker,
   user-select: none;
   background-color: #e0efec;
 }
+
+.list .table-skeleton tr td {
+  min-width: 80px;
+}
