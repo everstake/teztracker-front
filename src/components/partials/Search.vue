@@ -281,9 +281,11 @@
         const { searchQuery } = this;
 
         if (publicBakersSearch && publicBakersSearch.length > 0) {
-          return publicBakersSearch.filter(({ name }) => {
-            return name.toLowerCase().includes(searchQuery.toLowerCase());
-          });
+          return publicBakersSearch
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .filter(({ name }) => {
+              return name.toLowerCase().includes(searchQuery.toLowerCase());
+            });
         } else {
           return [];
         }
