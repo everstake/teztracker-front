@@ -1,7 +1,7 @@
 <template>
   <div class="list txs-list">
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect @per-page="$_setPerPage" />
+      <LimitSelect :limit="perPage" :loading="loading" @per-page="$_setPerPage" />
     </div>
 
     <div v-if="loading && protocols.length === 0" class="table-skeleton">
@@ -50,15 +50,15 @@
 <script>
   import { mapMutations, mapState } from 'vuex';
   import { SET_PROTOCOLS_COUNT } from '@/store/mutations.types';
-  import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
+  import LimitSelect from '@/components/partials/LimitSelect';
 
   export default {
     name: 'ProtocolsList',
     components: {
-      PerPageSelect,
+      LimitSelect,
       Pagination,
     },
     mixins: [handleCurrentPageChange, setPerPage],
