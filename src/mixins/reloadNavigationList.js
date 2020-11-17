@@ -10,7 +10,7 @@ export default {
     };
   },
   async beforeRouteUpdate(to, from, next) {
-    await this.executeReload(Number(to.params.page));
+    await this.executeReload(to.params.page);
     next();
   },
   async created() {
@@ -74,8 +74,11 @@ export default {
     async executeReload(pageBeforeRouteUpdate) {
       this.loading = true;
       if (pageBeforeRouteUpdate) {
-        this.page = pageBeforeRouteUpdate;
+        this.page = Number(pageBeforeRouteUpdate);
+      } else {
+        this.page = this.$constants.INITIAL_CURRENT_PAGE;
       }
+
       await this.reload();
       this.loading = false;
     },
