@@ -45,6 +45,7 @@
   import Counter from '../components/partials/Counter';
   import { SET_ENDORSEMENTS_COUNT } from '@/store/mutations.types';
   import reloadNavigationList from '@/mixins/reloadNavigationList';
+  import wsListHandler from '@/mixins/wsListsHandler';
 
   export default {
     name: 'Endorsements',
@@ -54,7 +55,13 @@
       CardHeader,
       Counter,
     },
-    mixins: [reloadNavigationList],
+    mixins: [reloadNavigationList, wsListHandler],
+    data() {
+      return {
+        // Expected in wsListHandler.js mixin
+        subscriptionChannel: 'endorsements',
+      };
+    },
     computed: {
       crumbs() {
         return [

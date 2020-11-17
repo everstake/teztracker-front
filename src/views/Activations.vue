@@ -48,6 +48,7 @@
   import Counter from '../components/partials/Counter';
   import { SET_ACTIVATIONS_COUNT } from '@/store/mutations.types';
   import reloadNavigationList from '@/mixins/reloadNavigationList';
+  import wsListHandler from '@/mixins/wsListsHandler';
 
   export default {
     name: 'Activations',
@@ -58,7 +59,13 @@
       CardHeader,
       Counter,
     },
-    mixins: [reloadNavigationList],
+    mixins: [reloadNavigationList, wsListHandler],
+    data() {
+      return {
+        // Expected in wsListHandler.js mixin
+        subscriptionChannel: 'activations',
+      };
+    },
     computed: {
       crumbs() {
         return [

@@ -45,6 +45,7 @@
   import Counter from '../components/partials/Counter';
   import { SET_CONTRACTS } from '@/store/mutations.types';
   import reloadNavigationList from '@/mixins/reloadNavigationList';
+  import wsListsHandler from '@/mixins/wsListsHandler';
 
   export default {
     name: 'Contracts',
@@ -54,7 +55,13 @@
       Counter,
       CardHeader,
     },
-    mixins: [reloadNavigationList],
+    mixins: [reloadNavigationList, wsListsHandler],
+    data() {
+      return {
+        // Expected in wsListHandler.js mixin
+        subscriptionChannel: 'contracts',
+      };
+    },
     computed: {
       crumbs() {
         return [

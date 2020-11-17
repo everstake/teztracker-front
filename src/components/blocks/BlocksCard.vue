@@ -52,6 +52,7 @@
   import Counter from '../partials/Counter';
   import BlocksTable from '@/components/partials/tables/BlocksTable';
   import IconTooltip from '@/components/partials/IconTooltip';
+  import wsListsHandler from '@/mixins/wsListsHandler';
 
   export default {
     name: 'BlocksCard',
@@ -61,6 +62,7 @@
       Counter,
       IconTooltip,
     },
+    mixins: [wsListsHandler],
     data() {
       return {
         limit: 10,
@@ -68,6 +70,8 @@
         count: 0,
         page: 1,
         loading: true,
+        // Expected in wsListHandler.js mixin
+        subscriptionChannel: 'blocks',
       };
     },
     computed: {
