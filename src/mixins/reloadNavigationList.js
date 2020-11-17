@@ -71,11 +71,12 @@ export default {
         this.limit = Number(limit);
       }
     },
-    async executeReload(pageBeforeRouteUpdate) {
+    async executeReload(pageBeforeRouteUpdate = null) {
       this.loading = true;
+
       if (pageBeforeRouteUpdate) {
         this.page = Number(pageBeforeRouteUpdate);
-      } else {
+      } else if (pageBeforeRouteUpdate === undefined) {
         this.page = this.$constants.INITIAL_CURRENT_PAGE;
       }
 
