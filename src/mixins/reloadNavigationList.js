@@ -10,8 +10,16 @@ export default {
     };
   },
   async beforeRouteUpdate(to, from, next) {
-    await this.executeReload(to.params.page);
-    next();
+    const pageNotDefined = to.params.page === undefined;
+    const { INITIAL_CURRENT_PAGE } = this.$constants;
+
+    if (pageNotDefined) {
+      await this.executeReload(INITIAL_CURRENT_PAGE);
+      next();
+    } else {
+      await this.executeReload(to.params.page);
+      next();
+    }
   },
   async created() {
     const { INITIAL_CURRENT_PAGE, PER_PAGE, PER_PAGE_SNAPSHOTS } = this.$constants;
@@ -71,13 +79,11 @@ export default {
         this.limit = Number(limit);
       }
     },
-    async executeReload(pageBeforeRouteUpdate = null) {
+    async executeReload(pageBeforeRouteUpdate) {
       this.loading = true;
 
       if (pageBeforeRouteUpdate) {
         this.page = Number(pageBeforeRouteUpdate);
-      } else if (pageBeforeRouteUpdate === undefined) {
-        this.page = this.$constants.INITIAL_CURRENT_PAGE;
       }
 
       await this.reload();
