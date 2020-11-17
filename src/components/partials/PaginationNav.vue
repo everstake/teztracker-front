@@ -45,8 +45,6 @@
       generateLinks(page) {
         const { limit } = this;
         const { name } = this.$route;
-        const pageNotDefault =
-          this.$constants.INITIAL_CURRENT_PAGE !== page ? page : undefined;
         const limitNotDefault =
           this.$constants.PER_PAGE !== limit &&
           this.$constants.PER_PAGE_SNAPSHOTS !== limit
@@ -56,7 +54,7 @@
         return {
           name,
           params: {
-            page: pageNotDefault,
+            page,
           },
           query: {
             limit: limitNotDefault,
