@@ -29,7 +29,7 @@
           :reward="txInfo.reward"
           :claimed-amount="txInfo.claimedAmount"
         />
-        <DoubleOperationsSingle v-else-if="dataFetched" :props="txInfo" />
+        <DoubleOperationsSingle v-else-if="dataFetched" :loaded="dataFetched" :props="txInfo" />
       </b-container>
     </section>
 

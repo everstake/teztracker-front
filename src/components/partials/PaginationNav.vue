@@ -6,13 +6,14 @@
     }"
   >
     <b-pagination-nav
-      v-model="pageModel"
+      :value="page"
       :limit="3"
       :number-of-pages="numberOfPages"
       :link-gen="generateLinks"
       use-router
       no-page-detect
       hide-goto-end-buttons
+      @page-click.prevent="() => {}"
     />
   </div>
 </template>
@@ -27,14 +28,6 @@
       loading: Boolean,
     },
     computed: {
-      pageModel: {
-        get() {
-          return this.page;
-        },
-        set(page) {
-          this.$emit('onPageChange', page);
-        },
-      },
       numberOfPages() {
         const propsNotReady = !this.propsReady;
 
