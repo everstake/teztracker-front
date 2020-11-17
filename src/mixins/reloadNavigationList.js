@@ -10,14 +10,13 @@ export default {
     };
   },
   async beforeRouteUpdate(to, from, next) {
-    const pageNotDefined = to.params.page === undefined;
-    const { INITIAL_CURRENT_PAGE } = this.$constants;
+    const pageNotDefined = this.page === null;
 
     if (pageNotDefined) {
-      await this.executeReload(INITIAL_CURRENT_PAGE);
       next();
     } else {
-      await this.executeReload(to.params.page);
+      const { page } = to.params;
+      await this.executeReload(page);
       next();
     }
   },
@@ -108,7 +107,7 @@ export default {
           : undefined;
       const route = {
         name: routeName,
-        params: { ...params, page: undefined },
+        params: { ...params, page: limitNotDefault ? 1 : undefined },
         query: { ...query, limit: limitNotDefault },
       };
       this.$router.replace(route);
