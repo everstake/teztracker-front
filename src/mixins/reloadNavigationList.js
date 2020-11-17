@@ -9,6 +9,10 @@ export default {
       loading: false,
     };
   },
+  async beforeRouteUpdate(to, from, next) {
+    await this.executeReload(Number(to.params.page));
+    next();
+  },
   async created() {
     const { INITIAL_CURRENT_PAGE, PER_PAGE, PER_PAGE_SNAPSHOTS } = this.$constants;
     const { name: routeName, params, query, params: { page: routePage }, query: { limit: routeLimit } } = this.$route;
@@ -67,8 +71,11 @@ export default {
         this.limit = Number(limit);
       }
     },
-    async executeReload() {
+    async executeReload(pageBeforeRouteUpdate) {
       this.loading = true;
+      if (pageBeforeRouteUpdate) {
+        this.page = pageBeforeRouteUpdate;
+      }
       await this.reload();
       this.loading = false;
     },
@@ -102,7 +109,6 @@ export default {
     async handlePageChange(page) {
       if (page !== this.page) {
         this.updatePage(page);
-        await this.executeReload();
       }
     },
   },
