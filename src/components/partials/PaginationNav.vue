@@ -43,13 +43,15 @@
     },
     methods: {
       generateLinks(page) {
-        const { limit } = this;
-        const { name } = this.$route;
-        const limitNotDefault =
-          this.$constants.PER_PAGE !== limit &&
-          this.$constants.PER_PAGE_SNAPSHOTS !== limit
-            ? limit
-            : undefined;
+        const {
+          limit,
+          $route: { name },
+          $constants: { PER_PAGE, PER_PAGE_SNAPSHOTS },
+        } = this;
+
+        const limitDefault =
+          limit === PER_PAGE ||
+          limit === PER_PAGE_SNAPSHOTS;
 
         return {
           name,
@@ -57,7 +59,7 @@
             page,
           },
           query: {
-            limit: limitNotDefault,
+            limit: limitDefault ? undefined : limit,
           },
         };
       },
