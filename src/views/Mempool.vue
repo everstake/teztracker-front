@@ -16,7 +16,17 @@
               </CardHeader>
 
               <b-card-body>
-                <MempoolTable :items="itemsPrepared" />
+                <div v-if="loading && items.length === 0" class="table-skeleton">
+                  <b-skeleton-table
+                    responsive
+                    :rows="10"
+                    :columns="5"
+                    :table-props="{ borderless: true, responsive: true }"
+                    animation="none"
+                    class="table-skeleton"
+                  />
+                </div>
+                <MempoolTable v-else :items="itemsPrepared" />
               </b-card-body>
             </b-card>
           </b-col>
@@ -41,6 +51,7 @@
     data() {
       return {
         items: [],
+        loading: false,
       };
     },
     computed: {
@@ -64,12 +75,14 @@
     },
     methods: {
       async reload() {
-        this.$api
+        this.loading = true;
+        await this.$api
           .getMempool()
           .then((data) => {
             this.items = data.data;
           })
           .catch(() => {});
+        this.loading = false;
       },
     },
   };

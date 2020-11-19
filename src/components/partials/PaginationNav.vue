@@ -6,13 +6,14 @@
     }"
   >
     <b-pagination-nav
-      v-model="pageModel"
+      :value="page"
       :limit="3"
       :number-of-pages="numberOfPages"
       :link-gen="generateLinks"
       use-router
       no-page-detect
       hide-goto-end-buttons
+      @page-click.prevent="() => {}"
     />
   </div>
 </template>
@@ -27,14 +28,6 @@
       loading: Boolean,
     },
     computed: {
-      pageModel: {
-        get() {
-          return this.page;
-        },
-        set(page) {
-          this.$emit('onPageChange', page);
-        },
-      },
       numberOfPages() {
         const propsNotReady = !this.propsReady;
 
@@ -50,23 +43,23 @@
     },
     methods: {
       generateLinks(page) {
-        const { limit } = this;
-        const { name } = this.$route;
-        const pageNotDefault =
-          this.$constants.INITIAL_CURRENT_PAGE !== page ? page : undefined;
-        const limitNotDefault =
-          this.$constants.PER_PAGE !== limit &&
-          this.$constants.PER_PAGE_SNAPSHOTS !== limit
-            ? limit
-            : undefined;
+        const {
+          limit,
+          $route: { name },
+          $constants: { PER_PAGE, PER_PAGE_SNAPSHOTS },
+        } = this;
+
+        const limitDefault =
+          limit === PER_PAGE ||
+          limit === PER_PAGE_SNAPSHOTS;
 
         return {
           name,
           params: {
-            page: pageNotDefault,
+            page,
           },
           query: {
-            limit: limitNotDefault,
+            limit: limitDefault ? undefined : limit,
           },
         };
       },

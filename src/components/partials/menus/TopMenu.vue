@@ -177,9 +177,9 @@
             :disabled="!networkChangable"
           >
             <b-dropdown-item
-              v-for="network in networkList"
+              v-for="(network, index) in networkList"
               class="pointer"
-              :key="generateKey()"
+              :key="index + generateKey()"
               @click="changeRouteNetwork(network)"
             >
               {{ $t(`nets.${network}`) }}

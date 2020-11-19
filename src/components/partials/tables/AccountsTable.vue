@@ -10,7 +10,7 @@
     class="transactions-table"
     :empty-text="$t('common.noData')"
   >
-    <template slot="accountId" slot-scope="row">
+    <template #cell(accountId)="row">
       <span v-if="row.item.is_baker" class="d-flex align-items-center">
         <b-link
           v-if="row.item.is_baker"
@@ -49,13 +49,13 @@
         />
       </span>
     </template>
-    <template slot="balance" slot-scope="row">
+    <template #cell(balance)="row">
       <span>{{ row.item.balance | denominate }}</span>
     </template>
-    <template slot="createdAt" slot-scope="row">
+    <template #cell(createdAt)="row">
       <span>{{ row.item.createdAt | timeformat(dateFormat) }}</span>
     </template>
-    <template slot="delegateValue" slot-scope="row">
+    <template #cell(delegateValue)="row">
       <span v-if="row.item.delegateValue" class="d-flex align-items-center">
         <IdentIcon :seed="row.item.delegateValue" />
 

@@ -29,7 +29,7 @@
           :reward="txInfo.reward"
           :claimed-amount="txInfo.claimedAmount"
         />
-        <DoubleOperationsSingle v-else-if="dataFetched" :props="txInfo" />
+        <DoubleOperationsSingle v-else-if="dataFetched" :loaded="dataFetched" :props="txInfo" />
       </b-container>
     </section>
 
@@ -61,7 +61,18 @@
                   active
                 >
                   <b-card-body>
+                    <div v-if="loading && Object.keys(transactionsSorted.operations).length === 0" class="table-skeleton">
+                      <b-skeleton-table
+                        responsive
+                        :rows="3"
+                        :columns="9"
+                        :table-props="{ borderless: true, responsive: true }"
+                        animation="none"
+                        class="table-skeleton"
+                      />
+                    </div>
                     <b-table
+                      v-else
                       responsive
                       show-empty
                       :items="transactionsSorted.operations"
@@ -73,7 +84,7 @@
                       :tbody-tr-class="$_defineRowClass"
                       :empty-text="$t('common.noData')"
                     >
-                      <template slot="from" slot-scope="row">
+                      <template #cell(from)="row">
                         <span class=" d-flex align-items-center">
                           <IdentIcon :seed="row.item.source" />
 
@@ -98,7 +109,7 @@
                         </span>
                       </template>
 
-                      <template slot="to" slot-scope="row">
+                      <template #cell(to)="row">
                         <b-link
                           :to="{
                             name: 'account',
@@ -129,25 +140,25 @@
                           </template>
                         </b-link>
                       </template>
-                      <template slot="amount" slot-scope="row">
+                      <template #cell(amount)="row">
                         {{ row.item.amount | denominate }}
                       </template>
-                      <template slot="fee" slot-scope="row">
+                      <template #cell(fee)="row">
                         {{ row.item.fee | denominate }}
                       </template>
-                      <template slot="gas" slot-scope="row">
+                      <template #cell(gas)="row">
                         {{ row.item.gasLimit | formatInteger }}
                       </template>
-                      <template slot="storage" slot-scope="row">
+                      <template #cell(storage)="row">
                         {{ row.item.storageLimit }}
                       </template>
-                      <template slot="delegationAmount" slot-scope="row">
+                      <template #cell(delegationAmount)="row">
                         {{ row.item.delegationAmount | denominate }}
                       </template>
-                      <template slot="balance" slot-scope="row">
+                      <template #cell(balance)="row">
                         {{ row.item.balance | denominate }}
                       </template>
-                      <template slot="originatedContracts" slot-scope="row">
+                      <template #cell(originatedContracts)="row">
                         <b-link
                           :to="{
                             name: 'account',
@@ -160,6 +171,7 @@
                     </b-table>
 
                     <Pagination
+                      :loading="loading"
                       :total-rows="count"
                       :per-page="perPage"
                       @change="$_handleCurrentPageChange"
@@ -176,7 +188,7 @@
                   :title="$t('revealsList.reveal')"
                 >
                   <b-card-body>
-                    <RevealsList :items="transactionsSorted.reveals" />
+                    <RevealsList :items="transactionsSorted.reveals" :loading="loading" />
                   </b-card-body>
                 </b-tab>
               </b-tabs>
@@ -230,6 +242,7 @@
           'activate_account',
         ],
         dataFetched: false,
+        loading: false,
       };
     },
     computed: {
@@ -362,6 +375,7 @@
     },
     methods: {
       async reload(page = 1) {
+        this.loading = true;
         const props = {
           page,
           limit: this.perPage,
@@ -381,6 +395,7 @@
         this.transactions = data.data;
         this.dataFetched = true;
         this.count = data.count;
+        this.loading = false;
       },
     },
   };

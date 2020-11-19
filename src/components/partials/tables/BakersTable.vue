@@ -10,10 +10,10 @@
     class="transactions-table"
     :empty-text="$t('common.noData')"
   >
-    <template slot="id" slot-scope="row">
+    <template #cell(id)="row">
       <span>{{ row.index + 1 }}</span>
     </template>
-    <template slot="accountId" slot-scope="row">
+    <template #cell(accountId)="row">
       <span class="d-flex align-items-center">
         <IdentIcon :seed="row.item.accountId" />
 
@@ -29,19 +29,19 @@
         <BtnCopy v-if="!row.item.name" :text-to-copy="row.item.accountId" />
       </span>
     </template>
-    <template slot="blocks" slot-scope="row">
+    <template #cell(blocks)="row">
       {{ row.item.blocks | formatInteger }}
     </template>
-    <template slot="endorsements" slot-scope="row">
+    <template #cell(endorsements)="row">
       {{ row.item.endorsements | formatInteger }}
     </template>
-    <template slot="stakingBalance" slot-scope="row">
+    <template #cell(stakingBalance)="row">
       {{ row.item.stakingBalance | denominate }}
     </template>
-    <template slot="rolls" slot-scope="row">
+    <template #cell(rolls)="row">
       {{ row.item.rolls | formatInteger }}
     </template>
-    <template slot="bakingSince" slot-scope="row">
+    <template #cell(bakingSince)="row">
       {{ row.item.bakingSince | timeformat(dateFormat) }}
     </template>
   </b-table>

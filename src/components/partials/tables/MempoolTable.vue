@@ -8,7 +8,7 @@
     class="transactions-table"
     :empty-text="$t('common.noData')"
   >
-    <template slot="details" slot-scope="row">
+    <template #cell(details)="row">
       <b-button size="sm" variant="success" @click="row.toggleDetails">
         {{
           row.detailsShowing
@@ -17,34 +17,32 @@
         }}
       </b-button>
     </template>
-
-    <template slot="row-details" slot-scope="row">
+    <template #row-details="row">
       <b-card>
         <div v-for="(operation, index) in row.item.contents" :key="index">
           <pre><code class="code">{{ beautifyJSON(operation) }}</code></pre>
         </div>
       </b-card>
     </template>
-
-    <template slot="signature" slot-scope="row">
+    <template #cell(signature)="row">
       <span class="d-flex align-items-center">
         {{ row.item.signature | longhash }}
         <BtnCopy :text-to-copy="row.item.signature" />
       </span>
     </template>
-    <template slot="branch" slot-scope="row">
+    <template #cell(branch)="row">
       <span class="d-flex align-items-center">
         {{ row.item.branch | longhash }}
         <BtnCopy :text-to-copy="row.item.branch" />
       </span>
     </template>
-    <template slot="protocol" slot-scope="row">
+    <template #cell(protocol)="row">
       <span class="d-flex align-items-center">
         {{ row.item.protocol | longhash }}
         <BtnCopy :text-to-copy="row.item.protocol" />
       </span>
     </template>
-    <template slot="kind" slot-scope="row">
+    <template #cell(kind)="row">
       <div v-for="(kind, index) in row.item.kind" :key="index">
         {{ kind }}
       </div>

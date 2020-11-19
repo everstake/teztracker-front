@@ -1,6 +1,17 @@
 <template>
-  <div>
+  <div class="list baking-rights-list">
+    <div v-if="loading && baking_rights.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="11"
+        :columns="7"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="baking_rights"
@@ -11,11 +22,10 @@
       class="transactions-table"
       :empty-text="$t('common.noData')"
     >
-      <template slot="priority" slot-scope="row">
+      <template #cell(priority)="row">
         <span>{{ row.item.priority }}</span>
       </template>
-
-      <template slot="block_0" slot-scope="row">
+      <template #cell(block_0)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.block_0.delegate" />
 
@@ -40,7 +50,7 @@
           />
         </span>
       </template>
-      <template slot="block_1" slot-scope="row">
+      <template #cell(block_1)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.block_1.delegate" />
 
@@ -65,7 +75,7 @@
           />
         </span>
       </template>
-      <template slot="block_2" slot-scope="row">
+      <template #cell(block_2)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.block_2.delegate" />
 
@@ -90,7 +100,7 @@
           />
         </span>
       </template>
-      <template slot="block_3" slot-scope="row">
+      <template #cell(block_3)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.block_3.delegate" />
 
@@ -115,7 +125,7 @@
           />
         </span>
       </template>
-      <template slot="block_4" slot-scope="row">
+      <template #cell(block_4)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.block_4.delegate" />
 
@@ -140,7 +150,7 @@
           />
         </span>
       </template>
-      <template slot="block_5" slot-scope="row">
+      <template #cell(block_5)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.block_5.delegate" />
 
@@ -165,7 +175,7 @@
           />
         </span>
       </template>
-      <template slot="block_6" slot-scope="row">
+      <template #cell(block_6)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.block_6.delegate" />
 
@@ -221,6 +231,7 @@
       BtnCopy,
       IdentIcon,
     },
+    props: ['loading'],
     mixins: [handleCurrentPageChange],
     data() {
       return {
@@ -230,7 +241,6 @@
         // block_levels: [],
         blocks_in_row: this.$constants.BLOCKS_IN_ROW,
         newFields: [],
-        loading: false,
       };
     },
     computed: {
@@ -336,7 +346,7 @@
         this.baking_rights = result;
       },
       async reload(page = 1) {
-        this.loading = true;
+        this.$emit('onLoading', { type: 'bakingRights', value: true });
         const props = {
           page,
           limit: this.blocks_in_row,
@@ -344,7 +354,7 @@
         const data = await this.$api.getBakingRights(props);
         await this[SET_BAKING_RIGHTS_COUNT](data.count);
         this.parseResponse(data.data);
-        this.loading = false;
+        this.$emit('onLoading', { type: 'bakingRights', value: false });
       },
     },
   };

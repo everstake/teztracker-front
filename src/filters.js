@@ -1,5 +1,4 @@
 import Vue from 'vue';
-import moment from 'moment';
 import numeral from 'numeral';
 
 Vue.filter('bignum', function(num, delimiter) {

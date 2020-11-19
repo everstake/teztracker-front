@@ -1,10 +1,21 @@
 <template>
-  <div>
+  <div class="list txs-list">
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect @per-page="$_setPerPage" />
+      <LimitSelect :limit="perPage" :loading="loading" @per-page="$_setPerPage" />
     </div>
 
+    <div v-if="loading && protocols.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="9"
+        :columns="4"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="protocols"
@@ -15,13 +26,12 @@
       class="transactions-table"
       :empty-text="$t('common.noData')"
     >
-      <template slot="startBlock" slot-scope="row">
+      <template #cell(startBlock)="row">
         <b-link :to="{ name: 'block', params: { level: row.item.startBlock } }">
           {{ row.item.startBlock | formatInteger }}
         </b-link>
       </template>
-
-      <template slot="endBlock" slot-scope="row">
+      <template #cell(endBlock)="row">
         <b-link :to="{ name: 'block', params: { level: row.item.endBlock } }">
           {{ row.item.endBlock | formatInteger }}
         </b-link>
@@ -40,19 +50,19 @@
 <script>
   import { mapMutations, mapState } from 'vuex';
   import { SET_PROTOCOLS_COUNT } from '@/store/mutations.types';
-  import PerPageSelect from '@/components/partials/PerPageSelect';
   import Pagination from '../partials/Pagination';
   import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
   import setPerPage from '@/mixins/setPerPage';
+  import LimitSelect from '@/components/partials/LimitSelect';
 
   export default {
     name: 'ProtocolsList',
     components: {
-      PerPageSelect,
+      LimitSelect,
       Pagination,
     },
     mixins: [handleCurrentPageChange, setPerPage],
-    props: ['account'],
+    props: ['account', 'loading'],
     data() {
       return {
         protocols: [],
@@ -90,6 +100,7 @@
     methods: {
       ...mapMutations('period', [SET_PROTOCOLS_COUNT]),
       async reload(page = 1) {
+        this.$emit('onLoading', true);
         const props = {
           page,
           limit: this.perPage,
@@ -101,6 +112,7 @@
           .reverse();
         this[SET_PROTOCOLS_COUNT](data.data.length);
         this.protocols = result;
+        this.$emit('onLoading', false);
       },
     },
   };

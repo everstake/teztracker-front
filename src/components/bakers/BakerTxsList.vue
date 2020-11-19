@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="list baker-txs-list">
     <div class="d-flex justify-content-between mb-2">
       <LimitSelect
         :limit="perPage"
@@ -9,8 +9,19 @@
         "
       />
     </div>
-
+  
+    <div v-if="loading && txs.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="10"
+        :columns="7"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="txs"
@@ -21,7 +32,7 @@
       class="transactions-table"
       :empty-text="$t('common.noData')"
     >
-      <template slot="txhash" slot-scope="row">
+      <template #cell(txhash)="row">
         <span class="d-flex align-items-center">
           <b-link
             :to="{
@@ -35,15 +46,15 @@
           <BtnCopy :text-to-copy="row.item.operationGroupHash" />
         </span>
       </template>
-      <template slot="level" slot-scope="row">
+      <template #cell(level)="row">
         <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
           {{ row.item.blockLevel | formatInteger }}
         </b-link>
       </template>
-      <template slot="timestamp" slot-scope="row">
+      <template #cell(timestamp)="row">
         {{ row.item.timestamp | timeformat(dateFormat) }}
       </template>
-      <template slot="from" slot-scope="row">
+      <template #cell(from)="row">
         <span class="position-relative w-100 d-flex align-items-center">
           <IdentIcon :seed="row.item.source" />
 
@@ -72,7 +83,7 @@
           </span>
         </span>
       </template>
-      <template slot="to" slot-scope="row">
+      <template #cell(to)="row">
         <span class="d-flex align-items-center">
           <IdentIcon :seed="row.item.destination" />
 
@@ -93,10 +104,10 @@
           />
         </span>
       </template>
-      <template slot="amount" slot-scope="row">
+      <template #cell(amount)="row">
         {{ row.item.amount | denominate }}
       </template>
-      <template slot="fee" slot-scope="row">
+      <template #cell(fee)="row">
         {{ row.item.fee | denominate }}
       </template>
     </b-table>

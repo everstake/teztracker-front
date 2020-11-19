@@ -1,5 +1,5 @@
 <template>
-  <div class="baking-list">
+  <div class="list baking-list">
     <div class="d-flex justify-content-between mb-2">
       <LimitSelect
         :limit="perPage"
@@ -9,8 +9,19 @@
         "
       />
     </div>
-
+  
+    <div v-if="loading && data.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="2"
+        :columns="7"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="data"
@@ -24,7 +35,7 @@
       :empty-text="$t('common.noData')"
       @row-selected="handleRowClick"
     >
-      <template slot="cycle" slot-scope="row">
+      <template #cell(cycle)="row">
         {{ row.item.cycle | formatInteger }}
 
         <font-awesome-icon
@@ -52,20 +63,19 @@
           </b-toast>
         </div>
       </template>
-      <template slot="stakingBalance" slot-scope="row">
+      <template #cell(stakingBalance)="row">
         {{ row.item.stakingBalance | denominate }}
       </template>
-      <template slot="baking" slot-scope="row">
+      <template #cell(baking)="row">
         {{ row.item.baking | denominate }}
       </template>
-      <template slot="endorsements" slot-scope="row">
+      <template #cell(endorsements)="row">
         {{ row.item.endorsements | denominate }}
       </template>
-      <template slot="losses" slot-scope="row">
+      <template #cell(losses)="row">
         {{ row.item.losses | denominate }}
       </template>
-
-      <template slot="fees" slot-scope="row">
+      <template #cell(fees)="row">
         {{ row.item.fees | denominate }}
       </template>
     </b-table>
@@ -91,23 +101,21 @@
           class="transactions-table baker-baking-table"
           :empty-text="$t('common.noData')"
         >
-          <template slot="cycle" slot-scope="row">
+          <template #cell(cycle)="row">
             {{ row.item.cycle }}
           </template>
 
-          <template slot="delegator" slot-scope="row">
+          <template #cell(delegator)="row">
             <router-link
               :to="{ name: 'account', params: { account: row.item.delegator } }"
             >
               {{ row.item.delegator }}
             </router-link>
           </template>
-
-          <template slot="balance" slot-scope="row">
+          <template #cell(balance)="row">
             {{ row.item.balance | denominate }}
           </template>
-
-          <template slot="share" slot-scope="row">
+          <template #cell(share)="row">
             {{ (row.item.share * 100) | toFixedNoRounding }}%
           </template>
         </b-table>

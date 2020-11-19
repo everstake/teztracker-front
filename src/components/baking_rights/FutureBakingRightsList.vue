@@ -1,6 +1,17 @@
 <template>
-  <div>
+  <div class="list future-baking-rights-list">
+    <div v-if="loading && future_baking_rights.length === 0" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="11"
+        :columns="7"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
       :items="future_baking_rights"
@@ -11,11 +22,10 @@
       class="transactions-table"
       :empty-text="$t('common.noData')"
     >
-      <template slot="priority" slot-scope="row">
+      <template #cell(priority)="row">
         <span>{{ row.item.priority }}</span>
       </template>
-
-      <template slot="block_0" slot-scope="row">
+      <template #cell(block_0)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -45,7 +55,7 @@
           />
         </span>
       </template>
-      <template slot="block_1" slot-scope="row">
+      <template #cell(block_1)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -75,7 +85,7 @@
           />
         </span>
       </template>
-      <template slot="block_2" slot-scope="row">
+      <template #cell(block_2)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -105,7 +115,7 @@
           />
         </span>
       </template>
-      <template slot="block_3" slot-scope="row">
+      <template #cell(block_3)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -135,7 +145,7 @@
           />
         </span>
       </template>
-      <template slot="block_4" slot-scope="row">
+      <template #cell(block_4)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -165,7 +175,7 @@
           />
         </span>
       </template>
-      <template slot="block_5" slot-scope="row">
+      <template #cell(block_5)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -195,7 +205,7 @@
           />
         </span>
       </template>
-      <template slot="block_6" slot-scope="row">
+      <template #cell(block_6)="row">
         <span class="d-flex align-items-center">
           <!--FIXME: There should be no empty data-->
           <IdentIcon
@@ -256,14 +266,13 @@
       IdentIcon,
     },
     mixins: [handleCurrentPageChange],
-    props: ['block'],
+    props: ['block', 'loading'],
     data() {
       return {
         perPage: this.$constants.PER_PAGE,
         blocks_in_row: this.$constants.BLOCKS_IN_ROW,
         future_baking_rights: [],
         newFields: [],
-        loading: false,
       };
     },
     computed: {
@@ -363,7 +372,7 @@
       },
 
       async reload(page = 1) {
-        this.loading = true;
+        this.$emit('onLoading', { type: 'futureBakingRights', value: true });
         const props = {
           page,
           limit: this.blocks_in_row,
@@ -371,7 +380,7 @@
         const data = await this.$api.getFutureBakingRights(props);
         await this[SET_FUTURE_BAKING_RIGHTS_COUNT](data.count);
         this.parseResponse(data.data);
-        this.loading = false;
+        this.$emit('onLoading', { type: 'futureBakingRights', value: false });
       },
     },
   };

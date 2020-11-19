@@ -7,19 +7,28 @@
         </h4>
       </template>
       <template v-slot:right-content class="text">
-        <Counter show-line :count="count" />
+        <Counter show-line :count="count" :loading="loading" />
       </template>
     </CardHeader>
 
     <b-card-body>
+      <div v-if="loading" class="table-skeleton">
+        <b-skeleton-table
+          responsive
+          :rows="10"
+          :columns="3"
+          :table-props="{ borderless: true, responsive: true }"
+          animation="none"
+        />
+      </div>
       <TxsTable
+        v-else
         :loading="loading"
         :limit="limit"
         :items="items"
         :count="count"
         :page="page"
         :props-fields="fields"
-        @onPageChange="handlePageChange"
       />
 
       <div class="txs-card__actions">
@@ -34,7 +43,6 @@
 <script>
   import CardHeader from '../partials/CardHeader';
   import Counter from '../partials/Counter';
-  import reloadNavigationTable from '@/mixins/reloadNavigationList';
   import TxsTable from '@/components/partials/tables/TxsTable';
 
   export default {
@@ -44,23 +52,44 @@
       CardHeader,
       Counter,
     },
-    mixins: [reloadNavigationTable],
+    data() {
+      return {
+        limit: 10,
+        items: [],
+        count: 0,
+        page: 1,
+        loading: true,
+      };
+    },
     computed: {
       fields() {
         if (!this.$i18n.locale) return [];
         return [
           { key: 'level', label: this.$t('common.blockId') },
-          { key: 'txhash', label: this.$t('hashTypes.txHash'), tdClass: 'txs-card--hash-height' },
+          {
+            key: 'txhash',
+            label: this.$t('hashTypes.txHash'),
+            tdClass: 'txs-card--hash-height',
+          },
           { key: 'timestamp', label: this.$t('common.timestamp') },
         ];
       },
     },
+    async created() {
+      await this.reload();
+    },
     methods: {
       async reload() {
         const { page, limit } = this;
-        const data = await this.$api.getTransactions({ page, limit });
-        this.items = data.data;
-        this.count = data.count;
+        this.loading = true;
+        await this.$api
+          .getTransactions({ page, limit })
+          .then((data) => {
+            this.items = data.data;
+            this.count = data.count;
+          })
+          .catch(() => {});
+        this.loading = false;
       },
     },
   };
@@ -93,10 +122,12 @@
   .txs-card__link {
     font-weight: bold;
   }
-</style>
 
-<style>
-  .txs-card--hash-height span {
+  ::v-deep .txs-hash {
     height: 28px;
+  }
+
+  ::v-deep .table-skeleton tr {
+    height: 52px;
   }
 </style>

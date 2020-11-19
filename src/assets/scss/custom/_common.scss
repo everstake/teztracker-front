@@ -1045,53 +1045,14 @@ span a.baker,
   position: relative;
 }
 
-.table.b-table > thead > tr > th[aria-sort][aria-sort='descending']::before,
-.table.b-table > tfoot > tr > th[aria-sort][aria-sort='descending']::before,
-.table.b-table > thead > tr > th[aria-sort][aria-sort='ascending']::before,
-.table.b-table > tfoot > tr > th[aria-sort][aria-sort='ascending']::before,
-.table.b-table > thead > tr > th[aria-sort]::before,
-.table.b-table > tfoot > tr > th[aria-sort]::before {
+.table.b-table > thead > tr > [aria-sort],
+.table.b-table > tfoot > tr > [aria-sort] {
   content: none;
+  background: none;
 }
 
-.table.b-table > thead > tr > th[aria-sort][aria-sort='ascending']::after,
-.table.b-table > tfoot > tr > th[aria-sort][aria-sort='ascending']::after {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  content: '';
-  border-top: 0;
-  border-right: 0.3em solid transparent;
-  border-bottom: 0.3em solid;
-  border-left: 0.3em solid transparent;
-
-  @include for-desktop-down {
-    top: auto;
-    bottom: 18px;
-    transform: none;
-  }
-}
-
-.table.b-table > thead > tr > th[aria-sort][aria-sort='descending']::after,
-.table.b-table > tfoot > tr > th[aria-sort][aria-sort='descending']::after {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  content: '';
-  border-top: 0.3em solid;
-  border-right: 0.3em solid transparent;
-  border-bottom: 0;
-  border-left: 0.3em solid transparent;
-
-  @include for-desktop-down {
-    top: auto;
-    bottom: 18px;
-    transform: none;
-  }
-}
-
-.table.b-table > thead > tr > th[aria-sort]::after,
-.table.b-table > tfoot > tr > th[aria-sort]::after {
+.table.b-table > thead > tr > th[aria-sort] > div::after,
+.table.b-table > tfoot > tr > th[aria-sort] > div::after {
   margin-left: 7px;
   position: absolute;
   top: 50%;
@@ -1111,6 +1072,21 @@ span a.baker,
   }
 }
 
+.table.b-table > thead > tr > th[aria-sort='ascending'] > div::after,
+.table.b-table > tfoot > tr > th[aria-sort='ascending'] > div::after {
+  border-right: 0.3em solid transparent;
+  border-bottom: 0.3em solid;
+  border-left: 0.3em solid transparent;
+}
+
+.table.b-table > thead > tr > th[aria-sort='descending'] > div::after,
+.table.b-table > tfoot > tr > th[aria-sort='descending'] > div::after {
+  border-top: 0.3em solid;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0;
+  border-left: 0.3em solid transparent;
+}
+
 .ordinal-number {
   display: inline-block;
   max-width: 100px;
@@ -1120,4 +1096,8 @@ span a.baker,
   pointer-events: none;
   user-select: none;
   background-color: #e0efec;
+}
+
+.list .table-skeleton tr td {
+  min-width: 80px;
 }

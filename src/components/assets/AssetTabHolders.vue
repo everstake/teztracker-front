@@ -1,45 +1,61 @@
 <template>
-  <div>
+  <div class="list assets-holders">
     <div class="d-flex justify-content-between mb-2">
-      <PerPageSelect :hide="!showLimitFilter" @onLimitChange="$_setPerPage" :loading="loading" />
+      <LimitSelect
+        :limit="limit"
+        @onLimitChange="
+          (limit) => $emit('onLimitChange', { name: 'holders', limit })
+        "
+        :loading="loading"
+      />
     </div>
 
+    <div v-if="loading && !loaded" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="5"
+        :columns="6"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
+      v-else
       responsive
       show-empty
-      :items="transactions"
+      :items="items"
       :fields="fields"
-      :current-page="currentPage"
+      :current-page="page"
       :per-page="0"
       borderless
       class="transactions-table"
       :tbody-tr-class="$_defineRowClass"
     />
 
-    <Pagination
+    <PaginationSelect
       :total-rows="count"
-      :per-page="perPage"
-      @change="$_handleCurrentPageChange"
+      :per-page="limit"
+      :current-page="page"
       :loading="loading"
+      @onPageChange="(page) => $emit('onPageChange', { name: 'holders', page })"
     />
   </div>
 </template>
 
 <script>
   import { mapState } from 'vuex';
-  import PerPageSelect from '@/components/partials/PerPageSelect';
-  import Pagination from '../partials/Pagination';
-  import handleCurrentPageChange from '@/mixins/handleCurrentPageChange';
-  import setPerPage from '@/mixins/setPerPage';
+  import LimitSelect from '@/components/partials/LimitSelect';
+  import PaginationSelect from '@/components/partials/PaginationSelect';
   import defineRowClass from '@/mixins/defineRowClass';
 
   export default {
     name: 'AssetTabHolders',
     components: {
-      PerPageSelect,
-      Pagination,
+      LimitSelect,
+      PaginationSelect,
     },
-    mixins: [handleCurrentPageChange, setPerPage, defineRowClass],
+    mixins: [defineRowClass],
     props: {
       block: {
         type: Object,
@@ -47,19 +63,14 @@
       account: {
         type: String,
       },
-      showLimitFilter: {
-        type: Boolean,
-        default: true,
-      },
       currency: String,
       precision: [String, Number],
-    },
-    data() {
-      return {
-        transactions: [],
-        count: 0,
-        loading: false,
-      };
+      count: Number,
+      items: Array,
+      loading: Boolean,
+      loaded: Boolean,
+      limit: Number,
+      page: Number,
     },
     computed: {
       ...mapState('app', {
@@ -78,50 +89,18 @@
         ];
       },
     },
-    watch: {
-      currentPage: {
-        async handler(value) {
-          await this.reload(value);
-        },
-      },
-      block: {
-        async handler() {
-          await this.reload();
-        },
-      },
-      account: {
-        async handler() {
-          await this.reload();
-        },
-      },
-      async perPage() {
-        await this.reload();
-      },
-    },
-    async created() {
-      // TODO: refactor API
-      if (!this.block) {
-        await this.reload();
-      }
-    },
     methods: {
-      async reload(page = 1) {
-        this.loading = true;
-        const props = {
-          page,
-          limit: this.perPage,
-          type: 'transfer',
-          assets_id: this.$route.params.id,
-        };
-        const data = await this.$api.getAssetsHoldersById(props);
-        this.transactions = data.data;
-        this.count = data.count;
-        this.loading = false;
-      },
       getAccountName(row, rowHash) {
         return `${row.item[`${rowHash}Name`] ||
           row.item[rowHash].slice(0, 15)}...`;
       },
+    },
+    created() {
+      const itemsNotFetched = !this.loaded;
+      const { page, limit } = this;
+      if (itemsNotFetched) {
+        this.$emit('onReload', { name: 'holders', page, limit });
+      }
     },
   };
 </script>
