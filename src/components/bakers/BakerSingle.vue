@@ -19,62 +19,7 @@
                 </template>
               </h3>
 
-              <b-btn
-                class="card__button"
-                variant="success"
-                type="submit"
-                @click="handleExportClick"
-              >
-                {{ $t('common.export') }}
-              </b-btn>
-
-              <b-modal
-                id="export-data"
-                size="md"
-                class="modal"
-                centered
-                hide-header
-                hide-footer
-              >
-                <div class="export">
-                  <div class="modal__section calendar">
-                    <p class="modal__subtitle">Select period</p>
-                    <date-picker
-                      inline
-                      v-model="calendar.selected"
-                      range-separator=" - "
-                      prefix-class="teztracker"
-                      :range="true"
-                      :lang="calendarLanguage"
-                    />
-                  </div>
-                  <div class="modal__section">
-                    <p class="modal__subtitle">Select operations</p>
-                    <div class="export-operations">
-                      <b-row>
-                        <b-col>
-                          <b-form-checkbox-group
-                            v-model="checkboxes.selected"
-                            :options="checkboxes.operations"
-                            switches
-                            size="md"
-                          />
-                        </b-col>
-                      </b-row>
-                    </div>
-                  </div>
-                  <div class="modal__section text-center">
-                    <b-button
-                      :disabled="calendar.loading"
-                      size="md"
-                      variant="success"
-                      @click="exportReport"
-                      >
-                      Export
-                    </b-button>
-                  </div>
-                </div>
-              </b-modal>
+              <ReportExport />
             </div>
             <div class="subtitle mb-2">
               {{ $t('infoTypes.bakerInfo') }}
@@ -285,12 +230,8 @@
   import BtnCopy from '@/components/partials/BtnCopy';
   import BakerSocials from '@/components/bakers/BakerSocials';
   import convert from '../../mixins/convert';
-  import DatePicker from 'vue2-datepicker';
-  import 'vue2-datepicker/locale/zh-cn';
-  import 'vue2-datepicker/locale/ru';
-  import i18n from '@/plugins/i18n';
   import uuid from '@/mixins/uuid';
-  import moment from 'moment';
+  import ReportExport from '@/components/partials/ReportExport';
 
   export default {
     name: 'BakerSingle',
@@ -298,7 +239,7 @@
       IdentIcon,
       BtnCopy,
       BakerSocials,
-      DatePicker,
+      ReportExport,
     },
     mixins: [convert, uuid],
     props: {
@@ -312,36 +253,6 @@
         bakerInfo: {},
         account: {},
         loading: false,
-        calendar: {
-          selected: [new Date(), new Date()],
-          loading: false,
-        },
-        checkboxes: {
-          selected: [
-            'transaction',
-            'endorsement',
-            'delegation',
-            'origination',
-            'activate_account',
-            'double_baking_evidence',
-            'double_endorsement_evidence',
-            'baking',
-          ],
-          operations: [
-            { text: 'Transaction', value: 'transaction' },
-            { text: 'Baking', value: 'baking' },
-            { text: 'Endorsement', value: 'endorsement' },
-            { text: 'Delegation', value: 'delegation' },
-            { text: 'Origination', value: 'origination' },
-            { text: 'Activation', value: 'activate_account' },
-            // { text: 'Reveal', value: 'reveal' },
-            { text: 'Double-baking', value: 'double_baking_evidence' },
-            {
-              text: 'Double-endorsement',
-              value: 'double_endorsement_evidence',
-            },
-          ],
-        },
       };
     },
     computed: {
@@ -349,16 +260,6 @@
         info: (state) => state.priceInfo,
         dateFormat: (state) => state.dateFormat,
       }),
-      calendarLanguage() {
-        if (i18n.locale === 'zh') {
-          return 'zh-cn';
-        } else {
-          return i18n.locale;
-        }
-      },
-      calendarDateFormat() {
-        return this.dateFormat.slice(0, 10);
-      },
     },
     watch: {
       hash: {
@@ -387,46 +288,6 @@
           this.baker = false;
         }
         this.loading = false;
-      },
-      handleExportClick() {
-        this.$bvModal.show('export-data');
-      },
-      async exportReport() {
-        /* eslint-disable */
-        const account = this.$route.params.baker;
-        const from = moment(this.calendar.selected[0])
-          .startOf('day')
-          .utc()
-          .unix();
-        const to = moment(this.calendar.selected[1])
-          .endOf('day')
-          .utc()
-          .unix();
-        const selectedOperations = this.checkboxes.selected;
-        const props = {
-          account,
-          operation_type: selectedOperations,
-          from,
-          to,
-        };
-        this.calendar.loading = true;
-        await this.$api
-          .getAccountReport(props)
-          .then((response) => {
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const link = document.createElement('a');
-
-            link.href = url;
-            link.setAttribute('download', 'report.csv');
-            document.body.appendChild(link);
-
-            link.click();
-            this.$bvModal.hide('export-data');
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-        this.calendar.loading = false;
       },
     },
   };
@@ -481,28 +342,5 @@
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-  }
-
-  .modal__section:not(:last-child) {
-    margin-bottom: 1rem;
-  }
-
-  .modal__subtitle {
-    margin-bottom: 0.5rem;
-  }
-
-  ::v-deep .custom-switch {
-    max-width: 28%;
-    width: 100%;
-    margin-bottom: 0.3rem;
-
-    @include max-width-mobiles-landscape {
-      max-width: 45%;
-      margin-bottom: 0.5rem;
-    }
-  }
-
-  ::v-deep .custom-switch:last-child {
-    margin-bottom: 0;
   }
 </style>
