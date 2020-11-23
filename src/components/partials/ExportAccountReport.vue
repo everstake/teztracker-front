@@ -55,6 +55,9 @@
             Export
           </b-button>
         </div>
+        <div class="modal__section text-center">
+          <small>Report file is limited to about 250.000 rows.</small>
+        </div>
       </div>
     </b-modal>
   </div>
@@ -121,6 +124,17 @@
           return i18n.locale;
         }
       },
+      networkStartDate() {
+        const { currentNetwork } = this;
+        const mainnetStartDate = '2018-9-17';
+        const carthagenetStartDate = '2019-11-7';
+
+        if (currentNetwork === 'carthagenet') {
+          return moment(carthagenetStartDate);
+        }
+
+        return moment(mainnetStartDate);
+      },
     },
     methods: {
       handleExportClick() {
@@ -179,16 +193,10 @@
         this.calendar.loading = false;
       },
       calendarDisabledDates(date) {
+        const { networkStartDate } = this;
         const today = moment();
-        let networkStartTime;
 
-        if (this.currentNetwork === 'mainnet') {
-          networkStartTime = moment('2018-9-17');
-        } else if (this.currentNetwork === 'carthagenet') {
-          networkStartTime = moment('2019-11-7');
-        }
-
-        return date > today || date < networkStartTime;
+        return date < networkStartDate || date > today;
       },
     },
   };
