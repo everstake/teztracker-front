@@ -27,6 +27,7 @@
             prefix-class="teztracker"
             :range="true"
             :lang="calendarLanguage"
+            :disabled-date="calendarDisabledDates"
           />
         </div>
         <div class="modal__section">
@@ -65,7 +66,7 @@
   import 'vue2-datepicker/locale/ru';
   import moment from 'moment';
   import i18n from '@/plugins/i18n';
-  import { mapState } from 'vuex';
+  import { mapGetters, mapState } from 'vuex';
 
   export default {
     name: 'ExportAccountReport',
@@ -109,6 +110,9 @@
     computed: {
       ...mapState('app', {
         dateFormat: (state) => state.dateFormat,
+      }),
+      ...mapGetters('app', {
+        currentNetwork: 'getAppNetwork',
       }),
       calendarLanguage() {
         if (i18n.locale === 'zh') {
@@ -173,6 +177,18 @@
             console.log(error);
           });
         this.calendar.loading = false;
+      },
+      calendarDisabledDates(date) {
+        const today = moment();
+        let networkStartTime;
+
+        if (this.currentNetwork === 'mainnet') {
+          networkStartTime = moment('2018-9-17');
+        } else if (this.currentNetwork === 'carthagenet') {
+          networkStartTime = moment('2019-11-7');
+        }
+
+        return date > today || date < networkStartTime;
       },
     },
   };
