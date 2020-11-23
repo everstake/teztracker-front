@@ -287,7 +287,6 @@
           .endOf('day')
           .utc()
           .unix();
-        // console.log(from, to);
         const selectedOperations = this.checkboxes.selected;
         const props = {
           account,
@@ -301,13 +300,6 @@
           .catch((error) => {
             console.log(error);
           });
-        // $bvToast.toast(errorText, {
-        //   title: i18n.t('errorsNotifications.error'),
-        //   autoHideDelay: 4000,
-        //   variant: 'danger',
-        //   appendToast: false,
-        // });
-        // });
       },
     },
   };
