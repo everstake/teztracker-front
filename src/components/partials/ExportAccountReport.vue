@@ -152,6 +152,7 @@
         await this.$api
           .getAccountReport(props, config)
           .then((response) => {
+            if (response.code !== 200) return;
             const blobURL = window.URL.createObjectURL(new Blob([response.data]));
             const tempLink = document.createElement('a');
 
