@@ -64,9 +64,14 @@
                     </div>
                   </div>
                   <div class="modal__section text-center">
-                    <b-button size="md" variant="success" @click="exportReport"
-                      >Export</b-button
-                    >
+                    <b-button
+                      :disabled="calendar.loading"
+                      size="md"
+                      variant="success"
+                      @click="exportReport"
+                      >
+                      Export
+                    </b-button>
                   </div>
                 </div>
               </b-modal>
@@ -309,6 +314,7 @@
         loading: false,
         calendar: {
           selected: [new Date(), new Date()],
+          loading: false,
         },
         checkboxes: {
           selected: [
@@ -403,6 +409,7 @@
           from,
           to,
         };
+        this.calendar.loading = true;
         await this.$api
           .getAccountReport(props)
           .then((response) => {
@@ -414,10 +421,12 @@
             document.body.appendChild(link);
 
             link.click();
+            this.$bvModal.hide('export-data');
           })
           .catch((error) => {
             console.log(error);
           });
+        this.calendar.loading = false;
       },
     },
   };
