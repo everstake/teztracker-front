@@ -278,7 +278,7 @@
       },
       async exportReport() {
         /* eslint-disable */
-        const account = this.$route.params.baker;
+        const account = this.$route.params.id;
         const from = moment(this.calendar.selected[0])
           .startOf('day')
           .utc()
@@ -296,7 +296,16 @@
         };
         await this.$api
           .getAccountReport(props)
-          .then(() => {})
+          .then((response) => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+
+            link.href = url;
+            link.setAttribute('download', 'report.csv');
+            document.body.appendChild(link);
+
+            link.click();
+          })
           .catch((error) => {
             console.log(error);
           });
