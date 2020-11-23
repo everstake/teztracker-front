@@ -50,7 +50,8 @@
     "contractName": "Название контракта",
     "bonds": "Залог",
     "startDate": "Start date",
-    "endDate": "End date"
+    "endDate": "End date",
+    "export": "Export"
   },
   "opTypes": {
     "tx": "Транзакция | Транзакции",

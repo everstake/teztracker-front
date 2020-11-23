@@ -164,6 +164,11 @@ const TzAPI = {
       opts,
     );
   },
+  getAccountReport(opts = {}) {
+    const { account } = opts;
+    delete opts.account;
+    return get(this.API_URL(), `accounts/${account}/report`, opts, false);
+  },
   getContracts(opts = {}) {
     return get(this.API_URL(), 'contracts', opts);
   },
