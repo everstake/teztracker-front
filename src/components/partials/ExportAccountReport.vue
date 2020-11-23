@@ -16,6 +16,7 @@
       centered
       hide-header
       hide-footer
+      @hidden="resetToDefault()"
     >
       <div class="export-container">
         <div class="modal__section calendar">
@@ -198,6 +199,19 @@
 
         return date < networkStartDate || date > today;
       },
+      resetToDefault() {
+        this.calendar.selected = [new Date(), new Date()];
+        this.checkboxes.selected = [
+          'transaction',
+          'endorsement',
+          'delegation',
+          'origination',
+          'activate_account',
+          'double_baking_evidence',
+          'double_endorsement_evidence',
+          'baking',
+        ];
+      }
     },
   };
 </script>
