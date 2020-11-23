@@ -68,7 +68,7 @@
   import { mapState } from 'vuex';
 
   export default {
-    name: 'ReportExport',
+    name: 'ExportAccountReport',
     components: {
       DatePicker,
     },
