@@ -50,7 +50,8 @@
     "contractName": "Contract name",
     "bonds": "Bonds",
     "startDate": "Start date",
-    "endDate": "End date"
+    "endDate": "End date",
+    "export": "Export"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",

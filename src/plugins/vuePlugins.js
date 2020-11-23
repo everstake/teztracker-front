@@ -23,6 +23,7 @@ import {
   ToastPlugin,
   PaginationNavPlugin,
   SkeletonPlugin,
+  CalendarPlugin,
 } from 'bootstrap-vue';
 import {
   FontAwesomeIcon,
@@ -47,6 +48,7 @@ import {
   faGlobe,
   faEnvelope,
   faQuestionCircle,
+  faSyncAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faLightbulb,
@@ -92,6 +94,7 @@ Vue.use(FlagIcon);
 Vue.use(ToastPlugin);
 Vue.use(PaginationNavPlugin);
 Vue.use(SkeletonPlugin);
+Vue.use(CalendarPlugin);
 
 dom.watch();
 library.add(
@@ -112,6 +115,7 @@ library.add(
   faGlobe,
   faEnvelope,
   faQuestionCircle,
+  faSyncAlt,
 );
 library.add(
   faLightbulb,
