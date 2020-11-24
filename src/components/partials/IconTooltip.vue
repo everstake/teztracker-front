@@ -24,10 +24,11 @@
 <style lang="scss" scoped>
   .btn--tooltip {
     color: $color-brand;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
     display: flex;
     font-size: 16px;
+    border-radius: 50%;
+    margin-left: 7px;
 
     &:hover {
       color: darken($color-brand, 10%);
