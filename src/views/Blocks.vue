@@ -9,9 +9,13 @@
             <b-card no-body>
               <CardHeader>
                 <template #left-content class="text">
-                  <h4 class="tz-title--bold">
-                    {{ $t('listTypes.blocksList') }}
-                  </h4>
+                  <div class="d-flex align-items-center flex-wrap">
+                    <h4 class="tz-title--bold">
+                      {{ $t('listTypes.blocksList') }}
+                    </h4>
+
+                    <IconTooltip :tooltip-txt="$t('tooltips.blocks')" />
+                  </div>
                 </template>
                 <template #right-content class="text">
                   <Counter show-line :count="count" :loading="loading" />
@@ -43,6 +47,7 @@
   import BlocksList from '../components/blocks/BlocksList';
   import CardHeader from '../components/partials/CardHeader';
   import Counter from '../components/partials/Counter';
+  import IconTooltip from '@/components/partials/IconTooltip';
   import { SET_BLOCK } from '@/store/mutations.types';
   import reloadNavigationTable from '@/mixins/reloadNavigationList';
 
@@ -53,6 +58,7 @@
       BlocksList,
       CardHeader,
       Counter,
+      IconTooltip,
     },
     mixins: [reloadNavigationTable],
     computed: {
