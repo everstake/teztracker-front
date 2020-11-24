@@ -2,9 +2,13 @@
   <b-card no-body>
     <CardHeader>
       <template #left-content class="text">
-        <h4 class="tz-title--bold">
-          {{ $t('numberOf.#OfOperations') }}
-        </h4>
+        <div class="d-flex align-items-center flex-wrap">
+          <h4 class="tz-title--bold">
+            {{ $t('numberOf.#OfOperations') }}
+          </h4>
+
+          <IconTooltip :tooltip-txt="$t('tooltips.numOfOps')" />
+        </div>
       </template>
     </CardHeader>
 
@@ -27,6 +31,7 @@
 <script>
   import CardHeader from '../../partials/CardHeader';
   import LineChart from '../../partials/chart-types/LineChart.vue';
+  import IconTooltip from '@/components/partials/IconTooltip';
   import chartsData from '../../../mixins/charts/chartsData';
 
   export default {
@@ -34,6 +39,7 @@
     components: {
       CardHeader,
       LineChart,
+      IconTooltip,
     },
     mixins: [chartsData],
     data() {

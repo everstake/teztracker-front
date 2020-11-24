@@ -9,9 +9,13 @@
             <b-card no-body>
               <CardHeader>
                 <template #left-content class="text">
-                  <h4 class="tz-title--bold">
-                    {{ $t('listTypes.snapshotsList') }}
-                  </h4>
+                  <div class="d-flex align-items-center flex-wrap">
+                    <h4 class="tz-title--bold">
+                      {{ $t('listTypes.snapshotsList') }}
+                    </h4>
+
+                    <IconTooltip :tooltip-txt="$t('tooltips.snapshots')" />
+                  </div>
                 </template>
                 <template #right-content class="text">
                   <Counter show-line :count="count" :loading="loading" />
@@ -43,6 +47,7 @@
   import SnapshotsList from '../components/snapshots/SnapshotsList';
   import CardHeader from '../components/partials/CardHeader';
   import Counter from '../components/partials/Counter';
+  import IconTooltip from '@/components/partials/IconTooltip';
   import reloadNavigationList from '@/mixins/reloadNavigationList';
 
   export default {
@@ -52,6 +57,7 @@
       SnapshotsList,
       CardHeader,
       Counter,
+      IconTooltip,
     },
     mixins: [reloadNavigationList],
     computed: {

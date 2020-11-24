@@ -9,12 +9,20 @@
             <b-card no-body>
               <CardHeader>
                 <template #left-content class="text">
-                  <h4 class="tz-title--bold">
-                    {{ $t('listTypes.protocolsList') }}
-                  </h4>
+                  <div class="d-flex align-items-center flex-wrap">
+                    <h4 class="tz-title--bold">
+                      {{ $t('listTypes.protocolsList') }}
+                    </h4>
+
+                    <IconTooltip :tooltip-txt="$t('tooltips.protocols')" />
+                  </div>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="protocolsCount" :loading="loading" />
+                  <Counter
+                    show-line
+                    :count="protocolsCount"
+                    :loading="loading"
+                  />
                 </template>
               </CardHeader>
 
@@ -34,6 +42,7 @@
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import CardHeader from '../components/partials/CardHeader';
   import Counter from '../components/partials/Counter';
+  import IconTooltip from '@/components/partials/IconTooltip';
   import ProtocolsList from '@/components/protocol/ProtocolsList';
 
   export default {
@@ -43,6 +52,7 @@
       CardHeader,
       ProtocolsList,
       Counter,
+      IconTooltip,
     },
     data() {
       return {
