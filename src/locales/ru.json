@@ -523,6 +523,14 @@
     "copied": "Скопировано",
     "failed": "Не удалось скопировать"
   },
+  "tooltips": {
+    "blocks": "A Block is a set of Operations, sealed together in the Blockchain. A Hash is computed for every Block. In a Blockchain, every Block contains the Hash of the previous Block, so that any modification of a Block would change the Hashes of all the next Blocks.",
+    "snapshots": "A snapshot is a representation of the state of the network at a particular point in time with all the necessary data (history of transfers, balances, etc.). 16 snapshots are taken during each cycle of which is randomly selected and used for assigning baking and endorsement rights to the bakers.",
+    "bakingRights": "Each future block has a list of bakers with different priorities assigned to it. A baker with priority 0 is set to bake the block, however, if they miss their chance for some reason the block will be produced by a baker with priority 1 and so on.",
+    "protocols": "Due to Tezos onchain protocol amendment feature, a version of the protocol can change automatically after onchain voting. This list represents all the versions of the Tezos protocol.",
+    "numOfOps": "Number of delegations, transactions, endorsements, activations and originations.",
+    "avgBlockDelay": "An average delay between blocks being produced. A delay can increase dramatically if there’s a high number of missed blocks."
+  },
   "validationErrs": {
     "required": "Поле обязательно",
     "maxLength": "The field must be at most {num} characters",

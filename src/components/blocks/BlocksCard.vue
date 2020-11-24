@@ -2,9 +2,13 @@
   <b-card no-body class="blocks-card">
     <CardHeader>
       <template v-slot:left-content class="text">
-        <h4 class="tz-title--bold">
-          {{ $t('listTypes.blocksList') }}
-        </h4>
+        <div class="d-flex align-items-center flex-wrap">
+          <h4 class="tz-title--bold">
+            {{ $t('listTypes.blocksList') }}
+          </h4>
+
+          <IconTooltip :tooltip-txt="$t('tooltips.blocks')" />
+        </div>
       </template>
       <template v-slot:right-content class="text">
         <Counter show-line :count="count" :loading="loading" />
@@ -47,6 +51,7 @@
   import CardHeader from '../partials/CardHeader';
   import Counter from '../partials/Counter';
   import BlocksTable from '@/components/partials/tables/BlocksTable';
+  import IconTooltip from '@/components/partials/IconTooltip';
 
   export default {
     name: 'BlocksCard',
@@ -54,6 +59,7 @@
       BlocksTable,
       CardHeader,
       Counter,
+      IconTooltip,
     },
     data() {
       return {
