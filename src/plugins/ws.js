@@ -47,7 +47,7 @@ const sendObj = (obj) => {
   try {
     ws.send(JSON.stringify(obj));
   } catch (e) {
-    console.error(e);
+    // console.error(e);
   }
 };
 
