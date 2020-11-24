@@ -50,6 +50,7 @@
   import IconTooltip from '@/components/partials/IconTooltip';
   import { SET_BLOCK } from '@/store/mutations.types';
   import reloadNavigationTable from '@/mixins/reloadNavigationList';
+  import wsListHandler from '@/mixins/wsListsHandler';
 
   export default {
     name: 'Blocks',
@@ -60,7 +61,13 @@
       Counter,
       IconTooltip,
     },
-    mixins: [reloadNavigationTable],
+    mixins: [reloadNavigationTable, wsListHandler],
+    data() {
+      return {
+        // Expected in wsListHandler.js mixin
+        subscriptionChannel: 'blocks',
+      };
+    },
     computed: {
       crumbs() {
         return [

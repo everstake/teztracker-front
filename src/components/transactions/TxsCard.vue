@@ -44,6 +44,7 @@
   import CardHeader from '../partials/CardHeader';
   import Counter from '../partials/Counter';
   import TxsTable from '@/components/partials/tables/TxsTable';
+  import wsListsHandler from '@/mixins/wsListsHandler';
 
   export default {
     name: 'TxsCard',
@@ -52,6 +53,7 @@
       CardHeader,
       Counter,
     },
+    mixins: [wsListsHandler],
     data() {
       return {
         limit: 10,
@@ -59,6 +61,8 @@
         count: 0,
         page: 1,
         loading: true,
+        // Expected in wsListHandler.js mixin
+        subscriptionChannel: 'transactions',
       };
     },
     computed: {
