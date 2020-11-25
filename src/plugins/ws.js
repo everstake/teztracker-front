@@ -10,7 +10,7 @@ const connectionInterval = 10000;
 let subscriptions = [];
 
 const connect = (network = store.getters['app/getAppNetwork']) => {
-  ws = new WebSocket(`ws://168.119.9.132:8085/v2/${network}/ws`);
+  ws = new WebSocket(`${process.env.VUE_APP_ROOT_WS_API}/v2/${network}/ws`);
 
   ws.onopen = () => {
     isOpen = true;
