@@ -6,6 +6,7 @@ import './plugins/tezosApi';
 import './plugins/vuePlugins';
 import './plugins/helpers';
 import './plugins/eventBus';
+import './plugins/ws';
 import './filters';
 import router from './router';
 import store from './store';

@@ -303,13 +303,12 @@
 
 <script>
   import { mapState, mapActions } from 'vuex';
-  import { GET_APP_INFO, GET_BLOCK_HEAD } from '@/store/actions.types';
+  import { GET_BLOCK_HEAD } from '@/store/actions.types';
 
   import BlocksCard from '../components/blocks/BlocksCard.vue';
   import TxsCard from '../components/transactions/TxsCard';
   import CycleCounter from '../components/partials/cycle/CycleCounter';
   import Search from '../components/partials/Search';
-  import { setInterval, clearInterval } from 'timers';
   import moment from 'moment';
 
   export default {
@@ -319,11 +318,6 @@
       TxsCard,
       Search,
       CycleCounter,
-    },
-    data() {
-      return {
-        interval: null,
-      };
     },
     computed: {
       ...mapState('app', {
@@ -386,17 +380,9 @@
       },
     },
     async created() {
-      this.interval = setInterval(async () => {
-        await this[GET_APP_INFO](this.currentCurrency);
-      }, 10000);
-
       await Promise.all([await this[GET_BLOCK_HEAD]()]);
     },
-    beforeDestroy() {
-      clearInterval(this.interval);
-    },
     methods: {
-      ...mapActions('app', [GET_APP_INFO]),
       ...mapActions('blocks', [GET_BLOCK_HEAD]),
     },
   };

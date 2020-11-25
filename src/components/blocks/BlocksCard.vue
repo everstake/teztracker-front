@@ -52,6 +52,7 @@
   import Counter from '../partials/Counter';
   import BlocksTable from '@/components/partials/tables/BlocksTable';
   import IconTooltip from '@/components/partials/IconTooltip';
+  import wsListsHandler from '@/mixins/wsListsHandler';
 
   export default {
     name: 'BlocksCard',
@@ -61,13 +62,16 @@
       Counter,
       IconTooltip,
     },
+    mixins: [wsListsHandler],
     data() {
       return {
         limit: 10,
         items: [],
         count: 0,
-        page: 1,
+        page: null,
         loading: true,
+        // Expected in wsListHandler.js mixin
+        subscriptionChannel: 'blocks',
       };
     },
     computed: {
@@ -81,6 +85,8 @@
       },
     },
     async created() {
+      // TODO: Refactor page handling as it causes WS subscriptions unexpected behaviour
+      this.page = 1;
       await this.reload();
     },
     methods: {
