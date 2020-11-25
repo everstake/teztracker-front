@@ -59,7 +59,7 @@
         limit: 10,
         items: [],
         count: 0,
-        page: 1,
+        page: null,
         loading: true,
         // Expected in wsListHandler.js mixin
         subscriptionChannel: 'transactions',
@@ -80,6 +80,8 @@
       },
     },
     async created() {
+      // TODO: Refactor page handling as it causes WS subscriptions unexpected behaviour
+      this.page = 1;
       await this.reload();
     },
     methods: {
