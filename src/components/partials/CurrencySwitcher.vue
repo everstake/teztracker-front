@@ -54,14 +54,16 @@
           const { currency, connection } = val;
           const { currency: oldCurrency } = oldVal || { currency: '' };
 
+          // TODO: Refactor XTZ handling
           const wsCurrency = currency === 'xtz' ? 'usd' : currency;
+          const wsOldCurrency = oldCurrency === 'xtz' ? 'usd' : oldCurrency;
 
           if (currency) {
             localStorage.setItem('currency', currency);
 
             if (connection) {
-              if (this.$ws.subscriptions.includes(`info_${oldCurrency}`)) {
-                this.$ws.unsubscribeFromChannel(`info_${oldCurrency}`);
+              if (this.$ws.subscriptions.includes(`info_${wsOldCurrency}`)) {
+                this.$ws.unsubscribeFromChannel(`info_${wsOldCurrency}`);
               }
 
               await this[GET_APP_INFO](currency);
