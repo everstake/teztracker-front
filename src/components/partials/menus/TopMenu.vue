@@ -201,6 +201,7 @@
           <b-nav-form v-if="isSearchVisible" class="search">
             <Search :placeholder="$t('search.placeholder')" />
           </b-nav-form>
+          <BtnsBeacon />
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -216,6 +217,7 @@
   import DateFormatSwitcher from '@/components/partials/DateFormatSwitcher';
   import CurrencySwitcher from '@/components/partials/CurrencySwitcher';
   import LanguageSwitcher from '@/components/partials/LanguageSwitcher';
+  import BtnsBeacon from '@/components/partials/BtnsBeacon';
   import Logo from '../icons/Logo';
 
   export default {
@@ -226,6 +228,7 @@
       CurrencySwitcher,
       LanguageSwitcher,
       Logo,
+      BtnsBeacon,
     },
     mixins: [network, uuid],
     data() {
