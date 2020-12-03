@@ -4,21 +4,25 @@
       <b-col lg="12">
         <b-card no-body>
           <b-card-header>
-            <h3>
-              <span class="text">
-                <IdentIcon :seed="hash" />
+            <div class="card__heading">
+              <h3>
+                <span class="text">
+                  <IdentIcon :seed="hash" />
 
-                <template v-if="account.name">
-                  {{ account.name }}
-                </template>
-                <template v-else>
-                  <span class="text-break">
-                    {{ hash }}
-                    <BtnCopy :text-to-copy="hash" />
-                  </span>
-                </template>
-              </span>
-            </h3>
+                  <template v-if="account.name">
+                    {{ account.name }}
+                  </template>
+                  <template v-else>
+                    <span class="text-break">
+                      {{ hash }}
+                      <BtnCopy :text-to-copy="hash" />
+                    </span>
+                  </template>
+                </span>
+              </h3>
+
+<!--              <ExportAccountReport />-->
+            </div>
             <div class="subtitle">
               {{ $t('infoTypes.assetInfo') }}
             </div>
@@ -98,12 +102,14 @@
   import IdentIcon from '@/components/accounts/IdentIcon';
   import BtnCopy from '@/components/partials/BtnCopy';
   import convert from '../../mixins/convert';
+  // import ExportAccountReport from '@/components/partials/ExportAccountReport';
 
   export default {
     name: 'AssetSingle',
     components: {
       IdentIcon,
       BtnCopy,
+      // ExportAccountReport,
     },
     mixins: [convert],
     props: {
@@ -181,5 +187,10 @@
 <style scoped lang="scss">
   .asset-single__skeleton {
     width: 200px;
+  }
+
+  .card__heading {
+    display: flex;
+    justify-content: space-between;
   }
 </style>

@@ -8,50 +8,55 @@ function formatURL(api, path, query) {
   return `${api}${path}?${querystring.stringify(query)}`;
 }
 
-async function get(api, path, query, isStandard = true) {
+async function get(api, path, query, isStandard = true, config = {}) {
   const { page = 1, limit = 10 } = query;
   const offset = limit * (page - 1);
   delete query.page;
   let data = {};
   let result = {};
-  try {
-    data = await http.get(
-      isStandard
-        ? formatURL(api, path, Object.assign({}, query, { limit, offset }))
-        : formatURL(api, path, Object.assign({}, query)),
-    );
+  let url;
 
-    result.data = data.data;
-    result.status = data.status;
-
-    if (data.headers && data.headers[Vue.prototype.$constants.COUNT_HEADER]) {
-      result.count = parseInt(
-        data.headers[Vue.prototype.$constants.COUNT_HEADER],
-      );
-    }
-
-    result = { ...result, data: data.data, status: data.status };
-    return result;
-  } catch (e) {
-    const responseNotDefined = !e.response;
-    const requestHasBeenCancelled = e.message === 'Request cancelled';
-
-    if (responseNotDefined && requestHasBeenCancelled) {
-      return;
-    }
-    handleError(e);
-
-    data = e.response;
-
-    if (data.headers && data.headers[Vue.prototype.$constants.COUNT_HEADER]) {
-      result.count = parseInt(
-        data.headers[Vue.prototype.$constants.COUNT_HEADER],
-      );
-    }
-
-    result = { ...result, data: data.data, status: data.status };
-    return result;
+  if (isStandard) {
+    url = formatURL(api, path, Object.assign({}, query, { limit, offset }));
+  } else {
+    url = formatURL(api, path, Object.assign({}, query));
   }
+
+  return await http
+    .get(url, { ...config })
+    .then((data) => {
+      result.data = data.data;
+      result.status = data.status;
+
+      if (data.headers && data.headers[Vue.prototype.$constants.COUNT_HEADER]) {
+        result.count = parseInt(
+          data.headers[Vue.prototype.$constants.COUNT_HEADER],
+        );
+      }
+
+      result = { ...result, data: data.data, status: data.status };
+      return result;
+    })
+    .catch((e) => {
+      const responseNotDefined = !e.response;
+      const requestHasBeenCancelled = e.message === 'Request cancelled';
+
+      if (responseNotDefined && requestHasBeenCancelled) {
+        return;
+      }
+      handleError(e);
+
+      data = e.response;
+
+      if (data.headers && data.headers[Vue.prototype.$constants.COUNT_HEADER]) {
+        result.count = parseInt(
+          data.headers[Vue.prototype.$constants.COUNT_HEADER],
+        );
+      }
+
+      result = { ...result, data: data.data, status: data.status };
+      return result;
+    });
 }
 
 const TzAPI = {
@@ -163,6 +168,11 @@ const TzAPI = {
       `accounts/security_deposit/${account}/future`,
       opts,
     );
+  },
+  getAccountReport(opts = {}, config) {
+    const { account } = opts;
+    delete opts.account;
+    return get(this.API_URL(), `accounts/${account}/report`, opts, false, config);
   },
   getContracts(opts = {}) {
     return get(this.API_URL(), 'contracts', opts);

@@ -50,7 +50,8 @@
     "contractName": "Contract name",
     "bonds": "Bonds",
     "startDate": "Start date",
-    "endDate": "End date"
+    "endDate": "End date",
+    "export": "Export"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -544,5 +545,8 @@
     "400": "Bad request",
     "500": "Internal error",
     "ERR_SERVICE": "Service error"
+  },
+  "tooltipMessages": {
+    "noDataForSelectedPeriod": "Opps, looks like there's no data for the selected period."
   }
 }

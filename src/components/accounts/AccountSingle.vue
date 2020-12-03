@@ -5,20 +5,21 @@
         <b-card no-body>
           <b-card-header>
             <div class="break-word">
-              <h3 class="card__title text-accent">
-                <IdentIcon :seed="hash" />
+              <div class="card__heading">
+                <h3 class="card__title text-accent">
+                  <IdentIcon :seed="hash" />
 
-                <template v-if="account.accountName">
-                  {{ account.accountName }}
-                </template>
-                <template v-else>
-                  <span class="text-break">
-                    <span>{{ hash }}</span>
-                    <BtnCopy :text-to-copy="hash" />
-                  </span>
-                </template>
-              </h3>
-
+                  <template v-if="account.accountName">
+                    {{ account.accountName }}
+                  </template>
+                  <template v-else>
+                    <span class="text-break">
+                      <span>{{ hash }}</span>
+                      <BtnCopy :text-to-copy="hash" />
+                    </span>
+                  </template>
+                </h3>
+              </div>
               <div class="subtitle">
                 <span v-if="hash.slice(0, 2) === 'KT'">{{
                   $t('infoTypes.contractInfo')
@@ -38,7 +39,10 @@
                 </span>
               </b-col>
               <b-col lg="10">
-                <b-skeleton v-if="loading" class="account-single__skeleton"></b-skeleton>
+                <b-skeleton
+                  v-if="loading"
+                  class="account-single__skeleton"
+                ></b-skeleton>
                 <span class="value">{{ account.manager }}</span>
               </b-col>
             </b-row>
@@ -50,7 +54,10 @@
                 </span>
               </b-col>
               <b-col lg="10">
-                <b-skeleton v-if="loading" class="account-single__skeleton"></b-skeleton>
+                <b-skeleton
+                  v-if="loading"
+                  class="account-single__skeleton"
+                ></b-skeleton>
                 <span v-else class="value">
                   {{ account.createdAt | timeformat(dateFormat) }}
                 </span>
@@ -64,7 +71,10 @@
                 </span>
               </b-col>
               <b-col lg="10">
-                <b-skeleton v-if="loading" class="account-single__skeleton"></b-skeleton>
+                <b-skeleton
+                  v-if="loading"
+                  class="account-single__skeleton"
+                ></b-skeleton>
                 <span
                   v-else-if="account.delegateValue"
                   class="d-flex align-items-center"
@@ -93,7 +103,10 @@
                 </span>
               </b-col>
               <b-col lg="10">
-                <b-skeleton v-if="loading" class="account-single__skeleton"></b-skeleton>
+                <b-skeleton
+                  v-if="loading"
+                  class="account-single__skeleton"
+                ></b-skeleton>
                 <span v-else class="value">
                   {{ account.balance | denominate }}
                 </span>
@@ -107,7 +120,10 @@
                 </span>
               </b-col>
               <b-col lg="10">
-                <b-skeleton v-if="loading" class="account-single__skeleton"></b-skeleton>
+                <b-skeleton
+                  v-if="loading"
+                  class="account-single__skeleton"
+                ></b-skeleton>
                 <span v-else class="value">
                   {{ account.operations }}
                 </span>
@@ -121,7 +137,10 @@
                 </span>
               </b-col>
               <b-col lg="10">
-                <b-skeleton v-if="loading" class="account-single__skeleton"></b-skeleton>
+                <b-skeleton
+                  v-if="loading"
+                  class="account-single__skeleton"
+                ></b-skeleton>
                 <span v-else class="value">
                   {{ account.lastActive | timeformat(dateFormat) }}
                 </span>
@@ -135,7 +154,10 @@
                 </span>
               </b-col>
               <b-col lg="10">
-                <b-skeleton v-if="loading" class="account-single__skeleton"></b-skeleton>
+                <b-skeleton
+                  v-if="loading"
+                  class="account-single__skeleton"
+                ></b-skeleton>
                 <span
                   v-else
                   class="value value--capitalize"
@@ -263,5 +285,10 @@
 
   .account-single__skeleton {
     width: 150px;
+  }
+
+  .card__heading {
+    display: flex;
+    justify-content: space-between;
   }
 </style>

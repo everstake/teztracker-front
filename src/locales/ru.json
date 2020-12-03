@@ -50,7 +50,8 @@
     "contractName": "Название контракта",
     "bonds": "Залог",
     "startDate": "Start date",
-    "endDate": "End date"
+    "endDate": "End date",
+    "export": "Export"
   },
   "opTypes": {
     "tx": "Транзакция | Транзакции",
@@ -544,5 +545,8 @@
     "400": "Bad request",
     "500": "Internal error",
     "ERR_SERVICE": "Service error"
+  },
+  "tooltipMessages": {
+    "noDataForSelectedPeriod": "Упс, похоже, данных за выбранный период нет."
   }
 }

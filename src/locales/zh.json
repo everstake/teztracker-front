@@ -50,7 +50,8 @@
     "contractName": "合同名称",
     "bonds": "债券",
     "startDate": "Start date",
-    "endDate": "End date"
+    "endDate": "End date",
+    "export": "Export"
   },
   "opTypes": {
     "tx": "交易 | 交易",
@@ -544,5 +545,8 @@
     "400": "Bad request",
     "500": "Internal error",
     "ERR_SERVICE": "Service error"
+  },
+  "tooltipMessages": {
+    "noDataForSelectedPeriod": "Opps, looks like there's no data for the selected period."
   }
 }

@@ -1,0 +1,36 @@
+$namespace: 'teztracker';
+
+$default-color: #9ea0a5;
+$primary-color: #309282;
+$input-hover-border-color: $primary-color;
+@import '~vue2-datepicker/scss/index.scss';
+
+.teztracker-datepicker-main {
+  font-family: 'Montserrat Alternates', Arial, sans-serif;
+}
+
+.teztracker-calendar {
+  width: 100%;
+}
+
+.teztracker-datepicker-btn-confirm {
+  color: #fff;
+  background-color: #309282;
+  border-color: #309282;
+  font-size: 14px;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+}
+.teztracker-datepicker-btn-confirm:focus {
+  box-shadow: 0 0 0 0.2rem rgba(79, 162, 149, 0.5);
+}
+
+.teztracker-datepicker-btn-confirm:hover,
+.teztracker-datepicker-btn-confirm:active, {
+  color: #fff;
+  background-color: #236c60;
+  border-color: #206257;
+}
+
+
