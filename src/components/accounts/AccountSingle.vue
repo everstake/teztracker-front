@@ -19,8 +19,6 @@
                     </span>
                   </template>
                 </h3>
-
-                <ExportAccountReport />
               </div>
               <div class="subtitle">
                 <span v-if="hash.slice(0, 2) === 'KT'">{{
@@ -194,14 +192,12 @@
   import convert from '../../mixins/convert';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
-  import ExportAccountReport from '@/components/partials/ExportAccountReport';
 
   export default {
     name: 'AccountSingle',
     components: {
       BtnCopy,
       IdentIcon,
-      ExportAccountReport,
     },
     mixins: [convert],
     props: {

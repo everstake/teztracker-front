@@ -122,6 +122,9 @@
                     />
                   </b-card-body>
                 </b-tab>
+                <template #tabs-end>
+                  <ExportAccountReport />
+                </template>
               </b-tabs>
             </b-card>
           </b-col>
@@ -140,6 +143,7 @@
   import DelegationsTabList from '@/components/partials/tabs/DelegationsTabList';
   import OriginationsTabList from '@/components/partials/tabs/OriginationsTabList';
   import OperationsTabList from '@/components/partials/tabs/OperationsTabList';
+  import ExportAccountReport from '@/components/partials/ExportAccountReport';
 
   export default {
     name: 'Account',
@@ -151,6 +155,7 @@
       Breadcrumbs,
       AccountSingle,
       ChartBalanceLast30Days,
+      ExportAccountReport,
     },
     mixins: [reloadTabTables],
     props: {

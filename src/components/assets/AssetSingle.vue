@@ -21,7 +21,7 @@
                 </span>
               </h3>
 
-              <ExportAccountReport />
+<!--              <ExportAccountReport />-->
             </div>
             <div class="subtitle">
               {{ $t('infoTypes.assetInfo') }}
@@ -102,14 +102,14 @@
   import IdentIcon from '@/components/accounts/IdentIcon';
   import BtnCopy from '@/components/partials/BtnCopy';
   import convert from '../../mixins/convert';
-  import ExportAccountReport from '@/components/partials/ExportAccountReport';
+  // import ExportAccountReport from '@/components/partials/ExportAccountReport';
 
   export default {
     name: 'AssetSingle',
     components: {
       IdentIcon,
       BtnCopy,
-      ExportAccountReport,
+      // ExportAccountReport,
     },
     mixins: [convert],
     props: {
