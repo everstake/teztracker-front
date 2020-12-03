@@ -8,6 +8,7 @@ import {
   SET_APP_NETWORK_CHANGABLE,
   SET_DATE_FORMAT,
   SET_CURRENT_CURRENCY,
+  SET_IS_WS_CONNECTION_OPEN,
 } from '@/store/mutations.types';
 
 const initialState = {
@@ -19,6 +20,7 @@ const initialState = {
   dateFormat: Vue.prototype.$constants.DATE_FORMAT,
   cancelTokens: [],
   currentCurrency: '',
+  isWsConnectionOpen: false,
 };
 
 export const state = { ...initialState };
@@ -66,6 +68,9 @@ export const mutations = {
   },
   [SET_CURRENT_CURRENCY](state, currency) {
     state.currentCurrency = currency;
+  },
+  [SET_IS_WS_CONNECTION_OPEN](state, newState) {
+    state.isWsConnectionOpen = newState;
   },
 };
 

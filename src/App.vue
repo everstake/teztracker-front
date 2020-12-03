@@ -5,12 +5,24 @@
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
+  import { mapState, mapGetters } from 'vuex';
 
   export default {
     name: 'App',
     computed: {
+      ...mapState('app', ['isWsConnectionOpen']),
       ...mapGetters('app', ['getAppNetwork']),
+    },
+    watch: {
+      getAppNetwork: {
+        immediate: true,
+        handler() {
+          if (this.isWsConnectionOpen) {
+            this.$ws.close();
+          }
+          this.$ws.connect();
+        },
+      },
     },
     created() {
       this.checkHealth();

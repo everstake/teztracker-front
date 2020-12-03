@@ -44,6 +44,7 @@
   import CardHeader from '../partials/CardHeader';
   import Counter from '../partials/Counter';
   import TxsTable from '@/components/partials/tables/TxsTable';
+  import wsListsHandler from '@/mixins/wsListsHandler';
 
   export default {
     name: 'TxsCard',
@@ -52,13 +53,16 @@
       CardHeader,
       Counter,
     },
+    mixins: [wsListsHandler],
     data() {
       return {
         limit: 10,
         items: [],
         count: 0,
-        page: 1,
+        page: null,
         loading: true,
+        // Expected in wsListHandler.js mixin
+        subscriptionChannel: 'transactions',
       };
     },
     computed: {
@@ -76,6 +80,8 @@
       },
     },
     async created() {
+      // TODO: Refactor page handling as it causes WS subscriptions unexpected behaviour
+      this.page = 1;
       await this.reload();
     },
     methods: {

@@ -2,9 +2,13 @@
   <b-card no-body class="blocks-card">
     <CardHeader>
       <template v-slot:left-content class="text">
-        <h4 class="tz-title--bold">
-          {{ $t('listTypes.blocksList') }}
-        </h4>
+        <div class="d-flex align-items-center flex-wrap">
+          <h4 class="tz-title--bold">
+            {{ $t('listTypes.blocksList') }}
+          </h4>
+
+          <IconTooltip :tooltip-txt="$t('tooltips.blocks')" />
+        </div>
       </template>
       <template v-slot:right-content class="text">
         <Counter show-line :count="count" :loading="loading" />
@@ -47,6 +51,8 @@
   import CardHeader from '../partials/CardHeader';
   import Counter from '../partials/Counter';
   import BlocksTable from '@/components/partials/tables/BlocksTable';
+  import IconTooltip from '@/components/partials/IconTooltip';
+  import wsListsHandler from '@/mixins/wsListsHandler';
 
   export default {
     name: 'BlocksCard',
@@ -54,14 +60,18 @@
       BlocksTable,
       CardHeader,
       Counter,
+      IconTooltip,
     },
+    mixins: [wsListsHandler],
     data() {
       return {
         limit: 10,
         items: [],
         count: 0,
-        page: 1,
+        page: null,
         loading: true,
+        // Expected in wsListHandler.js mixin
+        subscriptionChannel: 'blocks',
       };
     },
     computed: {
@@ -75,6 +85,8 @@
       },
     },
     async created() {
+      // TODO: Refactor page handling as it causes WS subscriptions unexpected behaviour
+      this.page = 1;
       await this.reload();
     },
     methods: {

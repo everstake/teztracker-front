@@ -9,34 +9,56 @@
             <b-card class="mb-3" no-body>
               <CardHeader>
                 <template #left-content class="text">
-                  <h4 class="tz-title--bold">
-                    {{ $t('listTypes.futureBakingRightsList') }}
-                  </h4>
+                  <div class="d-flex align-items-center flex-wrap">
+                    <h4 class="tz-title--bold">
+                      {{ $t('listTypes.futureBakingRightsList') }}
+                    </h4>
+
+                    <IconTooltip :tooltip-txt="$t('tooltips.bakingRights')" />
+                  </div>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count.future_baking_rights" :loading="loading.futureBakingRights" />
+                  <Counter
+                    show-line
+                    :count="count.future_baking_rights"
+                    :loading="loading.futureBakingRights"
+                  />
                 </template>
               </CardHeader>
 
               <b-card-body>
-                <FutureBakingRightsList :loading="loading.futureBakingRights" @onLoading="handleLoading" />
+                <FutureBakingRightsList
+                  :loading="loading.futureBakingRights"
+                  @onLoading="handleLoading"
+                />
               </b-card-body>
             </b-card>
 
             <b-card no-body>
               <CardHeader>
                 <template #left-content class="text">
-                  <h4 class="tz-title--bold">
-                    {{ $t('listTypes.pastBakingRightsList') }}
-                  </h4>
+                  <div class="d-flex align-items-center flex-wrap">
+                    <h4 class="tz-title--bold">
+                      {{ $t('listTypes.pastBakingRightsList') }}
+                    </h4>
+
+                    <IconTooltip :tooltip-txt="$t('tooltips.bakingRights')" />
+                  </div>
                 </template>
                 <template #right-content class="text">
-                  <Counter show-line :count="count.baking_rights" :loading="loading.bakingRights"  />
+                  <Counter
+                    show-line
+                    :count="count.baking_rights"
+                    :loading="loading.bakingRights"
+                  />
                 </template>
               </CardHeader>
 
               <b-card-body>
-                <BakingRightsList :loading="loading.bakingRights" @onLoading="handleLoading" />
+                <BakingRightsList
+                  :loading="loading.bakingRights"
+                  @onLoading="handleLoading"
+                />
               </b-card-body>
             </b-card>
           </b-col>
@@ -53,6 +75,7 @@
   import FutureBakingRightsList from '../components/baking_rights/FutureBakingRightsList';
   import CardHeader from '../components/partials/CardHeader';
   import Counter from '../components/partials/Counter';
+  import IconTooltip from '@/components/partials/IconTooltip';
 
   export default {
     name: 'BakingRights',
@@ -62,6 +85,7 @@
       FutureBakingRightsList,
       CardHeader,
       Counter,
+      IconTooltip,
     },
     data() {
       return {

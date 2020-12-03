@@ -9,7 +9,7 @@
 
 <script>
   import { mapState, mapMutations, mapActions } from 'vuex';
-  import { SET_CURRENT_CURRENCY } from '@/store/mutations.types';
+  import { SET_APP_INFO, SET_CURRENT_CURRENCY } from '@/store/mutations.types';
   import { GET_APP_INFO } from '@/store/actions.types';
 
   export default {
@@ -23,29 +23,14 @@
           { text: 'GBP', value: 'gbp' },
           { text: 'CNY', value: 'cny' },
         ],
-        getInfoRouteNames: [
-          'network',
-          'blocks',
-          'block',
-          'tx',
-          'txs',
-          'delegations',
-          'originations',
-          'bakers',
-          'baker',
-          'public_bakers',
-          'double_endorsement',
-          'double_baking',
-          'accounts',
-          'top_accounts',
-          'account',
-          'contracts',
-          'asset',
-        ],
       };
     },
     computed: {
-      ...mapState('app', ['currentCurrency', 'priceInfo']),
+      ...mapState('app', [
+        'currentCurrency',
+        'priceInfo',
+        'isWsConnectionOpen',
+      ]),
       // for v-model
       currentCurrencyLocal: {
         get() {
@@ -55,28 +40,49 @@
           this[SET_CURRENT_CURRENCY](val);
         },
       },
+      currencyAndConnection() {
+        return {
+          currency: this.currentCurrency,
+          connection: this.isWsConnectionOpen,
+        };
+      },
     },
     watch: {
-      currentCurrency: {
+      currencyAndConnection: {
         immediate: true,
-        handler(val) {
-          if (val) {
-            localStorage.setItem('currency', val);
-            this[GET_APP_INFO](val);
+        async handler(val, oldVal) {
+          const { currency, connection } = val;
+          const { currency: oldCurrency } = oldVal || { currency: '' };
+
+          // TODO: Refactor XTZ handling
+          const wsCurrency = currency === 'xtz' ? 'usd' : currency;
+          const wsOldCurrency = oldCurrency === 'xtz' ? 'usd' : oldCurrency;
+
+          if (currency) {
+            localStorage.setItem('currency', currency);
+
+            if (connection) {
+              if (this.$ws.subscriptions.includes(`info_${wsOldCurrency}`)) {
+                this.$ws.unsubscribeFromChannel(`info_${wsOldCurrency}`);
+              }
+
+              await this[GET_APP_INFO](currency);
+              this.$ws.subscribeToChannel(`info_${wsCurrency}`);
+              this.$ws.onmessage((res) => {
+                if (res.event === `info_${wsCurrency}`) {
+                  this[SET_APP_INFO](res.data);
+                }
+              });
+            }
           }
         },
-      },
-      '$route.name'(val) {
-        if (this.getInfoRouteNames.includes(val)) {
-          this[GET_APP_INFO](this.currentCurrency);
-        }
       },
     },
     created() {
       this.setInitialCurrentCurrency();
     },
     methods: {
-      ...mapMutations('app', [SET_CURRENT_CURRENCY]),
+      ...mapMutations('app', [SET_CURRENT_CURRENCY, SET_APP_INFO]),
       ...mapActions('app', [GET_APP_INFO]),
       setInitialCurrentCurrency() {
         if (
