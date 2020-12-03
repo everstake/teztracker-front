@@ -172,6 +172,15 @@
           .getAccountReport(props, config)
           .then((response) => {
             if (response.status !== 200) return;
+            if (response.data.size === 0) {
+              this.$bvToast.toast(this.$t('tooltipMessages.noDataForSelectedPeriod'), {
+                title: this.$t('errorsNotifications.error'),
+                autoHideDelay: 4000,
+                variant: 'danger',
+                appendToast: false,
+              });
+              return;
+            }
             const blobURL = window.URL.createObjectURL(new Blob([response.data]));
             const tempLink = document.createElement('a');
 

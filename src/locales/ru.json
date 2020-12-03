@@ -545,5 +545,8 @@
     "400": "Bad request",
     "500": "Internal error",
     "ERR_SERVICE": "Service error"
+  },
+  "tooltipMessages": {
+    "noDataForSelectedPeriod": "Упс, похоже, данных за выбранный период нет."
   }
 }
