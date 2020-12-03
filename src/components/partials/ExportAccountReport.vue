@@ -1,7 +1,7 @@
 <template>
   <div class="export">
     <b-btn
-      class="card__button"
+      class="card__button export__button"
       variant="success"
       type="submit"
       @click="handleExportClick"
@@ -57,7 +57,7 @@
           </b-button>
         </div>
         <div class="modal__section text-center">
-          <small>Report file is limited to about 250.000 rows.</small>
+          <small>The report file is exported in the .csv format. Please note that .csv is limited to 250,000 rows, so it’s better to select shorter time periods to make sure all the data fits into a file.</small>
         </div>
       </div>
     </b-modal>
@@ -217,6 +217,13 @@
 </script>
 
 <style scoped lang="scss">
+  .export__button {
+    margin-left: 2rem;
+    margin-right: 2rem;
+    font-weight: 700;
+    line-height: 20px;
+  }
+
   .modal__section:not(:last-child) {
     margin-bottom: 1rem;
   }

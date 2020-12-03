@@ -18,8 +18,6 @@
                   </span>
                 </template>
               </h3>
-
-              <ExportAccountReport />
             </div>
             <div class="subtitle mb-2">
               {{ $t('infoTypes.bakerInfo') }}
@@ -231,7 +229,6 @@
   import BakerSocials from '@/components/bakers/BakerSocials';
   import convert from '../../mixins/convert';
   import uuid from '@/mixins/uuid';
-  import ExportAccountReport from '@/components/partials/ExportAccountReport';
 
   export default {
     name: 'BakerSingle',
@@ -239,7 +236,6 @@
       IdentIcon,
       BtnCopy,
       BakerSocials,
-      ExportAccountReport,
     },
     mixins: [convert, uuid],
     props: {

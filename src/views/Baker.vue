@@ -227,6 +227,9 @@
                     />
                   </b-card-body>
                 </b-tab>
+                <template #tabs-end>
+                  <ExportAccountReport />
+                </template>
               </b-tabs>
             </b-card>
           </b-col>
@@ -248,6 +251,7 @@
   import BakerEndorsingList from '@/components/bakers/BakerEndorsingList';
   import BakerRewardsList from '@/components/bakers/BakerRewardsList';
   import reloadTabTables from '@/mixins/reloadTabulationList';
+  import ExportAccountReport from '@/components/partials/ExportAccountReport';
 
   export default {
     name: 'Baker',
@@ -262,6 +266,7 @@
       BakingTabList,
       BakerEndorsingList,
       BondsTabList,
+      ExportAccountReport,
     },
     mixins: [reloadTabTables],
     computed: {
