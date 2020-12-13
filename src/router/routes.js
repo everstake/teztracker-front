@@ -67,6 +67,9 @@ const Glossary = () => import('../views/Glossary.vue');
 const Feedback = () => import('../views/Feedback.vue');
 const Mempool = () => import('../views/Mempool.vue');
 
+// Personal account
+const PersonalAccount = () => import('../views/PersonalAccount.vue');
+
 // Errors
 const Maintenance = () => import('../views/Maintenance.vue');
 const NotFound = () => import('../views/errors/NotFound.vue');
@@ -252,5 +255,10 @@ export default [
       },
       /* Charts group end */
     ],
+  },
+  {
+    name: 'personal-account',
+    path: '/account',
+    component: PersonalAccount,
   },
 ];

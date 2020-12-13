@@ -185,6 +185,7 @@
               {{ $t(`nets.${network}`) }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
+          <LanguageSwitcher />
           <b-nav-item-dropdown class="date-switcher">
             <template slot="button-content">
               <font-awesome-icon icon="cog" />
@@ -197,10 +198,12 @@
               <CurrencySwitcher />
             </b-dropdown-text>
           </b-nav-item-dropdown>
-          <LanguageSwitcher />
           <b-nav-form v-if="isSearchVisible" class="search">
             <Search :placeholder="$t('search.placeholder')" />
           </b-nav-form>
+          <b-nav-item href="/account">
+            <font-awesome-icon :icon="['fas', 'user']" />
+          </b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
