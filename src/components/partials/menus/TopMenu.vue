@@ -1,9 +1,12 @@
 <template>
   <header class="main-header">
     <b-navbar toggleable="xl" :sticky="true">
-      <b-navbar-brand href="#">
+      <b-navbar-brand>
         <router-link
-          :to="{ name: 'network', params: { network: currentNetwork } }"
+          :to="{
+            name: 'network',
+            params: { network: currentNetwork, language: currentLanguage },
+          }"
         >
           <Logo />
         </router-link>
@@ -13,36 +16,45 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item-dropdown :text="$tc('common.block', 2)">
+          <b-nav-item-dropdown id="blocks" :text="$tc('common.block', 2)">
             <b-dropdown-item
-              :to="{ name: 'blocks', params: { network: currentNetwork } }"
+              :to="{
+                name: 'blocks',
+                params: { network: currentNetwork, language: currentLanguage },
+              }"
             >
               {{ $tc('common.block', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
-              :to="{ name: 'snapshots', params: { network: currentNetwork } }"
+              :to="{
+                name: 'snapshots',
+                params: { network: currentNetwork, language: currentLanguage },
+              }"
             >
               {{ $tc('common.snapshot', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
                 name: 'baking_rights',
-                params: { network: currentNetwork },
+                params: { network: currentNetwork, language: currentLanguage },
               }"
             >
               {{ $tc('common.bakingRights', 2) }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown :text="$t('header.operations')">
+          <b-nav-item-dropdown id="operations" :text="$t('header.operations')">
             <b-dropdown-item
-              :to="{ name: 'txs', params: { network: currentNetwork } }"
+              :to="{
+                name: 'txs',
+                params: { network: currentNetwork, language: currentLanguage },
+              }"
             >
               {{ $tc('opTypes.tx', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
                 name: 'endorsements',
-                params: { network: currentNetwork },
+                params: { network: currentNetwork, language: currentLanguage },
               }"
             >
               {{ $tc('opTypes.endorsement', 2) }}
@@ -50,7 +62,7 @@
             <b-dropdown-item
               :to="{
                 name: 'delegations',
-                params: { network: currentNetwork },
+                params: { network: currentNetwork, language: currentLanguage },
               }"
             >
               {{ $tc('opTypes.delegation', 2) }}
@@ -58,7 +70,7 @@
             <b-dropdown-item
               :to="{
                 name: 'originations',
-                params: { network: currentNetwork },
+                params: { network: currentNetwork, language: currentLanguage },
               }"
             >
               {{ $tc('opTypes.origination', 2) }}
@@ -66,7 +78,7 @@
             <b-dropdown-item
               :to="{
                 name: 'activations',
-                params: { network: currentNetwork },
+                params: { network: currentNetwork, language: currentLanguage },
               }"
             >
               {{ $tc('opTypes.activation', 2) }}
@@ -74,7 +86,7 @@
             <b-dropdown-item
               :to="{
                 name: 'mempool',
-                params: { network: currentNetwork },
+                params: { network: currentNetwork, language: currentLanguage },
               }"
             >
               {{ $t('header.mempool') }}
@@ -82,7 +94,7 @@
             <b-dropdown-item
               :to="{
                 name: 'double_baking',
-                params: { network: currentNetwork },
+                params: { network: currentNetwork, language: currentLanguage },
               }"
             >
               {{ $tc('opTypes.doubleBaking', 2) }}
@@ -90,53 +102,66 @@
             <b-dropdown-item
               :to="{
                 name: 'double_endorsement',
-                params: { network: currentNetwork },
+                params: { network: currentNetwork, language: currentLanguage },
               }"
             >
               {{ $tc('opTypes.doubleEndorsement', 2) }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown :text="$tc('common.baker', 2)">
+          <b-nav-item-dropdown id="bakers" :text="$tc('common.baker', 2)">
             <b-dropdown-item
-              :to="{ name: 'bakers', params: { network: currentNetwork } }"
+              :to="{
+                name: 'bakers',
+                params: { network: currentNetwork, language: currentLanguage },
+              }"
             >
               {{ $t('header.allBakers') }}
             </b-dropdown-item>
             <b-dropdown-item
               :to="{
                 name: 'public_bakers',
-                params: { network: currentNetwork },
+                params: { network: currentNetwork, language: currentLanguage },
               }"
             >
               {{ $t('header.publicBakers') }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown :text="$tc('common.acc', 2)">
+          <b-nav-item-dropdown id="accounts" :text="$tc('common.acc', 2)">
             <b-dropdown-item
               :to="{
                 name: 'top_accounts',
-                params: { network: currentNetwork },
+                params: { network: currentNetwork, language: currentLanguage },
               }"
             >
               {{ $t('common.topAcc') }}
             </b-dropdown-item>
             <b-dropdown-item
-              :to="{ name: 'accounts', params: { network: currentNetwork } }"
+              :to="{
+                name: 'accounts',
+                params: { network: currentNetwork, language: currentLanguage },
+              }"
             >
               {{ $tc('common.acc', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
-              :to="{ name: 'contracts', params: { network: currentNetwork } }"
+              :to="{
+                name: 'contracts',
+                params: { network: currentNetwork, language: currentLanguage },
+              }"
             >
               {{ $tc('common.contract', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
-              :to="{ name: 'assets', params: { network: currentNetwork } }"
+              :to="{
+                name: 'assets',
+                params: { network: currentNetwork, language: currentLanguage },
+              }"
             >
               {{ $t('common.assets') }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown
+            id="governance"
             :text="$t('header.governance')"
             :disabled="currentNetwork !== 'mainnet'"
           >
@@ -149,6 +174,7 @@
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown
+            id="charts"
             :text="$t('header.charts')"
             :disabled="currentNetwork !== 'mainnet'"
           >
@@ -159,7 +185,7 @@
               {{ $t('common.baking') }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown :text="$t('header.resources')">
+          <b-nav-item-dropdown id="resources" :text="$t('header.resources')">
             <b-dropdown-item :to="{ name: 'glossary' }">
               {{ $t('glossary.title') }}
             </b-dropdown-item>
@@ -198,12 +224,12 @@
               <CurrencySwitcher />
             </b-dropdown-text>
           </b-nav-item-dropdown>
-          <b-nav-form v-if="isSearchVisible" class="search">
-            <Search :placeholder="$t('search.placeholder')" />
-          </b-nav-form>
-          <b-nav-item href="/account">
+          <b-nav-item class="account" to="/account">
             <font-awesome-icon :icon="['fas', 'user']" />
           </b-nav-item>
+          <b-nav-form v-if="isSearchVisible" class="search ml-1">
+            <Search :placeholder="$t('search.placeholder')" />
+          </b-nav-form>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -245,13 +271,19 @@
         networkList: 'getAppNetworkList',
         networkChangable: 'getAppNetworkChangable',
       }),
+      currentLanguage() {
+        return this.$translation.currentLanguage;
+      },
     },
     watch: {
       $route: {
         deep: true,
         immediate: true,
         handler(to) {
-          this.isSearchVisible = to.name !== 'network';
+          const routesWithNoSearch = ['network', 'personal_account'];
+          const searchAllowed = !routesWithNoSearch.some((notAllowedRoute) => to.name === notAllowedRoute);
+
+          this.isSearchVisible = searchAllowed;
         },
       },
     },
@@ -285,5 +317,9 @@
   .main-nav .dropdown-item,
   .main-nav .dropdown-toggle {
     text-transform: capitalize;
+  }
+
+  .account .router-link-active {
+    color: rgba(0, 0, 0, 0.7);
   }
 </style>
