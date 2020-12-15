@@ -48,6 +48,8 @@ import {
   faEnvelope,
   faQuestionCircle,
   faSyncAlt,
+  faUser as fasUser,
+  faStar as fasStar,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faLightbulb,
@@ -114,6 +116,8 @@ library.add(
   faEnvelope,
   faQuestionCircle,
   faSyncAlt,
+  fasUser,
+  fasStar,
 );
 library.add(
   faLightbulb,

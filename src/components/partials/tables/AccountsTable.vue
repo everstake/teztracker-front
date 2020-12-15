@@ -9,7 +9,18 @@
     borderless
     class="transactions-table"
     :empty-text="$t('common.noData')"
+    :sort-compare="sortFavoriteAccounts"
   >
+    <template #cell(favorite)="row">
+      <font-awesome-icon
+        @click="toggleFavorite(row.item.accountId)"
+        class="icon-favorite"
+        :class="{
+          'icon-favorite--active': isAccountFavorite(row.item.accountId),
+        }"
+        :icon="['fa', 'star']"
+      />
+    </template>
     <template #cell(accountId)="row">
       <span v-if="row.item.is_baker" class="d-flex align-items-center">
         <b-link
@@ -91,6 +102,7 @@
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
   import NoDataTableCell from '@/components/partials/NoDataTableCell';
+  import favoriteAccount from '@/mixins/favoriteAccount';
 
   export default {
     name: 'AccountsTable',
@@ -110,6 +122,7 @@
       IdentIcon,
       NoDataTableCell,
     },
+    mixins: [favoriteAccount],
     computed: {
       ...mapState({
         dateFormat: (state) => state.app.dateFormat,
@@ -121,6 +134,13 @@
           return this.propsFields;
         } else {
           return [
+            {
+              key: 'favorite',
+              label: 'Fav',
+              sortable: true,
+              sortDirection: 'asc',
+              thClass: 'favorite-heading',
+            },
             { key: 'accountId', label: this.$tc('common.acc', 1) },
             {
               key: 'balance',

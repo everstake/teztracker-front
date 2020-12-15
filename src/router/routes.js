@@ -69,6 +69,9 @@ const Glossary = () => import('../views/Glossary.vue');
 const Feedback = () => import('../views/Feedback.vue');
 const Mempool = () => import('../views/Mempool.vue');
 
+// Personal account
+const PersonalAccount = () => import('../views/PersonalAccount.vue');
+
 // Errors
 const Maintenance = () => import('../views/Maintenance.vue');
 const NotFound = () => import('../views/errors/NotFound.vue');
@@ -79,6 +82,22 @@ export default [
     path: '/',
     name: 'index',
     redirect: { name: 'network' },
+    component: PageContentContainer,
+    children: [
+      {
+        name: 'personal_account',
+        path: 'account',
+        component: PersonalAccount,
+        props: {
+          isSearchVisible: false,
+        },
+      },
+      {
+        path: 'maintenance',
+        name: 'maintenance',
+        component: Maintenance,
+      },
+    ],
   },
   {
     path: '/:language',
@@ -94,6 +113,9 @@ export default [
         component: Index,
         meta: {
           middleware: [language, network],
+        },
+        props: {
+          isSearchVisible: false,
         },
       },
       /* Blocks group */
@@ -340,20 +362,6 @@ export default [
           middleware: [language, network],
         },
       },
-
-      /* Errors group */
-      {
-        path: 'maintenance',
-        name: 'maintenance',
-        component: Maintenance,
-        meta: {
-          middleware: [language, network],
-        },
-      },
-      { path: '404', name: '404', component: NotFound },
-      { path: '500', name: '500', component: ServerError },
-      { path: '*', redirect: { name: '404' } },
-      /* Errors group end */
     ],
   },
   {
@@ -416,4 +424,9 @@ export default [
       /* Charts group end */
     ],
   },
+  /* Errors group */
+  { path: '/404', name: '404', component: NotFound },
+  { path: '/500', name: '500', component: ServerError },
+  { path: '*', redirect: { name: '404' } },
+  /* Errors group end */
 ];
