@@ -1101,3 +1101,14 @@ span a.baker,
 .list .table-skeleton tr td {
   min-width: 80px;
 }
+
+.icon-favorite {
+  font-size: 14px;
+  color: rgb(224, 239, 236);
+  cursor: pointer;
+}
+
+.icon-favorite--active,
+.icon-favorite:hover {
+  color: $color-brand;
+}
