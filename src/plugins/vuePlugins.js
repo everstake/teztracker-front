@@ -50,6 +50,7 @@ import {
   faSyncAlt,
   faUser as fasUser,
   faStar as fasStar,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faLightbulb,
@@ -118,6 +119,7 @@ library.add(
   faSyncAlt,
   fasUser,
   fasStar,
+  faPlus,
 );
 library.add(
   faLightbulb,

@@ -1,16 +1,13 @@
 import { FAVORITE_SET, FAVORITE_DELETE } from '@/store/mutations.types';
 
 let initialState;
-const favoritesFromStorage = localStorage.getItem('favorites');
+const favoritesLocalStorage = localStorage.getItem('favorites');
 
-if (favoritesFromStorage) {
-  initialState = JSON.parse(favoritesFromStorage);
+if (favoritesLocalStorage) {
+  initialState = JSON.parse(favoritesLocalStorage);
 } else {
   initialState = {
-    account: [],
-    contract: [],
-    baker: [],
-    publicBaker: [],
+    favoriteList: [],
   };
 }
 
@@ -19,19 +16,15 @@ export const state = { ...initialState };
 export const actions = {};
 
 export const mutations = {
-  [FAVORITE_SET](state, payload) {
-    const key = Object.keys(payload);
-    const value = payload[key];
-    state[key].push(value);
+  [FAVORITE_SET](state, accountId) {
+    state.favoriteList.push(accountId);
     localStorage.setItem('favorites', JSON.stringify(state));
   },
-  [FAVORITE_DELETE](state, payload) {
-    const key = Object.keys(payload);
-    const value = payload[key];
-    const foundFavoriteIndex = state[key].findIndex((favorite) => favorite === value);
+  [FAVORITE_DELETE](state, accountId) {
+    const foundFavoriteIndex = state.favoriteList.findIndex((favorite) => favorite === accountId);
 
     if (foundFavoriteIndex !== -1) {
-      state[key].splice(foundFavoriteIndex, 1);
+      state.favoriteList.splice(foundFavoriteIndex, 1);
       localStorage.setItem('favorites', JSON.stringify(state));
     }
   },

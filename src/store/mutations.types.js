@@ -46,3 +46,4 @@ export const SET_CURRENT_CURRENCY = 'setCurrentCurrency';
 export const SET_IS_WS_CONNECTION_OPEN = 'setIsWsConnectionOpen';
 export const FAVORITE_SET = 'setFavorite';
 export const FAVORITE_DELETE = 'deleteFavorite';
+export const USER_SET_EMAIL = 'usetSetEmail';
