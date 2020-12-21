@@ -12,7 +12,7 @@
       <CurrencySwitcher />
     </div>
     <div class="settings__item">
-      <b-form-group :label="$t('currencySwitcher.title')">
+      <b-form-group :label="'Language'">
         <b-form-radio-group
           v-model="languageModel"
           :options="languageOptions"
@@ -23,7 +23,7 @@
       <b-form-group label="Change email address">
         <b-form-input
           class="form-group email-input"
-          placeholder="user@gmail.com"
+          placeholder="example@gmail.com"
           type="text"
           :value="email"
           @input="handleEmailChange"
@@ -80,7 +80,7 @@
 
 <style lang="scss" scoped>
   .email-input {
-    max-width: 270px;
+    max-width: 230px;
   }
 
   .settings__item {
