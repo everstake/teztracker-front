@@ -8,12 +8,13 @@
               v-for="(tab, index) in tabslist"
               :key="tab + index"
               class="nav__item"
-              @click="activeTabIndex = index"
             >
               <button
+                @click="handleTabChange(index)"
                 class="nav-button"
                 :class="{
-                  'nav-button--active': index === activeTabIndex,
+                  'nav-button--active': index === currentTabIndex,
+                  'nav-button--disabled': !allowedTabIndexes.includes(index),
                 }"
               >
                 {{ tab }}
@@ -23,8 +24,8 @@
         </b-col>
         <b-col class="col" cols="12" lg="8">
           <div class="content personal-account__content">
-            <div v-if="loading" class="loading">Loading</div>
-            <div v-else></div>
+            <AccountFavorites v-if="currentTabIndex === 3" />
+            <AccountSettings v-else-if="currentTabIndex === 5" />
           </div>
         </b-col>
       </b-row>
@@ -33,8 +34,12 @@
 </template>
 
 <script>
+  import AccountFavorites from '@/components/personal_account/AccountFavorites';
+  import AccountSettings from '@/components/personal_account/AccountSettings';
+
   export default {
     name: 'PersonalAccount',
+    components: { AccountSettings, AccountFavorites },
     data() {
       return {
         loading: true,
@@ -46,8 +51,18 @@
           'Notes',
           'Settings',
         ],
-        activeTabIndex: 0,
+        currentTabIndex: 3,
+        allowedTabIndexes: [3, 5],
       };
+    },
+    methods: {
+      handleTabChange(index) {
+        const tabNotDisabled = this.allowedTabIndexes.includes(index);
+
+        if (tabNotDisabled) {
+          this.currentTabIndex = index;
+        }
+      },
     },
   };
 </script>
@@ -97,6 +112,15 @@
   .nav-button--active {
     font-weight: bold;
     transition: font-weight 100ms ease-out;
+  }
+
+  .nav-button--disabled,
+  .nav-button--disabled:hover {
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.3);
+    transition: none;
+    cursor: text;
+    user-select: none;
   }
 
   .loading {
