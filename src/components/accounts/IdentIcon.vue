@@ -27,7 +27,7 @@
         }
         if (this.isSeedPublicBaker) {
           const logoReference = accounts[this.seed].logoReference || this.seed;
-          return require(`../../assets/tezos-assets/img/${logoReference}.png`);
+          return `/static/validators-logo/${logoReference}.png`;
         }
         return createIcon({
           seed: this.seed,
