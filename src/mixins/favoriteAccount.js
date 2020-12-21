@@ -3,25 +3,24 @@ import { FAVORITE_DELETE, FAVORITE_SET } from '@/store/mutations.types';
 
 export default {
   computed: {
-    ...mapState({
-      favoriteAccounts: (state) => state.favorite.account,
+    ...mapState('favorite', {
+      favoriteList: (state) => state.favoriteList,
     }),
   },
   methods: {
     ...mapMutations('favorite', [FAVORITE_SET, FAVORITE_DELETE]),
     isAccountFavorite(accountId) {
-      return this.favoriteAccounts.find((favorite) => favorite === accountId);
+      return this.favoriteList.includes(accountId);
     },
     toggleFavorite(accountId) {
       const accountFavorite = this.isAccountFavorite(accountId);
-      const payload = { account: accountId };
 
       if (accountFavorite) {
-        this[FAVORITE_DELETE](payload);
+        this[FAVORITE_DELETE](accountId);
         return;
       }
 
-      this[FAVORITE_SET](payload);
+      this[FAVORITE_SET](accountId);
     },
     sortFavoriteAccounts(a, b, key) {
       if (key === 'favorite') {
@@ -39,8 +38,12 @@ export default {
   },
   mounted() {
     const th = document.getElementsByClassName('favorite-heading');
-    if (th) {
-      th[0].click();
+    try {
+      if (th) {
+        th[0].click();
+      }
+    } catch (e) {
+      console.log(e);
     }
   },
 };
