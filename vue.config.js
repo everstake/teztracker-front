@@ -1,20 +1,42 @@
 const webpack = require('webpack');
 
 module.exports = {
-  productionSourceMap: false,
-
   configureWebpack: {
     plugins: [
       new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /en|ru|cn/),
     ],
+
+    optimization: {
+      runtimeChunk: 'single',
+      moduleIds: 'hashed',
+      splitChunks: {
+        chunks: 'all',
+        maxSize: 300000,
+        maxInitialRequests: Infinity,
+        cacheGroups: {
+          styles: {
+            name: 'chunk-styles',
+            test: (m) => m.constructor.name === 'CssModule',
+            chunks: 'all',
+            minChunks: 2,
+            reuseExistingChunk: true,
+            enforce: true,
+          },
+        },
+      },
+    },
   },
 
   css: {
-    sourceMap: true,
     loaderOptions: {
       sass: {
+        sourceMap: true,
         prependData: `@import "@/assets/scss/_variables";
                       @import "@/assets/scss/_mixins";`,
+        sassOptions: {
+          outputStyle:
+            process.env.NODE_ENV === 'production' ? 'compressed' : undefined,
+        },
       },
     },
   },
