@@ -4,7 +4,16 @@ let initialState;
 const favoritesLocalStorage = localStorage.getItem('favorites');
 
 if (favoritesLocalStorage) {
-  initialState = JSON.parse(favoritesLocalStorage);
+  const parsedFavorites = JSON.parse(favoritesLocalStorage);
+  const parsedFavoritesNotValid = !('favoriteList' in parsedFavorites) || !Array.isArray(parsedFavorites);
+
+  if (parsedFavoritesNotValid) {
+    initialState = {
+      favoriteList: [],
+    };
+  } else {
+    initialState = parsedFavorites;
+  }
 } else {
   initialState = {
     favoriteList: [],
