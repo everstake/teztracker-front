@@ -11,6 +11,10 @@
 }
 
 .beacon-alert {
+  &__base {
+    overflow-y: auto;
+  }
+
   &__text,
   &__title {
     font-family: 'Montserrat Alternates', Arial, sans-serif, 'Andika' !important;
