@@ -1,0 +1,33 @@
+.beacon-modal {
+  &__button {
+    background-color: $color-brand !important;
+    border: 2px solid $color-brand !important;
+
+    &--outline {
+      color: $color-brand !important;
+      border: 2px solid $color-brand !important;
+    }
+  }
+}
+
+.beacon-alert {
+  &__base {
+    overflow-y: auto;
+  }
+
+  &__text,
+  &__title {
+    font-family: 'Montserrat Alternates', Arial, sans-serif, 'Andika' !important;
+  }
+}
+
+.beacon-toast__content {
+  font-family: 'Montserrat Alternates', Arial, sans-serif, 'Andika' !important;
+}
+
+.spinner .loader {
+  border-top: 4px solid $color-brand--opacity-2 !important;
+  border-right: 4px solid $color-brand--opacity-2 !important;
+  border-bottom: 4px solid $color-brand--opacity-2 !important;
+  border-left: 4px solid $color-brand !important;
+}
