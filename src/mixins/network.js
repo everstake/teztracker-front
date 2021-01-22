@@ -4,8 +4,8 @@ export default {
       switch (this.$route.params.network) {
         case 'mainnet':
           return this.$t('nets.mainnet');
-        case 'carthagenet':
-          return this.$t('nets.carthagenet');
+        case 'delphi':
+          return this.$t('nets.delphi');
         default:
           return 'Mainnet';
       }

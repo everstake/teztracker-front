@@ -128,10 +128,10 @@
       networkStartDate() {
         const { currentNetwork } = this;
         const mainnetStartDate = '2018-9-17';
-        const carthagenetStartDate = '2019-11-7';
+        const delphiStartDate = '2020-9-4';
 
-        if (currentNetwork === 'carthagenet') {
-          return moment(carthagenetStartDate);
+        if (currentNetwork === 'delphi') {
+          return moment(delphiStartDate);
         }
 
         return moment(mainnetStartDate);

@@ -257,7 +257,8 @@
   "nets": {
     "mainnet": "主网",
     "babylonnet": "巴比伦网",
-    "carthagenet": "迦太基网"
+    "carthagenet": "迦太基网",
+    "delphi": "Delphi"
   },
   "footer": {
     "allRights": "版权所有",

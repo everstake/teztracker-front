@@ -257,7 +257,8 @@
   "nets": {
     "mainnet": "Основная сеть",
     "babylonnet": "Вавилон",
-    "carthagenet": "Карфаген"
+    "carthagenet": "Карфаген",
+    "delphi": "Delphi"
   },
   "footer": {
     "allRights": "Все права защищены",

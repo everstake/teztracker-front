@@ -257,7 +257,8 @@
   "nets": {
     "mainnet": "Mainnet",
     "babylonnet": "Babylonnet",
-    "carthagenet": "Carthagenet"
+    "carthagenet": "Carthagenet",
+    "delphi": "Delphi"
   },
   "footer": {
     "allRights": "All rights reserved",
