@@ -224,13 +224,12 @@
               <CurrencySwitcher />
             </b-dropdown-text>
           </b-nav-item-dropdown>
-          <b-nav-item class="account" to="/account">
-            <font-awesome-icon :icon="['fas', 'user']" />
+          <b-nav-item class="account">
+            <BtnsBeacon />
           </b-nav-item>
-          <b-nav-form v-if="isSearchVisible" class="search ml-1">
+          <b-nav-form v-if="headerSearchVisible" class="search ml-1">
             <Search :placeholder="$t('search.placeholder')" />
           </b-nav-form>
-          <BtnsBeacon />
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -260,10 +259,11 @@
       BtnsBeacon,
     },
     mixins: [network, uuid],
-    data() {
-      return {
-        isSearchVisible: true,
-      };
+    props: {
+      headerSearchEnabled: {
+        type: Boolean,
+        default: false,
+      },
     },
     computed: {
       ...mapState('app', {
@@ -277,17 +277,9 @@
       currentLanguage() {
         return this.$translation.currentLanguage;
       },
-    },
-    watch: {
-      $route: {
-        deep: true,
-        immediate: true,
-        handler(to) {
-          const routesWithNoSearch = ['network', 'personal_account'];
-          const searchAllowed = !routesWithNoSearch.some((notAllowedRoute) => to.name === notAllowedRoute);
-
-          this.isSearchVisible = searchAllowed;
-        },
+      headerSearchVisible() {
+        const { name } = this.$route;
+        return name === 'network' ? false : this.headerSearchEnabled;
       },
     },
     methods: {
@@ -324,5 +316,10 @@
 
   .account .router-link-active {
     color: rgba(0, 0, 0, 0.7);
+  }
+
+  .account .nav-link {
+    padding: 0;
+    margin: 0.5rem 1rem;
   }
 </style>

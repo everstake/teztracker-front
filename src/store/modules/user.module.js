@@ -1,28 +1,168 @@
-import { USER_SET_EMAIL, SET_BEACON_ACCOUNT } from '@/store/mutations.types';
+import {
+  SET_ACCOUNT_EMAIL,
+  SET_BEACON_ACCOUNT,
+  SET_ACCOUNT_USERNAME,
+  SET_ACCOUNT_NOTIFICATION,
+  DELETE_ACCOUNT_NOTIFICATION,
+  NOTE_ADD,
+  NOTE_EDIT,
+  NOTE_DELETE,
+  FAVORITE_SET,
+  FAVORITE_DELETE,
+  EDIT_ACCOUNT_NOTIFICATION,
+  INIT_EMAIL_RESEND_TIMER,
+  SET_ACCOUNTS_NOTIFICATIONS,
+  SET_EMAIL_VERIFICATION,
+  SET_USER_PROFILE,
+  SET_USER_NOTES,
+} from '@/store/mutations.types';
+import {
+  GET_USER_EMAIL,
+  GET_ACCOUNTS_NOTIFICATIONS,
+  GET_EMAIL_VERIFICATION,
+  GET_USER_PROFILE,
+  GET_USER_NOTES,
+} from '@/store/actions.types';
 
-let initialState;
-const settingsLocalStorage = localStorage.getItem('settings');
+let favorites = [];
 
-if (settingsLocalStorage) {
-  initialState = JSON.parse(settingsLocalStorage);
-} else {
-  initialState = {
-    email: '',
-    beaconAccount: null,
-  };
+if (localStorage.getItem('favorites') !== null) {
+  const storageFavorites = JSON.parse(localStorage.getItem('favorites'));
+  if (!Array.isArray(storageFavorites)) {
+    localStorage.setItem('favorites', null);
+  } else {
+    favorites = storageFavorites;
+  }
 }
+
+let initialState = {
+  username: '',
+  email: 'mk@qq.qq',
+  emailVerified: false,
+  emailResendTimer: 2,
+  beaconAccount: {},
+  notifications: [],
+  notes: [
+  ],
+  favorites: [...favorites],
+};
 
 export const state = { ...initialState };
 
-export const actions = {};
+export const actions = {
+  async [GET_USER_EMAIL]({ commit, rootGetters }, payload) {
+    commit(SET_ACCOUNT_EMAIL, await rootGetters.API.getAccountEmail(payload));
+  },
+  async [GET_ACCOUNTS_NOTIFICATIONS]({ commit, rootGetters }, payload) {
+    commit(
+      SET_ACCOUNTS_NOTIFICATIONS,
+      await rootGetters.API.getUserNotifications(payload),
+    );
+  },
+  async [GET_EMAIL_VERIFICATION]({ commit, rootGetters }, payload) {
+    commit(
+      SET_EMAIL_VERIFICATION,
+      await rootGetters.API.getAccounts(payload),
+    );
+  },
+  async [GET_USER_PROFILE]({ commit, rootGetters }, payload) {
+    commit(SET_USER_PROFILE, await rootGetters.API.getUserProfile(payload));
+  },
+  async [GET_USER_NOTES]({ commit, rootGetters }, payload) {
+    commit(SET_USER_NOTES, await rootGetters.API.getUserNotes(payload));
+  },
+};
 
 export const mutations = {
-  [USER_SET_EMAIL](state, email) {
-    state.email = email;
-    localStorage.setItem('settings', JSON.stringify(state));
+  [SET_ACCOUNT_EMAIL](state, payload) {
+    state.email = payload.data.email;
   },
   [SET_BEACON_ACCOUNT](state, beaconAccount) {
-    state.beaconAccount = beaconAccount;
+    if (beaconAccount) {
+      state.beaconAccount = beaconAccount;
+    }
+  },
+  [SET_ACCOUNT_USERNAME](state, username) {
+    state.username = username;
+  },
+  [SET_ACCOUNT_NOTIFICATION](state, payload) {
+    state.notifications.push(payload.data);
+  },
+  [EDIT_ACCOUNT_NOTIFICATION](state, payload) {
+    const foundIndex = state.notifications.findIndex(
+      (notification) => notification.accountId === payload.accountId,
+    );
+    if (foundIndex > -1) {
+      state.notifications = [
+        ...state.notifications.slice(0, foundIndex),
+        payload,
+        ...state.notifications.slice(foundIndex + 1),
+      ];
+    }
+  },
+  [DELETE_ACCOUNT_NOTIFICATION](state, index) {
+    state.notifications = [
+      ...state.notifications.slice(0, index),
+      ...state.notifications.slice(index + 1),
+    ];
+  },
+  [NOTE_ADD](state, note) {
+    state.notes.push(note);
+  },
+  [NOTE_EDIT](state, note) {
+    const index = state.notes.findIndex(
+      ({ accountId }) => accountId === note.accountId,
+    );
+    state.notes = [
+      ...state.notes.slice(0, index),
+      note,
+      ...state.notes.slice(index + 1),
+    ];
+  },
+  [NOTE_DELETE](state, note) {
+    const index = state.notes.findIndex(
+      ({ accountId }) => accountId === note.accountId,
+    );
+    state.notes = [
+      ...state.notes.slice(0, index),
+      ...state.notes.slice(index + 1),
+    ];
+  },
+  [FAVORITE_SET](state, accountId) {
+    state.favorites.push(accountId);
+    localStorage.setItem('favorites', JSON.stringify(state.favorites));
+  },
+  [FAVORITE_DELETE](state, accountId) {
+    const foundFavoriteIndex = state.favorites.findIndex(
+      (favorite) => favorite === accountId,
+    );
+
+    if (foundFavoriteIndex !== -1) {
+      state.favorites.splice(foundFavoriteIndex, 1);
+      localStorage.setItem('favorites', JSON.stringify(state.favorites));
+    }
+  },
+  [INIT_EMAIL_RESEND_TIMER](state) {
+    if (state.emailResendTimer > 0) {
+      setInterval(() => {
+        state.emailResendTimer--;
+      }, 1000);
+    }
+  },
+  [SET_ACCOUNTS_NOTIFICATIONS](state, data) {
+    state.notifications = data.data;
+  },
+  [SET_EMAIL_VERIFICATION](state, payload) {
+    state.emailVerified = payload;
+  },
+  [SET_USER_PROFILE](state, payload) {
+    console.log('SET_USER_PROFILE', payload);
+    state.email = payload.email;
+    state.username = payload.username;
+    state.emailVerified = payload.verified;
+  },
+  [SET_USER_NOTES](state, data) {
+    state.notes = data.data;
   },
 };
 

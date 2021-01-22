@@ -66,6 +66,9 @@ const TzAPI = {
   API_URL_WITHOUT_PLATFORM() {
     return Vue.prototype.$constants.API_BASE_URLS.mainnetWithoutPlatform;
   },
+  API_URL_BASE() {
+    return Vue.prototype.$constants.API_BASE_URLS.baseApi;
+  },
   getAccounts(opts = {}) {
     return get(this.API_URL(), 'accounts', opts);
   },
@@ -172,7 +175,13 @@ const TzAPI = {
   getAccountReport(opts = {}, config) {
     const { account } = opts;
     delete opts.account;
-    return get(this.API_URL(), `accounts/${account}/report`, opts, false, config);
+    return get(
+      this.API_URL(),
+      `accounts/${account}/report`,
+      opts,
+      false,
+      config,
+    );
   },
   getContracts(opts = {}) {
     return get(this.API_URL(), 'contracts', opts);
@@ -326,6 +335,131 @@ const TzAPI = {
   },
   getMempool(opts = {}) {
     return get(this.API_URL(), 'mempool', opts, false);
+  },
+  async getAccountEmail(opts = {}) {
+    return await http.get(formatURL(this.API_URL_BASE(), 'profile'), {
+      headers: { address: opts.address },
+    });
+  },
+  async setAccountProfile(opts = {}) {
+    return await http.post(
+      formatURL(this.API_URL_BASE(), 'profile/update'),
+      { email: opts.email, username: opts.email },
+      { headers: { address: opts.accountId } },
+    );
+  },
+  async verifyEmail(opts = {}) {
+    return await http.post(
+      formatURL(this.API_URL_WITHOUT_PLATFORM(), 'profile/verify/email'),
+      { email: opts.email, username: '' },
+    );
+  },
+  async setAccountUsername(opts = {}) {
+    return await http.post(
+      formatURL(this.API_URL_WITHOUT_PLATFORM(), 'profile/update', {
+        address: opts.address,
+      }),
+      { username: opts.username },
+    );
+  },
+  getAccountAddresses(opts = {}) {
+    return get(this.API_URL(), 'profile/addresses', opts, false);
+  },
+  async getUserProfile(opts = {}) {
+    const config = {
+      headers: { address: opts.address },
+    };
+
+    return await http.get(formatURL(this.API_URL_BASE(), 'profile'), config);
+  },
+  async updateUserProfile(opts = {}) {
+    const config = {
+      headers: { address: opts.address },
+    };
+
+    const data = {
+      email: opts.email ? opts.email : undefined,
+      username: opts.username ? opts.username : undefined,
+    };
+
+    return await http.post(
+      formatURL(this.API_URL_BASE(), 'profile/update'),
+      data,
+      config,
+    );
+  },
+  async getUserNotes(opts = {}) {
+    const config = {
+      headers: { address: opts.address },
+    };
+
+    return await http.get(
+      formatURL(this.API_URL_BASE(), 'profile/notes'),
+      config,
+    );
+  },
+  async postUserNote(opts = {}) {
+    const config = {
+      headers: { address: opts.address },
+    };
+
+    const data = {
+      text: opts.text,
+      alias: opts.alias,
+    };
+
+    return await http.post(
+      formatURL(this.API_URL_BASE(), 'profile/note'),
+      data,
+      config,
+    );
+  },
+  async postUserNotification(opts = {}) {
+    const config = {
+      headers: { address: opts.address },
+    };
+
+    return await http.post(
+      formatURL(this.API_URL_BASE(), 'profile/address'),
+      {
+        address: opts.accountId,
+        text: opts.text,
+        alias: opts.alias,
+      },
+      config,
+    );
+  },
+  async getUserNotifications(opts = {}) {
+    const config = {
+      headers: { address: opts.address },
+    };
+
+    return await http.get(
+      formatURL(this.API_URL_BASE(), 'profile/addresses'),
+      config,
+    );
+  },
+  async deleteUserNote(opts = {}) {
+    return await http.post(
+      formatURL(this.API_URL_BASE(), 'profile/delete/note'),
+      { address: opts.accountId },
+      {
+        headers: { address: opts.address },
+      },
+    );
+  },
+  async deleteUserNotification(opts = {}) {
+    const data = {
+      address: opts.address,
+    };
+    const config = {
+      headers: { address: opts.address },
+    };
+    return await http.post(
+      formatURL(this.API_URL_BASE(), 'profile/delete/address'),
+      data,
+      config,
+    );
   },
 };
 

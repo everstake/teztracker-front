@@ -9,11 +9,11 @@
     borderless
     class="transactions-table"
     :empty-text="$t('common.noData')"
-    :sort-compare="sortFavoriteAccounts"
+
   >
     <template #cell(favorite)="row">
       <font-awesome-icon
-        @click="toggleFavorite(row.item.accountId)"
+        @click="toggleFavorite(row.item.accountId, row.item.accountName)"
         class="icon-favorite"
         :class="{
           'icon-favorite--active': isAccountFavorite(row.item.accountId),
@@ -137,7 +137,6 @@
             {
               key: 'favorite',
               label: 'Fav',
-              sortable: true,
               sortDirection: 'asc',
               thClass: 'favorite-heading',
             },

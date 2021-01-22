@@ -6,7 +6,6 @@ import blocks from './modules/blocks.module';
 import operations from './modules/operations.module';
 import accounts from './modules/accounts.module';
 import period from './modules/period.module';
-import favorite from './modules/favorite.module';
 import user from './modules/user.module';
 
 Vue.use(Vuex);
@@ -23,7 +22,6 @@ export default new Vuex.Store({
     accounts,
     operations,
     period,
-    favorite,
     user,
   },
 });

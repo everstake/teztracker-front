@@ -14,19 +14,21 @@
                 class="nav-button"
                 :class="{
                   'nav-button--active': index === currentTabIndex,
-                  'nav-button--disabled': !allowedTabIndexes.includes(index),
                 }"
               >
                 {{ tab }}
               </button>
             </li>
+            <li class="nav__item text-center">
+              <button class="nav-button button-logout" @click="handleSignOut">
+                Sign out
+              </button>
+            </li>
           </ul>
         </b-col>
-        <b-col class="col" cols="12" lg="8">
+        <b-col class="col pl-0 pr-0" cols="12" lg="8">
           <div class="content personal-account__content">
-            <AccountProfile v-if="currentTabIndex === 0" />
-            <AccountFavorites v-if="currentTabIndex === 3" />
-            <AccountSettings v-else-if="currentTabIndex === 5" />
+            <router-view />
           </div>
         </b-col>
       </b-row>
@@ -35,13 +37,11 @@
 </template>
 
 <script>
-  import AccountProfile from '@/components/personal_account/AccountProfile';
-  import AccountFavorites from '@/components/personal_account/AccountFavorites';
-  import AccountSettings from '@/components/personal_account/AccountSettings';
+  import { mapMutations } from 'vuex';
+  import { SET_BEACON_ACCOUNT } from '@/store/mutations.types';
 
   export default {
     name: 'PersonalAccount',
-    components: { AccountProfile, AccountSettings, AccountFavorites },
     data() {
       return {
         loading: true,
@@ -49,21 +49,42 @@
           'My profile',
           'Accounts & Notifications',
           'My operations',
-          'Favourites',
+          'Favorites',
           'Notes',
           'Settings',
         ],
-        currentTabIndex: 3,
-        allowedTabIndexes: [3, 5],
+        tabsRoutes: [
+          'account_profile',
+          'account_notifications',
+          'account_operations',
+          'account_favorites',
+          'account_notes',
+          'account_settings',
+        ],
+        currentTabIndex: 0,
       };
     },
-    methods: {
-      handleTabChange(index) {
-        const tabNotDisabled = this.allowedTabIndexes.includes(index);
+    watch: {
+      $route: {
+        immediate: true,
+        handler(to) {
+          const foundIndex = this.tabsRoutes.findIndex((route) => route === to.name);
 
-        if (tabNotDisabled) {
-          this.currentTabIndex = index;
-        }
+          if (foundIndex > -1) {
+            this.currentTabIndex = foundIndex;
+          }
+        },
+      },
+    },
+    methods: {
+      ...mapMutations('user', [SET_BEACON_ACCOUNT]),
+      handleTabChange(index) {
+        this.$router.push({ name: this.tabsRoutes[index] });
+      },
+      handleSignOut() {
+        this.$beacon.resetConnection();
+        this[SET_BEACON_ACCOUNT]({});
+        this.$router.push({ name: 'network' });
       },
     },
   };
@@ -89,8 +110,7 @@
 
   .personal-account__content {
     min-height: 350px;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 15px;
   }
 
   .nav__item {
@@ -137,5 +157,11 @@
       content: '\2026';
       width: 0;
     }
+  }
+
+  .button-logout {
+    display: inline-block;
+    width: auto;
+    color: red;
   }
 </style>

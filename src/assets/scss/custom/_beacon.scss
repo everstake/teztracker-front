@@ -1,4 +1,5 @@
 .beacon-modal {
+
   &__button {
     background-color: $color-brand !important;
     border: 2px solid $color-brand !important;
@@ -30,4 +31,9 @@
   border-right: 4px solid $color-brand--opacity-2 !important;
   border-bottom: 4px solid $color-brand--opacity-2 !important;
   border-left: 4px solid $color-brand !important;
+}
+
+.beacon-alert__base .beacon-modal__wrapper {
+  top: 0;
+  transform: none;
 }

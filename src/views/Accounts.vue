@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import { mapMutations } from 'vuex';
+  import { mapMutations, mapState } from 'vuex';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import AccountsList from '../components/accounts/AccountsList';
   import CardHeader from '../components/partials/CardHeader';
@@ -63,6 +63,7 @@
       };
     },
     computed: {
+      ...mapState('user', ['favorites']),
       crumbs() {
         return [
           { toRouteName: 'network', text: this.$t('common.home') },
@@ -73,9 +74,9 @@
     methods: {
       ...mapMutations('accounts', [SET_ACCOUNTS]),
       async reload() {
-        const { page, limit } = this;
+        const options = { page: this.page, limit: this.limit, favorites: this.favorites };
         await this.$api
-          .getAccounts({ page, limit })
+          .getAccounts(options)
           .then((data) => {
             this.items = data.data;
             this.count = data.count;

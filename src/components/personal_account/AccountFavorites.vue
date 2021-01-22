@@ -1,47 +1,80 @@
 <template>
   <div class="favorites">
-    <h3>
-      Favorites
-      <button @click="handleFavoriteAdd" class="favorite__add">
-        <font-awesome-icon :icon="['fa', 'plus']" />
-      </button>
-      <b-modal id="favorite-add" size="md" centered hide-header>
-        <p>Add favorite account</p>
-        <b-form-group>
-          <b-form-input
-            class="form-group"
-            type="text"
-            placeholder="Put account hash here"
-            autofocus
-            @input="onFavoriteAccountInput"
-          >
-          </b-form-input>
-        </b-form-group>
-        <template #modal-footer>
-          <b-btn @click="closeFavoriteModal">
-            Close
-          </b-btn>
-          <b-btn variant="success" @click="saveFavoriteModal">
-            Save
-          </b-btn>
-        </template>
-      </b-modal>
-    </h3>
+    <div class="favorites__header">
+      <h3>Favorites ({{ this.favorites.length }}/50)</h3>
+
+      <b-btn
+        variant="success"
+        @click="handleFavoriteAdd"
+        :disabled="favorites.length >= 50"
+      >
+        <font-awesome-icon :icon="['fa', 'plus']" /> Favorite
+      </b-btn>
+    </div>
+    <b-modal
+      id="favorite-add"
+      size="md"
+      centered
+      hide-header
+      @hide="handleModalClose"
+    >
+      <p>Select account favorite</p>
+      <b-form-group>
+        <b-form-input
+          class="form-group"
+          type="text"
+          placeholder="Account id"
+          autofocus
+          v-model="$v.address.$model"
+          :state="validateState('address')"
+        >
+        </b-form-input>
+        <b-form-invalid-feedback
+          v-if="!$v.address.isAddress"
+          id="input-1-live-feedback"
+          >Account string must start with KT1, tz1, tz2 or tz3
+          symbols.</b-form-invalid-feedback
+        >
+        <b-form-invalid-feedback id="input-1-live-feedback"
+          >This field must be 36 characters.</b-form-invalid-feedback
+        >
+      </b-form-group>
+      <template #modal-footer>
+        <b-btn @click="handleModalClose">
+          Close
+        </b-btn>
+        <b-btn
+          variant="success"
+          @click="handleModalSave"
+          :disabled="!validateState('address')"
+        >
+          Save
+        </b-btn>
+      </template>
+    </b-modal>
     <hr />
+    <div v-if="loading" class="table-skeleton">
+      <b-skeleton-table
+        responsive
+        :rows="5"
+        :columns="2"
+        :table-props="{ borderless: true, responsive: true }"
+        animation="none"
+        class="table-skeleton"
+      />
+    </div>
     <b-table
       responsive
       show-empty
-      :items="favoriteList"
+      :items="favorites"
       :fields="fields"
-      :current-page="page"
-      :per-page="0"
       borderless
-      class="transactions-table"
+      class="transactions-table profile-table"
       :empty-text="$t('common.noData')"
-      :sort-compare="sortFavoriteAccounts"
+      :per-page="limit"
+      :current-page="page"
     >
       <template #cell(favorite)="row">
-        {{ row }}
         <font-awesome-icon
           @click="toggleFavorite(row.item)"
           class="icon-favorite"
@@ -51,29 +84,55 @@
           :icon="['fa', 'star']"
         />
       </template>
+      <template #cell(accountId)="row">
+        {{ row.item }}
+        <BtnCopy :text-to-copy="row.item" />
+      </template>
     </b-table>
+    <PaginationSelect
+      v-model="page"
+      :total-rows="favorites.length"
+      :per-page="limit"
+      :current-page="page"
+      :loading="loading"
+      @onPageChange="(page) => handlePageChange(page)"
+    />
   </div>
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapState, mapMutations } from 'vuex';
+  import { FAVORITE_SET } from '@/store/mutations.types';
   import favoriteAccount from '@/mixins/favoriteAccount';
+  import vuelidateMixin from '@/mixins/vuelidateMixin';
+  import { required, minLength, maxLength } from 'vuelidate/lib/validators';
+  import BtnCopy from '@/components/partials/BtnCopy';
+  import PaginationSelect from '@/components/partials/PaginationSelect';
 
   export default {
     name: 'AccountFavorites',
-    mixins: [favoriteAccount],
+    components: { BtnCopy, PaginationSelect },
+    mixins: [favoriteAccount, vuelidateMixin],
+    validations: {
+      address: {
+        required,
+        minLength: minLength(36),
+        maxLength: maxLength(36),
+        isAddress: (value) =>
+          ['KT1', 'tz1', 'tz2', 'tz3'].some((w) => w === value.slice(0, 3)),
+      },
+    },
     data() {
       return {
+        address: '',
+        limit: 5,
+        count: 0,
         page: 1,
-        favoriteModal: {
-          account: '',
-        },
+        loading: false,
       };
     },
     computed: {
-      ...mapState('favorite', {
-        favoriteList: (state) => state.favoriteList,
-      }),
+      ...mapState('user', ['favorites']),
       fields() {
         if (!this.$i18n.locale) return [];
         return [
@@ -83,44 +142,52 @@
             sortDirection: 'asc',
             thClass: 'favorite-heading',
           },
-          { key: 'accountId', label: 'Account ID' },
+          { key: 'accountId', label: 'Address' },
         ];
       },
     },
     methods: {
+      ...mapMutations('user', [FAVORITE_SET]),
       handleFavoriteAdd() {
         this.$bvModal.show('favorite-add');
       },
-      onFavoriteAccountInput(value) {
-        this.favoriteModal.account = value;
-      },
-      resetFavoriteModal() {
-        this.favoriteModal.account = '';
-      },
-      closeFavoriteModal() {
-        this.resetFavoriteModal();
+      handleModalSave() {
+        const addressAlreadyFavorite = this.favorites.includes(this.address);
+        if (addressAlreadyFavorite) {
+          this.$bvToast.toast('This address has already been added.', {
+            title: 'Favorite address',
+            variant: 'danger',
+            autoHideDelay: 5000,
+          });
+          return;
+        }
+        this[FAVORITE_SET](this.address);
+        this.$bvToast.toast(
+          `${this.$helpers.truncateHash(this.address)} is added to favorites`,
+          {
+            title: `Favorite added (${this.favorites.length}/50)`,
+            variant: 'success',
+            autoHideDelay: 1500,
+          },
+        );
         this.$bvModal.hide('favorite-add');
       },
-      saveFavoriteModal() {
+      handleModalClose() {
+        this.address = '';
+        this.$v.$reset();
         this.$bvModal.hide('favorite-add');
+      },
+      handlePageChange(page) {
+        this.page = page;
       },
     },
   };
 </script>
 
 <style lang="scss" scoped>
-  .favorite__add {
-    font-size: 12px;
-    outline: none;
-    border: none;
-    background: #309282;
-    color: white;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    display: inline-flex;
-    justify-content: center;
+  .favorites__header {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    vertical-align: middle;
   }
 </style>

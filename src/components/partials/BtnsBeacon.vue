@@ -1,25 +1,9 @@
 <template>
-  <div>
-    <b-btn
-      variant="primary"
-      :disabled="isBeaconAccountSet"
-      @click="pairBeacon(currentNetwork)"
-    >
-      Login
-    </b-btn>
-    <b-btn
-      :disabled="!isBeaconAccountSet"
-      @click="$beacon.sendTx(0.1, 'tz1QGH5dEBBuGvBi5WCgn2LDRvdo1LD3ZNTy')"
-    >
-      Tx
-    </b-btn>
-    <b-btn
-      :disabled="!isBeaconAccountSet"
-      @click="$beacon.sendDelegation('tz1iQa8HPw2tKaCm5aSWqVn9L8b769iR6DEw')"
-    >
-      Del
-    </b-btn>
-  </div>
+  <font-awesome-icon
+    @click="pairBeacon(currentNetwork)"
+    :icon="['fas', 'user']"
+    class="beacon-icon"
+  />
 </template>
 
 <script>
@@ -51,9 +35,18 @@
     methods: {
       ...mapMutations('user', [SET_BEACON_ACCOUNT]),
       async pairBeacon(network) {
+        if (this.isBeaconAccountSet) {
+          return this.$router.push({ name: 'personal_account' });
+        }
+
         try {
           await this.$beacon.requestPermissions(network);
-          this[SET_BEACON_ACCOUNT](await this.$beacon.getActiveAccount());
+          this[SET_BEACON_ACCOUNT](
+            await this.$beacon.getActiveAccount().then((data) => {
+              return data;
+            }),
+          );
+          this.$router.push({ name: 'personal_account' });
         } catch (e) {
           console.error(e);
         }

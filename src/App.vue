@@ -17,7 +17,7 @@
     watch: {
       getAppNetwork: {
         immediate: true,
-        handler() {
+        async handler() {
           if (this.isWsConnectionOpen) {
             this.$ws.close();
           }
@@ -26,7 +26,7 @@
           // If a dApp network changes a user needs to reset a connection
           // to be able to get permissions for the needed network.
           if (this.isBeaconAccountSet) {
-            this.$beacon.resetConnection();
+            await this.$beacon.resetConnection();
           }
         },
       },
@@ -37,18 +37,18 @@
     methods: {
       async checkHealth() {
         try {
-          const resp = await this.$api.checkHealth();
-          if (resp && resp.status === 500) {
-            this.$router.replace({ name: 'maintenance' });
-          }
+          // const resp = await this.$api.checkHealth();
+          // if (resp && resp.status === 500) {
+          //   this.$router.replace({ name: 'maintenance' });
+          // }
 
-          if (this.$route.name === 'maintenance' && resp.status === 200) {
-            this.$router.replace({ name: 'network' });
-          }
+          // if (this.$route.name === 'maintenance' && resp.status === 200) {
+          //   this.$router.replace({ name: 'network' });
+          // }
         } catch (e) {
           // eslint-disable-next-line
           console.error(e);
-          this.$router.replace({ name: 'maintenance' });
+          // this.$router.replace({ name: 'maintenance' });
         }
       },
     },

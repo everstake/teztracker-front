@@ -66,9 +66,9 @@
     },
     methods: {
       async reload() {
-        const { page, limit } = this;
+        const options = { page: this.page, limit: this.limit, favorites: this.favorites };
         await this.$api
-          .getTopAccounts({ page, limit })
+          .getTopAccounts(options)
           .then((data) => {
             this.items = data.data;
             this.count = data.count;

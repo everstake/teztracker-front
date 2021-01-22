@@ -38,7 +38,7 @@
 </template>
 
 <script>
-  import { mapMutations } from 'vuex';
+  import { mapMutations, mapState } from 'vuex';
   import Breadcrumbs from '../components/partials/Breadcrumbs';
   import BakersListPublic from '../components/bakers/BakersListPublic';
   import CardHeader from '../components/partials/CardHeader';
@@ -56,6 +56,7 @@
     },
     mixins: [reloadNavigationList],
     computed: {
+      ...mapState('user', ['favorites']),
       crumbs() {
         return [
           { toRouteName: 'network', text: this.$t('common.home') },
@@ -69,9 +70,9 @@
     methods: {
       ...mapMutations('accounts', [SET_PUBLIC_BAKERS]),
       async reload() {
-        const { page, limit } = this;
+        const options = { page: this.page, limit: this.limit, favorites: this.favorites };
         await this.$api
-          .getPublicBakers({ page, limit })
+          .getPublicBakers(options)
           .then((data) => {
             this.items = data.data;
             this.count = data.count;
