@@ -130,7 +130,7 @@
         const mainnetStartDate = '2018-9-17';
         const delphiStartDate = '2020-9-4';
 
-        if (currentNetwork === 'delphi') {
+        if (currentNetwork === 'delphinet') {
           return moment(delphiStartDate);
         }
 

@@ -14,7 +14,7 @@ import {
 const initialState = {
   platform: 'tezos',
   network: 'mainnet',
-  networkList: ['mainnet', 'delphi'],
+  networkList: ['mainnet', 'delphinet'],
   networkChangable: true,
   priceInfo: {},
   dateFormat: Vue.prototype.$constants.DATE_FORMAT,
