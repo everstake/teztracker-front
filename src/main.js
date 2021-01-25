@@ -7,6 +7,7 @@ import './plugins/vuePlugins';
 import './plugins/helpers';
 import './plugins/eventBus';
 import './plugins/ws';
+import './plugins/beacon';
 import './filters';
 import router from './router';
 import store from './store';

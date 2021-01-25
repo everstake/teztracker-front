@@ -17,7 +17,7 @@ function cancelAllPendingRequests() {
 }
 
 router.beforeEach((to, from, next) => {
-  if (!to.name) {
+  if (!to.name || to.params.pathMatch === '//') {
     return next({ name: 'network' });
   }
 

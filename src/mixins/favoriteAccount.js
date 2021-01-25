@@ -1,39 +1,44 @@
+import Vue from 'vue';
 import { mapState, mapMutations } from 'vuex';
 import { FAVORITE_DELETE, FAVORITE_SET } from '@/store/mutations.types';
 
 export default {
   computed: {
-    ...mapState('favorite', {
-      favoriteList: (state) => state.favoriteList,
+    ...mapState('user', {
+      favorites: (state) => state.favorites,
     }),
   },
   methods: {
-    ...mapMutations('favorite', [FAVORITE_SET, FAVORITE_DELETE]),
+    ...mapMutations('user', [FAVORITE_SET, FAVORITE_DELETE]),
     isAccountFavorite(accountId) {
-      return this.favoriteList.includes(accountId);
+      return this.favorites.includes(accountId);
     },
-    toggleFavorite(accountId) {
+    toggleFavorite(accountId, accountName) {
       const accountFavorite = this.isAccountFavorite(accountId);
 
       if (accountFavorite) {
         this[FAVORITE_DELETE](accountId);
         return;
       }
-
-      this[FAVORITE_SET](accountId);
-    },
-    sortFavoriteAccounts(a, b, key) {
-      if (key === 'favorite') {
-        if (!this.isAccountFavorite(a.accountId)) {
-          return 1;
-        } else if (!this.isAccountFavorite(b.accountId)) {
-          return -1;
-        } else {
-          return 0;
-        }
+      if (this.favorites.length >= 50) {
+        this.$bvToast.toast('You have been selected 50/50 favorite addresses', {
+          title: 'Limit has been reached',
+          variant: 'danger',
+          autoHideDelay: 1500,
+        });
       } else {
-        return false;
+        this[FAVORITE_SET](accountId);
+        this.printNotification(accountId, accountName);
       }
+    },
+    printNotification(id, name) {
+      const alias = name ? name : Vue.prototype.$helpers.truncateHash(id);
+
+      this.$bvToast.toast(`${alias} is added to favorites`, {
+        title: `Favorite added (${this.favorites.length}/50)`,
+        variant: 'success',
+        autoHideDelay: 1500,
+      });
     },
   },
   mounted() {

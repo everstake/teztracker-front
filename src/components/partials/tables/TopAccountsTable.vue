@@ -2,18 +2,17 @@
   <b-table
     responsive
     show-empty
-    :items="items"
+    :items="topAccountsItems"
     :fields="fields"
     :current-page="page"
     :per-page="0"
     borderless
     class="transactions-table"
     :empty-text="$t('common.noData')"
-    :sort-compare="sortFavoriteAccounts"
   >
     <template #cell(favorite)="row">
       <font-awesome-icon
-        @click="toggleFavorite(row.item.accountId)"
+        @click="toggleFavorite(row.item.accountId, row.item.accountName)"
         class="icon-favorite"
         :class="{
           'icon-favorite--active': isAccountFavorite(row.item.accountId),
@@ -38,6 +37,11 @@
           v-if="!row.item.accountName"
           :text-to-copy="row.item.accountId"
         />
+        <BtnNote
+          :index="row.item.index"
+          :account-name="row.item.accountName"
+          :account-id="row.item.accountId"
+        />
       </span>
       <span
         v-else-if="row.item.accountId.slice(0, 2) === 'KT'"
@@ -60,6 +64,11 @@
           v-if="!row.item.accountName"
           :text-to-copy="row.item.accountId"
         />
+        <BtnNote
+          :index="row.item.index"
+          :account-name="row.item.accountName"
+          :account-id="row.item.accountId"
+        />
       </span>
       <span v-else class="d-flex align-items-center">
         <IdentIcon :seed="row.item.accountId" />
@@ -78,6 +87,11 @@
         <BtnCopy
           v-if="!row.item.accountName"
           :text-to-copy="row.item.accountId"
+        />
+        <BtnNote
+          :index="row.item.index"
+          :account-name="row.item.accountName"
+          :account-id="row.item.accountId"
         />
       </span>
     </template>
@@ -125,11 +139,13 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
   import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import favoriteAccount from '@/mixins/favoriteAccount';
+  import BtnNote from '@/components/partials/BtnNote';
+  import { GET_USER_NOTES } from '@/store/actions.types';
 
   export default {
     name: 'TopAccountsTable',
@@ -145,15 +161,20 @@
       },
     },
     components: {
+      BtnNote,
       BtnCopy,
       IdentIcon,
       NoDataTableCell,
     },
     mixins: [favoriteAccount],
+    methods: {
+      ...mapActions('user', [GET_USER_NOTES]),
+    },
     computed: {
       ...mapState({
         dateFormat: (state) => state.app.dateFormat,
       }),
+      ...mapState('user', ['beaconAccount', 'notes']),
       fields() {
         const propsFields = this.propsFields.length > 0;
         if (!this.$i18n.locale) return [];
@@ -164,7 +185,6 @@
             {
               key: 'favorite',
               label: 'Fav',
-              sortable: true,
               sortDirection: 'asc',
               thClass: 'favorite-heading',
             },
@@ -180,6 +200,22 @@
             { key: 'createdAt', label: this.$t('accSingle.created') },
           ];
         }
+      },
+      topAccountsItems() {
+        return this.items.map((item, index) => ({ ...item, index }));
+      },
+    },
+    watch: {
+      beaconAccount: {
+        immediate: true,
+        deep: true,
+        async handler({ address }) {
+          if (address) {
+            await this[GET_USER_NOTES]({
+              address: this.beaconAccount.address,
+            });
+          }
+        },
       },
     },
   };

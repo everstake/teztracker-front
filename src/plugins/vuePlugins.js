@@ -23,6 +23,9 @@ import {
   ToastPlugin,
   PaginationNavPlugin,
   SkeletonPlugin,
+  InputGroupPlugin,
+  ButtonGroupPlugin,
+  BadgePlugin,
 } from 'bootstrap-vue';
 import {
   FontAwesomeIcon,
@@ -51,6 +54,8 @@ import {
   faUser as fasUser,
   faStar as fasStar,
   faPlus,
+  faPencilAlt,
+  faPencilRuler,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faLightbulb,
@@ -96,6 +101,9 @@ Vue.use(FlagIcon);
 Vue.use(ToastPlugin);
 Vue.use(PaginationNavPlugin);
 Vue.use(SkeletonPlugin);
+Vue.use(InputGroupPlugin);
+Vue.use(ButtonGroupPlugin);
+Vue.use(BadgePlugin);
 
 dom.watch();
 library.add(
@@ -120,6 +128,8 @@ library.add(
   fasUser,
   fasStar,
   faPlus,
+  faPencilAlt,
+  faPencilRuler,
 );
 library.add(
   faLightbulb,

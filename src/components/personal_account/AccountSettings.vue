@@ -14,29 +14,16 @@
     <div class="settings__item">
       <b-form-group :label="'Language'">
         <b-form-radio-group
-          v-model="languageModel"
-          :options="languageOptions"
+          v-model="language"
+          :options="options"
         />
-      </b-form-group>
-    </div>
-    <div class="settings__item">
-      <b-form-group label="Change email address">
-        <b-form-input
-          class="form-group email-input"
-          placeholder="example@gmail.com"
-          type="text"
-          :value="email"
-          @input="handleEmailChange"
-          >{{ email }}</b-form-input
-        >
       </b-form-group>
     </div>
   </div>
 </template>
 
 <script>
-  import { mapMutations, mapState } from 'vuex';
-  import { USER_SET_EMAIL } from '@/store/mutations.types';
+  import { mapState } from 'vuex';
   import DateFormatSwitcher from '@/components/partials/DateFormatSwitcher';
   import CurrencySwitcher from '@/components/partials/CurrencySwitcher';
 
@@ -46,9 +33,15 @@
       DateFormatSwitcher,
       CurrencySwitcher,
     },
+    props: {
+      email: {
+        type: String,
+        default: '',
+      },
+    },
     data() {
       return {
-        languageOptions: [
+        options: [
           { text: 'EN', value: 'en' },
           { text: 'RU', value: 'ru' },
           { text: 'ZH', value: 'zh' },
@@ -56,11 +49,9 @@
       };
     },
     computed: {
-      ...mapState('user', {
-        email: (state) => state.email,
-      }),
       ...mapState('app', ['currentCurrency']),
-      languageModel: {
+      ...mapState('user', ['beaconAccount']),
+      language: {
         get() {
           return this.$translation.currentLanguage;
         },
@@ -69,20 +60,10 @@
         },
       },
     },
-    methods: {
-      ...mapMutations('user', [USER_SET_EMAIL]),
-      handleEmailChange(value) {
-        this[USER_SET_EMAIL](value);
-      },
-    },
   };
 </script>
 
 <style lang="scss" scoped>
-  .email-input {
-    max-width: 230px;
-  }
-
   .settings__item {
     margin-bottom: 1.5rem;
   }
