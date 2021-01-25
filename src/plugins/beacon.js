@@ -28,6 +28,7 @@ Vue.use({
         try {
           await this.client.init();
         } catch (e) {
+          // eslint-disable-next-line
           console.error(e);
         }
       },
@@ -42,6 +43,7 @@ Vue.use({
             network: formNetwork(network),
           });
         } catch (e) {
+          // eslint-disable-next-line
           console.error(e);
         }
       },
@@ -50,6 +52,7 @@ Vue.use({
         try {
           return await this.client.setActiveAccount(undefined);
         } catch (e) {
+          // eslint-disable-next-line
           console.error(e);
         }
       },
@@ -58,6 +61,7 @@ Vue.use({
         try {
           return await this.client.getActiveAccount();
         } catch (e) {
+          // eslint-disable-next-line
           console.error(e);
         }
       },
@@ -74,6 +78,7 @@ Vue.use({
             ],
           });
         } catch (e) {
+          // eslint-disable-next-line
           console.error(e);
         }
       },
@@ -89,6 +94,7 @@ Vue.use({
             operationDetails: [payload],
           });
         } catch (e) {
+          // eslint-disable-next-line
           console.error(e);
         }
       },
