@@ -37,18 +37,18 @@
     methods: {
       async checkHealth() {
         try {
-          // const resp = await this.$api.checkHealth();
-          // if (resp && resp.status === 500) {
-          //   this.$router.replace({ name: 'maintenance' });
-          // }
+          const resp = await this.$api.checkHealth();
+          if (resp && resp.status === 500) {
+            this.$router.replace({ name: 'maintenance' });
+          }
 
-          // if (this.$route.name === 'maintenance' && resp.status === 200) {
-          //   this.$router.replace({ name: 'network' });
-          // }
+          if (this.$route.name === 'maintenance' && resp.status === 200) {
+            this.$router.replace({ name: 'network' });
+          }
         } catch (e) {
           // eslint-disable-next-line
           console.error(e);
-          // this.$router.replace({ name: 'maintenance' });
+          this.$router.replace({ name: 'maintenance' });
         }
       },
     },
