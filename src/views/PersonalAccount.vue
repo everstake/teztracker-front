@@ -68,7 +68,9 @@
       $route: {
         immediate: true,
         handler(to) {
-          const foundIndex = this.tabsRoutes.findIndex((route) => route === to.name);
+          const foundIndex = this.tabsRoutes.findIndex(
+            (route) => route === to.name,
+          );
 
           if (foundIndex > -1) {
             this.currentTabIndex = foundIndex;

@@ -78,7 +78,7 @@ const AccountOperations = () => import('@/components/personal_account/AccountOpe
 const AccountFavorites = () => import('@/components/personal_account/AccountFavorites');
 const AccountNotes = () => import('@/components/personal_account/AccountNotes');
 const AccountSettings = () => import('@/components/personal_account/AccountSettings');
-const EmailAccountVerification = () => import('@/views/EmailAccountVerification');
+const EmailVerification = () => import('@/views/EmailVerification');
 
 // Errors
 const Maintenance = () => import('../views/Maintenance.vue');
@@ -154,7 +154,7 @@ export default [
       {
         path: 'account_verification/:token',
         name: 'account_verification',
-        component: EmailAccountVerification,
+        component: EmailVerification,
         props: true,
       },
       {

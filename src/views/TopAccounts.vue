@@ -43,6 +43,7 @@
   import CardHeader from '../components/partials/CardHeader';
   import Counter from '../components/partials/Counter';
   import reloadNavigationList from '@/mixins/reloadNavigationList';
+  import { mapState } from "vuex";
 
   export default {
     name: 'TopAccounts',
@@ -54,6 +55,7 @@
     },
     mixins: [reloadNavigationList],
     computed: {
+      ...mapState('user', ['favorites']),
       crumbs() {
         return [
           { toRouteName: 'network', text: this.$t('common.home') },

@@ -320,6 +320,6 @@
 
   .account .nav-link {
     padding: 0;
-    margin: 0.5rem 1rem;
+    margin: 0;
   }
 </style>

@@ -3,8 +3,8 @@
     <div class="notes__heading">
       <h3>
         Notes
+        <span v-if="notes.length">({{ notes.length }}/50)</span>
       </h3>
-
       <b-btn
         variant="success"
         @click="handleNoteClick"
@@ -14,7 +14,7 @@
       </b-btn>
     </div>
     <b-modal
-      id="add-note"
+      id="note-add"
       size="md"
       centered
       hide-header
@@ -26,16 +26,16 @@
           v-model="$v.note.accountId.$model"
           class="form-group"
           type="text"
-          placeholder="Title"
+          placeholder="Account id"
           :state="validateState('note.accountId')"
           autofocus
-          :disabled="notes.find((item) => item.accountId === note.accountId)"
+          :disabled="notes.find((item) => item.text === note.accountId)"
         >
         </b-form-input>
         <b-form-invalid-feedback
           v-if="!$v.note.accountId.isAddress"
           id="input-1-live-feedback"
-          >Account string must start with KT1, tz1, tz2 or tz3
+          >Account id must starts with KT1, tz1, tz2 or tz3
           symbols.</b-form-invalid-feedback
         >
         <b-form-invalid-feedback id="input-1-live-feedback"
@@ -48,7 +48,7 @@
           v-model="$v.note.alias.$model"
           class="form-group"
           type="text"
-          placeholder="Title"
+          placeholder="Alias"
           :state="validateState('note.alias')"
         >
         </b-form-input>
@@ -103,7 +103,7 @@
       <b-skeleton-table
         responsive
         :rows="3"
-        :columns="6"
+        :columns="4"
         :table-props="{ borderless: true, responsive: true }"
         animation="none"
         class="table-skeleton"
@@ -121,28 +121,31 @@
       :per-page="limit"
       :current-page="page"
     >
-      <template #cell(accountId)="row">
-        {{ row.item.accountId | longhash }}
-        <BtnCopy :text-to-copy="row.item.accountId" />
+      <template #cell(text)="row">
+        <div class="d-flex">
+          {{ $helpers.truncateHash(row.item.text, 3, -5) }}
+          <BtnCopy :text-to-copy="row.item.text" />
+        </div>
       </template>
       <template #cell(tag)="row">
         {{ row.item.tag || '-' }}
       </template>
-      <template #cell(notification)="row">
-        {{ row.item.notification }}
+      <template #cell(description)="row">
+        {{ row.item.description }}
+      </template>
+      <template #cell(balance)="row">
+        <span v-if="row.item.balance">
+          {{ row.item.balance | denominate }}
+        </span>
+        <span v-else>-</span>
       </template>
       <template #cell(actions)="row">
         <b-button-group>
-          <b-btn
-            size="sm"
-            variant="danger"
-            @click="handleNoteDelete(row.item)"
+          <b-btn size="sm" variant="danger" @click="handleNoteDelete(row)"
             >Delete</b-btn
           >
 
-          <b-btn variant="primary" @click="handleNoteEdit(row.item.accountId)"
-            >Edit</b-btn
-          >
+          <b-btn size="sm" variant="primary" @click="handleNoteEdit(row)">Edit</b-btn>
         </b-button-group>
       </template>
     </b-table>
@@ -161,11 +164,7 @@
   import vuelidateMixin from '@/mixins/vuelidateMixin';
   import { minLength, maxLength, required } from 'vuelidate/lib/validators';
   import { mapMutations, mapState, mapActions } from 'vuex';
-  import {
-    NOTE_ADD,
-    NOTE_EDIT,
-    NOTE_DELETE,
-  } from '@/store/mutations.types';
+  import { NOTE_ADD, NOTE_EDIT, NOTE_DELETE } from '@/store/mutations.types';
   import BtnCopy from '@/components/partials/BtnCopy';
   import PaginationSelect from '@/components/partials/PaginationSelect';
   import { GET_USER_NOTES } from '@/store/actions.types';
@@ -211,14 +210,16 @@
         },
         fields: [
           { key: 'actions', label: 'Actions' },
+          { key: 'tag', label: 'Tag', sortable: true, thClass: 'notes__tag' },
+          { key: 'text', label: 'Address' },
           { key: 'alias', label: 'Alias' },
-          { key: 'tag', label: 'Tag' },
-          { key: 'content', label: 'Note' },
+          { key: 'description', label: 'Notes' },
+          { key: 'balance', label: 'Balance' },
         ],
         limit: 5,
         count: 0,
         page: 1,
-        loading: false,
+        loading: true,
       };
     },
     computed: {
@@ -234,20 +235,28 @@
           content: '',
           tag: '',
         };
-        this.$bvModal.show('add-note');
+        this.$bvModal.show('note-add');
       },
-      handleNoteEdit(accountId) {
-        this.note = this.notes.find((item) => item.accountId === accountId);
-        this.$bvModal.show('add-note');
+      handleNoteEdit(row) {
+        const foundNote = this.notes.find((item) => item.text === row.item.text);
+
+        const note = {
+          accountId: foundNote.text,
+          alias: foundNote.alias || '',
+          content: foundNote.description || '',
+          tag: foundNote.tag || '',
+        };
+        this.note = note;
+        this.$bvModal.show('note-add');
       },
-      async handleNoteDelete({ accountId }) {
+      async handleNoteDelete({ item }) {
         await this.$api
           .deleteUserNote({
             address: this.beaconAccount.address,
-            accountId: accountId,
+            text: item.text,
           })
           .then(() => {
-            this[NOTE_DELETE](this.note);
+            this[NOTE_DELETE]({ accountId: item.accountId });
           })
           .catch(() => {
             this.$bvToast.toast('Oops, something went wrong!', {
@@ -259,39 +268,35 @@
       },
       handleModalClose() {
         this.$v.$reset();
-        this.$bvModal.hide('add-note');
+        this.$bvModal.hide('note-add');
       },
       async handleModalSave() {
-        const noteExist = this.notes.find(
-          (item) => item.accountId === this.note.accountId,
-        );
-
-        if (noteExist) {
-          this[NOTE_EDIT](this.note);
-        } else {
-          await this.$api
-            .postUserNote({
+        await this.$api
+          .postUserNote({
+            address: this.beaconAccount.address,
+            text: this.note.accountId,
+            description: this.note.content,
+            alias: this.note.alias,
+            tag: this.note.tag,
+          })
+          .then(async () => {
+            await this[GET_USER_NOTES]({
               address: this.beaconAccount.address,
-              text: this.note.content,
-              alias: this.note.alias,
-            })
-            .then(() => {
-              this[NOTE_ADD](this.note);
-              this.$bvToast.toast(`${this.note.alias} is added to notes`, {
-                title: 'Note saved',
-                variant: 'success',
-                autoHideDelay: 1500,
-              });
-            })
-            .catch(() => {
-              this.$bvToast.toast('Oops, something went wrong!', {
-                title: this.$t('errorsNotifications.error'),
-                variant: 'danger',
-                autoHideDelay: 1500,
-              });
             });
-        }
-        this.$bvModal.hide('add-note');
+            this.$bvModal.hide('note-add');
+            this.$bvToast.toast(`${this.accountName ? this.accountName : this.$helpers.truncateHash(this.accountId, 8, -5)} saved`, {
+              title: `Note saved (${this.notes.length}/50)`,
+              variant: 'success',
+              autoHideDelay: 1500,
+            });
+          })
+          .catch(() => {
+            this.$bvToast.toast('Oops, something went wrong!', {
+              title: this.$t('errorsNotifications.error'),
+              variant: 'danger',
+              autoHideDelay: 1500,
+            });
+          });
       },
       handlePageChange(page) {
         this.page = page;
@@ -302,8 +307,7 @@
         immediate: true,
         deep: true,
         async handler({ address }) {
-          if (address && !this.notes.length) {
-            this.loading = true;
+          if (address) {
             await this[GET_USER_NOTES]({
               address: this.beaconAccount.address,
             });
@@ -320,5 +324,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  ::v-deep .notes__tag {
+    position: relative;
   }
 </style>

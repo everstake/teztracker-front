@@ -24,7 +24,6 @@
         placeholder="Account ID"
         v-model="$v.accountId.$model"
         :state="validateState('accountId')"
-        autofocus
       >
       </b-form-input>
       <b-form-invalid-feedback
@@ -35,7 +34,7 @@
       <b-form-invalid-feedback
         v-if="!$v.accountId.isAddress"
         id="input-1-live-feedback"
-        >Account string must start with KT1, tz1, tz2 or tz3
+        >Account id must starts with KT1, tz1, tz2 or tz3
         symbols.</b-form-invalid-feedback
       >
       <b-form-invalid-feedback

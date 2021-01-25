@@ -37,13 +37,12 @@ if (localStorage.getItem('favorites') !== null) {
 
 let initialState = {
   username: '',
-  email: 'mk@qq.qq',
+  email: '',
   emailVerified: false,
-  emailResendTimer: 2,
+  emailResendTimer: 300,
   beaconAccount: {},
   notifications: [],
-  notes: [
-  ],
+  notes: [],
   favorites: [...favorites],
 };
 
@@ -60,10 +59,7 @@ export const actions = {
     );
   },
   async [GET_EMAIL_VERIFICATION]({ commit, rootGetters }, payload) {
-    commit(
-      SET_EMAIL_VERIFICATION,
-      await rootGetters.API.getAccounts(payload),
-    );
+    commit(SET_EMAIL_VERIFICATION, await rootGetters.API.verifyEmail(payload));
   },
   async [GET_USER_PROFILE]({ commit, rootGetters }, payload) {
     commit(SET_USER_PROFILE, await rootGetters.API.getUserProfile(payload));
@@ -75,7 +71,8 @@ export const actions = {
 
 export const mutations = {
   [SET_ACCOUNT_EMAIL](state, payload) {
-    state.email = payload.data.email;
+    state.email = payload;
+    state.emailVerified = false;
   },
   [SET_BEACON_ACCOUNT](state, beaconAccount) {
     if (beaconAccount) {
@@ -107,12 +104,20 @@ export const mutations = {
     ];
   },
   [NOTE_ADD](state, note) {
-    state.notes.push(note);
+    const foundIndex = state.notes.findIndex(({ text }) => text === note.text);
+
+    if (foundIndex > -1) {
+      state.notes = [
+        ...state.notes.slice(0, foundIndex),
+        note,
+        ...state.notes.slice(foundIndex + 1),
+      ];
+    } else {
+      state.notes.push(note);
+    }
   },
   [NOTE_EDIT](state, note) {
-    const index = state.notes.findIndex(
-      ({ accountId }) => accountId === note.accountId,
-    );
+    const index = state.notes.findIndex(({ text }) => text === note.text);
     state.notes = [
       ...state.notes.slice(0, index),
       note,
@@ -156,10 +161,10 @@ export const mutations = {
     state.emailVerified = payload;
   },
   [SET_USER_PROFILE](state, payload) {
-    console.log('SET_USER_PROFILE', payload);
-    state.email = payload.email;
-    state.username = payload.username;
-    state.emailVerified = payload.verified;
+    const { data } = payload;
+    state.email = data.email;
+    state.username = data.username;
+    state.emailVerified = data.verified;
   },
   [SET_USER_NOTES](state, data) {
     state.notes = data.data;

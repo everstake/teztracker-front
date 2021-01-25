@@ -25,6 +25,7 @@ import {
   SkeletonPlugin,
   InputGroupPlugin,
   ButtonGroupPlugin,
+  BadgePlugin,
 } from 'bootstrap-vue';
 import {
   FontAwesomeIcon,
@@ -102,6 +103,7 @@ Vue.use(PaginationNavPlugin);
 Vue.use(SkeletonPlugin);
 Vue.use(InputGroupPlugin);
 Vue.use(ButtonGroupPlugin);
+Vue.use(BadgePlugin);
 
 dom.watch();
 library.add(

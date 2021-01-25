@@ -1,9 +1,13 @@
 <template>
-  <font-awesome-icon
-    @click="pairBeacon(currentNetwork)"
-    :icon="['fas', 'user']"
-    class="beacon-icon"
-  />
+  <b-btn @click="pairBeacon(currentNetwork)" class="beacon-btn">
+    <font-awesome-icon
+      :icon="['fas', 'user']"
+      class="beacon-icon"
+      :class="{
+        'beacon-account-active': isBeaconAccountSet,
+      }"
+    />
+  </b-btn>
 </template>
 
 <script>
@@ -36,7 +40,9 @@
       ...mapMutations('user', [SET_BEACON_ACCOUNT]),
       async pairBeacon(network) {
         if (this.isBeaconAccountSet) {
-          return this.$router.push({ name: 'personal_account' });
+          return this.$route.name !== 'account_profile'
+            ? this.$router.push({ name: 'account_profile' })
+            : false;
         }
 
         try {
@@ -54,3 +60,25 @@
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  .beacon-account-active {
+    color: $color-brand;
+  }
+
+  .beacon-btn {
+    padding: 0.5rem 1rem;
+    background: none;
+    border: none;
+    border-radius: 0;
+  }
+
+  .beacon-btn:hover,
+  .beacon-btn:active,
+  .beacon-btn:focus {
+    background: none !important;
+    border: none !important;
+    border-radius: 0;
+    box-shadow: none !important;
+  }
+</style>

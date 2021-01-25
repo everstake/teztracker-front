@@ -37,7 +37,11 @@
           v-if="!row.item.accountName"
           :text-to-copy="row.item.accountId"
         />
-        <BtnNote :alias="row.item.accountName" :account-id="row.item.accountId" :index="row.item.index" :row-index="row.index" />
+        <BtnNote
+          :index="row.item.index"
+          :account-name="row.item.accountName"
+          :account-id="row.item.accountId"
+        />
       </span>
       <span
         v-else-if="row.item.accountId.slice(0, 2) === 'KT'"
@@ -60,7 +64,11 @@
           v-if="!row.item.accountName"
           :text-to-copy="row.item.accountId"
         />
-        <BtnNote :alias="row.item.accountName" :account-id="row.item.accountId" :index="row.item.index" :row-index="row.index" />
+        <BtnNote
+          :index="row.item.index"
+          :account-name="row.item.accountName"
+          :account-id="row.item.accountId"
+        />
       </span>
       <span v-else class="d-flex align-items-center">
         <IdentIcon :seed="row.item.accountId" />
@@ -80,7 +88,11 @@
           v-if="!row.item.accountName"
           :text-to-copy="row.item.accountId"
         />
-        <BtnNote :alias="row.item.accountName" :account-id="row.item.accountId" :index="row.item.index" :row-index="row.index" />
+        <BtnNote
+          :index="row.item.index"
+          :account-name="row.item.accountName"
+          :account-id="row.item.accountId"
+        />
       </span>
     </template>
     <template #cell(balance)="row">
@@ -127,12 +139,13 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+  import { mapState, mapActions } from 'vuex';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
   import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import favoriteAccount from '@/mixins/favoriteAccount';
   import BtnNote from '@/components/partials/BtnNote';
+  import { GET_USER_NOTES } from '@/store/actions.types';
 
   export default {
     name: 'TopAccountsTable',
@@ -154,10 +167,14 @@
       NoDataTableCell,
     },
     mixins: [favoriteAccount],
+    methods: {
+      ...mapActions('user', [GET_USER_NOTES]),
+    },
     computed: {
       ...mapState({
         dateFormat: (state) => state.app.dateFormat,
       }),
+      ...mapState('user', ['beaconAccount', 'notes']),
       fields() {
         const propsFields = this.propsFields.length > 0;
         if (!this.$i18n.locale) return [];
@@ -186,6 +203,19 @@
       },
       topAccountsItems() {
         return this.items.map((item, index) => ({ ...item, index }));
+      },
+    },
+    watch: {
+      beaconAccount: {
+        immediate: true,
+        deep: true,
+        async handler({ address }) {
+          if (address) {
+            await this[GET_USER_NOTES]({
+              address: this.beaconAccount.address,
+            });
+          }
+        },
       },
     },
   };

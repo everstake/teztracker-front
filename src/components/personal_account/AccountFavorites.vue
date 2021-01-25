@@ -1,7 +1,7 @@
 <template>
   <div class="favorites">
     <div class="favorites__header">
-      <h3>Favorites ({{ this.favorites.length }}/50)</h3>
+      <h3>Favorites <span v-if="favorites.length">({{ favorites.length }}/50)</span></h3>
 
       <b-btn
         variant="success"
@@ -18,7 +18,7 @@
       hide-header
       @hide="handleModalClose"
     >
-      <p>Select account favorite</p>
+      <p>Add favorite account by id</p>
       <b-form-group>
         <b-form-input
           class="form-group"
@@ -32,7 +32,7 @@
         <b-form-invalid-feedback
           v-if="!$v.address.isAddress"
           id="input-1-live-feedback"
-          >Account string must start with KT1, tz1, tz2 or tz3
+          >Account id must starts with KT1, tz1, tz2 or tz3
           symbols.</b-form-invalid-feedback
         >
         <b-form-invalid-feedback id="input-1-live-feedback"

@@ -2,7 +2,7 @@
   <span>
     <b-button
       v-b-tooltip.hover
-      title="Create a note"
+      :title="noteExist ? 'Edit a note' : 'Create a note'"
       variant="icon"
       class="py-0 btn-note"
       @click="handleNoteClick"
@@ -17,20 +17,20 @@
       />
     </b-button>
     <b-modal
-      :id="`note-${index}`"
+      :id="`note-${accountId}`"
       size="md"
       centered
       hide-header
       @hide="handleModalClose"
     >
-      <p>Create a note</p>
+      <p>{{ noteExist ? 'Edit a note' : 'Create a note' }}</p>
       <b-form-group>
         Alias
         <b-form-input
           v-model="$v.note.alias.$model"
           class="form-group"
           type="text"
-          placeholder="Title"
+          placeholder="Alias"
           :state="validateState('note.alias')"
         >
         </b-form-input>
@@ -44,10 +44,10 @@
         <b-form-textarea
           v-model="$v.note.content.$model"
           class="form-group"
-          autofocus
           placeholder="Note"
-          rows="6qw"
+          rows="6"
           :state="validateState('note.content')"
+          autofocus
         >
         </b-form-textarea>
         <b-form-invalid-feedback id="input-1-live-feedback"
@@ -81,19 +81,15 @@
     name: 'BtnNote',
     mixins: [vuelidateMixin],
     props: {
-      rowIndex: {
-        type: Number,
-        default: 0,
-      },
       index: {
         type: Number,
         default: 0,
       },
-      alias: {
+      accountId: {
         type: String,
         default: '',
       },
-      accountId: {
+      accountName: {
         type: String,
         default: '',
       },
@@ -115,20 +111,18 @@
     data() {
       return {
         note: {
-          accountId: this.accountId,
-          alias: this.alias || this.accountId,
+          alias: '',
           content: '',
-          tag: '',
         },
       };
     },
     computed: {
-      ...mapState('user', ['notes']),
+      ...mapState('user', ['notes', 'beaconAccount']),
       noteExist() {
         if (!this.notes.length) return false;
 
         const foundNote = this.notes.find(
-          (item) => item.accountId === this.note.accountId,
+          (item) => item.text === this.accountId,
         );
 
         return foundNote;
@@ -138,45 +132,56 @@
       ...mapMutations('user', [NOTE_ADD, NOTE_EDIT]),
       handleNoteClick() {
         const noteExist = this.notes.find(
-          (item) => item.accountId === this.note.accountId,
+          (item) => item.text === this.accountId,
         );
 
         if (noteExist) {
-          this.handleNoteEdit();
+          this.handleNoteEdit(noteExist);
         } else {
           this.handleNoteCreate();
         }
       },
       handleNoteCreate() {
-        this.$bvModal.show(`note-${this.rowIndex}`);
+        this.note.alias = this.accountName || this.accountId;
+        this.note.content = '';
+        this.$bvModal.show(`note-${this.accountId}`);
       },
-      handleNoteEdit() {
-        this.$v.$touch();
-        this.note = this.notes.find(
-          (item) => item.accountId === this.note.accountId,
-        );
-        this.$bvModal.show(`note-${this.rowIndex}`);
+      handleNoteEdit(note) {
+        this.note.alias = note.alias || note.text;
+        this.note.content = note.description || '';
+        this.$bvModal.show(`note-${this.accountId}`);
       },
-      handleModalSave() {
-        const noteExist = this.notes.find(
-          (item) => item.accountId === this.note.accountId,
-        );
-
-        if (noteExist) {
-          this[NOTE_EDIT](this.note);
-        } else {
-          this[NOTE_ADD](this.note);
-          this.$bvToast.toast(`${this.note.alias} is added to notes`, {
-            title: 'Note saved',
-            variant: 'success',
-            autoHideDelay: 1500,
+      async handleModalSave() {
+        await this.$api
+          .postUserNote({
+            address: this.beaconAccount.address,
+            text: this.accountId,
+            description: this.note.content,
+            alias: this.note.alias,
+          })
+          .then(() => {
+            this[NOTE_ADD]({
+              text: this.accountId,
+              description: this.note.content,
+              alias: this.note.alias,
+            });
+            this.$bvModal.hide(`note-${this.accountId}`);
+            this.$bvToast.toast(`${this.accountName ? this.accountName : this.$helpers.truncateHash(this.accountId, 8, -5)} saved`, {
+              title: `Note saved (${this.notes.length}/50)`,
+              variant: 'success',
+              autoHideDelay: 1500,
+            });
+          })
+          .catch(() => {
+            this.$bvToast.toast('Oops, something went wrong!', {
+              title: this.$t('errorsNotifications.error'),
+              variant: 'danger',
+              autoHideDelay: 1500,
+            });
           });
-        }
-        this.$bvModal.hide(`note-${this.rowIndex}`);
       },
       handleModalClose() {
-        this.$v.$reset();
-        this.$bvModal.hide(`note-${this.rowIndex}`);
+        this.$bvModal.hide(`note-${this.accountId}`);
       },
     },
   };

@@ -3,8 +3,30 @@
     <div class="notifications__heading">
       <h3>
         Accounts & Notifications
+        <span v-if="notifications.length"
+          >({{ notifications.length }}/100)</span
+        >
+        <b-btn
+          v-if="!email || !emailVerified"
+          v-b-tooltip.bottom.hover
+          :title="
+            !email
+              ? 'Add email address to enable email notification'
+              : email && !emailVerified
+              ? 'Please, verify your email. We have sent a verification letter on your email address'
+              : ''
+          "
+          variant="icon"
+          class="btn--tooltip notifications__tooltip d-inline-block"
+        >
+          <font-awesome-icon icon="question-circle" class="icon icon-circle" />
+        </b-btn>
       </h3>
-      <b-btn variant="success" @click="handleAddAddress">
+      <b-btn
+        :disabled="notifications.length >= 100 || !email || !emailVerified"
+        variant="success"
+        @click="handleAddAddress"
+      >
         <font-awesome-icon :icon="['fa', 'plus']" /> Address
       </b-btn>
       <b-modal id="add-address" size="md" centered hide-header>
@@ -22,7 +44,7 @@
           <b-form-invalid-feedback
             v-if="!$v.accountId.isAddress"
             id="input-1-live-feedback"
-            >Account string must start with KT1, tz1, tz2 or tz3
+            >Account id must starts with KT1, tz1, tz2 or tz3
             symbols.</b-form-invalid-feedback
           >
           <b-form-invalid-feedback id="input-1-live-feedback"
@@ -43,9 +65,6 @@
           </b-row>
         </div>
         <template #modal-footer>
-          <b-btn @click="onModalClose">
-            Close
-          </b-btn>
           <b-btn
             variant="success"
             @click="onModalSave"
@@ -90,22 +109,11 @@
           <span v-else>-</span>
         </template>
         <template #cell(notification)="row">
-          <span v-if="email && emailVerified">
-            {{ email }}
-          </span>
-          <span v-else>
-            <b-btn @click="handleEmailAdd" size="sm" variant="warning">
-              <span v-if="email && !emailVerified">Email verification</span>
-              <span v-else>Add an email</span>
-            </b-btn>
-          </span>
+          {{ email }}
         </template>
         <template #cell(actions)="row">
           <b-button-group>
-            <b-btn
-              size="sm"
-              variant="danger"
-              @click="onNotificationDelete(row)"
+            <b-btn size="sm" variant="danger" @click="onNotificationDelete(row)"
               >Delete</b-btn
             >
           </b-button-group>
@@ -130,7 +138,10 @@
     DELETE_ACCOUNT_NOTIFICATION,
     EDIT_ACCOUNT_NOTIFICATION,
   } from '@/store/mutations.types';
-  import { GET_ACCOUNTS_NOTIFICATIONS } from '@/store/actions.types';
+  import {
+    GET_ACCOUNTS_NOTIFICATIONS,
+    GET_USER_PROFILE,
+  } from '@/store/actions.types';
   import { required, minLength, maxLength } from 'vuelidate/lib/validators';
   import vuelidateMixin from '@/mixins/vuelidateMixin';
   import BtnCopy from '@/components/partials/BtnCopy';
@@ -183,7 +194,7 @@
         limit: 5,
         count: 0,
         page: 1,
-        loading: false,
+        loading: true,
       };
     },
     methods: {
@@ -192,19 +203,29 @@
         DELETE_ACCOUNT_NOTIFICATION,
         EDIT_ACCOUNT_NOTIFICATION,
       ]),
-      ...mapActions('user', [GET_ACCOUNTS_NOTIFICATIONS]),
+      ...mapActions('user', [GET_ACCOUNTS_NOTIFICATIONS, GET_USER_PROFILE]),
       handleAddAddress() {
         this.$bvModal.show('add-address');
       },
       async onModalSave() {
         const operations = !this.modal.selected.includes('no_notifications');
         let selectedOperations;
+        const defaultOperations = {
+          delegations_enabled: false,
+          in_transfers_enabled: false,
+          out_transfers_enabled: false,
+        };
 
         if (operations) {
-          selectedOperations = this.modal.selected.reduce(
-            (acc, curr) => ((acc[curr] = true), acc),
-            {},
-          );
+          selectedOperations = {
+            ...defaultOperations,
+            ...this.modal.selected.reduce(
+              (acc, curr) => ((acc[curr] = true), acc),
+              {},
+            ),
+          };
+        } else {
+          selectedOperations = defaultOperations;
         }
 
         await this.$api
@@ -214,14 +235,12 @@
             ...selectedOperations,
           })
           .then(async () => {
-            this.$bvToast.toast({
-              title: this.$t('errorsNotifications.success'),
-              variant: 'success',
-              autoHideDelay: 1500,
-            });
-            await this.$api.getUserNotifications({
+            await this[GET_ACCOUNTS_NOTIFICATIONS]({
               address: this.beaconAccount.address,
             });
+
+            this.resetModal();
+            this.$bvModal.hide('add-address');
           })
           .catch(() => {
             this.$bvToast.toast('Oops, something went wrong!', {
@@ -230,9 +249,6 @@
               autoHideDelay: 1500,
             });
           });
-
-        this.resetModal();
-        this.$bvModal.hide('add-address');
       },
       resetModal() {
         this.accountId = '';
@@ -241,11 +257,11 @@
         this.resetModal();
         this.$bvModal.hide('add-address');
       },
-      async onNotificationDelete({ item: accountId, index }) {
+      async onNotificationDelete({ item, index }) {
         await this.$api
           .deleteUserNotification({
             address: this.beaconAccount.address,
-            accountId: accountId,
+            accountId: item.address,
           })
           .then(() => {
             this[DELETE_ACCOUNT_NOTIFICATION](index);
@@ -260,9 +276,6 @@
       },
       handlePageChange(page) {
         this.page = page;
-      },
-      handleEmailAdd() {
-        this.$emit('handleTabChange', 0);
       },
       handleCheckboxChange(arr) {
         if (!arr.length) {
@@ -299,24 +312,13 @@
         immediate: true,
         deep: true,
         async handler({ address }) {
-          if (address && !this.notifications.length) {
-            this.loading = true;
-
-            this[GET_ACCOUNTS_NOTIFICATIONS]({
+          if (address) {
+            await this[GET_USER_PROFILE]({
               address: this.beaconAccount.address,
             });
-
-            if (this.notifications.length) {
-              const accountsId = this.notifications.map(
-                (notification) => notification.accountId,
-              );
-              await this.$api
-                .getAccounts({ account_id: accountsId })
-                .then((data) => {
-                  this[SET_ACCOUNT_NOTIFICATION](data.data);
-                })
-                .catch(() => {});
-            }
+            await this[GET_ACCOUNTS_NOTIFICATIONS]({
+              address: this.beaconAccount.address,
+            });
             this.loading = false;
           }
         },
@@ -330,5 +332,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .notifications__tooltip {
+    margin-left: 0;
+  }
+
+  .notifications__tooltip:focus {
+    box-shadow: none;
   }
 </style>

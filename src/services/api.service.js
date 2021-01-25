@@ -348,12 +348,6 @@ const TzAPI = {
       { headers: { address: opts.accountId } },
     );
   },
-  async verifyEmail(opts = {}) {
-    return await http.post(
-      formatURL(this.API_URL_WITHOUT_PLATFORM(), 'profile/verify/email'),
-      { email: opts.email, username: '' },
-    );
-  },
   async setAccountUsername(opts = {}) {
     return await http.post(
       formatURL(this.API_URL_WITHOUT_PLATFORM(), 'profile/update', {
@@ -373,14 +367,9 @@ const TzAPI = {
     return await http.get(formatURL(this.API_URL_BASE(), 'profile'), config);
   },
   async updateUserProfile(opts = {}) {
-    const config = {
-      headers: { address: opts.address },
-    };
-
-    const data = {
-      email: opts.email ? opts.email : undefined,
-      username: opts.username ? opts.username : undefined,
-    };
+    const { email, username, address } = opts;
+    const data = { email, username };
+    const config = { headers: { address } };
 
     return await http.post(
       formatURL(this.API_URL_BASE(), 'profile/update'),
@@ -399,13 +388,10 @@ const TzAPI = {
     );
   },
   async postUserNote(opts = {}) {
+    const { text, description, alias, tag, address } = opts;
+    const data = { text, description, alias, tag };
     const config = {
-      headers: { address: opts.address },
-    };
-
-    const data = {
-      text: opts.text,
-      alias: opts.alias,
+      headers: { address },
     };
 
     return await http.post(
@@ -415,17 +401,25 @@ const TzAPI = {
     );
   },
   async postUserNotification(opts = {}) {
+    const {
+      accountId,
+      delegations_enabled,
+      in_transfers_enabled,
+      out_transfers_enabled,
+    } = opts;
+    const data = {
+      address: accountId,
+      delegations_enabled,
+      in_transfers_enabled,
+      out_transfers_enabled,
+    };
     const config = {
       headers: { address: opts.address },
     };
 
     return await http.post(
       formatURL(this.API_URL_BASE(), 'profile/address'),
-      {
-        address: opts.accountId,
-        text: opts.text,
-        alias: opts.alias,
-      },
+      data,
       config,
     );
   },
@@ -442,7 +436,7 @@ const TzAPI = {
   async deleteUserNote(opts = {}) {
     return await http.post(
       formatURL(this.API_URL_BASE(), 'profile/delete/note'),
-      { address: opts.accountId },
+      { text: opts.text },
       {
         headers: { address: opts.address },
       },
@@ -450,7 +444,7 @@ const TzAPI = {
   },
   async deleteUserNotification(opts = {}) {
     const data = {
-      address: opts.address,
+      address: opts.accountId,
     };
     const config = {
       headers: { address: opts.address },
@@ -459,6 +453,12 @@ const TzAPI = {
       formatURL(this.API_URL_BASE(), 'profile/delete/address'),
       data,
       config,
+    );
+  },
+  async verifyEmail(token) {
+    return await http.post(
+      formatURL(this.API_URL_BASE(), 'profile/verify/email/token'),
+      { token },
     );
   },
 };

@@ -38,6 +38,11 @@
         </b-link>
 
         <BtnCopy v-if="!row.item.name" :text-to-copy="row.item.accountId" />
+        <BtnNote
+            :index="row.item.index"
+            :account-name="row.item.name"
+            :account-id="row.item.accountId"
+        />
       </span>
     </template>
     <template #cell(blocks)="row">
@@ -59,10 +64,12 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+import {mapActions, mapState} from 'vuex';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
   import favoriteAccount from '@/mixins/favoriteAccount';
+  import BtnNote from "@/components/partials/BtnNote";
+import {GET_USER_NOTES} from "@/store/actions.types";
 
   export default {
     name: 'BakersTable',
@@ -80,12 +87,14 @@
     components: {
       BtnCopy,
       IdentIcon,
+      BtnNote,
     },
     mixins: [favoriteAccount],
     computed: {
       ...mapState({
         dateFormat: (state) => state.app.dateFormat,
       }),
+      ...mapState('user', ['beaconAccount', 'notes']),
       fields() {
         const propsFields = this.propsFields.length > 0;
         if (!this.$i18n.locale) return [];
@@ -144,9 +153,25 @@
       },
       bakersFormatted() {
         if (!this.items || this.items.length === 0) return [];
-        return this.items.map((bakerObj) => {
-          return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
+        return this.items.map((bakerObj, index) => {
+          return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo, index };
         });
+      },
+    },
+    methods: {
+      ...mapActions('user', [GET_USER_NOTES]),
+    },
+    watch: {
+      beaconAccount: {
+        immediate: true,
+        deep: true,
+        async handler({ address }) {
+          if (address) {
+            await this[GET_USER_NOTES]({
+              address: this.beaconAccount.address,
+            });
+          }
+        },
       },
     },
   };

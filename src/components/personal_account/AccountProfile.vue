@@ -1,138 +1,303 @@
 <template>
   <div class="profile">
-    <h3>
-      My profile
-    </h3>
+    <div class="profile__heading">
+      <h3>
+        My profile
+      </h3>
+    </div>
     <hr />
 
-    <b-form-group label="Email address">
-      <div v-if="email && emailVerified">
-        <p class="profile__email">{{ email }}</p>
-        <button class="profile__button" @click="handleEmailChange">
-          Change email address
-        </button>
+    <div class="profile__content">
+      <div class="profile__email email mb-3">
+        <div v-if="loading.email">
+          <b-skeleton width="150px" />
+        </div>
+        <div v-else>
+          <div v-if="!email">
+            <b-btn
+              v-b-tooltip.hover.bottom
+              title="To enable Accounts & Notifications"
+              variant="success"
+              @click="handleEmailAdd"
+            >
+              Add email address
+            </b-btn>
+            <b-modal id="email-add" size="sm" title="Email" hide-footer>
+              <div class="mb-3">
+                <b-form-input
+                  v-model.lazy="$v.user.email.$model"
+                  type="text"
+                  :state="validateState('user.email')"
+                />
+                <b-form-invalid-feedback id="input-1-live-feedback"
+                  >Please enter a valid email address.</b-form-invalid-feedback
+                >
+              </div>
+              <div class="mb-1">
+                <b-btn
+                  @click="handleEmailSave"
+                  :disabled="!user.email.length || !$v.user.email.email"
+                  class="w-100"
+                  variant="success"
+                  >Save</b-btn
+                >
+              </div>
+            </b-modal>
+          </div>
+          <div class="d-flex justify-content-between align-items-center" v-else>
+            <div>
+              Email:
+              <span
+                :class="!emailVerified ? 'color-secondary' : 'color-accent'"
+                >{{ email }}</span
+              >
+              <b-badge
+                v-b-tooltip.bottom.hover
+                title="We have sent a verification letter on your email address"
+                v-if="!emailVerified"
+                class="ml-2"
+                variant="secondary"
+                >email not verified</b-badge
+              >
+            </div>
+            <b-btn size="sm" v-if="email" @click="handleEmailEdit"
+              >Edit email</b-btn
+            >
+            <b-modal id="email-edit" size="sm" title="Edit email" hide-footer>
+              <div>
+                <p class="mb-0">
+                  <label class="mr-4" for="profile-edit-email">Email</label>
+                </p>
+                <b-form-input
+                  id="profile-edit-email"
+                  v-model.lazy="$v.profileEdit.email.$model"
+                  :state="validateState('profileEdit.email')"
+                  type="text"
+                  autofocus
+                />
+                <b-form-invalid-feedback id="input-1-live-feedback"
+                  >Please enter a valid email address.</b-form-invalid-feedback
+                >
+                <b-btn
+                  class="mt-4 w-100"
+                  :disabled="
+                    !profileEdit.email.length || !$v.profileEdit.email.email
+                  "
+                  variant="success"
+                  @click="handleEmailEditSave"
+                  >Save</b-btn
+                >
+              </div>
+            </b-modal>
+          </div>
+        </div>
       </div>
-      <div v-else-if="email && !emailVerified">
-        <p>{{ user.email }}</p>
-        <p>
-          <button
-              class="profile__button profile__button--important"
-              @click="handleEmailChange"
-              :disabled="loading"
-          >
-            <span>Resend verification email</span>
-          </button>
-        </p>
-      </div>
-      <div v-else-if="!email">
-        <b-form-input
-          v-model="$v.user.email.$model"
-          :state="validateState('user.email')"
-          class="form-group email-input"
-          type="text"
-          placeholder="email@gmail.com"
-          >{{ email }}</b-form-input
-        >
 
-        <b-btn
-          variant="success"
-          :disabled="loading || !user.email || $v.user.email.$anyError"
-          @click="handleUserEmailSave"
-        >
-          Save
-        </b-btn>
+      <div class="profile__username username mb-3">
+        <div v-if="loading.username">
+          <b-skeleton width="150px" />
+        </div>
+        <div v-else>
+          <div v-if="!username">
+            <b-btn
+              @click="handleUsernameAdd"
+              class="username__btn"
+              variant="success"
+              >Add username</b-btn
+            >
+            <b-modal id="username-add" size="sm" title="Username" hide-footer>
+              <div>
+                <b-form-input
+                  v-model.lazy="$v.user.username.$model"
+                  type="text"
+                  :state="validateState('user.username')"
+                />
+                <b-form-invalid-feedback id="input-1-live-feedback"
+                  >This field is required and must be between 3 and 30
+                  characters.</b-form-invalid-feedback
+                >
+              </div>
+              <div class="mb-1">
+                <b-btn
+                  @click="handleUsernameSave"
+                  :disabled="
+                    !user.username.length ||
+                      !$v.user.username.minLength ||
+                      !$v.user.username.maxLength
+                  "
+                  class="w-100"
+                  variant="success"
+                  >Save</b-btn
+                >
+              </div>
+            </b-modal>
+          </div>
+          <div class="d-flex justify-content-between align-items-center" v-else>
+            <span
+              >Username: <span class="color-accent">{{ username }}</span></span
+            >
 
-        <b-form-invalid-feedback id="input-1-live-feedback"
-          >Please enter a valid email address.</b-form-invalid-feedback
-        >
+            <b-btn size="sm" v-if="username" @click="handleUsernameEdit"
+              >Edit username</b-btn
+            >
+            <b-modal
+              id="username-edit"
+              size="sm"
+              title="Edit username"
+              hide-footer
+            >
+              <div class="mb-3">
+                <p class="mb-0">
+                  <label class="mr-4" for="profile-edit-username"
+                    >Username</label
+                  >
+                </p>
+                <b-form-input
+                  id="profile-edit-username"
+                  v-model.lazy="$v.profileEdit.username.$model"
+                  :state="validateState('profileEdit.username')"
+                  type="text"
+                  autofocus
+                />
+                <b-form-invalid-feedback id="input-1-live-feedback"
+                  >This field is required and must be between 3 and 30
+                  characters.</b-form-invalid-feedback
+                >
+                <b-btn
+                  class="mt-4 w-100"
+                  :disabled="
+                    !profileEdit.username.length ||
+                      !$v.profileEdit.username.minLength ||
+                      !$v.profileEdit.username.maxLength
+                  "
+                  variant="success"
+                  @click="handleUsernameEditSave"
+                  >Save</b-btn
+                >
+              </div>
+            </b-modal>
+          </div>
+        </div>
       </div>
-    </b-form-group>
 
-    <b-form-group label="Username">
-      <div v-if="username">
-        <p>{{ username }}</p>
-      </div>
-      <div v-else>
-        <b-form-input
-          v-model="$v.user.username.$model"
-          :state="validateState('user.username')"
-          class="form-group email-input"
-          type="text"
-          placeholder="Username"
-          >{{ username }}</b-form-input
-        >
-        <b-btn
-          variant="success"
-          :disabled="loading || !user.username || $v.user.username.$anyError"
-          @click="handleUserNameSave"
-        >
-          Save
-        </b-btn>
-        <b-form-invalid-feedback
-          v-if="!$v.user.username.minLength"
-          id="input-1-live-feedback"
-          >This field must be at least 3 characters.</b-form-invalid-feedback
-        >
-        <b-form-invalid-feedback
-          v-if="!$v.user.username.maxLength"
-          id="input-1-live-feedback"
-          >This field must be less than 30 characters.</b-form-invalid-feedback
-        >
-      </div>
-    </b-form-group>
+      <!--    <b-form-group label="Username">-->
+      <!--      <div v-if="loading">-->
+      <!--        <b-skeleton width="150px" />-->
+      <!--      </div>-->
+      <!--      &lt;!&ndash;      <div v-if="username">&ndash;&gt;-->
+      <!--      &lt;!&ndash;        <p>{{ username }}</p>&ndash;&gt;-->
+      <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
+      <!--      &lt;!&ndash;      <div v-else>&ndash;&gt;-->
+      <!--      &lt;!&ndash;        <b-form-input&ndash;&gt;-->
+      <!--      &lt;!&ndash;          v-model="$v.user.username.$model"&ndash;&gt;-->
+      <!--      &lt;!&ndash;          :state="validateState('user.username')"&ndash;&gt;-->
+      <!--      &lt;!&ndash;          class="form-group email-input"&ndash;&gt;-->
+      <!--      &lt;!&ndash;          type="text"&ndash;&gt;-->
+      <!--      &lt;!&ndash;          placeholder="Username"&ndash;&gt;-->
+      <!--      &lt;!&ndash;          >{{ username }}</b-form-input&ndash;&gt;-->
+      <!--      &lt;!&ndash;        >&ndash;&gt;-->
+      <!--      &lt;!&ndash;        <b-btn&ndash;&gt;-->
+      <!--      &lt;!&ndash;          variant="success"&ndash;&gt;-->
+      <!--      &lt;!&ndash;          :disabled="loading || !user.username || $v.user.username.$anyError"&ndash;&gt;-->
+      <!--      &lt;!&ndash;          @click="handleUserNameSave"&ndash;&gt;-->
+      <!--      &lt;!&ndash;        >&ndash;&gt;-->
+      <!--      &lt;!&ndash;          <span v-if="loading">&ndash;&gt;-->
+      <!--      &lt;!&ndash;            <font-awesome-icon&ndash;&gt;-->
+      <!--      &lt;!&ndash;                :class="loading ? 'spinner' : 'icon-white'"&ndash;&gt;-->
+      <!--      &lt;!&ndash;                :icon="loading ? 'spinner' : 'search'"&ndash;&gt;-->
+      <!--      &lt;!&ndash;                :spin="loading"&ndash;&gt;-->
+      <!--      &lt;!&ndash;            />&ndash;&gt;-->
+      <!--      &lt;!&ndash;             Loading&ndash;&gt;-->
+      <!--      &lt;!&ndash;             </span>&ndash;&gt;-->
+      <!--      &lt;!&ndash;          <span v-else>Save</span>&ndash;&gt;-->
+      <!--      &lt;!&ndash;        </b-btn>&ndash;&gt;-->
+      <!--      &lt;!&ndash;        <b-form-invalid-feedback&ndash;&gt;-->
+      <!--      &lt;!&ndash;          v-if="!$v.user.username.minLength"&ndash;&gt;-->
+      <!--      &lt;!&ndash;          id="input-1-live-feedback"&ndash;&gt;-->
+      <!--      &lt;!&ndash;          >This field must be at least 3 characters.</b-form-invalid-feedback&ndash;&gt;-->
+      <!--      &lt;!&ndash;        >&ndash;&gt;-->
+      <!--      &lt;!&ndash;        <b-form-invalid-feedback&ndash;&gt;-->
+      <!--      &lt;!&ndash;          v-if="!$v.user.username.maxLength"&ndash;&gt;-->
+      <!--      &lt;!&ndash;          id="input-1-live-feedback"&ndash;&gt;-->
+      <!--      &lt;!&ndash;          >This field must be less than 30 characters.</b-form-invalid-feedback&ndash;&gt;-->
+      <!--      &lt;!&ndash;        >&ndash;&gt;-->
+      <!--      &lt;!&ndash;      </div>&ndash;&gt;-->
+      <!--    </b-form-group>-->
 
-    <p>
-      Notifications:
-      <router-link
-        :to="{ name: 'personal_account' }"
-        @click.native.prevent="$emit('changeCurrentTab', 1)"
-      >
-        {{ notifications.length }} / 100
-      </router-link>
-    </p>
-    <p>
-      Favorites:
-      <router-link
-        :to="{ name: 'personal_account' }"
-        @click.native.prevent="$emit('changeCurrentTab', 3)"
-      >
-        {{ favorites.length }} / 50
-      </router-link>
-    </p>
-    <p>
-      Notes:
-      <router-link
-        :to="{ name: 'personal_account' }"
-        @click.native.prevent="$emit('changeCurrentTab', 4)"
-      >
-        {{ notes.length }} / 50
-      </router-link>
-    </p>
-    <p v-if="beaconAccount && beaconAccount.connectedAt">
-      Last login:
-      <span>
-        {{ (beaconAccount.connectedAt / 1000) | timeformat(dateFormat) }}
-      </span>
-    </p>
+      <p class="d-flex align-items-center">
+        <span class="mr-2">Notifications:</span>
+        <b-skeleton class="mb-0" v-if="loaded" width="50px" />
+        <router-link v-else :to="{ name: 'account_notifications' }">
+          {{ notifications.length }} / 100
+        </router-link>
+      </p>
+      <p class="d-flex align-items-center">
+        <span class="mr-2">Favorites:</span>
+        <b-skeleton class="mb-0" v-if="loaded" width="50px" />
+        <router-link v-else :to="{ name: 'account_favorites' }">
+          {{ favorites.length }} / 50
+        </router-link>
+      </p>
+      <p class="d-flex align-items-center">
+        <span class="mr-2">Notes:</span>
+        <b-skeleton class="mb-0" v-if="loaded" width="50px" />
+        <router-link v-else :to="{ name: 'account_notes' }">
+          {{ notes.length }} / 50
+        </router-link>
+      </p>
+      <p v-if="beaconAccount && beaconAccount.connectedAt">
+        Last login:
+        <span>
+          {{ (beaconAccount.connectedAt / 1000) | timeformat(dateFormat) }}
+        </span>
+      </p>
+    </div>
   </div>
 </template>
 
 <script>
   import { mapMutations, mapState, mapActions } from 'vuex';
   import { validationMixin } from 'vuelidate';
-  import { email, maxLength, minLength } from 'vuelidate/lib/validators';
+  import {
+    email,
+    maxLength,
+    minLength,
+    required,
+  } from 'vuelidate/lib/validators';
   import {
     SET_ACCOUNT_EMAIL,
     SET_ACCOUNT_USERNAME,
     SET_USER_PROFILE,
   } from '@/store/mutations.types';
   import vuelidateMixin from '@/mixins/vuelidateMixin';
-  import { GET_USER_PROFILE } from '@/store/actions.types';
+  import {
+    GET_ACCOUNTS_NOTIFICATIONS,
+    GET_USER_NOTES,
+    GET_USER_PROFILE,
+  } from '@/store/actions.types';
 
   export default {
     name: 'AccountProfile',
     mixins: [validationMixin, vuelidateMixin],
     validations: {
+      profileEdit: {
+        username: {
+          required,
+          minLength: minLength(3),
+          maxLength: maxLength(30),
+        },
+        email: {
+          required,
+          email,
+        },
+      },
+      email: {
+        email,
+      },
+      username: {
+        minLength: minLength(3),
+        maxLength: maxLength(30),
+      },
       user: {
         email: {
           email,
@@ -162,8 +327,16 @@
           username: '',
           verified: false,
         },
-        loading: false,
+        profileEdit: {
+          email: '',
+          username: '',
+        },
         timer: 60,
+        loading: {
+          email: false,
+          username: false,
+        },
+        loaded: false,
       };
     },
     methods: {
@@ -172,91 +345,33 @@
         SET_ACCOUNT_USERNAME,
         SET_USER_PROFILE,
       ]),
-      ...mapActions('user', [GET_USER_PROFILE]),
-      async handleEmailChange() {
-        this[SET_USER_PROFILE]({
-          email: null,
-          emailVerified: false,
-        });
+      ...mapActions('user', [
+        GET_USER_PROFILE,
+        GET_ACCOUNTS_NOTIFICATIONS,
+        GET_USER_NOTES,
+      ]),
+      handleEmailEdit() {
+        this.$bvModal.show('email-edit');
       },
-      async handleSettingsSave() {
-        this.$v.user.$touch();
-        if (this.$v.user.$anyError) {
-          return;
-        }
-        this.$emit('onLoading', true);
+      handleUsernameEdit() {
+        this.$bvModal.show('username-edit');
+      },
+      handleEmailAdd() {
+        this.$bvModal.show('email-add');
+      },
+      handleUsernameAdd() {
+        this.$bvModal.show('username-add');
+      },
+      async handleEmailSave() {
+        this.loading.email = true;
         await this.$api
-          .setAccountProfile({
+          .updateUserProfile({
             address: this.beaconAccount.address,
             email: this.user.email,
             username: this.user.username,
           })
           .then(() => {
-            this.$bvToast.toast({
-              title: this.$t('errorsNotifications.success'),
-              variant: 'success',
-              autoHideDelay: 1500,
-            });
-          })
-          .catch(() => {
-            this.$bvToast.toast({
-              title: this.$t('errorsNotifications.error'),
-              variant: 'error',
-              autoHideDelay: 1500,
-            });
-          });
-        this.$emit('onLoading', false);
-      },
-      onUsernameInput(value) {
-        this.$v.user.$touch();
-        if (this.$v.user.$anyError) {
-          return;
-        }
-        this[SET_ACCOUNT_USERNAME](value);
-      },
-      onEmailInput(value) {
-        this.$v.user.$touch();
-        if (this.$v.user.$anyError) {
-          return;
-        }
-        this.user.email = value;
-      },
-      async handleProfileSave() {
-        this.loading = true;
-        await this.$api
-          .updateUserProfile({
-            address: this.beaconAccount.address,
-            email: this.user.email,
-            username: this.user.username ? this.user.username : undefined,
-          })
-          .then((data) => {
-            this[SET_ACCOUNT_EMAIL](data.data.email);
-            this[SET_ACCOUNT_USERNAME](data.data.username);
-            this.$bvToast.toast('Profile successfully saved', {
-              title: 'Profile saved',
-              variant: 'success',
-              autoHideDelay: 1500,
-            });
-          })
-          .catch((e) => {
-            console.log(e);
-            this.$bvToast.toast('Oops, something went wrong!', {
-              title: this.$t('errorsNotifications.error'),
-              variant: 'danger',
-              autoHideDelay: 2500,
-            });
-          });
-        this.loading = false;
-      },
-      async handleUserEmailSave() {
-        this.loading = true;
-        await this.$api
-          .updateUserProfile({
-            address: this.beaconAccount.address,
-            email: this.user.email,
-          })
-          .then((data) => {
-            this[SET_ACCOUNT_EMAIL](data.data.email);
+            this[SET_ACCOUNT_EMAIL](this.user.email);
             this.$bvToast.toast('Email saved', {
               title: 'Email successfully saved',
               variant: 'success',
@@ -271,17 +386,18 @@
               autoHideDelay: 2500,
             });
           });
-        this.loading = false;
+        this.loading.email = false;
       },
-      async handleUserNameSave() {
-        this.loading = true;
+      async handleUsernameSave() {
+        this.loading.username = true;
         await this.$api
           .updateUserProfile({
             address: this.beaconAccount.address,
             username: this.user.username,
+            email: this.email,
           })
-          .then((data) => {
-            this[SET_ACCOUNT_USERNAME](data.data.username);
+          .then(() => {
+            this[SET_ACCOUNT_USERNAME](this.user.username);
             this.$bvToast.toast('Username saved', {
               title: 'Username successfully saved',
               variant: 'success',
@@ -296,7 +412,60 @@
               autoHideDelay: 2500,
             });
           });
-        this.loading = false;
+        this.loading.username = false;
+      },
+      async handleEmailEditSave() {
+        if (this.profileEdit.email === this.email) return;
+        this.loading.email = true;
+        await this.$api
+          .updateUserProfile({
+            address: this.beaconAccount.address,
+            username: this.username,
+            email: this.profileEdit.email,
+          })
+          .then(() => {
+            this[SET_ACCOUNT_EMAIL](this.profileEdit.email);
+            this.$bvToast.toast('Email changed', {
+              title: 'Email successfully changed',
+              variant: 'success',
+              autoHideDelay: 1500,
+            });
+          })
+          .catch((e) => {
+            console.log(e);
+            this.$bvToast.toast('Oops, something went wrong!', {
+              title: this.$t('errorsNotifications.error'),
+              variant: 'danger',
+              autoHideDelay: 2500,
+            });
+          });
+        this.loading.email = false;
+      },
+      async handleUsernameEditSave() {
+        this.loading.username = true;
+        await this.$api
+          .updateUserProfile({
+            address: this.beaconAccount.address,
+            username: this.profileEdit.username,
+            email: this.email,
+          })
+          .then(() => {
+            this[SET_ACCOUNT_USERNAME](this.profileEdit.username);
+            this.$bvToast.toast('Username changed', {
+              title: 'Username successfully changed',
+              variant: 'success',
+              autoHideDelay: 1500,
+            });
+          })
+          .catch((e) => {
+            console.log(e);
+            this.$bvToast.toast('Oops, something went wrong!', {
+              title: this.$t('errorsNotifications.error'),
+              variant: 'danger',
+              autoHideDelay: 2500,
+            });
+          });
+        this.loading.username = false;
       },
     },
     watch: {
@@ -305,9 +474,23 @@
         deep: true,
         async handler({ address }) {
           if (address) {
+            this.loading = {
+              email: true,
+              username: true,
+            };
+            this.loaded = true;
             await this[GET_USER_PROFILE]({
               address: this.beaconAccount.address,
             });
+            await this[GET_ACCOUNTS_NOTIFICATIONS]({
+              address: this.beaconAccount.address,
+            });
+            await this[GET_USER_NOTES]({ address: this.beaconAccount.address });
+            this.loaded = false;
+            this.loading = {
+              email: false,
+              username: false,
+            };
           }
         },
       },
@@ -320,6 +503,12 @@
     max-width: 230px;
     display: inline-block;
     margin-right: 15px;
+  }
+
+  .profile__heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .profile__email {
@@ -348,5 +537,39 @@
 
   .profile__button--important:hover {
     border-bottom: 2px solid $color-brand;
+  }
+
+  .profile__email-change {
+    padding: 0;
+    color: $color-brand;
+    background: none;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+  }
+
+  .profile__email-change:hover {
+    border-bottom: 1px solid $color-brand;
+  }
+
+  .username__btn {
+    padding: 0;
+    color: $color-brand;
+    background: none;
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid transparent;
+  }
+
+  .username__btn:hover,
+  .username__btn:active,
+  .username__btn:focus {
+    color: $color-brand !important;
+    background: none !important;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid $color-brand;
+    box-shadow: none;
   }
 </style>
