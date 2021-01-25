@@ -56,6 +56,7 @@ import {
   faPlus,
   faPencilAlt,
   faPencilRuler,
+  faBell,
 } from '@fortawesome/free-solid-svg-icons';
 import {
   faLightbulb,
@@ -130,6 +131,7 @@ library.add(
   faPlus,
   faPencilAlt,
   faPencilRuler,
+  faBell,
 );
 library.add(
   faLightbulb,
