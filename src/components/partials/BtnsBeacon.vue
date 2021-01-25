@@ -54,6 +54,7 @@
           );
           this.$router.push({ name: 'personal_account' });
         } catch (e) {
+          // eslint-disable-next-line
           console.error(e);
         }
       },
@@ -67,6 +68,7 @@
   }
 
   .beacon-btn {
+    color: $color-black--opacity-05;
     padding: 0.5rem 1rem;
     background: none;
     border: none;

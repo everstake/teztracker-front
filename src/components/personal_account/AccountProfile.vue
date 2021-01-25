@@ -378,8 +378,7 @@
               autoHideDelay: 1500,
             });
           })
-          .catch((e) => {
-            console.log(e);
+          .catch(() => {
             this.$bvToast.toast('Oops, something went wrong!', {
               title: this.$t('errorsNotifications.error'),
               variant: 'danger',
@@ -404,8 +403,7 @@
               autoHideDelay: 1500,
             });
           })
-          .catch((e) => {
-            console.log(e);
+          .catch(() => {
             this.$bvToast.toast('Oops, something went wrong!', {
               title: this.$t('errorsNotifications.error'),
               variant: 'danger',
@@ -431,8 +429,7 @@
               autoHideDelay: 1500,
             });
           })
-          .catch((e) => {
-            console.log(e);
+          .catch(() => {
             this.$bvToast.toast('Oops, something went wrong!', {
               title: this.$t('errorsNotifications.error'),
               variant: 'danger',
@@ -457,8 +454,7 @@
               autoHideDelay: 1500,
             });
           })
-          .catch((e) => {
-            console.log(e);
+          .catch(() => {
             this.$bvToast.toast('Oops, something went wrong!', {
               title: this.$t('errorsNotifications.error'),
               variant: 'danger',
