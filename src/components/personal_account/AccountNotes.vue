@@ -29,7 +29,7 @@
           placeholder="Account id"
           :state="validateState('note.accountId')"
           autofocus
-          :disabled="notes.find((item) => item.text === note.accountId)"
+          :disabled="notes.find((item) => item.address === note.accountId)"
         >
         </b-form-input>
         <b-form-invalid-feedback
@@ -121,10 +121,10 @@
       :per-page="limit"
       :current-page="page"
     >
-      <template #cell(text)="row">
+      <template #cell(address)="row">
         <div class="d-flex">
-          {{ $helpers.truncateHash(row.item.text, 3, -5) }}
-          <BtnCopy :text-to-copy="row.item.text" />
+          {{ $helpers.truncateHash(row.item.address, 3, -5) }}
+          <BtnCopy :text-to-copy="row.item.address" />
         </div>
       </template>
       <template #cell(tag)="row">
@@ -211,7 +211,7 @@
         fields: [
           { key: 'actions', label: 'Actions' },
           { key: 'tag', label: 'Tag', sortable: true, thClass: 'notes__tag' },
-          { key: 'text', label: 'Address' },
+          { key: 'address', label: 'Address' },
           { key: 'alias', label: 'Alias' },
           { key: 'description', label: 'Notes' },
           { key: 'balance', label: 'Balance' },
@@ -238,10 +238,10 @@
         this.$bvModal.show('note-add');
       },
       handleNoteEdit(row) {
-        const foundNote = this.notes.find((item) => item.text === row.item.text);
+        const foundNote = this.notes.find((item) => item.address === row.item.address);
 
         const note = {
-          accountId: foundNote.text,
+          accountId: foundNote.address,
           alias: foundNote.alias || '',
           content: foundNote.description || '',
           tag: foundNote.tag || '',
@@ -253,7 +253,7 @@
         await this.$api
           .deleteUserNote({
             address: this.beaconAccount.address,
-            text: item.text,
+            text: item.address,
           })
           .then(() => {
             this[NOTE_DELETE]({ accountId: item.accountId });
@@ -284,7 +284,7 @@
               address: this.beaconAccount.address,
             });
             this.$bvModal.hide('note-add');
-            this.$bvToast.toast(`${this.accountName ? this.accountName : this.$helpers.truncateHash(this.accountId, 8, -5)} saved`, {
+            this.$bvToast.toast(`${this.$helpers.truncateHash(this.note.accountId, 8, -5)} saved`, {
               title: `Note saved (${this.notes.length}/50)`,
               variant: 'success',
               autoHideDelay: 1500,
