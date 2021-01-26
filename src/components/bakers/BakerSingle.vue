@@ -17,6 +17,9 @@
                     <BtnCopy :text-to-copy="hash" />
                   </span>
                 </template>
+                <a v-if="bakerInfo.name" class="ml-2" target="_blank" :href="`https://t.me/TezosNotifierBot?start=teztracker_${hash}_${subscribeBakerName}`">
+                  <i class="fas fa-bell"></i>
+                </a>
               </h3>
             </div>
             <div class="subtitle mb-2">
@@ -256,6 +259,9 @@
         info: (state) => state.priceInfo,
         dateFormat: (state) => state.dateFormat,
       }),
+      subscribeBakerName() {
+        return this.bakerInfo.name.replace(/[^a-zA-Z0-9]/gi, '');
+      },
     },
     watch: {
       hash: {
