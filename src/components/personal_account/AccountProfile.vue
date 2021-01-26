@@ -372,10 +372,10 @@
           })
           .then(() => {
             this[SET_ACCOUNT_EMAIL](this.user.email);
-            this.$bvToast.toast('Email saved', {
-              title: 'Email successfully saved',
+            this.$bvToast.toast('Please check your mailbox', {
+              title: 'We’ve sent you an email to verify your address. Please check your mailbox. Sometimes the email might end up in the spam folder.',
               variant: 'success',
-              autoHideDelay: 1500,
+              noAutoHide: true,
             });
           })
           .catch(() => {
@@ -413,7 +413,15 @@
         this.loading.username = false;
       },
       async handleEmailEditSave() {
-        if (this.profileEdit.email === this.email) return;
+        if (this.profileEdit.email === this.email) {
+          this.$bvToast.toast('Email must be different from current', {
+            title: this.$t('errorsNotifications.error'),
+            variant: 'danger',
+            autoHideDelay: 3000,
+          });
+          this.$bvModal.hide('email-edit');
+          return;
+        }
         this.loading.email = true;
         await this.$api
           .updateUserProfile({
@@ -428,6 +436,7 @@
               variant: 'success',
               autoHideDelay: 1500,
             });
+            this.$bvModal.hide('email-edit');
           })
           .catch(() => {
             this.$bvToast.toast('Oops, something went wrong!', {
