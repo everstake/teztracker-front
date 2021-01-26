@@ -306,10 +306,9 @@ const TzAPI = {
     return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${asset_id}`, opts);
   },
   getAssetsOperationsById(opts = {}) {
-    const { assets_id } = opts;
     return get(
       this.API_URL_WITHOUT_PLATFORM(),
-      `assets/${assets_id}/operations`,
+      `assets/operations`,
       opts,
     );
   },
