@@ -22,13 +22,25 @@
           <font-awesome-icon icon="question-circle" class="icon icon-circle" />
         </b-btn>
       </h3>
-      <b-btn
-        :disabled="notifications.length >= 100 || !email || !emailVerified"
-        variant="success"
-        @click="handleAddAddress"
+      <div
+        v-b-tooltip.bottom.hover
+        :title="
+          !email
+            ? 'Add email address to enable email notification'
+            : email && !emailVerified
+            ? 'Please, verify your email. We have sent a verification letter on your email address'
+            : ''
+        "
       >
-        <font-awesome-icon :icon="['fa', 'plus']" /> Address
-      </b-btn>
+        <b-btn
+          :disabled="notifications.length >= 100 || !email || !emailVerified"
+          variant="success"
+          @click="handleAddAddress"
+        >
+          <font-awesome-icon :icon="['fa', 'plus']" /> Address
+        </b-btn>
+      </div>
+
       <b-modal id="add-address" size="md" centered hide-header>
         <p>Add new address</p>
         <b-form-group>
@@ -239,8 +251,8 @@
               address: this.beaconAccount.address,
             });
 
-            this.resetModal();
             this.$bvModal.hide('add-address');
+            this.resetModal();
           })
           .catch(() => {
             this.$bvToast.toast('Oops, something went wrong!', {
@@ -258,21 +270,28 @@
         this.$bvModal.hide('add-address');
       },
       async onNotificationDelete({ item, index }) {
-        await this.$api
-          .deleteUserNotification({
-            address: this.beaconAccount.address,
-            accountId: item.address,
+        this.$bvModal
+          .msgBoxConfirm('Are you sure?')
+          .then(async (confirmed) => {
+            if (confirmed) {
+              await this.$api
+                .deleteUserNotification({
+                  address: this.beaconAccount.address,
+                  accountId: item.address,
+                })
+                .then(() => {
+                  this[DELETE_ACCOUNT_NOTIFICATION](index);
+                })
+                .catch(() => {
+                  this.$bvToast.toast('Oops, something went wrong!', {
+                    title: this.$t('errorsNotifications.error'),
+                    variant: 'danger',
+                    autoHideDelay: 1500,
+                  });
+                });
+            }
           })
-          .then(() => {
-            this[DELETE_ACCOUNT_NOTIFICATION](index);
-          })
-          .catch(() => {
-            this.$bvToast.toast('Oops, something went wrong!', {
-              title: this.$t('errorsNotifications.error'),
-              variant: 'danger',
-              autoHideDelay: 1500,
-            });
-          });
+          .catch(() => {});
       },
       handlePageChange(page) {
         this.page = page;

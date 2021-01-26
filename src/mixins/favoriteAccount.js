@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { mapState, mapMutations } from 'vuex';
-import { FAVORITE_DELETE, FAVORITE_SET } from '@/store/mutations.types';
+import {FAVORITE_DELETE, FAVORITE_SET} from '@/store/mutations.types';
 
 export default {
   computed: {
@@ -17,7 +17,14 @@ export default {
       const accountFavorite = this.isAccountFavorite(accountId);
 
       if (accountFavorite) {
-        this[FAVORITE_DELETE](accountId);
+        this.$bvModal
+          .msgBoxConfirm('Are you sure?')
+          .then(async (confirmed) => {
+            if (confirmed) {
+              this[FAVORITE_DELETE](accountId);
+            }
+          })
+          .catch(() => {});
         return;
       }
       if (this.favorites.length >= 50) {

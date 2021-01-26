@@ -16,8 +16,20 @@
         >
       </b-button-group>
     </p>
-    <b-form-group>
-      Baker Account ID:
+    <b-form-group v-if="currentOperationIndex === 1">
+      Delegate to Public bakers:
+      <b-form-select
+        v-model="selected"
+        :options="getPublicBakers"
+      ></b-form-select>
+    </b-form-group>
+    <b-form-group
+      v-if="
+        currentOperationIndex === 0 ||
+          (currentOperationIndex === 1 && !selected)
+      "
+    >
+      Recipient:
       <b-form-input
         class="form-group"
         type="text"
@@ -109,13 +121,13 @@
       variant="success"
       size="md"
       @click="handleSendClick"
-      >Send</b-btn
+      >Send tx</b-btn
     >
   </div>
 </template>
 
 <script>
-  import { mapGetters } from 'vuex';
+  import { mapActions, mapGetters, mapState } from 'vuex';
   import vuelidateMixin from '@/mixins/vuelidateMixin';
   import {
     minLength,
@@ -124,6 +136,7 @@
     maxValue,
   } from 'vuelidate/lib/validators';
   import uuid from '@/mixins/uuid';
+  import { GET_PUBLIC_BAKERS_SEARCH } from '@/store/actions.types';
 
   export default {
     name: 'AccountOperations',
@@ -163,12 +176,27 @@
         feeSelected: 0,
         feeCustom: null,
         loading: false,
+        selected: null,
       };
     },
     computed: {
       ...mapGetters('user', ['isBeaconAccountSet']),
+      ...mapState('accounts', ['publicBakersSearch']),
+      getPublicBakers() {
+        return [
+          {
+            text: 'Not selected',
+            value: null,
+          },
+          ...this.publicBakersSearch.map((item) => ({
+            text: item.name,
+            value: item.accountId,
+          })),
+        ];
+      },
     },
     methods: {
+      ...mapActions('accounts', [GET_PUBLIC_BAKERS_SEARCH]),
       async handleSendClick() {
         this.loading = true;
         if (this.currentOperationIndex === 0) {
@@ -176,10 +204,19 @@
         }
 
         if (this.currentOperationIndex === 1) {
-          await this.$beacon.sendDelegation(this.accountId);
+          if (this.selected) {
+            await this.$beacon.sendDelegation(this.selected.value);
+          } else {
+            await this.$beacon.sendDelegation(this.accountId);
+          }
         }
         this.loading = false;
       },
+    },
+    created() {
+      if (!this.publicBakersSearch.length) {
+        this[GET_PUBLIC_BAKERS_SEARCH]({ limit: 10 });
+      }
     },
   };
 </script>

@@ -58,19 +58,6 @@
         >
       </b-form-group>
       <b-form-group>
-        Tag
-        <b-form-input
-          v-model="$v.note.tag.$model"
-          class="form-group"
-          type="text"
-          :state="validateState('note.tag')"
-        >
-        </b-form-input>
-        <b-form-invalid-feedback id="input-1-live-feedback"
-          >This field includes maximum 20 characters.</b-form-invalid-feedback
-        >
-      </b-form-group>
-      <b-form-group>
         Text *
         <b-form-textarea
           v-model="$v.note.content.$model"
@@ -126,9 +113,6 @@
           {{ $helpers.truncateHash(row.item.address, 3, -5) }}
           <BtnCopy :text-to-copy="row.item.address" />
         </div>
-      </template>
-      <template #cell(tag)="row">
-        {{ row.item.tag || '-' }}
       </template>
       <template #cell(description)="row">
         {{ row.item.description }}
@@ -194,9 +178,6 @@
           minLength: minLength(1),
           maxLength: maxLength(36),
         },
-        tag: {
-          maxLength: maxLength(20),
-        },
       },
     },
     mixins: [vuelidateMixin],
@@ -206,13 +187,11 @@
           accountId: '',
           alias: '',
           content: '',
-          tag: '',
         },
         fields: [
           { key: 'actions', label: 'Actions' },
-          { key: 'tag', label: 'Tag', sortable: true, thClass: 'notes__tag' },
-          { key: 'address', label: 'Address' },
           { key: 'alias', label: 'Alias' },
+          { key: 'address', label: 'Address' },
           { key: 'description', label: 'Notes' },
           { key: 'balance', label: 'Balance' },
         ],
@@ -233,7 +212,6 @@
           accountId: '',
           alias: '',
           content: '',
-          tag: '',
         };
         this.$bvModal.show('note-add');
       },
@@ -244,7 +222,6 @@
           accountId: foundNote.address,
           alias: foundNote.alias || '',
           content: foundNote.description || '',
-          tag: foundNote.tag || '',
         };
         this.note = note;
         this.$bvModal.show('note-add');
@@ -277,7 +254,6 @@
             text: this.note.accountId,
             description: this.note.content,
             alias: this.note.alias,
-            tag: this.note.tag,
           })
           .then(async () => {
             await this[GET_USER_NOTES]({
@@ -324,9 +300,5 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-
-  ::v-deep .notes__tag {
-    position: relative;
   }
 </style>
