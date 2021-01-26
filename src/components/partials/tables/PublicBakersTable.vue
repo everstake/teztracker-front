@@ -29,7 +29,7 @@
     </template>
     <template #cell(stakingCapacity)="row">
       {{
-        ((row.item.stakingCapacity - row.item.stakingBalance) / $constants.XTZ)
+        ((row.item.stakingCapacity - row.item.stakingBalance))
           | denominate
       }}
     </template>
