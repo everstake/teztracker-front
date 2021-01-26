@@ -122,7 +122,7 @@
         if (!this.notes.length) return false;
 
         const foundNote = this.notes.find(
-          (item) => item.text === this.accountId,
+          (item) => item.address === this.accountId,
         );
 
         return foundNote;
@@ -132,7 +132,7 @@
       ...mapMutations('user', [NOTE_ADD, NOTE_EDIT]),
       handleNoteClick() {
         const noteExist = this.notes.find(
-          (item) => item.text === this.accountId,
+          (item) => item.address === this.accountId,
         );
 
         if (noteExist) {
