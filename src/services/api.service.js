@@ -389,7 +389,7 @@ const TzAPI = {
   },
   async postUserNote(opts = {}) {
     const { text, description, alias, tag, address } = opts;
-    const data = { text, description, alias, tag };
+    const data = { address: text, description, alias, tag };
     const config = {
       headers: { address },
     };
@@ -436,7 +436,7 @@ const TzAPI = {
   async deleteUserNote(opts = {}) {
     return await http.post(
       formatURL(this.API_URL_BASE(), 'profile/delete/note'),
-      { text: opts.text },
+      { address: opts.text },
       {
         headers: { address: opts.address },
       },
