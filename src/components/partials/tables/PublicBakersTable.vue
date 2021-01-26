@@ -28,10 +28,7 @@
       </span>
     </template>
     <template #cell(stakingCapacity)="row">
-      {{
-        ((row.item.stakingCapacity - row.item.stakingBalance) / $constants.XTZ)
-          | denominate
-      }}
+      {{ (row.item.stakingCapacity - row.item.stakingBalance) | denominate }}
     </template>
     <template #cell(fee)="row"> {{ row.item.fee }} % </template>
     <template #cell(stakingBalance)="row">
