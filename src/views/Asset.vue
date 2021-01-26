@@ -176,8 +176,8 @@
       },
       async onReload({ name, limit, page }) {
         this.loading[name] = true;
-        const { id: assets_id } = this.$route.params;
-        const props = { page, limit, type: 'transfer', assets_id };
+        const { id: asset_id } = this.$route.params;
+        const props = { page, limit, type: 'transfer', asset_id };
 
         if (name === 'txs') {
           await this.$api
@@ -192,7 +192,7 @@
 
         if (name === 'otherOperations') {
           await this.$api
-            .getAssetsOperationsById({ ...props, type: ['burn', 'other'] })
+            .getAssetsOperationsById({ ...props, type: ['other'] })
             .then((data) => {
               this.otherOperations = data.data;
               this.count.otherOperations = data.count;
