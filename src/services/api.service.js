@@ -313,10 +313,10 @@ const TzAPI = {
     );
   },
   getAssetsHoldersById(opts = {}) {
-    const { assets_id } = opts;
+    const { asset_id } = opts;
     return get(
       this.API_URL_WITHOUT_PLATFORM(),
-      `assets/${assets_id}/holders`,
+      `assets/${asset_id}/holders`,
       opts,
     );
   },

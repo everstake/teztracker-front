@@ -14,7 +14,7 @@
       <b-skeleton-table
         responsive
         :rows="5"
-        :columns="6"
+        :columns="2"
         :table-props="{ borderless: true, responsive: true }"
         animation="none"
         class="table-skeleton"
@@ -22,7 +22,6 @@
     </div>
     <b-table
       v-else
-      responsive
       show-empty
       :items="items"
       :fields="fields"
@@ -31,7 +30,24 @@
       borderless
       class="transactions-table"
       :tbody-tr-class="$_defineRowClass"
-    />
+    >
+      <template #cell(account_id)="row">
+        <span class="d-flex align-items-center">
+          <IdentIcon :seed="row.item.account_id" />
+
+          <b-link
+            :to="{ name: 'account', params: { account: row.item.account_id } }"
+          >
+            {{ row.item.account_id }}
+          </b-link>
+
+          <BtnCopy :text-to-copy="row.item.account_id" />
+        </span>
+      </template>
+      <template #cell(balance)="row">
+        {{ row.item.balance | denominate }}
+      </template>
+    </b-table>
 
     <PaginationSelect
       :total-rows="count"
@@ -48,12 +64,16 @@
   import LimitSelect from '@/components/partials/LimitSelect';
   import PaginationSelect from '@/components/partials/PaginationSelect';
   import defineRowClass from '@/mixins/defineRowClass';
+  import IdentIcon from '@/components/accounts/IdentIcon';
+  import BtnCopy from '@/components/partials/BtnCopy';
 
   export default {
     name: 'AssetTabHolders',
     components: {
       LimitSelect,
       PaginationSelect,
+      IdentIcon,
+      BtnCopy,
     },
     mixins: [defineRowClass],
     props: {
@@ -79,12 +99,12 @@
       fields() {
         return [
           {
-            key: 'balance',
-            label: this.$t('common.balance'),
+            key: 'account_id',
+            label: this.$t('bakerSingle.address'),
           },
           {
-            key: 'address',
-            label: this.$t('bakerSingle.address'),
+            key: 'balance',
+            label: this.$t('common.balance'),
           },
         ];
       },

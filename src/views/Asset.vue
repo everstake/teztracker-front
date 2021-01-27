@@ -203,7 +203,7 @@
 
         if (name === 'holders') {
           await this.$api
-            .getAssetsHoldersById(props)
+            .getAssetsHoldersById({ limit, page, asset_id })
             .then((data) => {
               this.holders = data.data;
               this.count.holders = data.count;
