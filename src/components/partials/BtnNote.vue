@@ -175,6 +175,7 @@
             });
           })
           .catch((e) => {
+            // eslint-disable-next-line
             console.log(e);
             this.$bvToast.toast('Oops, something went wrong!', {
               title: this.$t('errorsNotifications.error'),
