@@ -1,7 +1,10 @@
 <template>
   <div class="favorites">
     <div class="favorites__header">
-      <h3>Favorites <span v-if="favorites.length">({{ favorites.length }}/50)</span></h3>
+      <h3>
+        Favorites
+        <span v-if="favorites.length">({{ favorites.length }}/50)</span>
+      </h3>
 
       <b-btn
         variant="success"
@@ -76,17 +79,48 @@
     >
       <template #cell(favorite)="row">
         <font-awesome-icon
-          @click="toggleFavorite(row.item)"
-          class="icon-favorite"
+          class="icon-favorite cursor-text"
           :class="{
-            'icon-favorite--active': isAccountFavorite(row.item),
+            'icon-favorite--active': isAccountFavorite({
+              accountId: row.item.accountId,
+            }),
           }"
           :icon="['fa', 'star']"
         />
       </template>
       <template #cell(accountId)="row">
-        {{ row.item }}
-        <BtnCopy :text-to-copy="row.item" />
+        <router-link
+          v-if="row.item.accountType === 'baker'"
+          :to="{
+            name: 'baker',
+            params: { network: getAppNetwork, baker: row.item.accountId },
+          }"
+        >
+          {{ row.item.accountName }}
+        </router-link>
+        <router-link
+          v-else-if="row.item.accountType === 'account'"
+          :to="{
+            name: 'account',
+            params: { network: getAppNetwork, account: row.item.accountId },
+          }"
+        >
+          {{ row.item.accountId }}
+        </router-link>
+        <div v-else>
+          {{ row.item.accountId }}
+          <BtnCopy :text-to-copy="row.item.accountId" />
+        </div>
+      </template>
+      <template #cell(actions)="row">
+        <b-button-group>
+          <b-btn
+            size="sm"
+            variant="danger"
+            @click="handleFavoriteDelete(row.item.accountId)"
+            >Delete</b-btn
+          >
+        </b-button-group>
       </template>
     </b-table>
     <PaginationSelect
@@ -101,8 +135,8 @@
 </template>
 
 <script>
-  import { mapState, mapMutations } from 'vuex';
-  import { FAVORITE_SET } from '@/store/mutations.types';
+  import { mapState, mapMutations, mapGetters } from 'vuex';
+  import { FAVORITE_DELETE, FAVORITE_SET } from '@/store/mutations.types';
   import favoriteAccount from '@/mixins/favoriteAccount';
   import vuelidateMixin from '@/mixins/vuelidateMixin';
   import { required, minLength, maxLength } from 'vuelidate/lib/validators';
@@ -133,6 +167,7 @@
     },
     computed: {
       ...mapState('user', ['favorites']),
+      ...mapGetters('app', ['getAppNetwork']),
       fields() {
         if (!this.$i18n.locale) return [];
         return [
@@ -143,6 +178,7 @@
             thClass: 'favorite-heading',
           },
           { key: 'accountId', label: 'Address' },
+          { key: 'actions', label: 'Actions' },
         ];
       },
     },
@@ -152,7 +188,9 @@
         this.$bvModal.show('favorite-add');
       },
       handleModalSave() {
-        const addressAlreadyFavorite = this.favorites.includes(this.address);
+        const addressAlreadyFavorite = this.favorites.includes(
+          (fav) => fav.accountId === this.address,
+        );
         if (addressAlreadyFavorite) {
           this.$bvToast.toast('This address has already been added.', {
             title: 'Favorite address',
@@ -161,7 +199,7 @@
           });
           return;
         }
-        this[FAVORITE_SET](this.address);
+        this[FAVORITE_SET]({ accountId: this.address });
         this.$bvToast.toast(
           `${this.$helpers.truncateHash(this.address)} is added to favorites`,
           {
@@ -179,6 +217,16 @@
       },
       handlePageChange(page) {
         this.page = page;
+      },
+      handleFavoriteDelete(accountId) {
+        this.$bvModal
+          .msgBoxConfirm('Are you sure?')
+          .then(async (confirmed) => {
+            if (confirmed) {
+              this[FAVORITE_DELETE](accountId);
+            }
+          })
+          .catch(() => {});
       },
     },
   };

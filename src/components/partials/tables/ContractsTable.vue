@@ -12,10 +12,10 @@
   >
     <template #cell(favorite)="row">
       <font-awesome-icon
-        @click="toggleFavorite(row.item.accountId, row.item.name)"
+        @click="toggleFavorite(row.item.accountId, row.item.name, 'account')"
         class="icon-favorite"
         :class="{
-          'icon-favorite--active': isAccountFavorite(row.item.accountId),
+          'icon-favorite--active': isAccountFavorite({ accountId: row.item.accountId }),
         }"
         :icon="['fa', 'star']"
       />
@@ -27,7 +27,10 @@
         <router-link
           :to="{ name: 'account', params: { account: row.item.accountId } }"
         >
-          <span>{{ row.item.accountId | longhash }}</span>
+          <template v-if="row.item.accountName">
+            {{ row.item.accountName }}
+          </template>
+          <span v-else>{{ row.item.accountId | longhash }}</span>
         </router-link>
 
         <BtnCopy :text-to-copy="row.item.accountId" />

@@ -56,7 +56,7 @@
     },
     mixins: [reloadNavigationList],
     computed: {
-      ...mapState('user', ['favorites']),
+      ...mapState('user', ['favorites', 'notes']),
       crumbs() {
         return [
           { toRouteName: 'network', text: this.$t('common.home') },
@@ -67,7 +67,7 @@
     methods: {
       ...mapMutations('accounts', [SET_BAKERS]),
       async reload() {
-        const options = { page: this.page, limit: this.limit, favorites: this.favorites };
+        const options = { page: this.page, limit: this.limit, favorites: this.favorites.map((fav) => fav.accountId) };
         await this.$api
           .getBakers(options)
           .then((data) => {
@@ -76,6 +76,40 @@
             this[SET_BAKERS](data);
           })
           .catch(() => {});
+      },
+      handleNoteSave(payload) {
+        const foundIndex = this.items.findIndex(
+            (item) => item.accountId === payload.accountId,
+        );
+        if (foundIndex > -1) {
+          this.items = [
+            ...this.items.slice(0, foundIndex),
+            { ...this.items[foundIndex], bakerInfo: { ...this.items[foundIndex].bakerInfo, name: payload.alias } },
+            ...this.items.slice(foundIndex + 1),
+          ];
+        }
+      },
+    },
+    created() {
+      this.$eventBus.$on('onNoteSave', (payload) => this.handleNoteSave(payload));
+    },
+    watch: {
+      notes: {
+        immediate: true,
+        handler(notes) {
+          if (notes.length) {
+            this.items = this.items.map((item) => {
+              const foundNote = notes.find(
+                  ({ address }) => address === item.accountId,
+              );
+              if (foundNote) {
+                return { ...item, bakerInfo: {...item.bakerInfo, name: foundNote.alias } };
+              } else {
+                return item;
+              }
+            });
+          }
+        },
       },
     },
   };

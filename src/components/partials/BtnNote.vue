@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <span v-if="isBeaconAccountSet">
     <b-button
       v-b-tooltip.hover
       :title="noteExist ? 'Edit a note' : 'Create a note'"
@@ -74,7 +74,7 @@
 <script>
   import vuelidateMixin from '@/mixins/vuelidateMixin';
   import { maxLength, minLength, required } from 'vuelidate/lib/validators';
-  import { mapState, mapMutations } from 'vuex';
+  import {mapState, mapMutations, mapGetters} from 'vuex';
   import { NOTE_ADD, NOTE_EDIT } from '@/store/mutations.types';
 
   export default {
@@ -118,6 +118,7 @@
     },
     computed: {
       ...mapState('user', ['notes', 'beaconAccount']),
+      ...mapGetters('user', ['isBeaconAccountSet']),
       noteExist() {
         if (!this.notes.length) return false;
 
@@ -165,14 +166,16 @@
               description: this.note.content,
               alias: this.note.alias,
             });
+            this.$eventBus.$emit('onNoteSave', {accountId: this.accountId, alias: this.note.alias});
             this.$bvModal.hide(`note-${this.accountId}`);
-            this.$bvToast.toast(`${this.accountName ? this.accountName : this.$helpers.truncateHash(this.accountId, 8, -5)} saved`, {
+            this.$bvToast.toast(`${this.note.alias ? this.note.alias : this.accountName ? this.accountName : this.$helpers.truncateHash(this.accountId, 8, -5)} saved`, {
               title: `Note saved (${this.notes.length}/50)`,
               variant: 'success',
               autoHideDelay: 1500,
             });
           })
-          .catch(() => {
+          .catch((e) => {
+            console.log(e);
             this.$bvToast.toast('Oops, something went wrong!', {
               title: this.$t('errorsNotifications.error'),
               variant: 'danger',

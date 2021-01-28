@@ -1,5 +1,6 @@
 <template>
   <b-table
+    ref="top-accounts-table"
     responsive
     show-empty
     :items="topAccountsItems"
@@ -12,10 +13,10 @@
   >
     <template #cell(favorite)="row">
       <font-awesome-icon
-        @click="toggleFavorite(row.item.accountId, row.item.accountName)"
+        @click="toggleFavorite(row.item.accountId, row.item.accountName, row.item.is_baker ? 'baker' : 'account')"
         class="icon-favorite"
         :class="{
-          'icon-favorite--active': isAccountFavorite(row.item.accountId),
+          'icon-favorite--active': isAccountFavorite({ accountId: row.item.accountId }),
         }"
         :icon="['fa', 'star']"
       />
@@ -202,7 +203,9 @@
         }
       },
       topAccountsItems() {
-        return this.items.map((item, index) => ({ ...item, index }));
+        return this.items.map((item, index) => {
+          return { ...item, index };
+        });
       },
     },
     watch: {

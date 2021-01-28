@@ -4,17 +4,16 @@ import {FAVORITE_DELETE, FAVORITE_SET} from '@/store/mutations.types';
 
 export default {
   computed: {
-    ...mapState('user', {
-      favorites: (state) => state.favorites,
-    }),
+    ...mapState('user', ['favorites']),
   },
   methods: {
     ...mapMutations('user', [FAVORITE_SET, FAVORITE_DELETE]),
-    isAccountFavorite(accountId) {
-      return this.favorites.includes(accountId);
+    isAccountFavorite(payload) {
+      const foundFavorite = this.favorites.find((fav) => fav.accountId === payload.accountId);
+      return !!foundFavorite;
     },
-    toggleFavorite(accountId, accountName) {
-      const accountFavorite = this.isAccountFavorite(accountId);
+    toggleFavorite(accountId, accountName, accountType) {
+      const accountFavorite = this.isAccountFavorite({accountId});
 
       if (accountFavorite) {
         this.$bvModal
@@ -34,7 +33,7 @@ export default {
           autoHideDelay: 1500,
         });
       } else {
-        this[FAVORITE_SET](accountId);
+        this[FAVORITE_SET]({accountId, accountName, accountType});
         this.printNotification(accountId, accountName);
       }
     },

@@ -63,7 +63,7 @@
       };
     },
     computed: {
-      ...mapState('user', ['favorites']),
+      ...mapState('user', ['favorites', 'notes']),
       crumbs() {
         return [
           { toRouteName: 'network', text: this.$t('common.home') },
@@ -77,7 +77,7 @@
     methods: {
       ...mapMutations('accounts', [SET_CONTRACTS]),
       async reload() {
-        const options = { page: this.page, limit: this.limit, favorites: this.favorites };
+        const options = { page: this.page, limit: this.limit, favorites: this.favorites.map((fav) => fav.accountId) };
         await this.$api
           .getContracts(options)
           .then((data) => {
@@ -86,6 +86,40 @@
             this[SET_CONTRACTS](data);
           })
           .catch(() => {});
+      },
+      handleNoteSave(payload) {
+        const foundIndex = this.items.findIndex(
+            (item) => item.accountId === payload.accountId,
+        );
+        if (foundIndex > -1) {
+          this.items = [
+            ...this.items.slice(0, foundIndex),
+            { ...this.items[foundIndex], accountName: payload.alias },
+            ...this.items.slice(foundIndex + 1),
+          ];
+        }
+      },
+    },
+    created() {
+      this.$eventBus.$on('onNoteSave', (payload) => this.handleNoteSave(payload));
+    },
+    watch: {
+      notes: {
+        immediate: true,
+        handler(notes) {
+          if (notes.length) {
+            this.items = this.items.map((item) => {
+              const foundNote = notes.find(
+                  ({ address }) => address === item.accountId,
+              );
+              if (foundNote) {
+                return { ...item, accountName: foundNote.alias };
+              } else {
+                return item;
+              }
+            });
+          }
+        },
       },
     },
   };
