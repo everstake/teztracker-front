@@ -29,7 +29,7 @@
           placeholder="Account id"
           :state="validateState('note.accountId')"
           autofocus
-          :disabled="notes.find((item) => item.address === note.accountId)"
+          :disabled="notes.findIndex((item) => item.address === note.accountId) > -1"
         >
         </b-form-input>
         <b-form-invalid-feedback
@@ -129,7 +129,7 @@
             >Delete</b-btn
           >
 
-          <b-btn size="sm" variant="primary" @click="handleNoteEdit(row)">Edit</b-btn>
+          <b-btn size="sm" variant="secondary" @click="handleNoteEdit(row)">Edit</b-btn>
         </b-button-group>
       </template>
     </b-table>
@@ -218,13 +218,16 @@
       handleNoteEdit(row) {
         const foundNote = this.notes.find((item) => item.address === row.item.address);
 
-        const note = {
-          accountId: foundNote.address,
-          alias: foundNote.alias || '',
-          content: foundNote.description || '',
-        };
-        this.note = note;
-        this.$bvModal.show('note-add');
+        if (foundNote) {
+          const note = {
+            accountId: foundNote.address,
+            alias: foundNote.alias || '',
+            content: foundNote.description || '',
+          };
+
+          this.note = note;
+          this.$bvModal.show('note-add');
+        }
       },
       async handleNoteDelete({ item }) {
         await this.$api

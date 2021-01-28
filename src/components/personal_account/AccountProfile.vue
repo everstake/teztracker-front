@@ -101,7 +101,6 @@
           <div v-if="!username">
             <b-btn
               @click="handleUsernameAdd"
-              class="username__btn"
               variant="success"
               >Add username</b-btn
             >
@@ -117,7 +116,7 @@
                   characters.</b-form-invalid-feedback
                 >
               </div>
-              <div class="mb-1">
+              <div class="mb-1 mt-3">
                 <b-btn
                   @click="handleUsernameSave"
                   :disabled="

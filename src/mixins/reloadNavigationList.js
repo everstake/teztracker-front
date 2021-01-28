@@ -115,7 +115,11 @@ export default {
       if (routeLimit == limit) {
         return;
       }
-      const { INITIAL_CURRENT_PAGE, PER_PAGE, PER_PAGE_SNAPSHOTS } = this.$constants;
+      const {
+        INITIAL_CURRENT_PAGE,
+        PER_PAGE,
+        PER_PAGE_SNAPSHOTS,
+      } = this.$constants;
       const limitDefault = limit === PER_PAGE || limit === PER_PAGE_SNAPSHOTS;
       const route = {
         name: routeName,

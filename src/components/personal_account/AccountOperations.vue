@@ -210,7 +210,16 @@
             await this.$beacon.sendDelegation(this.accountId);
           }
         }
+        this.resetForm();
         this.loading = false;
+      },
+      resetForm() {
+        this.amount = 0;
+        this.feeSelected = 0;
+        this.feeCustom = null;
+        this.selected = null;
+        this.accountId = '';
+        this.$v.$reset();
       },
     },
     created() {

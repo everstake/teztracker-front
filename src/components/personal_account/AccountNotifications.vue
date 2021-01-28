@@ -41,9 +41,15 @@
         </b-btn>
       </div>
 
-      <b-modal id="add-address" size="md" centered hide-header>
+      <b-modal
+        id="notification-modal"
+        size="md"
+        centered
+        hide-header
+        @hidden="onModalClose"
+      >
         <p>Add new address</p>
-        <b-form-group>
+        <b-form-group class="mb-0">
           <b-form-input
             class="form-group"
             type="text"
@@ -51,6 +57,7 @@
             autofocus
             v-model="$v.accountId.$model"
             :state="validateState('accountId')"
+            :disabled="notifications.findIndex((item) => item.address === accountId) > -1"
           >
           </b-form-input>
           <b-form-invalid-feedback
@@ -59,11 +66,11 @@
             >Account id must starts with KT1, tz1, tz2 or tz3
             symbols.</b-form-invalid-feedback
           >
-          <b-form-invalid-feedback id="input-1-live-feedback"
+          <b-form-invalid-feedback class="mb-3" id="input-1-live-feedback"
             >This field must be 36 characters.</b-form-invalid-feedback
           >
         </b-form-group>
-        <div class="export-operations">
+        <div>
           <b-row>
             <b-col>
               <b-form-checkbox-group
@@ -72,12 +79,24 @@
                 switches
                 size="md"
                 @change="handleCheckboxChange"
+                class="notifications__operations"
               />
             </b-col>
           </b-row>
         </div>
         <template #modal-footer>
+          <b-btn @click="onModalClose">
+            Close
+          </b-btn>
           <b-btn
+            v-if="notifications.findIndex((item) => item.address === accountId) > -1"
+            variant="success"
+            @click="onModalSave"
+          >
+            Save
+          </b-btn>
+          <b-btn
+            v-else
             variant="success"
             @click="onModalSave"
             :disabled="!validateState('accountId')"
@@ -125,6 +144,12 @@
         </template>
         <template #cell(actions)="row">
           <b-button-group>
+            <b-btn
+              size="sm"
+              variant="secondary"
+              @click="onNotificationEdit(row)"
+              >Edit</b-btn
+            >
             <b-btn size="sm" variant="danger" @click="onNotificationDelete(row)"
               >Delete</b-btn
             >
@@ -217,7 +242,7 @@
       ]),
       ...mapActions('user', [GET_ACCOUNTS_NOTIFICATIONS, GET_USER_PROFILE]),
       handleAddAddress() {
-        this.$bvModal.show('add-address');
+        this.$bvModal.show('notification-modal');
       },
       async onModalSave() {
         const operations = !this.modal.selected.includes('no_notifications');
@@ -251,7 +276,7 @@
               address: this.beaconAccount.address,
             });
 
-            this.$bvModal.hide('add-address');
+            this.$bvModal.hide('notification-modal');
             this.resetModal();
           })
           .catch(() => {
@@ -264,10 +289,12 @@
       },
       resetModal() {
         this.accountId = '';
+        this.selected = ['no_notifications'];
+        this.$v.accountId.$reset();
       },
       onModalClose() {
         this.resetModal();
-        this.$bvModal.hide('add-address');
+        this.$bvModal.hide('notification-modal');
       },
       async onNotificationDelete({ item, index }) {
         this.$bvModal
@@ -292,6 +319,38 @@
             }
           })
           .catch(() => {});
+      },
+      onNotificationEdit(row) {
+        const {
+          address,
+          delegations_enabled,
+          in_transfers_enabled,
+          out_transfers_enabled,
+        } = row.item;
+
+        const selectedOperations = {
+          delegations_enabled: delegations_enabled,
+          in_transfers_enabled: in_transfers_enabled,
+          out_transfers_enabled: out_transfers_enabled,
+        };
+
+        const foundNotification = this.notifications.find(
+          (item) => item.address === address,
+        );
+
+        if (foundNotification) {
+          this.modal.selected = [];
+          this.accountId = address;
+          const operationsNotSelected = Object.values(selectedOperations).every((value) => value === false);
+          if (operationsNotSelected) {
+            this.modal.selected = ['no_notifications'];
+          } else {
+            if (selectedOperations.delegations_enabled) this.modal.selected.push('delegations_enabled');
+            if (selectedOperations.in_transfers_enabled) this.modal.selected.push('in_transfers_enabled');
+            if (selectedOperations.out_transfers_enabled) this.modal.selected.push('out_transfers_enabled');
+          }
+          this.$bvModal.show('notification-modal');
+        }
       },
       handlePageChange(page) {
         this.page = page;
@@ -359,5 +418,10 @@
 
   .notifications__tooltip:focus {
     box-shadow: none;
+  }
+
+  ::v-deep .notifications__operations .custom-control {
+    margin-bottom: 10px;
+    width: 100% !important;
   }
 </style>

@@ -133,13 +133,13 @@ export const mutations = {
       ...state.notes.slice(index + 1),
     ];
   },
-  [FAVORITE_SET](state, accountId) {
-    state.favorites.push(accountId);
+  [FAVORITE_SET](state, payload) {
+    state.favorites.push(payload);
     localStorage.setItem('favorites', JSON.stringify(state.favorites));
   },
   [FAVORITE_DELETE](state, accountId) {
     const foundFavoriteIndex = state.favorites.findIndex(
-      (favorite) => favorite === accountId,
+      (fav) => fav.accountId === accountId,
     );
 
     if (foundFavoriteIndex !== -1) {
