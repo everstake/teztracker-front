@@ -25,8 +25,7 @@
     </b-form-group>
     <b-form-group
       v-if="
-        currentOperationIndex === 0 ||
-          (currentOperationIndex === 1 && !selected)
+        currentOperationIndex === 0
       "
     >
       Recipient:
