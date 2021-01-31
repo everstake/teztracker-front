@@ -9,7 +9,7 @@
         "
       />
     </div>
-  
+
     <div v-if="loading && data.length === 0" class="table-skeleton">
       <b-skeleton-table
         responsive
@@ -125,6 +125,7 @@
           :total-rows="selectedRow.count"
           :per-page="selectedRow.perPage"
           :loading="selectedRow.loading"
+          @change="handleModalPagination"
         />
       </b-modal>
     </div>
