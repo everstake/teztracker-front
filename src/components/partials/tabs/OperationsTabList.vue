@@ -92,24 +92,33 @@
         ];
       },
     },
-    async reload(limit, page) {
-      this.loading = true;
-      let result = [];
-      let counter = 0;
-      const types = ['endorsement', 'activate_account', 'double_endorsement_evidence'];
-      const props = { page, limit, account_id: this.hash };
+    methods: {
+      async reload(limit, page) {
+        this.loading = true;
+        let result = [];
+        let counter = 0;
+        const types = [
+          'endorsement',
+          'activate_account',
+          'double_endorsement_evidence',
+        ];
+        const props = { page, limit, account_id: this.hash };
 
-      for (let i = 0; i < types.length; i += 1) {
-        const data = await this.$api.getOperations({ ...props, operation_kind: types[i] });
+        for (let i = 0; i < types.length; i += 1) {
+          const data = await this.$api.getOperations({
+            ...props,
+            operation_kind: types[i],
+          });
 
-        result = [...result, ...data.data];
-        counter += data.count;
-      }
+          result = [...result, ...data.data];
+          counter += data.count;
+        }
 
-      this.items = result;
-      this.count = counter;
-      this.loading = false;
-      this.loaded = true;
+        this.items = result;
+        this.count = counter;
+        this.loading = false;
+        this.loaded = true;
+      },
     },
   };
 </script>
