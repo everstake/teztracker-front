@@ -2,13 +2,13 @@
   <div class="list list-endorsements">
     <div class="d-flex justify-content-between mb-2">
       <LimitSelect
-        :limit="perPage"
+        :limit="limit"
         :loading="loading"
-        @onLimitChange="(limit) => $emit('onLimitChange', { type: 'endorsements', limit })"
+        @onLimitChange="handleLimitChange"
       />
     </div>
-  
-    <div v-if="loading && endorsements.length === 0" class="table-skeleton">
+
+    <div v-if="loading && items.length === 0" class="table-skeleton">
       <b-skeleton-table
         responsive
         :rows="2"
@@ -22,9 +22,9 @@
       v-else
       responsive
       show-empty
-      :items="endorsements"
+      :items="items"
       :fields="fields"
-      :current-page="currentPage"
+      :current-page="page"
       :per-page="0"
       borderless
       class="transactions-table"
@@ -88,10 +88,10 @@
 
     <PaginationSelect
       :total-rows="count"
-      :per-page="perPage"
-      :current-page="currentPage"
+      :per-page="limit"
+      :current-page="page"
       :loading="loading"
-      @onPageChange="(page) => $emit('onPageChange', { type: 'endorsements', page })"
+      @onPageChange="handlePageChange"
     />
   </div>
 </template>
@@ -102,6 +102,7 @@
   import PaginationSelect from '@/components/partials/PaginationSelect';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
+  import tabulationList from '@/mixins/tabulationList';
 
   export default {
     name: 'EndorsementsTabList',
@@ -111,24 +112,10 @@
       BtnCopy,
       IdentIcon,
     },
-
     props: {
-      endorsements: {
-        type: Array,
-        default() {
-          return [];
-        },
-      },
-      count: {
-        type: Number,
-        default: 0,
-      },
-      account: String,
-      currentPage: Number,
-      perPage: Number,
-      loaded: Boolean,
-      loading: Boolean,
+      hash: String,
     },
+    mixins: [tabulationList],
     computed: {
       ...mapState('app', {
         dateFormat: (state) => state.dateFormat,
@@ -145,11 +132,25 @@
         ];
       },
     },
-    async created() {
-      const itemsNotFetched = !this.loaded;
-      if (itemsNotFetched) {
-        this.$emit('onReload', { type: 'endorsements', limit: this.perPage });
-      }
+    methods: {
+      async reload(limit, page) {
+        this.loading = true;
+        const props = {
+          page,
+          limit,
+          account_id: this.hash,
+        };
+        const data = await this.$api.getEndorsements(props);
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+        this.count = data.count;
+        this.items = data.data;
+        this.loading = false;
+        this.loaded = true;
+      },
     },
   };
 </script>

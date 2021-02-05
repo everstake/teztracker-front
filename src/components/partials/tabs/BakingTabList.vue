@@ -2,15 +2,13 @@
   <div class="list baking-list">
     <div class="d-flex justify-content-between mb-2">
       <LimitSelect
-        :limit="perPage"
+        :limit="limit"
         :loading="loading"
-        @onLimitChange="
-          (limit) => $emit('onLimitChange', { type: 'baking', limit })
-        "
+        @onLimitChange="handleLimitChange"
       />
     </div>
 
-    <div v-if="loading && data.length === 0" class="table-skeleton">
+    <div v-if="loading && baking.data.length === 0" class="table-skeleton">
       <b-skeleton-table
         responsive
         :rows="2"
@@ -24,9 +22,9 @@
       v-else
       responsive
       show-empty
-      :items="data"
+      :items="baking.data"
       :fields="fields"
-      :current-page="currentPage"
+      :current-page="page"
       :per-page="0"
       borderless
       selectable
@@ -79,10 +77,10 @@
 
     <PaginationSelect
       :total-rows="count"
-      :per-page="perPage"
-      :current-page="currentPage"
+      :per-page="limit"
+      :current-page="page"
       :loading="loading"
-      @onPageChange="(page) => $emit('onPageChange', { type: 'baking', page })"
+      @onPageChange="handlePageChange"
     />
 
     <div>
@@ -137,6 +135,7 @@
   import PaginationSelect from '@/components/partials/PaginationSelect';
   import { mapState } from 'vuex';
   import moment from 'moment';
+  import tabulationList from '@/mixins/tabulationList';
 
   export default {
     name: 'BakingTabList',
@@ -145,24 +144,9 @@
       Pagination,
       PaginationSelect,
     },
+    mixins: [tabulationList],
     props: {
-      data: {
-        type: Array,
-        default() {
-          return [];
-        },
-      },
-      future: Array,
-      total: Object,
-      count: {
-        type: Number,
-        default: 0,
-      },
-      account: String,
-      currentPage: Number,
-      perPage: Number,
-      loaded: Boolean,
-      loading: Boolean,
+      hash: String,
     },
     data() {
       return {
@@ -172,6 +156,12 @@
           count: 0,
           fields: [],
           currentPage: 1,
+          loading: false,
+        },
+        baking: {
+          total: null,
+          future: null,
+          data: [],
           loading: false,
         },
         toast: undefined,
@@ -211,12 +201,6 @@
         },
       },
     },
-    async created() {
-      const itemsNotFetched = !this.loaded;
-      if (itemsNotFetched) {
-        this.$emit('onReload', { type: 'baking', limit: this.perPage });
-      }
-    },
     methods: {
       formatDate(date) {
         return moment(date).format(this.dateFormat);
@@ -249,7 +233,7 @@
         return classes.join(' ');
       },
       async handleRowClick(row) {
-        if (this.loading || row.length === 0) return;
+        if (row.length === 0) return;
 
         const isRowFuture = row[0].class === 'future';
         const isRowTotal = row[0].cycle === 'Total';
@@ -263,7 +247,7 @@
         if (isRowFuture) {
           this.selectedRow.type = 'future';
           modalData = await this.$api.getAccountBakingRightsFuture({
-            account: this.account,
+            account: this.hash,
             cycleId: row[0].cycle,
           });
 
@@ -277,7 +261,7 @@
         } else {
           this.selectedRow.type = 'baking';
           modalData = await this.$api.getAccountBakingItem({
-            account: this.account,
+            account: this.hash,
             cycleId: row[0].cycle,
           });
 
@@ -298,7 +282,7 @@
       async reloadAccountBakingItem(page = 1) {
         const props = {
           page,
-          account: this.account,
+          account: this.hash,
           cycleId: this.cycleId,
         };
 
@@ -338,6 +322,48 @@
           this.$bvToast.hide(this.toast);
           this.toast = undefined;
         }
+      },
+      async reload(limit, page) {
+        this.loading = true;
+        const props = {
+          page,
+          limit,
+          account: this.hash,
+        };
+
+        if (page === 1) {
+          this.baking.loading = true;
+          const total = await this.$api.getAccountBakingTotal({
+            account: this.hash,
+          });
+          const future = await this.$api.getAccountBakingFuture({
+            account: this.hash,
+          });
+          const data = await this.$api.getAccountBaking(props);
+
+          this.baking.total = { ...total.data, status: 'Total' };
+          this.baking.future = future.data.map((item) => ({
+            ...item,
+            class: 'future',
+          }));
+
+          this.baking.data = [
+            ...this.baking.future,
+            { ...total.data, cycle: 'Total', class: 'total', status: 'Total' },
+            ...data.data,
+          ];
+
+          this.count = data.count;
+          this.baking.loading = false;
+        } else {
+          this.baking.loading = true;
+          const data = await this.$api.getAccountBaking(props);
+          this.baking.data = data.data;
+          this.baking.loading = false;
+        }
+
+        this.loading = false;
+        this.loaded = true;
       },
     },
     updated() {

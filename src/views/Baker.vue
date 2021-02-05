@@ -26,18 +26,7 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <TxsTabList
-                      :txs="txs"
-                      :count="counts.txs"
-                      :account="hash"
-                      :current-page="page.txs"
-                      :per-page="limit.txs"
-                      :loaded="loaded.txs"
-                      :loading="loading.txs"
-                      @onReload="reload"
-                      @onLimitChange="handleLimitChange"
-                      @onPageChange="handlePageChange"
-                    />
+                    <TxsTabList :hash="hash" />
                   </b-card-body>
                 </b-tab>
                 <b-tab :title="$tc('opTypes.delegation', 2)">
@@ -52,18 +41,7 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <DelegationsTabList
-                      :delegations="delegations"
-                      :count="counts.delegations"
-                      :account="hash"
-                      :current-page="page.delegations"
-                      :per-page="limit.delegations"
-                      :loaded="loaded.delegations"
-                      :loading="loading.delegations"
-                      @onReload="reload"
-                      @onLimitChange="handleLimitChange"
-                      @onPageChange="handlePageChange"
-                    />
+                    <DelegationsTabList :hash="hash" />
                   </b-card-body>
                 </b-tab>
                 <b-tab :title="$tc('opTypes.origination', 2)">
@@ -78,18 +56,7 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <OriginationsTabList
-                      :originations="originations"
-                      :count="counts.originations"
-                      :account="hash"
-                      :current-page="page.originations"
-                      :per-page="limit.originations"
-                      :loaded="loaded.originations"
-                      :loading="loading.originations"
-                      @onReload="reload"
-                      @onLimitChange="handleLimitChange"
-                      @onPageChange="handlePageChange"
-                    />
+                    <OriginationsTabList :account="hash" />
                   </b-card-body>
                 </b-tab>
 
@@ -105,18 +72,7 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <EndorsementsTabList
-                      :endorsements="endorsements"
-                      :count="counts.endorsements"
-                      :account="hash"
-                      :current-page="page.endorsements"
-                      :per-page="limit.endorsements"
-                      :loaded="loaded.endorsements"
-                      :loading="loading.endorsements"
-                      @onReload="reload"
-                      @onLimitChange="handleLimitChange"
-                      @onPageChange="handlePageChange"
-                    />
+                    <EndorsementsTabList :hash="hash" />
                   </b-card-body>
                 </b-tab>
 
@@ -132,20 +88,7 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <BakingTabList
-                      :future="baking.future"
-                      :loading="baking.loading"
-                      :data="baking.data"
-                      :total="baking.total"
-                      :count="counts.baking"
-                      :account="hash"
-                      :current-page="page.baking"
-                      :per-page="limit.baking"
-                      :loaded="loaded.baking"
-                      @onReload="reload"
-                      @onLimitChange="handleLimitChange"
-                      @onPageChange="handlePageChange"
-                    />
+                    <BakingTabList :hash="hash" />
                   </b-card-body>
 
                   <b-card-header>
@@ -159,18 +102,7 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <BakerEndorsingList
-                      :data="endorsing.data"
-                      :count="counts.endorsing"
-                      :account="hash"
-                      :current-page="page.endorsing"
-                      :per-page="limit.endorsing"
-                      :loading="endorsing.loading"
-                      :loaded="loaded.endorsing"
-                      @onReload="reload"
-                      @onLimitChange="handleLimitChange"
-                      @onPageChange="handlePageChange"
-                    />
+                    <BakerEndorsingList :hash="hash" />
                   </b-card-body>
                 </b-tab>
 
@@ -186,18 +118,7 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <BakerRewardsList
-                      :data="rewards"
-                      :count="counts.rewards"
-                      :account="hash"
-                      :current-page="page.rewards"
-                      :per-page="limit.rewards"
-                      :loaded="loaded.rewards"
-                      :loading="loading.rewards"
-                      @onReload="reload"
-                      @onLimitChange="handleLimitChange"
-                      @onPageChange="handlePageChange"
-                    />
+                    <BakerRewardsList :hash="hash" />
                   </b-card-body>
                 </b-tab>
 
@@ -213,18 +134,7 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <BondsTabList
-                      :data="bonds"
-                      :count="counts.bonds"
-                      :account="hash"
-                      :current-page="page.bonds"
-                      :per-page="limit.bonds"
-                      :loaded="loaded.bonds"
-                      :loading="loading.bonds"
-                      @onReload="reload"
-                      @onLimitChange="handleLimitChange"
-                      @onPageChange="handlePageChange"
-                    />
+                    <BondsTabList :hash="hash" />
                   </b-card-body>
                 </b-tab>
                 <template #tabs-end>
@@ -250,7 +160,6 @@
   import BondsTabList from '@/components/partials/tabs/BondsTabList';
   import BakerEndorsingList from '@/components/bakers/BakerEndorsingList';
   import BakerRewardsList from '@/components/bakers/BakerRewardsList';
-  import reloadTabTables from '@/mixins/reloadTabulationList';
   import ExportAccountReport from '@/components/partials/ExportAccountReport';
 
   export default {
@@ -268,7 +177,6 @@
       BondsTabList,
       ExportAccountReport,
     },
-    mixins: [reloadTabTables],
     computed: {
       hash() {
         return this.$route.params.baker;

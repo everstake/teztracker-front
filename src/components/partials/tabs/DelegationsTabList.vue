@@ -2,15 +2,13 @@
   <div class="list delegations-list">
     <div class="d-flex justify-content-between mb-2">
       <LimitSelect
-        :limit="perPage"
+        :limit="limit"
         :loading="loading"
-        @onLimitChange="
-          (limit) => $emit('onLimitChange', { type: 'delegations', limit })
-        "
+        @onLimitChange="handleLimitChange"
       />
     </div>
-  
-    <div v-if="loading && delegations.length === 0" class="table-skeleton">
+
+    <div v-if="loading && items.length === 0" class="table-skeleton">
       <b-skeleton-table
         responsive
         :rows="2"
@@ -24,9 +22,9 @@
       v-else
       responsive
       show-empty
-      :items="delegations"
+      :items="items"
       :fields="fields"
-      :current-page="currentPage"
+      :current-page="page"
       :per-page="0"
       borderless
       class="transactions-table"
@@ -112,12 +110,10 @@
 
     <PaginationSelect
       :total-rows="count"
-      :per-page="perPage"
-      :current-page="currentPage"
+      :per-page="limit"
+      :current-page="page"
       :loading="loading"
-      @onPageChange="
-        (page) => $emit('onPageChange', { type: 'delegations', page })
-      "
+      @onPageChange="handlePageChange"
     />
   </div>
 </template>
@@ -130,6 +126,7 @@
   import IdentIcon from '@/components/accounts/IdentIcon';
   import NoDataTableCell from '@/components/partials/NoDataTableCell';
   import defineRowClass from '@/mixins/defineRowClass';
+  import tabulationList from '@/mixins/tabulationList';
 
   export default {
     name: 'DelegationsTabList',
@@ -140,23 +137,9 @@
       IdentIcon,
       NoDataTableCell,
     },
-    mixins: [defineRowClass],
+    mixins: [defineRowClass, tabulationList],
     props: {
-      delegations: {
-        type: Array,
-        default() {
-          return [];
-        },
-      },
-      count: {
-        type: Number,
-        default: 0,
-      },
-      account: String,
-      currentPage: Number,
-      perPage: Number,
-      loaded: Boolean,
-      loading: Boolean,
+      hash: String,
     },
     computed: {
       ...mapState('app', {
@@ -175,11 +158,25 @@
         ];
       },
     },
-    async created() {
-      const itemsNotFetched = !this.loaded;
-      if (itemsNotFetched) {
-        this.$emit('onReload', { type: 'delegations', limit: this.perPage });
-      }
+    methods: {
+      async reload(limit, page) {
+        this.loading = true;
+        const props = {
+          page,
+          limit,
+          account_id: this.hash,
+        };
+        const data = await this.$api.getDelegations(props);
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+        this.items = data.data;
+        this.count = data.count;
+        this.loading = false;
+        this.loaded = true;
+      },
     },
   };
 </script>

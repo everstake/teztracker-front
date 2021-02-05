@@ -28,18 +28,7 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <TxsTabList
-                      @onReload="reload"
-                      :txs="txs"
-                      :count="counts.txs"
-                      :currentPage="page.txs"
-                      :perPage="limit.txs"
-                      :loaded="loaded.txs"
-                      :loading="loading.txs"
-                      @onLimitChange="handleLimitChange"
-                      @onPageChange="handlePageChange"
-                      :block-hash="block.hash"
-                    />
+                    <TxsTabList :hash="block.hash" hash-type="block" />
                   </b-card-body>
                 </b-tab>
                 <b-tab :title="$tc('opTypes.endorsement', 2)">
@@ -54,18 +43,7 @@
                   </b-card-header>
 
                   <b-card-body>
-                    <EndorsementsTabList
-                      @onReload="reload"
-                      :endorsements="endorsements"
-                      :count="counts.endorsements"
-                      :currentPage="page.endorsements"
-                      :perPage="limit.endorsements"
-                      :loaded="loaded.endorsements"
-                      :loading="loading.endorsements"
-                      @onLimitChange="handleLimitChange"
-                      @onPageChange="handlePageChange"
-                      :disable-pagination="true"
-                    />
+                    <EndorsementsTabList :hash="block.hash" />
                   </b-card-body>
                 </b-tab>
                 <b-tab :title="$t('common.other')">
@@ -79,18 +57,7 @@
                     </div>
                   </b-card-header>
                   <b-card-body>
-                    <BlockOtherOperationsList
-                      @onReload="reload"
-                      :operations="blockOtherOperations"
-                      :count="counts.blockOtherOperations"
-                      :currentPage="page.blockOtherOperations"
-                      :perPage="limit.blockOtherOperations"
-                      :loaded="loaded.blockOtherOperations"
-                      :loading="loading.blockOtherOperations"
-                      @onLimitChange="handleLimitChange"
-                      @onPageChange="handlePageChange"
-                      :block-hash="block.hash"
-                    />
+                    <BlockOtherOperationsList :hash="block.hash" />
                   </b-card-body>
                 </b-tab>
               </b-tabs>
@@ -109,7 +76,6 @@
   import BlockOtherOperationsList from '../components/blocks/BlockOtherOperationsList';
   import EndorsementsTabList from '@/components/partials/tabs/EndorsementsTabList';
   import TxsTabList from '@/components/partials/tabs/TxsTabList';
-  import reloadTabTables from '@/mixins/reloadTabulationList';
 
   export default {
     name: 'Block',
@@ -121,13 +87,11 @@
       EndorsementsSlots,
       BlockOtherOperationsList,
     },
-    mixins: [reloadTabTables],
     data() {
       return {
         block: {
           loading: false,
         },
-        otherOperations: [],
       };
     },
     computed: {
@@ -166,42 +130,6 @@
             }
           });
         this.block.loading = false;
-      },
-      async reloadEndorsements({ limit, page }) {
-        this.loading.endorsements = true;
-        if (!this.block.hash) return;
-        const props = {
-          page,
-          limit,
-          block_id: this.block.hash,
-        };
-        await this.$api
-          .getEndorsements(props)
-          .then((data) => {
-            this.counts.endorsements = data.count;
-            this.endorsements = data.data;
-          })
-          .catch(() => {});
-        this.loaded.endorsements = true;
-        this.loading.endorsements = false;
-      },
-      async reloadTxs({ limit, page }) {
-        this.loading.txs = true;
-        if (!this.block.hash) return;
-        const props = {
-          page,
-          limit,
-          block_id: this.block.hash,
-        };
-        await this.$api
-          .getTransactions(props)
-          .then((data) => {
-            this.txs = data.data;
-            this.counts.txs = data.count;
-          })
-          .catch(() => {});
-        this.loaded.txs = true;
-        this.loading.txs = false;
       },
     },
   };
