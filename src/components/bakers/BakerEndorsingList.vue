@@ -2,15 +2,13 @@
   <div class="list endorsing-list">
     <div class="d-flex justify-content-between mb-2">
       <LimitSelect
-        :limit="perPage"
+        :limit="limit"
         :loading="loading"
-        @onLimitChange="
-          (limit) => $emit('onLimitChange', { type: 'endorsing', limit })
-        "
+        @onLimitChange="handleLimitChange"
       />
     </div>
-  
-    <div v-if="loading && data.length === 0" class="table-skeleton">
+
+    <div v-if="loading && endorsing.data.length === 0" class="table-skeleton">
       <b-skeleton-table
         responsive
         :rows="2"
@@ -24,9 +22,9 @@
       v-else
       responsive
       show-empty
-      :items="data"
+      :items="endorsing.data"
       :fields="fields"
-      :current-page="currentPage"
+      :current-page="page"
       :per-page="0"
       borderless
       selectable
@@ -76,12 +74,10 @@
 
     <PaginationSelect
       :total-rows="count"
-      :per-page="perPage"
-      :current-page="currentPage"
+      :per-page="limit"
+      :current-page="page"
       :loading="loading"
-      @onPageChange="
-        (page) => $emit('onPageChange', { type: 'endorsing', page })
-      "
+      @onPageChange="handlePageChange"
     />
 
     <div>
@@ -143,6 +139,7 @@
   import Pagination from '../partials/Pagination';
   import PaginationSelect from '../partials/PaginationSelect';
   import { mapState } from 'vuex';
+  import tabulationList from '@/mixins/tabulationList';
 
   export default {
     name: 'BakerEndorsingList',
@@ -151,24 +148,9 @@
       Pagination,
       PaginationSelect,
     },
+    mixins: [tabulationList],
     props: {
-      data: {
-        type: Array,
-        default() {
-          return [];
-        },
-      },
-      future: Array,
-      total: Object,
-      count: {
-        type: Number,
-        default: 0,
-      },
-      account: String,
-      currentPage: Number,
-      perPage: Number,
-      loaded: Boolean,
-      loading: Boolean,
+      hash: String,
     },
     data() {
       return {
@@ -182,6 +164,12 @@
           loading: false,
         },
         toast: undefined,
+        endorsing: {
+          total: null,
+          future: null,
+          data: [],
+          loading: false,
+        },
       };
     },
     computed: {
@@ -218,12 +206,6 @@
     },
     updated() {
       this.hideCycleToast();
-    },
-    async created() {
-      const itemsNotFetched = !this.loaded;
-      if (itemsNotFetched) {
-        this.$emit('onReload', { type: 'endorsing', limit: this.perPage });
-      }
     },
     methods: {
       getRowClass(item) {
@@ -343,6 +325,47 @@
           this.$bvToast.hide(this.toast);
           this.toast = undefined;
         }
+      },
+      async reload(limit, page) {
+        this.loading = true;
+        const props = {
+          page,
+          limit,
+          account: this.hash,
+        };
+
+        if (page === 1) {
+          this.endorsing.loading = true;
+          const total = await this.$api.getAccountEndorsingTotal({
+            account: this.hash,
+          });
+          const future = await this.$api.getAccountEndorsingFuture({
+            account: this.hash,
+          });
+          const data = await this.$api.getAccountEndorsing(props);
+
+          this.endorsing.total = { ...total.data, status: 'Total' };
+          this.endorsing.future = future.data.map((item) => ({
+            ...item,
+            class: 'future',
+          }));
+          this.endorsing.data = [
+            ...this.endorsing.future,
+            { ...total.data, cycle: 'Total', class: 'total', status: 'Total' },
+            ...data.data,
+          ];
+
+          this.count = data.count;
+          this.endorsing.loading = false;
+        } else {
+          this.endorsing.loading = true;
+          const data = await this.$api.getAccountEndorsing(props);
+          this.endorsing.data = data.data;
+          this.endorsing.loading = false;
+        }
+
+        this.loading = false;
+        this.loaded = true;
       },
     },
   };

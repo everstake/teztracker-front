@@ -2,15 +2,13 @@
   <div class="list txs-list">
     <div class="d-flex justify-content-between mb-2">
       <LimitSelect
-        :limit="perPage"
-        @onLimitChange="
-          (limit) => $emit('onLimitChange', { type: 'txs', limit })
-        "
+        :limit="limit"
+        @onLimitChange="handleLimitChange"
         :loading="loading"
       />
     </div>
-  
-    <div v-if="loading && txs.length === 0" class="table-skeleton">
+
+    <div v-if="loading && items.length === 0" class="table-skeleton">
       <b-skeleton-table
         responsive
         :rows="2"
@@ -24,7 +22,7 @@
       v-else
       responsive
       show-empty
-      :items="txs"
+      :items="items"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
@@ -61,7 +59,7 @@
 
           <b-link
             :to="{ name: 'account', params: { account: row.item.source } }"
-            :class="row.item.sourceName === account ? 'source' : 'destination'"
+            :class="row.item.sourceName === hash ? 'source' : 'destination'"
           >
             <template v-if="row.item.sourceName">
               {{ row.item.sourceName }}
@@ -76,10 +74,10 @@
             :text-to-copy="row.item.source"
           />
 
-          <span v-if="account === row.item.source" class="icon">
+          <span v-if="hash === row.item.source" class="icon">
             <i class="icon__arrow--green"></i>
           </span>
-          <span v-else-if="account === row.item.destination" class="icon">
+          <span v-else-if="hash === row.item.destination" class="icon">
             <i class="icon__arrow--red"></i>
           </span>
         </span>
@@ -115,10 +113,10 @@
 
     <PaginationSelect
       :total-rows="count"
-      :per-page="perPage"
+      :per-page="limit"
       :current-page="currentPage"
       :loading="loading"
-      @onPageChange="(page) => $emit('onPageChange', { type: 'txs', page })"
+      @onPageChange="handlePageChange"
     />
   </div>
 </template>
@@ -130,6 +128,7 @@
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
   import defineRowClass from '@/mixins/defineRowClass';
+  import tabulationList from '@/mixins/tabulationList';
 
   export default {
     name: 'TxsTabList',
@@ -139,24 +138,12 @@
       BtnCopy,
       IdentIcon,
     },
-    mixins: [defineRowClass],
+    mixins: [defineRowClass, tabulationList],
     props: {
-      txs: {
-        type: Array,
-        default() {
-          return [];
-        },
-      },
-      count: {
-        type: Number,
-        default: 0,
-      },
-      account: String,
       currentPage: Number,
       perPage: Number,
-      loaded: Boolean,
-      loading: Boolean,
-      blockHash: String,
+      hash: String,
+      hashType: String,
     },
     computed: {
       ...mapState('app', {
@@ -188,27 +175,49 @@
       },
     },
     watch: {
-      blockHash: {
+      hash: {
         immediate: true,
-        handler(value) {
-          const itemsNotFetched = !this.loaded;
-          if (itemsNotFetched && value) {
-            this.$emit('onReload', { type: 'txs', limit: this.perPage });
+        async handler(hash) {
+          if (!this.loaded && hash) {
+            await this.reload(this.limit, this.page);
           }
         },
       },
     },
     async created() {
-      const { blockHash } = this;
-      const itemsNotFetched = !this.loaded;
-      if (itemsNotFetched && !blockHash) {
-        this.$emit('onReload', { type: 'txs', limit: this.perPage });
+      if (!this.loaded && !this.hash) {
+        await this.reload(this.limit, this.page);
       }
     },
     methods: {
       getAccountName(row, rowHash) {
         return `${row.item[`${rowHash}Name`] ||
           row.item[rowHash].slice(0, 15)}...`;
+      },
+      async reload(limit, page) {
+        this.loading = true;
+        const props = {
+          page,
+          limit,
+        };
+        switch (this.hashType) {
+          case 'account':
+            props.account_id = this.hash;
+            break;
+          case 'block':
+            props.block_id = this.hash;
+            break;
+        }
+        const data = await this.$api.getTransactions(props);
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+        this.items = data.data;
+        this.count = data.count;
+        this.loading = false;
+        this.loaded = true;
       },
     },
   };

@@ -2,15 +2,13 @@
   <div class="list baking-list">
     <div class="d-flex justify-content-between mb-2">
       <LimitSelect
-        :limit="perPage"
+        :limit="limit"
         :loading="loading"
-        @onLimitChange="
-          (limit) => $emit('onLimitChange', { type: 'rewards', limit })
-        "
+        @onLimitChange="handleLimitChange"
       />
     </div>
-  
-    <div v-if="loading && data.length === 0" class="table-skeleton">
+
+    <div v-if="loading && items.length === 0" class="table-skeleton">
       <b-skeleton-table
         responsive
         :rows="2"
@@ -24,9 +22,9 @@
       v-else
       responsive
       show-empty
-      :items="data"
+      :items="items"
       :fields="fields"
-      :current-page="currentPage"
+      :current-page="page"
       borderless
       selectable
       :select-mode="'single'"
@@ -82,10 +80,10 @@
 
     <PaginationSelect
       :total-rows="count"
-      :current-page="currentPage"
+      :current-page="page"
       :loading="loading"
-      :per-page="perPage"
-      @onPageChange="(page) => $emit('onPageChange', { type: 'rewards', page })"
+      :per-page="limit"
+      @onPageChange="handlePageChange"
     />
 
     <div>
@@ -125,6 +123,7 @@
           :total-rows="selectedRow.count"
           :per-page="selectedRow.perPage"
           :loading="selectedRow.loading"
+          @change="handleModalPagination"
         />
       </b-modal>
     </div>
@@ -136,6 +135,7 @@
   import Pagination from '../partials/Pagination';
   import PaginationSelect from '../partials/PaginationSelect';
   import { mapState } from 'vuex';
+  import tabulationList from "@/mixins/tabulationList";
 
   export default {
     name: 'BakerRewardsList',
@@ -149,23 +149,9 @@
         return amount.toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0];
       },
     },
-
+    mixins: [tabulationList],
     props: {
-      data: {
-        type: Array,
-        default() {
-          return [];
-        },
-      },
-      count: {
-        type: Number,
-        default: 0,
-      },
-      account: String,
-      currentPage: Number,
-      perPage: Number,
-      loaded: Boolean,
-      loading: Boolean,
+      hash: String,
     },
     data() {
       return {
@@ -248,7 +234,7 @@
         this.cycleId = row[0].cycle;
 
         modalData = await this.$api.getAccountRewardsDelegators({
-          account: this.account,
+          account: this.hash,
           cycleId: row[0].cycle,
         });
 
@@ -268,7 +254,7 @@
         this.selectedRow.loading = true;
         const props = {
           page,
-          account: this.account,
+          account: this.hash,
           cycleId: this.cycleId,
         };
 
@@ -298,15 +284,23 @@
           this.toast = undefined;
         }
       },
+      async reload(limit, page) {
+        this.loading = true;
+        const props = {
+          page,
+          limit,
+          account: this.hash,
+        };
+
+        const data = await this.$api.getAccountRewards(props);
+        this.items = data.data;
+        this.count = data.count;
+        this.loading = false;
+        this.loaded = true;
+      },
     },
     updated() {
       this.hideCycleToast();
-    },
-    async created() {
-      const itemsNotFetched = !this.loaded;
-      if (itemsNotFetched) {
-        this.$emit('onReload', { type: 'rewards', limit: this.perPage });
-      }
     },
   };
 </script>

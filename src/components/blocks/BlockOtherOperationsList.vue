@@ -1,6 +1,6 @@
 <template>
   <div class="list block-other-operations-list">
-    <div v-if="loading && operations.length === 0" class="table-skeleton">
+    <div v-if="loading && items.length === 0" class="table-skeleton">
       <b-skeleton-table
         responsive
         :rows="5"
@@ -14,7 +14,7 @@
       v-else
       responsive
       show-empty
-      :items="operations"
+      :items="items"
       :fields="fields"
       borderless
       class="transactions-table"
@@ -140,6 +140,7 @@
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
   import defineRowClass from '@/mixins/defineRowClass';
+  import tabulationList from '@/mixins/tabulationList';
 
   export default {
     name: 'BlockOtherOperationsList',
@@ -147,24 +148,9 @@
       BtnCopy,
       IdentIcon,
     },
-    mixins: [defineRowClass],
+    mixins: [defineRowClass, tabulationList],
     props: {
-      operations: {
-        type: Array,
-        default() {
-          return [];
-        },
-      },
-      count: {
-        type: Number,
-        default: 0,
-      },
-      account: String,
-      currentPage: Number,
-      perPage: Number,
-      loaded: Boolean,
-      loading: Boolean,
-      blockHash: String,
+      hash: String,
     },
     data() {
       return {
@@ -193,14 +179,42 @@
       },
     },
     watch: {
-      blockHash: {
+      hash: {
         immediate: true,
-        handler(value) {
-          const itemsNotFetched = !this.loaded;
-          if (itemsNotFetched && value) {
-            this.$emit('onReload', { type: 'blockOtherOperations', limit: this.perPage });
+        async handler(hash) {
+          if (!this.loaded && hash) {
+            await this.reload();
           }
         },
+      },
+    },
+    methods: {
+      async reload() {
+        this.loading = true;
+        const operationTypes = [
+          'delegation',
+          'origination',
+          'activate_account',
+          'double_baking_evidence',
+          'double_endorsement_evidence',
+        ];
+
+        const data = await this.$api.getOperations({
+          block_id: this.hash,
+          operation_kind: operationTypes,
+          limit: 100,
+        });
+
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+
+        this.items = data.data;
+        this.count = data.count;
+        this.loading = false;
+        this.loaded = true;
       },
     },
   };

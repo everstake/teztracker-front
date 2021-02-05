@@ -1,10 +1,14 @@
 <template>
   <div class="list baking-list">
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :limit="perPage" :loading="loading" @onLimitChange="(limit) => $emit('onLimitChange', { type: 'bonds', limit })" />
+      <LimitSelect
+        :limit="limit"
+        :loading="loading"
+        @onLimitChange="handleLimitChange"
+      />
     </div>
-  
-    <div v-if="loading && data.length === 0" class="table-skeleton">
+
+    <div v-if="loading && items.length === 0" class="table-skeleton">
       <b-skeleton-table
         responsive
         :rows="2"
@@ -18,9 +22,9 @@
       v-else
       responsive
       show-empty
-      :items="data"
+      :items="items"
       :fields="fields"
-      :current-page="currentPage"
+      :current-page="page"
       borderless
       class="transactions-table"
       :tbody-tr-class="getRowClass"
@@ -88,33 +92,21 @@
 <script>
   import LimitSelect from '@/components/partials/LimitSelect';
   import { mapState } from 'vuex';
+  import tabulationList from "@/mixins/tabulationList";
 
   export default {
     name: 'BondsTabList',
     components: {
       LimitSelect,
     },
+    mixins: [tabulationList],
     filters: {
       toFixedNoRounding(amount) {
         return amount.toFixed(20).match(/^-?\d*\.?0*\d{0,2}/)[0];
       },
     },
     props: {
-      data: {
-        type: Array,
-        default() {
-          return [];
-        },
-      },
-      count: {
-        type: Number,
-        default: 0,
-      },
-      account: String,
-      currentPage: Number,
-      perPage: Number,
-      loaded: Boolean,
-      loading: Boolean,
+      hash: String,
     },
     data() {
       return {
@@ -199,12 +191,20 @@
 
         return classes.join(' ');
       },
-    },
-    async created() {
-      const itemsNotFetched = !this.loaded;
-      if (itemsNotFetched) {
-        this.$emit('onReload', { type: 'bonds', limit: this.perPage });
-      }
+      async reload(limit, page) {
+        this.loading = true;
+        const props = {
+          page,
+          limit,
+          account: this.hash,
+        };
+
+        const data = await this.$api.getAccountBonds(props);
+        this.bonds = data.data;
+        this.count = data.count;
+        this.loading = false;
+        this.loaded = true;
+      },
     },
   };
 </script>
