@@ -66,6 +66,9 @@ const TzAPI = {
   API_URL_WITHOUT_PLATFORM() {
     return Vue.prototype.$constants.API_BASE_URLS.mainnetWithoutPlatform;
   },
+  API_URL_BASE() {
+    return Vue.prototype.$constants.API_BASE_URLS.baseApi;
+  },
   getAccounts(opts = {}) {
     return get(this.API_URL(), 'accounts', opts);
   },
@@ -185,6 +188,9 @@ const TzAPI = {
   },
   getPublicBakersSearch(opts = {}) {
     return get(this.API_URL(), 'public_bakers/search', opts);
+  },
+  getBakersDelegateComparison(opts = {}) {
+    return get(this.API_URL_BASE(), 'thirdparty/bakers', opts, false);
   },
   getTransactions(opts = {}) {
     const options = { ...opts };

@@ -89,7 +89,8 @@
     "assetsList": "Assets list",
     "holdersList": "Holders list",
     "bondsList": "Bonds list",
-    "mempoolList": "Mempool list"
+    "mempoolList": "Mempool list",
+    "delegateComparison": "Delagate comparison list"
   },
   "pageTypes": {
     "txsPage": "Transactions page",
@@ -111,7 +112,8 @@
     "bakingChartsPage": "Baking charts page",
     "topAccountsPage": "Top accounts page",
     "assetsPage": "Assets page",
-    "mempoolPage": "Mempool page"
+    "mempoolPage": "Mempool page",
+    "delegateComparison": "Delegate comparison page"
   },
   "infoTypes": {
     "txInfo": "Transaction information",
@@ -252,7 +254,8 @@
     "charts": "Charts",
     "general": "General",
     "resources": "Resources",
-    "mempool": "Mempool"
+    "mempool": "Mempool",
+    "delegateComparison": "Delegate comparison"
   },
   "nets": {
     "mainnet": "Mainnet",

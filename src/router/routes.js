@@ -63,6 +63,7 @@ const ChartsBaking = () => import('../views/chart-views/ChartsBaking.vue');
 const ChartsGeneral = () => import('../views/chart-views/ChartsGeneral.vue');
 /* Charts group end */
 
+const DelegateComparison = () => import('../views/DelegateComparison.vue');
 const Glossary = () => import('../views/Glossary.vue');
 const Feedback = () => import('../views/Feedback.vue');
 const Mempool = () => import('../views/Mempool.vue');
@@ -206,7 +207,11 @@ export default [
       { path: 'charts/baking', redirect: { name: 'baking_charts' } },
       { path: 'charts/general', redirect: { name: 'general_charts' } },
       /* Charts group end */
-
+      {
+        path: 'delegate_comparison',
+        name: 'delegate_comparison',
+        component: DelegateComparison,
+      },
       { path: 'glossary', name: 'glossary', component: Glossary },
       { path: 'feedback', name: 'feedback', component: Feedback },
       { path: 'mempool', name: 'mempool', component: Mempool },

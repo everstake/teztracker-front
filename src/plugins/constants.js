@@ -28,6 +28,7 @@ const constants = {
     mainnet: process.env.VUE_APP_ROOT_API + '/v2/data/tezos/mainnet/',
     carthagenet: process.env.VUE_APP_ROOT_API + '/v2/data/tezos/carthagenet/',
     mainnetWithoutPlatform: process.env.VUE_APP_ROOT_API + '/v2/data/mainnet/',
+    baseApi: process.env.VUE_APP_ROOT_API + '/v2/data/',
   },
   SEARCH_PREFIXES: {
     account: ['KT', 'tz'],

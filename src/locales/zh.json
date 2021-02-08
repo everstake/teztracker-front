@@ -89,7 +89,8 @@
     "assetsList": "资产清单",
     "holdersList": "持有者名单",
     "bondsList": "债券清单",
-    "mempoolList": "Mempool list"
+    "mempoolList": "Mempool list",
+    "delegateComparison": "Delagate comparison list"
   },
   "pageTypes": {
     "txsPage": "交易页面",
@@ -111,7 +112,8 @@
     "bakingChartsPage": "区块创建图页面",
     "topAccountsPage": "高级账户页面",
     "assetsPage": "资产页",
-    "mempoolPage": "Mempool page"
+    "mempoolPage": "Mempool page",
+    "delegateComparison": "Delegate comparison page"
   },
   "infoTypes": {
     "txInfo": "交易信息",
@@ -252,7 +254,8 @@
     "charts": "图表",
     "general": "指挥",
     "resources": "Resources",
-    "mempool": "Mempool"
+    "mempool": "Mempool",
+    "delegateComparison": "Delegate comparison"
   },
   "nets": {
     "mainnet": "主网",
