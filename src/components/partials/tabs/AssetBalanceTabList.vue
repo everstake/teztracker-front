@@ -10,7 +10,7 @@
       />
     </div>
 
-    <div v-if="loading && assetBalances.length === 0" class="table-skeleton">
+    <div v-if="loading && assetBalance.length === 0" class="table-skeleton">
       <b-skeleton-table
         responsive
         :rows="2"
@@ -22,9 +22,8 @@
     </div>
     <b-table
       v-else
-      responsive
       show-empty
-      :items="assetBalances"
+      :items="assetBalance"
       :fields="fields"
       :current-page="currentPage"
       :per-page="0"
@@ -33,83 +32,21 @@
       :empty-text="$t('common.noData')"
       :tbody-tr-class="$_defineRowClass"
     >
-      <template #cell(txhash)="row">
+      <template #cell(account_id)="row">
         <span class="d-flex align-items-center">
-          <b-link
-            :to="{
-              name: 'tx',
-              params: { txhash: row.item.operationGroupHash },
-            }"
-          >
-            {{ row.item.operationGroupHash | longhash }}
-          </b-link>
-
-          <BtnCopy :text-to-copy="row.item.operationGroupHash" />
-        </span>
-      </template>
-      <template #cell(level)="row">
-        <b-link :to="{ name: 'block', params: { level: row.item.blockLevel } }">
-          {{ row.item.blockLevel | formatInteger }}
-        </b-link>
-      </template>
-      <template #cell(timestamp)="row">
-        {{ row.item.timestamp | timeformat(dateFormat) }}
-      </template>
-      <template #cell(from)="row">
-        <span class="position-relative w-100 d-flex align-items-center">
-          <IdentIcon :seed="row.item.source" />
+          <IdentIcon :seed="row.item.account_id" />
 
           <b-link
-            :to="{ name: 'account', params: { account: row.item.source } }"
-            :class="row.item.sourceName === account ? 'source' : 'destination'"
+              :to="{ name: 'account', params: { account: row.item.account_id } }"
           >
-            <template v-if="row.item.sourceName">
-              {{ row.item.sourceName }}
-            </template>
-            <template v-else>
-              {{ row.item.source | longhash }}
-            </template>
+            {{ row.item.account_id }}
           </b-link>
 
-          <BtnCopy
-            v-if="!row.item.sourceName"
-            :text-to-copy="row.item.source"
-          />
-
-          <span v-if="account === row.item.source" class="icon">
-            <i class="icon__arrow--green"></i>
-          </span>
-          <span v-else-if="account === row.item.destination" class="icon">
-            <i class="icon__arrow--red"></i>
-          </span>
+          <BtnCopy :text-to-copy="row.item.account_id" />
         </span>
       </template>
-      <template #cell(to)="row">
-        <span class="d-flex align-items-center">
-          <IdentIcon :seed="row.item.destination" />
-
-          <b-link
-            :to="{ name: 'account', params: { account: row.item.destination } }"
-          >
-            <template v-if="row.item.destinationName">
-              {{ row.item.destinationName }}
-            </template>
-            <template v-else>
-              {{ row.item.destination | longhash }}
-            </template>
-          </b-link>
-
-          <BtnCopy
-            v-if="!row.item.destinationName"
-            :text-to-copy="row.item.destination"
-          />
-        </span>
-      </template>
-      <template #cell(amount)="row">
-        {{ row.item.amount | denominate }}
-      </template>
-      <template #cell(fee)="row">
-        {{ row.item.fee | denominate }}
+      <template #cell(balance)="row">
+        {{ row.item.balance | denominate }}
       </template>
     </b-table>
 
@@ -141,7 +78,7 @@
     },
     mixins: [defineRowClass],
     props: {
-      assetBalances: {
+      assetBalance: {
         type: Array,
         default() {
           return [];
@@ -165,25 +102,15 @@
       fields() {
         if (!this.$i18n.locale) return [];
         return [
-          { key: 'level', label: this.$t('common.blockId') },
-          { key: 'txhash', label: this.$t('hashTypes.txHash') },
           {
-            key: 'from',
-            label: this.$t('common.from'),
+            key: 'account_id',
+            label: this.$t('bakerSingle.address'),
           },
+
           {
-            key: 'to',
-            label: this.$t('common.to'),
+            key: 'balance',
+            label: this.$t('common.balance'),
           },
-          {
-            key: 'amount',
-            label: this.$t('common.amount'),
-          },
-          {
-            key: 'fee',
-            label: this.$t('common.fee'),
-          },
-          { key: 'timestamp', label: this.$t('common.timestamp') },
         ];
       },
     },

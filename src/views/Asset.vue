@@ -112,7 +112,7 @@
                   <b-card-body>
                     <AssetBalanceTabList
                         @onReload="reload"
-                        :operations="assetBalance"
+                        :assetBalance="assetBalance"
                         :count="counts.assetBalance"
                         :currentPage="page.assetBalance"
                         :perPage="limit.assetBalance"
