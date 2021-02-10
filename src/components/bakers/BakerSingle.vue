@@ -26,7 +26,7 @@
               {{ $t('infoTypes.bakerInfo') }}
             </div>
             <div>
-              <BakerSocials :baker-address="hash" />
+              <BakerSocials :media="bakerInfo.media" />
             </div>
           </b-card-header>
 
