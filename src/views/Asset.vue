@@ -111,15 +111,15 @@
 
                   <b-card-body>
                     <AssetBalanceTabList
-                        @onReload="reload"
+                        @onReload="reloadAssetBalances"
                         :assetBalance="assetBalance"
-                        :count="counts.assetBalance"
+                        :count="count.assetBalance"
                         :currentPage="page.assetBalance"
                         :perPage="limit.assetBalance"
                         :loaded="loaded.assetBalance"
                         :loading="loading.assetBalance"
-                        @onLimitChange="handleLimitChange"
-                        @onPageChange="handlePageChange"
+                        @onPageChange="onPageChange"
+                        @onLimitChange="onLimitChange"
                     />
                   </b-card-body>
                 </b-tab>
@@ -157,30 +157,36 @@
         txs: [],
         holders: [],
         otherOperations: [],
+        assetBalance: [],
         loading: {
           txs: false,
           holders: false,
           otherOperations: false,
+          assetBalance: false,
         },
         loaded: {
           txs: false,
           holders: false,
           otherOperations: false,
+          assetBalance: false,
         },
         count: {
           txs: 0,
           holders: 0,
           otherOperations: 0,
+          assetBalance: 0,
         },
         limit: {
           txs: 10,
           holders: 10,
           otherOperations: 10,
+          assetBalance: 10,
         },
         page: {
           txs: 1,
           holders: 1,
           otherOperations: 1,
+          assetBalance: 1,
         },
       };
     },
@@ -239,6 +245,24 @@
           this.loaded.holders = true;
         }
         this.loading[name] = false;
+      },
+      async reloadAssetBalances({ limit, page }) {
+        this.loading.assetBalance = true;
+        const props = {
+          page,
+          limit,
+          account_id: this.hash,
+        };
+        const data = await this.$api.getAccountAssetsBalances(props);
+        if (data.status !== this.$constants.STATUS_SUCCESS) {
+          return this.$router.replace({
+            name: data.status,
+          });
+        }
+        this.assetBalance = data.data;
+        this.count.assetBalance = data.count;
+        this.loading.assetBalance = false;
+        this.loaded.assetBalance = true;
       },
       async onPageChange({ name, page }) {
         const limit = this.limit[name];
