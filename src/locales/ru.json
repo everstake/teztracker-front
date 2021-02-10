@@ -91,7 +91,7 @@
     "holdersList": "Список холдеров",
     "bondsList": "Список залоговых стредств",
     "mempoolList": "Mempool list",
-    "assetsOperationsList": "Assets operations list"
+    "assetsOperationsList": "Assets operations list",
     "delegateComparison": "Delagate comparison list"
   },
   "pageTypes": {
