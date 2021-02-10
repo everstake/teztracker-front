@@ -60,3 +60,4 @@ export const NOTE_EDIT = 'editNote';
 export const NOTE_DELETE = 'deleteNote';
 export const SET_USER_PROFILE = 'setUserProfile';
 export const SET_USER_NOTES = 'setUserNotes';
+export const SET_DELEGATE_COMPARISON = 'setDelegateComparison';

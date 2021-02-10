@@ -113,7 +113,8 @@
     "bakingChartsPage": "Baking charts page",
     "topAccountsPage": "Top accounts page",
     "assetsPage": "Assets page",
-    "mempoolPage": "Mempool page"
+    "mempoolPage": "Mempool page",
+    "delegateComparison": "Delegate comparison page"
   },
   "infoTypes": {
     "txInfo": "Transaction information",
@@ -254,7 +255,8 @@
     "charts": "Charts",
     "general": "General",
     "resources": "Resources",
-    "mempool": "Mempool"
+    "mempool": "Mempool",
+    "delegateComparison": "Delegate comparison"
   },
   "nets": {
     "mainnet": "Mainnet",

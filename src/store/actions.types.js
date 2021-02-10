@@ -31,3 +31,4 @@ export const GET_USER_PROFILE = 'getUserProfile';
 export const GET_USER_NOTES = 'getUserNotes';
 export const POST_USER_NOTE = 'postUserNote';
 export const DELETE_USER_NOTE = 'deleteUserNote';
+export const GET_DELEGATE_COMPARISON = 'getDelegateComparison';

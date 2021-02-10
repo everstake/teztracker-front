@@ -195,6 +195,9 @@ const TzAPI = {
   getPublicBakersSearch(opts = {}) {
     return get(this.API_URL(), 'public_bakers/search', opts);
   },
+  getBakersDelegateComparison(opts = {}) {
+    return get(this.API_URL_BASE(), 'thirdparty/bakers', opts, false);
+  },
   getTransactions(opts = {}) {
     const options = { ...opts };
     if (!options.operation_id) {
