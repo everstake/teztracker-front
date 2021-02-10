@@ -107,6 +107,14 @@
             >
               {{ $tc('opTypes.doubleEndorsement', 2) }}
             </b-dropdown-item>
+            <b-dropdown-item
+              :to="{
+                name: 'assets_operations',
+                params: { network: currentNetwork },
+              }"
+            >
+              {{ $t('opTypes.assetsOperations') }}
+            </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown id="bakers" :text="$tc('common.baker', 2)">
             <b-dropdown-item

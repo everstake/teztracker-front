@@ -61,7 +61,8 @@
     "activation": "激活 | 激活",
     "doubleBaking": "双重创建区块",
     "doubleEndorsement": "双重背书| 双重背书",
-    "holders": "持有者"
+    "holders": "持有者",
+    "assetsOperations": "Assets operations"
   },
   "listTypes": {
     "txsList": "交易列表",
@@ -89,7 +90,8 @@
     "assetsList": "资产清单",
     "holdersList": "持有者名单",
     "bondsList": "债券清单",
-    "mempoolList": "Mempool list"
+    "mempoolList": "Mempool list",
+    "assetsOperationsList": "Assets operations list"
   },
   "pageTypes": {
     "txsPage": "交易页面",

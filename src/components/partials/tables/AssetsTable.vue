@@ -9,27 +9,25 @@
     class="transactions-table table-responsive-md"
   >
     <template #cell(account_id)="row">
-      <router-link
-        :to="{ name: 'asset', params: { id: row.item.account_id } }"
-      >
-          <span v-if="row.item.name">
-            {{ row.item.name }}
-          </span>
+      <router-link :to="{ name: 'asset', params: { id: row.item.account_id } }">
+        <span v-if="row.item.name">
+          {{ row.item.name }}
+        </span>
         <span v-else>{{ row.item.account_id | longhash }}</span>
       </router-link>
     </template>
     <template #cell(manager)="row">
-        <span v-if="row.item.manager" class="d-flex align-items-center">
-          <IdentIcon :seed="row.item.manager" />
+      <span v-if="row.item.manager" class="d-flex align-items-center">
+        <IdentIcon :seed="row.item.manager" />
 
-          <b-link
-            :to="{ name: 'account', params: { account: row.item.manager } }"
-          >
-            <span>{{ row.item.manager | longhash }}</span>
-          </b-link>
+        <b-link
+          :to="{ name: 'account', params: { account: row.item.manager } }"
+        >
+          <span>{{ row.item.manager | longhash }}</span>
+        </b-link>
 
-          <BtnCopy :text-to-copy="row.item.manager" />
-        </span>
+        <BtnCopy :text-to-copy="row.item.manager" />
+      </span>
       <NoDataTableCell v-else />
     </template>
     <template #cell(name)="row">
@@ -37,10 +35,17 @@
       <NoDataTableCell v-else />
     </template>
     <template #cell(balance)="row">
-        <span>{{
-          row.item.balance
-            | tezos(getAssetCurrency(row.item.name), row.item.precision)
-        }}</span>
+      <span>{{
+        row.item.balance
+          | tezos(getAssetCurrency(row.item.name), row.item.precision)
+      }}</span>
+    </template>
+    <template #cell(ticker)="row">
+      <span v-if="row.item.ticker">{{ row.item.ticker }}</span>
+      <NoDataTableCell v-else />
+    </template>
+    <template #cell(total_supply)="row">
+      <span>{{ row.item.total_supply | tezos }}</span>
     </template>
     <template #cell(created_at)="row">
       <span>{{ row.item.created_at | timeformat(dateFormat) }}</span>
@@ -52,7 +57,7 @@
   import { mapState } from 'vuex';
   import BtnCopy from '@/components/partials/BtnCopy';
   import IdentIcon from '@/components/accounts/IdentIcon';
-  import NoDataTableCell from '@/components/partials/NoDataTableCell'
+  import NoDataTableCell from '@/components/partials/NoDataTableCell';
 
   export default {
     name: 'AssetsTable',
@@ -91,6 +96,12 @@
               label: this.$t('common.balance'),
               sortable: true,
               sortDirection: 'desc',
+              thClass: 'assets-table__heading',
+            },
+            { key: 'ticker', label: 'Ticker' },
+            {
+              key: 'total_supply',
+              label: 'Total supply',
             },
             { key: 'created_at', label: this.$t('accSingle.created') },
           ];
@@ -116,3 +127,9 @@
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  ::v-deep .assets-table__heading > div {
+    position: relative;
+  }
+</style>

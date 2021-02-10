@@ -33,6 +33,7 @@ const Activations = () => import('../views/Activations.vue');
 const DoubleBaking = () => import('../views/DoubleBaking.vue');
 // Double endorsement
 const DoubleEndorsement = () => import('../views/DoubleEndorsement.vue');
+const AssetsOperations = () => import('../views/AssetsOperations.vue');
 /* Operations group end */
 
 // Bakers
@@ -287,6 +288,11 @@ export default [
         meta: {
           middleware: [language, network, page],
         },
+      },
+      {
+        path: 'assets_operations/:page?',
+        name: 'assets_operations',
+        component: AssetsOperations,
       },
       /* Operations group end */
 

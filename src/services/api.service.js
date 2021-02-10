@@ -315,19 +315,26 @@ const TzAPI = {
     return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${asset_id}`, opts);
   },
   getAssetsOperationsById(opts = {}) {
-    const { assets_id } = opts;
     return get(
       this.API_URL_WITHOUT_PLATFORM(),
-      `assets/${assets_id}/operations`,
+      `assets/operations`,
       opts,
     );
   },
   getAssetsHoldersById(opts = {}) {
-    const { assets_id } = opts;
+    const { asset_id } = opts;
     return get(
       this.API_URL_WITHOUT_PLATFORM(),
-      `assets/${assets_id}/holders`,
+      `assets/${asset_id}/holders`,
       opts,
+    );
+  },
+  getAccountAssetsBalances(opts = {}) {
+    const { account_id, page, limit } = opts;
+    return get(
+      this.API_URL(),
+      `accounts/${account_id}/assets`,
+      { page, limit },
     );
   },
   checkHealth(opts = {}) {

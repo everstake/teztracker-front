@@ -122,6 +122,31 @@
                     />
                   </b-card-body>
                 </b-tab>
+                <b-tab title="Assets balances">
+                  <b-card-header>
+                    <div class="break-word">
+                      <h3>
+                        <span class="text">
+                          Asset balances list
+                        </span>
+                      </h3>
+                    </div>
+                  </b-card-header>
+
+                  <b-card-body>
+                    <AssetBalanceTabList
+                      @onReload="reload"
+                      :operations="assetBalance"
+                      :count="counts.assetBalance"
+                      :currentPage="page.assetBalance"
+                      :perPage="limit.assetBalance"
+                      :loaded="loaded.assetBalance"
+                      :loading="loading.assetBalance"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
+                  </b-card-body>
+                </b-tab>
                 <template #tabs-end>
                   <ExportAccountReport />
                 </template>
@@ -144,6 +169,7 @@
   import OriginationsTabList from '@/components/partials/tabs/OriginationsTabList';
   import OperationsTabList from '@/components/partials/tabs/OperationsTabList';
   import ExportAccountReport from '@/components/partials/ExportAccountReport';
+  import AssetBalanceTabList from '@/components/partials/tabs/AssetBalanceTabList';
 
   export default {
     name: 'Account',
@@ -156,6 +182,7 @@
       AccountSingle,
       ChartBalanceLast30Days,
       ExportAccountReport,
+      AssetBalanceTabList,
     },
     mixins: [reloadTabTables],
     props: {

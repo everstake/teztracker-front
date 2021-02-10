@@ -98,6 +98,31 @@
                     />
                   </b-card-body>
                 </b-tab>
+                <b-tab title="Assets balances">
+                  <b-card-header>
+                    <div class="break-word">
+                      <h3>
+                        <span class="text">
+                          Asset balances list
+                        </span>
+                      </h3>
+                    </div>
+                  </b-card-header>
+
+                  <b-card-body>
+                    <AssetBalanceTabList
+                        @onReload="reload"
+                        :operations="assetBalance"
+                        :count="counts.assetBalance"
+                        :currentPage="page.assetBalance"
+                        :perPage="limit.assetBalance"
+                        :loaded="loaded.assetBalance"
+                        :loading="loading.assetBalance"
+                        @onLimitChange="handleLimitChange"
+                        @onPageChange="handlePageChange"
+                    />
+                  </b-card-body>
+                </b-tab>
               </b-tabs>
             </b-card>
           </b-col>
@@ -113,6 +138,7 @@
   import AssetTabTxs from '../components/assets/AssetTabTxs';
   import AssetTabHolders from '../components/assets/AssetTabHolders';
   import AssetTabOther from '../components/assets/AssetTabOther';
+  import AssetBalanceTabList from '@/components/partials/tabs/AssetBalanceTabList';
 
   export default {
     name: 'Asset',
@@ -122,6 +148,7 @@
       AssetTabTxs,
       AssetTabHolders,
       AssetTabOther,
+      AssetBalanceTabList,
     },
     data() {
       return {
@@ -176,8 +203,8 @@
       },
       async onReload({ name, limit, page }) {
         this.loading[name] = true;
-        const { id: assets_id } = this.$route.params;
-        const props = { page, limit, type: 'transfer', assets_id };
+        const { id: asset_id } = this.$route.params;
+        const props = { page, limit, type: 'transfer', asset_id };
 
         if (name === 'txs') {
           await this.$api
@@ -192,7 +219,7 @@
 
         if (name === 'otherOperations') {
           await this.$api
-            .getAssetsOperationsById({ ...props, type: ['burn', 'other'] })
+            .getAssetsOperationsById({ ...props, type: ['other'] })
             .then((data) => {
               this.otherOperations = data.data;
               this.count.otherOperations = data.count;
@@ -203,7 +230,7 @@
 
         if (name === 'holders') {
           await this.$api
-            .getAssetsHoldersById(props)
+            .getAssetsHoldersById({ limit, page, asset_id })
             .then((data) => {
               this.holders = data.data;
               this.count.holders = data.count;

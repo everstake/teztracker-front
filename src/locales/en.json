@@ -61,7 +61,8 @@
     "activation": "Activation | Activations",
     "doubleBaking": "Double-baking",
     "doubleEndorsement": "Double-endorsement | Double-endorsements",
-    "holders": "Holders"
+    "holders": "Holders",
+    "assetsOperations": "Assets operations"
   },
   "listTypes": {
     "txsList": "Transactions list",
@@ -89,7 +90,8 @@
     "assetsList": "Assets list",
     "holdersList": "Holders list",
     "bondsList": "Bonds list",
-    "mempoolList": "Mempool list"
+    "mempoolList": "Mempool list",
+    "assetsOperationsList": "Assets operations list"
   },
   "pageTypes": {
     "txsPage": "Transactions page",
