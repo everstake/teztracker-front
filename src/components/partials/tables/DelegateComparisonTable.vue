@@ -69,7 +69,7 @@
       </div>
     </template>
     <template #cell(fee)="row">
-      <span v-if="getAvarageOf('fee', row.item.providers)">{{ getAvarageOf('fee', row.item.providers) }}</span>
+      <span v-if="getAvarageOf('fee', row.item.providers)">{{ (getAvarageOf('fee', row.item.providers) * 100).toString().slice(0, 4) }}%</span>
       <span v-else>-</span>
     </template>
     <template #cell(details)="row">
@@ -123,19 +123,19 @@
           </div>
         </template>
         <template #cell(fee)="row">
-          <span v-if="row.item.fee">{{ row.item.fee }}</span>
+          <span v-if="row.item.fee">{{ row.item.fee * 100 }}%</span>
           <span v-else>-</span>
         </template>
         <template #cell(roi)="row">
-          <span v-if="row.item.yield">{{ row.item.yield.toString().slice(0, 4) }}</span>
+          <span v-if="row.item.yield">{{ row.item.yield.toString().slice(0, 4) }}%</span>
           <span v-else>-</span>
         </template>
         <template #cell(efficiency)="row">
-          <span v-if="row.item.efficiency">{{ row.item.efficiency.toString().slice(0, 4) }}</span>
+          <span v-if="row.item.efficiency">{{ row.item.efficiency.toString().slice(0, 4) }}%</span>
           <span v-else>-</span>
         </template>
         <template #cell(available_capacity)="row">
-          <span v-if="row.item.available_capacity">{{ row.item.available_capacity }}</span>
+          <span v-if="row.item.available_capacity">{{ formattedAvailableCapacity(getAvarageOf('available_capacity', row.item.providers)) }}</span>
           <span v-else>-</span>
         </template>
         <template #cell(payout_accuracy)="row">
@@ -146,19 +146,19 @@
     </template>
     <template #cell(roi)="row">
       <span v-if="getAvarageOf('yield', row.item.providers)"
-        >{{ getAvarageOf('yield', row.item.providers) }}%</span
+        >{{ getAvarageOf('yield', row.item.providers).toString().slice(0, 4) }}%</span
       >
       <span v-else>-</span>
     </template>
     <template #cell(efficiency)="row">
       <span v-if="getAvarageOf('efficiency', row.item.providers)"
-        >{{ getAvarageOf('efficiency', row.item.providers) }}%</span
+        >{{ getAvarageOf('efficiency', row.item.providers).toString().slice(0, 4) }}%</span
       >
       <span v-else>-</span>
     </template>
     <template #cell(available_capacity)="row">
-      {{ getAvarageOf('available_capacity', row.item.providers) }}
-    </template>
+      <span v-if="row.item.available_capacity">{{ formattedAvailableCapacity(getAvarageOf('available_capacity', row.item.providers)) }}</span>
+      <span v-else>-</span>    </template>
     <template #cell(payout_accuracy)="row">
       <span
         v-if="
@@ -206,6 +206,7 @@
   import { mapGetters, mapState } from 'vuex';
   import IdentIcon from '@/components/accounts/IdentIcon';
   import uuid from '@/mixins/uuid';
+  import numeral from 'numeral';
 
   export default {
     name: 'DelegateComparisonTable',
@@ -284,7 +285,10 @@
         if (!filteredArray.length) return false;
         const sum = filteredArray.reduce((a, b) => a + b, 0);
         const avarage = sum / filteredArray.length;
-        return `${avarage.toString().slice(0, 4)}`;
+        return `${avarage.toString()}`;
+      },
+      formattedAvailableCapacity(n) {
+        return numeral(n).format(('0,0'));
       },
     },
   };
