@@ -98,6 +98,31 @@
                     />
                   </b-card-body>
                 </b-tab>
+                <b-tab title="Assets balances">
+                  <b-card-header>
+                    <div class="break-word">
+                      <h3>
+                        <span class="text">
+                          Asset balances list
+                        </span>
+                      </h3>
+                    </div>
+                  </b-card-header>
+
+                  <b-card-body>
+                    <AssetBalanceTabList
+                        @onReload="reload"
+                        :operations="assetBalance"
+                        :count="counts.assetBalance"
+                        :currentPage="page.assetBalance"
+                        :perPage="limit.assetBalance"
+                        :loaded="loaded.assetBalance"
+                        :loading="loading.assetBalance"
+                        @onLimitChange="handleLimitChange"
+                        @onPageChange="handlePageChange"
+                    />
+                  </b-card-body>
+                </b-tab>
               </b-tabs>
             </b-card>
           </b-col>
@@ -113,6 +138,7 @@
   import AssetTabTxs from '../components/assets/AssetTabTxs';
   import AssetTabHolders from '../components/assets/AssetTabHolders';
   import AssetTabOther from '../components/assets/AssetTabOther';
+  import AssetBalanceTabList from '@/components/partials/tabs/AssetBalanceTabList';
 
   export default {
     name: 'Asset',
@@ -122,6 +148,7 @@
       AssetTabTxs,
       AssetTabHolders,
       AssetTabOther,
+      AssetBalanceTabList,
     },
     data() {
       return {

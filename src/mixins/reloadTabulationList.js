@@ -21,6 +21,7 @@ export default {
       bonds: [],
       operations: [],
       blockOtherOperations: [],
+      assetBalance: [],
       counts: {
         txs: 0,
         delegations: 0,
@@ -32,6 +33,7 @@ export default {
         bonds: 0,
         operations: 0,
         blockOtherOperations: 0,
+        assetBalance: 0,
       },
       page: {
         txs: 1,
@@ -44,6 +46,7 @@ export default {
         bonds: 1,
         operations: 1,
         blockOtherOperations: 1,
+        assetBalance: 1,
       },
       limit: {
         txs: this.$constants.PER_PAGE,
@@ -56,6 +59,7 @@ export default {
         bonds: 20,
         operations: this.$constants.PER_PAGE,
         blockOtherOperations: 100,
+        assetBalance: 10,
       },
       loading: {
         txs: false,
@@ -68,6 +72,7 @@ export default {
         bonds: false,
         operations: false,
         blockOtherOperations: false,
+        assetBalance: false,
       },
       loaded: {
         txs: false,
@@ -80,6 +85,7 @@ export default {
         bonds: false,
         operations: false,
         blockOtherOperations: false,
+        assetBalance: false,
       },
     };
   },
@@ -101,6 +107,24 @@ export default {
       this.counts.txs = data.count;
       this.loading.txs = false;
       this.loaded.txs = true;
+    },
+    async reloadAssetBalances({ limit, page }) {
+      this.loading.assetBalance = true;
+      const props = {
+        page,
+        limit,
+        account_id: this.hash,
+      };
+      const data = await this.$api.getAccountAssetsBalances(props);
+      if (data.status !== this.$constants.STATUS_SUCCESS) {
+        return this.$router.replace({
+          name: data.status,
+        });
+      }
+      this.assetBalance = data.data;
+      this.counts.assetBalance = data.count;
+      this.loading.assetBalance = false;
+      this.loaded.assetBalance = true;
     },
     async reloadDelegations({ limit, page }) {
       this.loading.delegations = true;
@@ -349,6 +373,10 @@ export default {
 
       if (type === 'blockOtherOperations') {
         await this.reloadBlockOtherOperations();
+      }
+
+      if (type === 'assetBalance') {
+        await this.reloadAssetBalances({ limit, page });
       }
     },
     handlePageChange({ type, page }) {

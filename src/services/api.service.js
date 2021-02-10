@@ -320,6 +320,14 @@ const TzAPI = {
       opts,
     );
   },
+  getAccountAssetsBalances(opts = {}) {
+    const { account_id, page, limit } = opts;
+    return get(
+      this.API_URL(),
+      `accounts/${account_id}/assets`,
+      { page, limit },
+    );
+  },
   checkHealth(opts = {}) {
     return get(this.API_URL(), 'health', opts, false);
   },

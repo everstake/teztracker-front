@@ -61,7 +61,8 @@
     "activation": "Активация | Активации",
     "doubleBaking": "Двойной бейкинг",
     "doubleEndorsement": "Двойное заверение | Двойные заверения",
-    "holders": "Холдеры"
+    "holders": "Холдеры",
+    "assetsOperations": "Assets operations"
   },
   "listTypes": {
     "txsList": "Список транзакций",
@@ -89,7 +90,8 @@
     "assetsList": "Список ассетов",
     "holdersList": "Список холдеров",
     "bondsList": "Список залоговых стредств",
-    "mempoolList": "Mempool list"
+    "mempoolList": "Mempool list",
+    "assetsOperationsList": "Assets operations list"
   },
   "pageTypes": {
     "txsPage": "Страница транзакций",
