@@ -37,10 +37,10 @@
           <IdentIcon :seed="row.item.account_id" />
 
           <b-link
-              :to="{ name: 'account', params: { account: row.item.account_id } }"
+              :to="{ name: 'asset', params: { id: row.item.token_info.account_id } }"
           >
             <span v-if="row.item.token_info.name">{{ row.item.token_info.name }}</span>
-            <span v-else>{{ row.item.account_id }}</span>
+            <span v-else>{{ row.item.token_info.account_id }}</span>
           </b-link>
 
           <BtnCopy :text-to-copy="row.item.account_id" />
