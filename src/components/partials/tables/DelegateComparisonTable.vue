@@ -262,15 +262,6 @@
             { key: 'efficiency', label: 'Efficiency' },
             { key: 'payout_accuracy', label: 'Payout accuracy' },
             { key: 'details', label: 'Show details' },
-            // { key: 'providers[0].yield', label: 'ROI baking-bad' },
-            // { key: 'providers[1].yield', label: 'ROI tezos-nodes' },
-            // { key: 'providers[2].yield', label: 'ROI tzstats' },
-            // { key: 'providers[0].available_capacity', label: 'Free space baking-bad' },
-            // { key: 'providers[1].available_capacity', label: 'Free space tezos-nodes' },
-            // { key: 'providers[2].available_capacity', label: 'Free space tzstats' },
-            // { key: 'providers[1].efficiency', label: 'Efficiency tezos-nodes' },
-            // { key: 'providers[2].efficiency', label: 'Efficiency tzstats' },
-            // { key: 'providers[0].payout_accuracy', label: 'Payout accuracy' },
           ];
         }
       },
@@ -287,7 +278,7 @@
         return `${avarage.toString()}`;
       },
       formattedAvailableCapacity(n) {
-        return numeral(n).format('0,0');
+        return numeral(n).format('0,0[.]000000');
       },
     },
   };
