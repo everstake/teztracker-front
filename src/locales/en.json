@@ -91,6 +91,7 @@
     "holdersList": "Holders list",
     "bondsList": "Bonds list",
     "mempoolList": "Mempool list",
+    "delegateComparison": "Delagate comparison list",
     "assetsOperationsList": "Assets operations list"
   },
   "pageTypes": {

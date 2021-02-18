@@ -27,8 +27,8 @@
             },
           }"
         >
-          <template v-if="row.item.name">
-            {{ row.item.name }}
+          <template v-if="row.item.alias">
+            {{ row.item.alias }}
           </template>
           <template v-else>
             {{ row.item.baker | longhash }}
@@ -81,6 +81,48 @@
         }}
       </b-button>
     </template>
+    <template #cell(roi)="row">
+      <span v-if="getAvarageOf('yield', row.item.providers)"
+        >{{
+          getAvarageOf('yield', row.item.providers)
+            .toString()
+            .slice(0, 4)
+        }}%</span
+      >
+      <span v-else>-</span>
+    </template>
+    <template #cell(efficiency)="row">
+      <span v-if="getAvarageOf('efficiency', row.item.providers)"
+        >{{
+          getAvarageOf('efficiency', row.item.providers)
+            .toString()
+            .slice(0, 4)
+        }}%</span
+      >
+      <span v-else>-</span>
+    </template>
+    <template #cell(available_capacity)="row">
+      <span>{{
+        formattedAvailableCapacity(
+          getAvarageOf('available_capacity', row.item.providers),
+        )
+      }}</span>
+    </template>
+    <template #cell(payout_accuracy)="row">
+      <span
+        v-if="
+          !row.item.providers
+            .filter((item) => item.payout_accuracy)
+            .map((item) => item.payout_accuracy).length
+        "
+        >-</span
+      >
+      <span v-else>{{
+        row.item.providers
+          .filter((item) => item.payout_accuracy)
+          .map((item) => item.payout_accuracy)[0]
+      }}</span>
+    </template>
     <template #row-details="row">
       <b-table
         responsive
@@ -127,78 +169,29 @@
           <span v-else>-</span>
         </template>
         <template #cell(roi)="row">
-          <span v-if="row.item.yield">{{ row.item.yield.toString().slice(0, 4) }}%</span>
+          <span v-if="row.item.yield"
+            >{{ row.item.yield.toString().slice(0, 4) }}%</span
+          >
           <span v-else>-</span>
         </template>
         <template #cell(efficiency)="row">
-          <span v-if="row.item.efficiency">{{ row.item.efficiency.toString().slice(0, 4) }}%</span>
+          <span v-if="row.item.efficiency"
+            >{{ row.item.efficiency.toString().slice(0, 4) }}%</span
+          >
           <span v-else>-</span>
         </template>
         <template #cell(available_capacity)="row">
-          <span v-if="row.item.available_capacity">{{ formattedAvailableCapacity(getAvarageOf('available_capacity', row.item.providers)) }}</span>
+          <span v-if="row.item.available_capacity">{{ formattedAvailableCapacity(row.item.available_capacity) }}</span>
           <span v-else>-</span>
         </template>
         <template #cell(payout_accuracy)="row">
-          <span v-if="row.item.payout_accuracy">{{ row.item.payout_accuracy }}</span>
+          <span v-if="row.item.payout_accuracy">{{
+            row.item.payout_accuracy
+          }}</span>
           <span v-else>-</span>
         </template>
       </b-table>
     </template>
-    <template #cell(roi)="row">
-      <span v-if="getAvarageOf('yield', row.item.providers)"
-        >{{ getAvarageOf('yield', row.item.providers).toString().slice(0, 4) }}%</span
-      >
-      <span v-else>-</span>
-    </template>
-    <template #cell(efficiency)="row">
-      <span v-if="getAvarageOf('efficiency', row.item.providers)"
-        >{{ getAvarageOf('efficiency', row.item.providers).toString().slice(0, 4) }}%</span
-      >
-      <span v-else>-</span>
-    </template>
-    <template #cell(available_capacity)="row">
-      <span v-if="row.item.available_capacity">{{ formattedAvailableCapacity(getAvarageOf('available_capacity', row.item.providers)) }}</span>
-      <span v-else>-</span>    </template>
-    <template #cell(payout_accuracy)="row">
-      <span
-        v-if="
-          !row.item.providers
-            .filter((item) => item.payout_accuracy)
-            .map((item) => item.payout_accuracy).length
-        "
-        >-</span
-      >
-      <span v-else>{{
-        row.item.providers
-          .filter((item) => item.payout_accuracy)
-          .map((item) => item.payout_accuracy)[0]
-      }}</span>
-    </template>
-    <!--    <template #cell(stakingCapacity)="row">-->
-    <!--      {{-->
-    <!--        ((row.item.stakingCapacity - row.item.stakingBalance) / $constants.XTZ)-->
-    <!--          | denominate-->
-    <!--      }}-->
-    <!--    </template>-->
-    <!--    <template #cell(fee)="row"> {{ row.item.fee }} % </template>-->
-    <!--    <template #cell(stakingBalance)="row">-->
-    <!--      {{ row.item.stakingBalance | denominate }}-->
-    <!--    </template>-->
-    <!--    <template #cell(rolls)="row">-->
-    <!--      {{ row.item.rolls | formatInteger }}-->
-    <!--    </template>-->
-    <!--    <template #cell(blocks)="row">-->
-    <!--      {{ row.item.blocks | formatInteger }}-->
-    <!--    </template>-->
-    <!--    <template #cell(endorsements)="row">-->
-    <!--      {{ row.item.endorsements | formatInteger }}-->
-    <!--    </template>-->
-    <!--    <template #cell(activeDelegators)="row">-->
-    <!--      {{ row.item.activeDelegators | formatInteger }}-->
-    <!--    </template>-->
-    <!--    <template #cell(bakingSince)="row">-->
-    <!--      {{ row.item.bakingSince | timeformat(dateFormat) }}-->
-    <!--    </template>-->
   </b-table>
 </template>
 
@@ -288,7 +281,7 @@
         return `${avarage.toString()}`;
       },
       formattedAvailableCapacity(n) {
-        return numeral(n).format(('0,0'));
+        return numeral(n).format('0,0');
       },
     },
   };
