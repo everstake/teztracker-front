@@ -278,7 +278,7 @@
         return `${avarage.toString()}`;
       },
       formattedAvailableCapacity(n) {
-        return numeral(n).format('0,0[.]000000');
+        return numeral(n / 1000000).format('0,0');
       },
     },
   };
