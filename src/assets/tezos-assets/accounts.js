@@ -1096,4 +1096,9 @@ export default {
     hasLogo: true,
     accountType: 'account',
   },
+  tz1d9ek6HrScY6QRZ71NJdB85MNz8gKGBjrv: {
+    alias: 'Guarda Wallet',
+    hasLogo: true,
+    accountType: 'baker',
+  },
 };
