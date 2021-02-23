@@ -61,7 +61,8 @@
     "activation": "Activation | Activations",
     "doubleBaking": "Double-baking",
     "doubleEndorsement": "Double-endorsement | Double-endorsements",
-    "holders": "Holders"
+    "holders": "Holders",
+    "assetsOperations": "Assets operations"
   },
   "listTypes": {
     "txsList": "Transactions list",
@@ -90,7 +91,8 @@
     "holdersList": "Holders list",
     "bondsList": "Bonds list",
     "mempoolList": "Mempool list",
-    "delegateComparison": "Delagate comparison list"
+    "delegateComparison": "Delagate comparison list",
+    "assetsOperationsList": "Assets operations list"
   },
   "pageTypes": {
     "txsPage": "Transactions page",
@@ -260,7 +262,8 @@
   "nets": {
     "mainnet": "Mainnet",
     "babylonnet": "Babylonnet",
-    "carthagenet": "Carthagenet"
+    "carthagenet": "Carthagenet",
+    "delphinet": "Delphinet"
   },
   "footer": {
     "allRights": "All rights reserved",

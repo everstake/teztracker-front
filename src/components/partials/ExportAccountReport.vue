@@ -128,10 +128,10 @@
       networkStartDate() {
         const { currentNetwork } = this;
         const mainnetStartDate = '2018-9-17';
-        const carthagenetStartDate = '2019-11-7';
+        const delphiStartDate = '2020-9-4';
 
-        if (currentNetwork === 'carthagenet') {
-          return moment(carthagenetStartDate);
+        if (currentNetwork === 'delphinet') {
+          return moment(delphiStartDate);
         }
 
         return moment(mainnetStartDate);
@@ -227,8 +227,6 @@
 
 <style scoped lang="scss">
   .export__button {
-    margin-left: 2rem;
-    margin-right: 2rem;
     font-weight: 700;
     line-height: 20px;
   }

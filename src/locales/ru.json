@@ -61,7 +61,8 @@
     "activation": "Активация | Активации",
     "doubleBaking": "Двойной бейкинг",
     "doubleEndorsement": "Двойное заверение | Двойные заверения",
-    "holders": "Холдеры"
+    "holders": "Холдеры",
+    "assetsOperations": "Assets operations"
   },
   "listTypes": {
     "txsList": "Список транзакций",
@@ -90,6 +91,7 @@
     "holdersList": "Список холдеров",
     "bondsList": "Список залоговых стредств",
     "mempoolList": "Mempool list",
+    "assetsOperationsList": "Assets operations list",
     "delegateComparison": "Delagate comparison list"
   },
   "pageTypes": {
@@ -260,7 +262,8 @@
   "nets": {
     "mainnet": "Основная сеть",
     "babylonnet": "Вавилон",
-    "carthagenet": "Карфаген"
+    "carthagenet": "Карфаген",
+    "delphinet": "Delphinet"
   },
   "footer": {
     "allRights": "Все права защищены",

@@ -12,15 +12,22 @@
     computed: {
       ...mapState('app', ['isWsConnectionOpen']),
       ...mapGetters('app', ['getAppNetwork']),
+      ...mapGetters('user', ['isBeaconAccountSet']),
     },
     watch: {
       getAppNetwork: {
         immediate: true,
-        handler() {
+        async handler() {
           if (this.isWsConnectionOpen) {
             this.$ws.close();
           }
           this.$ws.connect();
+
+          // If a dApp network changes a user needs to reset a connection
+          // to be able to get permissions for the needed network.
+          if (this.isBeaconAccountSet) {
+            await this.$beacon.resetConnection();
+          }
         },
       },
     },

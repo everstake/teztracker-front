@@ -1088,7 +1088,6 @@ span a.baker,
 }
 
 .ordinal-number {
-  display: inline-block;
   max-width: 100px;
 }
 
@@ -1100,4 +1099,35 @@ span a.baker,
 
 .list .table-skeleton tr td {
   min-width: 80px;
+}
+
+.icon-favorite {
+  font-size: 14px;
+  color: rgb(224, 239, 236);
+  cursor: pointer;
+}
+
+.icon-note {
+  font-size: 14px;
+  color: #e0efec;
+  cursor: pointer;
+}
+
+.icon-note--saved {
+  color: $color-brand;
+}
+
+.icon-note--active,
+.btn:hover .icon-note,
+.icon-favorite--active,
+.btn:hover .icon-favorite {
+  color: $color-brand;
+}
+
+.profile-table {
+  min-height: 200px;
+}
+
+.cursor-text {
+  cursor: text;
 }

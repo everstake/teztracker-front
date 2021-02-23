@@ -9,7 +9,18 @@
     borderless
     class="transactions-table"
     :empty-text="$t('common.noData')"
+
   >
+    <template #cell(favorite)="row">
+      <font-awesome-icon
+          @click="toggleFavorite(row.item.accountId, row.item.name, 'baker')"
+          class="icon-favorite"
+          :class="{
+          'icon-favorite--active': isAccountFavorite({ accountId: row.item.accountId }),
+        }"
+          :icon="['fa', 'star']"
+      />
+    </template>
     <template #cell(id)="row">
       <span>{{ row.index + 1 }}</span>
     </template>
@@ -25,13 +36,15 @@
             {{ row.item.accountId | longhash }}
           </template>
         </b-link>
+        <BtnNote
+            :index="row.item.index"
+            :account-name="row.item.name"
+            :account-id="row.item.accountId"
+        />
       </span>
     </template>
     <template #cell(stakingCapacity)="row">
-      {{
-        ((row.item.stakingCapacity - row.item.stakingBalance) / $constants.XTZ)
-          | denominate
-      }}
+      {{ (row.item.stakingCapacity - row.item.stakingBalance) | denominate }}
     </template>
     <template #cell(fee)="row"> {{ row.item.fee }} % </template>
     <template #cell(stakingBalance)="row">
@@ -56,8 +69,11 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex';
+import {mapActions, mapState} from 'vuex';
   import IdentIcon from '@/components/accounts/IdentIcon';
+  import favoriteAccount from '@/mixins/favoriteAccount';
+  import BtnNote from "@/components/partials/BtnNote";
+import {GET_USER_NOTES} from "@/store/actions.types";
 
   export default {
     name: 'PublicBakersTable',
@@ -74,11 +90,14 @@
     },
     components: {
       IdentIcon,
+      BtnNote,
     },
+    mixins: [favoriteAccount],
     computed: {
       ...mapState({
         dateFormat: (state) => state.app.dateFormat,
       }),
+      ...mapState('user', ['beaconAccount', 'notes']),
       fields() {
         const propsFields = this.propsFields.length > 0;
         if (!this.$i18n.locale) return [];
@@ -86,6 +105,12 @@
           return this.propsFields;
         } else {
           return [
+            {
+              key: 'favorite',
+              label: 'Fav',
+              sortDirection: 'asc',
+              thClass: 'favorite-heading',
+            },
             {
               key: 'id',
               label: '#',
@@ -139,9 +164,25 @@
       },
       bakersFormatted() {
         if (!this.items || this.items.length === 0) return [];
-        return this.items.map((bakerObj) => {
-          return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo };
+        return this.items.map((bakerObj, index) => {
+          return { accountId: bakerObj.accountId, ...bakerObj.bakerInfo, index };
         });
+      },
+    },
+    methods: {
+      ...mapActions('user', [GET_USER_NOTES]),
+    },
+    watch: {
+      beaconAccount: {
+        immediate: true,
+        deep: true,
+        async handler({ address }) {
+          if (address) {
+            await this[GET_USER_NOTES]({
+              address: this.beaconAccount.address,
+            });
+          }
+        },
       },
     },
   };
