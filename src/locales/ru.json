@@ -115,7 +115,8 @@
     "topAccountsPage": "Страница топ аккаунтов",
     "assetsPage": "Страница ассетов",
     "mempoolPage": "Mempool page",
-    "delegateComparison": "Delegate comparison page"
+    "delegateComparison": "Delegate comparison page",
+    "assetsOperationsPage": "Assets operations page"
   },
   "infoTypes": {
     "txInfo": "Информация о транзакции",

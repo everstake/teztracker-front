@@ -115,7 +115,8 @@
     "topAccountsPage": "Top accounts page",
     "assetsPage": "Assets page",
     "mempoolPage": "Mempool page",
-    "delegateComparison": "Delegate comparison page"
+    "delegateComparison": "Delegate comparison page",
+    "assetsOperationsPage": "Assets operations page"
   },
   "infoTypes": {
     "txInfo": "Transaction information",

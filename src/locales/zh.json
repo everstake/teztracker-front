@@ -115,7 +115,8 @@
     "topAccountsPage": "高级账户页面",
     "assetsPage": "资产页",
     "mempoolPage": "Mempool page",
-    "delegateComparison": "Delegate comparison page"
+    "delegateComparison": "Delegate comparison page",
+    "assetsOperationsPage": "Assets operations page"
   },
   "infoTypes": {
     "txInfo": "交易信息",
