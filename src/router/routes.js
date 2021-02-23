@@ -5,6 +5,7 @@ const Index = () => import('../views/Index');
 import language from '@/router/middleware/language';
 import network from '@/router/middleware/network';
 import page from '@/router/middleware/page';
+import beacon from '@/router/middleware/beacon';
 
 /* Blocks group */
 // Blocks
@@ -69,6 +70,16 @@ const Glossary = () => import('../views/Glossary.vue');
 const Feedback = () => import('../views/Feedback.vue');
 const Mempool = () => import('../views/Mempool.vue');
 
+// Personal account
+const PersonalAccount = () => import('../views/PersonalAccount.vue');
+const AccountProfile = () => import('@/components/personal_account/AccountProfile');
+const AccountNotifications = () => import('@/components/personal_account/AccountNotifications');
+const AccountOperations = () => import('@/components/personal_account/AccountOperations');
+const AccountFavorites = () => import('@/components/personal_account/AccountFavorites');
+const AccountNotes = () => import('@/components/personal_account/AccountNotes');
+const AccountSettings = () => import('@/components/personal_account/AccountSettings');
+const EmailVerification = () => import('@/views/EmailVerification');
+
 // Errors
 const Maintenance = () => import('../views/Maintenance.vue');
 const NotFound = () => import('../views/errors/NotFound.vue');
@@ -79,6 +90,79 @@ export default [
     path: '/',
     name: 'index',
     redirect: { name: 'network' },
+    component: PageContentContainer,
+    children: [
+      {
+        name: 'personal_account',
+        path: 'account',
+        redirect: { name: 'account_profile' },
+        component: PersonalAccount,
+        meta: {
+          middleware: [beacon],
+        },
+        children: [
+          {
+            path: 'profile',
+            name: 'account_profile',
+            component: AccountProfile,
+            meta: {
+              middleware: [beacon],
+            },
+          },
+          {
+            path: 'notifications',
+            name: 'account_notifications',
+            component: AccountNotifications,
+            meta: {
+              middleware: [beacon],
+            },
+          },
+          {
+            path: 'operations',
+            name: 'account_operations',
+            component: AccountOperations,
+            meta: {
+              middleware: [beacon],
+            },
+          },
+          {
+            path: 'favorites',
+            name: 'account_favorites',
+            component: AccountFavorites,
+            meta: {
+              middleware: [beacon],
+            },
+          },
+          {
+            path: 'notes',
+            name: 'account_notes',
+            component: AccountNotes,
+            meta: {
+              middleware: [beacon],
+            },
+          },
+          {
+            path: 'settings',
+            name: 'account_settings',
+            component: AccountSettings,
+            meta: {
+              middleware: [beacon],
+            },
+          },
+        ],
+      },
+      {
+        path: 'account_verification/:token',
+        name: 'account_verification',
+        component: EmailVerification,
+        props: true,
+      },
+      {
+        path: 'maintenance',
+        name: 'maintenance',
+        component: Maintenance,
+      },
+    ],
   },
   {
     path: '/:language',
@@ -87,6 +171,7 @@ export default [
   {
     path: '/:language/:network',
     component: PageContentContainer,
+    props: { headerSearchEnabled: true },
     children: [
       {
         path: '',
@@ -340,26 +425,13 @@ export default [
           middleware: [language, network],
         },
       },
-
-      /* Errors group */
-      {
-        path: 'maintenance',
-        name: 'maintenance',
-        component: Maintenance,
-        meta: {
-          middleware: [language, network],
-        },
-      },
-      { path: '404', name: '404', component: NotFound },
-      { path: '500', name: '500', component: ServerError },
-      { path: '*', redirect: { name: '404' } },
-      /* Errors group end */
     ],
   },
   {
     name: 'mainnet',
     path: '/:language/mainnet',
     component: PageContentContainer,
+    props: { headerSearchEnabled: true },
     children: [
       /* Governance group */
       {
@@ -416,4 +488,9 @@ export default [
       /* Charts group end */
     ],
   },
+  /* Errors group */
+  { path: '/404', name: '404', component: NotFound },
+  { path: '/500', name: '500', component: ServerError },
+  { path: '*', redirect: { name: '404' } },
+  /* Errors group end */
 ];

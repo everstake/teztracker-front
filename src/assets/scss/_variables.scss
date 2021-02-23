@@ -2,6 +2,8 @@
 $color-brand: #309282;
 $color-brand--opacity-2: rgba(48, 146, 130, 0.2);
 $color-brand--opacity-4: rgba(48, 146, 130, 0.4);
+$color-brand--opacity-6: rgba(48, 146, 130, 0.6);
+$color-brand--opacity-8: rgba(48, 146, 130, 0.8);
 $color-error: #e56968;
 $color-error--opacity-2: rgba(229, 105, 104, 0.2);
 $color-error--opacity-4: rgba(229, 105, 104, 0.4);
@@ -15,6 +17,7 @@ $color-grey-2: #d8d8da;
 $color-grey--dark: #4a4a4a;
 $color-black: #2d2e2c;
 $color-black--opacity-02: rgba(0, 0, 0, 0.02);
+$color-black--opacity-05: rgba(0, 0, 0, 0.5);
 
 // Bootstrap overrides
 $green: $color-brand;

@@ -1,6 +1,6 @@
 <template>
   <div class="main-wrap">
-    <TopMenu v-if="!isBasicPage" />
+    <TopMenu v-if="!isBasicPage" :header-search-enabled="headerSearchEnabled" />
 
     <main
       :class="{
@@ -21,6 +21,12 @@
 
   export default {
     name: 'PageContentContainer',
+    props: {
+      headerSearchEnabled: {
+        type: Boolean,
+        default: false,
+      },
+    },
     components: {
       TopMenu,
       Footer,
