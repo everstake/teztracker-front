@@ -227,8 +227,6 @@
 
 <style scoped lang="scss">
   .export__button {
-    margin-left: 2rem;
-    margin-right: 2rem;
     font-weight: 700;
     line-height: 20px;
   }

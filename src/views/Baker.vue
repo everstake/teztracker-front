@@ -13,7 +13,7 @@
         <b-row>
           <b-col lg="12">
             <b-card no-body>
-              <b-tabs lazy>
+              <b-tabs class="baker-tabs" lazy>
                 <b-tab :title="$tc('opTypes.tx', 2)" active>
                   <b-card-header>
                     <div class="break-word">
@@ -227,8 +227,33 @@
                     />
                   </b-card-body>
                 </b-tab>
+                <b-tab title="Assets balances">
+                  <b-card-header>
+                    <div class="break-word">
+                      <h3>
+                        <span class="text">
+                          Asset balances list
+                        </span>
+                      </h3>
+                    </div>
+                  </b-card-header>
+
+                  <b-card-body>
+                    <AssetBalanceTabList
+                      @onReload="reload"
+                      :assetBalance="assetBalance"
+                      :count="counts.assetBalance"
+                      :currentPage="page.assetBalance"
+                      :perPage="limit.assetBalance"
+                      :loaded="loaded.assetBalance"
+                      :loading="loading.assetBalance"
+                      @onLimitChange="handleLimitChange"
+                      @onPageChange="handlePageChange"
+                    />
+                  </b-card-body>
+                </b-tab>
                 <template #tabs-end>
-                  <ExportAccountReport />
+                  <ExportAccountReport class="baker-tab-export" />
                 </template>
               </b-tabs>
             </b-card>
@@ -252,6 +277,7 @@
   import BakerRewardsList from '@/components/bakers/BakerRewardsList';
   import reloadTabTables from '@/mixins/reloadTabulationList';
   import ExportAccountReport from '@/components/partials/ExportAccountReport';
+  import AssetBalanceTabList from '@/components/partials/tabs/AssetBalanceTabList';
 
   export default {
     name: 'Baker',
@@ -267,6 +293,7 @@
       BakerEndorsingList,
       BondsTabList,
       ExportAccountReport,
+      AssetBalanceTabList,
     },
     mixins: [reloadTabTables],
     computed: {
@@ -283,3 +310,24 @@
     },
   };
 </script>
+
+<style lang="scss" scoped>
+  .baker-tab-export {
+    position: absolute;
+    top: 0;
+    right: 10px;
+  }
+
+  ::v-deep .baker-tabs .nav-tabs {
+    position: relative;
+    padding-right: 100px;
+  }
+
+  ::v-deep .baker-tabs .nav-tabs .nav-item {
+    margin-bottom: 5px;
+  }
+
+  ::v-deep .baker-tabs .nav-tabs .nav-link {
+    border-bottom: 2px solid transparent;
+  }
+</style>
