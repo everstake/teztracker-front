@@ -24,6 +24,7 @@ export const GET_VOTERS = 'getVoters';
 export const GET_NON_VOTERS = 'getNonVoters';
 export const GET_BALLOTS = 'getBallots';
 export const CANCEL_PENDING_REQUESTS = 'cancelPendingRequests';
+export const GET_DELEGATE_COMPARISON = 'getDelegateComparison';
 export const GET_USER_EMAIL = 'getUserEmail';
 export const GET_ACCOUNTS_NOTIFICATIONS = 'getAccountsNotifications';
 export const GET_EMAIL_VERIFICATION = 'getEmailVerification';

@@ -44,6 +44,7 @@ export const CLEAR_CANCEL_TOKENS = 'clearCancelTokens';
 export const ADD_CANCEL_TOKEN = 'addCancelToken';
 export const SET_CURRENT_CURRENCY = 'setCurrentCurrency';
 export const SET_IS_WS_CONNECTION_OPEN = 'setIsWsConnectionOpen';
+export const SET_DELEGATE_COMPARISON = 'setDelegateComparison';
 export const SET_BEACON_ACCOUNT = 'setBeaconAccount';
 export const FAVORITE_SET = 'setFavorite';
 export const FAVORITE_DELETE = 'deleteFavorite';

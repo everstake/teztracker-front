@@ -200,6 +200,9 @@
             <b-dropdown-item :to="{ name: 'feedback' }">
               {{ $t('feedback.title') }}
             </b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'delegate_comparison' }">
+              {{ $t('header.delegateComparison') }}
+            </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
 

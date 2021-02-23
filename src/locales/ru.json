@@ -91,7 +91,8 @@
     "holdersList": "Список холдеров",
     "bondsList": "Список залоговых стредств",
     "mempoolList": "Mempool list",
-    "assetsOperationsList": "Assets operations list"
+    "assetsOperationsList": "Assets operations list",
+    "delegateComparison": "Delagate comparison list"
   },
   "pageTypes": {
     "txsPage": "Страница транзакций",
@@ -113,7 +114,9 @@
     "bakingChartsPage": "Страница графиков бейкинга",
     "topAccountsPage": "Страница топ аккаунтов",
     "assetsPage": "Страница ассетов",
-    "mempoolPage": "Mempool page"
+    "mempoolPage": "Mempool page",
+    "delegateComparison": "Delegate comparison page",
+    "assetsOperationsPage": "Assets operations page"
   },
   "infoTypes": {
     "txInfo": "Информация о транзакции",
@@ -254,7 +257,8 @@
     "charts": "Графики",
     "general": "Общее",
     "resources": "Ресурсы",
-    "mempool": "Mempool"
+    "mempool": "Mempool",
+    "delegateComparison": "Delegate comparison"
   },
   "nets": {
     "mainnet": "Основная сеть",
