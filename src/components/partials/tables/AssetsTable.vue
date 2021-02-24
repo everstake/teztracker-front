@@ -34,18 +34,12 @@
       <span v-if="row.item.name">{{ row.item.name }}</span>
       <NoDataTableCell v-else />
     </template>
-    <template #cell(balance)="row">
-      <span>{{
-        row.item.balance
-          | tezos(getAssetCurrency(row.item.name), row.item.precision)
-      }}</span>
-    </template>
     <template #cell(ticker)="row">
       <span v-if="row.item.ticker">{{ row.item.ticker }}</span>
       <NoDataTableCell v-else />
     </template>
     <template #cell(total_supply)="row">
-      <span>{{ row.item.total_supply | tezos }}</span>
+      <span>{{ row.item.total_supply | formatCurrencyWithPrecision(getAssetCurrency(row.item.name), row.item.precision) }}</span>
     </template>
     <template #cell(created_at)="row">
       <span>{{ row.item.created_at | timeformat(dateFormat) }}</span>
@@ -91,13 +85,6 @@
             { key: 'id', label: this.$t('common.ordinalNumber') },
             { key: 'account_id', label: this.$t('common.contractName') },
             { key: 'manager', label: this.$t('common.manager') },
-            {
-              key: 'balance',
-              label: this.$t('common.balance'),
-              sortable: true,
-              sortDirection: 'desc',
-              thClass: 'assets-table__heading',
-            },
             { key: 'ticker', label: 'Ticker' },
             {
               key: 'total_supply',
