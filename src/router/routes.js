@@ -407,15 +407,6 @@ export default [
         redirect: { name: 'general_charts' },
       },
       /* Charts group end */
-      {
-        path: 'delegate_comparison',
-        name: 'delegate_comparison',
-        component: DelegateComparison,
-      },
-      { path: 'feedback', name: 'feedback', component: Feedback },
-      { path: 'mempool', name: 'mempool', component: Mempool },
-
-      /* Errors group */
 
       {
         path: 'glossary',
@@ -425,6 +416,15 @@ export default [
           middleware: [language, network],
         },
       },
+      {
+        path: 'delegate_comparison',
+        name: 'delegate_comparison',
+        component: DelegateComparison,
+      },
+      { path: 'feedback', name: 'feedback', component: Feedback },
+      { path: 'mempool', name: 'mempool', component: Mempool },
+
+      /* Errors group */
       {
         path: 'feedback',
         name: 'feedback',

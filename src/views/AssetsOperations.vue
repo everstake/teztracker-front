@@ -66,7 +66,7 @@
           { toRouteName: 'network', text: this.$t('common.home') },
           {
             toRouteName: 'originations',
-            text: this.$t('pageTypes.originationsPage'),
+            text: this.$t('pageTypes.assetsOperationsPage'),
           },
         ];
       },

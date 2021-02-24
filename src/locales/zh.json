@@ -91,8 +91,8 @@
     "holdersList": "持有者名单",
     "bondsList": "债券清单",
     "mempoolList": "Mempool list",
-    "assetsOperationsList": "Assets operations list",
-    "delegateComparison": "Delagate comparison list"
+    "delegateComparison": "Delagate comparison list",
+    "assetsOperationsList": "Assets operations list"
   },
   "pageTypes": {
     "txsPage": "交易页面",
