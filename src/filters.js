@@ -29,6 +29,19 @@ Vue.filter('tezos', (amount, currency = 'ꜩ') =>
   Vue.prototype.$helpers.tezos(amount, currency, true),
 );
 
+Vue.filter(
+  'formatCurrencyWithPrecision',
+  (amount, currency = 'ꜩ', precision) => {
+    const formatWithPrecision = Vue.prototype.$helpers.formatPrecision(
+      precision,
+    );
+    const formattedAmount = numeral(
+      Number(amount) / Vue.prototype.$constants.XTZ,
+    ).format(formatWithPrecision);
+    return `${formattedAmount} ${currency}`;
+  },
+);
+
 Vue.filter('currencyPrecision', function(
   amount,
   currency = 'ꜩ',
@@ -45,17 +58,12 @@ Vue.filter('currencyPrecision', function(
     return `${amount} ${currency}`;
   }
 
-  let format = '0,0[.]';
-  // format.padEnd(format.length + precision, '0');
-
-  for (let i = 0; i < precision; i++) {
-    format += 0;
-  }
+  const formatWithPrecision = Vue.prototype.$helpers.formatPrecision(precision);
 
   if (amount > 0) {
     const formattedAmount = numeral(
       Number(amount) / Vue.prototype.$constants.XTZ,
-    ).format(format);
+    ).format(formatWithPrecision);
     return `${formattedAmount} ${currency}`;
   }
 
