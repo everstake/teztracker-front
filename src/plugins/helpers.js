@@ -61,6 +61,15 @@ const helpers = {
       Number(ts) * Vue.prototype.$constants.THOUSAND_MILLISECONDS,
     ).format(format);
   },
+  formatPrecision(precision) {
+    let format = '0,0[.]0';
+
+    for (let i = 1; i < precision; i++) {
+      format += 0;
+    }
+
+    return format;
+  },
 };
 
 Vue.use({
