@@ -32,12 +32,20 @@ Vue.filter('tezos', (amount, currency = 'ꜩ') =>
 Vue.filter(
   'formatCurrencyWithPrecision',
   (amount, currency = 'ꜩ', precision) => {
-    const formatWithPrecision = Vue.prototype.$helpers.formatPrecision(
-      precision,
-    );
+    const noAmount = !amount || amount === 0;
+    const noPrecision = !precision || precision === 0 || precision < 0;
+
+    if (noAmount) {
+      return `0 ${currency}`;
+    }
+
+    if (noPrecision) {
+      return `${amount} ${currency}`;
+    }
+
     const formattedAmount = numeral(
       Number(amount) / Vue.prototype.$constants.XTZ,
-    ).format(formatWithPrecision);
+    ).format('0,0[.]');
     return `${formattedAmount} ${currency}`;
   },
 );

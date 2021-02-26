@@ -39,7 +39,10 @@
       <NoDataTableCell v-else />
     </template>
     <template #cell(total_supply)="row">
-      <span>{{ row.item.total_supply | formatCurrencyWithPrecision(getAssetCurrency(row.item.name), row.item.precision) }}</span>
+      <span v-if="!row.item.precision">
+        {{ row.item.total_supply | bignum(',') }} {{ getAssetCurrency(row.item.name) }}
+      </span>
+      <span v-else>{{ row.item.total_supply | formatCurrencyWithPrecision(getAssetCurrency(row.item.name), row.item.precision) }}</span>
     </template>
     <template #cell(created_at)="row">
       <span>{{ row.item.created_at | timeformat(dateFormat) }}</span>
