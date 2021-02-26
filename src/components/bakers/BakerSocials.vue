@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span v-for="(social, index) in bakerSocials" :key="index">
+    <span v-for="(social, index) in media" :key="index">
       <a
         v-if="social"
         :href="formURL(index, social)"
@@ -16,36 +16,14 @@
 </template>
 
 <script>
-  import axios from 'axios';
-
   export default {
     name: 'BakerSocials',
     props: {
-      bakerAddress: {
-        type: String,
+      media: {
         required: true,
+        type: Object,
+        default: () => ({}),
       },
-    },
-    data() {
-      return {
-        bakerMeta: {},
-      };
-    },
-    computed: {
-      bakerSocials() {
-        if (!this.bakerMeta || !Object.keys(this.bakerMeta).length) return {};
-
-        const { site, email, twitter, telegram } = this.bakerMeta.metadata;
-        return {
-          site,
-          email,
-          twitter,
-          telegram,
-        };
-      },
-    },
-    created() {
-      this.getBakerMeta(this.bakerAddress);
     },
     methods: {
       formURL(socialMedia, link) {
@@ -58,18 +36,6 @@
             return `mailto:${link}`;
           default:
             return link;
-        }
-      },
-      async getBakerMeta(bakerAddress) {
-        try {
-          const res = await axios.get(
-            `https://staging.api.tzkt.io/v1/accounts/${bakerAddress}?metadata=true`,
-          );
-
-          this.bakerMeta = res.data;
-        } catch (e) {
-          // eslint-disable-next-line
-          console.error(e);
         }
       },
     },
