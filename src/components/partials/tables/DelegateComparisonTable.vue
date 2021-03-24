@@ -45,26 +45,44 @@
           v-for="({ provider }, index) in row.item.providers"
           :key="index + generateKey()"
         >
-          <img
-            v-if="provider && provider.includes('baking-bad')"
-            class="providers__img"
-            src="@/assets/icons/baking-bad.jpg"
-            alt="Baking bad"
-          />
+          <a
+            href="https://baking-bad.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              v-if="provider && provider.includes('baking-bad')"
+              class="providers__img"
+              src="@/assets/icons/baking-bad.jpg"
+              alt="Baking bad"
+            />
+          </a>
 
-          <img
-            v-if="provider && provider.includes('tezos-nodes')"
-            class="providers__img"
-            src="@/assets/icons/tezos-nodes.jpg"
-            alt="Tezos nodes"
-          />
+          <a
+            href="https://www.tezos-nodes.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              v-if="provider && provider.includes('tezos-nodes')"
+              class="providers__img"
+              src="@/assets/icons/tezos-nodes.jpg"
+              alt="Tezos nodes"
+            />
+          </a>
 
-          <img
-            v-if="provider && provider.includes('tzstats')"
-            class="providers__img"
-            src="@/assets/icons/tzstats.jpg"
-            alt="Tzstats"
-          />
+          <a
+            href="https://tzstats.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              v-if="provider && provider.includes('tzstats')"
+              class="providers__img"
+              src="@/assets/icons/tzstats.jpg"
+              alt="Tzstats"
+            />
+          </a>
         </div>
       </div>
     </template>
@@ -148,26 +166,43 @@
         <template #cell(services)="row">
           <div v-if="row.item.provider" class="providers">
             <span v-if="!row.item.provider">-</span>
-            <img
-              v-if="row.item.provider === 'baking-bad'"
-              class="providers__img"
-              src="@/assets/icons/baking-bad.jpg"
-              alt="Baking bad"
-            />
+            <a
+              href="https://baking-bad.org/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                v-if="row.item.provider === 'baking-bad'"
+                class="providers__img"
+                src="@/assets/icons/baking-bad.jpg"
+                alt="Baking bad"
+              />
+            </a>
+            <a
+              href="https://www.tezos-nodes.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                v-if="row.item.provider === 'tezos-nodes'"
+                class="providers__img"
+                src="@/assets/icons/tezos-nodes.jpg"
+                alt="Tezos nodes"
+              />
+            </a>
 
-            <img
-              v-if="row.item.provider === 'tezos-nodes'"
-              class="providers__img"
-              src="@/assets/icons/tezos-nodes.jpg"
-              alt="Tezos nodes"
-            />
-
-            <img
-              v-if="row.item.provider === 'tzstats'"
-              class="providers__img"
-              src="@/assets/icons/tzstats.jpg"
-              alt="Tzstats"
-            />
+            <a
+              href="https://tzstats.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                v-if="row.item.provider === 'tzstats'"
+                class="providers__img"
+                src="@/assets/icons/tzstats.jpg"
+                alt="Tzstats"
+              />
+            </a>
           </div>
         </template>
         <template #cell(fee)="row">
@@ -187,7 +222,9 @@
           <span v-else>-</span>
         </template>
         <template #cell(available_capacity)="row">
-          <span v-if="row.item.available_capacity">{{ formattedAvailableCapacity(row.item.available_capacity) }}</span>
+          <span v-if="row.item.available_capacity">{{
+            formattedAvailableCapacity(row.item.available_capacity)
+          }}</span>
           <span v-else>-</span>
         </template>
         <template #cell(payout_accuracy)="row">
