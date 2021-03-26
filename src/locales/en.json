@@ -264,7 +264,8 @@
     "mainnet": "Mainnet",
     "babylonnet": "Babylonnet",
     "carthagenet": "Carthagenet",
-    "delphinet": "Delphinet"
+    "delphinet": "Delphinet",
+    "edonet": "Edonet"
   },
   "footer": {
     "allRights": "All rights reserved",

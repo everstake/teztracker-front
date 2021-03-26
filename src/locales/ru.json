@@ -264,7 +264,8 @@
     "mainnet": "Основная сеть",
     "babylonnet": "Вавилон",
     "carthagenet": "Карфаген",
-    "delphinet": "Delphinet"
+    "delphinet": "Delphinet",
+    "edonet": "Edonet"
   },
   "footer": {
     "allRights": "Все права защищены",
