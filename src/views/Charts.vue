@@ -140,13 +140,13 @@
                 class="period-button"
                 variant="success"
                 type="submit"
-                @click="$bvModal.show('new-addresses-modal')"
+                @click="$bvModal.show('newAddresses')"
               >
                 Last 24 hours
               </b-btn>
 
               <b-modal
-                id="new-addresses-modal"
+                id="newAddresses"
                 size="md"
                 class="modal"
                 centered
