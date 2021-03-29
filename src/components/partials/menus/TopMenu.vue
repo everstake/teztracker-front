@@ -26,7 +26,10 @@
               {{ $tc('common.block', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
-              :to="{ name: 'snapshots', params: { network: currentNetwork, language: currentLanguage } }"
+              :to="{
+                name: 'snapshots',
+                params: { network: currentNetwork, language: currentLanguage },
+              }"
               :disabled="currentNetwork === 'delphinet'"
             >
               {{ $tc('common.snapshot', 2) }}
@@ -181,6 +184,17 @@
               {{ $t('listTypes.protocolsList') }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
+          <b-nav-item
+            id="charts"
+            text="Charts"
+            :disabled="currentNetwork !== 'mainnet'"
+            :to="{
+              name: 'charts',
+              params: { network: currentNetwork, language: currentLanguage },
+            }"
+          >
+            Charts
+          </b-nav-item>
           <b-nav-item-dropdown
             id="charts"
             :text="$t('header.charts')"

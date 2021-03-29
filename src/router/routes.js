@@ -63,6 +63,7 @@ const Vote = () => import('../views/Vote.vue');
 /* Votes group end */
 
 /* Charts group */
+const Charts = () => import('../views/Charts.vue');
 const ChartsBaking = () => import('../views/chart-views/ChartsBaking.vue');
 const ChartsGeneral = () => import('../views/chart-views/ChartsGeneral.vue');
 /* Charts group end */
@@ -485,6 +486,11 @@ export default [
       /* Governance group end */
 
       /* Charts group */
+      {
+        path: 'charts',
+        name: 'charts',
+        component: Charts,
+      },
       {
         path: 'charts/baking',
         name: 'baking_charts',
