@@ -3,7 +3,12 @@
 
   export default {
     name: 'DoughnutChart',
-    props: ['options', 'backgroundColors'],
+    props: {
+      options: { required: true },
+      backgroundColors: Array,
+      showTooltips: { type: Boolean, default: true },
+      labelCallback: {type:Function, default: (data) => data},
+    },
     extends: Doughnut,
     mounted() {
       this.initChart();
@@ -16,6 +21,7 @@
     methods: {
       initChart() {
         let { data = [], backgroundColors = [], legend = {} } = this.options;
+        const { labelCallback } = this;
         const vm = this;
 
         if (this.options.data !== undefined) {
@@ -79,7 +85,7 @@
                     line = `${line.slice(1, -2)} >1`;
                   }
 
-                  return line;
+                  return labelCallback(line);
                 }),
               ];
 

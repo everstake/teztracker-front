@@ -304,6 +304,39 @@ const TzAPI = {
   getCharts(opts = {}) {
     return get(this.API_URL(), 'charts', opts, false);
   },
+  getAddressesNumber(opts = {}) {
+    return get(this.API_URL(), 'accounts/agg', opts, false);
+  },
+  getTotalAddressesNumber(opts = {}) {
+    return get(this.API_URL(), 'accounts/total/agg', opts, false);
+  },
+  getActiveAddressesNumber(opts = {}) {
+    return get(this.API_URL(), 'active/accounts/agg', opts, false);
+  },
+  getInactiveAddressesNumber(opts = {}) {
+    return get(this.API_URL(), 'inactive/accounts/agg', opts, false);
+  },
+  getLowBalanceAddressesNumber(opts = {}) {
+    return get(this.API_URL(), 'low/balance/total/agg', opts, false);
+  },
+  getContractsNumber(opts = {}) {
+    return get(this.API_URL(), 'contracts/total/agg', opts, false);
+  },
+  getNewContractsNumber(opts = {}) {
+    return get(this.API_URL(), 'contracts/agg', opts, false);
+  },
+  getLostBlocks(opts = {}) {
+    return get(this.API_URL(), 'lost/blocks/agg', opts, false);
+  },
+  getLostEndorsements(opts = {}) {
+    return get(this.API_URL(), 'lost/endorsements/agg', opts, false);
+  },
+  getLostRewards(opts = {}) {
+    return get(this.API_URL(), 'lost/rewards/agg', opts, false);
+  },
+  getBakersHolding(opts = {}) {
+    return get(this.API_URL(), 'bakers/holding', opts, false);
+  },
   getBakersRollsChart(opts = {}) {
     return get(this.API_URL(), 'charts/bakers', opts, false);
   },
@@ -318,11 +351,7 @@ const TzAPI = {
     return get(this.API_URL_WITHOUT_PLATFORM(), `assets/${asset_id}`, opts);
   },
   getAssetsOperationsById(opts = {}) {
-    return get(
-      this.API_URL_WITHOUT_PLATFORM(),
-      `assets/operations`,
-      opts,
-    );
+    return get(this.API_URL_WITHOUT_PLATFORM(), `assets/operations`, opts);
   },
   getAssetsHoldersById(opts = {}) {
     const { asset_id } = opts;
@@ -334,11 +363,10 @@ const TzAPI = {
   },
   getAccountAssetsBalances(opts = {}) {
     const { account_id, page, limit } = opts;
-    return get(
-      this.API_URL(),
-      `accounts/${account_id}/assets`,
-      { page, limit },
-    );
+    return get(this.API_URL(), `accounts/${account_id}/assets`, {
+      page,
+      limit,
+    });
   },
   checkHealth(opts = {}) {
     return get(this.API_URL(), 'health', opts, false);

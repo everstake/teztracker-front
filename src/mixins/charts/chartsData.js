@@ -2,6 +2,16 @@ import { mapState } from 'vuex';
 import moment from 'moment';
 
 export default {
+  props: {
+    propsData: {
+      type: Array,
+      default: () => [],
+    },
+    propsLabels: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       chartDataInitial: [],
@@ -54,8 +64,9 @@ export default {
       dataFormatter,
     ) {
       return initialArr.map((dataObj) => {
+        const timestamp = dataObj.timestamp || dataObj.date;
         return {
-          x: moment.unix(dataObj.timestamp).format(dateFormat),
+          x: moment.unix(timestamp).format(dateFormat),
           y: dataFormatter
             ? dataFormatter(dataObj[dataEntity])
             : dataObj[dataEntity],

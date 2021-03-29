@@ -16,6 +16,13 @@ body {
   font-weight: bold;
   margin-bottom: 0;
 }
+.tz-subtitle {
+  font-size: 19px;
+
+  @include for-desktop-down {
+    font-size: 16px;
+  }
+}
 
 .title {
   font-size: 20px;

@@ -181,18 +181,17 @@
               {{ $t('listTypes.protocolsList') }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
-          <b-nav-item-dropdown
+          <b-nav-item
             id="charts"
-            :text="$t('header.charts')"
+            text="Charts"
             :disabled="currentNetwork !== 'mainnet'"
+            :to="{
+              name: 'charts',
+              params: { network: currentNetwork, language: currentLanguage },
+            }"
           >
-            <b-dropdown-item :to="{ name: 'general_charts' }">
-              {{ $t('header.general') }}
-            </b-dropdown-item>
-            <b-dropdown-item :to="{ name: 'baking_charts' }">
-              {{ $t('common.baking') }}
-            </b-dropdown-item>
-          </b-nav-item-dropdown>
+            Charts
+          </b-nav-item>
           <b-nav-item-dropdown id="resources" :text="$t('header.resources')">
             <b-dropdown-item :to="{ name: 'glossary' }">
               {{ $t('glossary.title') }}
