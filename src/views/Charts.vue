@@ -65,7 +65,7 @@
     </div>
 
     <section>
-      <Breadcrumbs :crumbs="getCrumbs('general')" class="mb-3" />
+      <Breadcrumbs class="mb-2" :crumbs="getCrumbs('general')" />
 
       <b-container fluid>
         <b-row>
@@ -107,7 +107,7 @@
     </section>
 
     <section>
-      <Breadcrumbs :crumbs="getCrumbs('baking')" class="mb-3" />
+      <h2 class="charts__title">Baking charts</h2>
 
       <b-container fluid>
         <b-row>
@@ -128,7 +128,7 @@
     </section>
 
     <section>
-      <Breadcrumbs :crumbs="getCrumbs('accounts')" class="mb-3" />
+      <h2 class="charts__title">Accounts and addresses</h2>
       <b-container fluid>
         <b-row>
           <b-col xl="6" class="mb-30">
@@ -311,7 +311,7 @@
     </section>
 
     <section>
-      <Breadcrumbs :crumbs="getCrumbs('bakerEfficiency')" class="mb-3" />
+      <h2 class="charts__title">Baker efficiency</h2>
 
       <b-container fluid>
         <b-row>
@@ -332,10 +332,7 @@
     </section>
 
     <section>
-      <Breadcrumbs
-        :crumbs="getCrumbs('decentralizationCentralization')"
-        class="mb-3"
-      />
+      <h2 class="charts__title">Decentralization and Centralization</h2>
 
       <b-container fluid>
         <b-row>
@@ -642,6 +639,15 @@
 </script>
 
 <style lang="scss" scoped>
+  .charts {
+    &__title {
+      margin-top: 100px;
+      margin-left: 20px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+  }
+
   .sidebar {
     &__button {
       z-index: 100000;
@@ -729,6 +735,7 @@
       }
     }
   }
+
   section {
     scroll-behavior: smooth;
   }
