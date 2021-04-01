@@ -130,6 +130,7 @@
                 name: 'public_bakers',
                 params: { network: currentNetwork, language: currentLanguage },
               }"
+              :disabled="currentNetwork === 'edonet'"
             >
               {{ $t('header.publicBakers') }}
             </b-dropdown-item>
