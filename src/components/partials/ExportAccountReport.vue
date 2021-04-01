@@ -128,10 +128,11 @@
       networkStartDate() {
         const { currentNetwork } = this;
         const mainnetStartDate = '2018-9-17';
-        const delphiStartDate = '2020-9-4';
+        // const delphiStartDate = '2020-9-4';
+        const edonetStartDate = '2021-3-25';
 
-        if (currentNetwork === 'delphinet') {
-          return moment(delphiStartDate);
+        if (currentNetwork === 'edonet') {
+          return moment(edonetStartDate);
         }
 
         return moment(mainnetStartDate);

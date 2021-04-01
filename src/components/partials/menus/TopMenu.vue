@@ -27,7 +27,7 @@
             </b-dropdown-item>
             <b-dropdown-item
               :to="{ name: 'snapshots', params: { network: currentNetwork, language: currentLanguage } }"
-              :disabled="currentNetwork === 'delphinet'"
+              :disabled="currentNetwork === 'edonet'"
             >
               {{ $tc('common.snapshot', 2) }}
             </b-dropdown-item>
@@ -94,7 +94,7 @@
                 name: 'double_baking',
                 params: { network: currentNetwork, language: currentLanguage },
               }"
-              :disabled="currentNetwork === 'delphinet'"
+              :disabled="currentNetwork === 'edonet'"
             >
               {{ $tc('opTypes.doubleBaking', 2) }}
             </b-dropdown-item>
@@ -103,7 +103,7 @@
                 name: 'double_endorsement',
                 params: { network: currentNetwork, language: currentLanguage },
               }"
-              :disabled="currentNetwork === 'delphinet'"
+              :disabled="currentNetwork === 'edonet'"
             >
               {{ $tc('opTypes.doubleEndorsement', 2) }}
             </b-dropdown-item>
