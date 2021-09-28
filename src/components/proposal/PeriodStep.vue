@@ -20,7 +20,7 @@
                 class="proposal-step__item font font--mini"
               >
                 <p
-                  v-if="getLinks[index] === null && !loading"
+                  v-if="!getLinks[index] && !loading"
                   class="proposal-step__para font font--mini"
                   :class="{
                     'proposal-step__para--disabled': loading,
@@ -67,15 +67,17 @@
     ],
     computed: {
       getLinks() {
+        let steps = new Array(this.periodTypes.length).fill(null);
+
         if (this.shownCondition) {
-          return [this.currentPeriodId, null, null, null];
+          steps[0] = this.currentPeriodId;
         }
 
         if (this.periodStepUrls.length > 0) {
-          return this.periodStepUrls;
-        } else {
-          return [null, null, null, null];
+          steps = this.periodStepUrls;
         }
+
+        return steps;
       },
     },
   };
@@ -222,6 +224,11 @@
       &:nth-child(4) .proposal-step__link:before,
       &:nth-child(4) .proposal-step__para:before {
         content: '4';
+      }
+
+      &:nth-child(5) .proposal-step__link:before,
+      &:nth-child(5) .proposal-step__para:before {
+        content: '5';
       }
     }
 

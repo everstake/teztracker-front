@@ -20,8 +20,6 @@
                   </template>
                 </span>
               </h3>
-
-<!--              <ExportAccountReport />-->
             </div>
             <div class="subtitle">
               {{ $t('infoTypes.assetInfo') }}
@@ -102,14 +100,12 @@
   import IdentIcon from '@/components/accounts/IdentIcon';
   import BtnCopy from '@/components/partials/BtnCopy';
   import convert from '../../mixins/convert';
-  // import ExportAccountReport from '@/components/partials/ExportAccountReport';
 
   export default {
     name: 'AssetSingle',
     components: {
       IdentIcon,
       BtnCopy,
-      // ExportAccountReport,
     },
     mixins: [convert],
     props: {
@@ -123,6 +119,11 @@
         bakerInfo: {},
         account: {},
         loading: true,
+        assetCurrencyByName: {
+          tzBTC: 'tzBTC',
+          USDtz: 'USDtz',
+          'Staker DAO': 'STKR',
+        },
       };
     },
     computed: {
@@ -157,28 +158,18 @@
           })
           .catch(() => {});
         this.loading = false;
-      },
-      getAssetCurrency(asset) {
-        if (!asset) return 'ꜩ';
-
-        const assets = [
-          { name: 'tzBTC', currency: 'tzBTC' },
-          { name: 'Staker DAO', currency: 'STKR' },
-          { name: 'USDtz', currency: 'USDtz' },
-        ];
-
-        const findedAsset = assets.find(({ name, currency }) => {
-          if (asset === name) return currency;
-        });
-
-        findedAsset.precision = this.account.precision;
 
         this.$emit('onCurrencyChange', {
-          currency: findedAsset.currency,
-          precision: findedAsset.precision,
+          currency: this.assetCurrencyByName[this.account.name],
+          precision: this.account.precision,
         });
+      },
+      getAssetCurrency(asset) {
+        if (!asset) {
+          return 'ꜩ';
+        }
 
-        return findedAsset.currency;
+        return this.assetCurrencyByName[asset];
       },
     },
   };

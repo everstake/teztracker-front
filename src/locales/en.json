@@ -318,7 +318,8 @@
       "proposal": "Proposal",
       "exploration": "Exploration",
       "testing": "Testing",
-      "promotion": "Promotion"
+      "promotion": "Promotion",
+      "adoption": "Adoption"
     },
     "showAll": "Show all",
     "showLess": "Show less"

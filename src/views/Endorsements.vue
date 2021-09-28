@@ -78,7 +78,7 @@
       async reload() {
         const { page, limit } = this;
         await this.$api
-          .getEndorsements({ page, limit })
+          .getEndorsements({ page, limit }, true)
           .then((data) => {
             this.items = data.data;
             this.count = data.count;

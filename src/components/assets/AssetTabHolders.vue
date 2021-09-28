@@ -44,8 +44,9 @@
           <BtnCopy :text-to-copy="row.item.account_id" />
         </span>
       </template>
+
       <template #cell(balance)="row">
-        {{ row.item.balance | denominate }}
+        {{ row.item.balance | currencyPrecision(currency, precision) }}
       </template>
     </b-table>
 

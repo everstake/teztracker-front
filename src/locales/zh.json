@@ -318,7 +318,8 @@
       "proposal": "提案",
       "exploration": "探索",
       "testing": "测试",
-      "promotion": "提升"
+      "promotion": "提升",
+      "adoption": "采用"
     },
     "showAll": "显示全部",
     "showLess": "显示部分"

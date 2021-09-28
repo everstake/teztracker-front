@@ -68,7 +68,7 @@
       />
       <!-- Testing period end -->
 
-      <!-- Testing period start -->
+      <!-- Promotion period start -->
       <PeriodExploration
         v-if="currentPeriodType === 'promotion'"
         :proposal="proposal"
@@ -80,7 +80,16 @@
         @setDoughnutLegendPosition="setPeriodWidth"
         :getDoughnutLegendPosition="getDoughnutLegendPosition"
       />
-      <!-- Testing period end -->
+      <!-- Promotion period end -->
+
+      <!-- Adoption period adoption -->
+      <PeriodTesting
+        v-if="currentPeriodType === 'adoption'"
+        :voters="voters"
+        :proposal="proposal"
+        class="vote__testing"
+      />
+      <!-- Adoption period adoption -->
 
       <!-- Vote tables start -->
       <PeriodTable
@@ -182,6 +191,15 @@
           this.loading = false;
         },
       },
+    },
+    created() {
+      if (this.$route.params.id < 40) {
+        return;
+      }
+
+      // add adoption step after 40 period
+
+      this.periodTypes = [...this.periodTypes, 'adoption'];
     },
     methods: {
       ...mapActions('period', [
@@ -310,63 +328,22 @@
       getPeriodStepsLinks() {
         const currentPeriodId = this.proposal.period.id;
         const currentPeriodType = this.proposal.period.periodType;
+
         const currentPeriodIndex = this.periods.findIndex(
           (period) => period.id === currentPeriodId,
         );
-        const currentPeriodTypeIndex = this.periodTypes.findIndex(
+
+        const stepCount = this.periodTypes.length;
+        const currentStepIndex = this.periodTypes.findIndex(
           (period) => period === currentPeriodType,
         );
-        let tempResult = [];
-        const result = [];
 
-        switch (currentPeriodTypeIndex) {
-          case 0:
-            tempResult = this.periods.slice(
-              currentPeriodIndex,
-              currentPeriodIndex + 4,
-            );
-            break;
-          case 1:
-            tempResult = this.periods.slice(
-              currentPeriodIndex - 1,
-              currentPeriodIndex + 3,
-            );
-            break;
-          case 2:
-            tempResult = this.periods.slice(
-              currentPeriodIndex - 2,
-              currentPeriodIndex + 2,
-            );
-            break;
-          case 3:
-            tempResult = this.periods.slice(
-              currentPeriodIndex - 3,
-              currentPeriodIndex + 1,
-            );
-            break;
-          case 4:
-            tempResult = this.periods.slice(
-              currentPeriodIndex - 4,
-              currentPeriodIndex,
-            );
-            break;
-          default:
-            [null, null, null, null];
-        }
+        const startVotingIndex = currentPeriodIndex - currentStepIndex;
+        const endVotingIndex = currentPeriodIndex + stepCount - currentStepIndex;
 
-        tempResult.map((item, index) => {
-          if (item.periodType === this.periodTypes[index]) {
-            result.push(item.id);
-          } else {
-            result.push(null);
-          }
-        });
-
-        while (result.length < 4) {
-          result.push(null);
-        }
-
-        return result;
+        return this.periods
+          .slice(startVotingIndex, endVotingIndex)
+          .map((period) => period.id);
       },
       getDoughnutLegendPosition() {
         if (this.window.width <= 480) {
