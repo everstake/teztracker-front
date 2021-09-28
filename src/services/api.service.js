@@ -205,9 +205,9 @@ const TzAPI = {
     }
     return get(this.API_URL(), 'operations', options);
   },
-  getEndorsements(opts = {}) {
+  getEndorsements(opts = {}, withSlot) {
     return get(this.API_URL(), 'operations', {
-      operation_kind: 'endorsement',
+      operation_kind: `endorsement${withSlot ? ',endorsement_with_slot' : ''}`,
       ...opts,
     });
   },

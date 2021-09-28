@@ -1,7 +1,12 @@
 <template>
   <div class="list txs-list">
     <div class="d-flex justify-content-between mb-2">
-      <LimitSelect :limit="perPage" :loading="loading" @per-page="$_setPerPage" />
+      <LimitSelect
+        :limit="perPage"
+        :loading="loading"
+        @per-page="$_setPerPage"
+        :perPageOptions="[20, 50, 100]"
+      />
     </div>
 
     <div v-if="loading && protocols.length === 0" class="table-skeleton">
@@ -66,6 +71,7 @@
     data() {
       return {
         protocols: [],
+        perPage: 20,
       };
     },
     computed: {
@@ -73,7 +79,7 @@
         protocolsCount: (state) => state.counts.protocols,
       }),
       isPaginationNeeded() {
-        return this.protocolsCount > 10;
+        return this.protocolsCount > 20;
       },
       fields() {
         return [

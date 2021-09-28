@@ -7,7 +7,7 @@
       id="perPageSelect"
       :value="limit"
       size="sm"
-      :options="perPageOptions"
+      :options="selectOptions"
       class="limit"
       :class="{
         'page__el--loading': loading,
@@ -24,11 +24,15 @@
     props: {
       limit: Number,
       loading: Boolean,
+      perPageOptions: {
+        type: Array,
+        require: false,
+      },
     },
-    data() {
-      return {
-        perPageOptions: this.$constants.PER_PAGE_OPTIONS,
-      };
+    computed: {
+      selectOptions() {
+        return this.perPageOptions || this.$constants.PER_PAGE_OPTIONS;
+      },
     },
     methods: {
       handleLimitChange(value) {
