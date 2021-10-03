@@ -13,7 +13,9 @@
       use-router
       no-page-detect
       hide-goto-end-buttons
-      @page-click.prevent="() => {}"
+      @page-click.prevent="
+        (page) => $emit('onPageChange', Number(page.target.text))
+      "
     />
   </div>
 </template>

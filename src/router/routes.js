@@ -82,6 +82,11 @@ const AccountNotes = () => import('@/components/personal_account/AccountNotes');
 const AccountSettings = () => import('@/components/personal_account/AccountSettings');
 const EmailVerification = () => import('@/views/EmailVerification');
 
+// Nft
+const NftContracts = () => import('@/views/NftContracts');
+const NftContract = () => import('@/views/NftContract');
+const NftToken = () => import('@/views/NftToken');
+
 // Errors
 const Maintenance = () => import('../views/Maintenance.vue');
 const NotFound = () => import('../views/errors/NotFound.vue');
@@ -217,7 +222,6 @@ export default [
         },
       },
       /* Blocks group end */
-
       /* Operations group */
       // Txs
       {
@@ -377,7 +381,23 @@ export default [
         },
       },
       /* Accounts group end */
-
+      /* Nft group */
+      {
+        path: 'nft_contracts/:page?',
+        name: 'nft_contracts',
+        component: NftContracts,
+      },
+      {
+        path: 'nft_contract/:address',
+        name: 'nft_contract',
+        component: NftContract,
+      },
+      {
+        path: 'nft_token/:address/:tokenId',
+        name: 'nft_token',
+        component: NftToken,
+      },
+      /* Nft group end */
       /* Governance group */
       {
         path: 'protocol_amendment',
@@ -396,7 +416,6 @@ export default [
         redirect: { name: 'vote' },
       },
       /* Governance group end */
-
       /* Charts group */
       {
         path: 'charts/baking',
@@ -407,7 +426,6 @@ export default [
         redirect: { name: 'general_charts' },
       },
       /* Charts group end */
-
       {
         path: 'glossary',
         name: 'glossary',

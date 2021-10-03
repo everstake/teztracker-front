@@ -21,6 +21,7 @@
       :items="items"
       :page="page"
       :limit="limit"
+      :visible-fields="fields"
     />
 
     <PaginationNav
@@ -60,6 +61,18 @@
         default() {
           return [];
         },
+      },
+      fields: {
+        type: Array,
+        default: () => [
+          'level',
+          'txhash',
+          'from',
+          'to',
+          'amount',
+          'fee',
+          'timestamp',
+        ],
       },
     },
   };

@@ -26,7 +26,10 @@
               {{ $tc('common.block', 2) }}
             </b-dropdown-item>
             <b-dropdown-item
-              :to="{ name: 'snapshots', params: { network: currentNetwork, language: currentLanguage } }"
+              :to="{
+                name: 'snapshots',
+                params: { network: currentNetwork, language: currentLanguage },
+              }"
               :disabled="currentNetwork === 'edonet'"
             >
               {{ $tc('common.snapshot', 2) }}
@@ -202,6 +205,12 @@
             </b-dropdown-item>
             <b-dropdown-item :to="{ name: 'delegate_comparison' }">
               {{ $t('header.delegateComparison') }}
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item-dropdown id="resources" text="NFT">
+            <b-dropdown-item :to="{ name: 'nft_contracts' }">
+              {{ $t('nft.contracts') }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
