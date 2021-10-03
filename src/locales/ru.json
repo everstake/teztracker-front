@@ -51,7 +51,13 @@
     "bonds": "Залог",
     "startDate": "Start date",
     "endDate": "End date",
-    "export": "Export"
+    "export": "Export",
+    "address": "Адрес",
+    "tokens": "Токены",
+    "operations": "Операции",
+    "stats": "Статистика",
+    "holders": "Держатели",
+    "account": "Аккаунт"
   },
   "opTypes": {
     "tx": "Транзакция | Транзакции",
@@ -92,7 +98,8 @@
     "bondsList": "Список залоговых стредств",
     "mempoolList": "Mempool list",
     "assetsOperationsList": "Assets operations list",
-    "delegateComparison": "Delagate comparison list"
+    "delegateComparison": "Delagate comparison list",
+    "nftContractsList": "NFT Contracts List"
   },
   "pageTypes": {
     "txsPage": "Страница транзакций",
@@ -116,7 +123,10 @@
     "assetsPage": "Страница ассетов",
     "mempoolPage": "Mempool page",
     "delegateComparison": "Delegate comparison page",
-    "assetsOperationsPage": "Assets operations page"
+    "assetsOperationsPage": "Assets operations page",
+    "nftContracts": "NFT Контракты",
+    "nftContract": "Контракт",
+    "nftToken": "Токен"
   },
   "infoTypes": {
     "txInfo": "Информация о транзакции",
@@ -557,5 +567,23 @@
   },
   "tooltipMessages": {
     "noDataForSelectedPeriod": "Упс, похоже, данных за выбранный период нет."
+  },
+  "nft": {
+    "nftsNumber": "Количество NFT",
+    "operationsNumber": "Количество Операций",
+    "description": "Описание",
+    "tokenList": "Список Токенов",
+    "operationsList": "Список Операций",
+    "tokenInfo": "Информация о токене",
+    "holdersList": "Список Держателей",
+    "created": "Создан",
+    "lastPrice": "Последняя цены",
+    "category": "Категория",
+    "lastActive": "Последняя активность",
+    "contracts": "Контракты",
+    "owners": "Владельцы",
+    "operations": "Операции",
+    "operationsPerDay": "Операций в день",
+    "nftDistribution": "Топ 15 обладателей"
   }
 }

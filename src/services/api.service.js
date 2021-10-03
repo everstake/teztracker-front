@@ -471,6 +471,82 @@ const TzAPI = {
       { token },
     );
   },
+
+  getNftContracts(options = {}) {
+    return get(this.API_URL_BASE(), `${state.network}/nft_contracts`, options);
+  },
+
+  getNftContract({ address }) {
+    return http.get(
+      formatURL(
+        this.API_URL_BASE(),
+        `${state.network}/nft_contracts/${address}`,
+      ),
+    );
+  },
+
+  getNftTokens({ address }, options = {}) {
+    return get(
+      this.API_URL_BASE(),
+      `${state.network}/nft_contracts/${address}/tokens`,
+      options,
+    );
+  },
+
+  getNftToken({ address, tokenId }) {
+    return http.get(
+      formatURL(
+        this.API_URL_BASE(),
+        `${state.network}/nft_contracts/${address}/tokens/${tokenId}`,
+      ),
+    );
+  },
+
+  getNftTokenHolders({ address, tokenId }, options = {}) {
+    return get(
+      this.API_URL_BASE(),
+      `${state.network}/nft_contracts/${address}/tokens/${tokenId}/holders`,
+      options,
+    );
+  },
+
+  getNftContractOperations({ address }, options = {}) {
+    return get(
+      this.API_URL_BASE(),
+      `${state.network}/nft_contracts/${address}/operations`,
+      options,
+    );
+  },
+
+  getNftOwnership({ address }) {
+    return http.get(
+      formatURL(
+        this.API_URL_BASE(),
+        `${state.network}/nft_contracts/${address}/ownership`,
+      ),
+    );
+  },
+
+  getNftDistribution({ address }) {
+    return http.get(
+      formatURL(
+        this.API_URL_BASE(),
+        `${state.network}/nft_contracts/${address}/distribution`,
+      ),
+    );
+  },
+
+  getNftOperationsChart({ address }, options) {
+    return get(
+      this.API_URL_BASE(),
+      `${state.network}/nft_contracts/${address}/operations/chart`,
+      {
+        ...options,
+        period: 'D',
+      },
+      false,
+    );
+  },
 };
 
 export default TzAPI;

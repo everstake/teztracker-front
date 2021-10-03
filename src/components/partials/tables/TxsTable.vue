@@ -101,6 +101,7 @@
       items: Array,
       page: Number,
       limit: Number,
+      visibleFields: Array,
       propsFields: {
         type: Array,
         default() {
@@ -143,7 +144,7 @@
               label: this.$t('common.fee'),
             },
             { key: 'timestamp', label: this.$t('common.timestamp') },
-          ];
+          ].filter((field) => this.visibleFields.includes(field.key));
         }
       },
       account() {

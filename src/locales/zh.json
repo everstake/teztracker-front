@@ -51,7 +51,13 @@
     "bonds": "债券",
     "startDate": "Start date",
     "endDate": "End date",
-    "export": "Export"
+    "export": "Export",
+    "address": "Address",
+    "tokens": "Tokens",
+    "operations": "Operations",
+    "stats": "Stats",
+    "holders": "Holders",
+    "Account": "Account"
   },
   "opTypes": {
     "tx": "交易 | 交易",
@@ -92,7 +98,8 @@
     "bondsList": "债券清单",
     "mempoolList": "Mempool list",
     "delegateComparison": "Delagate comparison list",
-    "assetsOperationsList": "Assets operations list"
+    "assetsOperationsList": "Assets operations list",
+    "nftContractsList": "NFT Contracts List"
   },
   "pageTypes": {
     "txsPage": "交易页面",
@@ -116,7 +123,10 @@
     "assetsPage": "资产页",
     "mempoolPage": "Mempool page",
     "delegateComparison": "Delegate comparison page",
-    "assetsOperationsPage": "Assets operations page"
+    "assetsOperationsPage": "Assets operations page",
+    "nftContracts": "NFT Contracts",
+    "nftContract": "Contract",
+    "nftToken": "Token"
   },
   "infoTypes": {
     "txInfo": "交易信息",
@@ -557,5 +567,23 @@
   },
   "tooltipMessages": {
     "noDataForSelectedPeriod": "Opps, looks like there's no data for the selected period."
+  },
+  "nft": {
+    "nftsNumber": "NFTs Number",
+    "operationsNumber": "Operations Number",
+    "description": "Description",
+    "tokenList": "Tokens List",
+    "operationsList": "Operations List",
+    "tokenInfo": "Token Info",
+    "holdersList": "Holders List",
+    "created": "Created",
+    "lastPrice": "Last price",
+    "category": "Category",
+    "lastActive": "Last Active",
+    "contracts": "Contracts",
+    "owners": "Owners",
+    "operations": "Operations",
+    "operationsPerDay": "Operations per day",
+    "nftDistribution": "Top 15 holders"
   }
 }
