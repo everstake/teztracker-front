@@ -37,7 +37,7 @@
         <div class="card-divider" />
 
         <b-card-body>
-          <div v-if="loading || !ownership" class="min-h-400 vote__loading">
+          <div v-if="loading || !operations" class="min-h-400 vote__loading">
             {{ $t('common.loading') }}
           </div>
 
@@ -62,7 +62,7 @@
         <div class="card-divider" />
 
         <b-card-body>
-          <div v-if="loading || !ownership" class="min-h-400 vote__loading">
+          <div v-if="loading || !distribution" class="min-h-400 vote__loading">
             {{ $t('common.loading') }}
           </div>
 

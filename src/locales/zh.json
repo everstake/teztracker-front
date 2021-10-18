@@ -57,7 +57,8 @@
     "operations": "Operations",
     "stats": "Stats",
     "holders": "Holders",
-    "Account": "Account"
+    "account": "Account",
+    "tokenName": "Token Name"
   },
   "opTypes": {
     "tx": "交易 | 交易",

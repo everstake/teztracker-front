@@ -57,7 +57,8 @@
     "operations": "Operations",
     "stats": "Stats",
     "holders": "Holders",
-    "Account": "Account"
+    "account": "Account",
+    "tokenName": "Token Name"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
