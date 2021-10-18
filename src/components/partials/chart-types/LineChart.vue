@@ -38,7 +38,13 @@
         type: Function,
         default(label) {
           if (label > 999999) {
-            return `${label / 1000 / 1000}M`;
+            const tick = `${label / 1000 / 1000}`;
+
+            if (!tick.includes('.')) {
+              return tick;
+            }
+
+            return `${tick.split('.')[0]}.${tick.split('.')[1].slice(0, 4)}M`;
           }
           if (label > 999) {
             return `${label / 1000}K`;

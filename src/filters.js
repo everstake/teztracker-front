@@ -133,3 +133,5 @@ Vue.filter('formatCurrency', (amount, calcXTZ = true) =>
 Vue.filter('denominate', (amount, calcXTZ = true) =>
   Vue.prototype.$helpers.denominate(amount, calcXTZ),
 );
+
+Vue.filter('withoutPrecision', (amountString) => amountString.split('.')[0]);

@@ -13,7 +13,11 @@
       },
       yAxesMaxTicksLimit: {
         type: Number,
-        default: 14,
+        default: 0,
+      },
+      xAxesMaxTicksLimit: {
+        type: Number,
+        default: 0,
       },
       yTicksCallback: {
         type: Function,
@@ -58,7 +62,6 @@
                   ticks: {
                     fontFamily: 'Montserrat Alternates',
                     fontColor: '#2d2e2c',
-                    beginAtZero: true,
                     maxTicksLimit: this.yAxesMaxTicksLimit,
                     callback: this.yTicksCallback,
                   },
@@ -70,7 +73,7 @@
                     drawOnChartArea: false,
                   },
                   ticks: {
-                    maxTicksLimit: 10,
+                    maxTicksLimit: this.xAxesMaxTicksLimit,
                     fontColor: '#2d2e2c',
                     fontFamily: 'Montserrat Alternates',
                     beginAtZero: true,

@@ -547,6 +547,48 @@ const TzAPI = {
       false,
     );
   },
+  getAccountsAgg(options) {
+    return get(this.API_URL(), 'accounts/agg', options, false);
+  },
+  getAccountsTotalAgg(options) {
+    return get(this.API_URL(), 'accounts/total/agg', options, false);
+  },
+  getLowBalanceTotalAgg(options) {
+    return get(this.API_URL(), 'low/balance/total/agg', options, false);
+  },
+  getActiveAccountsAgg(options) {
+    return get(this.API_URL(), 'active/accounts/agg', options, false);
+  },
+  getInactiveAccountsAgg(options) {
+    return get(this.API_URL(), 'inactive/accounts/agg', options, false);
+  },
+  getContractsAgg(options) {
+    return get(this.API_URL(), 'contracts/agg', options, false);
+  },
+  getContractsTotalAgg(options) {
+    return get(this.API_URL(), 'contracts/total/agg', options, false);
+  },
+  getLostBlocksAgg(options) {
+    return get(this.API_URL(), 'lost/blocks/agg', options, false);
+  },
+  getLostEndorsementsAgg(options) {
+    return get(this.API_URL(), 'lost/endorsements/agg', options, false);
+  },
+  getLostRewardsAgg(options) {
+    return get(this.API_URL(), 'lost/rewards/agg', options, false);
+  },
+  getBakersHolding() {
+    return get(this.API_URL(), 'bakers/holding', {}, false);
+  },
+  getBakersDelegators() {
+    return get(this.API_URL(), 'bakers/delegators', {}, false);
+  },
+  getBakersStakeChange() {
+    return get(this.API_URL(), 'bakers/stake/change', {}, false);
+  },
+  getBakersVoting() {
+    return get(this.API_URL(), 'bakers/voting', {}, false);
+  },
 };
 
 export default TzAPI;
