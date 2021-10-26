@@ -1,0 +1,19 @@
+[
+  {
+    "selector": "node",
+    "style": {
+      "background-color": "mapData(balance, 0, 4000000000000, #c3f1e1, #034e41)",
+      "width": "mapData(balance, 0, 40000000000000, 5, 100)",
+      "height": "mapData(balance, 0, 40000000000000, 5, 100)"
+    }
+  },
+  {
+    "selector": "edge",
+    "style": {
+      "width": 0.5,
+      "line-color": "#ddd",
+      "curve-style": "haystack",
+      "target-arrow-shape": "none"
+    }
+  }
+]

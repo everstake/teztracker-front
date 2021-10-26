@@ -589,6 +589,15 @@ const TzAPI = {
   getBakersVoting() {
     return get(this.API_URL(), 'bakers/voting', {}, false);
   },
+  getWhaleAccounts() {
+    return get(this.API_URL(), 'whale/accounts', {}, false);
+  },
+  getWhaleTransfers() {
+    return get(this.API_URL(), 'whale/transfers', {}, false);
+  },
+  getWhaleMovers() {
+    return get(this.API_URL(), 'whale/mover', {}, false);
+  },
 };
 
 export default TzAPI;

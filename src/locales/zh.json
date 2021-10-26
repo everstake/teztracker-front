@@ -58,7 +58,8 @@
     "stats": "Stats",
     "holders": "Holders",
     "account": "Account",
-    "tokenName": "Token Name"
+    "tokenName": "Token Name",
+    "accountsNetwork": "Accounts Network"
   },
   "opTypes": {
     "tx": "交易 | 交易",
