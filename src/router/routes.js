@@ -65,6 +65,8 @@ const Vote = () => import('../views/Vote.vue');
 /* Charts group */
 const ChartsBaking = () => import('../views/chart-views/ChartsBaking.vue');
 const ChartsGeneral = () => import('../views/chart-views/ChartsGeneral.vue');
+const AccountsNetwork = () =>
+  import('../views/chart-views/AccountsNetwork.vue');
 /* Charts group end */
 
 const DelegateComparison = () => import('../views/DelegateComparison.vue');
@@ -74,12 +76,17 @@ const Mempool = () => import('../views/Mempool.vue');
 
 // Personal account
 const PersonalAccount = () => import('../views/PersonalAccount.vue');
-const AccountProfile = () => import('@/components/personal_account/AccountProfile');
-const AccountNotifications = () => import('@/components/personal_account/AccountNotifications');
-const AccountOperations = () => import('@/components/personal_account/AccountOperations');
-const AccountFavorites = () => import('@/components/personal_account/AccountFavorites');
+const AccountProfile = () =>
+  import('@/components/personal_account/AccountProfile');
+const AccountNotifications = () =>
+  import('@/components/personal_account/AccountNotifications');
+const AccountOperations = () =>
+  import('@/components/personal_account/AccountOperations');
+const AccountFavorites = () =>
+  import('@/components/personal_account/AccountFavorites');
 const AccountNotes = () => import('@/components/personal_account/AccountNotes');
-const AccountSettings = () => import('@/components/personal_account/AccountSettings');
+const AccountSettings = () =>
+  import('@/components/personal_account/AccountSettings');
 const EmailVerification = () => import('@/views/EmailVerification');
 
 // Nft
@@ -515,6 +522,14 @@ export default [
         path: 'charts/general',
         name: 'general_charts',
         component: ChartsGeneral,
+        meta: {
+          middleware: [language],
+        },
+      },
+      {
+        path: 'charts/accounts_network',
+        name: 'accounts_network',
+        component: AccountsNetwork,
         meta: {
           middleware: [language],
         },
