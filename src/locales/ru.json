@@ -59,7 +59,12 @@
     "holders": "Держатели",
     "account": "Аккаунт",
     "tokenName": "Название Токена",
-    "accountsNetwork": "Сеть Аккаунтов"
+    "biggestAccounts": "Наибольшее Аккаунты",
+    "source": "Отправитель",
+    "destination": "Получатель",
+    "period": "Период",
+    "biggestAccountsNetwork": "Топ Аккаунтов Сеть",
+    "biggestMovers": "Топ Отправителей/Получателей"
   },
   "opTypes": {
     "tx": "Транзакция | Транзакции",
@@ -101,7 +106,10 @@
     "mempoolList": "Mempool list",
     "assetsOperationsList": "Assets operations list",
     "delegateComparison": "Delagate comparison list",
-    "nftContractsList": "NFT Contracts List"
+    "nftContractsList": "NFT Contracts List",
+    "biggestTransfers": "Топ Транзакций",
+    "biggestSender": "Топ Отправителей",
+    "biggestReceiver": "Топ Получателей"
   },
   "pageTypes": {
     "txsPage": "Страница транзакций",
@@ -128,7 +136,8 @@
     "assetsOperationsPage": "Assets operations page",
     "nftContracts": "NFT Контракты",
     "nftContract": "Контракт",
-    "nftToken": "Токен"
+    "nftToken": "Токен",
+    "biggestTransfers": "Топ Транзакций"
   },
   "infoTypes": {
     "txInfo": "Информация о транзакции",

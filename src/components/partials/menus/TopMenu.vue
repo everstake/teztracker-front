@@ -195,8 +195,14 @@
             <b-dropdown-item :to="{ name: 'baking_charts' }">
               {{ $t('common.baking') }}
             </b-dropdown-item>
-            <b-dropdown-item :to="{ name: 'accounts_network' }">
-              {{ $t('common.accountsNetwork') }}
+            <b-dropdown-item :to="{ name: 'biggest_accounts' }">
+              {{ $t('common.biggestAccounts') }}
+            </b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'biggest_movers' }">
+              {{ $t('common.biggestMovers') }}
+            </b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'biggest_transfers' }">
+              {{ $t('pageTypes.biggestTransfers') }}
             </b-dropdown-item>
           </b-nav-item-dropdown>
           <b-nav-item-dropdown id="resources" :text="$t('header.resources')">

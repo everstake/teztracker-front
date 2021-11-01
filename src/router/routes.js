@@ -65,8 +65,10 @@ const Vote = () => import('../views/Vote.vue');
 /* Charts group */
 const ChartsBaking = () => import('../views/chart-views/ChartsBaking.vue');
 const ChartsGeneral = () => import('../views/chart-views/ChartsGeneral.vue');
-const AccountsNetwork = () =>
-  import('../views/chart-views/AccountsNetwork.vue');
+const BiggestAccounts = () =>
+  import('../views/chart-views/BiggestAccounts.vue');
+const BiggestMovers = () => import('../views/BiggestMovers.vue');
+const BiggestTransfers = () => import('../views/BiggestTransfers.vue');
 /* Charts group end */
 
 const DelegateComparison = () => import('../views/DelegateComparison.vue');
@@ -527,9 +529,25 @@ export default [
         },
       },
       {
-        path: 'charts/accounts_network',
-        name: 'accounts_network',
-        component: AccountsNetwork,
+        path: 'charts/biggest_accounts',
+        name: 'biggest_accounts',
+        component: BiggestAccounts,
+        meta: {
+          middleware: [language],
+        },
+      },
+      {
+        path: 'charts/biggest_movers',
+        name: 'biggest_movers',
+        component: BiggestMovers,
+        meta: {
+          middleware: [language],
+        },
+      },
+      {
+        path: 'charts/biggest_transfers',
+        name: 'biggest_transfers',
+        component: BiggestTransfers,
         meta: {
           middleware: [language],
         },
