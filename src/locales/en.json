@@ -59,7 +59,12 @@
     "holders": "Holders",
     "account": "Account",
     "tokenName": "Token Name",
-    "accountsNetwork": "Accounts Network"
+    "biggestAccounts": "Biggest Accounts",
+    "source": "From",
+    "destination": "To",
+    "period": "Period",
+    "biggestAccountsNetwork": "Biggest Accounts Network",
+    "biggestMovers": "Biggest Sender/Receiver"
   },
   "opTypes": {
     "tx": "Transaction | Transactions",
@@ -101,7 +106,10 @@
     "mempoolList": "Mempool list",
     "delegateComparison": "Delagate comparison list",
     "assetsOperationsList": "Assets operations list",
-    "nftContractsList": "NFT Contracts List"
+    "nftContractsList": "NFT Contracts List",
+    "biggestTransfers": "Biggest Transfers",
+    "biggestSender": "Biggest Sender",
+    "biggestReceiver": "Biggest Receiver"
   },
   "pageTypes": {
     "txsPage": "Transactions page",
@@ -128,7 +136,8 @@
     "assetsOperationsPage": "Assets operations page",
     "nftContracts": "NFT Contracts",
     "nftContract": "Contract",
-    "nftToken": "Token"
+    "nftToken": "Token",
+    "biggestTransfers": "Biggest Transfers"
   },
   "infoTypes": {
     "txInfo": "Transaction information",

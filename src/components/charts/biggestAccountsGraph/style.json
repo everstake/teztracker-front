@@ -8,12 +8,22 @@
     }
   },
   {
+    "selector": "node[balance = 0]",
+    "style": {
+      "background-color": "#c3f1e1",
+      "width": 4,
+      "height": 4
+    }
+  },
+  {
     "selector": "edge",
     "style": {
       "width": 0.5,
       "line-color": "#ddd",
-      "curve-style": "haystack",
-      "target-arrow-shape": "none"
+      "curve-style": "straight",
+      "target-arrow-shape": "vee",
+      "target-arrow-color": "#ddd",
+      "arrow-scale": 0.3
     }
   }
 ]
