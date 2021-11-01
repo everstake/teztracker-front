@@ -1,0 +1,7 @@
+{
+  "name": "cose",
+  "padding": 10,
+  "random": true,
+  "animate": false,
+  "componentSpacing": 10
+}

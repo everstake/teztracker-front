@@ -592,11 +592,13 @@ const TzAPI = {
   getWhaleAccounts() {
     return get(this.API_URL(), 'whale/accounts', {}, false);
   },
-  getWhaleTransfers() {
-    return get(this.API_URL(), 'whale/transfers', {}, false);
+
+  getWhaleTransfers(options) {
+    return get(this.API_URL(), 'whale/transfers', options, false);
   },
-  getWhaleMovers() {
-    return get(this.API_URL(), 'whale/mover', {}, false);
+
+  getWhaleMovers(options) {
+    return get(this.API_URL(), 'whale/movers', options, false);
   },
 };
 
