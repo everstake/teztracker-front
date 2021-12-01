@@ -221,6 +221,12 @@
             <b-dropdown-item :to="{ name: 'nft_contracts' }">
               {{ $t('nft.contracts') }}
             </b-dropdown-item>
+            <b-dropdown-item
+              href="https://minter.teztracker.com/"
+              target="_blank"
+            >
+              Minter
+            </b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
 
