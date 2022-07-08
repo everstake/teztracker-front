@@ -28,7 +28,7 @@
     "core-js": "^2.6.11",
     "cytoscape": "^3.19.1",
     "lodash": "^4.17.20",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "node-sass": "^4.14.1",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
